@@ -1,2 +1,2 @@
-# mlr3spatial
-Spatial statistics for mlr3
+# mlr3spatiotemporal
+Spatiotemporal statistics for mlr3
