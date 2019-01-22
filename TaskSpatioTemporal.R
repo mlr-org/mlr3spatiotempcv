@@ -33,7 +33,7 @@ TaskSpatioTemporal = R6::R6Class("TaskSpatioTemporal",
 
     coordinates = function(row_ids = NULL) {
       if (is.null(row_ids))
-        row_ids = self$row_ids[[1L]]
+        row_ids = self$row_ids
       self$backend$data(rows = row_ids, cols = self$coordinate_names)
     }
   ),
