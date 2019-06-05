@@ -1,0 +1,6 @@
+^\.travis\.yml$
+^appveyor\.yml$
+^tic\.R$
+^.*\.Rproj$
+^\.Rproj\.user$
+^mlr3spatiotemporal\.Rproj$
