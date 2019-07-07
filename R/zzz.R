@@ -5,10 +5,10 @@
 #' @importFrom R6 R6Class
 "_PACKAGE"
 
-.onLoad = function(libname, pkgname) {
+.onLoad <- function(libname, pkgname) {
   # add 'coordinates' as col roles
-  tmp = c("feature", "target", "label", "order", "groups", "weights", "coordinates")
-  mlr_reflections$task_col_roles = list(
+  tmp <- c("feature", "target", "label", "order", "groups", "weights", "coordinates")
+  mlr_reflections$task_col_roles <- list(
     regr = tmp,
     classif = tmp
   )
