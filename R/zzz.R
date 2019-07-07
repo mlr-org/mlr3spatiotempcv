@@ -1,8 +1,8 @@
 #' @rawNamespace import(data.table, except = transpose)
 #' @import paradox
 #' @import mlr3misc
+#' @import mlr3
 #' @importFrom R6 R6Class
-#' @importFrom mlr3 Task Resampling mlr_reflections mlr_tasks mlr_resamplings
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) {

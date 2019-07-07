@@ -2,12 +2,8 @@
 
 export(ResamplingSpCVKmeans)
 import(data.table, except = transpose)
+import(mlr3)
 import(mlr3misc)
 import(paradox)
 importFrom(R6,R6Class)
-importFrom(mlr3,Resampling)
-importFrom(mlr3,Task)
 importFrom(mlr3,as_data_backend)
-importFrom(mlr3,mlr_reflections)
-importFrom(mlr3,mlr_resamplings)
-importFrom(mlr3,mlr_tasks)

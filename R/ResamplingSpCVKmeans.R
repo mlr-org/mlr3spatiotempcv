@@ -1,6 +1,7 @@
 #' @title Spatial Cross Validation Resampling
 #'
 #' @format [R6::R6Class] inheriting from [Resampling].
+#' @import mlr3
 #'
 #' @description
 #' Spatial Cross validation following the "k-means" approach after Brenning 2012.
@@ -20,11 +21,11 @@
 #' @export
 #' @examples
 #' # Create a task with 10 observations
-#' task = mlr_tasks$get("ecuador")
+#' task = mlr3::mlr_tasks$get("ecuador")
 #' task$filter(1:10)
 #'
 #' # Instantiate Resampling
-#' rcv = mlr_resamplings$get("spcv-kmeans")
+#' rcv = mlr3::mlr_resamplings$get("spcv-kmeans")
 #' rcv$param_set$values = list(folds = 3)
 #' rcv$instantiate(task)
 #'
