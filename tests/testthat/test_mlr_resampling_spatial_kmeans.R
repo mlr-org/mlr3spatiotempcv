@@ -1,36 +1,37 @@
 context("mlr_resampling_spcv-kmeans")
 
 test_that("spcv has no duplicated ids", {
-  r = mlr_resamplings$get("spcv-kmeans")
+  r <- mlr_resamplings$get("spcv-kmeans")
   expect_identical(r$duplicated_ids, FALSE)
 })
 
 test_that("stratification", {
-  task = mlr_tasks$get("ecuador")
-  r = mlr_resamplings$get("spcv-kmeans")
-  r$param_set$values = list(folds = 5, stratify = TRUE)
+  task <- mlr_tasks$get("ecuador")
+  r <- mlr_resamplings$get("spcv-kmeans")
+  r$param_set$values <- list(folds = 5, stratify = TRUE)
   expect_error(r$instantiate(task))
 })
 
 test_that("grouping", {
   # select resampling
-  r = mlr_resamplings$get("spcv-kmeans")
+  r <- mlr_resamplings$get("spcv-kmeans")
 
   # create custom data for grouping variable
-  b = as.data.table(readRDS(system.file("extdata", "ecuador.rda",
-    package = "mlr3spatiotemporal")))
+  b <- as.data.table(readRDS(system.file("extdata", "ecuador.rda",
+    package = "mlr3spatiotemporal"
+  )))
 
   # add grouping variable
-  data = insert_named(b[1:150, ], list(grp = rep_len(letters[1:10], 150)))
-  task = TaskClassif$new("ecuador-grp", as_data_backend(data), target = "slides")
+  data <- insert_named(b[1:150, ], list(grp = rep_len(letters[1:10], 150)))
+  task <- TaskClassif$new("ecuador-grp", as_data_backend(data), target = "slides")
   task$set_col_role(c("x", "y"), "coordinates")
   task$set_col_role("grp", "groups")
 
   # grouping only
-  r$param_set$values = list(folds = 5)
+  r$param_set$values <- list(folds = 5)
   expect_error(r$instantiate(task))
 
   # grouping and stratify = TRUE
-  r$param_set$values = list(folds = 5, stratify = TRUE)
+  r$param_set$values <- list(folds = 5, stratify = TRUE)
   expect_error(r$instantiate(task))
 })

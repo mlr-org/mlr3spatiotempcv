@@ -21,12 +21,12 @@
 #' @export
 #' @examples
 #' # Create a task with 10 observations
-#' task = mlr3::mlr_tasks$get("ecuador")
+#' task <- mlr3::mlr_tasks$get("ecuador")
 #' task$filter(1:10)
 #'
 #' # Instantiate Resampling
-#' rcv = mlr3::mlr_resamplings$get("spcv-kmeans")
-#' rcv$param_set$values = list(folds = 3)
+#' rcv <- mlr3::mlr_resamplings$get("spcv-kmeans")
+#' rcv$param_set$values <- list(folds = 3)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -36,7 +36,8 @@
 #'
 #' # Internal storage:
 #' rcv$instance # table
-ResamplingSpCVKmeans = R6Class("ResamplingSpCVKmeans", inherit = mlr3::Resampling,
+ResamplingSpCVKmeans <- R6Class("ResamplingSpCVKmeans",
+  inherit = mlr3::Resampling,
   public = list(
     initialize = function(id = "spcv-kmeans", param_vals = list(folds = 10L)) {
       super$initialize(
@@ -50,32 +51,32 @@ ResamplingSpCVKmeans = R6Class("ResamplingSpCVKmeans", inherit = mlr3::Resamplin
     },
     instantiate = function(task) {
       assert_task(task)
-      groups = task$groups
+      groups <- task$groups
 
       if (!is.null(task$col_roles$coordinates)) {
+        # FIXME: We need a simpler way to extract the coordinates
         task$set_col_role(c("x", "y"), "feature")
-        coords = as.data.table(task$data(cols = c("x", "y")))
+        coords <- as.data.table(task$data(cols = c("x", "y")))
         task$set_col_role(c("x", "y"), "coordinates")
       }
 
-      stratify = self$param_set$values$stratify
+      stratify <- self$param_set$values$stratify
+
       if (length(stratify) == 0L || isFALSE(stratify)) {
         if (is.null(groups)) {
-          instance = private$.sample(task$row_ids, coords)
+          instance <- private$.sample(task$row_ids, coords)
         } else {
-          private$.groups = groups
-          instance = private$.sample(unique(groups$group, coords))
+          stopf("Grouping is not supported for spatial resampling methods.", call. = FALSE)
         }
       } else {
         if (!is.null(groups)) {
-          stopf("Cannot combine stratification with grouping")
+          stopf("Grouping is not supported for spatial resampling methods", call. = FALSE)
         }
-        instances = stratify(task, stratify)
-        instance = private$.combine(lapply(instances$..row_id, function(x) private$.sample(x, coords)))
+        stopf("Stratification is not supported for spatial resampling methods.", call. = FALSE)
       }
 
-      self$instance = instance
-      self$task_hash = task$hash
+      self$instance <- instance
+      self$task_hash <- task$hash
       invisible(self)
     }
   ),
@@ -89,13 +90,13 @@ ResamplingSpCVKmeans = R6Class("ResamplingSpCVKmeans", inherit = mlr3::Resamplin
   private = list(
     .sample = function(ids, coords) {
 
-      inds = kmeans(coords, centers = self$param_set$values$folds)
-      inds = factor(inds$cluster)
+      inds <- kmeans(coords, centers = self$param_set$values$folds)
+      inds <- factor(inds$cluster)
 
       # uses resulting factor levels from kmeans clustering to set up a list of
       # length x (x = folds) with row indices of the data referring to which fold
       # each observation is assigned to
-      ids = lapply(levels(inds), function(x, spl)
+      ids <- lapply(levels(inds), function(x, spl)
         which(spl == x), spl = inds)
 
       data.table(
