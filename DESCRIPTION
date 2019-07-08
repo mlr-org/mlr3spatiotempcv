@@ -20,7 +20,6 @@ Imports:
     mlr3,
     mlr3misc,
     paradox,
-    paradox,
     R6
 Suggests:
     knitr,
