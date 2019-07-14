@@ -1,16 +1,18 @@
 #' @rawNamespace import(data.table, except = transpose)
 #' @import paradox
 #' @import mlr3misc
+#' @import checkmate
 #' @import mlr3
 #' @importFrom R6 R6Class
 "_PACKAGE"
 
 .onLoad <- function(libname, pkgname) {
+
   # add 'coordinates' as col roles
-  tmp <- c("feature", "target", "label", "order", "groups", "weights", "coordinates")
+  tmp <- mlr_reflections$task_col_roles$regr
   mlr_reflections$task_col_roles <- list(
-    regr = tmp,
-    classif = tmp
+    regr = c(tmp, "coordinates"),
+    classif = c(tmp, "coordinates")
   )
 
   # add spatial task
