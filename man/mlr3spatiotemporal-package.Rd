@@ -6,9 +6,11 @@
 \alias{mlr3spatiotemporal-package}
 \title{mlr3spatiotemporal: Spatial support for mlr3}
 \description{
-Implements spatio-temporal methods to enhance the experience of mlr3.
+Implements spatio-temporal methods to enhance the
+    experience of mlr3.
 
-Implements spatio-temporal methods to enhance the experience of mlr3.
+Implements spatio-temporal methods to enhance the
+    experience of mlr3.
 }
 \seealso{
 Useful links:
