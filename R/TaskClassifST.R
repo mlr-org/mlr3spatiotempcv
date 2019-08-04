@@ -83,6 +83,7 @@ TaskClassifST <- R6::R6Class("TaskClassifST",
         assert_numeric(self$data(cols = coord)[[1L]], any.missing = FALSE)
       }
 
+
       # mark columns as coordinates
       # check if coordinates should be included as features
       if (coords_as_features == TRUE) {
@@ -99,7 +100,8 @@ TaskClassifST <- R6::R6Class("TaskClassifST",
 
     coordinates = function(row_ids = NULL) {
       if (is.null(row_ids)) {
-        row_ids <- self$row_ids
+        # we need to maintain the correct order for the coordinates
+        row_ids <- as.character(sort(as.numeric(self$row_ids)))
       }
       self$backend$data(rows = row_ids, cols = self$coordinate_names)
     },

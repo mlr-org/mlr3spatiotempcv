@@ -20,9 +20,7 @@
 #'
 #' @export
 #' @examples
-#' # Create a task with 10 observations
 #' task <- mlr3::mlr_tasks$get("ecuador")
-#' task$filter(1:10)
 #'
 #' # Instantiate Resampling
 #' rcv <- mlr3::mlr_resamplings$get("spcv-kmeans")
@@ -53,18 +51,12 @@ ResamplingSpCVKmeans <- R6Class("ResamplingSpCVKmeans",
       assert_task(task)
       groups <- task$groups
 
-      if (!is.null(task$col_roles$coordinates)) {
-        # FIXME: We need a simpler way to extract the coordinates
-        task$set_col_role(c("x", "y"), "feature")
-        coords <- as.data.table(task$data(cols = c("x", "y")))
-        task$set_col_role(c("x", "y"), "coordinates")
-      }
 
       stratify <- self$param_set$values$stratify
 
       if (length(stratify) == 0L || isFALSE(stratify)) {
         if (is.null(groups)) {
-          instance <- private$.sample(task$row_ids, coords)
+          instance <- private$.sample(task$row_ids, task$coordinates())
         } else {
           stopf("Grouping is not supported for spatial resampling methods.", call. = FALSE)
         }
@@ -96,12 +88,14 @@ ResamplingSpCVKmeans <- R6Class("ResamplingSpCVKmeans",
       # uses resulting factor levels from kmeans clustering to set up a list of
       # length x (x = folds) with row indices of the data referring to which fold
       # each observation is assigned to
-      ids <- lapply(levels(inds), function(x, spl)
+      ids <- map(levels(inds), function(x, spl)
         which(spl == x), spl = inds)
 
+      fold_id = imap(ids, function(.x, .y) rep(.y, length((.x))))
+
       data.table(
-        row_id = ids,
-        fold = seq_along0(ids) %% self$param_set$values$folds + 1L,
+        row_id = unlist(ids),
+        fold = unlist(fold_id),
         key = "fold"
       )
     },
