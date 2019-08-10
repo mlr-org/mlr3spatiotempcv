@@ -98,16 +98,10 @@ ResamplingSpCVBlock <- R6Class("ResamplingSpCVBlock",
         showBlocks = FALSE,
         progress = FALSE,
       ))
-      inds <- map(inds$folds, function(x) x[[2]])
-
-      # Match row_ids with folds
-      fold_id <- map(1:nrow(points), function(x) {
-        which(sapply(inds, function(y) as.numeric(x) %in% y))
-      })
 
       data.table(
         row_id = ids,
-        fold = unlist(fold_id),
+        fold = inds$foldID,
         key = "fold"
       )
     },
