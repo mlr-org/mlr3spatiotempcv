@@ -105,8 +105,8 @@ TaskClassifST <- R6::R6Class("TaskClassifST",
 
     coordinates = function(row_ids = NULL) {
       if (is.null(row_ids)) {
-        # we need to maintain the correct order for the coordinates
-        row_ids <- as.character(sort(as.numeric(self$row_ids)))
+        # Return coords in task$data order
+        row_ids <- self$row_ids
       }
       self$backend$data(rows = row_ids, cols = self$coordinate_names)
     },
