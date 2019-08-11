@@ -89,15 +89,14 @@ ResamplingSpCVBlock <- R6Class("ResamplingSpCVBlock",
     .sample = function(ids, coords) {
       points <- sf::st_as_sf(cbind(ids, coords), coords = c("x", "y"))
 
-      # Supress warning about missing crs
-      inds <- suppressWarnings(blockCV::spatialBlock(
+      # Suppress print message, warning crs and package load
+      capture.output(inds <- suppressMessages(suppressWarnings(blockCV::spatialBlock(
         speciesData = points,
         rows = self$param_set$values$rows,
         cols = self$param_set$values$cols,
         k = self$param_set$values$folds,
         showBlocks = FALSE,
-        progress = FALSE,
-      ))
+        progress = FALSE))))
 
       data.table(
         row_id = ids,
