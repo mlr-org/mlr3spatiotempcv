@@ -20,4 +20,5 @@
 
   # add spatial resampling methods
   mlr_resamplings$add("spcv-kmeans", ResamplingSpCVKmeans)
+  mlr_resamplings$add("spcv-env", ResamplingSpCVEnv)
 }
