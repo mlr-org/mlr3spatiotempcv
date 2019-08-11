@@ -87,7 +87,7 @@ ResamplingSpCVBlock <- R6Class("ResamplingSpCVBlock",
 
   private = list(
     .sample = function(ids, coords) {
-      points <- sf::st_as_sf(cbind(ids, coords), coords = c("x", "y"))
+      points <- sf::st_as_sf(coords, coords = c("x", "y"))
 
       # Suppress print message, warning crs and package load
       capture.output(inds <- suppressMessages(suppressWarnings(blockCV::spatialBlock(
