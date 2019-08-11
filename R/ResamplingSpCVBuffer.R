@@ -77,7 +77,7 @@ ResamplingSpCVBuffer <- R6Class("ResamplingSpCVBuffer",
 
   private = list(
     .sample = function(ids, coords, crs) {
-      points <- sf::st_as_sf(cbind(ids, coords),
+      points <- sf::st_as_sf(coords,
                              coords = c("x", "y"),
                              crs = crs)
 

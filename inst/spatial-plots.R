@@ -10,7 +10,7 @@ resampling_cv = mlr_resamplings$get("spcv-kmeans", param_vals = list(folds = 3))
 resampling_cv$instantiate(task)
 
 coords = task$coordinates()
-coords$row_id = sort(as.character(1:task$nrow))
+coords$row_id = task$row_ids
 
 coords_resamp = merge(coords, resampling_cv$instance, by = "row_id")
 
@@ -25,11 +25,11 @@ ggplot() +
 # buffer
 
 task = mlr_tasks$get("ecuador")
-resampling_cv = mlr_resamplings$get("spcv-buffer", param_vals = list(folds = 3))
+resampling_cv = mlr_resamplings$get("spcv-buffer", param_vals = list(range = 3000))
 resampling_cv$instantiate(task)
 
 coords = task$coordinates()
-coords$row_id = sort(as.character(1:task$nrow))
+coords$row_id = task$row_ids
 
 # Select set
 i = 1
