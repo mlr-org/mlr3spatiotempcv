@@ -38,6 +38,7 @@ NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
+    'ResamplingSpCVEnv.R'
     'ResamplingSpCVKmeans.R'
     'TaskClassifST.R'
     'Task_classif_ecuador.R'
