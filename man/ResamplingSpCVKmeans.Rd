@@ -22,9 +22,7 @@ See \link{Resampling}.
 }
 
 \examples{
-# Create a task with 10 observations
 task <- mlr3::mlr_tasks$get("ecuador")
-task$filter(1:10)
 
 # Instantiate Resampling
 rcv <- mlr3::mlr_resamplings$get("spcv-kmeans")
