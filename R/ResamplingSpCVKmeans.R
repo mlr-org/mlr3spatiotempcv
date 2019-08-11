@@ -81,6 +81,11 @@ ResamplingSpCVKmeans <- R6Class("ResamplingSpCVKmeans",
 
   private = list(
     .sample = function(ids, coords) {
+      # Align coords and row_id order
+      coords$row_id <- as.character(1:nrow(coords))
+      setorder(coords, row_id)
+      coords = coords[,c("x", "y")]
+
       inds <- kmeans(coords, centers = self$param_set$values$folds)
 
       data.table(
