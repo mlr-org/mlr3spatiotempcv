@@ -41,6 +41,9 @@
 #' * `coords_as_features` :: `logical(1)`\cr
 #'   Whether the coordinates should also be used as features. Default is `FALSE`.
 #'
+#' * `crs` :: `character(1)`\cr
+#'   Coordinates reference system
+#'
 #' @section Fields:
 #' All methods from [TaskSupervised] and [TaskClassif], and additionally:
 #'
@@ -73,9 +76,11 @@
 TaskClassifST <- R6::R6Class("TaskClassifST",
   inherit = TaskClassif,
   public = list(
+    crs = NULL,
 
-    initialize = function(id, backend, target, coordinates, coords_as_features = FALSE, positive = NULL) {
+    initialize = function(id, backend, target, coordinates, coords_as_features = FALSE, positive = NULL, crs = NULL) {
       super$initialize(id = id, backend = backend, target = target, positive = positive)
+      self$crs = checkmate::assert_character(crs, null.ok=TRUE)
 
       # check coordinates
       assert_names(self$backend$colnames, must.include = coordinates)
