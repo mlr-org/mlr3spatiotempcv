@@ -2,6 +2,7 @@
 
 export(ResamplingSpCVEnv)
 export(ResamplingSpCVBlock)
+export(ResamplingSpCVBuffer)
 export(ResamplingSpCVKmeans)
 export(TaskClassifST)
 import(checkmate)

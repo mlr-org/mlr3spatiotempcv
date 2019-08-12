@@ -20,7 +20,9 @@ Imports:
     mlr3,
     mlr3misc,
     paradox,
-    R6
+    R6,
+    blockCV,
+    sf
 Suggests:
     knitr,
     lgr,
@@ -43,6 +45,7 @@ RoxygenNote: 6.1.1
 Collate: 
     'ResamplingSpCVEnv.R'
     'ResamplingSpCVBlock.R'
+    'ResamplingSpCVBuffer.R'
     'ResamplingSpCVKmeans.R'
     'TaskClassifST.R'
     'Task_classif_ecuador.R'
