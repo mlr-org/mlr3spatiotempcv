@@ -4,10 +4,14 @@
 \alias{plot.ResamplingSpCVBlock}
 \title{Plot for Spatial Resampling}
 \usage{
-\method{plot}{ResamplingSpCVBlock}(object, task)
+\method{plot}{ResamplingSpCVBlock}(object, task, fold_id = NULL)
 }
 \arguments{
-\item{object}{(\link[mlr3spatiotemporal:ResamplingSpCVBlock]{mlr3spatiotemporal::ResamplingSpCVBlock}).}
+\item{object}{\link[mlr3spatiotemporal:ResamplingSpCVBlock]{mlr3spatiotemporal::ResamplingSpCVBlock}}
+
+\item{task}{\link[mlr3spatiotemporal:TaskClassifST]{mlr3spatiotemporal::TaskClassifST}}
+
+\item{fold_id}{\code{\link[=numeric]{numeric()}}}
 }
 \value{
 \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object.
@@ -22,4 +26,6 @@ resampling <- ResamplingSpCVBlock$new()
 resampling$param_set$values <- list(folds = 4)
 resampling$instantiate(task)
 plot(resampling, task)
+plot(resampling, task, 1)
+plot(resampling, task, c(1,2,3,4))
 }
