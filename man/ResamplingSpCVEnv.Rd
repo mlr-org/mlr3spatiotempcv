@@ -9,7 +9,8 @@
 ResamplingSpCVEnv
 }
 \description{
-Environmental Block Cross Validation.
+Environmental Block Cross Validation. This strategy uses k-means clustering to specify blocks of smilar environmental conditions.
+Only numeric features can be used. The \code{features} used for building blocks can be specified in the \code{param_set}. By default, all numeric features are used.
 }
 \section{Fields}{
 
@@ -26,7 +27,7 @@ task <- mlr3::mlr_tasks$get("ecuador")
 
 # Instantiate Resampling
 rcv <- mlr3::mlr_resamplings$get("spcv-env")
-rcv$param_set$values <- list(folds = 4)
+rcv$param_set$values <- list(folds = 4))
 rcv$instantiate(task)
 
 # Individual sets:

@@ -4,8 +4,8 @@
 #' @import mlr3
 #'
 #' @description
-#' Environmental Block Cross Validation.
-#'
+#' Environmental Block Cross Validation. This strategy uses k-means clustering to specify blocks of smilar environmental conditions.
+#' Only numeric features can be used. The `features` used for building blocks can be specified in the `param_set`. By default, all numeric features are used.
 #' @section Fields:
 #' See [Resampling].
 #'
@@ -39,7 +39,9 @@ ResamplingSpCVEnv <- R6Class("ResamplingSpCVEnv",
         id = id,
         param_set = ParamSet$new(params = list(
           ParamUty$new("stratify", default = NULL),
-          ParamInt$new("folds", lower = 1L, tags = "required")
+          ParamInt$new("folds", lower = 1L, tags = "required"),
+          ParamUty$new("features")
+
         )),
         param_vals = param_vals
       )
@@ -54,6 +56,9 @@ ResamplingSpCVEnv <- R6Class("ResamplingSpCVEnv",
       if (is.null(self$param_set$values$cols)) {
         self$param_set$values$cols <- self$param_set$default[["cols"]]
       }
+      if (is.null(self$param_set$values$features)) {
+        self$param_set$values$features <- task$feature_names
+      }
 
       groups <- task$groups
       stratify <- self$param_set$values$stratify
@@ -65,7 +70,15 @@ ResamplingSpCVEnv <- R6Class("ResamplingSpCVEnv",
           columns <- columns[id != task$target_names]
           columns <- columns[type == "numeric"]
           columns <- columns[!id %in% c("x", "y")]
+
+          # Check for selected features that are not in task
+          diff <- setdiff(self$param_set$values$features, columns[, id])
+          if(length(diff) > 0) {
+            stop(paste("Selected features are not numeric features of the task: ", diff))
+          }
+          columns <- columns[id %in% self$param_set$values$features]
           columns <- columns[, id]
+
           data <- task$data()[, columns, with = FALSE]
 
           instance <- private$.sample(task$row_ids, data)
