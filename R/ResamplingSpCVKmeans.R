@@ -81,21 +81,11 @@ ResamplingSpCVKmeans <- R6Class("ResamplingSpCVKmeans",
 
   private = list(
     .sample = function(ids, coords) {
-
       inds <- kmeans(coords, centers = self$param_set$values$folds)
-      inds <- factor(inds$cluster)
-
-      # uses resulting factor levels from kmeans clustering to set up a list of
-      # length x (x = folds) with row indices of the data referring to which fold
-      # each observation is assigned to
-      ids <- map(levels(inds), function(x, spl)
-        which(spl == x), spl = inds)
-
-      fold_id = imap(ids, function(.x, .y) rep(.y, length((.x))))
 
       data.table(
-        row_id = unlist(ids),
-        fold = unlist(fold_id),
+        row_id = ids,
+        fold = inds$cluster,
         key = "fold"
       )
     },
