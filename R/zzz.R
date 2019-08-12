@@ -22,4 +22,5 @@
   mlr_resamplings$add("spcv-kmeans", ResamplingSpCVKmeans)
   mlr_resamplings$add("spcv-env", ResamplingSpCVEnv)
   mlr_resamplings$add("spcv-block", ResamplingSpCVBlock)
+  mlr_resamplings$add("spcv-buffer", ResamplingSpCVBuffer)
 }
