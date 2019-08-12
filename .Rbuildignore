@@ -5,3 +5,5 @@
 ^\.Rproj\.user$
 ^mlr3spatiotemporal\.Rproj$
 ^README\.Rmd$
+^renv$
+^renv\.lock$
