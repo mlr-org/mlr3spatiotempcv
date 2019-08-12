@@ -41,7 +41,10 @@ ResamplingSpCVBlock <- R6Class("ResamplingSpCVBlock",
           ParamUty$new("stratify", default = NULL),
           ParamInt$new("folds", lower = 1L, tags = "required"),
           ParamInt$new("rows", lower = 1L, default = 2),
-          ParamInt$new("cols", lower = 1L, default = 2)
+          ParamInt$new("cols", lower = 1L, default = 2),
+          ParamInt$new("range", lower = 1L),
+          ParamFct$new("selection", levels = c("random", "systematic", "checkerboard"), default = "random")
+
         )),
         param_vals = param_vals
       )
@@ -49,12 +52,20 @@ ResamplingSpCVBlock <- R6Class("ResamplingSpCVBlock",
     instantiate = function(task) {
       assert_task(task)
 
+      # Check combination
+      if(!is.null(self$param_set$values$range) & (!is.null(self$param_set$values$rows) | !is.null(self$param_set$values$cols))) {
+        warning("Cols and rows are ignored. Range is used to generated blocks.")
+      }
+
       # Set values to default if missing
-      if (is.null(self$param_set$values$rows)) {
+      if (is.null(self$param_set$values$rows) & is.null(self$param_set$values$range)) {
         self$param_set$values$rows = self$param_set$default[["rows"]]
       }
-      if (is.null(self$param_set$values$cols)) {
+      if (is.null(self$param_set$values$cols) & is.null(self$param_set$values$range)) {
         self$param_set$values$cols = self$param_set$default[["cols"]]
+      }
+      if(is.null(self$param_set$selection)) {
+        self$param_set$values$selection = self$param_set$default[["selection"]]
       }
 
       groups <- task$groups
@@ -92,9 +103,11 @@ ResamplingSpCVBlock <- R6Class("ResamplingSpCVBlock",
       # Suppress print message, warning crs and package load
       capture.output(inds <- suppressMessages(suppressWarnings(blockCV::spatialBlock(
         speciesData = points,
+        theRange = self$param_set$values$range,
         rows = self$param_set$values$rows,
         cols = self$param_set$values$cols,
         k = self$param_set$values$folds,
+        selection = self$param_set$values$selection,
         showBlocks = FALSE,
         progress = FALSE))))
 
