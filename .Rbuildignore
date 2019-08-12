@@ -6,4 +6,4 @@
 ^mlr3spatiotemporal\.Rproj$
 ^README\.Rmd$
 ^renv$
-renv\.lock
+^renv\.lock$
