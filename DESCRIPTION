@@ -34,7 +34,7 @@ Remotes:
     mlr-org/mlr3,
     mlr-org/mlr3misc,
     mlr-org/paradox,
-    rvalavi/blockCV
+    be-marc/blockCV
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
