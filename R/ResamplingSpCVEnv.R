@@ -21,7 +21,7 @@
 #'
 #' # Instantiate Resampling
 #' rcv <- mlr3::mlr_resamplings$get("spcv-env")
-#' rcv$param_set$values <- list(folds = 4))
+#' rcv$param_set$values <- list(folds = 4)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
