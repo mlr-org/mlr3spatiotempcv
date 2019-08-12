@@ -24,13 +24,16 @@ Imports:
 Suggests:
     knitr,
     lgr,
-    testthat
+    testthat,
+    blockCV,
+    sf
 VignetteBuilder:
     knitr
 Remotes:
     mlr-org/mlr3,
     mlr-org/mlr3misc,
-    mlr-org/paradox
+    mlr-org/paradox,
+    rvalavi/blockCV
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
@@ -39,6 +42,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
     'ResamplingSpCVEnv.R'
+    'ResamplingSpCVBlock.R'
     'ResamplingSpCVKmeans.R'
     'TaskClassifST.R'
     'Task_classif_ecuador.R'
