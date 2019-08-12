@@ -20,14 +20,14 @@ Imports:
     mlr3,
     mlr3misc,
     paradox,
-    R6
+    R6,
+    ggplot2
 Suggests:
     knitr,
     lgr,
     testthat,
     blockCV,
     sf,
-    ggplot2,
     cowplot
 VignetteBuilder:
     knitr
@@ -50,5 +50,6 @@ Collate:
     'TaskClassifST.R'
     'Task_classif_ecuador.R'
     'mlr3spatiotemporal-package.R'
+    'reexports.R'
     'VizFold.R'
     'zzz.R'

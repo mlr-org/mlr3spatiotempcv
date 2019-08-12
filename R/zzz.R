@@ -3,6 +3,7 @@
 #' @import mlr3misc
 #' @import checkmate
 #' @import mlr3
+#' @import ggplot2
 #' @importFrom R6 R6Class
 "_PACKAGE"
 
