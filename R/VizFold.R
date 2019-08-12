@@ -25,7 +25,7 @@ plot.ResamplingSpCVBlock = function(object, task, fold_id=NULL) {
   coords_resamp = merge(coords, object$instance, by = "row_id")
 
   if(!is.null(fold_id)) {
-      if(length(fold_id) > task$iters) {
+      if(length(fold_id) > object$iters) {
         stop("More folds specified than stored in resampling")
       }
       # Multiplot with train and test set
@@ -133,7 +133,7 @@ plot.ResamplingSpCVEnv = function(object, task, fold_id=NULL) {
   coords_resamp = merge(coords, object$instance, by = "row_id")
 
   if(!is.null(fold_id)) {
-    if(length(fold_id) > task$iters) {
+    if(length(fold_id) > object$iters) {
       stop("More folds specified than stored in resampling")
     }
     # Multiplot with train and test set
@@ -204,7 +204,7 @@ plot.ResamplingSpCVKmeans = function(object, task, fold_id=NULL) {
   coords_resamp = merge(coords, object$instance, by = "row_id")
 
   if(!is.null(fold_id)) {
-    if(length(fold_id) > task$iters) {
+    if(length(fold_id) > object$iters) {
       stop("More folds specified than stored in resampling")
     }
     # Multiplot with train and test set
