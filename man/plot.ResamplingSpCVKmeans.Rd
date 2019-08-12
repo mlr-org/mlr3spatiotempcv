@@ -4,10 +4,14 @@
 \alias{plot.ResamplingSpCVKmeans}
 \title{Plot for Spatial Resampling}
 \usage{
-\method{plot}{ResamplingSpCVKmeans}(object, task)
+\method{plot}{ResamplingSpCVKmeans}(object, task, fold_id = NULL)
 }
 \arguments{
-\item{object}{(\link[mlr3spatiotemporal:ResamplingSpCVKmeans]{mlr3spatiotemporal::ResamplingSpCVKmeans}).}
+\item{object}{\link[mlr3spatiotemporal:ResamplingSpCVKmeans]{mlr3spatiotemporal::ResamplingSpCVKmeans}}
+
+\item{task}{\link[mlr3spatiotemporal:TaskClassifST]{mlr3spatiotemporal::TaskClassifST}}
+
+\item{fold_id}{\code{\link[=numeric]{numeric()}}}
 }
 \value{
 \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object.
@@ -22,4 +26,6 @@ resampling <- ResamplingSpCVKmeans$new()
 resampling$param_set$values <- list(folds = 4)
 resampling$instantiate(task)
 plot(resampling, task)
+plot(resampling, task, 1)
+plot(resampling, task, c(1,2,3,4))
 }

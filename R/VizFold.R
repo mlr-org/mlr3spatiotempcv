@@ -3,7 +3,9 @@
 #' @description
 #' Generates plots for [mlr3spatiotemporal::ResamplingSpCVBlock].
 #'
-#' @param object ([mlr3spatiotemporal::ResamplingSpCVBlock]).
+#' @param object [mlr3spatiotemporal::ResamplingSpCVBlock]
+#' @param task [mlr3spatiotemporal::TaskClassifST]
+#' @param fold_id [numeric()]
 #'
 #' @return [ggplot2::ggplot()] object.
 #' @export
@@ -14,18 +16,57 @@
 #' resampling$param_set$values <- list(folds = 4)
 #' resampling$instantiate(task)
 #' plot(resampling, task)
-plot.ResamplingSpCVBlock = function(object, task) {
+#' plot(resampling, task, 1)
+#' plot(resampling, task, c(1,2,3,4))
+plot.ResamplingSpCVBlock = function(object, task, fold_id=NULL) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
   coords_resamp = merge(coords, object$instance, by = "row_id")
 
-  sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs=task$crs)
-  sf_df$fold = as.factor(as.character(sf_df$fold))
+  if(!is.null(fold_id)) {
+      if(length(fold_id) > task$iters) {
+        stop("More folds specified than stored in resampling")
+      }
+      # Multiplot with train and test set
+      plot_list <- list()
+      for(i in fold_id) {
+        table = copy(coords_resamp)
+        table[,indicator:=ifelse(fold==i,"Test", "Train")]
 
-  ggplot2::ggplot() +
-    ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = fold)) +
-    ggplot2::scale_color_viridis_d()
+        sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs=task$crs)
+        sf_df$indicator = as.factor(as.character(sf_df$indicator))
+
+        plot_list[[length(plot_list)+1]] <-
+          ggplot2::ggplot() +
+          ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
+          ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
+          ggplot2::theme(legend.position="none")
+      }
+      plots <- do.call(cowplot::plot_grid, plot_list)
+
+      # Get legend
+      coords_resamp[,indicator:=ifelse(fold==1,"Test", "Train")]
+
+      sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs=task$crs)
+      sf_df$indicator = as.factor(as.character(sf_df$indicator))
+
+      legend <- cowplot::get_legend(ggplot2::ggplot() +
+        ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
+        ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
+        ggplot2::theme(legend.position = "bottom"))
+
+      # Plot
+      cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
+  } else {
+    # Plot with folds
+    sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs=task$crs)
+    sf_df$fold = as.factor(as.character(sf_df$fold))
+
+    ggplot2::ggplot() +
+      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = fold)) +
+      ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Fold")
+  }
 }
 
 #' @title Plot for Spatial Resampling
@@ -33,7 +74,9 @@ plot.ResamplingSpCVBlock = function(object, task) {
 #' @description
 #' Generates plots for [mlr3spatiotemporal::ResamplingSpCVBuffer].
 #'
-#' @param object ([mlr3spatiotemporal::ResamplingSpCVBuffer]).
+#' @param object [mlr3spatiotemporal::ResamplingSpCVBuffer].
+#' @param task [mlr3spatiotemporal::TaskClassifST]
+#' @param fold_id [numeric()]
 #'
 #' @return [ggplot2::ggplot()] object.
 #' @export
@@ -44,12 +87,12 @@ plot.ResamplingSpCVBlock = function(object, task) {
 #' resampling$param_set$values <- list(range = 1000)
 #' resampling$instantiate(task)
 #' plot(resampling, task, 1)
-plot.ResamplingSpCVBuffer = function(object, task, fold) {
+plot.ResamplingSpCVBuffer = function(object, task, fold_id) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
-  coords_train = coords[row_id %in% object$instance[[fold]]$train]
-  coords_test = coords[row_id %in% object$instance[[fold]]$test]
+  coords_train = coords[row_id %in% object$instance[[fold_id]]$train]
+  coords_test = coords[row_id %in% object$instance[[fold_id]]$test]
 
   coords_train$indicator = "train"
   coords_test$indicator = "test"
@@ -68,7 +111,9 @@ plot.ResamplingSpCVBuffer = function(object, task, fold) {
 #' @description
 #' Generates plots for [mlr3spatiotemporal::ResamplingSpCVEnv].
 #'
-#' @param object ([mlr3spatiotemporal::ResamplingSpCVEnv]).
+#' @param object [mlr3spatiotemporal::ResamplingSpCVEnv]
+#' @param task [mlr3spatiotemporal::TaskClassifST]
+#' @param fold_id [numeric()]
 #'
 #' @return [ggplot2::ggplot()] object.
 #' @export
@@ -79,18 +124,57 @@ plot.ResamplingSpCVBuffer = function(object, task, fold) {
 #' resampling$param_set$values <- list(folds = 4, features=c("dem"))
 #' resampling$instantiate(task)
 #' plot(resampling, task)
-plot.ResamplingSpCVEnv = function(object, task) {
+#' plot(resampling, task, 1)
+#' plot(resampling, task, c(1,2,3,4))
+plot.ResamplingSpCVEnv = function(object, task, fold_id=NULL) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
   coords_resamp = merge(coords, object$instance, by = "row_id")
 
-  sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs=task$crs)
-  sf_df$fold = as.factor(as.character(sf_df$fold))
+  if(!is.null(fold_id)) {
+    if(length(fold_id) > task$iters) {
+      stop("More folds specified than stored in resampling")
+    }
+    # Multiplot with train and test set
+    plot_list <- list()
+    for(i in fold_id) {
+      table = copy(coords_resamp)
+      table[,indicator:=ifelse(fold==i,"Test", "Train")]
 
-  ggplot2::ggplot() +
-    ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = fold)) +
-    ggplot2::scale_color_viridis_d()
+      sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs=task$crs)
+      sf_df$indicator = as.factor(as.character(sf_df$indicator))
+
+      plot_list[[length(plot_list)+1]] <-
+        ggplot2::ggplot() +
+        ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
+        ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
+        ggplot2::theme(legend.position="none")
+    }
+    plots <- do.call(cowplot::plot_grid, plot_list)
+
+    # Get legend
+    coords_resamp[,indicator:=ifelse(fold==1,"Test", "Train")]
+
+    sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs=task$crs)
+    sf_df$indicator = as.factor(as.character(sf_df$indicator))
+
+    legend <- cowplot::get_legend(ggplot2::ggplot() +
+                                    ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
+                                    ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
+                                    ggplot2::theme(legend.position = "bottom"))
+
+    # Plot
+    cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
+  } else {
+    # Plot with folds
+    sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs=task$crs)
+    sf_df$fold = as.factor(as.character(sf_df$fold))
+
+    ggplot2::ggplot() +
+      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = fold)) +
+      ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Fold")
+  }
 }
 
 #' @title Plot for Spatial Resampling
@@ -98,7 +182,9 @@ plot.ResamplingSpCVEnv = function(object, task) {
 #' @description
 #' Generates plots for [mlr3spatiotemporal::ResamplingSpCVKmeans].
 #'
-#' @param object ([mlr3spatiotemporal::ResamplingSpCVKmeans]).
+#' @param object [mlr3spatiotemporal::ResamplingSpCVKmeans]
+#' @param task [mlr3spatiotemporal::TaskClassifST]
+#' @param fold_id [numeric()]
 #'
 #' @return [ggplot2::ggplot()] object.
 #' @export
@@ -109,16 +195,55 @@ plot.ResamplingSpCVEnv = function(object, task) {
 #' resampling$param_set$values <- list(folds = 4)
 #' resampling$instantiate(task)
 #' plot(resampling, task)
-plot.ResamplingSpCVKmeans= function(object, task) {
+#' plot(resampling, task, 1)
+#' plot(resampling, task, c(1,2,3,4))
+plot.ResamplingSpCVKmeans = function(object, task, fold_id=NULL) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
   coords_resamp = merge(coords, object$instance, by = "row_id")
 
-  sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs=task$crs)
-  sf_df$fold = as.factor(as.character(sf_df$fold))
+  if(!is.null(fold_id)) {
+    if(length(fold_id) > task$iters) {
+      stop("More folds specified than stored in resampling")
+    }
+    # Multiplot with train and test set
+    plot_list <- list()
+    for(i in fold_id) {
+      table = copy(coords_resamp)
+      table[,indicator:=ifelse(fold==i,"Test", "Train")]
 
-  ggplot2::ggplot() +
-    ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = fold)) +
-    ggplot2::scale_color_viridis_d()
+      sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs=task$crs)
+      sf_df$indicator = as.factor(as.character(sf_df$indicator))
+
+      plot_list[[length(plot_list)+1]] <-
+        ggplot2::ggplot() +
+        ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
+        ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
+        ggplot2::theme(legend.position="none")
+    }
+    plots <- do.call(cowplot::plot_grid, plot_list)
+
+    # Get legend
+    coords_resamp[,indicator:=ifelse(fold==1,"Test", "Train")]
+
+    sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs=task$crs)
+    sf_df$indicator = as.factor(as.character(sf_df$indicator))
+
+    legend <- cowplot::get_legend(ggplot2::ggplot() +
+                                    ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
+                                    ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
+                                    ggplot2::theme(legend.position = "bottom"))
+
+    # Plot
+    cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
+  } else {
+    # Plot with folds
+    sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs=task$crs)
+    sf_df$fold = as.factor(as.character(sf_df$fold))
+
+    ggplot2::ggplot() +
+      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = fold)) +
+      ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Fold")
+  }
 }

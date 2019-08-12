@@ -4,10 +4,14 @@
 \alias{plot.ResamplingSpCVEnv}
 \title{Plot for Spatial Resampling}
 \usage{
-\method{plot}{ResamplingSpCVEnv}(object, task)
+\method{plot}{ResamplingSpCVEnv}(object, task, fold_id = NULL)
 }
 \arguments{
-\item{object}{(\link[mlr3spatiotemporal:ResamplingSpCVEnv]{mlr3spatiotemporal::ResamplingSpCVEnv}).}
+\item{object}{\link[mlr3spatiotemporal:ResamplingSpCVEnv]{mlr3spatiotemporal::ResamplingSpCVEnv}}
+
+\item{task}{\link[mlr3spatiotemporal:TaskClassifST]{mlr3spatiotemporal::TaskClassifST}}
+
+\item{fold_id}{\code{\link[=numeric]{numeric()}}}
 }
 \value{
 \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object.
@@ -22,4 +26,6 @@ resampling <- ResamplingSpCVEnv$new()
 resampling$param_set$values <- list(folds = 4, features=c("dem"))
 resampling$instantiate(task)
 plot(resampling, task)
+plot(resampling, task, 1)
+plot(resampling, task, c(1,2,3,4))
 }

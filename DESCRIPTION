@@ -28,7 +28,8 @@ Suggests:
     blockCV,
     sf,
     ggplot2,
-    sf
+    sf,
+    cowplot
 VignetteBuilder:
     knitr
 Remotes:
