@@ -1,5 +1,7 @@
 library(mlr3)
 library(mlr3spatiotemporal)
+library(ggplot2)
+
 library(blockCV)
 library(sf)
 library(R6)
@@ -18,7 +20,7 @@ rcv$instantiate(task)
 
 resampling = resample(task, learner, rcv)
 
-plot(rcv, task)
+autoplot(rcv, task)
 
 # ResamplingSpCVBlock - range + checkerboard
 
@@ -31,7 +33,7 @@ rcv$instantiate(task)
 
 resampling = resample(task, learner, rcv)
 
-plot(rcv, task)
+autoplot(rcv, task)
 
 # ResamplingSpCVBlock - rows + cols + systematic
 
@@ -44,7 +46,7 @@ rcv$instantiate(task)
 
 resampling = resample(task, learner, rcv)
 
-plot(rcv, task)
+autoplot(rcv, task)
 
 # ResamplingSpCVBlock - rows + cols + range
 
@@ -67,7 +69,7 @@ rcv$instantiate(task)
 
 resampling = resample(task, learner, rcv)
 
-plot(rcv, task)
+autoplot(rcv, task)
 
 # ResamplingSpCVEnv - feature selection
 
@@ -80,7 +82,7 @@ rcv$instantiate(task)
 
 resampling = resample(task, learner, rcv)
 
-plot(rcv, task)
+autoplot(rcv, task)
 
 # ResamplingSpCVEnv - Wrong feature
 
@@ -93,7 +95,7 @@ rcv$instantiate(task)
 
 resampling = resample(task, learner, rcv)
 
-plot(rcv, task)
+autoplot(rcv, task)
 
 
 # ResampleSpCVKmeans - No parameter
@@ -105,7 +107,7 @@ rcv$instantiate(task)
 
 resample(task, learner, rcv)
 
-plot(rcv, task)
+autoplot(rcv, task)
 
 # ResampleSpCVKmeans - folds
 task <- mlr3::mlr_tasks$get("ecuador")
@@ -115,7 +117,7 @@ rcv <- ResamplingSpCVKmeans$new()
 rcv$param_set$values <- list(folds = 4)
 rcv$instantiate(task)
 
-plot(rcv, task)
+autoplot(rcv, task)
 
 
 # ResampleSpCVBuffer - range
@@ -128,7 +130,7 @@ rcv$instantiate(task)
 
 resampling = resample(task, learner, rcv)
 
-plot(rcv, task, 1)
+autoplot(rcv, task, 1)
 
 # ResampleSpCVBuffer - No parameter
 task <- mlr3::mlr_tasks$get("ecuador")
@@ -139,7 +141,7 @@ rcv$instantiate(task)
 
 resampling = resample(task, learner, rcv)
 
-plot(rcv, task, 1)
+autoplot(rcv, task, 1)
 
 
 # Vizualiation - Multiplot all folds
@@ -151,7 +153,7 @@ rcv <- ResamplingSpCVBlock$new()
 rcv$param_set$values <- list(folds = 4)
 rcv$instantiate(task)
 
-plot(rcv, task, fold_id=c(1,2,3,4))
+autoplot(rcv, task, fold_id=c(1,2,3,4))
 
 # Vizualiation - Multiplot
 
@@ -162,7 +164,7 @@ rcv <- ResamplingSpCVBlock$new()
 rcv$param_set$values <- list(folds = 4)
 rcv$instantiate(task)
 
-plot(rcv, task, fold_id=c(1,2,3))
+autoplot(rcv, task, fold_id=c(1,2,3))
 
 # Vizualiation - Too many folds
 
@@ -173,7 +175,7 @@ rcv <- ResamplingSpCVBlock$new()
 rcv$param_set$values <- list(folds = 4)
 rcv$instantiate(task)
 
-plot(rcv, task, fold_id=c(1,2,3,4,5))
+autoplot(rcv, task, fold_id=c(1,2,3,4,5))
 
 # Vizualiation - One fold
 
@@ -184,7 +186,7 @@ rcv <- ResamplingSpCVBlock$new()
 rcv$param_set$values <- list(folds = 4)
 rcv$instantiate(task)
 
-plot(rcv, task, fold_id=1)
+autoplot(rcv, task, fold_id=1)
 
 # Vizualiation - All folds one plot
 
@@ -195,5 +197,5 @@ rcv <- ResamplingSpCVBlock$new()
 rcv$param_set$values <- list(folds = 4)
 rcv$instantiate(task)
 
-plot(rcv, task)
+autoplot(rcv, task)
 

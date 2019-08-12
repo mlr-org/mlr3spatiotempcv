@@ -12,14 +12,15 @@
 #' @export
 #' @examples
 #' library(mlr3)
+#' library(ggplot2)
 #' task <- mlr3::mlr_tasks$get("ecuador")
 #' resampling <- ResamplingSpCVBlock$new()
 #' resampling$param_set$values <- list(folds = 4)
 #' resampling$instantiate(task)
-#' plot(resampling, task)
-#' plot(resampling, task, 1)
-#' plot(resampling, task, c(1,2,3,4))
-plot.ResamplingSpCVBlock = function(object, task, fold_id=NULL, ...) {
+#' autoplot(resampling, task)
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, c(1,2,3,4))
+autoplot.ResamplingSpCVBlock = function(object, task, fold_id=NULL, ...) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
@@ -84,12 +85,13 @@ plot.ResamplingSpCVBlock = function(object, task, fold_id=NULL, ...) {
 #' @export
 #' @examples
 #' library(mlr3)
+#' library(ggplot2)
 #' task <- mlr3::mlr_tasks$get("ecuador")
 #' resampling <- ResamplingSpCVBuffer$new()
 #' resampling$param_set$values <- list(range = 1000)
 #' resampling$instantiate(task)
-#' plot(resampling, task, 1)
-plot.ResamplingSpCVBuffer = function(object, task, fold_id, ...) {
+#' autoplot(resampling, task, 1)
+autoplot.ResamplingSpCVBuffer = function(object, task, fold_id, ...) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
@@ -122,14 +124,15 @@ plot.ResamplingSpCVBuffer = function(object, task, fold_id, ...) {
 #' @export
 #' @examples
 #' library(mlr3)
+#' library(ggplot2)
 #' task <- mlr3::mlr_tasks$get("ecuador")
 #' resampling <- ResamplingSpCVEnv$new()
 #' resampling$param_set$values <- list(folds = 4, features=c("dem"))
 #' resampling$instantiate(task)
-#' plot(resampling, task)
-#' plot(resampling, task, 1)
-#' plot(resampling, task, c(1,2,3,4))
-plot.ResamplingSpCVEnv = function(object, task, fold_id=NULL, ...) {
+#' autoplot(resampling, task)
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, c(1,2,3,4))
+autoplot.ResamplingSpCVEnv = function(object, task, fold_id=NULL, ...) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
@@ -194,14 +197,15 @@ plot.ResamplingSpCVEnv = function(object, task, fold_id=NULL, ...) {
 #' @export
 #' @examples
 #' library(mlr3)
+#' library(ggplot2)
 #' task <- mlr3::mlr_tasks$get("ecuador")
 #' resampling <- ResamplingSpCVKmeans$new()
 #' resampling$param_set$values <- list(folds = 4)
 #' resampling$instantiate(task)
-#' plot(resampling, task)
-#' plot(resampling, task, 1)
-#' plot(resampling, task, c(1,2,3,4))
-plot.ResamplingSpCVKmeans = function(object, task, fold_id=NULL, ...) {
+#' autoplot(resampling, task)
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, c(1,2,3,4))
+autoplot.ResamplingSpCVKmeans = function(object, task, fold_id=NULL, ...) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
