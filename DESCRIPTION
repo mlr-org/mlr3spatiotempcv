@@ -27,7 +27,8 @@ Suggests:
     testthat,
     blockCV,
     sf,
-    ggplot2
+    ggplot2,
+    sf
 VignetteBuilder:
     knitr
 Remotes:
