@@ -6,6 +6,7 @@
 #' @param object [mlr3spatiotemporal::ResamplingSpCVBlock]
 #' @param task [mlr3spatiotemporal::TaskClassifST]
 #' @param fold_id [numeric()]
+#' @param ... Currently not used
 #'
 #' @return [ggplot2::ggplot()] object.
 #' @export
@@ -18,7 +19,7 @@
 #' plot(resampling, task)
 #' plot(resampling, task, 1)
 #' plot(resampling, task, c(1,2,3,4))
-plot.ResamplingSpCVBlock = function(object, task, fold_id=NULL) {
+plot.ResamplingSpCVBlock = function(object, task, fold_id=NULL, ...) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
@@ -77,6 +78,7 @@ plot.ResamplingSpCVBlock = function(object, task, fold_id=NULL) {
 #' @param object [mlr3spatiotemporal::ResamplingSpCVBuffer].
 #' @param task [mlr3spatiotemporal::TaskClassifST]
 #' @param fold_id [numeric()]
+#' @param ... Currently not used
 #'
 #' @return [ggplot2::ggplot()] object.
 #' @export
@@ -87,7 +89,7 @@ plot.ResamplingSpCVBlock = function(object, task, fold_id=NULL) {
 #' resampling$param_set$values <- list(range = 1000)
 #' resampling$instantiate(task)
 #' plot(resampling, task, 1)
-plot.ResamplingSpCVBuffer = function(object, task, fold_id) {
+plot.ResamplingSpCVBuffer = function(object, task, fold_id, ...) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
@@ -114,6 +116,7 @@ plot.ResamplingSpCVBuffer = function(object, task, fold_id) {
 #' @param object [mlr3spatiotemporal::ResamplingSpCVEnv]
 #' @param task [mlr3spatiotemporal::TaskClassifST]
 #' @param fold_id [numeric()]
+#' @param ... Currently not used
 #'
 #' @return [ggplot2::ggplot()] object.
 #' @export
@@ -126,7 +129,7 @@ plot.ResamplingSpCVBuffer = function(object, task, fold_id) {
 #' plot(resampling, task)
 #' plot(resampling, task, 1)
 #' plot(resampling, task, c(1,2,3,4))
-plot.ResamplingSpCVEnv = function(object, task, fold_id=NULL) {
+plot.ResamplingSpCVEnv = function(object, task, fold_id=NULL, ...) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
@@ -185,6 +188,7 @@ plot.ResamplingSpCVEnv = function(object, task, fold_id=NULL) {
 #' @param object [mlr3spatiotemporal::ResamplingSpCVKmeans]
 #' @param task [mlr3spatiotemporal::TaskClassifST]
 #' @param fold_id [numeric()]
+#' @param ... Currently not used
 #'
 #' @return [ggplot2::ggplot()] object.
 #' @export
@@ -197,7 +201,7 @@ plot.ResamplingSpCVEnv = function(object, task, fold_id=NULL) {
 #' plot(resampling, task)
 #' plot(resampling, task, 1)
 #' plot(resampling, task, c(1,2,3,4))
-plot.ResamplingSpCVKmeans = function(object, task, fold_id=NULL) {
+plot.ResamplingSpCVKmeans = function(object, task, fold_id=NULL, ...) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
