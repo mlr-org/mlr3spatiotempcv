@@ -4,7 +4,7 @@
 \alias{plot.ResamplingSpCVBuffer}
 \title{Plot for Spatial Resampling}
 \usage{
-\method{plot}{ResamplingSpCVBuffer}(object, task, fold_id)
+\method{plot}{ResamplingSpCVBuffer}(object, task, fold_id, ...)
 }
 \arguments{
 \item{object}{\link[mlr3spatiotemporal:ResamplingSpCVBuffer]{mlr3spatiotemporal::ResamplingSpCVBuffer}.}
@@ -12,6 +12,8 @@
 \item{task}{\link[mlr3spatiotemporal:TaskClassifST]{mlr3spatiotemporal::TaskClassifST}}
 
 \item{fold_id}{\code{\link[=numeric]{numeric()}}}
+
+\item{...}{Currently not used}
 }
 \value{
 \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object.
