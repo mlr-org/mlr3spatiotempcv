@@ -42,3 +42,11 @@ env:
 
 #services
 services:
+
+# addons
+addons:
+  apt:
+    packages:
+      - libudunits2-dev
+
+

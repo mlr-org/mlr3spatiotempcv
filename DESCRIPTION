@@ -20,13 +20,13 @@ Imports:
     mlr3,
     mlr3misc,
     paradox,
-    R6,
-    blockCV,
-    sf
+    R6
 Suggests:
     knitr,
     lgr,
-    testthat
+    testthat,
+    blockCV,
+    sf
 VignetteBuilder:
     knitr
 Remotes:
