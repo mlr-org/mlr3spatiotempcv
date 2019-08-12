@@ -43,7 +43,7 @@ plot.ResamplingSpCVBlock = function(object, task) {
 #' resampling <- ResamplingSpCVBuffer$new()
 #' resampling$param_set$values <- list(range = 1000)
 #' resampling$instantiate(task)
-#' plot(resampling, task)
+#' plot(resampling, task, 1)
 plot.ResamplingSpCVBuffer = function(object, task, fold) {
   coords = task$coordinates()
   coords$row_id = task$row_ids

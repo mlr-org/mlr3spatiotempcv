@@ -18,7 +18,7 @@ Generates plots for \link[mlr3spatiotemporal:ResamplingSpCVEnv]{mlr3spatiotempor
 \examples{
 library(mlr3)
 task <- mlr3::mlr_tasks$get("ecuador")
-resampling <- ResamplingSpCVBlock$new()
+resampling <- ResamplingSpCVEnv$new()
 resampling$param_set$values <- list(folds = 4, features=c("dem"))
 resampling$instantiate(task)
 plot(resampling, task)
