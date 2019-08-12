@@ -20,15 +20,14 @@ Imports:
     mlr3,
     mlr3misc,
     paradox,
-    R6,
-    blockCV,
-    sf
+    R6
 Suggests:
     knitr,
     lgr,
     testthat,
     blockCV,
-    sf
+    sf,
+    ggplot2
 VignetteBuilder:
     knitr
 Remotes:
@@ -50,4 +49,5 @@ Collate:
     'TaskClassifST.R'
     'Task_classif_ecuador.R'
     'mlr3spatiotemporal-package.R'
+    'VizFold.R'
     'zzz.R'
