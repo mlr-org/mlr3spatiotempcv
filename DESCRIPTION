@@ -23,6 +23,7 @@ Imports:
     R6
 Suggests:
     blockCV,
+    blockCV,
     knitr,
     lgr,
     sf,
@@ -30,6 +31,7 @@ Suggests:
 VignetteBuilder:
     knitr
 Remotes:
+    be-marc/blockCV,
     be-marc/blockCV,
     mlr-org/mlr3,
     mlr-org/mlr3misc,
