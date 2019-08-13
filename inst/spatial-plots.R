@@ -6,7 +6,8 @@ set.seed(123)
 # kmeans and block
 
 task = mlr_tasks$get("ecuador")
-resampling_cv = mlr_resamplings$get("spcv-kmeans", param_vals = list(folds = 3))
+resampling_cv = mlr_resamplings$get("spcv-env", param_vals = list(folds = 3))
+resampling_cv = mlr_resamplings$get("spcv-block", param_vals = list(folds = 4))
 resampling_cv$instantiate(task)
 
 coords = task$coordinates()
