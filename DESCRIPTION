@@ -38,7 +38,7 @@ NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
-    'ResamplingSpCVKmeans.R'
+    'ResamplingSpCVCoords.R'
     'TaskClassifST.R'
     'Task_classif_ecuador.R'
     'mlr3spatiotemporal-package.R'
