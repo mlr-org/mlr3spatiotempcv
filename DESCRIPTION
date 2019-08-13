@@ -17,25 +17,25 @@ Depends:
 Imports:
     checkmate,
     data.table,
+    ggplot2,
     mlr3,
     mlr3misc,
     paradox,
-    R6,
-    ggplot2
+    R6
 Suggests:
+    blockCV,
+    cowplot,
     knitr,
     lgr,
-    testthat,
-    blockCV,
     sf,
-    cowplot
+    testthat
 VignetteBuilder:
     knitr
 Remotes:
+    be-marc/blockCV,
     mlr-org/mlr3,
     mlr-org/mlr3misc,
-    mlr-org/paradox,
-    be-marc/blockCV
+    mlr-org/paradox
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
@@ -43,10 +43,10 @@ NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
-    'ResamplingSpCVEnv.R'
     'ResamplingSpCVBlock.R'
     'ResamplingSpCVBuffer.R'
     'ResamplingSpCVCoords.R'
+    'ResamplingSpCVEnv.R'
     'TaskClassifST.R'
     'Task_classif_ecuador.R'
     'mlr3spatiotemporal-package.R'
