@@ -2,8 +2,8 @@
 
 S3method(autoplot,ResamplingSpCVBlock)
 S3method(autoplot,ResamplingSpCVBuffer)
+S3method(autoplot,ResamplingSpCVCoords)
 S3method(autoplot,ResamplingSpCVEnv)
-S3method(autoplot,ResamplingSpCVKmeans)
 export(ResamplingSpCVBlock)
 export(ResamplingSpCVBuffer)
 export(ResamplingSpCVCoords)
