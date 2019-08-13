@@ -23,7 +23,7 @@
 #' task <- mlr3::mlr_tasks$get("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv <- mlr3::mlr_resamplings$get("spcv-kmeans")
+#' rcv <- mlr3::mlr_resamplings$get("spcv-coords")
 #' rcv$param_set$values <- list(folds = 3)
 #' rcv$instantiate(task)
 #'
@@ -34,10 +34,10 @@
 #'
 #' # Internal storage:
 #' rcv$instance # table
-ResamplingSpCVKmeans <- R6Class("ResamplingSpCVKmeans",
+ResamplingSpCVCoords<- R6Class("ResamplingSpCVCoords",
   inherit = mlr3::Resampling,
   public = list(
-    initialize = function(id = "spcv-kmeans", param_vals = list(folds = 10L)) {
+    initialize = function(id = "spcv-coords", param_vals = list(folds = 10L)) {
       super$initialize(
         id = id,
         param_set = ParamSet$new(params = list(
