@@ -186,9 +186,9 @@ autoplot.ResamplingSpCVEnv = function(object, task, fold_id=NULL, ...) {
 #' @title Plot for Spatial Resampling
 #'
 #' @description
-#' Generates plots for [mlr3spatiotemporal::ResamplingSpCVKmeans].
+#' Generates plots for [mlr3spatiotemporal::ResamplingSpCVCoords].
 #'
-#' @param object [mlr3spatiotemporal::ResamplingSpCVKmeans]
+#' @param object [mlr3spatiotemporal::ResamplingSpCVCoords]
 #' @param task [mlr3spatiotemporal::TaskClassifST]
 #' @param fold_id [numeric()]
 #' @param ... Currently not used
@@ -199,13 +199,13 @@ autoplot.ResamplingSpCVEnv = function(object, task, fold_id=NULL, ...) {
 #' library(mlr3)
 #' library(ggplot2)
 #' task <- mlr3::mlr_tasks$get("ecuador")
-#' resampling <- ResamplingSpCVKmeans$new()
+#' resampling <- ResamplingSpCVCoords$new()
 #' resampling$param_set$values <- list(folds = 4)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1,2,3,4))
-autoplot.ResamplingSpCVKmeans = function(object, task, fold_id=NULL, ...) {
+autoplot.ResamplingSpCVCoords = function(object, task, fold_id=NULL, ...) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
