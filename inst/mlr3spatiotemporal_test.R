@@ -102,7 +102,7 @@ autoplot(rcv, task)
 task <- mlr3::mlr_tasks$get("ecuador")
 learner = mlr_learners$get("classif.rpart")
 
-rcv <- ResamplingSpCVKmeans$new()
+rcv <- ResamplingSpCVCoords$new()
 rcv$instantiate(task)
 
 resample(task, learner, rcv)
@@ -113,7 +113,7 @@ autoplot(rcv, task)
 task <- mlr3::mlr_tasks$get("ecuador")
 learner = mlr_learners$get("classif.rpart")
 
-rcv <- ResamplingSpCVKmeans$new()
+rcv <- ResamplingSpCVCoords$new()
 rcv$param_set$values <- list(folds = 4)
 rcv$instantiate(task)
 
