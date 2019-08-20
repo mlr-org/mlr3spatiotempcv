@@ -22,15 +22,19 @@ Imports:
     paradox,
     R6
 Suggests:
+    blockCV,
     knitr,
     lgr,
+    sf,
     testthat
 VignetteBuilder:
     knitr
 Remotes:
+    be-marc/blockCV,
     mlr-org/mlr3,
     mlr-org/mlr3misc,
-    mlr-org/paradox
+    mlr-org/paradox,
+    be-marc/blockCV
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
@@ -38,7 +42,10 @@ NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
-    'ResamplingSpCVKmeans.R'
+    'ResamplingSpCVBlock.R'
+    'ResamplingSpCVBuffer.R'
+    'ResamplingSpCVCoords.R'
+    'ResamplingSpCVEnv.R'
     'TaskClassifST.R'
     'Task_classif_ecuador.R'
     'mlr3spatiotemporal-package.R'
