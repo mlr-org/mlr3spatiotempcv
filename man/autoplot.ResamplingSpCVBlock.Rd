@@ -4,14 +4,20 @@
 \alias{autoplot.ResamplingSpCVBlock}
 \title{Plot for Spatial Resampling}
 \usage{
-\method{autoplot}{ResamplingSpCVBlock}(object, task, fold_id = NULL, ...)
+\method{autoplot}{ResamplingSpCVBlock}(object, task, fold_id = NULL,
+  grid = TRUE, ...)
 }
 \arguments{
 \item{object}{\link[mlr3spatiotemporal:ResamplingSpCVBlock]{mlr3spatiotemporal::ResamplingSpCVBlock}}
 
 \item{task}{\link[mlr3spatiotemporal:TaskClassifST]{mlr3spatiotemporal::TaskClassifST}}
 
-\item{fold_id}{\code{\link[=numeric]{numeric()}}}
+\item{fold_id}{\code{\link[=numeric]{numeric()}}\cr For which fold ids should training and test
+sets be visualized?}
+
+\item{grid}{(\code{logical(1)})\cr Should a gridded plot using
+\code{cowplot::plot_grid()} be created instead of returning a list with all
+ggplot2 objects? Default is \code{TRUE}. Only applies if \code{fold_id} is set.}
 
 \item{...}{Currently not used}
 }
@@ -20,6 +26,11 @@
 }
 \description{
 Generates plots for \link[mlr3spatiotemporal:ResamplingSpCVBlock]{mlr3spatiotemporal::ResamplingSpCVBlock}.
+}
+\details{
+By default a plot is returned; if \code{fold_id} is set, a gridded plot
+is created. If \code{grid = FALSE}, only a list of ggplot2 objects is returned.
+This gives the option to align the single plots manually.
 }
 \examples{
 library(mlr3)
@@ -31,4 +42,6 @@ resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, fold_id = 1)
 autoplot(resampling, task, fold_id = c(1, 2, 3, 4))
+# return only a list of ggplot2 objects
+plot_list = autoplot(resampling, task, fold_id = c(1, 2, 3, 4), grid = FALSE)
 }
