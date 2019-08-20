@@ -18,8 +18,8 @@
 #' resampling$param_set$values = list(folds = 4)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
-#' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
+#' autoplot(resampling, task, fold_id = 1)
+#' autoplot(resampling, task, fold_id = c(1, 2, 3, 4))
 autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, ...) {
 
   coords = task$coordinates()
@@ -35,27 +35,32 @@ autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, ...) {
     plot_list = list()
     for (i in fold_id) {
       table = copy(coords_resamp)
-      table[, table$indicator := ifelse(table$fold == i, "Test", "Train")]
+
+      # suppress undefined global variables note
+      indicator = NULL
+      fold = NULL
+
+      table[, indicator := ifelse(fold == i, "Test", "Train")]
 
       sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
       sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
       plot_list[[length(plot_list) + 1]] =
         ggplot2::ggplot() +
-        ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = sf_df$indicator)) +
+        ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
         ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
         ggplot2::theme(legend.position = "none")
     }
     plots = do.call(cowplot::plot_grid, plot_list)
 
     # Get legend
-    coords_resamp[, coords_resamp$indicator := ifelse(coords_resamp$fold == 1, "Test", "Train")]
+    coords_resamp[, indicator := ifelse(fold == 1, "Test", "Train")]
 
     sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
     legend = cowplot::get_legend(ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = sf_df$indicator)) +
+      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
       ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
       ggplot2::theme(legend.position = "bottom"))
 
@@ -67,7 +72,7 @@ autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, ...) {
     sf_df$fold = as.factor(as.character(sf_df$fold))
 
     ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = sf_df$fold)) +
+      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = fold)) +
       ggplot2::scale_color_viridis_d() +
       ggplot2::labs(color = "Fold")
   }
@@ -108,8 +113,11 @@ autoplot.ResamplingSpCVBuffer = function(object, task, fold_id, ...) {
 
   sf_df = sf::st_as_sf(coords_df, coords = c("x", "y"))
 
+  # suppress undefined global variables note
+  indicator = NULL
+
   ggplot2::ggplot() +
-    ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = sf_df$indicator)) +
+    ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
     ggplot2::scale_color_viridis_d()
 }
 
@@ -142,6 +150,10 @@ autoplot.ResamplingSpCVEnv = function(object, task, fold_id = NULL, ...) {
 
   coords_resamp = merge(coords, object$instance, by = "row_id")
 
+  # suppress undefined global variables note
+  indicator = NULL
+  fold = NULL
+
   if (!is.null(fold_id)) {
     if (length(fold_id) > object$iters) {
       stop("More folds specified than stored in resampling")
@@ -150,29 +162,31 @@ autoplot.ResamplingSpCVEnv = function(object, task, fold_id = NULL, ...) {
     plot_list = list()
     for (i in fold_id) {
       table = copy(coords_resamp)
-      table[, table$indicator := ifelse(table$fold == i, "Test", "Train")]
+      table[, indicator := ifelse(fold == i, "Test", "Train")]
 
       sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
       sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
       plot_list[[length(plot_list) + 1]] =
         ggplot2::ggplot() +
-        ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = sf_df$indicator)) +
-        ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
+        ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
+        ggplot2::scale_color_viridis_d() +
+        ggplot2::labs(color = "Set") +
         ggplot2::theme(legend.position = "none")
     }
     plots = do.call(cowplot::plot_grid, plot_list)
 
     # Get legend
-    coords_resamp[, coords_resamp$indicator := ifelse(coords_resamp$fold == 1, "Test", "Train")]
+    coords_resamp[, indicator := ifelse(fold == 1, "Test", "Train")]
 
     sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
 
     legend = cowplot::get_legend(ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = sf_df$indicator)) +
-      ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
+      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
+      ggplot2::scale_color_viridis_d() +
+      ggplot2::labs(color = "Set") +
       ggplot2::theme(legend.position = "bottom"))
 
     # Plot
@@ -183,7 +197,7 @@ autoplot.ResamplingSpCVEnv = function(object, task, fold_id = NULL, ...) {
     sf_df$fold = as.factor(as.character(sf_df$fold))
 
     ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = sf_df$fold)) +
+      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = fold)) +
       ggplot2::scale_color_viridis_d() +
       ggplot2::labs(color = "Fold")
   }
@@ -218,6 +232,10 @@ autoplot.ResamplingSpCVCoords = function(object, task, fold_id = NULL, ...) {
 
   coords_resamp = merge(coords, object$instance, by = "row_id")
 
+  # suppress undefined global variables note
+  indicator = NULL
+  fold = NULL
+
   if (!is.null(fold_id)) {
     if (length(fold_id) > object$iters) {
       stop("More folds specified than stored in resampling")
@@ -226,28 +244,30 @@ autoplot.ResamplingSpCVCoords = function(object, task, fold_id = NULL, ...) {
     plot_list = list()
     for (i in fold_id) {
       table = copy(coords_resamp)
-      table[, table$indicator := ifelse(table$fold == i, "Test", "Train")]
+      table[, indicator := ifelse(fold == i, "Test", "Train")]
 
       sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
       sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
       plot_list[[length(plot_list) + 1]] =
         ggplot2::ggplot() +
-        ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = sf_df$indicator)) +
-        ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
+        ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
+        ggplot2::scale_color_viridis_d() +
+        ggplot2::labs(color = "Set") +
         ggplot2::theme(legend.position = "none")
     }
     plots = do.call(cowplot::plot_grid, plot_list)
 
     # Get legend
-    coords_resamp[, coords_resamp$indicator := ifelse(coords_resamp$fold == 1, "Test", "Train")]
+    coords_resamp[, indicator := ifelse(fold == 1, "Test", "Train")]
 
     sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
     legend = cowplot::get_legend(ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = sf_df$indicator)) +
-      ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
+      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
+      ggplot2::scale_color_viridis_d() +
+      ggplot2::labs(color = "Set") +
       ggplot2::theme(legend.position = "bottom"))
 
     # Plot
@@ -258,7 +278,8 @@ autoplot.ResamplingSpCVCoords = function(object, task, fold_id = NULL, ...) {
     sf_df$fold = as.factor(as.character(sf_df$fold))
 
     ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = sf_df$fold)) +
-      ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Fold")
+      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = fold)) +
+      ggplot2::scale_color_viridis_d() +
+      ggplot2::labs(color = "Fold")
   }
 }

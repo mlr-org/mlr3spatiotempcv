@@ -29,6 +29,6 @@ resampling = ResamplingSpCVBlock$new()
 resampling$param_set$values = list(folds = 4)
 resampling$instantiate(task)
 autoplot(resampling, task)
-autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2, 3, 4))
+autoplot(resampling, task, fold_id = 1)
+autoplot(resampling, task, fold_id = c(1, 2, 3, 4))
 }
