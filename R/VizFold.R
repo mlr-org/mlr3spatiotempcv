@@ -1,12 +1,19 @@
 #' @title Plot for Spatial Resampling
 #'
-#' @description
-#' Generates plots for [mlr3spatiotemporal::ResamplingSpCVBlock].
+#' @description Generates plots for [mlr3spatiotemporal::ResamplingSpCVBlock].
 #'
 #' @param object [mlr3spatiotemporal::ResamplingSpCVBlock]
 #' @param task [mlr3spatiotemporal::TaskClassifST]
-#' @param fold_id [numeric()]
+#' @param fold_id [numeric()]\cr For which fold ids should training and test
+#'   sets be visualized?
+#' @param grid (`logical(1)`)\cr Should a gridded plot using
+#'   `cowplot::plot_grid()` be created instead of returning a list with all
+#'   ggplot2 objects? Default is `TRUE`. Only applies if `fold_id` is set.
 #' @param ... Currently not used
+#'
+#' @details By default a plot is returned; if `fold_id` is set, a gridded plot
+#' is created. If `grid = FALSE`, only a list of ggplot2 objects is returned.
+#' This gives the option to align the single plots manually.
 #'
 #' @return [ggplot2::ggplot()] object.
 #' @export
@@ -20,13 +27,18 @@
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, fold_id = 1)
 #' autoplot(resampling, task, fold_id = c(1, 2, 3, 4))
-autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, ...) {
+#' # return only a list of ggplot2 objects
+#' plot_list = autoplot(resampling, task, fold_id = c(1, 2, 3, 4), grid = FALSE)
+autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, grid = TRUE,
+                                        ...) {
 
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
+  # attach the coordinates to the resampling indices
   coords_resamp = merge(coords, object$instance, by = "row_id")
 
+  # plot train and test of a specific fold?
   if (!is.null(fold_id)) {
     if (length(fold_id) > object$iters) {
       stop("More folds specified than stored in resampling")
@@ -48,33 +60,47 @@ autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, ...) {
       plot_list[[length(plot_list) + 1]] =
         ggplot2::ggplot() +
         ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
-        ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
+        ggplot2::scale_color_viridis_d() +
+        ggplot2::labs(color = "Set") +
         ggplot2::theme(legend.position = "none")
     }
-    plots = do.call(cowplot::plot_grid, plot_list)
+    plots = do.call(cowplot::plot_grid, list(plotlist = plot_list,
+                                             labels = sprintf("Fold %s", seq(1, length(plot_list)))))
 
-    # Get legend
+    # is a grid requested?
+    if (isTRUE(grid)) {
+    # Extract legend standalone, we only want one legend in the grid
     coords_resamp[, indicator := ifelse(fold == 1, "Test", "Train")]
 
     sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
+    # 'fold' needs to be a factor, otherwise `show.legend = "points" has no effect
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
     legend = cowplot::get_legend(ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
-      ggplot2::scale_color_viridis_d() + ggplot2::labs(color = "Set") +
+      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator),
+                       show.legend = "point") +
+      ggplot2::scale_color_viridis_d() +
+      ggplot2::labs(color = "Set") +
       ggplot2::theme(legend.position = "bottom"))
 
     # Plot
     cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
+    }
+    else {
+      # return plots as list
+      return(plots)
+    }
   } else {
-    # Plot with folds
+    # Create one plot with all (test)-folds
     sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
     sf_df$fold = as.factor(as.character(sf_df$fold))
 
     ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = fold)) +
+      ggplot2::geom_sf(data = sf_df, show.legend = "point",
+                       ggplot2::aes(color = fold)) +
       ggplot2::scale_color_viridis_d() +
-      ggplot2::labs(color = "Fold")
+      ggplot2::labs(color = "Test Set, Fold #")
+
   }
 }
 
