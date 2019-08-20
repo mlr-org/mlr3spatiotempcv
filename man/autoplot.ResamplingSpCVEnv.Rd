@@ -24,11 +24,11 @@ Generates plots for \link[mlr3spatiotemporal:ResamplingSpCVEnv]{mlr3spatiotempor
 \examples{
 library(mlr3)
 library(ggplot2)
-task <- mlr3::mlr_tasks$get("ecuador")
-resampling <- ResamplingSpCVEnv$new()
-resampling$param_set$values <- list(folds = 4, features=c("dem"))
+task = mlr3::mlr_tasks$get("ecuador")
+resampling = ResamplingSpCVEnv$new()
+resampling$param_set$values = list(folds = 4, features = c("dem"))
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1,2,3,4))
+autoplot(resampling, task, c(1, 2, 3, 4))
 }
