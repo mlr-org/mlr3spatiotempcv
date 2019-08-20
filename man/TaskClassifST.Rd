@@ -33,6 +33,8 @@ A \link{data.frame} with \code{ncol(2)} containing longitude and latitude inform
 Only for binary classification: Name of the positive class.
 \item \code{coords_as_features} :: \code{logical(1)}\cr
 Whether the coordinates should also be used as features. Default is \code{FALSE}.
+\item \code{crs} :: \code{character(1)}\cr
+Coordinates reference system
 }
 }
 

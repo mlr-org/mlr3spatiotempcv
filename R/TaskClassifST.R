@@ -41,6 +41,9 @@
 #' * `coords_as_features` :: `logical(1)`\cr
 #'   Whether the coordinates should also be used as features. Default is `FALSE`.
 #'
+#' * `crs` :: `character(1)`\cr
+#'   Coordinates reference system
+#'
 #' @section Fields:
 #' All methods from [TaskSupervised] and [TaskClassif], and additionally:
 #'
@@ -73,9 +76,11 @@
 TaskClassifST <- R6::R6Class("TaskClassifST",
   inherit = TaskClassif,
   public = list(
+    crs = NULL,
 
-    initialize = function(id, backend, target, coordinates, coords_as_features = FALSE, positive = NULL) {
+    initialize = function(id, backend, target, coordinates, coords_as_features = FALSE, positive = NULL, crs = NULL) {
       super$initialize(id = id, backend = backend, target = target, positive = positive)
+      self$crs = checkmate::assert_character(crs, null.ok=TRUE)
 
       # check coordinates
       assert_names(self$backend$colnames, must.include = coordinates)
@@ -100,8 +105,8 @@ TaskClassifST <- R6::R6Class("TaskClassifST",
 
     coordinates = function(row_ids = NULL) {
       if (is.null(row_ids)) {
-        # we need to maintain the correct order for the coordinates
-        row_ids <- as.character(sort(as.numeric(self$row_ids)))
+        # Return coords in task$data order
+        row_ids <- self$row_ids
       }
       self$backend$data(rows = row_ids, cols = self$coordinate_names)
     },
@@ -127,7 +132,7 @@ TaskClassifST <- R6::R6Class("TaskClassifST",
   types = self$feature_types
   if (nrow(types)) {
     catf("Features (%i):", nrow(types))
-    types = types[, list(N = .N, feats = str_collapse(get("id"), n = 100L)), by = "type"][, "type" := translate_types(get("type"))]
+    types = types[, list(N = .N, feats = str_collapse(get("id"), n = 100L)), by = "type"][, "type" := mlr3:::translate_types(get("type"))]
     setorderv(types, "N", order = -1L)
     pmap(types, function(type, N, feats) catf(str_indent(sprintf("* %s (%i):", type, N), feats)))
   }
