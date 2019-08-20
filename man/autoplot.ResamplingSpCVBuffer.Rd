@@ -24,9 +24,9 @@ Generates plots for \link[mlr3spatiotemporal:ResamplingSpCVBuffer]{mlr3spatiotem
 \examples{
 library(mlr3)
 library(ggplot2)
-task <- mlr3::mlr_tasks$get("ecuador")
-resampling <- ResamplingSpCVBuffer$new()
-resampling$param_set$values <- list(range = 1000)
+task = mlr3::mlr_tasks$get("ecuador")
+resampling = ResamplingSpCVBuffer$new()
+resampling$param_set$values = list(range = 1000)
 resampling$instantiate(task)
 autoplot(resampling, task, 1)
 }
