@@ -2,6 +2,7 @@
 #'
 #' @description Generates plots for [mlr3spatiotemporal::ResamplingSpCVBlock].
 #'
+#' @import ggplot2
 #' @param object [mlr3spatiotemporal::ResamplingSpCVBlock]
 #' @param task [mlr3spatiotemporal::TaskClassifST]
 #' @param fold_id [numeric()]\cr For which fold ids should training and test
@@ -58,11 +59,11 @@ autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, grid = TRU
       sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
       plot_list[[length(plot_list) + 1]] =
-        ggplot2::ggplot() +
-        ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
-        ggplot2::scale_color_viridis_d() +
-        ggplot2::labs(color = "Set") +
-        ggplot2::theme(legend.position = "none")
+        ggplot() +
+        geom_sf(data = sf_df, aes(color = indicator)) +
+        scale_color_viridis_d() +
+        labs(color = "Set") +
+        theme(legend.position = "none")
     }
     plots = do.call(cowplot::plot_grid, list(plotlist = plot_list,
                                              labels = sprintf("Fold %s", seq(1, length(plot_list)))))
@@ -76,12 +77,12 @@ autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, grid = TRU
     # 'fold' needs to be a factor, otherwise `show.legend = "points" has no effect
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
-    legend = cowplot::get_legend(ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator),
+    legend = cowplot::get_legend(ggplot() +
+      geom_sf(data = sf_df, aes(color = indicator),
                        show.legend = "point") +
-      ggplot2::scale_color_viridis_d() +
-      ggplot2::labs(color = "Set") +
-      ggplot2::theme(legend.position = "bottom"))
+      scale_color_viridis_d() +
+      labs(color = "Set") +
+      theme(legend.position = "bottom"))
 
     # Plot
     cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
@@ -95,11 +96,11 @@ autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, grid = TRU
     sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
     sf_df$fold = as.factor(as.character(sf_df$fold))
 
-    ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, show.legend = "point",
-                       ggplot2::aes(color = fold)) +
-      ggplot2::scale_color_viridis_d() +
-      ggplot2::labs(color = "Test Set, Fold #")
+    ggplot() +
+      geom_sf(data = sf_df, show.legend = "point",
+                       aes(color = fold)) +
+      scale_color_viridis_d() +
+      labs(color = "Test Set, Fold #")
 
   }
 }
@@ -142,9 +143,9 @@ autoplot.ResamplingSpCVBuffer = function(object, task, fold_id, ...) {
   # suppress undefined global variables note
   indicator = NULL
 
-  ggplot2::ggplot() +
-    ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
-    ggplot2::scale_color_viridis_d()
+  ggplot() +
+    geom_sf(data = sf_df, aes(color = indicator)) +
+    scale_color_viridis_d()
 }
 
 #' @title Plot for Spatial Resampling
@@ -194,11 +195,11 @@ autoplot.ResamplingSpCVEnv = function(object, task, fold_id = NULL, ...) {
       sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
       plot_list[[length(plot_list) + 1]] =
-        ggplot2::ggplot() +
-        ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
-        ggplot2::scale_color_viridis_d() +
-        ggplot2::labs(color = "Set") +
-        ggplot2::theme(legend.position = "none")
+        ggplot() +
+        geom_sf(data = sf_df, aes(color = indicator)) +
+        scale_color_viridis_d() +
+        labs(color = "Set") +
+        theme(legend.position = "none")
     }
     plots = do.call(cowplot::plot_grid, plot_list)
 
@@ -209,11 +210,11 @@ autoplot.ResamplingSpCVEnv = function(object, task, fold_id = NULL, ...) {
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
 
-    legend = cowplot::get_legend(ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
-      ggplot2::scale_color_viridis_d() +
-      ggplot2::labs(color = "Set") +
-      ggplot2::theme(legend.position = "bottom"))
+    legend = cowplot::get_legend(ggplot() +
+      geom_sf(data = sf_df, aes(color = indicator)) +
+      scale_color_viridis_d() +
+      labs(color = "Set") +
+      theme(legend.position = "bottom"))
 
     # Plot
     cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
@@ -222,10 +223,10 @@ autoplot.ResamplingSpCVEnv = function(object, task, fold_id = NULL, ...) {
     sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
     sf_df$fold = as.factor(as.character(sf_df$fold))
 
-    ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = fold)) +
-      ggplot2::scale_color_viridis_d() +
-      ggplot2::labs(color = "Fold")
+    ggplot() +
+      geom_sf(data = sf_df, aes(color = fold)) +
+      scale_color_viridis_d() +
+      labs(color = "Fold")
   }
 }
 
@@ -276,11 +277,11 @@ autoplot.ResamplingSpCVCoords = function(object, task, fold_id = NULL, ...) {
       sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
       plot_list[[length(plot_list) + 1]] =
-        ggplot2::ggplot() +
-        ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
-        ggplot2::scale_color_viridis_d() +
-        ggplot2::labs(color = "Set") +
-        ggplot2::theme(legend.position = "none")
+        ggplot() +
+        geom_sf(data = sf_df, aes(color = indicator)) +
+        scale_color_viridis_d() +
+        labs(color = "Set") +
+        theme(legend.position = "none")
     }
     plots = do.call(cowplot::plot_grid, plot_list)
 
@@ -290,11 +291,11 @@ autoplot.ResamplingSpCVCoords = function(object, task, fold_id = NULL, ...) {
     sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
-    legend = cowplot::get_legend(ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = indicator)) +
-      ggplot2::scale_color_viridis_d() +
-      ggplot2::labs(color = "Set") +
-      ggplot2::theme(legend.position = "bottom"))
+    legend = cowplot::get_legend(ggplot() +
+      geom_sf(data = sf_df, aes(color = indicator)) +
+      scale_color_viridis_d() +
+      labs(color = "Set") +
+      theme(legend.position = "bottom"))
 
     # Plot
     cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
@@ -303,9 +304,9 @@ autoplot.ResamplingSpCVCoords = function(object, task, fold_id = NULL, ...) {
     sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
     sf_df$fold = as.factor(as.character(sf_df$fold))
 
-    ggplot2::ggplot() +
-      ggplot2::geom_sf(data = sf_df, ggplot2::aes(color = fold)) +
-      ggplot2::scale_color_viridis_d() +
-      ggplot2::labs(color = "Fold")
+    ggplot() +
+      geom_sf(data = sf_df, aes(color = fold)) +
+      scale_color_viridis_d() +
+      labs(color = "Fold")
   }
 }
