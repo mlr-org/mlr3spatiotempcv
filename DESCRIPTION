@@ -52,5 +52,5 @@ Collate:
     'Task_classif_ecuador.R'
     'mlr3spatiotemporal-package.R'
     'reexports.R'
-    'VizFold.R'
+    'autoplot.R'
     'zzz.R'
