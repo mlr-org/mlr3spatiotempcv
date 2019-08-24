@@ -50,10 +50,11 @@ ResamplingSpCVBlock <- R6Class("ResamplingSpCVBlock",
       )
     },
     instantiate = function(task) {
+
       assert_task(task)
 
       # Check combination
-      if(!is.null(self$param_set$values$range) & (!is.null(self$param_set$values$rows) | !is.null(self$param_set$values$cols))) {
+      if (!is.null(self$param_set$values$range) & (!is.null(self$param_set$values$rows) | !is.null(self$param_set$values$cols))) {
         warning("Cols and rows are ignored. Range is used to generated blocks.")
       }
 
@@ -64,7 +65,7 @@ ResamplingSpCVBlock <- R6Class("ResamplingSpCVBlock",
       if (is.null(self$param_set$values$cols) & is.null(self$param_set$values$range)) {
         self$param_set$values$cols = self$param_set$default[["cols"]]
       }
-      if(is.null(self$param_set$selection)) {
+      if (is.null(self$param_set$selection)) {
         self$param_set$values$selection = self$param_set$default[["selection"]]
       }
 

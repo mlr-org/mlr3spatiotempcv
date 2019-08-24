@@ -45,6 +45,7 @@ ResamplingSpCVBuffer <- R6Class("ResamplingSpCVBuffer",
       )
     },
     instantiate = function(task) {
+
       assert_task(task)
 
       groups <- task$groups
@@ -78,8 +79,8 @@ ResamplingSpCVBuffer <- R6Class("ResamplingSpCVBuffer",
   private = list(
     .sample = function(ids, coords, crs) {
       points <- sf::st_as_sf(coords,
-                             coords = c("x", "y"),
-                             crs = crs)
+        coords = c("x", "y"),
+        crs = crs)
 
       inds <- blockCV::buffering(
         speciesData = points,

@@ -79,7 +79,7 @@ resampling = ResamplingSpCVBuffer$new()
 resampling$param_set$values = list(range = 1000)
 resampling$instantiate(task)
 autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2, 3, 4)
+autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # SpCVEnv
 #####

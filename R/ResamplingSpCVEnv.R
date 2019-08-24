@@ -47,6 +47,7 @@ ResamplingSpCVEnv <- R6Class("ResamplingSpCVEnv",
       )
     },
     instantiate = function(task) {
+
       assert_task(task)
 
       # Set values to default if missing
@@ -73,7 +74,7 @@ ResamplingSpCVEnv <- R6Class("ResamplingSpCVEnv",
 
           # Check for selected features that are not in task
           diff <- setdiff(self$param_set$values$features, columns[, id])
-          if(length(diff) > 0) {
+          if (length(diff) > 0) {
             stop(paste("Selected features are not numeric features of the task: ", diff))
           }
           columns <- columns[id %in% self$param_set$values$features]
