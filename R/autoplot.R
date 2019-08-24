@@ -47,10 +47,9 @@
 #' plot_list = autoplot(resampling, task,
 #'   fold_id = c(1, 2, 3, 4), grid = FALSE)
 autoplot.ResamplingSpCVBlock = function(resampling, task, fold_id = NULL, grid = TRUE,
-                                        ...) {
-
+  ...) {
   autoplot_spatial(resampling = resampling, task = task, fold_id = fold_id,
-                   grid = grid)
+    grid = grid)
 }
 
 #' @title Plot for Spatial Resampling
@@ -69,11 +68,10 @@ autoplot.ResamplingSpCVBlock = function(resampling, task, fold_id = NULL, grid =
 #' resampling$param_set$values = list(range = 1000)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2, 3, 4)
+#' autoplot(resampling, task, c(1, 2, 3, 4))
 autoplot.ResamplingSpCVBuffer = function(resampling, task, fold_id, grid = TRUE) {
-
   autoplot_spatial(resampling = resampling, task = task, fold_id = fold_id,
-                   grid = grid)
+    grid = grid)
 
 }
 
@@ -99,9 +97,8 @@ autoplot.ResamplingSpCVBuffer = function(resampling, task, fold_id, grid = TRUE)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
 autoplot.ResamplingSpCVEnv = function(resampling, task, fold_id = NULL, grid = TRUE) {
-
   autoplot_spatial(resampling = resampling, task = task, fold_id = fold_id,
-                   grid = grid)
+    grid = grid)
 }
 
 #' @title Plot for Spatial Resampling
@@ -118,7 +115,6 @@ autoplot.ResamplingSpCVEnv = function(resampling, task, fold_id = NULL, grid = T
 #' @export
 #' @keywords internal
 autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
-
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
@@ -126,19 +122,19 @@ autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
 
     coords_resamp = mlr3misc::imap(resampling$instance, function(x, y) {
       inds = data.table(row_id = resampling$instance[[y]]$train,
-                        fold = y,
-                        indicator = "Train")
+        fold = y,
+        indicator = "Train")
       ind_test = data.table(row_id = resampling$instance[[y]]$test,
-                            fold = y,
-                            indicator = "Test")
+        fold = y,
+        indicator = "Test")
       inds_comb = rbind(inds, ind_test)
 
       merge(coords, inds_comb, by = "row_id")
     })
     coords_resamp = rbindlist(coords_resamp)
   } else {
-  # attach the coordinates to the resampling indices
-  coords_resamp = merge(coords, resampling$instance, by = "row_id")
+    # attach the coordinates to the resampling indices
+    coords_resamp = merge(coords, resampling$instance, by = "row_id")
   }
 
   # plot train and test of a specific fold?
@@ -178,9 +174,8 @@ autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
     if (!grid) {
       return(plot_list)
     } else {
-
-    plots = do.call(cowplot::plot_grid, list(plotlist = plot_list,
-                                             labels = sprintf("Fold %s", seq(1, length(plot_list)))))
+      plots = do.call(cowplot::plot_grid, list(plotlist = plot_list,
+        labels = sprintf("Fold %s", seq(1, length(plot_list)))))
 
       # Extract legend standalone, we only want one legend in the grid
       coords_resamp[, indicator := ifelse(fold == 1, "Test", "Train")]
@@ -190,11 +185,11 @@ autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
       sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
       legend = cowplot::get_legend(ggplot() +
-                                     geom_sf(data = sf_df, aes(color = indicator),
-                                                      show.legend = "point") +
-                                     scale_color_viridis_d() +
-                                     labs(color = "Set") +
-                                     theme(legend.position = "bottom"))
+        geom_sf(data = sf_df, aes(color = indicator),
+          show.legend = "point") +
+        scale_color_viridis_d() +
+        labs(color = "Set") +
+        theme(legend.position = "bottom"))
 
       # Plot
       cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
@@ -206,9 +201,8 @@ autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
 
     ggplot() +
       geom_sf(data = sf_df, show.legend = "point",
-                       aes(color = fold)) +
+        aes(color = fold)) +
       scale_color_viridis_d() +
       labs(color = "Test Set, Fold #")
-
   }
 }
