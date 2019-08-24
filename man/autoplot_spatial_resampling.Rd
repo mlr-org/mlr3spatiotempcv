@@ -2,17 +2,21 @@
 % Please edit documentation in R/autoplot.R
 \name{autoplot.ResamplingSpCVBlock}
 \alias{autoplot.ResamplingSpCVBlock}
-\alias{autoplot.ResamplingSpCVBuffer}
 \alias{autoplot.ResamplingSpCVEnv}
+\alias{autoplot.ResamplingSpCVBuffer}
+\alias{autoplot.ResamplingSpCVCoords}
 \title{Visualization of spatial resampling.}
 \usage{
 \method{autoplot}{ResamplingSpCVBlock}(resampling, task, fold_id = NULL,
   grid = TRUE, ...)
 
+\method{autoplot}{ResamplingSpCVEnv}(resampling, task, fold_id = NULL,
+  grid = TRUE)
+
 \method{autoplot}{ResamplingSpCVBuffer}(resampling, task, fold_id,
   grid = TRUE)
 
-\method{autoplot}{ResamplingSpCVEnv}(resampling, task, fold_id = NULL,
+\method{autoplot}{ResamplingSpCVCoords}(resampling, task, fold_id = NULL,
   grid = TRUE)
 }
 \arguments{
@@ -36,12 +40,16 @@ Should a gridded plot using \code{cowplot::plot_grid()} be created? If ´FALSE\c
 \code{\link[=ggplot]{ggplot()}} resampling.
 
 \code{\link[=ggplot]{ggplot()}} resampling.
+
+\code{\link[=ggplot]{ggplot()}} resampling.
 }
 \description{
 Generates plots for \link{ResamplingSpCVBlock}, \link{ResamplingSpCVEnv},
 \link{ResamplingSpCVBuffer} and \link{ResamplingSpCVCoords}.
 
 Generates plots for \link[mlr3spatiotemporal:ResamplingSpCVEnv]{mlr3spatiotemporal::ResamplingSpCVEnv}.
+
+Generates plots for \link[mlr3spatiotemporal:ResamplingSpCVCoords]{mlr3spatiotemporal::ResamplingSpCVCoords}.
 }
 \details{
 By default a plot is returned; if \code{fold_id} is set, a gridded plot
@@ -72,6 +80,16 @@ autoplot(resampling, task, fold_id = c(1, 2, 3, 4))
 plot_list = autoplot(resampling, task,
   fold_id = c(1, 2, 3, 4), grid = FALSE)
 #####
+# SpCVEnv
+#####
+
+resampling = ResamplingSpCVEnv$new()
+resampling$param_set$values = list(folds = 4, features = c("dem"))
+resampling$instantiate(task)
+autoplot(resampling, task)
+autoplot(resampling, task, 1)
+autoplot(resampling, task, c(1, 2, 3, 4))
+#####
 # SpCVBuffer
 #####
 
@@ -81,11 +99,10 @@ resampling$instantiate(task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, c(1, 2, 3, 4))
 #####
-# SpCVEnv
+# SpCVCoords
 #####
 
-resampling = ResamplingSpCVEnv$new()
-resampling$param_set$values = list(folds = 4, features = c("dem"))
+resampling = ResamplingSpCVCoords$new()
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)

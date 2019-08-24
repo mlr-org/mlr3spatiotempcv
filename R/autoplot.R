@@ -54,29 +54,6 @@ autoplot.ResamplingSpCVBlock = function(resampling, task, fold_id = NULL, grid =
 
 #' @title Plot for Spatial Resampling
 #'
-#' @inheritParams autoplot.ResamplingSpCVBlock
-#'
-#' @rdname autoplot_spatial_resampling
-#' @return [ggplot()] resampling.
-#' @export
-#' @examples
-#' #####
-#' # SpCVBuffer
-#' #####
-#'
-#' resampling = ResamplingSpCVBuffer$new()
-#' resampling$param_set$values = list(range = 1000)
-#' resampling$instantiate(task)
-#' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingSpCVBuffer = function(resampling, task, fold_id, grid = TRUE) {
-  autoplot_spatial(resampling = resampling, task = task, fold_id = fold_id,
-    grid = grid)
-
-}
-
-#' @title Plot for Spatial Resampling
-#'
 #' @description
 #' Generates plots for [mlr3spatiotemporal::ResamplingSpCVEnv].
 #'
@@ -99,6 +76,54 @@ autoplot.ResamplingSpCVBuffer = function(resampling, task, fold_id, grid = TRUE)
 autoplot.ResamplingSpCVEnv = function(resampling, task, fold_id = NULL, grid = TRUE) {
   autoplot_spatial(resampling = resampling, task = task, fold_id = fold_id,
     grid = grid)
+}
+
+#' @title Plot for Spatial Resampling
+#'
+#' @inheritParams autoplot.ResamplingSpCVBlock
+#'
+#' @rdname autoplot_spatial_resampling
+#' @return [ggplot()] resampling.
+#' @export
+#' @examples
+#' #####
+#' # SpCVBuffer
+#' #####
+#'
+#' resampling = ResamplingSpCVBuffer$new()
+#' resampling$param_set$values = list(range = 1000)
+#' resampling$instantiate(task)
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, c(1, 2, 3, 4))
+autoplot.ResamplingSpCVBuffer = function(resampling, task, fold_id, grid = TRUE) {
+  autoplot_spatial(resampling = resampling, task = task, fold_id = fold_id,
+                   grid = grid)
+
+}
+
+#' @title Plot for Spatial Resampling
+#'
+#' @description
+#' Generates plots for [mlr3spatiotemporal::ResamplingSpCVCoords].
+#'
+#' @inheritParams autoplot.ResamplingSpCVBlock
+#'
+#' @rdname autoplot_spatial_resampling
+#' @return [ggplot()] resampling.
+#' @export
+#' @examples
+#' #####
+#' # SpCVCoords
+#' #####
+#'
+#' resampling = ResamplingSpCVCoords$new()
+#' resampling$instantiate(task)
+#' autoplot(resampling, task)
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, c(1, 2, 3, 4))
+autoplot.ResamplingSpCVCoords = function(resampling, task, fold_id = NULL, grid = TRUE) {
+  autoplot_spatial(resampling = resampling, task = task, fold_id = fold_id,
+                   grid = grid)
 }
 
 #' @title Plot for Spatial Resampling
@@ -202,7 +227,7 @@ autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
     ggplot() +
       geom_sf(data = sf_df, show.legend = "point",
         aes(color = fold)) +
-      scale_color_viridis_d() +
+      scale_color_viridis_d(breaks = sort(as.integer(as.character(sf_df$fold)))) +
       labs(color = "Test Set, Fold #")
   }
 }
