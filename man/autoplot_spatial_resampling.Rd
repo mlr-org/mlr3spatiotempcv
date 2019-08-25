@@ -7,20 +7,20 @@
 \alias{autoplot.ResamplingSpCVCoords}
 \title{Visualization of spatial resampling.}
 \usage{
-\method{autoplot}{ResamplingSpCVBlock}(resampling, task, fold_id = NULL,
+\method{autoplot}{ResamplingSpCVBlock}(object, task, fold_id = NULL,
   grid = TRUE, ...)
 
-\method{autoplot}{ResamplingSpCVEnv}(resampling, task, fold_id = NULL,
-  grid = TRUE)
+\method{autoplot}{ResamplingSpCVEnv}(object, task, fold_id = NULL,
+  grid = TRUE, ...)
 
-\method{autoplot}{ResamplingSpCVBuffer}(resampling, task, fold_id,
-  grid = TRUE)
+\method{autoplot}{ResamplingSpCVBuffer}(object, task, fold_id = NULL,
+  grid = TRUE, ...)
 
-\method{autoplot}{ResamplingSpCVCoords}(resampling, task, fold_id = NULL,
-  grid = TRUE)
+\method{autoplot}{ResamplingSpCVCoords}(object, task, fold_id = NULL,
+  grid = TRUE, ...)
 }
 \arguments{
-\item{resampling}{\link{ResamplingSpCVBlock}\cr
+\item{object}{\link{ResamplingSpCVBlock}\cr
 An instantianated spatial resampling.}
 
 \item{task}{\link{TaskClassifST}\cr
