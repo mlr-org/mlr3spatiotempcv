@@ -28,7 +28,8 @@ Suggests:
     knitr,
     lgr,
     sf,
-    testthat
+    testthat,
+    vdiffr
 VignetteBuilder:
     knitr
 Remotes:
