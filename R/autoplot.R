@@ -4,7 +4,7 @@
 #'   [ResamplingSpCVBuffer] and [ResamplingSpCVCoords].
 #'
 #' @import ggplot2
-#' @param resampling [ResamplingSpCVBlock]\cr
+#' @param object [ResamplingSpCVBlock]\cr
 #'   An instantianated spatial resampling.
 #' @param task [TaskClassifST]\cr
 #'   A spatial task.
@@ -46,9 +46,8 @@
 #' # return only a list of ggplot2 resamplings
 #' plot_list = autoplot(resampling, task,
 #'   fold_id = c(1, 2, 3, 4), grid = FALSE)
-autoplot.ResamplingSpCVBlock = function(resampling, task, fold_id = NULL, grid = TRUE,
-  ...) {
-  autoplot_spatial(resampling = resampling, task = task, fold_id = fold_id,
+autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, grid = TRUE, ...) {
+  autoplot_spatial(resampling = object, task = task, fold_id = fold_id,
     grid = grid)
 }
 
@@ -73,8 +72,8 @@ autoplot.ResamplingSpCVBlock = function(resampling, task, fold_id = NULL, grid =
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingSpCVEnv = function(resampling, task, fold_id = NULL, grid = TRUE) {
-  autoplot_spatial(resampling = resampling, task = task, fold_id = fold_id,
+autoplot.ResamplingSpCVEnv = function(object, task, fold_id = NULL, grid = TRUE, ...) {
+  autoplot_spatial(resampling = object, task = task, fold_id = fold_id,
     grid = grid)
 }
 
@@ -95,9 +94,9 @@ autoplot.ResamplingSpCVEnv = function(resampling, task, fold_id = NULL, grid = T
 #' resampling$instantiate(task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingSpCVBuffer = function(resampling, task, fold_id, grid = TRUE) {
-  autoplot_spatial(resampling = resampling, task = task, fold_id = fold_id,
-                   grid = grid)
+autoplot.ResamplingSpCVBuffer = function(object, task, fold_id = NULL, grid = TRUE, ...) {
+  autoplot_spatial(resampling = object, task = task, fold_id = fold_id,
+    grid = grid)
 
 }
 
@@ -121,15 +120,19 @@ autoplot.ResamplingSpCVBuffer = function(resampling, task, fold_id, grid = TRUE)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingSpCVCoords = function(resampling, task, fold_id = NULL, grid = TRUE) {
-  autoplot_spatial(resampling = resampling, task = task, fold_id = fold_id,
-                   grid = grid)
+autoplot.ResamplingSpCVCoords = function(object, task, fold_id = NULL, grid = TRUE, ...) {
+  autoplot_spatial(resampling = object, task = task, fold_id = fold_id,
+    grid = grid)
 }
 
 #' @title Plot for Spatial Resampling
 #'
 #' @description
 #' Workhorse for autoplot.ResamplingSpCV*.
+#'
+#' @importFrom data.table data.table rbindlist
+#' @importFrom mlr3misc imap
+#' @import ggplot2
 #'
 #' @param resampling [ResamplingSpCVCoords]
 #' @param task [TaskClassifST]
@@ -145,7 +148,7 @@ autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
 
   if (class(resampling)[1] == "ResamplingSpCVBuffer") {
 
-    coords_resamp = mlr3misc::imap(resampling$instance, function(x, y) {
+    coords_resamp = imap(resampling$instance, function(x, y) {
       inds = data.table(row_id = resampling$instance[[y]]$train,
         fold = y,
         indicator = "Train")
