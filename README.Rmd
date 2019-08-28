@@ -42,7 +42,7 @@ Generic S3 function `autoplot()` for all implemented spatial resampling methods.
 
 <div id="ref-Brenning2012">
 
-**Brenning**, A.. 2012. “Spatial Cross-Validation and Bootstrap for the Assessment of
+**Brenning**, A., 2012. “Spatial Cross-Validation and Bootstrap for the Assessment of
 Prediction Rules in Remote Sensing: The R Package Sperrorest.” In *2012
 IEEE International Geoscience and Remote Sensing Symposium*, 5372–5.
 <https://doi.org/10.1109/IGARSS.2012.6352393>.

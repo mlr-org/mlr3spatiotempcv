@@ -3,6 +3,8 @@
 
 Spatio-temporal extensions for mlr3
 
+<!-- badges: start -->
+
 [![Travis build
 status](https://travis-ci.org/mlr-org/mlr3spatiotemporal.svg?branch=master)](https://travis-ci.org/mlr-org/mlr3spatiotemporal)
 [![CRAN
@@ -11,6 +13,7 @@ status](https://www.r-pkg.org/badges/version/mlr3spatiotemporal)](https://cran.r
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Coverage
 status](https://codecov.io/gh/mlr-org/mlr3spatiotemporal/branch/master/graph/badge.svg)](https://codecov.io/github/mlr-org/mlr3spatiotemporal?branch=master)
+<!-- badges: end -->
 
 This package extends the [mlr3](https://github.com/mlr-org/mlr3) package
 framework by spatiotemporal resampling and visualization methods.
@@ -42,7 +45,7 @@ methods.
 
 <div id="ref-Brenning2012">
 
-**Brenning**, A.. 2012. “Spatial Cross-Validation and Bootstrap for the
+**Brenning**, A., 2012. “Spatial Cross-Validation and Bootstrap for the
 Assessment of Prediction Rules in Remote Sensing: The R Package
 Sperrorest.” In *2012 IEEE International Geoscience and Remote Sensing
 Symposium*, 5372–5. <https://doi.org/10.1109/IGARSS.2012.6352393>.
