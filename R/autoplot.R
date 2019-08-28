@@ -11,9 +11,9 @@
 #' @param fold_id [numeric()]\cr
 #'   For which fold ids should training and test sets be visualized?
 #' @param grid (`logical(1)`)\cr
-#'   Should a gridded plot using `cowplot::plot_grid()` be created? If ´FALSE` a
+#'   Should a gridded plot using `cowplot::plot_grid()` be created? If ´FALSE` only a
 #'   list with all ggplot2 resamplings is returned. Default is `TRUE`. Only applies
-#'   if `fold_id` is set.
+#'   if a numeric vector is passed to argument `fold_id`.
 #' @param ... Currently not used
 #'
 #' @details By default a plot is returned; if `fold_id` is set, a gridded plot
