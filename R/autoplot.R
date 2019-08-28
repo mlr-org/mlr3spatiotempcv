@@ -27,7 +27,7 @@
 #' #####
 #' # SpCVBlock
 #' #####
-#'
+#' \dontrun{
 #' library(mlr3)
 #' task = mlr_tasks$get("ecuador")
 #' resampling = ResamplingSpCVBlock$new()
@@ -46,6 +46,7 @@
 #' # return only a list of ggplot2 resamplings
 #' plot_list = autoplot(resampling, task,
 #'   fold_id = c(1, 2, 3, 4), grid = FALSE)
+#' }
 autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, grid = TRUE, ...) {
   autoplot_spatial(resampling = object, task = task, fold_id = fold_id,
     grid = grid)
@@ -65,13 +66,14 @@ autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, grid = TRU
 #' #####
 #' # SpCVEnv
 #' #####
-#'
+#' \dontrun{
 #' resampling = ResamplingSpCVEnv$new()
 #' resampling$param_set$values = list(folds = 4, features = c("dem"))
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
+#' }
 autoplot.ResamplingSpCVEnv = function(object, task, fold_id = NULL, grid = TRUE, ...) {
   autoplot_spatial(resampling = object, task = task, fold_id = fold_id,
     grid = grid)
@@ -88,12 +90,13 @@ autoplot.ResamplingSpCVEnv = function(object, task, fold_id = NULL, grid = TRUE,
 #' #####
 #' # SpCVBuffer
 #' #####
-#'
+#' \dontrun{
 #' resampling = ResamplingSpCVBuffer$new()
 #' resampling$param_set$values = list(range = 1000)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
+#' }
 autoplot.ResamplingSpCVBuffer = function(object, task, fold_id = NULL, grid = TRUE, ...) {
   autoplot_spatial(resampling = object, task = task, fold_id = fold_id,
     grid = grid)
@@ -114,12 +117,13 @@ autoplot.ResamplingSpCVBuffer = function(object, task, fold_id = NULL, grid = TR
 #' #####
 #' # SpCVCoords
 #' #####
-#'
+#' \dontrun{
 #' resampling = ResamplingSpCVCoords$new()
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
+#' }
 autoplot.ResamplingSpCVCoords = function(object, task, fold_id = NULL, grid = TRUE, ...) {
   autoplot_spatial(resampling = object, task = task, fold_id = fold_id,
     grid = grid)
