@@ -17,6 +17,7 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' task <- mlr3::mlr_tasks$get("ecuador")
 #'
 #' # Instantiate Resampling
@@ -31,6 +32,7 @@
 #'
 #' # Internal storage:
 #' rcv$instance
+#' }
 ResamplingSpCVBlock <- R6Class("ResamplingSpCVBlock",
   inherit = mlr3::Resampling,
   public = list(
