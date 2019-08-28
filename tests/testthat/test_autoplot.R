@@ -25,12 +25,14 @@ Block1 = autoplot(resa_Block, task)
 Block2 = autoplot(resa_Block, task, 1)
 Block3 = autoplot(resa_Block, task, c(1, 2, 3, 4))
 
-expect_error(autoplot(resa_Block, task, 5))
-expect_error(autoplot(resa_Block, task, c(1, 2, 3, 4, 5)))
-
 vdiffr::expect_doppelganger("SpCVBlock all test sets", Block1)
 vdiffr::expect_doppelganger("SpCVBlock - Fold 1", Block2)
 vdiffr::expect_doppelganger("SpCVBlock - Fold 1-4", Block3)
+
+# these checks apply to all resampling methods.
+expect_error(autoplot(resa_Block, task, 5))
+expect_error(autoplot(resa_Block, task, c(1, 2, 3, 4, 5)))
+expect_list(autoplot(resa_Block, task,  c(1, 2, 3, 4), grid = FALSE))
 
 # SpCVBuffer -------------------------------------------------------------------
 
