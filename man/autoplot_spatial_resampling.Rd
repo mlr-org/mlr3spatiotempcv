@@ -30,7 +30,7 @@ A spatial task.}
 For which fold ids should training and test sets be visualized?}
 
 \item{grid}{(\code{logical(1)})\cr
-Should a gridded plot using \code{cowplot::plot_grid()} be created? If ´FALSE\code{a list with all ggplot2 resamplings is returned. Default is}TRUE\code{. Only applies if }fold_id` is set.}
+Should a gridded plot using \code{cowplot::plot_grid()} be created? If ´FALSE\code{only a list with all ggplot2 resamplings is returned. Default is}TRUE\code{. Only applies if a numeric vector is passed to argument }fold_id`.}
 
 \item{...}{Currently not used}
 }
@@ -60,7 +60,7 @@ This gives the option to align the single plots manually.
 #####
 # SpCVBlock
 #####
-
+\dontrun{
 library(mlr3)
 task = mlr_tasks$get("ecuador")
 resampling = ResamplingSpCVBlock$new()
@@ -79,32 +79,36 @@ autoplot(resampling, task, fold_id = c(1, 2, 3, 4))
 # return only a list of ggplot2 resamplings
 plot_list = autoplot(resampling, task,
   fold_id = c(1, 2, 3, 4), grid = FALSE)
+}
 #####
 # SpCVEnv
 #####
-
+\dontrun{
 resampling = ResamplingSpCVEnv$new()
 resampling$param_set$values = list(folds = 4, features = c("dem"))
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, c(1, 2, 3, 4))
+}
 #####
 # SpCVBuffer
 #####
-
+\dontrun{
 resampling = ResamplingSpCVBuffer$new()
 resampling$param_set$values = list(range = 1000)
 resampling$instantiate(task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, c(1, 2, 3, 4))
+}
 #####
 # SpCVCoords
 #####
-
+\dontrun{
 resampling = ResamplingSpCVCoords$new()
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, c(1, 2, 3, 4))
+}
 }
