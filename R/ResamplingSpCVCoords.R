@@ -34,7 +34,7 @@
 #'
 #' # Internal storage:
 #' rcv$instance # table
-ResamplingSpCVCoords<- R6Class("ResamplingSpCVCoords",
+ResamplingSpCVCoords <- R6Class("ResamplingSpCVCoords",
   inherit = mlr3::Resampling,
   public = list(
     initialize = function(id = "spcv-coords", param_vals = list(folds = 10L)) {
@@ -48,6 +48,7 @@ ResamplingSpCVCoords<- R6Class("ResamplingSpCVCoords",
       )
     },
     instantiate = function(task) {
+
       assert_task(task)
       groups <- task$groups
 

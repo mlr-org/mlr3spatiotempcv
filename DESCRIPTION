@@ -17,24 +17,26 @@ Depends:
 Imports:
     checkmate,
     data.table,
+    ggplot2,
     mlr3,
     mlr3misc,
     paradox,
     R6
 Suggests:
     blockCV,
+    cowplot,
     knitr,
     lgr,
     sf,
-    testthat
+    testthat,
+    vdiffr
 VignetteBuilder:
     knitr
 Remotes:
     be-marc/blockCV,
     mlr-org/mlr3,
     mlr-org/mlr3misc,
-    mlr-org/paradox,
-    be-marc/blockCV
+    mlr-org/paradox
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
@@ -47,6 +49,9 @@ Collate:
     'ResamplingSpCVCoords.R'
     'ResamplingSpCVEnv.R'
     'TaskClassifST.R'
+    'helper.R'
     'Task_classif_ecuador.R'
     'mlr3spatiotemporal-package.R'
+    'reexports.R'
+    'autoplot.R'
     'zzz.R'
