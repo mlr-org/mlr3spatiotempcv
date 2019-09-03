@@ -67,7 +67,7 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
 
       if (length(stratify) == 0L || isFALSE(stratify)) {
         if (is.null(groups)) {
-          # Remove non-mnumeric features, target and coordinates
+          # Remove non-numeric features, target and coordinates
           columns = task$col_info
           columns = columns[id != task$target_names]
           columns = columns[type == "numeric"]
