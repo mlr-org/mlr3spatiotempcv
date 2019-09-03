@@ -100,10 +100,6 @@ ResamplingSpCVCoords <- R6Class("ResamplingSpCVCoords",
       self$instance[list(i), "row_id", on = "fold"][[1L]]
     },
 
-    .combine = function(instances) {
-      rbindlist(instances, use.names = TRUE)
-    },
-
     deep_clone = function(name, value) {
       if (name == "instance") copy(value) else value
     }

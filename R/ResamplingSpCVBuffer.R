@@ -108,10 +108,6 @@ ResamplingSpCVBuffer <- R6Class("ResamplingSpCVBuffer",
       self$instance[[i]]$test
     },
 
-    .combine = function(instances) {
-      rbindlist(instances, use.names = TRUE)
-    },
-
     deep_clone = function(name, value) {
       if (name == "instance") copy(value) else value
     }
