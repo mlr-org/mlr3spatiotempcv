@@ -7,8 +7,11 @@ Spatio-temporal extensions for mlr3
 
 [![Travis build
 status](https://travis-ci.org/mlr-org/mlr3spatiotemporal.svg?branch=master)](https://travis-ci.org/mlr-org/mlr3spatiotemporal)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-ago/mlr3spatiotemporal)](https://cran.r-project.org/package=mlr3spatiotemporal)
+[![cran
+checks](https://cranchecks.info/badges/worst/mlr3spatiotemporal)](https://cran.r-project.org/web/checks/check_results_mlr3spatiotemporal.html)
 [![CRAN
-status](https://www.r-pkg.org/badges/version/mlr3spatiotemporal)](https://cran.r-project.org/package=mlr3spatiotemporal)
+Downloads](https://cranlogs.r-pkg.org/badges/mlr3spatiotemporal)](https://cran.rstudio.com/web/packages/mlr3spatiotemporal/index.html)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Coverage
@@ -20,8 +23,7 @@ framework by spatiotemporal resampling and visualization methods.
 
 ## Resampling methods
 
-Currently, the following ones are
-implemented:
+Currently, the following ones are implemented:
 
 | Literature Name        | R Package                                                 | Reference     | mlr3spatiotemporal Name |
 | ---------------------- | --------------------------------------------------------- | ------------- | ----------------------- |
@@ -33,6 +35,7 @@ implemented:
 ## Spatial tasks
 
   - Task “ecuador” -\> `mlr_tasks$get("ecuador")`
+  - Task “diplodia” -\> `mlr_tasks$get("diplodia")`
 
 ## Visualization methods
 
@@ -46,7 +49,9 @@ Visualization of all partitions
 ``` r
 library(mlr3)
 library(mlr3spatiotemporal)
-task <- tsk("ecuador")
+library(ggplot2)
+
+task = tsk("ecuador")
 resampling = rsmp("spcv-coords")
 resampling$param_set$values = list(folds = 5)
 resampling$instantiate(task)

@@ -7,21 +7,25 @@
 #' @importFrom R6 R6Class
 "_PACKAGE"
 
-.onLoad <- function(libname, pkgname) {
+.onLoad = function(libname, pkgname) {
 
+  # nocov start
   # add 'coordinates' as col roles
-  tmp <- mlr_reflections$task_col_roles$regr
-  mlr_reflections$task_col_roles <- list(
+  tmp = mlr_reflections$task_col_roles$regr
+  mlr_reflections$task_col_roles = list(
     regr = c(tmp, "coordinates"),
     classif = c(tmp, "coordinates")
   )
 
   # add spatial task
   mlr_tasks$add("ecuador", load_task_ecuador)
+  mlr_tasks$add("diplodia", load_task_diplodia)
 
   # add spatial resampling methods
   mlr_resamplings$add("spcv-block", ResamplingSpCVBlock)
   mlr_resamplings$add("spcv-buffer", ResamplingSpCVBuffer)
   mlr_resamplings$add("spcv-coords", ResamplingSpCVCoords)
   mlr_resamplings$add("spcv-env", ResamplingSpCVEnv)
+
+  #nocov end
 }

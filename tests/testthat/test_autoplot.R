@@ -19,7 +19,7 @@ vdiffr::expect_doppelganger("SpCVCoords - Fold 1-4", coords3)
 # SpCVBlock --------------------------------------------------------------------
 
 resa_Block = ResamplingSpCVBlock$new()
-resa_Block$param_set$values <- list(folds = 4)
+resa_Block$param_set$values = list(folds = 4)
 resa_Block$instantiate(task)
 Block1 = autoplot(resa_Block, task)
 Block2 = autoplot(resa_Block, task, 1)
