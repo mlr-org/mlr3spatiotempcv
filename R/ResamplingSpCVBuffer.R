@@ -37,7 +37,7 @@
 ResamplingSpCVBuffer <- R6Class("ResamplingSpCVBuffer",
   inherit = mlr3::Resampling,
   public = list(
-    initialize = function(id = "spcv-block", param_vals = list(range = 100)) {
+    initialize = function(id = "spcv-buffer", param_vals = list(range = 100)) {
       super$initialize(
         id = id,
         param_set = ParamSet$new(params = list(
