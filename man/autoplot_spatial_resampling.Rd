@@ -62,8 +62,8 @@ This gives the option to align the single plots manually.
 #####
 \dontrun{
 library(mlr3)
-task = mlr_tasks$get("ecuador")
-resampling = ResamplingSpCVBlock$new()
+task <- tsk("ecuador")
+resampling = rsmp("spcv-block")
 resampling$param_set$values = list(folds = 4)
 resampling$instantiate(task)
 
@@ -84,7 +84,7 @@ plot_list = autoplot(resampling, task,
 # SpCVEnv
 #####
 \dontrun{
-resampling = ResamplingSpCVEnv$new()
+resampling = rsmp("spcv-env")
 resampling$param_set$values = list(folds = 4, features = c("dem"))
 resampling$instantiate(task)
 autoplot(resampling, task)
@@ -95,7 +95,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 # SpCVBuffer
 #####
 \dontrun{
-resampling = ResamplingSpCVBuffer$new()
+resampling = rsmp("spcv-buffer")
 resampling$param_set$values = list(range = 1000)
 resampling$instantiate(task)
 autoplot(resampling, task, 1)
@@ -105,7 +105,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 # SpCVCoords
 #####
 \dontrun{
-resampling = ResamplingSpCVCoords$new()
+resampling = rsmp("spcv-coords")
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)

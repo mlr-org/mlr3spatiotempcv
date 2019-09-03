@@ -20,10 +20,11 @@
 #'
 #' @export
 #' @examples
-#' task <- mlr3::mlr_tasks$get("ecuador")
+#' library(mlr3)
+#' task <- tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv <- mlr3::mlr_resamplings$get("spcv-coords")
+#' rcv <- rsmp("spcv-coords")
 #' rcv$param_set$values <- list(folds = 3)
 #' rcv$instantiate(task)
 #'

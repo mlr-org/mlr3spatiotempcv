@@ -17,10 +17,12 @@
 #'
 #' @export
 #' @examples
-#' task <- mlr3::mlr_tasks$get("ecuador")
+#' \dontrun{
+#' library(mlr3)
+#' task <- tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv <- mlr3::mlr_resamplings$get("spcv-buffer")
+#' rcv <- rsmp("spcv-buffer")
 #' rcv$param_set$values <- list(range = 1000)
 #' rcv$instantiate(task)
 #'
@@ -31,6 +33,7 @@
 #'
 #' # Internal storage:
 #' rcv$instance
+#' }
 ResamplingSpCVBuffer <- R6Class("ResamplingSpCVBuffer",
   inherit = mlr3::Resampling,
   public = list(
