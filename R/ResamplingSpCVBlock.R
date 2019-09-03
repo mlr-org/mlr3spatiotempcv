@@ -3,17 +3,17 @@
 #' @format [R6::R6Class] inheriting from [Resampling].
 #' @import mlr3
 #'
-#' @description
-#' Spatial Block Cross validation implemented by the `blockCV` package.
+#' @description Spatial Block Cross validation implemented by the `blockCV`
+#' package.
 #'
-#' @section Fields:
-#' See [Resampling].
+#' @section Fields: See [Resampling].
 #'
-#' @section Methods:
-#' See [Resampling].
+#' @section Methods: See [Resampling].
 #'
-#' @references
-#' Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV: An r package for generating spatially or environmentally separated folds for k-fold cross-validation of species distribution models. Methods Ecol Evol. 2019; 10:225–232. https://doi.org/10.1111/2041-210X.13107
+#' @references Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV:
+#' An r package for generating spatially or environmentally separated folds for
+#' k-fold cross-validation of species distribution models. Methods Ecol Evol.
+#' 2019; 10:225–232. https://doi.org/10.1111/2041-210X.13107
 #'
 #' @export
 #' @examples

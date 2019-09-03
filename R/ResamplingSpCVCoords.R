@@ -3,19 +3,16 @@
 #' @format [R6::R6Class] inheriting from [Resampling].
 #' @import mlr3
 #'
-#' @description
-#' Spatial Cross validation following the "k-means" approach after Brenning 2012.
+#' @description Spatial Cross validation following the "k-means" approach after
+#' Brenning 2012.
 #'
-#' @section Fields:
-#' See [Resampling].
+#' @section Fields: See [Resampling].
 #'
-#' @section Methods:
-#' See [Resampling].
+#' @section Methods: See [Resampling].
 #'
-#' @references
-#' Brenning, A. (2012). Spatial cross-validation and bootstrap for the
-#' assessment of prediction rules in remote sensing: The R package sperrorest.
-#' 2012 IEEE International Geoscience and Remote Sensing Symposium.
+#' @references Brenning, A. (2012). Spatial cross-validation and bootstrap for
+#' the assessment of prediction rules in remote sensing: The R package
+#' sperrorest. 2012 IEEE International Geoscience and Remote Sensing Symposium.
 #' https://doi.org/10.1109/igarss.2012.6352393
 #'
 #' @export
