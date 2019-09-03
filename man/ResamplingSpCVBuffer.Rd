@@ -9,16 +9,15 @@
 ResamplingSpCVBuffer
 }
 \description{
-Spatial Buffer Cross validation implemented by the \code{blockCV} package.
+Spatial Buffer Cross validation implemented by the \code{blockCV}
+package.
 }
 \section{Fields}{
-
-See \link{Resampling}.
+ See \link{Resampling}.
 }
 
 \section{Methods}{
-
-See \link{Resampling}.
+ See \link{Resampling}.
 }
 
 \examples{
@@ -41,6 +40,9 @@ rcv$instance
 }
 }
 \references{
-Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV: An r package for generating spatially or environmentally separated folds for k-fold cross-validation of species distribution models. Methods Ecol Evol. 2019; 10:225–232. https://doi.org/10.1111/2041-210X.13107
+Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV:
+An r package for generating spatially or environmentally separated folds for
+k-fold cross-validation of species distribution models. Methods Ecol Evol.
+2019; 10:225–232. https://doi.org/10.1111/2041-210X.13107
 }
 \keyword{datasets}

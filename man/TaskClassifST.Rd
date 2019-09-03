@@ -4,16 +4,16 @@
 \name{TaskClassifST}
 \alias{TaskClassifST}
 \title{SpatioTemporal Classification Task}
-\format{\link[R6:R6Class]{R6::R6Class} object inheriting from \link{Task}/\link{TaskSupervised}/\link{TaskClassif}.}
+\format{\link[R6:R6Class]{R6::R6Class} object inheriting from
+\link{Task}/\link{TaskSupervised}/\link{TaskClassif}.}
 \description{
-This task specializes \link{Task} and \link{TaskSupervised} for spatio-temporal classification problems.
-The target column is assumed to be a factor.
-The \code{task_type} is set to \code{"classif"} and \code{"spatiotemporal"}.
+This task specializes \link{Task} and \link{TaskSupervised} for
+spatio-temporal classification problems. The target column is assumed to be a
+factor. The \code{task_type} is set to \code{"classif"} and \code{"spatiotemporal"}.
 
-A spatial example task is available via \code{mlr_tasks$get("ecuador")}.
-During initialization, coordinates need to be passed.
-By default, coordinates are not used as features.
-This can be changed by setting \code{coords_as_features = TRUE}.
+A spatial example task is available via \code{mlr_tasks$get("ecuador")}. During
+initialization, coordinates need to be passed. By default, coordinates are
+not used as features. This can be changed by setting \code{coords_as_features = TRUE}.
 }
 \section{Construction}{
 \preformatted{t = TaskClassifST$new(id, backend, target, coordinates, positive = NULL,
@@ -22,9 +22,9 @@ This can be changed by setting \code{coords_as_features = TRUE}.
 \itemize{
 \item \code{id} :: \code{character(1)}\cr
 Identifier for the task.
-\item \code{backend} :: \link{DataBackend}\cr
-Either a \link{DataBackend}, or any object which is convertible to a DataBackend with \code{as_data_backend()}.
-E.g., a \code{data.frame()} will be converted to a \link{DataBackendDataTable}.
+\item \code{backend} :: \link{DataBackend}\cr Either a \link{DataBackend}, or any object which
+is convertible to a DataBackend with \code{as_data_backend()}. E.g., a
+\code{data.frame()} will be converted to a \link{DataBackendDataTable}.
 \item \code{target} :: \code{character(1)}\cr
 Name of the target column.
 \item \code{coordinates} :: \link{data.frame}\cr
