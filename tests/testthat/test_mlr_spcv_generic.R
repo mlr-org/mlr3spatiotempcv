@@ -31,7 +31,7 @@ test_that("spcv has no duplicated ids", {
   }
 })
 
-test_that("stratification", {
+test_that("stratification throws errors", {
   for (i in spcv_rsp_no_buffer) {
     i$param_set$values <- list(folds = 5, stratify = TRUE)
     expect_error(i$instantiate(task))
@@ -40,15 +40,30 @@ test_that("stratification", {
   expect_error(spcv_rsp$`spcv-buffer`$instantiate(task))
 })
 
-# restore initial objects without modification
-spcv_rsp = mlr_resamplings$mget(
-  as.data.table(mlr_resamplings)[map_lgl(key, stringr::str_detect, pattern = "spcv"), key]
-)
-spcv_rsp_no_buffer = spcv_rsp
-spcv_rsp_no_buffer$`spcv-buffer` = NULL
+test_that("grouping throws errors when 'groups' is set", {
+  spcv_rsp = mlr_resamplings$mget(
+    as.data.table(mlr_resamplings)[map_lgl(key, stringr::str_detect, pattern = "spcv"), key]
+  )
+  spcv_rsp_no_buffer = spcv_rsp
+  spcv_rsp_no_buffer$`spcv-buffer` = NULL
 
-test_that("grouping", {
   for (i in spcv_rsp) {
-    expect_error(i$instantiate(task_grp))
+    expect_error(i$instantiate(task_grp), "Grouping is not supported for spatial resampling methods")
   }
+})
+
+test_that("grouping throws errors when 'groups' and 'stratify' is set", {
+  spcv_rsp = mlr_resamplings$mget(
+    as.data.table(mlr_resamplings)[map_lgl(key, stringr::str_detect, pattern = "spcv"), key]
+  )
+  spcv_rsp_no_buffer = spcv_rsp
+  spcv_rsp_no_buffer$`spcv-buffer` = NULL
+
+  for (i in spcv_rsp_no_buffer) {
+    i$param_set$values <- list(folds = 5, stratify = TRUE)
+    expect_error(i$instantiate(task_grp), "Grouping is not supported for spatial resampling methods")
+  }
+
+  spcv_rsp$`spcv-buffer`$param_set$values = list(stratify = TRUE, range = 100)
+  expect_error(spcv_rsp$`spcv-buffer`$instantiate(task_grp), "Grouping is not supported for spatial resampling methods")
 })
