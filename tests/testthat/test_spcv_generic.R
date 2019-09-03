@@ -5,12 +5,12 @@ context("mlr_resampling_spcv-coords")
 task = mlr_tasks$get("ecuador")
 
 ### create custom data for grouping variable
-b <- as.data.table(readRDS(system.file("extdata", "ecuador.rda",
+b = as.data.table(readRDS(system.file("extdata", "ecuador.rda",
   package = "mlr3spatiotemporal"
 )))
 # add grouping variable
-data <- insert_named(b[1:150, ], list(grp = rep_len(letters[1:10], 150)))
-task_grp <- TaskClassifST$new("ecuador-grp", as_data_backend(data), target = "slides",
+data = insert_named(b[1:150, ], list(grp = rep_len(letters[1:10], 150)))
+task_grp = TaskClassifST$new("ecuador-grp", as_data_backend(data), target = "slides",
   coordinates = c("x", "y"))
 task_grp$set_col_role("grp", "groups")
 
@@ -35,7 +35,7 @@ test_that("stratification throws errors", {
   spcv_rsp_no_buffer$`spcv-buffer` = NULL
 
   for (i in spcv_rsp_no_buffer) {
-    i$param_set$values <- list(folds = 5, stratify = TRUE)
+    i$param_set$values = list(folds = 5, stratify = TRUE)
     expect_error(i$instantiate(task))
   }
   spcv_rsp$`spcv-buffer`$param_set$values = list(stratify = TRUE, range = 100)
@@ -62,7 +62,7 @@ test_that("grouping throws errors when 'groups' and 'stratify' is set", {
   spcv_rsp_no_buffer$`spcv-buffer` = NULL
 
   for (i in spcv_rsp_no_buffer) {
-    i$param_set$values <- list(folds = 5, stratify = TRUE)
+    i$param_set$values = list(folds = 5, stratify = TRUE)
     expect_error(i$instantiate(task_grp), "Grouping is not supported for spatial resampling methods")
   }
 
@@ -80,7 +80,7 @@ test_that("train and test set getter functions are working", {
 
   for (i in spcv_rsp_no_buffer) {
     # FIXME: seting folds=5 is only needed because of #17
-    i$param_set$values <- list(folds = 4)
+    i$param_set$values = list(folds = 4)
     i$instantiate(task)
     expect_silent(i$train_set(1))
     expect_silent(i$test_set(1))
@@ -97,7 +97,7 @@ test_that("cloning works", {
   )
 
   for (i in spcv_rsp) {
-    clone <- i$clone(deep = TRUE)
+    clone = i$clone(deep = TRUE)
     expect_true(all.equal(i, clone))
   }
 })

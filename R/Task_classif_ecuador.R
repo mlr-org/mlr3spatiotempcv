@@ -22,11 +22,11 @@
 #'   Geomorphology, 139-140: 271-284.
 NULL
 
-load_task_ecuador <- function(id = "ecuador") {
-  b <- as_data_backend(readRDS(system.file("extdata", "ecuador.rda",
+load_task_ecuador = function(id = "ecuador") {
+  b = as_data_backend(readRDS(system.file("extdata", "ecuador.rda",
     package = "mlr3spatiotemporal")))
-  b$hash <- "_mlr3_tasks_ecuador_"
-  task <- TaskClassifST$new(id, b, target = "slides", positive = "TRUE",
+  b$hash = "_mlr3_tasks_ecuador_"
+  task = TaskClassifST$new(id, b, target = "slides", positive = "TRUE",
     coordinates = c("x", "y"), coords_as_features = FALSE,
     crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
 }

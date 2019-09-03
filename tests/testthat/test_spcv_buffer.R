@@ -5,12 +5,12 @@ context("mlr_resampling_spcv-buffer")
 task = mlr_tasks$get("ecuador")
 
 ### create custom data for grouping variable
-b <- as.data.table(readRDS(system.file("extdata", "ecuador.rda",
+b = as.data.table(readRDS(system.file("extdata", "ecuador.rda",
                                        package = "mlr3spatiotemporal"
 )))
 # add grouping variable
-data <- insert_named(b[1:150, ], list(grp = rep_len(letters[1:10], 150)))
-task_grp <- TaskClassifST$new("ecuador-grp", as_data_backend(data), target = "slides",
+data = insert_named(b[1:150, ], list(grp = rep_len(letters[1:10], 150)))
+task_grp = TaskClassifST$new("ecuador-grp", as_data_backend(data), target = "slides",
                               coordinates = c("x", "y"))
 task_grp$set_col_role("grp", "groups")
 
@@ -52,7 +52,7 @@ test_that("cloning works", {
   )
 
   for (i in spcv_rsp) {
-    clone <- i$clone(deep = TRUE)
+    clone = i$clone(deep = TRUE)
     expect_true(all.equal(i, clone))
   }
 })

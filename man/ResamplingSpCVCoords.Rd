@@ -23,11 +23,11 @@ See \link{Resampling}.
 
 \examples{
 library(mlr3)
-task <- tsk("ecuador")
+task = tsk("ecuador")
 
 # Instantiate Resampling
-rcv <- rsmp("spcv-coords")
-rcv$param_set$values <- list(folds = 3)
+rcv = rsmp("spcv-coords")
+rcv$param_set$values = list(folds = 3)
 rcv$instantiate(task)
 
 # Individual sets:

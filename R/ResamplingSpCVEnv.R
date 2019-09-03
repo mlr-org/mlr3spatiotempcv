@@ -18,11 +18,11 @@
 #' @export
 #' @examples
 #' library(mlr3)
-#' task <- tsk("ecuador")
+#' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv <- rsmp("spcv-env")
-#' rcv$param_set$values <- list(folds = 4)
+#' rcv = rsmp("spcv-env")
+#' rcv$param_set$values = list(folds = 4)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -32,7 +32,7 @@
 #'
 #' # Internal storage:
 #' rcv$instance
-ResamplingSpCVEnv <- R6Class("ResamplingSpCVEnv",
+ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
   inherit = mlr3::Resampling,
   public = list(
     initialize = function(id = "spcv-env", param_vals = list(folds = 10L)) {
@@ -53,38 +53,38 @@ ResamplingSpCVEnv <- R6Class("ResamplingSpCVEnv",
 
       # Set values to default if missing
       if (is.null(self$param_set$values$rows)) {
-        self$param_set$values$rows <- self$param_set$default[["rows"]]
+        self$param_set$values$rows = self$param_set$default[["rows"]]
       }
       if (is.null(self$param_set$values$cols)) {
-        self$param_set$values$cols <- self$param_set$default[["cols"]]
+        self$param_set$values$cols = self$param_set$default[["cols"]]
       }
       if (is.null(self$param_set$values$features)) {
-        self$param_set$values$features <- task$feature_names
+        self$param_set$values$features = task$feature_names
       }
 
-      groups <- task$groups
-      stratify <- self$param_set$values$stratify
+      groups = task$groups
+      stratify = self$param_set$values$stratify
 
       if (length(stratify) == 0L || isFALSE(stratify)) {
         if (is.null(groups)) {
           # Remove non-mnumeric features, target and coordinates
-          columns <- task$col_info
-          columns <- columns[id != task$target_names]
-          columns <- columns[type == "numeric"]
-          columns <- columns[!id %in% c("x", "y")]
+          columns = task$col_info
+          columns = columns[id != task$target_names]
+          columns = columns[type == "numeric"]
+          columns = columns[!id %in% c("x", "y")]
 
           # Check for selected features that are not in task
-          diff <- setdiff(self$param_set$values$features, columns[, id])
+          diff = setdiff(self$param_set$values$features, columns[, id])
           if (length(diff) > 0) {
             stop(sprintf("'spcv-env' requires numeric features for clustering. Feature '%s' is either non-numeric or does not exist in the data",
               diff))
           }
-          columns <- columns[id %in% self$param_set$values$features]
-          columns <- columns[, id]
+          columns = columns[id %in% self$param_set$values$features]
+          columns = columns[, id]
 
-          data <- task$data()[, columns, with = FALSE]
+          data = task$data()[, columns, with = FALSE]
 
-          instance <- private$.sample(task$row_ids, data)
+          instance = private$.sample(task$row_ids, data)
         } else {
           stopf("Grouping is not supported for spatial resampling methods.", call. = FALSE)
         }
@@ -95,8 +95,8 @@ ResamplingSpCVEnv <- R6Class("ResamplingSpCVEnv",
         stopf("Stratification is not supported for spatial resampling methods.", call. = FALSE)
       }
 
-      self$instance <- instance
-      self$task_hash <- task$hash
+      self$instance = instance
+      self$task_hash = task$hash
       invisible(self)
     }
   ),
@@ -109,7 +109,7 @@ ResamplingSpCVEnv <- R6Class("ResamplingSpCVEnv",
 
   private = list(
     .sample = function(ids, data) {
-      inds <- kmeans(data, centers = self$param_set$values$folds)
+      inds = kmeans(data, centers = self$param_set$values$folds)
 
       data.table(
         row_id = ids,

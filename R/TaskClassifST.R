@@ -73,7 +73,7 @@
 #'
 #' # possible properties:
 #' mlr3::mlr_reflections$task_properties$classif
-TaskClassifST <- R6::R6Class("TaskClassifST",
+TaskClassifST = R6::R6Class("TaskClassifST",
   inherit = TaskClassif,
   public = list(
     crs = NULL,
@@ -107,7 +107,7 @@ TaskClassifST <- R6::R6Class("TaskClassifST",
     coordinates = function(row_ids = NULL) {
       if (is.null(row_ids)) {
         # Return coords in task$data order
-        row_ids <- self$row_ids
+        row_ids = self$row_ids
       }
       self$backend$data(rows = row_ids, cols = self$coordinate_names)
     },

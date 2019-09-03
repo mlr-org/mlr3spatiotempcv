@@ -21,11 +21,11 @@
 #' @export
 #' @examples
 #' library(mlr3)
-#' task <- tsk("ecuador")
+#' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv <- rsmp("spcv-coords")
-#' rcv$param_set$values <- list(folds = 3)
+#' rcv = rsmp("spcv-coords")
+#' rcv$param_set$values = list(folds = 3)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -35,7 +35,7 @@
 #'
 #' # Internal storage:
 #' rcv$instance # table
-ResamplingSpCVCoords <- R6Class("ResamplingSpCVCoords",
+ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
   inherit = mlr3::Resampling,
   public = list(
     initialize = function(id = "spcv-coords", param_vals = list(folds = 10L)) {
@@ -51,14 +51,14 @@ ResamplingSpCVCoords <- R6Class("ResamplingSpCVCoords",
     instantiate = function(task) {
 
       assert_task(task)
-      groups <- task$groups
+      groups = task$groups
 
 
-      stratify <- self$param_set$values$stratify
+      stratify = self$param_set$values$stratify
 
       if (length(stratify) == 0L || isFALSE(stratify)) {
         if (is.null(groups)) {
-          instance <- private$.sample(task$row_ids, task$coordinates())
+          instance = private$.sample(task$row_ids, task$coordinates())
         } else {
           stopf("Grouping is not supported for spatial resampling methods.", call. = FALSE)
         }
@@ -69,8 +69,8 @@ ResamplingSpCVCoords <- R6Class("ResamplingSpCVCoords",
         stopf("Stratification is not supported for spatial resampling methods.", call. = FALSE)
       }
 
-      self$instance <- instance
-      self$task_hash <- task$hash
+      self$instance = instance
+      self$task_hash = task$hash
       invisible(self)
     }
   ),
@@ -83,7 +83,7 @@ ResamplingSpCVCoords <- R6Class("ResamplingSpCVCoords",
 
   private = list(
     .sample = function(ids, coords) {
-      inds <- kmeans(coords, centers = self$param_set$values$folds)
+      inds = kmeans(coords, centers = self$param_set$values$folds)
 
       data.table(
         row_id = ids,

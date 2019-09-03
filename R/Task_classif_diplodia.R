@@ -20,11 +20,11 @@
 #'   Modelling, 406, 109–120. https://doi.org/10/gf34bd
 NULL
 
-load_task_diplodia <- function(id = "diplodia") {
-  b <- as_data_backend(readRDS(system.file("extdata", "diplodia.rda",
+load_task_diplodia = function(id = "diplodia") {
+  b = as_data_backend(readRDS(system.file("extdata", "diplodia.rda",
     package = "mlr3spatiotemporal")))
-  b$hash <- "_mlr3_tasks_diplodia_"
-  task <- TaskClassifST$new(id, b, target = "diplo01", positive = "1",
+  b$hash = "_mlr3_tasks_diplodia_"
+  task = TaskClassifST$new(id, b, target = "diplo01", positive = "1",
     coordinates = c("x", "y"), coords_as_features = FALSE,
     crs = "+proj=utm +zone=30 +south +datum=WGS84 +units=m +no_defs")
 }

@@ -7,11 +7,11 @@
 #' @importFrom R6 R6Class
 "_PACKAGE"
 
-.onLoad <- function(libname, pkgname) {
+.onLoad = function(libname, pkgname) {
 
   # add 'coordinates' as col roles
-  tmp <- mlr_reflections$task_col_roles$regr
-  mlr_reflections$task_col_roles <- list(
+  tmp = mlr_reflections$task_col_roles$regr
+  mlr_reflections$task_col_roles = list(
     regr = c(tmp, "coordinates"),
     classif = c(tmp, "coordinates")
   )

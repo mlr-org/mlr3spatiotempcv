@@ -19,11 +19,11 @@
 #' @examples
 #' \dontrun{
 #' library(mlr3)
-#' task <- tsk("ecuador")
+#' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv <- rsmp("spcv-block")
-#' rcv$param_set$values <- list(folds = 4)
+#' rcv = rsmp("spcv-block")
+#' rcv$param_set$values = list(folds = 4)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -34,7 +34,7 @@
 #' # Internal storage:
 #' rcv$instance
 #' }
-ResamplingSpCVBlock <- R6Class("ResamplingSpCVBlock",
+ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
   inherit = mlr3::Resampling,
   public = list(
     initialize = function(id = "spcv-block", param_vals = list(folds = 10L)) {
@@ -72,12 +72,12 @@ ResamplingSpCVBlock <- R6Class("ResamplingSpCVBlock",
         self$param_set$values$selection = self$param_set$default[["selection"]]
       }
 
-      groups <- task$groups
-      stratify <- self$param_set$values$stratify
+      groups = task$groups
+      stratify = self$param_set$values$stratify
 
       if (length(stratify) == 0L || isFALSE(stratify)) {
         if (is.null(groups)) {
-          instance <- private$.sample(task$row_ids, task$coordinates())
+          instance = private$.sample(task$row_ids, task$coordinates())
         } else {
           stopf("Grouping is not supported for spatial resampling methods.", call. = FALSE)
         }
@@ -88,8 +88,8 @@ ResamplingSpCVBlock <- R6Class("ResamplingSpCVBlock",
         stopf("Stratification is not supported for spatial resampling methods.", call. = FALSE)
       }
 
-      self$instance <- instance
-      self$task_hash <- task$hash
+      self$instance = instance
+      self$task_hash = task$hash
       invisible(self)
     }
   ),
@@ -102,10 +102,10 @@ ResamplingSpCVBlock <- R6Class("ResamplingSpCVBlock",
 
   private = list(
     .sample = function(ids, coords) {
-      points <- sf::st_as_sf(coords, coords = c("x", "y"))
+      points = sf::st_as_sf(coords, coords = c("x", "y"))
 
       # Suppress print message, warning crs and package load
-      capture.output(inds <- suppressMessages(suppressWarnings(blockCV::spatialBlock(
+      capture.output(inds = suppressMessages(suppressWarnings(blockCV::spatialBlock(
         speciesData = points,
         theRange = self$param_set$values$range,
         rows = self$param_set$values$rows,

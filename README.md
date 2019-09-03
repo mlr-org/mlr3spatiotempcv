@@ -48,7 +48,7 @@ library(mlr3)
 library(mlr3spatiotemporal)
 library(ggplot2)
 
-task <- tsk("ecuador")
+task = tsk("ecuador")
 resampling = rsmp("spcv-coords")
 resampling$param_set$values = list(folds = 5)
 resampling$instantiate(task)
