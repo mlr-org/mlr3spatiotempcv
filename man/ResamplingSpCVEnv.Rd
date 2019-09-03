@@ -23,10 +23,11 @@ See \link{Resampling}.
 }
 
 \examples{
-task <- mlr3::mlr_tasks$get("ecuador")
+library(mlr3)
+task <- tsk("ecuador")
 
 # Instantiate Resampling
-rcv <- mlr3::mlr_resamplings$get("spcv-env")
+rcv <- rsmp("spcv-env")
 rcv$param_set$values <- list(folds = 4)
 rcv$instantiate(task)
 

@@ -18,10 +18,11 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' task <- mlr3::mlr_tasks$get("ecuador")
+#' library(mlr3)
+#' task <- tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv <- mlr3::mlr_resamplings$get("spcv-block")
+#' rcv <- rsmp("spcv-block")
 #' rcv$param_set$values <- list(folds = 4)
 #' rcv$instantiate(task)
 #'

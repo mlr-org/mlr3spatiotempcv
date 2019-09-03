@@ -15,6 +15,7 @@ Implements spatio-temporal methods to enhance the
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://mlr3spatiotemporal.mlr-org.com/}
   \item \url{https://github.com/mlr-org/mlr3spatiotemporal}
   \item Report bugs at \url{https://github.com/mlr-org/mlr3spatiotemporal/issues}
 }
@@ -22,6 +23,7 @@ Useful links:
 
 Useful links:
 \itemize{
+  \item \url{https://mlr3spatiotemporal.mlr-org.com/}
   \item \url{https://github.com/mlr-org/mlr3spatiotemporal}
   \item Report bugs at \url{https://github.com/mlr-org/mlr3spatiotemporal/issues}
 }

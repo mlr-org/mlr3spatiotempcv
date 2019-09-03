@@ -29,8 +29,8 @@
 #' #####
 #' \dontrun{
 #' library(mlr3)
-#' task = mlr_tasks$get("ecuador")
-#' resampling = ResamplingSpCVBlock$new()
+#' task <- tsk("ecuador")
+#' resampling = rsmp("spcv-block")
 #' resampling$param_set$values = list(folds = 4)
 #' resampling$instantiate(task)
 #'
@@ -67,7 +67,7 @@ autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, grid = TRU
 #' # SpCVEnv
 #' #####
 #' \dontrun{
-#' resampling = ResamplingSpCVEnv$new()
+#' resampling = rsmp("spcv-env")
 #' resampling$param_set$values = list(folds = 4, features = c("dem"))
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
@@ -91,7 +91,7 @@ autoplot.ResamplingSpCVEnv = function(object, task, fold_id = NULL, grid = TRUE,
 #' # SpCVBuffer
 #' #####
 #' \dontrun{
-#' resampling = ResamplingSpCVBuffer$new()
+#' resampling = rsmp("spcv-buffer")
 #' resampling$param_set$values = list(range = 1000)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task, 1)
@@ -118,7 +118,7 @@ autoplot.ResamplingSpCVBuffer = function(object, task, fold_id = NULL, grid = TR
 #' # SpCVCoords
 #' #####
 #' \dontrun{
-#' resampling = ResamplingSpCVCoords$new()
+#' resampling = rsmp("spcv-coords")
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
