@@ -74,6 +74,7 @@ test_that("train and test set getter functions are working", {
   spcv_rsp = mlr_resamplings$mget(
     as.data.table(mlr_resamplings)[map_lgl(key, stringr::str_detect, pattern = "spcv"), key]
   )
+
   spcv_rsp_no_buffer = spcv_rsp
   spcv_rsp_no_buffer$`spcv-buffer` = NULL
 
@@ -84,6 +85,10 @@ test_that("train and test set getter functions are working", {
     expect_silent(i$train_set(1))
     expect_silent(i$test_set(1))
   }
+
+  spcv_rsp$`spcv-buffer`$instantiate(task)
+  expect_silent(spcv_rsp$`spcv-buffer`$train_set(1))
+  expect_silent(spcv_rsp$`spcv-buffer`$test_set(1))
 })
 
 test_that("cloning works", {
@@ -91,7 +96,7 @@ test_that("cloning works", {
     as.data.table(mlr_resamplings)[map_lgl(key, stringr::str_detect, pattern = "spcv"), key]
   )
 
-  for (i in spcv_rsp_no_buffer) {
+  for (i in spcv_rsp) {
     clone <- i$clone(deep = TRUE)
     expect_true(all.equal(i, clone))
   }
