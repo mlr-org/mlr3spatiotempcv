@@ -18,4 +18,6 @@ test_that("printing works", {
   expect_output(print(task))
 
   expect_data_table(task$coordinates())
+
+  expect_output(print(task$truth()))
 })
