@@ -3,29 +3,26 @@
 #' @format [R6::R6Class] inheriting from [Resampling].
 #' @import mlr3
 #'
-#' @description
-#' Spatial Cross validation following the "k-means" approach after Brenning 2012.
+#' @description Spatial Cross validation following the "k-means" approach after
+#' Brenning 2012.
 #'
-#' @section Fields:
-#' See [Resampling].
+#' @section Fields: See [Resampling].
 #'
-#' @section Methods:
-#' See [Resampling].
+#' @section Methods: See [Resampling].
 #'
-#' @references
-#' Brenning, A. (2012). Spatial cross-validation and bootstrap for the
-#' assessment of prediction rules in remote sensing: The R package sperrorest.
-#' 2012 IEEE International Geoscience and Remote Sensing Symposium.
+#' @references Brenning, A. (2012). Spatial cross-validation and bootstrap for
+#' the assessment of prediction rules in remote sensing: The R package
+#' sperrorest. 2012 IEEE International Geoscience and Remote Sensing Symposium.
 #' https://doi.org/10.1109/igarss.2012.6352393
 #'
 #' @export
 #' @examples
 #' library(mlr3)
-#' task <- tsk("ecuador")
+#' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv <- rsmp("spcv-coords")
-#' rcv$param_set$values <- list(folds = 3)
+#' rcv = rsmp("spcv-coords")
+#' rcv$param_set$values = list(folds = 3)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -35,7 +32,7 @@
 #'
 #' # Internal storage:
 #' rcv$instance # table
-ResamplingSpCVCoords <- R6Class("ResamplingSpCVCoords",
+ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
   inherit = mlr3::Resampling,
   public = list(
     initialize = function(id = "spcv-coords", param_vals = list(folds = 10L)) {
@@ -51,14 +48,14 @@ ResamplingSpCVCoords <- R6Class("ResamplingSpCVCoords",
     instantiate = function(task) {
 
       assert_task(task)
-      groups <- task$groups
+      groups = task$groups
 
 
-      stratify <- self$param_set$values$stratify
+      stratify = self$param_set$values$stratify
 
       if (length(stratify) == 0L || isFALSE(stratify)) {
         if (is.null(groups)) {
-          instance <- private$.sample(task$row_ids, task$coordinates())
+          instance = private$.sample(task$row_ids, task$coordinates())
         } else {
           stopf("Grouping is not supported for spatial resampling methods.", call. = FALSE)
         }
@@ -69,8 +66,8 @@ ResamplingSpCVCoords <- R6Class("ResamplingSpCVCoords",
         stopf("Stratification is not supported for spatial resampling methods.", call. = FALSE)
       }
 
-      self$instance <- instance
-      self$task_hash <- task$hash
+      self$instance = instance
+      self$task_hash = task$hash
       invisible(self)
     }
   ),
@@ -83,7 +80,7 @@ ResamplingSpCVCoords <- R6Class("ResamplingSpCVCoords",
 
   private = list(
     .sample = function(ids, coords) {
-      inds <- kmeans(coords, centers = self$param_set$values$folds)
+      inds = kmeans(coords, centers = self$param_set$values$folds)
 
       data.table(
         row_id = ids,
@@ -98,10 +95,6 @@ ResamplingSpCVCoords <- R6Class("ResamplingSpCVCoords",
 
     .get_test = function(i) {
       self$instance[list(i), "row_id", on = "fold"][[1L]]
-    },
-
-    .combine = function(instances) {
-      rbindlist(instances, use.names = TRUE)
     },
 
     deep_clone = function(name, value) {

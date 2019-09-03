@@ -9,26 +9,26 @@
 ResamplingSpCVEnv
 }
 \description{
-Environmental Block Cross Validation. This strategy uses k-means clustering to specify blocks of smilar environmental conditions.
-Only numeric features can be used. The \code{features} used for building blocks can be specified in the \code{param_set}. By default, all numeric features are used.
+Environmental Block Cross Validation. This strategy uses k-means
+clustering to specify blocks of smilar environmental conditions. Only numeric
+features can be used. The \code{features} used for building blocks can be
+specified in the \code{param_set}. By default, all numeric features are used.
 }
 \section{Fields}{
-
-See \link{Resampling}.
+ See \link{Resampling}.
 }
 
 \section{Methods}{
-
-See \link{Resampling}.
+ See \link{Resampling}.
 }
 
 \examples{
 library(mlr3)
-task <- tsk("ecuador")
+task = tsk("ecuador")
 
 # Instantiate Resampling
-rcv <- rsmp("spcv-env")
-rcv$param_set$values <- list(folds = 4)
+rcv = rsmp("spcv-env")
+rcv$param_set$values = list(folds = 4)
 rcv$instantiate(task)
 
 # Individual sets:
@@ -40,6 +40,9 @@ intersect(rcv$train_set(1), rcv$test_set(1))
 rcv$instance
 }
 \references{
-Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV: An r package for generating spatially or environmentally separated folds for k-fold cross-validation of species distribution models. Methods Ecol Evol. 2019; 10:225–232. https://doi.org/10.1111/2041-210X.13107
+Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV:
+An r package for generating spatially or environmentally separated folds for
+k-fold cross-validation of species distribution models. Methods Ecol Evol.
+2019; 10:225–232. https://doi.org/10.1111/2041-210X.13107
 }
 \keyword{datasets}

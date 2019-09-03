@@ -29,6 +29,7 @@ Suggests:
     knitr,
     lgr,
     sf,
+    stringr,
     testthat,
     vdiffr
 VignetteBuilder:
@@ -49,6 +50,7 @@ Collate:
     'TaskClassifST.R'
     'helper.R'
     'Task_classif_ecuador.R'
+    'Task_classif_diplodia.R'
     'mlr3spatiotemporal-package.R'
     'reexports.R'
     'autoplot.R'

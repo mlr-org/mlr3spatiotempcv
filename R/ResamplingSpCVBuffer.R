@@ -3,27 +3,27 @@
 #' @format [R6::R6Class] inheriting from [Resampling].
 #' @import mlr3
 #'
-#' @description
-#' Spatial Buffer Cross validation implemented by the `blockCV` package.
+#' @description Spatial Buffer Cross validation implemented by the `blockCV`
+#' package.
 #'
-#' @section Fields:
-#' See [Resampling].
+#' @section Fields: See [Resampling].
 #'
-#' @section Methods:
-#' See [Resampling].
+#' @section Methods: See [Resampling].
 #'
-#' @references
-#' Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV: An r package for generating spatially or environmentally separated folds for k-fold cross-validation of species distribution models. Methods Ecol Evol. 2019; 10:225–232. https://doi.org/10.1111/2041-210X.13107
+#' @references Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV:
+#' An r package for generating spatially or environmentally separated folds for
+#' k-fold cross-validation of species distribution models. Methods Ecol Evol.
+#' 2019; 10:225–232. https://doi.org/10.1111/2041-210X.13107
 #'
 #' @export
 #' @examples
 #' \dontrun{
 #' library(mlr3)
-#' task <- tsk("ecuador")
+#' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv <- rsmp("spcv-buffer")
-#' rcv$param_set$values <- list(range = 1000)
+#' rcv = rsmp("spcv-buffer")
+#' rcv$param_set$values = list(range = 1000)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -34,10 +34,10 @@
 #' # Internal storage:
 #' rcv$instance
 #' }
-ResamplingSpCVBuffer <- R6Class("ResamplingSpCVBuffer",
+ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
   inherit = mlr3::Resampling,
   public = list(
-    initialize = function(id = "spcv-block", param_vals = list(range = 100)) {
+    initialize = function(id = "spcv-buffer", param_vals = list(range = 100)) {
       super$initialize(
         id = id,
         param_set = ParamSet$new(params = list(
@@ -51,12 +51,12 @@ ResamplingSpCVBuffer <- R6Class("ResamplingSpCVBuffer",
 
       assert_task(task)
 
-      groups <- task$groups
-      stratify <- self$param_set$values$stratify
+      groups = task$groups
+      stratify = self$param_set$values$stratify
 
       if (length(stratify) == 0L || isFALSE(stratify)) {
         if (is.null(groups)) {
-          instance <- private$.sample(task$row_ids, task$coordinates(), task$crs)
+          instance = private$.sample(task$row_ids, task$coordinates(), task$crs)
         } else {
           stopf("Grouping is not supported for spatial resampling methods.", call. = FALSE)
         }
@@ -67,8 +67,8 @@ ResamplingSpCVBuffer <- R6Class("ResamplingSpCVBuffer",
         stopf("Stratification is not supported for spatial resampling methods.", call. = FALSE)
       }
 
-      self$instance <- instance
-      self$task_hash <- task$hash
+      self$instance = instance
+      self$task_hash = task$hash
       invisible(self)
     }
   ),
@@ -81,11 +81,11 @@ ResamplingSpCVBuffer <- R6Class("ResamplingSpCVBuffer",
 
   private = list(
     .sample = function(ids, coords, crs) {
-      points <- sf::st_as_sf(coords,
+      points = sf::st_as_sf(coords,
         coords = c("x", "y"),
         crs = crs)
 
-      inds <- blockCV::buffering(
+      inds = blockCV::buffering(
         speciesData = points,
         theRange = self$param_set$values$range,
         progress = FALSE
@@ -95,7 +95,7 @@ ResamplingSpCVBuffer <- R6Class("ResamplingSpCVBuffer",
         set = map(x, function(y) {
           ids[y]
         })
-        names(set) <- c("train", "test")
+        names(set) = c("train", "test")
         set
       })
     },
@@ -106,10 +106,6 @@ ResamplingSpCVBuffer <- R6Class("ResamplingSpCVBuffer",
 
     .get_test = function(i) {
       self$instance[[i]]$test
-    },
-
-    .combine = function(instances) {
-      rbindlist(instances, use.names = TRUE)
     },
 
     deep_clone = function(name, value) {

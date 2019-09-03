@@ -62,7 +62,7 @@ This gives the option to align the single plots manually.
 #####
 \dontrun{
 library(mlr3)
-task <- tsk("ecuador")
+task = tsk("ecuador")
 resampling = rsmp("spcv-block")
 resampling$param_set$values = list(folds = 4)
 resampling$instantiate(task)
