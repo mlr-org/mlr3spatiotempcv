@@ -29,6 +29,7 @@ Suggests:
     knitr,
     lgr,
     sf,
+    stringr,
     testthat,
     vdiffr
 VignetteBuilder:
