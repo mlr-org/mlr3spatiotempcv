@@ -16,4 +16,6 @@ test_that("coordinates can be used as features", {
 test_that("printing works", {
   task = mlr_tasks$get("ecuador")
   expect_output(print(task))
+
+  expect_data_table(task$coordinates())
 })
