@@ -18,6 +18,7 @@
 
   # add spatial task
   mlr_tasks$add("ecuador", load_task_ecuador)
+  mlr_tasks$add("diplodia", load_task_diplodia)
 
   # add spatial resampling methods
   mlr_resamplings$add("spcv-block", ResamplingSpCVBlock)

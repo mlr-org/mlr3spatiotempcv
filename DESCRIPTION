@@ -53,6 +53,7 @@ Collate:
     'TaskClassifST.R'
     'helper.R'
     'Task_classif_ecuador.R'
+    'Task_classif_diplodia.R'
     'mlr3spatiotemporal-package.R'
     'reexports.R'
     'autoplot.R'

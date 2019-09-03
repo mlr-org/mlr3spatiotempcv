@@ -30,6 +30,7 @@ Currently, the following ones are implemented:
 ## Spatial tasks
 
 - Task "ecuador" -> `mlr_tasks$get("ecuador")`
+- Task "diplodia" -> `mlr_tasks$get("diplodia")`
 
 ## Visualization methods
 
@@ -39,9 +40,16 @@ The following example shows the resampling method `"spcv-coords"`.
 
 Visualization of all partitions
 
+```{r setup, include=FALSE}
+set.seed(123)
+```
+
+
 ```{r spcv-coords-all-partitions}
 library(mlr3)
 library(mlr3spatiotemporal)
+library(ggplot2)
+
 task <- tsk("ecuador")
 resampling = rsmp("spcv-coords")
 resampling$param_set$values = list(folds = 5)
