@@ -39,6 +39,31 @@ implemented:
 Generic S3 function `autoplot()` for all implemented spatial resampling
 methods.
 
+The following example shows the resampling method `"spcv-coords"`.
+
+Visualization of all partitions
+
+``` r
+library(mlr3)
+library(mlr3spatiotemporal)
+task <- tsk("ecuador")
+resampling = rsmp("spcv-coords")
+resampling$param_set$values = list(folds = 5)
+resampling$instantiate(task)
+
+autoplot(resampling, task)
+```
+
+![](README_files/figure-gfm/spcv-coords-all-partitions-1.png)<!-- -->
+
+Visualization of the first fold only
+
+``` r
+autoplot(resampling, task, fold_id = 1)
+```
+
+![](README_files/figure-gfm/spcv-coords-fold-1.png)<!-- -->
+
 # References
 
 <div id="refs" class="references">
