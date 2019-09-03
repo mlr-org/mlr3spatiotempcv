@@ -9,6 +9,7 @@
 
 .onLoad = function(libname, pkgname) {
 
+  # nocov start
   # add 'coordinates' as col roles
   tmp = mlr_reflections$task_col_roles$regr
   mlr_reflections$task_col_roles = list(
@@ -25,4 +26,6 @@
   mlr_resamplings$add("spcv-buffer", ResamplingSpCVBuffer)
   mlr_resamplings$add("spcv-coords", ResamplingSpCVCoords)
   mlr_resamplings$add("spcv-env", ResamplingSpCVEnv)
+
+  #nocov end
 }
