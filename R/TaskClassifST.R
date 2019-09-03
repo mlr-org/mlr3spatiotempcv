@@ -4,17 +4,17 @@
 #' @import mlr3
 #'
 #' @usage NULL
-#' @format [R6::R6Class] object inheriting from [Task]/[TaskSupervised]/[TaskClassif].
+#' @format [R6::R6Class] object inheriting from
+#'   [Task]/[TaskSupervised]/[TaskClassif].
 #'
-#' @description
-#' This task specializes [Task] and [TaskSupervised] for spatio-temporal classification problems.
-#' The target column is assumed to be a factor.
-#' The `task_type` is set to `"classif"` and `"spatiotemporal"`.
+#' @description This task specializes [Task] and [TaskSupervised] for
+#' spatio-temporal classification problems. The target column is assumed to be a
+#' factor. The `task_type` is set to `"classif"` and `"spatiotemporal"`.
 #'
-#' A spatial example task is available via `mlr_tasks$get("ecuador")`.
-#' During initialization, coordinates need to be passed.
-#' By default, coordinates are not used as features.
-#' This can be changed by setting `coords_as_features = TRUE`.
+#' A spatial example task is available via `mlr_tasks$get("ecuador")`. During
+#' initialization, coordinates need to be passed. By default, coordinates are
+#' not used as features. This can be changed by setting `coords_as_features =
+#' TRUE`.
 #'
 #' @section Construction:
 #' ```
@@ -25,9 +25,9 @@
 #' * `id` :: `character(1)`\cr
 #'   Identifier for the task.
 #'
-#' * `backend` :: [DataBackend]\cr
-#'   Either a [DataBackend], or any object which is convertible to a DataBackend with `as_data_backend()`.
-#'   E.g., a `data.frame()` will be converted to a [DataBackendDataTable].
+#' * `backend` :: [DataBackend]\cr Either a [DataBackend], or any object which
+#' is convertible to a DataBackend with `as_data_backend()`. E.g., a
+#' `data.frame()` will be converted to a [DataBackendDataTable].
 #'
 #' * `target` :: `character(1)`\cr
 #'   Name of the target column.
@@ -138,6 +138,7 @@ TaskClassifST = R6::R6Class("TaskClassifST",
     pmap(types, function(type, N, feats) catf(str_indent(sprintf("* %s (%i):", type, N), feats)))
   }
 
+  # nocov start
   if (length(self$col_roles$order)) {
     catf(str_indent("Order by:", self$col_roles$order))
   }
@@ -147,5 +148,6 @@ TaskClassifST = R6::R6Class("TaskClassifST",
   if ("weights" %in% self$properties) {
     catf(str_indent("Weights:", self$col_roles$weights))
   }
+  # nocov end
 
 }
