@@ -76,7 +76,8 @@ ResamplingSpCVEnv <- R6Class("ResamplingSpCVEnv",
           # Check for selected features that are not in task
           diff <- setdiff(self$param_set$values$features, columns[, id])
           if (length(diff) > 0) {
-            stop(paste("Selected features are not numeric features of the task: ", diff))
+            stop(sprintf("'spcv-env' requires numeric features for clustering. Feature '%s' is either non-numeric or does not exist in the data",
+              diff))
           }
           columns <- columns[id %in% self$param_set$values$features]
           columns <- columns[, id]
