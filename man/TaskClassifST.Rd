@@ -72,6 +72,8 @@ mlr3::mlr_reflections$task_properties$classif
 }
 \seealso{
 Example spatial classification task: \code{\link[=mlr_tasks_ecuador]{ecuador}}.
+
+Other Task: \code{\link{TaskRegrST}}
 }
 \concept{Task}
 \keyword{datasets}
