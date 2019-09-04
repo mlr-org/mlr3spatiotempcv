@@ -80,7 +80,24 @@ TaskClassifST = R6::R6Class("TaskClassifST",
 
     initialize = function(id, backend, target, coordinates, coords_as_features = FALSE, positive = NULL, crs = NULL) {
 
+      assert_string(target)
       super$initialize(id = id, backend = backend, target = target, positive = positive)
+
+      info = self$col_info[id == target]
+      levels = info$levels[[1L]]
+
+      if (info$type %nin% c("factor", "character")) {
+        stopf("Target column '%s' must be a factor or character", target)
+      }
+      if (length(levels) < 2L) {
+        stopf("Target column '%s' must have at least two levels", target)
+      }
+
+      self$properties = union(self$properties, if (length(levels) == 2L) "twoclass" else "multiclass")
+      if (!is.null(positive)) {
+        self$positive = positive
+      }
+
       self$crs = checkmate::assert_character(crs, null.ok = TRUE)
 
       # check coordinates
@@ -88,7 +105,6 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       for (coord in coordinates) {
         assert_numeric(self$data(cols = coord)[[1L]], any.missing = FALSE)
       }
-
 
       # mark columns as coordinates
       # check if coordinates should be included as features
