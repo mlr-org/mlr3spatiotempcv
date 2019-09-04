@@ -50,6 +50,7 @@ Collate:
     'ResamplingSpCVCoords.R'
     'ResamplingSpCVEnv.R'
     'TaskClassifST.R'
+    'TaskRegrST.R'
     'helper.R'
     'Task_classif_ecuador.R'
     'mlr3spatiotemporal-package.R'
