@@ -26,16 +26,12 @@ Imports:
 Suggests:
     blockCV,
     cowplot,
-    knitr,
     sf,
     stringr,
     testthat,
     vdiffr
-VignetteBuilder:
-    knitr
 Remotes:
     be-marc/blockCV
-ByteCompile: true
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
