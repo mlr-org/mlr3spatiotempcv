@@ -92,16 +92,7 @@ TaskClassifST = R6::R6Class("TaskClassifST",
 
       # mark columns as coordinates
       # check if coordinates should be included as features
-      if (coords_as_features == TRUE) {
-        exclusive = FALSE
-      } else {
-        exclusive = TRUE
-      }
-      self$set_col_role(coordinates, "coordinates", exclusive = exclusive)
-    },
-
-    truth = function(row_ids = NULL) {
-      self$data(row_ids, cols = self$target_names)[[1L]]
+      self$set_col_role(coordinates, "coordinates", exclusive = !coords_as_features)
     },
 
     coordinates = function(row_ids = NULL) {
@@ -111,6 +102,7 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       }
       self$backend$data(rows = row_ids, cols = self$coordinate_names)
     },
+
     print = function(...) {
       .task_print(self)
     }
@@ -130,6 +122,8 @@ TaskClassifST = R6::R6Class("TaskClassifST",
   catf(str_indent("Properties:", self$properties))
   catf(str_indent("Coordinates", self$coordinate_names))
 
+  # TODO: is this copy-pasted from Task?
+  # We should try to find a better way.
   types = self$feature_types
   if (nrow(types)) {
     catf("Features (%i):", nrow(types))

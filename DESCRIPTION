@@ -27,7 +27,6 @@ Suggests:
     blockCV,
     cowplot,
     knitr,
-    lgr,
     sf,
     stringr,
     testthat,

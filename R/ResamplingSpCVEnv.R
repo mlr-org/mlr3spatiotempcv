@@ -69,10 +69,7 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
       if (length(stratify) == 0L || isFALSE(stratify)) {
         if (is.null(groups)) {
           # Remove non-numeric features, target and coordinates
-          columns = task$col_info
-          columns = columns[id != task$target_names]
-          columns = columns[type == "numeric"]
-          columns = columns[!id %in% c("x", "y")]
+          columns = task$col_info[! id %in% c(task$target_names, "x", "y") & type == "numeric"]
 
           # Check for selected features that are not in task
           diff = setdiff(self$param_set$values$features, columns[, id])
@@ -87,13 +84,13 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
 
           instance = private$.sample(task$row_ids, data)
         } else {
-          stopf("Grouping is not supported for spatial resampling methods.", call. = FALSE)
+          stopf("Grouping is not supported for spatial resampling methods.")
         }
       } else {
         if (!is.null(groups)) {
-          stopf("Grouping is not supported for spatial resampling methods", call. = FALSE)
+          stopf("Grouping is not supported for spatial resampling methods")
         }
-        stopf("Stratification is not supported for spatial resampling methods.", call. = FALSE)
+        stopf("Stratification is not supported for spatial resampling methods.")
       }
 
       self$instance = instance

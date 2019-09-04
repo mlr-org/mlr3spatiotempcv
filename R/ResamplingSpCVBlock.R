@@ -52,20 +52,22 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         param_vals = param_vals
       )
     },
+
     instantiate = function(task) {
 
       assert_task(task)
+      pv = self$param_set$values
 
       # Check combination
-      if (!is.null(self$param_set$values$range) & (!is.null(self$param_set$values$rows) | !is.null(self$param_set$values$cols))) {
+      if (!is.null(pv$range) && (!is.null(pv$rows) || !is.null(pv$cols))) {
         warning("Cols and rows are ignored. Range is used to generated blocks.")
       }
 
       # Set values to default if missing
-      if (is.null(self$param_set$values$rows) & is.null(self$param_set$values$range)) {
+      if (is.null(pv$rows) & is.null(pv$range)) {
         self$param_set$values$rows = self$param_set$default[["rows"]]
       }
-      if (is.null(self$param_set$values$cols) & is.null(self$param_set$values$range)) {
+      if (is.null(pv$cols) & is.null(pv$range)) {
         self$param_set$values$cols = self$param_set$default[["cols"]]
       }
       if (is.null(self$param_set$selection)) {
@@ -73,19 +75,19 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       }
 
       groups = task$groups
-      stratify = self$param_set$values$stratify
+      stratify = pv$stratify
 
       if (length(stratify) == 0L || isFALSE(stratify)) {
         if (is.null(groups)) {
           instance = private$.sample(task$row_ids, task$coordinates())
         } else {
-          stopf("Grouping is not supported for spatial resampling methods.", call. = FALSE)
+          stopf("Grouping is not supported for spatial resampling methods.")
         }
       } else {
         if (!is.null(groups)) {
-          stopf("Grouping is not supported for spatial resampling methods", call. = FALSE)
+          stopf("Grouping is not supported for spatial resampling methods")
         }
-        stopf("Stratification is not supported for spatial resampling methods.", call. = FALSE)
+        stopf("Stratification is not supported for spatial resampling methods.")
       }
 
       self$instance = instance
