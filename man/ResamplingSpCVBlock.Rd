@@ -27,7 +27,6 @@ task = tsk("ecuador")
 
 # Instantiate Resampling
 rcv = rsmp("spcv-block")
-rcv$param_set$values = list(folds = 4)
 rcv$instantiate(task)
 
 # Individual sets:
