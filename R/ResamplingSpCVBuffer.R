@@ -46,6 +46,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         )),
         param_vals = param_vals
       )
+      require_namespaces(c("blockCV", "sf"))
     },
     instantiate = function(task) {
 
@@ -81,6 +82,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
 
   private = list(
     .sample = function(ids, coords, crs) {
+      require_namespaces("sf")
       points = sf::st_as_sf(coords,
         coords = c("x", "y"),
         crs = crs)

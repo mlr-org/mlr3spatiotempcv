@@ -149,6 +149,7 @@ autoplot.ResamplingSpCVCoords = function(object, task, fold_id = NULL, grid = TR
 autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
+  require_namespaces(c("sf", "cowplot"))
 
   if (class(resampling)[1] == "ResamplingSpCVBuffer") {
 

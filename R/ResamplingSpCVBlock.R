@@ -51,6 +51,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         )),
         param_vals = param_vals
       )
+      require_namespaces(c("blockCV", "sf"))
     },
 
     instantiate = function(task) {
