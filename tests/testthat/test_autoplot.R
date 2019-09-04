@@ -18,21 +18,20 @@ vdiffr::expect_doppelganger("SpCVCoords - Fold 1-4", coords3)
 
 # SpCVBlock --------------------------------------------------------------------
 
-resa_Block = ResamplingSpCVBlock$new()
-resa_Block$param_set$values = list(folds = 4)
-resa_Block$instantiate(task)
-Block1 = autoplot(resa_Block, task)
-Block2 = autoplot(resa_Block, task, 1)
-Block3 = autoplot(resa_Block, task, c(1, 2, 3, 4))
+resa_block = ResamplingSpCVBlock$new()
+resa_block$instantiate(task)
+Block1 = autoplot(resa_block, task)
+Block2 = autoplot(resa_block, task, 1)
+Block3 = autoplot(resa_block, task, c(1, 2, 3, 4))
 
 vdiffr::expect_doppelganger("SpCVBlock all test sets", Block1)
 vdiffr::expect_doppelganger("SpCVBlock - Fold 1", Block2)
 vdiffr::expect_doppelganger("SpCVBlock - Fold 1-4", Block3)
 
 # these checks apply to all resampling methods.
-expect_error(autoplot(resa_Block, task, 5))
-expect_error(autoplot(resa_Block, task, c(1, 2, 3, 4, 5)))
-expect_list(autoplot(resa_Block, task,  c(1, 2, 3, 4), grid = FALSE))
+expect_error(autoplot(resa_block, task, 20))
+expect_error(autoplot(resa_block, task, c(1, 20)))
+expect_list(autoplot(resa_block, task,  c(1, 2, 3, 4), grid = FALSE))
 
 # SpCVBuffer -------------------------------------------------------------------
 

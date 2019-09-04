@@ -23,7 +23,6 @@
 #'
 #' # Instantiate Resampling
 #' rcv = rsmp("spcv-block")
-#' rcv$param_set$values = list(folds = 4)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -43,8 +42,8 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         param_set = ParamSet$new(params = list(
           ParamUty$new("stratify", default = NULL),
           ParamInt$new("folds", lower = 1L, tags = "required"),
-          ParamInt$new("rows", lower = 1L, default = 2),
-          ParamInt$new("cols", lower = 1L, default = 2),
+          ParamInt$new("rows", lower = 1L, default = 4),
+          ParamInt$new("cols", lower = 1L, default = 4),
           ParamInt$new("range", lower = 1L),
           ParamFct$new("selection", levels = c("random", "systematic", "checkerboard"), default = "random")
 
@@ -75,8 +74,17 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         self$param_set$values$selection = self$param_set$default[["selection"]]
       }
 
+      # Check for valid combinations of rows, cols and folds
+      if ((self$param_set$values$rows*self$param_set$values$cols) < self$param_set$values$folds) {
+        stopf("'nrow' * 'ncol' needs to be larger than 'folds'.")
+      }
+
+      if (!is.null(self$param_set$values$rows) && !is.null(self$param_set$values$cols)) {
+        warning("Hyperparameters 'rows' and 'cols' not set. Using the default value of '4' set by 'mlr3spatiotemporal' for both which results in a grid of 16. You might want to set these values yourself during resampling construction.")
+      }
+
       groups = task$groups
-      stratify = pv$stratify
+      stratify = self$param_set$values$stratify
 
       if (length(stratify) == 0L || isFALSE(stratify)) {
         if (is.null(groups)) {

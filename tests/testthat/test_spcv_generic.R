@@ -79,8 +79,6 @@ test_that("train and test set getter functions are working", {
   spcv_rsp_no_buffer$`spcv-buffer` = NULL
 
   for (i in spcv_rsp_no_buffer) {
-    # FIXME: seting folds=5 is only needed because of #17
-    i$param_set$values = list(folds = 4)
     i$instantiate(task)
     expect_silent(i$train_set(1))
     expect_silent(i$test_set(1))

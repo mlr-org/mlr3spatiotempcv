@@ -174,7 +174,10 @@ autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
       stop("More folds specified than stored in resampling.")
     }
     if (length(fold_id) == 1 && fold_id > resampling$iters) {
-      stop("Specified a fold id which is not available.")
+      stop("Specified a fold id which exceeds the total number of folds.")
+    }
+    if (any(fold_id > resampling$iters)) {
+      stop("Specified a fold id which exceeds the total number of folds.")
     }
     # Multiplot with train and test set
     plot_list = list()
