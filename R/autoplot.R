@@ -29,7 +29,7 @@
 #' #####
 #' \dontrun{
 #' library(mlr3)
-#' task <- tsk("ecuador")
+#' task = tsk("ecuador")
 #' resampling = rsmp("spcv-block")
 #' resampling$param_set$values = list(folds = 4)
 #' resampling$instantiate(task)

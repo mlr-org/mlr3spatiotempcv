@@ -9,25 +9,24 @@
 ResamplingSpCVCoords
 }
 \description{
-Spatial Cross validation following the "k-means" approach after Brenning 2012.
+Spatial Cross validation following the "k-means" approach after
+Brenning 2012.
 }
 \section{Fields}{
-
-See \link{Resampling}.
+ See \link{Resampling}.
 }
 
 \section{Methods}{
-
-See \link{Resampling}.
+ See \link{Resampling}.
 }
 
 \examples{
 library(mlr3)
-task <- tsk("ecuador")
+task = tsk("ecuador")
 
 # Instantiate Resampling
-rcv <- rsmp("spcv-coords")
-rcv$param_set$values <- list(folds = 3)
+rcv = rsmp("spcv-coords")
+rcv$param_set$values = list(folds = 3)
 rcv$instantiate(task)
 
 # Individual sets:
@@ -39,9 +38,9 @@ intersect(rcv$train_set(1), rcv$test_set(1))
 rcv$instance # table
 }
 \references{
-Brenning, A. (2012). Spatial cross-validation and bootstrap for the
-assessment of prediction rules in remote sensing: The R package sperrorest.
-2012 IEEE International Geoscience and Remote Sensing Symposium.
+Brenning, A. (2012). Spatial cross-validation and bootstrap for
+the assessment of prediction rules in remote sensing: The R package
+sperrorest. 2012 IEEE International Geoscience and Remote Sensing Symposium.
 https://doi.org/10.1109/igarss.2012.6352393
 }
 \keyword{datasets}
