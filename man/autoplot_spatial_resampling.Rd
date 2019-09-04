@@ -20,17 +20,17 @@
   grid = TRUE, ...)
 }
 \arguments{
-\item{object}{\link{ResamplingSpCVBlock}\cr
-An instantiated spatial resampling.}
+\item{object}{\link{ResamplingSpCVBlock}\cr An instantiated spatial resampling.}
 
-\item{task}{\link{TaskClassifST}\cr
-A spatial task.}
+\item{task}{\link{TaskClassifST}\cr A spatial task.}
 
-\item{fold_id}{\code{\link[=numeric]{numeric()}}\cr
-For which fold ids should training and test sets be visualized?}
+\item{fold_id}{\code{\link[=numeric]{numeric()}}\cr For which fold ids should training and test
+sets be visualized?}
 
-\item{grid}{(\code{logical(1)})\cr
-Should a gridded plot using \code{cowplot::plot_grid()} be created? If ´FALSE\code{only a list with all \CRANpkg{ggplot2} resamplings is returned. Default is}TRUE\code{. Only applies if a numeric vector is passed to argument }fold_id`.}
+\item{grid}{(\code{logical(1)})\cr Should a gridded plot using
+\code{cowplot::plot_grid()} be created? If \code{FALSE} only a list with all
+\CRANpkg{ggplot2} resamplings is returned. Default is \code{TRUE}. Only applies
+if a numeric vector is passed to argument \code{fold_id}.}
 
 \item{...}{Currently not used}
 }
@@ -53,8 +53,8 @@ Generates plots for \link[mlr3spatiotemporal:ResamplingSpCVCoords]{mlr3spatiotem
 }
 \details{
 By default a plot is returned; if \code{fold_id} is set, a gridded plot
-is created. If \code{grid = FALSE}, only a list of ggplot2 resamplings is returned.
-This gives the option to align the single plots manually.
+is created. If \code{grid = FALSE}, only a list of ggplot2 resamplings is
+returned. This gives the option to align the single plots manually.
 }
 \examples{
 #####
