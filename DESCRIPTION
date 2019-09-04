@@ -27,7 +27,6 @@ Suggests:
     blockCV,
     cowplot,
     sf,
-    stringr,
     testthat,
     vdiffr
 Remotes:
