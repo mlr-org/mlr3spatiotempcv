@@ -5,14 +5,14 @@
 #'
 #' @import ggplot2
 #' @param object [ResamplingSpCVBlock]\cr
-#'   An instantianated spatial resampling.
+#'   An instantiated spatial resampling.
 #' @param task [TaskClassifST]\cr
 #'   A spatial task.
 #' @param fold_id [numeric()]\cr
 #'   For which fold ids should training and test sets be visualized?
 #' @param grid (`logical(1)`)\cr
 #'   Should a gridded plot using `cowplot::plot_grid()` be created? If ´FALSE` only a
-#'   list with all ggplot2 resamplings is returned. Default is `TRUE`. Only applies
+#'   list with all \CRANpkg{ggplot2} resamplings is returned. Default is `TRUE`. Only applies
 #'   if a numeric vector is passed to argument `fold_id`.
 #' @param ... Currently not used
 #'
