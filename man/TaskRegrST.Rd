@@ -51,19 +51,9 @@ See \link{TaskSupervised} and \link{TaskRegr}.
 }
 
 \examples{
-data = data.table::as.data.table(readRDS(system.file("extdata", "ecuador.rda",
-  package = "mlr3spatiotemporal")))
-task = TaskRegrST$new("ecuador", backend = data, target = "slides",
- coordinates = c("x", "y"))
-
-task$task_type
-task$formula()
-task$truth()
-task$coordinates()
-task$coordinate_names
 
 # possible properties:
-mlr3::mlr_reflections$task_properties$classif
+mlr3::mlr_reflections$task_properties$regr
 }
 \seealso{
 Example spatial regression task: \code{\link[=mlr_tasks_ecuador]{ecuador}}.
