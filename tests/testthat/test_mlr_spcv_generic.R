@@ -18,7 +18,7 @@ task_grp$set_col_role("grp", "groups")
 
 test_that("spcv has no duplicated ids", {
   spcv_rsp = mlr_resamplings$mget(
-    as.data.table(mlr_resamplings)[map_lgl(key, stringr::str_detect, pattern = "spcv"), key]
+    as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
   for (i in spcv_rsp) {
     expect_identical(i$duplicated_ids, FALSE)
@@ -27,7 +27,7 @@ test_that("spcv has no duplicated ids", {
 
 test_that("stratification throws errors", {
   spcv_rsp = mlr_resamplings$mget(
-    as.data.table(mlr_resamplings)[map_lgl(key, stringr::str_detect, pattern = "spcv"), key]
+    as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
   spcv_rsp_no_buffer = spcv_rsp
   spcv_rsp_no_buffer$`spcv-buffer` = NULL
@@ -40,7 +40,7 @@ test_that("stratification throws errors", {
 
 test_that("grouping throws errors when 'groups' is set", {
   spcv_rsp = mlr_resamplings$mget(
-    as.data.table(mlr_resamplings)[map_lgl(key, stringr::str_detect, pattern = "spcv"), key]
+    as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
   spcv_rsp_no_buffer = spcv_rsp
   spcv_rsp_no_buffer$`spcv-buffer` = NULL
@@ -51,7 +51,7 @@ test_that("grouping throws errors when 'groups' is set", {
 
 test_that("grouping throws errors when 'groups' and 'stratify' is set", {
   spcv_rsp = mlr_resamplings$mget(
-    as.data.table(mlr_resamplings)[map_lgl(key, stringr::str_detect, pattern = "spcv"), key]
+    as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
   spcv_rsp_no_buffer = spcv_rsp
   spcv_rsp_no_buffer$`spcv-buffer` = NULL
@@ -64,7 +64,7 @@ test_that("grouping throws errors when 'groups' and 'stratify' is set", {
 
 test_that("train and test set getter functions are working", {
   spcv_rsp = mlr_resamplings$mget(
-    as.data.table(mlr_resamplings)[map_lgl(key, stringr::str_detect, pattern = "spcv"), key]
+    as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
   spcv_rsp_no_buffer = spcv_rsp
   spcv_rsp_no_buffer$`spcv-buffer` = NULL
@@ -81,7 +81,7 @@ test_that("train and test set getter functions are working", {
 
 test_that("cloning works", {
   spcv_rsp = mlr_resamplings$mget(
-    as.data.table(mlr_resamplings)[map_lgl(key, stringr::str_detect, pattern = "spcv"), key]
+    as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
 
   for (i in spcv_rsp) {

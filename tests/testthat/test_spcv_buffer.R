@@ -48,7 +48,7 @@ test_that("train and test set getter functions are working", {
 
 test_that("cloning works", {
   spcv_rsp = mlr_resamplings$mget(
-    as.data.table(mlr_resamplings)[map_lgl(key, stringr::str_detect, pattern = "spcv"), key]
+    as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
 
   for (i in spcv_rsp) {

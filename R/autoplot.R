@@ -4,21 +4,19 @@
 #'   [ResamplingSpCVBuffer] and [ResamplingSpCVCoords].
 #'
 #' @import ggplot2
-#' @param object [ResamplingSpCVBlock]\cr
-#'   An instantianated spatial resampling.
-#' @param task [TaskClassifST]\cr
-#'   A spatial task.
-#' @param fold_id [numeric()]\cr
-#'   For which fold ids should training and test sets be visualized?
-#' @param grid (`logical(1)`)\cr
-#'   Should a gridded plot using `cowplot::plot_grid()` be created? If ´FALSE` only a
-#'   list with all ggplot2 resamplings is returned. Default is `TRUE`. Only applies
+#' @param object [ResamplingSpCVBlock]\cr An instantiated spatial resampling.
+#' @param task [TaskClassifST]\cr A spatial task.
+#' @param fold_id [numeric()]\cr For which fold ids should training and test
+#'   sets be visualized?
+#' @param grid (`logical(1)`)\cr Should a gridded plot using
+#'   `cowplot::plot_grid()` be created? If `FALSE` only a list with all
+#'   \CRANpkg{ggplot2} resamplings is returned. Default is `TRUE`. Only applies
 #'   if a numeric vector is passed to argument `fold_id`.
 #' @param ... Currently not used
 #'
 #' @details By default a plot is returned; if `fold_id` is set, a gridded plot
-#'   is created. If `grid = FALSE`, only a list of ggplot2 resamplings is returned.
-#'   This gives the option to align the single plots manually.
+#'   is created. If `grid = FALSE`, only a list of ggplot2 resamplings is
+#'   returned. This gives the option to align the single plots manually.
 #'
 #' @rdname autoplot_spatial_resampling
 #' @return [ggplot()] resampling.
@@ -149,6 +147,7 @@ autoplot.ResamplingSpCVCoords = function(object, task, fold_id = NULL, grid = TR
 autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
+  require_namespaces(c("sf", "cowplot"))
 
   if (class(resampling)[1] == "ResamplingSpCVBuffer") {
 
