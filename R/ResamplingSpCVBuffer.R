@@ -46,6 +46,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         )),
         param_vals = param_vals
       )
+      require_namespaces(c("blockCV", "sf"))
     },
     instantiate = function(task) {
 
@@ -58,13 +59,13 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         if (is.null(groups)) {
           instance = private$.sample(task$row_ids, task$coordinates(), task$crs)
         } else {
-          stopf("Grouping is not supported for spatial resampling methods.", call. = FALSE)
+          stopf("Grouping is not supported for spatial resampling methods.")
         }
       } else {
         if (!is.null(groups)) {
-          stopf("Grouping is not supported for spatial resampling methods", call. = FALSE)
+          stopf("Grouping is not supported for spatial resampling methods")
         }
-        stopf("Stratification is not supported for spatial resampling methods.", call. = FALSE)
+        stopf("Stratification is not supported for spatial resampling methods.")
       }
 
       self$instance = instance
@@ -81,6 +82,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
 
   private = list(
     .sample = function(ids, coords, crs) {
+      require_namespaces("sf")
       points = sf::st_as_sf(coords,
         coords = c("x", "y"),
         crs = crs)

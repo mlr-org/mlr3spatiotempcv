@@ -51,49 +51,47 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
     instantiate = function(task) {
 
       assert_task(task)
+      pv = self$param_set$values
 
       # Set values to default if missing
-      if (is.null(self$param_set$values$rows)) {
-        self$param_set$values$rows = self$param_set$default[["rows"]]
+      if (is.null(pv$rows)) {
+        pv$rows = self$param_set$default[["rows"]]
       }
-      if (is.null(self$param_set$values$cols)) {
-        self$param_set$values$cols = self$param_set$default[["cols"]]
+      if (is.null(pv$cols)) {
+        pv$cols = self$param_set$default[["cols"]]
       }
-      if (is.null(self$param_set$values$features)) {
-        self$param_set$values$features = task$feature_names
+      if (is.null(pv$features)) {
+        pv$features = task$feature_names
       }
 
       groups = task$groups
-      stratify = self$param_set$values$stratify
+      stratify = pv$stratify
 
       if (length(stratify) == 0L || isFALSE(stratify)) {
         if (is.null(groups)) {
           # Remove non-numeric features, target and coordinates
-          columns = task$col_info
-          columns = columns[id != task$target_names]
-          columns = columns[type == "numeric"]
-          columns = columns[!id %in% c("x", "y")]
+          columns = task$col_info[! id %in% c(task$target_names, "x", "y") & type == "numeric"]
 
           # Check for selected features that are not in task
-          diff = setdiff(self$param_set$values$features, columns[, id])
+          diff = setdiff(pv$features, columns[, id])
           if (length(diff) > 0) {
             stop(sprintf("'spcv-env' requires numeric features for clustering. Feature '%s' is either non-numeric or does not exist in the data",
               diff))
           }
-          columns = columns[id %in% self$param_set$values$features]
+          columns = columns[id %in% pv$features]
           columns = columns[, id]
 
           data = task$data()[, columns, with = FALSE]
 
           instance = private$.sample(task$row_ids, data)
         } else {
-          stopf("Grouping is not supported for spatial resampling methods.", call. = FALSE)
+          stopf("Grouping is not supported for spatial resampling methods.")
         }
       } else {
         if (!is.null(groups)) {
-          stopf("Grouping is not supported for spatial resampling methods", call. = FALSE)
+          stopf("Grouping is not supported for spatial resampling methods")
         }
-        stopf("Stratification is not supported for spatial resampling methods.", call. = FALSE)
+        stopf("Stratification is not supported for spatial resampling methods.")
       }
 
       self$instance = instance

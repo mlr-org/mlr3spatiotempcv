@@ -57,13 +57,13 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
         if (is.null(groups)) {
           instance = private$.sample(task$row_ids, task$coordinates())
         } else {
-          stopf("Grouping is not supported for spatial resampling methods.", call. = FALSE)
+          stopf("Grouping is not supported for spatial resampling methods.")
         }
       } else {
         if (!is.null(groups)) {
-          stopf("Grouping is not supported for spatial resampling methods", call. = FALSE)
+          stopf("Grouping is not supported for spatial resampling methods")
         }
-        stopf("Stratification is not supported for spatial resampling methods.", call. = FALSE)
+        stopf("Stratification is not supported for spatial resampling methods.")
       }
 
       self$instance = instance
