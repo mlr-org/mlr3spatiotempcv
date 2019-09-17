@@ -36,16 +36,16 @@
 ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
   inherit = mlr3::Resampling,
   public = list(
-    initialize = function(id = "spcv-env", param_vals = list(folds = 10L)) {
-      super$initialize(
-        id = id,
-        param_set = ParamSet$new(params = list(
+    initialize = function(id = "spcv-env") {
+      ps = ParamSet$new(params = list(
           ParamUty$new("stratify", default = NULL),
           ParamInt$new("folds", lower = 1L, tags = "required"),
           ParamUty$new("features")
-
-        )),
-        param_vals = param_vals
+      ))
+      ps$values = list(folds = 10L)
+      super$initialize(
+        id = id,
+        param_set = ps
       )
     },
     instantiate = function(task) {

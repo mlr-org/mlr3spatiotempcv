@@ -7,7 +7,8 @@ Spatio-temporal extensions for mlr3
 
 [![Travis build
 status](https://travis-ci.org/mlr-org/mlr3spatiotemporal.svg?branch=master)](https://travis-ci.org/mlr-org/mlr3spatiotemporal)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-ago/mlr3spatiotemporal)](https://cran.r-project.org/package=mlr3spatiotemporal)
+[![CRAN Status
+Badge](https://www.r-pkg.org/badges/version-ago/mlr3spatiotemporal)](https://cran.r-project.org/package=mlr3spatiotemporal)
 [![cran
 checks](https://cranchecks.info/badges/worst/mlr3spatiotemporal)](https://cran.r-project.org/web/checks/check_results_mlr3spatiotemporal.html)
 [![CRAN
@@ -52,8 +53,7 @@ library(mlr3spatiotemporal)
 library(ggplot2)
 
 task = tsk("ecuador")
-resampling = rsmp("spcv-coords")
-resampling$param_set$values = list(folds = 5)
+resampling = rsmp("spcv-coords", folds = 5)
 resampling$instantiate(task)
 
 autoplot(resampling, task)

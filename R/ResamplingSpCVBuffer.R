@@ -37,14 +37,15 @@
 ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
   inherit = mlr3::Resampling,
   public = list(
-    initialize = function(id = "spcv-buffer", param_vals = list(range = 100)) {
-      super$initialize(
-        id = id,
-        param_set = ParamSet$new(params = list(
+    initialize = function(id = "spcv-buffer") {
+      ps = ParamSet$new(params = list(
           ParamUty$new("stratify", default = NULL),
           ParamInt$new("range", lower = 1L, tags = "required")
-        )),
-        param_vals = param_vals
+      ))
+      ps$values = list(range = 100)
+      super$initialize(
+        id = id,
+        param_set = ps
       )
       require_namespaces(c("blockCV", "sf"))
     },

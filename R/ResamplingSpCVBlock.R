@@ -36,19 +36,19 @@
 ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
   inherit = mlr3::Resampling,
   public = list(
-    initialize = function(id = "spcv-block", param_vals = list(folds = 10L)) {
-      super$initialize(
-        id = id,
-        param_set = ParamSet$new(params = list(
+    initialize = function(id = "spcv-block") {
+      ps = ParamSet$new(params = list(
           ParamUty$new("stratify", default = NULL),
           ParamInt$new("folds", lower = 1L, tags = "required"),
           ParamInt$new("rows", lower = 1L, default = 4),
           ParamInt$new("cols", lower = 1L, default = 4),
           ParamInt$new("range", lower = 1L),
           ParamFct$new("selection", levels = c("random", "systematic", "checkerboard"), default = "random")
-
-        )),
-        param_vals = param_vals
+      ))
+      ps$values = list(folds = 10L)
+      super$initialize(
+        id = id,
+        param_set = ps
       )
       require_namespaces(c("blockCV", "sf"))
     },

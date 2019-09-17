@@ -6,7 +6,7 @@ set.seed(123)
 # kmeans and block
 
 task = mlr_tasks$get("ecuador")
-resampling_cv = mlr_resamplings$get("spcv-block", param_vals = list(folds = 4))
+resampling_cv = rsmp("spcv-block", folds = 4)
 resampling_cv$instantiate(task)
 
 coords = task$coordinates()
@@ -25,7 +25,7 @@ ggplot() +
 # buffer
 
 task = mlr_tasks$get("ecuador")
-resampling_cv = mlr_resamplings$get("spcv-buffer", param_vals = list(range = 3000))
+resampling_cv = rsmp("spcv-buffer", range = 3000)
 resampling_cv$instantiate(task)
 
 coords = task$coordinates()
