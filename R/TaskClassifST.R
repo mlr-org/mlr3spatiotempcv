@@ -106,9 +106,12 @@ TaskClassifST = R6::R6Class("TaskClassifST",
         assert_numeric(self$data(cols = coord)[[1L]], any.missing = FALSE)
       }
 
-      # mark columns as coordinates
+      # mark columns as coordinates and
       # check if coordinates should be included as features
-      self$set_col_role(coordinates, "coordinates", exclusive = !coords_as_features)
+      self$col_roles$coordinates = coordinates
+      if (isFALSE(coords_as_features)) {
+        self$col_roles$feature = setdiff(self$col_roles$feature, coordinates)
+      }
     },
 
     coordinates = function(row_ids = NULL) {
