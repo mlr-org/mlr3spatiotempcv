@@ -12,7 +12,7 @@ b = as.data.table(readRDS(system.file("extdata", "ecuador.rda",
 data = insert_named(b[1:150, ], list(grp = rep_len(letters[1:10], 150)))
 task_grp = TaskClassifST$new("ecuador-grp", as_data_backend(data), target = "slides",
   coordinates = c("x", "y"))
-task_grp$set_col_role("grp", "groups")
+task_grp$col_roles$groups = "grp"
 
 # run tests --------------------------------------------------------------------
 

@@ -78,14 +78,12 @@ TaskRegrST <- R6::R6Class("TaskRegrST",
         stopf("Target column '%s' must be numeric", target)
       }
 
-      # mark columns as coordinates
+      # mark columns as coordinates and
       # check if coordinates should be included as features
-      if (coords_as_features == TRUE) {
-        exclusive = FALSE
-      } else {
-        exclusive = TRUE
+      self$col_roles$coordinates = coordinates
+      if (isFALSE(coords_as_features)) {
+        self$col_roles$feature = setdiff(self$col_roles$feature, coordinates)
       }
-      self$set_col_role(coordinates, "coordinates", exclusive = exclusive)
     },
 
     truth = function(row_ids = NULL) {
