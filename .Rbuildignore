@@ -9,3 +9,4 @@
 ^renv\.lock$
 ^.pre-commit-config.yaml
 ^README_files
+^pkgdown$
