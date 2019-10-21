@@ -1,7 +1,7 @@
 
 # mlr3spatiotemporal
 
-Spatio-temporal extensions for mlr3
+Spatio-temporal extensions for mlr3.
 
 <!-- badges: start -->
 

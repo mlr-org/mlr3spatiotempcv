@@ -4,7 +4,7 @@ output: github_document
 
 # mlr3spatiotemporal
 
-Spatio-temporal extensions for mlr3
+Spatio-temporal extensions for mlr3.
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/mlr-org/mlr3spatiotemporal.svg?branch=master)](https://travis-ci.org/mlr-org/mlr3spatiotemporal)
