@@ -128,10 +128,10 @@ TaskRegrST <- R6::R6Class("TaskRegrST",
     catf(str_indent("Order by:", self$col_roles$order))
   }
   if ("groups" %in% self$properties) {
-    catf(str_indent("Groups:", self$col_roles$groups))
+    catf(str_indent("Groups:", self$col_roles$group))
   }
   if ("weights" %in% self$properties) {
-    catf(str_indent("Weights:", self$col_roles$weights))
+    catf(str_indent("Weights:", self$col_roles$weight))
   }
 
 }
