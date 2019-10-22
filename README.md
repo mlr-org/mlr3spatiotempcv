@@ -7,12 +7,8 @@ Spatio-temporal extensions for mlr3.
 
 [![Travis build
 status](https://travis-ci.org/mlr-org/mlr3spatiotemporal.svg?branch=master)](https://travis-ci.org/mlr-org/mlr3spatiotemporal)
-[![CRAN Status
-Badge](https://www.r-pkg.org/badges/version-ago/mlr3spatiotemporal)](https://cran.r-project.org/package=mlr3spatiotemporal)
 [![cran
 checks](https://cranchecks.info/badges/worst/mlr3spatiotemporal)](https://cran.r-project.org/web/checks/check_results_mlr3spatiotemporal.html)
-[![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/mlr3spatiotemporal)](https://cran.rstudio.com/web/packages/mlr3spatiotemporal/index.html)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Coverage
@@ -24,7 +20,8 @@ framework by spatiotemporal resampling and visualization methods.
 
 ## Resampling methods
 
-Currently, the following ones are implemented:
+Currently, the following ones are
+implemented:
 
 | Literature Name        | R Package                                                 | Reference     | mlr3spatiotemporal Name |
 | ---------------------- | --------------------------------------------------------- | ------------- | ----------------------- |
@@ -59,7 +56,7 @@ resampling$instantiate(task)
 autoplot(resampling, task)
 ```
 
-![](README_files/figure-gfm/spcv-coords-all-partitions-1.png)<!-- -->
+![](man/figures/README-spcv-coords-all-partitions-1.png)<!-- -->
 
 Visualization of the first fold only
 
@@ -67,7 +64,7 @@ Visualization of the first fold only
 autoplot(resampling, task, fold_id = 1)
 ```
 
-![](README_files/figure-gfm/spcv-coords-fold-1.png)<!-- -->
+![](man/figures/README-spcv-coords-fold-1.png)<!-- -->
 
 # References
 
