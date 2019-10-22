@@ -8,9 +8,7 @@ Spatio-temporal extensions for mlr3.
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/mlr-org/mlr3spatiotemporal.svg?branch=master)](https://travis-ci.org/mlr-org/mlr3spatiotemporal)
-[![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/mlr3spatiotemporal)](https://cran.r-project.org/package=mlr3spatiotemporal)
 [![cran checks](https://cranchecks.info/badges/worst/mlr3spatiotemporal)](https://cran.r-project.org/web/checks/check_results_mlr3spatiotemporal.html)
-[![CRAN Downloads](https://cranlogs.r-pkg.org/badges/mlr3spatiotemporal)](https://cran.rstudio.com/web/packages/mlr3spatiotemporal/index.html)
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Coverage status](https://codecov.io/gh/mlr-org/mlr3spatiotemporal/branch/master/graph/badge.svg)](https://codecov.io/github/mlr-org/mlr3spatiotemporal?branch=master)
 <!-- badges: end -->
@@ -44,6 +42,7 @@ Visualization of all partitions
 
 ```{r setup, include=FALSE}
 set.seed(123)
+knitr::opts_chunk$set(fig.path = "man/figures/README-")
 ```
 
 
