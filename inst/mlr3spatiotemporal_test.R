@@ -1,5 +1,5 @@
 library(mlr3)
-library(mlr3spatiotemporal)
+library(mlr3spatiotempcv)
 library(ggplot2)
 
 library(blockCV)

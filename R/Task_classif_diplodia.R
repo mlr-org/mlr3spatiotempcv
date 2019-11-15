@@ -22,7 +22,7 @@ NULL
 
 load_task_diplodia = function(id = "diplodia") {
   b = as_data_backend(readRDS(system.file("extdata", "diplodia.rda",
-    package = "mlr3spatiotemporal")))
+    package = "mlr3spatiotempcv")))
   b$hash = "_mlr3_tasks_diplodia_"
   task = TaskClassifST$new(id, b, target = "diplo01", positive = "1",
     coordinates = c("x", "y"), coords_as_features = FALSE,

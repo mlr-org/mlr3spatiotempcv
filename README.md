@@ -1,18 +1,18 @@
 
-# mlr3spatiotemporal
+# mlr3spatiotempcv
 
-Spatio-temporal extensions for mlr3.
+Spatio-temporal resampling methods for mlr3.
 
 <!-- badges: start -->
 
 [![Travis build
-status](https://travis-ci.org/mlr-org/mlr3spatiotemporal.svg?branch=master)](https://travis-ci.org/mlr-org/mlr3spatiotemporal)
+status](https://travis-ci.org/mlr-org/mlr3spatiotempcv.svg?branch=master)](https://travis-ci.org/mlr-org/mlr3spatiotempcv)
 [![cran
-checks](https://cranchecks.info/badges/worst/mlr3spatiotemporal)](https://cran.r-project.org/web/checks/check_results_mlr3spatiotemporal.html)
+checks](https://cranchecks.info/badges/worst/mlr3spatiotempcv)](https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Coverage
-status](https://codecov.io/gh/mlr-org/mlr3spatiotemporal/branch/master/graph/badge.svg)](https://codecov.io/github/mlr-org/mlr3spatiotemporal?branch=master)
+status](https://codecov.io/gh/mlr-org/mlr3spatiotempcv/branch/master/graph/badge.svg)](https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=master)
 <!-- badges: end -->
 
 This package extends the [mlr3](https://github.com/mlr-org/mlr3) package
@@ -20,15 +20,14 @@ framework by spatiotemporal resampling and visualization methods.
 
 ## Resampling methods
 
-Currently, the following ones are
-implemented:
+Currently, the following ones are implemented:
 
-| Literature Name        | R Package                                                 | Reference     | mlr3spatiotemporal Name |
-| ---------------------- | --------------------------------------------------------- | ------------- | ----------------------- |
-| Spatial CV             | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResampleSpCVCoords`    |
-| Spatial Blocking       | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBlock`     |
-| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVEnv`       |
-| Spatial Buffering      | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBuffer`    |
+| Literature Name        | R Package                                                 | Reference     | mlr3spatiotempcv Name |
+| ---------------------- | --------------------------------------------------------- | ------------- | --------------------- |
+| Spatial CV             | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResampleSpCVCoords`  |
+| Spatial Blocking       | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBlock`   |
+| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVEnv`     |
+| Spatial Buffering      | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBuffer`  |
 
 ## Spatial tasks
 
@@ -46,7 +45,7 @@ Visualization of all partitions
 
 ``` r
 library(mlr3)
-library(mlr3spatiotemporal)
+library(mlr3spatiotempcv)
 library(ggplot2)
 
 task = tsk("ecuador")
@@ -84,8 +83,7 @@ Symposium*. IEEE. <https://doi.org/10.1109/igarss.2012.6352393>.
 Valavi, Roozbeh, Jane Elith, José J. Lahoz-Monfort, and Gurutzeta
 Guillera-Arroita. 2018. “blockCV: An R Package for Generating Spatially
 or Environmentally Separated Folds for K-Fold Cross-Validation of
-Species Distribution Models,” June. Cold Spring Harbor Laboratory.
-<https://doi.org/10.1101/357798>.
+Species Distribution Models,” June. <https://doi.org/10.1101/357798>.
 
 </div>
 

@@ -1,4 +1,4 @@
-Package: mlr3spatiotemporal
+Package: mlr3spatiotempcv
 Title: Spatial support for mlr3
 Version: 0.0.0-9000
 Authors@R:
@@ -10,9 +10,9 @@ Authors@R:
 Description: Implements spatio-temporal methods to enhance the
     experience of mlr3.
 License: MIT + file LICENSE
-URL: https://mlr3spatiotemporal.mlr-org.com/,
-    https://github.com/mlr-org/mlr3spatiotemporal
-BugReports: https://github.com/mlr-org/mlr3spatiotemporal/issues
+URL: https://mlr3spatiotempcv.mlr-org.com/,
+    https://github.com/mlr-org/mlr3spatiotempcv
+BugReports: https://github.com/mlr-org/mlr3spatiotempcv/issues
 Depends:
     R (>= 3.1.0)
 Imports:
@@ -35,7 +35,7 @@ Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0.9000
 Collate: 
     'ResamplingSpCVBlock.R'
     'ResamplingSpCVBuffer.R'
@@ -46,7 +46,7 @@ Collate:
     'helper.R'
     'Task_classif_ecuador.R'
     'Task_classif_diplodia.R'
-    'mlr3spatiotemporal-package.R'
+    'mlr3spatiotempcv-package.R'
     'reexports.R'
     'autoplot.R'
     'zzz.R'
