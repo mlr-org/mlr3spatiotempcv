@@ -3,7 +3,7 @@
 ^tic\.R$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^mlr3spatiotemporal\.Rproj$
+^mlr3spatiotempcv\.Rproj$
 ^README\.Rmd$
 ^renv$
 ^renv\.lock$

@@ -23,7 +23,7 @@
 NULL
 
 load_task_ecuador = function(id = "ecuador") {
-  data = readRDS(system.file("extdata", "ecuador.rda", package = "mlr3spatiotemporal"))
+  data = readRDS(system.file("extdata", "ecuador.rda", package = "mlr3spatiotempcv"))
   rownames(data) = NULL # TODO: better re-save the data set without rownames
   b = as_data_backend(data)
   b$hash = "_mlr3_tasks_ecuador_"

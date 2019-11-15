@@ -1,5 +1,5 @@
 library(checkmate)
 library(testthat)
-library(mlr3spatiotemporal)
+library(mlr3spatiotempcv)
 
-test_check("mlr3spatiotemporal")
+test_check("mlr3spatiotempcv")

@@ -58,7 +58,7 @@
 #' @export
 #' @examples
 #' data = data.table::as.data.table(readRDS(system.file("extdata", "ecuador.rda",
-#'   package = "mlr3spatiotemporal")))
+#'   package = "mlr3spatiotempcv")))
 #' task = TaskClassifST$new("ecuador", backend = data, target = "slides",
 #'   positive = "TRUE", coordinates = c("x", "y"))
 #'

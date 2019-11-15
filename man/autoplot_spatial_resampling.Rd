@@ -7,17 +7,13 @@
 \alias{autoplot.ResamplingSpCVCoords}
 \title{Visualization of spatial resampling.}
 \usage{
-\method{autoplot}{ResamplingSpCVBlock}(object, task, fold_id = NULL,
-  grid = TRUE, ...)
+\method{autoplot}{ResamplingSpCVBlock}(object, task, fold_id = NULL, grid = TRUE, ...)
 
-\method{autoplot}{ResamplingSpCVEnv}(object, task, fold_id = NULL,
-  grid = TRUE, ...)
+\method{autoplot}{ResamplingSpCVEnv}(object, task, fold_id = NULL, grid = TRUE, ...)
 
-\method{autoplot}{ResamplingSpCVBuffer}(object, task, fold_id = NULL,
-  grid = TRUE, ...)
+\method{autoplot}{ResamplingSpCVBuffer}(object, task, fold_id = NULL, grid = TRUE, ...)
 
-\method{autoplot}{ResamplingSpCVCoords}(object, task, fold_id = NULL,
-  grid = TRUE, ...)
+\method{autoplot}{ResamplingSpCVCoords}(object, task, fold_id = NULL, grid = TRUE, ...)
 }
 \arguments{
 \item{object}{\link{ResamplingSpCVBlock}\cr An instantiated spatial resampling.}
@@ -47,9 +43,9 @@ if a numeric vector is passed to argument \code{fold_id}.}
 Generates plots for \link{ResamplingSpCVBlock}, \link{ResamplingSpCVEnv},
 \link{ResamplingSpCVBuffer} and \link{ResamplingSpCVCoords}.
 
-Generates plots for \link[mlr3spatiotemporal:ResamplingSpCVEnv]{mlr3spatiotemporal::ResamplingSpCVEnv}.
+Generates plots for \link[mlr3spatiotempcv:ResamplingSpCVEnv]{mlr3spatiotempcv::ResamplingSpCVEnv}.
 
-Generates plots for \link[mlr3spatiotemporal:ResamplingSpCVCoords]{mlr3spatiotemporal::ResamplingSpCVCoords}.
+Generates plots for \link[mlr3spatiotempcv:ResamplingSpCVCoords]{mlr3spatiotempcv::ResamplingSpCVCoords}.
 }
 \details{
 By default a plot is returned; if \code{fold_id} is set, a gridded plot

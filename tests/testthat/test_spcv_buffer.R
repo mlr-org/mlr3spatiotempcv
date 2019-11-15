@@ -6,7 +6,7 @@ task = mlr_tasks$get("ecuador")
 
 ### create custom data for grouping variable
 b = as.data.table(readRDS(system.file("extdata", "ecuador.rda",
-                                       package = "mlr3spatiotemporal"
+                                       package = "mlr3spatiotempcv"
 )))
 # add grouping variable
 data = insert_named(b[1:150, ], list(grp = rep_len(letters[1:10], 150)))

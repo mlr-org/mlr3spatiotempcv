@@ -53,7 +53,7 @@ autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, grid = TRU
 #' @title Plot for Spatial Resampling
 #'
 #' @description
-#' Generates plots for [mlr3spatiotemporal::ResamplingSpCVEnv].
+#' Generates plots for [mlr3spatiotempcv::ResamplingSpCVEnv].
 #'
 #' @inheritParams autoplot.ResamplingSpCVBlock
 #'
@@ -104,7 +104,7 @@ autoplot.ResamplingSpCVBuffer = function(object, task, fold_id = NULL, grid = TR
 #' @title Plot for Spatial Resampling
 #'
 #' @description
-#' Generates plots for [mlr3spatiotemporal::ResamplingSpCVCoords].
+#' Generates plots for [mlr3spatiotempcv::ResamplingSpCVCoords].
 #'
 #' @inheritParams autoplot.ResamplingSpCVBlock
 #'

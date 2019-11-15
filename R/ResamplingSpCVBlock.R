@@ -80,7 +80,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       }
 
       if (!is.null(self$param_set$values$rows) && !is.null(self$param_set$values$cols)) {
-        warning("Hyperparameters 'rows' and 'cols' not set. Using the default value of '4' set by 'mlr3spatiotemporal' for both which results in a grid of 16. You might want to set these values yourself during resampling construction.")
+        warning("Hyperparameters 'rows' and 'cols' not set. Using the default value of '4' set by 'mlr3spatiotempcv' for both which results in a grid of 16. You might want to set these values yourself during resampling construction.")
       }
 
       groups = task$groups
