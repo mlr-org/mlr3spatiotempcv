@@ -38,12 +38,12 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
   public = list(
     initialize = function(id = "spcv-block") {
       ps = ParamSet$new(params = list(
-          ParamUty$new("stratify", default = NULL),
-          ParamInt$new("folds", lower = 1L, tags = "required"),
-          ParamInt$new("rows", lower = 1L, default = 4),
-          ParamInt$new("cols", lower = 1L, default = 4),
-          ParamInt$new("range", lower = 1L),
-          ParamFct$new("selection", levels = c("random", "systematic", "checkerboard"), default = "random")
+        ParamUty$new("stratify", default = NULL),
+        ParamInt$new("folds", lower = 1L, tags = "required"),
+        ParamInt$new("rows", lower = 1L, default = 4),
+        ParamInt$new("cols", lower = 1L, default = 4),
+        ParamInt$new("range", lower = 1L),
+        ParamFct$new("selection", levels = c("random", "systematic", "checkerboard"), default = "random")
       ))
       ps$values = list(folds = 10L)
       super$initialize(
@@ -75,7 +75,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       }
 
       # Check for valid combinations of rows, cols and folds
-      if ((self$param_set$values$rows*self$param_set$values$cols) < self$param_set$values$folds) {
+      if ((self$param_set$values$rows * self$param_set$values$cols) < self$param_set$values$folds) {
         stopf("'nrow' * 'ncol' needs to be larger than 'folds'.")
       }
 

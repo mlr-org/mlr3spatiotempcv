@@ -37,8 +37,8 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
   public = list(
     initialize = function(id = "spcv-coords") {
       ps = ParamSet$new(params = list(
-          ParamUty$new("stratify", default = NULL),
-          ParamInt$new("folds", lower = 1L, tags = "required")
+        ParamUty$new("stratify", default = NULL),
+        ParamInt$new("folds", lower = 1L, tags = "required")
       ))
       ps$values = list(folds = 10L)
       super$initialize(

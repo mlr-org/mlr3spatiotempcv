@@ -35,7 +35,6 @@ test_that("stratification throws errors", {
     i$param_set$values = list(folds = 5, stratify = TRUE)
     expect_error(i$instantiate(task))
   }
-
 })
 
 test_that("grouping throws errors when 'groups' is set", {
@@ -76,7 +75,6 @@ test_that("train and test set getter functions are working", {
     expect_silent(i$train_set(1))
     expect_silent(i$test_set(1))
   }
-
 })
 
 test_that("cloning works", {

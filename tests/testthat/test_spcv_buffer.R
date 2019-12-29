@@ -6,12 +6,12 @@ task = mlr_tasks$get("ecuador")
 
 ### create custom data for grouping variable
 b = as.data.table(readRDS(system.file("extdata", "ecuador.rda",
-                                       package = "mlr3spatiotempcv"
+  package = "mlr3spatiotempcv"
 )))
 # add grouping variable
 data = insert_named(b[1:150, ], list(grp = rep_len(letters[1:10], 150)))
 task_grp = TaskClassifST$new("ecuador-grp", as_data_backend(data), target = "slides",
-                              coordinates = c("x", "y"))
+  coordinates = c("x", "y"))
 task_grp$col_roles$group = "grp"
 
 # run tests --------------------------------------------------------------------
@@ -24,18 +24,17 @@ test_that("stratification throws errors", {
 })
 
 test_that("grouping throws errors when 'groups' is set", {
-
   spcv_rsp_buffer = mlr_resamplings$get("spcv-buffer")
 
   expect_error(spcv_rsp_buffer$instantiate(task_grp),
-               "Grouping is not supported for spatial resampling methods")
+    "Grouping is not supported for spatial resampling methods")
 })
 
 test_that("grouping throws errors when 'groups' and 'stratify' is set", {
   spcv_rsp_buffer = mlr_resamplings$get("spcv-buffer")
 
-    expect_error(spcv_rsp_buffer$instantiate(task_grp),
-                 "Grouping is not supported for spatial resampling methods")
+  expect_error(spcv_rsp_buffer$instantiate(task_grp),
+    "Grouping is not supported for spatial resampling methods")
 })
 
 test_that("train and test set getter functions are working", {
