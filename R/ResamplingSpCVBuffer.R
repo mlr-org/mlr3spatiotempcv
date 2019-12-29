@@ -39,8 +39,8 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
   public = list(
     initialize = function(id = "spcv-buffer") {
       ps = ParamSet$new(params = list(
-          ParamUty$new("stratify", default = NULL),
-          ParamInt$new("range", lower = 1L, tags = "required")
+        ParamUty$new("stratify", default = NULL),
+        ParamInt$new("range", lower = 1L, tags = "required")
       ))
       ps$values = list(range = 100)
       super$initialize(

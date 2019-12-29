@@ -31,7 +31,7 @@ vdiffr::expect_doppelganger("SpCVBlock - Fold 1-4", Block3)
 # these checks apply to all resampling methods.
 expect_error(autoplot(resa_block, task, 20))
 expect_error(autoplot(resa_block, task, c(1, 20)))
-expect_list(autoplot(resa_block, task,  c(1, 2, 3, 4), grid = FALSE))
+expect_list(autoplot(resa_block, task, c(1, 2, 3, 4), grid = FALSE))
 
 # SpCVBuffer -------------------------------------------------------------------
 

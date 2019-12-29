@@ -38,9 +38,9 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
   public = list(
     initialize = function(id = "spcv-env") {
       ps = ParamSet$new(params = list(
-          ParamUty$new("stratify", default = NULL),
-          ParamInt$new("folds", lower = 1L, tags = "required"),
-          ParamUty$new("features")
+        ParamUty$new("stratify", default = NULL),
+        ParamInt$new("folds", lower = 1L, tags = "required"),
+        ParamUty$new("features")
       ))
       ps$values = list(folds = 10L)
       super$initialize(
@@ -70,7 +70,7 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
       if (length(stratify) == 0L || isFALSE(stratify)) {
         if (is.null(groups)) {
           # Remove non-numeric features, target and coordinates
-          columns = task$col_info[! id %in% c(task$target_names, "x", "y") & type == "numeric"]
+          columns = task$col_info[!id %in% c(task$target_names, "x", "y") & type == "numeric"]
 
           # Check for selected features that are not in task
           diff = setdiff(pv$features, columns[, id])

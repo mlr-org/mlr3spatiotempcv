@@ -63,6 +63,7 @@ TaskRegrST <- R6::R6Class("TaskRegrST",
     crs = NULL,
 
     initialize = function(id, backend, target, coordinates, coords_as_features = FALSE, crs = NULL) {
+
       assert_string(target)
       super$initialize(id = id, backend = backend, target = target)
       self$crs = checkmate::assert_character(crs, null.ok = TRUE)

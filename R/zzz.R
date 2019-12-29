@@ -27,5 +27,5 @@
   mlr_resamplings$add("spcv-coords", ResamplingSpCVCoords)
   mlr_resamplings$add("spcv-env", ResamplingSpCVEnv)
 
-  #nocov end
+  # nocov end
 }
