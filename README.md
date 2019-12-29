@@ -5,10 +5,10 @@ Spatio-temporal resampling methods for mlr3.
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.org/mlr-org/mlr3spatiotempcv.svg?branch=master)](https://travis-ci.org/mlr-org/mlr3spatiotempcv)
-[![cran
-checks](https://cranchecks.info/badges/worst/mlr3spatiotempcv)](https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html)
+[![Build
+Status](https://img.shields.io/travis/mlr-org/mlr3spatiotempcv/master?label=Linux&logo=travis&style=flat-square)](https://travis-ci.org/mlr-org/mlr3spatiotempcv)
+[![CRAN Status
+Badge](https://www.r-pkg.org/badges/version-ago/mlr3spatiotempcv)](https://cran.r-project.org/package=mlr3spatiotempcv)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Coverage
@@ -67,7 +67,7 @@ autoplot(resampling, task, fold_id = 1)
 
 # References
 
-<div id="refs" class="references">
+<div id="refs" class="references hanging-indent">
 
 <div id="ref-brenning2012">
 
