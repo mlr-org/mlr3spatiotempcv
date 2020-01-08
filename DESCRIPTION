@@ -29,14 +29,14 @@ Suggests:
     sf,
     testthat,
     vdiffr
-Remotes:
-    be-marc/blockCV
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
-Roxygen: list(markdown = TRUE, r6 = FALSE)
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
 Collate: 
+    'Task_classif_ecuador.R'
+    'Task_classif_diplodia.R'
     'ResamplingSpCVBlock.R'
     'ResamplingSpCVBuffer.R'
     'ResamplingSpCVCoords.R'
@@ -44,8 +44,6 @@ Collate:
     'TaskClassifST.R'
     'TaskRegrST.R'
     'helper.R'
-    'Task_classif_ecuador.R'
-    'Task_classif_diplodia.R'
     'mlr3spatiotempcv-package.R'
     'reexports.R'
     'autoplot.R'
