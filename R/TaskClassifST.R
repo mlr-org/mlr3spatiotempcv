@@ -16,49 +16,12 @@
 #' not used as features. This can be changed by setting `coords_as_features =
 #' TRUE`.
 #'
-#' @section Construction:
-#' ```
-#' t = TaskClassifST$new(id, backend, target, coordinates, positive = NULL,
-#'   coords_as_features = FALSE)
-#' ```
-#'
-#' * `id` :: `character(1)`\cr
-#'   Identifier for the task.
-#'
-#' * `backend` :: [DataBackend]\cr Either a [DataBackend], or any object which
-#' is convertible to a DataBackend with `as_data_backend()`. E.g., a
-#' `data.frame()` will be converted to a [DataBackendDataTable].
-#'
-#' * `target` :: `character(1)`\cr
-#'   Name of the target column.
-#'
-#' * `coordinates` :: [data.frame]\cr
-#'   A [data.frame] with `ncol(2)` containing longitude and latitude information.
-#'
-#' * `positive` :: `character(1)`\cr
-#'   Only for binary classification: Name of the positive class.
-#'
-#' * `coords_as_features` :: `logical(1)`\cr
-#'   Whether the coordinates should also be used as features. Default is `FALSE`.
-#'
-#' * `crs` :: `character(1)`\cr
-#'   Coordinates reference system
-#'
-#' @section Fields:
-#' All methods from [TaskSupervised] and [TaskClassif], and additionally:
-#'
-#' * `coordinates` :: [data.frame]\cr
-#'   Stores the coordinates passed during construction.
-#'
-#' @section Methods:
-#' See [TaskSupervised] and [TaskClassif].
-#'
 #' @family Task
 #' @seealso Example spatial classification task: [`ecuador`][mlr_tasks_ecuador].
 #' @export
 #' @examples
-#' data = data.table::as.data.table(readRDS(system.file("extdata", "ecuador.rda",
-#'   package = "mlr3spatiotempcv")))
+#' data = data.table::as.data.table(readRDS(system.file("extdata",
+#'   "ecuador.rda", package = "mlr3spatiotempcv")))
 #' task = TaskClassifST$new("ecuador", backend = data, target = "slides",
 #'   positive = "TRUE", coordinates = c("x", "y"))
 #'
@@ -73,15 +36,27 @@
 #'
 #' # possible properties:
 #' mlr3::mlr_reflections$task_properties$classif
-TaskClassifST = R6::R6Class("TaskClassifST",
-  inherit = TaskClassif,
+TaskClassifST = R6::R6Class("TaskClassifST", inherit = TaskClassif,
+
   public = list(
     crs = NULL,
 
-    initialize = function(id, backend, target, coordinates, coords_as_features = FALSE, positive = NULL, crs = NULL) {
+    #' @description
+    #' Create a new spatiotemp resampling instance
+    #' @param coordinates `character(2)`\cr
+    #'   Name of the coordinates in the dataset.
+    #' @param crs `character(1)`\cr
+    #'   Coordinates reference system
+    #' @param coords_as_features `logical(1)`\cr Whether the coordinates
+    #'   should also be used as features. Default is `FALSE`.
+    #' @inheritParams TaskClassif
+    initialize = function(id, backend, target, coordinates,
+      coords_as_features = FALSE, positive = NULL, crs = NULL,
+      coordinate_names = NULL) {
 
       assert_string(target)
-      super$initialize(id = id, backend = backend, target = target, positive = positive)
+      super$initialize(id = id, backend = backend, target = target,
+        positive = positive)
 
       info = self$col_info[id == target]
       levels = info$levels[[1L]]
@@ -112,8 +87,15 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       if (isFALSE(coords_as_features)) {
         self$col_roles$feature = setdiff(self$col_roles$feature, coordinates)
       }
+
+      if (is.null(self$coordinate_names)) {
+        self$coordinate_names = self$col_roles$coordinates
+      }
     },
 
+    #' @description
+    #' Return the coordinates of the task
+    #' @param row_ids ???
     coordinates = function(row_ids = NULL) {
       if (is.null(row_ids)) {
         # Return coords in task$data order
@@ -122,45 +104,14 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       self$backend$data(rows = row_ids, cols = self$coordinate_names)
     },
 
-    print = function(...) {
-      .task_print(self)
-    }
-  ),
-
-  active = list(
-    coordinate_names = function() {
-      self$col_roles$coordinates
-    }
+    #' @field coordinate_names [character]\cr
+    #'   The variables names of the coordinates.
+    coordinate_names = NULL
   )
+
+  # active = list(
+  #   coordinate_names = function() {
+  #     self$col_roles$coordinates
+  #   }
+  # )
 )
-
-.task_print = function(self) {
-
-  catf("%s (%i x %i)", format(self), self$nrow, self$ncol)
-  catf(str_indent("Target:", self$target_names))
-  catf(str_indent("Properties:", self$properties))
-  catf(str_indent("Coordinates", self$coordinate_names))
-
-  # TODO: is this copy-pasted from Task?
-  # We should try to find a better way.
-  types = self$feature_types
-  if (nrow(types)) {
-    catf("Features (%i):", nrow(types))
-    types = types[, list(N = .N, feats = str_collapse(get("id"), n = 100L)), by = "type"][, "type" := translate_types(get("type"))]
-    setorderv(types, "N", order = -1L)
-    pmap(types, function(type, N, feats) catf(str_indent(sprintf("* %s (%i):", type, N), feats)))
-  }
-
-  # nocov start
-  if (length(self$col_roles$order)) {
-    catf(str_indent("Order by:", self$col_roles$order))
-  }
-  if ("groups" %in% self$properties) {
-    catf(str_indent("Groups:", self$col_roles$group))
-  }
-  if ("weights" %in% self$properties) {
-    catf(str_indent("Weights:", self$col_roles$weights))
-  }
-  # nocov end
-
-}
