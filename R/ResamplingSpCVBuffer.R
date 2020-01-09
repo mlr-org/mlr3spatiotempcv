@@ -83,7 +83,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
-      as.integer(length(self$instance))
+      as.integer(length(self$instance$fold))
     }
   ),
 
@@ -112,7 +112,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       test_inds = map_int(inds, function(x) as.integer(x[["test"]]))
 
       data.table(
-        row_id = seq(1:length(test_inds)),
+        row_id = as.character(seq(1:length(test_inds))),
         fold = test_inds,
         key = "fold"
       )
