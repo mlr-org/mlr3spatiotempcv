@@ -35,6 +35,14 @@ register_mlr3 = function() {
 
     mlr_tasks$add("ecuador", load_task_ecuador)
     mlr_tasks$add("diplodia", load_task_diplodia)
+
+    # resampling methods ---------------------------------------------------------
+
+    x = utils::getFromNamespace("mlr_resamplings", ns = "mlr3")
+    mlr_resamplings$add("spcv-block", ResamplingSpCVBlock)
+    mlr_resamplings$add("spcv-buffer", ResamplingSpCVBuffer)
+    mlr_resamplings$add("spcv-coords", ResamplingSpCVCoords)
+    mlr_resamplings$add("spcv-env", ResamplingSpCVEnv)
   }
 
 }
