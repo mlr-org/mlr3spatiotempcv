@@ -1,19 +1,5 @@
 context("mlr_resampling_spcv-buffer")
 
-# init objects -----------------------------------------------------------------
-
-task = mlr_tasks$get("ecuador")
-
-### create custom data for grouping variable
-b = as.data.table(readRDS(system.file("extdata", "ecuador.rda",
-  package = "mlr3spatiotempcv"
-)))
-# add grouping variable
-data = insert_named(b[1:150, ], list(grp = rep_len(letters[1:10], 150)))
-task_grp = TaskClassifST$new("ecuador-grp", as_data_backend(data), target = "slides",
-  coordinates = c("x", "y"))
-task_grp$col_roles$group = "grp"
-
 # run tests --------------------------------------------------------------------
 
 test_that("stratification throws errors", {
