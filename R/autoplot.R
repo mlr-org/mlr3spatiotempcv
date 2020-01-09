@@ -3,29 +3,45 @@
 #' @description Generates plots for [ResamplingSpCVBlock], [ResamplingSpCVEnv],
 #'   [ResamplingSpCVBuffer] and [ResamplingSpCVCoords].
 #'
+#' @importFrom data.table data.table rbindlist
 #' @import ggplot2
-#' @param object [ResamplingSpCVBlock]\cr An instantiated spatial resampling.
-#' @param task [TaskClassifST]\cr A spatial task.
-#' @param fold_id [numeric()]\cr For which fold ids should training and test
-#'   sets be visualized?
+#'
+#' @param object [Resampling]\cr
+#'   mlr3 spatial resampling object. One of class [ResamplingSpCVBuffer],
+#'   [ResamplingSpCVBlock], [ResamplingSpCVCoords], [ResamplingSpCVEnv].
+#' @param task [TaskClassifST]/[TaskRegrST]\cr
+#'   mlr3 task object.
+#' @param fold_id [numeric]\cr
+#'   Fold IDs to plot.
 #' @param grid (`logical(1)`)\cr Should a gridded plot using
 #'   `cowplot::plot_grid()` be created? If `FALSE` only a list with all
 #'   \CRANpkg{ggplot2} resamplings is returned. Default is `TRUE`. Only applies
 #'   if a numeric vector is passed to argument `fold_id`.
-#' @param ... Currently not used
+#' @param train_color `character(1)`\cr
+#'   The color to use for the training set observations.
+#' @param test_color `character(1)`\cr
+#'   The color to use for the test set observations.
+#' @param ... Not used.
 #'
 #' @details By default a plot is returned; if `fold_id` is set, a gridded plot
 #'   is created. If `grid = FALSE`, only a list of ggplot2 resamplings is
 #'   returned. This gives the option to align the single plots manually.
 #'
+#'   When no single fold is selected, the [ggsci::scale_color_ucscgb()] palette
+#'   is used to display all partitions. If you want to change the colors,
+#'   call `<plot> + <color-palette>()`
+#' @return [ggplot()] or list of ggplot2 objects.
+
+#' @title Plot for Spatial Resampling
+#'
 #' @rdname autoplot_spatial_resampling
-#' @return [ggplot()] resampling.
+
 #' @export
 #' @examples
+#' \donttest{
 #' #####
 #' # SpCVBlock
 #' #####
-#' \dontrun{
 #' library(mlr3)
 #' task = tsk("ecuador")
 #' resampling = rsmp("spcv-block")
@@ -45,26 +61,29 @@
 #' plot_list = autoplot(resampling, task,
 #'   fold_id = c(1, 2, 3, 4), grid = FALSE)
 #' }
-autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, grid = TRUE, ...) {
-  autoplot_spatial(resampling = object, task = task, fold_id = fold_id,
+autoplot.ResamplingSpCVBlock = function(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...) {
+  autoplot_spatial(resampling = object,
+    task = task,
+    fold_id = fold_id,
     grid = grid)
 }
 
 #' @title Plot for Spatial Resampling
 #'
-#' @description
-#' Generates plots for [mlr3spatiotempcv::ResamplingSpCVEnv].
-#'
-#' @inheritParams autoplot.ResamplingSpCVBlock
-#'
 #' @rdname autoplot_spatial_resampling
-#' @return [ggplot()] resampling.
 #' @export
 #' @examples
 #' #####
 #' # SpCVEnv
 #' #####
-#' \dontrun{
+#' \donttest{
 #' resampling = rsmp("spcv-env")
 #' resampling$param_set$values = list(folds = 4, features = c("dem"))
 #' resampling$instantiate(task)
@@ -72,100 +91,95 @@ autoplot.ResamplingSpCVBlock = function(object, task, fold_id = NULL, grid = TRU
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
 #' }
-autoplot.ResamplingSpCVEnv = function(object, task, fold_id = NULL, grid = TRUE, ...) {
-  autoplot_spatial(resampling = object, task = task, fold_id = fold_id,
+autoplot.ResamplingSpCVEnv = function(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...) {
+  autoplot_spatial(resampling = object,
+    task = task,
+    fold_id = fold_id,
     grid = grid)
 }
 
 #' @title Plot for Spatial Resampling
 #'
-#' @inheritParams autoplot.ResamplingSpCVBlock
-#'
 #' @rdname autoplot_spatial_resampling
-#' @return [ggplot()] resampling.
 #' @export
 #' @examples
 #' #####
 #' # SpCVBuffer
 #' #####
-#' \dontrun{
+#' \donttest{
 #' resampling = rsmp("spcv-buffer")
 #' resampling$param_set$values = list(range = 1000)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
 #' }
-autoplot.ResamplingSpCVBuffer = function(object, task, fold_id = NULL, grid = TRUE, ...) {
-  autoplot_spatial(resampling = object, task = task, fold_id = fold_id,
+autoplot.ResamplingSpCVBuffer = function(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...) {
+  autoplot_spatial(resampling = object,
+    task = task,
+    fold_id = fold_id,
     grid = grid)
 
 }
 
 #' @title Plot for Spatial Resampling
 #'
-#' @description
-#' Generates plots for [mlr3spatiotempcv::ResamplingSpCVCoords].
-#'
-#' @inheritParams autoplot.ResamplingSpCVBlock
-#'
 #' @rdname autoplot_spatial_resampling
-#' @return [ggplot()] resampling.
 #' @export
 #' @examples
 #' #####
 #' # SpCVCoords
 #' #####
-#' \dontrun{
+#' \donttest{
 #' resampling = rsmp("spcv-coords")
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
 #' }
-autoplot.ResamplingSpCVCoords = function(object, task, fold_id = NULL, grid = TRUE, ...) {
-  autoplot_spatial(resampling = object, task = task, fold_id = fold_id,
+autoplot.ResamplingSpCVCoords = function(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...) {
+  autoplot_spatial(resampling = object,
+    task = task,
+    fold_id = fold_id,
     grid = grid)
 }
 
-#' @title Plot for Spatial Resampling
-#'
-#' @description
-#' Workhorse for autoplot.ResamplingSpCV*.
-#'
-#' @importFrom data.table data.table rbindlist
-#' @importFrom mlr3misc imap
-#' @import ggplot2
-#'
-#' @param resampling [ResamplingSpCVCoords]
-#' @param task [TaskClassifST]
-#' @param fold_id [numeric()]
-#' @param ... Currently not used
-#'
-#' @return [ggplot()] resampling.
-#' @export
-#' @keywords internal
-autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
+autoplot_spatial = function(
+  resampling = NULL,
+  task = NULL,
+  fold_id = NULL,
+  grid = NULL,
+  train_color = NULL,
+  test_color = NULL) {
+
   coords = task$coordinates()
   coords$row_id = task$row_ids
   require_namespaces(c("sf", "cowplot"))
 
-  if (class(resampling)[1] == "ResamplingSpCVBuffer") {
+  coords_resamp = merge(coords, resampling$instance, by = "row_id")
 
-    coords_resamp = imap(resampling$instance, function(x, y) {
-      inds = data.table(row_id = resampling$instance[[y]]$train,
-        fold = y,
-        indicator = "Train")
-      ind_test = data.table(row_id = resampling$instance[[y]]$test,
-        fold = y,
-        indicator = "Test")
-      inds_comb = rbind(inds, ind_test)
-
-      merge(coords, inds_comb, by = "row_id")
-    })
-    coords_resamp = rbindlist(coords_resamp)
-  } else {
-    # attach the coordinates to the resampling indices
-    coords_resamp = merge(coords, resampling$instance, by = "row_id")
+  if (class(resampling)[1] == "ResamplingSpCVBuffer" && is.null(fold_id)) {
+    stop("Plotting all folds of a LOOCV instance is not supported. Please provide a fold ID.") # nolint
   }
 
   # plot train and test of a specific fold?
@@ -179,6 +193,7 @@ autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
     if (any(fold_id > resampling$iters)) {
       stop("Specified a fold id which exceeds the total number of folds.")
     }
+
     # Multiplot with train and test set
     plot_list = list()
     for (i in fold_id) {
@@ -188,21 +203,18 @@ autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
       indicator = NULL
       fold = NULL
 
-      if (!class(resampling)[1] == "ResamplingSpCVBuffer") {
-        table[, indicator := ifelse(fold == i, "Test", "Train")]
-      } else {
-        # for ResamplingSpCVBuffer we already have a correct data.table
-        # we only need to subset it to the desired fold(s)
-        table = subset(table, fold %in% i)
-      }
+      table[, indicator := ifelse(fold == i, "Test", "Train")]
 
       sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
       sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
+      # reorder factor levels so that "train" comes first
+      sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
+
       plot_list[[length(plot_list) + 1]] =
         ggplot() +
         geom_sf(data = sf_df, aes(color = indicator)) +
-        scale_color_viridis_d() +
+        scale_color_manual(values = c("Train" = "#0072B5", "Test" = "#E18727")) +
         labs(color = "Set") +
         theme(legend.position = "none")
     }
@@ -218,14 +230,19 @@ autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
       coords_resamp[, indicator := ifelse(fold == 1, "Test", "Train")]
 
       sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
-      # 'fold' needs to be a factor, otherwise `show.legend = "points" has no effect
+      # 'fold' needs to be a factor, otherwise `show.legend = "points" has no
+      # effect
       sf_df$indicator = as.factor(as.character(sf_df$indicator))
+
+      # reorder factor levels so that "train" comes first
+      sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
 
       legend = cowplot::get_legend(ggplot() +
         geom_sf(data = sf_df, aes(color = indicator),
           show.legend = "point") +
-        scale_color_viridis_d() +
-        labs(color = "Set") +
+        scale_color_manual(values = c("Train" = "#0072B5",
+          "Test" = "#E18727")) +
+        labs(color = "") +
         theme(legend.position = "bottom"))
 
       # Plot
@@ -234,12 +251,16 @@ autoplot_spatial = function(resampling, task, fold_id = NULL, grid = TRUE) {
   } else {
     # Create one plot with all (test)-folds
     sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
+
+    # order fold ids
+    sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
     sf_df$fold = as.factor(as.character(sf_df$fold))
+    sf_df$fold <- factor(sf_df$fold, levels = unique(as.character(sf_df$fold)))
 
     ggplot() +
       geom_sf(data = sf_df, show.legend = "point",
         aes(color = fold)) +
-      scale_color_viridis_d(breaks = sort(as.integer(as.character(sf_df$fold)))) +
-      labs(color = "Test Set, Fold #")
+      ggsci::scale_color_ucscgb() +
+      labs(color = "Partition #")
   }
 }

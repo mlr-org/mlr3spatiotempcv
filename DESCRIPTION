@@ -26,6 +26,7 @@ Imports:
 Suggests:
     blockCV,
     cowplot,
+    ggsci,
     sf,
     testthat,
     vdiffr
