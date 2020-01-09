@@ -123,6 +123,15 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv", inherit = mlr3::Resampling,
         fold = inds$cluster,
         key = "fold"
       )
+    },
+    # private get funs for train and test which are used by
+    # Resampling$.get_set()
+    .get_train = function(i) {
+      self$instance[!list(i), "row_id", on = "fold"][[1L]]
+    },
+
+    .get_test = function(i) {
+      self$instance[list(i), "row_id", on = "fold"][[1L]]
     }
   )
 )

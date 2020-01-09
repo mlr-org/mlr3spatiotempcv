@@ -83,12 +83,13 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
-      as.integer(self$param_set$values$folds)
+      as.integer(length(self$instance))
     }
   ),
 
   private = list(
     .sample = function(ids, coords, crs) {
+
       require_namespaces(c("blockCV", "sf"))
 
       points = sf::st_as_sf(coords,
@@ -101,13 +102,28 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         progress = FALSE
       )
 
-      map(inds$folds, function(x) {
+      inds = map(inds$folds, function(x) {
         set = map(x, function(y) {
           ids[y]
         })
         names(set) = c("train", "test")
         set
       })
+      test_inds = map_int(inds, function(x) as.integer(x[["test"]]))
+
+      data.table(
+        row_id = seq(1:length(test_inds)),
+        fold = test_inds,
+        key = "fold"
+      )
+    },
+
+    .get_train = function(i) {
+      self$instance[!list(i), "row_id", on = "fold"][[1L]]
+    },
+
+    .get_test = function(i) {
+      self$instance[list(i), "row_id", on = "fold"][[1L]]
     }
   )
 )

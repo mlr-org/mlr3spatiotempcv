@@ -23,7 +23,8 @@
 #' # Individual sets:
 #' rcv$train_set(1)
 #' rcv$test_set(1)
-#' intersect(rcv$train_set(1), rcv$test_set(1))
+#' # check that no obs are in both sets
+#' intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 #'
 #' # Internal storage:
 #' rcv$instance # table
@@ -96,6 +97,16 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
         fold = inds$cluster,
         key = "fold"
       )
+    },
+
+    # private get funs for train and test which are used by
+    # Resampling$.get_set()
+    .get_train = function(i) {
+      self$instance[!list(i), "row_id", on = "fold"][[1L]]
+    },
+
+    .get_test = function(i) {
+      self$instance[list(i), "row_id", on = "fold"][[1L]]
     }
   )
 )

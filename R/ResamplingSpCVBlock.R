@@ -136,6 +136,15 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         fold = inds$foldID,
         key = "fold"
       )
+    },
+    # private get funs for train and test which are used by
+    # Resampling$.get_set()
+    .get_train = function(i) {
+      self$instance[!list(i), "row_id", on = "fold"][[1L]]
+    },
+
+    .get_test = function(i) {
+      self$instance[list(i), "row_id", on = "fold"][[1L]]
     }
   )
 )
