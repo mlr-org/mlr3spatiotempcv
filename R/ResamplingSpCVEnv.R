@@ -1,15 +1,11 @@
 #' @title Environmental Block Cross Validation Resampling
 #'
-#' @format [R6::R6Class] inheriting from [Resampling].
 #' @import mlr3
 #'
 #' @description Environmental Block Cross Validation. This strategy uses k-means
 #' clustering to specify blocks of smilar environmental conditions. Only numeric
 #' features can be used. The `features` used for building blocks can be
 #' specified in the `param_set`. By default, all numeric features are used.
-#' @section Fields: See [Resampling].
-#'
-#' @section Methods: See [Resampling].
 #'
 #' @references Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV:
 #' An r package for generating spatially or environmentally separated folds for
@@ -33,9 +29,13 @@
 #'
 #' # Internal storage:
 #' rcv$instance
-ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
-  inherit = mlr3::Resampling,
+ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv", inherit = mlr3::Resampling,
+
   public = list(
+    #' @description
+    #' Create an "Environmental Block" resampling instance.
+    #' @param id `character(1)`\cr
+    #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv-env") {
       ps = ParamSet$new(params = list(
         ParamUty$new("stratify", default = NULL),
@@ -48,6 +48,11 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
         param_set = ps
       )
     },
+
+    #' @description
+    #'  Materializes fixed training and test splits for a given task.
+    #' @param task [Task]\cr
+    #'  A task to instantiate.
     instantiate = function(task) {
 
       assert_task(task)
@@ -101,8 +106,11 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
   ),
 
   active = list(
+    #' @field iters `integer(1)`\cr
+    #'   Returns the number of resampling iterations, depending on the
+    #'   values stored in the `param_set`.
     iters = function() {
-      self$param_set$values$folds
+      as.integer(self$param_set$values$folds)
     }
   ),
 
@@ -115,18 +123,6 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
         fold = inds$cluster,
         key = "fold"
       )
-    },
-
-    .get_train = function(i) {
-      self$instance[!list(i), "row_id", on = "fold"][[1L]]
-    },
-
-    .get_test = function(i) {
-      self$instance[list(i), "row_id", on = "fold"][[1L]]
-    },
-
-    deep_clone = function(name, value) {
-      if (name == "instance") copy(value) else value
     }
   )
 )

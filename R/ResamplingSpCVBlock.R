@@ -1,23 +1,16 @@
 #' @title Spatial Block Cross Validation Resampling
 #'
-#' @format [R6::R6Class] inheriting from [Resampling].
 #' @import mlr3
 #'
 #' @description Spatial Block Cross validation implemented by the `blockCV`
 #' package.
 #'
-#' @section Fields: See [Resampling].
-#'
-#' @section Methods: See [Resampling].
-#'
 #' @references Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV:
 #' An r package for generating spatially or environmentally separated folds for
 #' k-fold cross-validation of species distribution models. Methods Ecol Evol.
 #' 2019; 10:225–232. https://doi.org/10.1111/2041-210X.13107
-#'
 #' @export
 #' @examples
-#' \dontrun{
 #' library(mlr3)
 #' task = tsk("ecuador")
 #'
@@ -32,10 +25,14 @@
 #'
 #' # Internal storage:
 #' rcv$instance
-#' }
 ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
   inherit = mlr3::Resampling,
+
   public = list(
+    #' @description
+    #' Create an "Environmental Block" resampling instance.
+    #' @param id `character(1)`\cr
+    #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv-block") {
       ps = ParamSet$new(params = list(
         ParamUty$new("stratify", default = NULL),
@@ -43,7 +40,8 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         ParamInt$new("rows", lower = 1L, default = 4),
         ParamInt$new("cols", lower = 1L, default = 4),
         ParamInt$new("range", lower = 1L),
-        ParamFct$new("selection", levels = c("random", "systematic", "checkerboard"), default = "random")
+        ParamFct$new("selection", levels = c("random", "systematic",
+          "checkerboard"), default = "random")
       ))
       ps$values = list(folds = 10L)
       super$initialize(
@@ -53,6 +51,10 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       require_namespaces(c("blockCV", "sf"))
     },
 
+    #' @description
+    #'  Materializes fixed training and test splits for a given task.
+    #' @param task [Task]\cr
+    #'  A task to instantiate.
     instantiate = function(task) {
 
       assert_task(task)
@@ -106,8 +108,11 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
   ),
 
   active = list(
+    #' @field iters `integer(1)`\cr
+    #'   Returns the number of resampling iterations, depending on the
+    #'   values stored in the `param_set`.
     iters = function() {
-      self$param_set$values$folds
+      as.integer(self$param_set$values$folds)
     }
   ),
 
@@ -131,18 +136,6 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         fold = inds$foldID,
         key = "fold"
       )
-    },
-
-    .get_train = function(i) {
-      self$instance[!list(i), "row_id", on = "fold"][[1L]]
-    },
-
-    .get_test = function(i) {
-      self$instance[list(i), "row_id", on = "fold"][[1L]]
-    },
-
-    deep_clone = function(name, value) {
-      if (name == "instance") copy(value) else value
     }
   )
 )
