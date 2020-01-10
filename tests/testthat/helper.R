@@ -1,7 +1,4 @@
 task = mlr_tasks$get("ecuador")
-set.seed(123)
-
-
 task = mlr_tasks$get("ecuador")
 
 ### create custom data for grouping variable
