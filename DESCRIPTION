@@ -2,11 +2,15 @@ Package: mlr3spatiotempcv
 Title: Spatial support for mlr3
 Version: 0.0.0.9002
 Authors@R:
-    person(given = "Patrick",
-           family = "Schratz",
-           role = c("aut", "cre"),
-           email = "patrick.schratz@gmail.com",
-           comment = c(ORCID = "0000-0003-0748-6624"))
+    c(person(given = "Patrick",
+             family = "Schratz",
+             role = c("aut", "cre"),
+             email = "patrick.schratz@gmail.com",
+             comment = c(ORCID = "0000-0003-0748-6624")),
+      person(given = "Marc",
+             family = "Becker",
+             role = "aut",
+             email = "marcbecker@posteo.de"))
 Description: Implements spatio-temporal methods to enhance the
     experience of mlr3.
 License: MIT + file LICENSE
