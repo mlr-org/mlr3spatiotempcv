@@ -3,8 +3,6 @@
 \name{TaskClassifST}
 \alias{TaskClassifST}
 \title{SpatioTemporal Classification Task}
-\format{\link[R6:R6Class]{R6::R6Class} object inheriting from
-\link{Task}/\link{TaskSupervised}/\link{TaskClassif}.}
 \description{
 This task specializes \link{Task} and \link{TaskSupervised} for
 spatio-temporal classification problems. The target column is assumed to be a
@@ -14,48 +12,11 @@ A spatial example task is available via \code{mlr_tasks$get("ecuador")}. During
 initialization, coordinates need to be passed. By default, coordinates are
 not used as features. This can be changed by setting \code{coords_as_features = TRUE}.
 }
-\section{Construction}{
-\preformatted{t = TaskClassifST$new(id, backend, target, coordinates, positive = NULL,
-  coords_as_features = FALSE)
-}
-\itemize{
-\item \code{id} :: \code{character(1)}\cr
-Identifier for the task.
-\item \code{backend} :: \link{DataBackend}\cr Either a \link{DataBackend}, or any object which
-is convertible to a DataBackend with \code{as_data_backend()}. E.g., a
-\code{data.frame()} will be converted to a \link{DataBackendDataTable}.
-\item \code{target} :: \code{character(1)}\cr
-Name of the target column.
-\item \code{coordinates} :: \link{data.frame}\cr
-A \link{data.frame} with \code{ncol(2)} containing longitude and latitude information.
-\item \code{positive} :: \code{character(1)}\cr
-Only for binary classification: Name of the positive class.
-\item \code{coords_as_features} :: \code{logical(1)}\cr
-Whether the coordinates should also be used as features. Default is \code{FALSE}.
-\item \code{crs} :: \code{character(1)}\cr
-Coordinates reference system
-}
-}
-
-\section{Fields}{
-
-All methods from \link{TaskSupervised} and \link{TaskClassif}, and additionally:
-\itemize{
-\item \code{coordinates} :: \link{data.frame}\cr
-Stores the coordinates passed during construction.
-}
-}
-
-\section{Methods}{
-
-See \link{TaskSupervised} and \link{TaskClassif}.
-}
-
 \examples{
-data = data.table::as.data.table(readRDS(system.file("extdata", "ecuador.rda",
-  package = "mlr3spatiotempcv")))
+data = data.table::as.data.table(readRDS(system.file("extdata",
+  "ecuador.rda", package = "mlr3spatiotempcv")))
 task = TaskClassifST$new("ecuador", backend = data, target = "slides",
-  positive = "TRUE", coordinates = c("x", "y"))
+  positive = "TRUE", coordinate_names = c("x", "y"))
 
 task$task_type
 task$formula()
@@ -76,3 +37,146 @@ Other Task:
 \code{\link{TaskRegrST}}
 }
 \concept{Task}
+\section{Super classes}{
+\code{\link[mlr3:Task]{mlr3::Task}} -> \code{\link[mlr3:TaskSupervised]{mlr3::TaskSupervised}} -> \code{\link[mlr3:TaskClassif]{mlr3::TaskClassif}} -> \code{TaskClassifST}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{coordinate_names}}{\link{character}\cr
+The variables names of the coordinates in the data.}
+
+\item{\code{crs}}{\link{character}\cr
+The \code{proj4string} of the coordinate system.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{TaskClassifST$new()}}
+\item \href{#method-coordinates}{\code{TaskClassifST$coordinates()}}
+\item \href{#method-print}{\code{TaskClassifST$print()}}
+\item \href{#method-clone}{\code{TaskClassifST$clone()}}
+}
+}
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="cbind">}\href{../../mlr3/html/Task.html#method-cbind}{\code{mlr3::Task$cbind()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="data">}\href{../../mlr3/html/Task.html#method-data}{\code{mlr3::Task$data()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="droplevels">}\href{../../mlr3/html/Task.html#method-droplevels}{\code{mlr3::Task$droplevels()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="filter">}\href{../../mlr3/html/Task.html#method-filter}{\code{mlr3::Task$filter()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="format">}\href{../../mlr3/html/Task.html#method-format}{\code{mlr3::Task$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="formula">}\href{../../mlr3/html/Task.html#method-formula}{\code{mlr3::Task$formula()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="head">}\href{../../mlr3/html/Task.html#method-head}{\code{mlr3::Task$head()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="help">}\href{../../mlr3/html/Task.html#method-help}{\code{mlr3::Task$help()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="levels">}\href{../../mlr3/html/Task.html#method-levels}{\code{mlr3::Task$levels()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="missings">}\href{../../mlr3/html/Task.html#method-missings}{\code{mlr3::Task$missings()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="rbind">}\href{../../mlr3/html/Task.html#method-rbind}{\code{mlr3::Task$rbind()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="rename">}\href{../../mlr3/html/Task.html#method-rename}{\code{mlr3::Task$rename()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="select">}\href{../../mlr3/html/Task.html#method-select}{\code{mlr3::Task$select()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="set_col_role">}\href{../../mlr3/html/Task.html#method-set_col_role}{\code{mlr3::Task$set_col_role()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="set_row_role">}\href{../../mlr3/html/Task.html#method-set_row_role}{\code{mlr3::Task$set_row_role()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="TaskClassif" data-id="truth">}\href{../../mlr3/html/TaskClassif.html#method-truth}{\code{mlr3::TaskClassif$truth()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Create a new spatiotemporal resampling instance.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TaskClassifST$new(
+  id,
+  backend,
+  target,
+  positive = NULL,
+  coords_as_features = FALSE,
+  crs = NA,
+  coordinate_names = NA
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{\code{character(1)}\cr
+Identifier for the task.}
+
+\item{\code{backend}}{\link{DataBackend}\cr
+Either a \link{DataBackend}, or any object which is convertible to a
+DataBackend with \code{as_data_backend()}. E.g., a \code{data.frame()} will be
+converted to a \link{DataBackendDataTable}.}
+
+\item{\code{target}}{\code{character(1)}\cr
+Name of the target column.}
+
+\item{\code{positive}}{\code{character(1)}\cr
+Only for binary classification: Name of the positive class. The levels
+of the target columns are reordered accordingly, so that the first
+element of \verb{$class_names} is the positive class, and the second element
+is the negative class.}
+
+\item{\code{coords_as_features}}{\code{logical(1)}\cr
+Whether the coordinates should also be used as features.
+Default is \code{FALSE}.}
+
+\item{\code{crs}}{\code{character(1)}\cr
+Coordinates reference system}
+
+\item{\code{coordinate_names}}{\code{character(2)}\cr
+The variables names of the coordinates in the data.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-coordinates"></a>}}
+\subsection{Method \code{coordinates()}}{
+Return the coordinates of the task
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TaskClassifST$coordinates(rows = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{rows}}{Row IDs. Can be used to subset the returned coordinates.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Print the task.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TaskClassifST$print(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Arguments passed to the \verb{$print()} method of the superclass.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TaskClassifST$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
+}

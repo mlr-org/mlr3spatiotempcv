@@ -10,3 +10,5 @@
 ^.pre-commit-config.yaml
 ^README_files
 ^pkgdown$
+^docs$
+^\.circleci$

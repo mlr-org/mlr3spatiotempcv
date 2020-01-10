@@ -7,25 +7,48 @@
 #' @importFrom R6 R6Class
 "_PACKAGE"
 
+register_mlr3 = function() {
+  # reflections ----------------------------------------------------------------
+
+  x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
+
+  if (!grepl("ST", x$task_types[, "task"])) {
+    x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
+
+    x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
+      ~type, ~package, ~task, ~learner, ~prediction, ~measure,
+      "regr", "mlr3spatiotempcv", "TaskRegrST", "LearnerRegr", "PredictionRegr",
+      "MeasureRegr",
+
+      "classif", "mlr3spatiotempcv", "TaskClassifST", "LearnerClassif",
+      "PredictionClassif", "MeasureClassif"
+    )), "type")
+
+    x$task_col_roles$regr = c("feature", "target", "label", "order", "group",
+      "weight", "coordinates")
+    x$task_col_roles$classif = c("feature", "target", "label", "order", "group",
+      "weight", "coordinates")
+
+    # tasks --------------------------------------------------------------------
+
+    x = utils::getFromNamespace("mlr_tasks", ns = "mlr3")
+
+    mlr_tasks$add("ecuador", load_task_ecuador)
+    mlr_tasks$add("diplodia", load_task_diplodia)
+
+    # resampling methods ---------------------------------------------------------
+
+    x = utils::getFromNamespace("mlr_resamplings", ns = "mlr3")
+    mlr_resamplings$add("spcv-block", ResamplingSpCVBlock)
+    mlr_resamplings$add("spcv-buffer", ResamplingSpCVBuffer)
+    mlr_resamplings$add("spcv-coords", ResamplingSpCVCoords)
+    mlr_resamplings$add("spcv-env", ResamplingSpCVEnv)
+  }
+
+}
+
 .onLoad = function(libname, pkgname) {
-
-  # nocov start
-  # add 'coordinates' as col roles
-  tmp = mlr_reflections$task_col_roles$regr
-  mlr_reflections$task_col_roles = list(
-    regr = c(tmp, "coordinates"),
-    classif = c(tmp, "coordinates")
-  )
-
-  # add spatial task
-  mlr_tasks$add("ecuador", load_task_ecuador)
-  mlr_tasks$add("diplodia", load_task_diplodia)
-
-  # add spatial resampling methods
-  mlr_resamplings$add("spcv-block", ResamplingSpCVBlock)
-  mlr_resamplings$add("spcv-buffer", ResamplingSpCVBuffer)
-  mlr_resamplings$add("spcv-coords", ResamplingSpCVCoords)
-  mlr_resamplings$add("spcv-env", ResamplingSpCVEnv)
-
-  # nocov end
+  register_mlr3()
+  setHook(packageEvent("mlr3", "onLoad"), function(...) register_mlr3(),
+    action = "append")
 }

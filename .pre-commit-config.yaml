@@ -11,11 +11,11 @@ repos:
     -   id: no-browser-statement
     -   id: readme-rmd-rendered
     #  R package development
-    -   id: roxygenize
+    # -   id: roxygenize
     -   id: use-tidy-description
     -   id: deps-in-desc
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.4.0
     hooks:
     -   id: check-added-large-files
-        args: ['--maxkb=200']
+        args: ['--maxkb=700']

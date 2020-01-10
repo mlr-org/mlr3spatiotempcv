@@ -7,56 +7,91 @@
 \alias{autoplot.ResamplingSpCVCoords}
 \title{Visualization of spatial resampling.}
 \usage{
-\method{autoplot}{ResamplingSpCVBlock}(object, task, fold_id = NULL, grid = TRUE, ...)
+\method{autoplot}{ResamplingSpCVBlock}(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...
+)
 
-\method{autoplot}{ResamplingSpCVEnv}(object, task, fold_id = NULL, grid = TRUE, ...)
+\method{autoplot}{ResamplingSpCVEnv}(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...
+)
 
-\method{autoplot}{ResamplingSpCVBuffer}(object, task, fold_id = NULL, grid = TRUE, ...)
+\method{autoplot}{ResamplingSpCVBuffer}(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...
+)
 
-\method{autoplot}{ResamplingSpCVCoords}(object, task, fold_id = NULL, grid = TRUE, ...)
+\method{autoplot}{ResamplingSpCVCoords}(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...
+)
 }
 \arguments{
-\item{object}{\link{ResamplingSpCVBlock}\cr An instantiated spatial resampling.}
+\item{object}{\link{Resampling}\cr
+mlr3 spatial resampling object. One of class \link{ResamplingSpCVBuffer},
+\link{ResamplingSpCVBlock}, \link{ResamplingSpCVCoords}, \link{ResamplingSpCVEnv}.}
 
-\item{task}{\link{TaskClassifST}\cr A spatial task.}
+\item{task}{\link{TaskClassifST}/\link{TaskRegrST}\cr
+mlr3 task object.}
 
-\item{fold_id}{\code{\link[=numeric]{numeric()}}\cr For which fold ids should training and test
-sets be visualized?}
+\item{fold_id}{\link{numeric}\cr
+Fold IDs to plot.}
 
 \item{grid}{(\code{logical(1)})\cr Should a gridded plot using
 \code{cowplot::plot_grid()} be created? If \code{FALSE} only a list with all
 \CRANpkg{ggplot2} resamplings is returned. Default is \code{TRUE}. Only applies
 if a numeric vector is passed to argument \code{fold_id}.}
 
-\item{...}{Currently not used}
+\item{train_color}{\code{character(1)}\cr
+The color to use for the training set observations.}
+
+\item{test_color}{\code{character(1)}\cr
+The color to use for the test set observations.}
+
+\item{...}{Not used.}
 }
 \value{
-\code{\link[=ggplot]{ggplot()}} resampling.
-
-\code{\link[=ggplot]{ggplot()}} resampling.
-
-\code{\link[=ggplot]{ggplot()}} resampling.
-
-\code{\link[=ggplot]{ggplot()}} resampling.
+\code{\link[=ggplot]{ggplot()}} or list of ggplot2 objects.
 }
 \description{
 Generates plots for \link{ResamplingSpCVBlock}, \link{ResamplingSpCVEnv},
 \link{ResamplingSpCVBuffer} and \link{ResamplingSpCVCoords}.
-
-Generates plots for \link[mlr3spatiotempcv:ResamplingSpCVEnv]{mlr3spatiotempcv::ResamplingSpCVEnv}.
-
-Generates plots for \link[mlr3spatiotempcv:ResamplingSpCVCoords]{mlr3spatiotempcv::ResamplingSpCVCoords}.
 }
 \details{
 By default a plot is returned; if \code{fold_id} is set, a gridded plot
 is created. If \code{grid = FALSE}, only a list of ggplot2 resamplings is
 returned. This gives the option to align the single plots manually.
+
+When no single fold is selected, the \code{\link[ggsci:scale_color_ucscgb]{ggsci::scale_color_ucscgb()}} palette
+is used to display all partitions. If you want to change the colors,
+call \verb{<plot> + <color-palette>()}
 }
 \examples{
+\donttest{
 #####
 # SpCVBlock
 #####
-\dontrun{
 library(mlr3)
 task = tsk("ecuador")
 resampling = rsmp("spcv-block")
@@ -79,7 +114,7 @@ plot_list = autoplot(resampling, task,
 #####
 # SpCVEnv
 #####
-\dontrun{
+\donttest{
 resampling = rsmp("spcv-env")
 resampling$param_set$values = list(folds = 4, features = c("dem"))
 resampling$instantiate(task)
@@ -90,7 +125,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # SpCVBuffer
 #####
-\dontrun{
+\donttest{
 resampling = rsmp("spcv-buffer")
 resampling$param_set$values = list(range = 1000)
 resampling$instantiate(task)
@@ -100,7 +135,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # SpCVCoords
 #####
-\dontrun{
+\donttest{
 resampling = rsmp("spcv-coords")
 resampling$instantiate(task)
 autoplot(resampling, task)
