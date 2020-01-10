@@ -24,26 +24,26 @@ framework by spatiotemporal resampling and visualization methods.
 
 Currently, the following ones are implemented:
 
-| Literature Name        | R Package                                                 | Reference     | mlr3spatiotempcv Class Name | mlr3 sugar            |
-| ---------------------- | --------------------------------------------------------- | ------------- | --------------------------- | --------------------- |
-| Spatial Buffering      | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBuffer`        | `rsmp("spcv-buffer")` |
-| Spatial Blocking       | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBlock`         | `rsmp("spcv-block")`  |
-| Spatial CV             | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResampleSpCVCoords`        | `rsmp("spcv-coords")` |
-| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVEnv`           | `rsmp("spcv-env")`    |
+| Literature             | Package                                                   | Reference     | Class Name           | mlr3 sugar            |
+| ---------------------- | --------------------------------------------------------- | ------------- | -------------------- | --------------------- |
+| Spatial Buffering      | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBuffer` | `rsmp("spcv-buffer")` |
+| Spatial Blocking       | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBlock`  | `rsmp("spcv-block")`  |
+| Spatial CV             | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResampleSpCVCoords` | `rsmp("spcv-coords")` |
+| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVEnv`    | `rsmp("spcv-env")`    |
 
 ## Spatial tasks
 
-  - Task “ecuador” -\> `mlr_tasks$get("ecuador")`
-  - Task “diplodia” -\> `mlr_tasks$get("diplodia")`
+| Name     | Code                        | Type    |
+| -------- | --------------------------- | ------- |
+| ecuador  | `mlr_tasks$get("ecuador")`  | Classif |
+| diplodia | `mlr_tasks$get("diplodia")` | Classif |
 
-## Visualization methods
+## Visualization
 
 Generic S3 function `autoplot()` for all implemented spatial resampling
 methods.
 
-The following example shows the resampling method `"spcv-coords"`.
-
-Visualization of all partitions
+### Visualization of all partitions
 
 ``` r
 library(mlr3)
@@ -59,13 +59,19 @@ autoplot(resampling, task)
 
 ![](man/figures/README-spcv-coords-all-partitions-1.png)<!-- -->
 
-Visualization of the first fold only
+### Visualization of the first fold only
 
 ``` r
 autoplot(resampling, task, fold_id = 1)
 ```
 
 ![](man/figures/README-spcv-coords-fold-1.png)<!-- -->
+
+## More resources
+
+For detailed information on how to use spatial resampling in {mlr3}
+please read the section about [spatial analysis in the mlr3
+book](https://mlr3book.mlr-org.com/spatial.html).
 
 # References
 
