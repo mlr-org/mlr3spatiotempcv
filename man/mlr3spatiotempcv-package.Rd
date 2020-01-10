@@ -32,8 +32,18 @@ Useful links:
 \author{
 \strong{Maintainer}: Patrick Schratz \email{patrick.schratz@gmail.com} (\href{https://orcid.org/0000-0003-0748-6624}{ORCID})
 
+Authors:
+\itemize{
+  \item Marc Becker \email{marcbecker@posteo.de}
+}
+
 
 \strong{Maintainer}: Patrick Schratz \email{patrick.schratz@gmail.com} (\href{https://orcid.org/0000-0003-0748-6624}{ORCID})
+
+Authors:
+\itemize{
+  \item Marc Becker \email{marcbecker@posteo.de}
+}
 
 }
 \keyword{internal}

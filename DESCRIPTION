@@ -34,6 +34,8 @@ Suggests:
     sf,
     testthat,
     vdiffr
+RdMacros:
+    mlr3misc
 Remotes: 
     rvalavi/blockCV
 Encoding: UTF-8

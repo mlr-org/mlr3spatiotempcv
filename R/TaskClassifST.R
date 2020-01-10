@@ -23,15 +23,11 @@
 #'
 #' task$task_type
 #' task$formula()
-#' task$truth()
 #' task$class_names
 #' task$positive
 #' task$negative
 #' task$coordinates()
 #' task$coordinate_names
-#'
-#' # possible properties:
-#' mlr3::mlr_reflections$task_properties$classif
 TaskClassifST = R6::R6Class("TaskClassifST", inherit = TaskClassif,
 
   public = list(

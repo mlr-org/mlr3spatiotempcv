@@ -20,15 +20,12 @@ task = TaskClassifST$new("ecuador", backend = data, target = "slides",
 
 task$task_type
 task$formula()
-task$truth()
 task$class_names
 task$positive
 task$negative
 task$coordinates()
 task$coordinate_names
 
-# possible properties:
-mlr3::mlr_reflections$task_properties$classif
 }
 \seealso{
 Example spatial classification task: \code{\link[=mlr_tasks_ecuador]{ecuador}}.
