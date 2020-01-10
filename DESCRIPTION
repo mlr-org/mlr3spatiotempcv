@@ -30,6 +30,8 @@ Suggests:
     sf,
     testthat,
     vdiffr
+Remotes: 
+    rvalavi/blockCV
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
