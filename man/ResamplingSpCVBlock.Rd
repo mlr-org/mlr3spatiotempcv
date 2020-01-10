@@ -24,10 +24,7 @@ intersect(rcv$train_set(1), rcv$test_set(1))
 rcv$instance
 }
 \references{
-Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV:
-An r package for generating spatially or environmentally separated folds for
-k-fold cross-validation of species distribution models. Methods Ecol Evol.
-2019; 10:225–232. https://doi.org/10.1111/2041-210X.13107
+\cite{mlr3spatiotempcv}{valavi2018}
 }
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingSpCVBlock}

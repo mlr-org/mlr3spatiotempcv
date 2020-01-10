@@ -12,11 +12,6 @@ During initialization, coordinates need to be passed.
 By default, coordinates are not used as features.
 This can be changed by setting \code{coords_as_features = TRUE}.
 }
-\examples{
-
-# possible properties:
-mlr3::mlr_reflections$task_properties$regr
-}
 \seealso{
 Other Task: 
 \code{\link{TaskClassifST}}

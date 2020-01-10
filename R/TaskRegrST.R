@@ -14,10 +14,6 @@
 #'
 #' @family Task
 #' @export
-#' @examples
-#'
-#' # possible properties:
-#' mlr3::mlr_reflections$task_properties$regr
 TaskRegrST <- R6::R6Class("TaskRegrST",
 
   inherit = TaskRegr,
