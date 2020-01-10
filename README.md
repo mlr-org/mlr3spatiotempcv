@@ -7,6 +7,8 @@ Spatio-temporal resampling methods for mlr3.
 
 [![Build
 Status](https://img.shields.io/travis/mlr-org/mlr3spatiotempcv/master?label=Linux&logo=travis&style=flat-square)](https://travis-ci.org/mlr-org/mlr3spatiotempcv)
+[![CircleCI build
+status](https://circleci.com/gh/mlr-org/mlr3spatiotempcv.svg?style=svg)](https://circleci.com/gh/mlr-org/mlr3spatiotempcv)
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version-ago/mlr3spatiotempcv)](https://cran.r-project.org/package=mlr3spatiotempcv)
 [![Lifecycle:
@@ -22,12 +24,12 @@ framework by spatiotemporal resampling and visualization methods.
 
 Currently, the following ones are implemented:
 
-| Literature Name        | R Package                                                 | Reference     | mlr3spatiotempcv Name |
-| ---------------------- | --------------------------------------------------------- | ------------- | --------------------- |
-| Spatial CV             | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResampleSpCVCoords`  |
-| Spatial Blocking       | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBlock`   |
-| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVEnv`     |
-| Spatial Buffering      | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBuffer`  |
+| Literature Name        | R Package                                                 | Reference     | mlr3spatiotempcv Class Name | mlr3 sugar            |
+| ---------------------- | --------------------------------------------------------- | ------------- | --------------------------- | --------------------- |
+| Spatial Buffering      | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBuffer`        | `rsmp("spcv-buffer")` |
+| Spatial Blocking       | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBlock`         | `rsmp("spcv-block")`  |
+| Spatial CV             | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResampleSpCVCoords`        | `rsmp("spcv-coords")` |
+| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVEnv`           | `rsmp("spcv-env")`    |
 
 ## Spatial tasks
 
@@ -73,7 +75,7 @@ autoplot(resampling, task, fold_id = 1)
 
 Brenning, Alexander. 2012. “Spatial Cross-Validation and Bootstrap for
 the Assessment of Prediction Rules in Remote Sensing: The R Package
-Sperrorest.” In *2012 IEEE International Geoscience and Remote Sensing
+sperrorest.” In *2012 IEEE International Geoscience and Remote Sensing
 Symposium*. IEEE. <https://doi.org/10.1109/igarss.2012.6352393>.
 
 </div>
@@ -81,9 +83,9 @@ Symposium*. IEEE. <https://doi.org/10.1109/igarss.2012.6352393>.
 <div id="ref-valavi2018">
 
 Valavi, Roozbeh, Jane Elith, José J. Lahoz-Monfort, and Gurutzeta
-Guillera-Arroita. 2018. “blockCV: An R Package for Generating Spatially
-or Environmentally Separated Folds for K-Fold Cross-Validation of
-Species Distribution Models,” June. <https://doi.org/10.1101/357798>.
+Guillera-Arroita. 2018. “blockCV: an R package for generating spatially
+or environmentally separated folds for k-fold cross-validation of
+species distribution models,” June. <https://doi.org/10.1101/357798>.
 
 </div>
 
