@@ -5,7 +5,7 @@ test_that("coordinates can be used as features", {
     package = "mlr3spatiotempcv")))
   b$hash = "_mlr3_tasks_ecuador_"
   task = TaskClassifST$new("test", b, target = "slides", positive = "TRUE",
-    coordinates = c("x", "y"), coords_as_features = TRUE,
+    coordinate_names = c("x", "y"), coords_as_features = TRUE,
     crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
 
   expect_names(c("x", "y"), subset.of = task$feature_names)

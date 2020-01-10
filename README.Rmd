@@ -11,6 +11,7 @@ Spatio-temporal resampling methods for mlr3.
 
 <!-- badges: start -->
 [![Build Status](https://img.shields.io/travis/mlr-org/mlr3spatiotempcv/master?label=Linux&logo=travis&style=flat-square)](https://travis-ci.org/mlr-org/mlr3spatiotempcv)
+[![CircleCI build status](https://circleci.com/gh/mlr-org/mlr3spatiotempcv.svg?style=svg)](https://circleci.com/gh/mlr-org/mlr3spatiotempcv)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/mlr3spatiotempcv)](https://cran.r-project.org/package=mlr3spatiotempcv)
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Coverage status](https://codecov.io/gh/mlr-org/mlr3spatiotempcv/branch/master/graph/badge.svg)](https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=master)
@@ -22,25 +23,25 @@ This package extends the [mlr3](https://github.com/mlr-org/mlr3) package framewo
 
 Currently, the following ones are implemented:
 
-| Literature Name | R Package | Reference | mlr3spatiotempcv Name |
-| --------------- | --------- | --------- | ----------------------- |
-| Spatial CV  | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResampleSpCVCoords`  |
-| Spatial Blocking | [blockCV](https://github.com/rvalavi/blockCV) | Valavi 2019 | `ResampleSpCVBlock`   |
-| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV) | Valavi 2019 | `ResampleSpCVEnv`   |
-| Spatial Buffering | [blockCV](https://github.com/rvalavi/blockCV) | Valavi 2019 | `ResampleSpCVBuffer` |
+| Literature             | Package                                                   | Reference     | Class Name           | mlr3 sugar            |
+| ---------------        | ---------                                                 | ---------     | -------------------- | --------------------- |
+| Spatial Buffering      | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBuffer` | `rsmp("spcv-buffer")` |
+| Spatial Blocking       | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBlock`  | `rsmp("spcv-block")`  |
+| Spatial CV             | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResampleSpCVCoords` | `rsmp("spcv-coords")` |
+| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVEnv`    | `rsmp("spcv-env")`    |
 
 ## Spatial tasks
 
-- Task "ecuador" -> `mlr_tasks$get("ecuador")`
-- Task "diplodia" -> `mlr_tasks$get("diplodia")`
+| Name     | Code                        | Type    |
+| ---      | ---                         | ---     |
+| ecuador  | `mlr_tasks$get("ecuador")`  | Classif |
+| diplodia | `mlr_tasks$get("diplodia")` | Classif |
 
-## Visualization methods
+## Visualization
 
 Generic S3 function `autoplot()` for all implemented spatial resampling methods.
 
-The following example shows the resampling method `"spcv-coords"`. 
-
-Visualization of all partitions
+### Visualization of all partitions
 
 ```{r setup, include=FALSE}
 set.seed(123)
@@ -48,7 +49,7 @@ knitr::opts_chunk$set(fig.path = "man/figures/README-")
 ```
 
 
-```{r spcv-coords-all-partitions}
+```{r spcv-coords-all-partitions, warning=FALSE}
 library(mlr3)
 library(mlr3spatiotempcv)
 library(ggplot2)
@@ -60,10 +61,14 @@ resampling$instantiate(task)
 autoplot(resampling, task)
 ```
 
-Visualization of the first fold only
+### Visualization of the first fold only
 
 ```{r spcv-coords-fold}
 autoplot(resampling, task, fold_id = 1)
 ```
+
+## More resources
+
+For detailed information on how to use spatial resampling in {mlr3} please read the section about [spatial analysis in the mlr3 book](https://mlr3book.mlr-org.com/spatial.html).
 
 # References

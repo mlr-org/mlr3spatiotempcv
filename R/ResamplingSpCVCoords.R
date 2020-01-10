@@ -1,14 +1,9 @@
 #' @title Spatial Cross Validation Resampling
 #'
-#' @format [R6::R6Class] inheriting from [Resampling].
 #' @import mlr3
 #'
 #' @description Spatial Cross validation following the "k-means" approach after
 #' Brenning 2012.
-#'
-#' @section Fields: See [Resampling].
-#'
-#' @section Methods: See [Resampling].
 #'
 #' @references Brenning, A. (2012). Spatial cross-validation and bootstrap for
 #' the assessment of prediction rules in remote sensing: The R package
@@ -28,13 +23,19 @@
 #' # Individual sets:
 #' rcv$train_set(1)
 #' rcv$test_set(1)
-#' intersect(rcv$train_set(1), rcv$test_set(1))
+#' # check that no obs are in both sets
+#' intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 #'
 #' # Internal storage:
 #' rcv$instance # table
 ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
   inherit = mlr3::Resampling,
+
   public = list(
+    #' @description
+    #' Create an "Environmental Block" resampling instance.
+    #' @param id `character(1)`\cr
+    #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv-coords") {
       ps = ParamSet$new(params = list(
         ParamUty$new("stratify", default = NULL),
@@ -46,6 +47,11 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
         param_set = ps
       )
     },
+
+    #' @description
+    #'  Materializes fixed training and test splits for a given task.
+    #' @param task [Task]\cr
+    #'  A task to instantiate.
     instantiate = function(task) {
 
       assert_task(task)
@@ -74,6 +80,9 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
   ),
 
   active = list(
+    #' @field iters `integer(1)`\cr
+    #'   Returns the number of resampling iterations, depending on the
+    #'   values stored in the `param_set`.
     iters = function() {
       self$param_set$values$folds
     }
@@ -90,16 +99,14 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
       )
     },
 
+    # private get funs for train and test which are used by
+    # Resampling$.get_set()
     .get_train = function(i) {
       self$instance[!list(i), "row_id", on = "fold"][[1L]]
     },
 
     .get_test = function(i) {
       self$instance[list(i), "row_id", on = "fold"][[1L]]
-    },
-
-    deep_clone = function(name, value) {
-      if (name == "instance") copy(value) else value
     }
   )
 )

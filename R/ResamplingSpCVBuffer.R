@@ -1,14 +1,9 @@
 #' @title Spatial Buffer Cross Validation Resampling
 #'
-#' @format [R6::R6Class] inheriting from [Resampling].
 #' @import mlr3
 #'
 #' @description Spatial Buffer Cross validation implemented by the `blockCV`
 #' package.
-#'
-#' @section Fields: See [Resampling].
-#'
-#' @section Methods: See [Resampling].
 #'
 #' @references Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV:
 #' An r package for generating spatially or environmentally separated folds for
@@ -17,7 +12,6 @@
 #'
 #' @export
 #' @examples
-#' \dontrun{
 #' library(mlr3)
 #' task = tsk("ecuador")
 #'
@@ -33,10 +27,14 @@
 #'
 #' # Internal storage:
 #' rcv$instance
-#' }
 ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
   inherit = mlr3::Resampling,
+
   public = list(
+    #' @description
+    #' Create an "Environmental Block" resampling instance.
+    #' @param id `character(1)`\cr
+    #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv-buffer") {
       ps = ParamSet$new(params = list(
         ParamUty$new("stratify", default = NULL),
@@ -49,6 +47,11 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       )
       require_namespaces(c("blockCV", "sf"))
     },
+
+    #' @description
+    #'  Materializes fixed training and test splits for a given task.
+    #' @param task [Task]\cr
+    #'  A task to instantiate.
     instantiate = function(task) {
 
       assert_task(task)
@@ -76,14 +79,19 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
   ),
 
   active = list(
+    #' @field iters `integer(1)`\cr
+    #'   Returns the number of resampling iterations, depending on the
+    #'   values stored in the `param_set`.
     iters = function() {
-      length(self$instance)
+      as.integer(length(self$instance$fold))
     }
   ),
 
   private = list(
     .sample = function(ids, coords, crs) {
-      require_namespaces("sf")
+
+      require_namespaces(c("blockCV", "sf"))
+
       points = sf::st_as_sf(coords,
         coords = c("x", "y"),
         crs = crs)
@@ -94,25 +102,28 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         progress = FALSE
       )
 
-      map(inds$folds, function(x) {
+      inds = map(inds$folds, function(x) {
         set = map(x, function(y) {
           ids[y]
         })
         names(set) = c("train", "test")
         set
       })
+      test_inds = map_int(inds, function(x) as.integer(x[["test"]]))
+
+      data.table(
+        row_id = as.character(seq(1:length(test_inds))),
+        fold = test_inds,
+        key = "fold"
+      )
     },
 
     .get_train = function(i) {
-      self$instance[[i]]$train
+      self$instance[!list(i), "row_id", on = "fold"][[1L]]
     },
 
     .get_test = function(i) {
-      self$instance[[i]]$test
-    },
-
-    deep_clone = function(name, value) {
-      if (name == "instance") copy(value) else value
+      self$instance[list(i), "row_id", on = "fold"][[1L]]
     }
   )
 )

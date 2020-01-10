@@ -4,7 +4,10 @@
 #' @format [R6::R6Class] inheriting from [TaskClassif].
 #' @importFrom mlr3 as_data_backend
 #'
-#' @section Usage: ``` mlr_tasks$get("diplodia") ```
+#' @section Usage:
+#' ```
+#' mlr_tasks$get("diplodia")
+#' ```
 #'
 #' @description Data set created by Patrick Schratz, University of Jena
 #'   (Germany) and Eugenia Iturritxa, NEIKER, Vitoria-Gasteiz (Spain). This
@@ -25,6 +28,7 @@ load_task_diplodia = function(id = "diplodia") {
     package = "mlr3spatiotempcv")))
   b$hash = "_mlr3_tasks_diplodia_"
   task = TaskClassifST$new(id, b, target = "diplo01", positive = "1",
-    coordinates = c("x", "y"), coords_as_features = FALSE,
+    coordinate_names = c("x", "y"), coords_as_features = FALSE,
     crs = "+proj=utm +zone=30 +south +datum=WGS84 +units=m +no_defs")
+  return(task)
 }

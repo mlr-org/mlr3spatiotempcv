@@ -3,21 +3,11 @@
 \name{ResamplingSpCVBlock}
 \alias{ResamplingSpCVBlock}
 \title{Spatial Block Cross Validation Resampling}
-\format{\link[R6:R6Class]{R6::R6Class} inheriting from \link{Resampling}.}
 \description{
 Spatial Block Cross validation implemented by the \code{blockCV}
 package.
 }
-\section{Fields}{
- See \link{Resampling}.
-}
-
-\section{Methods}{
- See \link{Resampling}.
-}
-
 \examples{
-\dontrun{
 library(mlr3)
 task = tsk("ecuador")
 
@@ -33,10 +23,90 @@ intersect(rcv$train_set(1), rcv$test_set(1))
 # Internal storage:
 rcv$instance
 }
-}
 \references{
 Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV:
 An r package for generating spatially or environmentally separated folds for
 k-fold cross-validation of species distribution models. Methods Ecol Evol.
 2019; 10:225–232. https://doi.org/10.1111/2041-210X.13107
+}
+\section{Super class}{
+\code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingSpCVBlock}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{iters}}{\code{integer(1)}\cr
+Returns the number of resampling iterations, depending on the
+values stored in the \code{param_set}.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Methods}{
+\subsection{Public methods}{
+\itemize{
+\item \href{#method-new}{\code{ResamplingSpCVBlock$new()}}
+\item \href{#method-instantiate}{\code{ResamplingSpCVBlock$instantiate()}}
+\item \href{#method-clone}{\code{ResamplingSpCVBlock$clone()}}
+}
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="format">}\href{../../mlr3/html/Resampling.html#method-format}{\code{mlr3::Resampling$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="print">}\href{../../mlr3/html/Resampling.html#method-print}{\code{mlr3::Resampling$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="test_set">}\href{../../mlr3/html/Resampling.html#method-test_set}{\code{mlr3::Resampling$test_set()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="train_set">}\href{../../mlr3/html/Resampling.html#method-train_set}{\code{mlr3::Resampling$train_set()}}\out{</span>}
+}
+\out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\subsection{Method \code{new()}}{
+Create an "Environmental Block" resampling instance.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVBlock$new(id = "spcv-block")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{\code{character(1)}\cr
+Identifier for the resampling strategy.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-instantiate"></a>}}
+\subsection{Method \code{instantiate()}}{
+Materializes fixed training and test splits for a given task.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVBlock$instantiate(task)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{task}}{\link{Task}\cr
+A task to instantiate.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVBlock$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
+}
+}
 }

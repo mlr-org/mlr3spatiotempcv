@@ -1,18 +1,4 @@
-context("mlr_resampling_spcv-coords")
-
-# init objects -----------------------------------------------------------------
-
-task = mlr_tasks$get("ecuador")
-
-### create custom data for grouping variable
-b = as.data.table(readRDS(system.file("extdata", "ecuador.rda",
-  package = "mlr3spatiotempcv"
-)))
-# add grouping variable
-data = insert_named(b[1:150, ], list(grp = rep_len(letters[1:10], 150)))
-task_grp = TaskClassifST$new("ecuador-grp", as_data_backend(data), target = "slides",
-  coordinates = c("x", "y"))
-task_grp$col_roles$group = "grp"
+context("mlr_resampling_generic")
 
 # run tests --------------------------------------------------------------------
 
@@ -50,7 +36,8 @@ test_that("grouping throws errors when 'groups' is set", {
   spcv_rsp_no_buffer$`spcv-buffer` = NULL
 
   for (i in spcv_rsp) {
-    expect_error(i$instantiate(task_grp), "Grouping is not supported for spatial resampling methods")
+    expect_error(i$instantiate(task_grp),
+      "Grouping is not supported for spatial resampling methods")
   }
 })
 
@@ -63,11 +50,13 @@ test_that("grouping throws errors when 'groups' and 'stratify' is set", {
 
   for (i in spcv_rsp_no_buffer) {
     i$param_set$values = list(folds = 5, stratify = TRUE)
-    expect_error(i$instantiate(task_grp), "Grouping is not supported for spatial resampling methods")
+    expect_error(i$instantiate(task_grp),
+      "Grouping is not supported for spatial resampling methods")
   }
 
   spcv_rsp$`spcv-buffer`$param_set$values = list(stratify = TRUE, range = 100)
-  expect_error(spcv_rsp$`spcv-buffer`$instantiate(task_grp), "Grouping is not supported for spatial resampling methods")
+  expect_error(spcv_rsp$`spcv-buffer`$instantiate(task_grp),
+    "Grouping is not supported for spatial resampling methods")
 })
 
 test_that("train and test set getter functions are working", {
