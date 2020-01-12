@@ -25,7 +25,6 @@ task$positive
 task$negative
 task$coordinates()
 task$coordinate_names
-
 }
 \seealso{
 Example spatial classification task: \code{\link[=mlr_tasks_ecuador]{ecuador}}.

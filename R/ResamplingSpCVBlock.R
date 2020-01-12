@@ -4,7 +4,6 @@
 #'
 #' @description Spatial Block Cross validation implemented by the `blockCV`
 #' package.
-#' @importFrom Rdpack reprompt
 #'
 #' @references
 #' \cite{mlr3spatiotempcv}{valavi2018}
