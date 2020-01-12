@@ -17,6 +17,7 @@ test_that("autoplot works for SpCVCoords", {
   expect_true(is.ggplot(coords2))
   expect_true(is.ggplot(coords3))
 
+  skip_on_ci()
   vdiffr::expect_doppelganger("SpCVCoords all test sets", coords1)
   vdiffr::expect_doppelganger("SpCVCoords - Fold 1", coords2)
   vdiffr::expect_doppelganger("SpCVCoords - Fold 1-4", coords3)
@@ -39,6 +40,7 @@ test_that("autoplot works for RepeatedSpCVCoords", {
   expect_true(is.ggplot(rcoords2))
   expect_true(is.ggplot(rcoords3))
 
+  skip_on_ci()
   vdiffr::expect_doppelganger("RepeatedSpCVCoords all test sets", rcoords1)
   vdiffr::expect_doppelganger("RepeatedSpCVCoords - Fold 1", rcoords2)
   vdiffr::expect_doppelganger("RepeatedSpCVCoords - Fold 1-4", rcoords3)
@@ -66,6 +68,7 @@ test_that("autoplot works for SpCVBlock", {
   expect_error(autoplot(resa_block, task, c(1, 20)))
   expect_list(autoplot(resa_block, task, c(1, 2, 3, 4), grid = FALSE))
 
+  skip_on_ci()
   vdiffr::expect_doppelganger("SpCVBlock all test sets", block1)
   vdiffr::expect_doppelganger("SpCVBlock - Fold 1", block2)
   vdiffr::expect_doppelganger("SpCVBlock - Fold 1-4", block3)
@@ -103,6 +106,7 @@ test_that("autoplot works for SpCVEnv", {
   env2 = autoplot(resa_env, task, 1)
   env3 = autoplot(resa_env, task, c(1, 2, 3, 4))
 
+  skip_on_ci()
   vdiffr::expect_doppelganger("SpCVEnv all test sets", env1)
   vdiffr::expect_doppelganger("SpCVEnv - Fold 1", env2)
   vdiffr::expect_doppelganger("SpCVEnv - Fold 1-4", env3)
