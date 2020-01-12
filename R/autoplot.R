@@ -13,6 +13,8 @@
 #'   mlr3 task object.
 #' @param fold_id [numeric]\cr
 #'   Fold IDs to plot.
+#' @param repeats_id [numeric]\cr
+#'   Repetition ID to plot.
 #' @param grid (`logical(1)`)\cr Should a gridded plot using
 #'   `cowplot::plot_grid()` be created? If `FALSE` only a list with all
 #'   \CRANpkg{ggplot2} resamplings is returned. Default is `TRUE`. Only applies

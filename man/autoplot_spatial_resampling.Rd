@@ -82,6 +82,9 @@ The color to use for the training set observations.}
 The color to use for the test set observations.}
 
 \item{...}{Not used.}
+
+\item{repeats_id}{\link{numeric}\cr
+Repetition ID to plot.}
 }
 \value{
 \code{\link[=ggplot]{ggplot()}} or list of ggplot2 objects.
