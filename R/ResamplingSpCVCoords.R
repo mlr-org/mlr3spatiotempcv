@@ -5,10 +5,8 @@
 #' @description Spatial Cross validation following the "k-means" approach after
 #' Brenning 2012.
 #'
-#' @references Brenning, A. (2012). Spatial cross-validation and bootstrap for
-#' the assessment of prediction rules in remote sensing: The R package
-#' sperrorest. 2012 IEEE International Geoscience and Remote Sensing Symposium.
-#' https://doi.org/10.1109/igarss.2012.6352393
+#' @references
+#' \cite{mlr3spatiotempcv}{brenning2012}
 #'
 #' @export
 #' @examples

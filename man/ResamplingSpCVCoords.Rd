@@ -26,10 +26,7 @@ intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 rcv$instance # table
 }
 \references{
-Brenning, A. (2012). Spatial cross-validation and bootstrap for
-the assessment of prediction rules in remote sensing: The R package
-sperrorest. 2012 IEEE International Geoscience and Remote Sensing Symposium.
-https://doi.org/10.1109/igarss.2012.6352393
+\cite{mlr3spatiotempcv}{brenning2012}
 }
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingSpCVCoords}
