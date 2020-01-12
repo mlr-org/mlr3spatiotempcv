@@ -28,6 +28,7 @@ Imports:
     paradox,
     R6
 Suggests:
+    bibtex,
     blockCV,
     cowplot,
     ggsci,
