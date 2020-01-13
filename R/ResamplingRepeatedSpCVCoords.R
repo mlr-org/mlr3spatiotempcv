@@ -68,24 +68,14 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
     #'  A task to instantiate.
     instantiate = function(task) {
 
+      if (!is.null(groups)) {
+        stopf("Grouping is not supported for spatial resampling methods.")
+      }
+
       assert_task(task)
       groups = task$groups
 
-
-      stratify = self$param_set$values$stratify
-
-      if (length(stratify) == 0L || isFALSE(stratify)) {
-        if (is.null(groups)) {
-          instance = private$.sample(task$row_ids, task$coordinates())
-        } else {
-          stopf("Grouping is not supported for spatial resampling methods.")
-        }
-      } else {
-        if (!is.null(groups)) {
-          stopf("Grouping is not supported for spatial resampling methods")
-        }
-        stopf("Stratification is not supported for spatial resampling methods.")
-      }
+      instance = private$.sample(task$row_ids, task$coordinates())
 
       self$instance = instance
       self$task_hash = task$hash
@@ -129,9 +119,5 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
       ii = data.table(rep = rep, fold = fold)
       self$instance[ii, "row_id", on = names(ii), nomatch = 0L][[1L]]
     },
-
-    .combine = function(instances) {
-      rbindlist(instances, use.names = TRUE)
-    }
   )
 )

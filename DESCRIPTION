@@ -33,7 +33,7 @@ Suggests:
     cowplot,
     ggsci,
     sf,
-    testthat,
+    testthat (>= 2.1.0),
     vdiffr
 RdMacros:
     mlr3misc

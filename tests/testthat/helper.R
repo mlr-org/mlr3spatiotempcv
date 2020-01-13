@@ -1,5 +1,4 @@
 task = mlr_tasks$get("ecuador")
-task = mlr_tasks$get("ecuador")
 
 ### create custom data for grouping variable
 b = as.data.table(readRDS(system.file("extdata", "ecuador.rda",
