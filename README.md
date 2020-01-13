@@ -24,12 +24,14 @@ framework by spatiotemporal resampling and visualization methods.
 
 Currently, the following ones are implemented:
 
-| Literature             | Package                                                   | Reference     | Class Name           | mlr3 sugar            |
-| ---------------------- | --------------------------------------------------------- | ------------- | -------------------- | --------------------- |
-| Spatial Buffering      | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBuffer` | `rsmp("spcv-buffer")` |
-| Spatial Blocking       | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVBlock`  | `rsmp("spcv-block")`  |
-| Spatial CV             | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResampleSpCVCoords` | `rsmp("spcv-coords")` |
-| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResampleSpCVEnv`    | `rsmp("spcv-env")`    |
+| Literature             | Package                                                   | Reference     | Class Name                      | mlr3 Sugar                     |
+| ---------------------- | --------------------------------------------------------- | ------------- | ------------------------------- | ------------------------------ |
+| Spatial Buffering      | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVBuffer`          | `rsmp("spcv-buffer")`          |
+| Spatial Blocking       | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVBlock`           | `rsmp("spcv-block")`           |
+| Spatial CV             | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResamplingSpCVCoords`          | `rsmp("spcv-coords")`          |
+| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVEnv`             | `rsmp("spcv-env")`             |
+| —                      | —                                                         | —             | —                               | —                              |
+| Repeated Spatial CV    | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `RepeatedRResamplingSpCVCoords` | `rsmp("repeated-spcv-coords")` |
 
 ## Spatial tasks
 
@@ -79,19 +81,30 @@ book](https://mlr3book.mlr-org.com/spatial.html).
 
 <div id="ref-brenning2012">
 
-Brenning, Alexander. 2012. “Spatial Cross-Validation and Bootstrap for
-the Assessment of Prediction Rules in Remote Sensing: The R Package
+Brenning, Alexander. 2012. “Spatial cross-validation and bootstrap for
+the assessment of prediction rules in remote sensing: The R package
 sperrorest.” In *2012 IEEE International Geoscience and Remote Sensing
 Symposium*. IEEE. <https://doi.org/10.1109/igarss.2012.6352393>.
 
 </div>
 
+<div id="ref-schratz2019">
+
+Schratz, Patrick, Jannes Muenchow, Eugenia Iturritxa, Jakob Richter, and
+Alexander Brenning. 2019. “Hyperparameter Tuning and Performance
+Assessment of Statistical and Machine-Learning Algorithms Using Spatial
+Data.” *Ecological Modelling* 406 (August): 109–20.
+<https://doi.org/10.1016/j.ecolmodel.2019.06.002>.
+
+</div>
+
 <div id="ref-valavi2018">
 
-Valavi, Roozbeh, Jane Elith, José J. Lahoz-Monfort, and Gurutzeta
+Valavi, Roozbeh, Jane Elith, Jose J. Lahoz-Monfort, and Gurutzeta
 Guillera-Arroita. 2018. “blockCV: an R package for generating spatially
 or environmentally separated folds for k-fold cross-validation of
-species distribution models,” June. <https://doi.org/10.1101/357798>.
+species distribution models.” *bioRxiv*, June.
+<https://doi.org/10.1101/357798>.
 
 </div>
 

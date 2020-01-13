@@ -1,0 +1,89 @@
+---
+title: "Get Started"
+output: rmarkdown::html_vignette
+bibliography: ../inst/references.bib
+vignette: >
+  %\VignetteIndexEntry{foo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(mlr3)
+library(mlr3spatiotempcv)
+```
+
+# Introduction
+
+This package provides resampling methods for the [mlr3] package framework suited for spatial and temporal data.
+**Currently, only spatial resampling are implemented.**
+
+After calling `library("mlr3spatiotempcv")`, the additional resampling methods and example tasks of this extension package are available to the user.
+
+### Task types
+
+```{r}
+mlr_reflections$task_types
+```
+
+### Task column roles
+
+```{r}
+# note the addtional "coordinates" slot
+mlr_reflections$task_col_roles
+```
+
+### Resampling methods
+
+```{r, warning=FALSE}
+as.data.table(mlr_resamplings)
+```
+
+Currently, the following resampling methods are implemented:
+
+| Literature             | Package                                                   | Reference     | Class Name                      | mlr3 Sugar                     |
+| ---------------        | ---------                                                 | ---------     | --------------------            | ---------------------          |
+| Spatial Buffering      | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVBuffer`          | `rsmp("spcv-buffer")`          |
+| Spatial Blocking       | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVBlock`           | `rsmp("spcv-block")`           |
+| Spatial CV             | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResamplingSpCVCoords`          | `rsmp("spcv-coords")`          |
+| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVEnv`             | `rsmp("spcv-env")`             |
+| ---                    | ---                                                       | ---           | ---                             | ---                            |
+| Repeated Spatial CV    | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `RepeatedRResamplingSpCVCoords` | `rsmp("repeated-spcv-coords")` |
+
+## Usage
+
+To create a spatial task, use the classes `TaskClassifST` and `TaskRegrST`.
+Your dataset needs to come with coordinates.
+The column names of these variables need to be passed during class construction via argument `coordinates_names`.
+
+In addition, one can can specify whether the coordinates should be used as features during modelling or not.
+By default they are not used and will be removed as features from the dataset after the coordinates have been created.
+
+For optional plotting purposes, it is recommended to also pass the PROJ string via the `crs` argument to set a coordinate reference system for the supplied coordinates.
+
+When printing a spatial task, this package adds a preview of the stored coordinates.
+
+```{r}
+data = mlr3::as_data_backend(readRDS(system.file("extdata", "ecuador.rda",
+  package = "mlr3spatiotempcv")))
+
+TaskClassifST$new(id = "ecuador", data, target = "slides",
+  positive = "TRUE", coordinate_names = c("x", "y"), coords_as_features = FALSE,
+  crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
+```
+
+After the task has been constructed, it can be used in conjunction with all resampling methods that contain `"spcv"` and all others.
+However, non-spatial methods should **only be used to showcase the degree of overoptimistic performance estimates** compared to the chosen spatiotemporal resampling method [@schratz2019].
+
+
+
+# References
+
+
