@@ -68,12 +68,11 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
     #'  A task to instantiate.
     instantiate = function(task) {
 
+      assert_task(task)
+      groups = task$groups
       if (!is.null(groups)) {
         stopf("Grouping is not supported for spatial resampling methods.")
       }
-
-      assert_task(task)
-      groups = task$groups
 
       instance = private$.sample(task$row_ids, task$coordinates())
 
