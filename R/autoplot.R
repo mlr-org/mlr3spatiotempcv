@@ -212,6 +212,11 @@ autoplot_spatial = function(
   coords$row_id = task$row_ids
   require_namespaces(c("sf", "cowplot"))
 
+  # instantiante if not yet done
+  if (!resampling$is_instantiated) {
+    resampling = resampling$instantiate(task)
+  }
+
   coords_resamp = merge(coords, resampling$instance, by = "row_id")
 
   if (grepl("Repeated", class(resampling)[1])) {
