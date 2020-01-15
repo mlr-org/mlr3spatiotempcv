@@ -34,10 +34,10 @@ Currently, the following ones are implemented:
 
 ## Spatial tasks
 
-| Name     | Code                        | Type    |
-| ---      | ---                         | ---     |
-| ecuador  | `mlr_tasks$get("ecuador")`  | Classif |
-| diplodia | `mlr_tasks$get("diplodia")` | Classif |
+| Name     | Code              | Type    |
+| ---      | ---               | ---     |
+| ecuador  | `tsk("ecuador")`  | Classif |
+| diplodia | `tsk("diplodia")` | Classif |
 
 ## Visualization
 
