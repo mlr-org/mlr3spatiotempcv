@@ -19,6 +19,7 @@ test_that("stratification throws errors", {
   # for some tests
   spcv_rsp_no_buffer = spcv_rsp
   spcv_rsp_no_buffer$`spcv-buffer` = NULL
+  spcv_rsp_no_buffer$`repeated-spcv-coords` = NULL
 
   for (i in spcv_rsp_no_buffer) {
     i$param_set$values = list(folds = 5, stratify = TRUE)
@@ -45,17 +46,19 @@ test_that("grouping throws errors when 'groups' and 'stratify' is set", {
   spcv_rsp = mlr_resamplings$mget(
     as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
-  spcv_rsp_no_buffer = spcv_rsp
-  spcv_rsp_no_buffer$`spcv-buffer` = NULL
+  spcv_rsp = spcv_rsp
+  spcv_rsp$`spcv-buffer` = NULL
+  spcv_rsp$`repeated-spcv-coords` = NULL
 
-  for (i in spcv_rsp_no_buffer) {
+  for (i in spcv_rsp) {
     i$param_set$values = list(folds = 5, stratify = TRUE)
     expect_error(i$instantiate(task_grp),
       "Grouping is not supported for spatial resampling methods")
   }
 
-  spcv_rsp$`spcv-buffer`$param_set$values = list(stratify = TRUE, range = 100)
-  expect_error(spcv_rsp$`spcv-buffer`$instantiate(task_grp),
+  buffer = rsmp("spcv-buffer")
+  buffer$param_set$values = list(stratify = TRUE, range = 100)
+  expect_error(buffer$instantiate(task_grp),
     "Grouping is not supported for spatial resampling methods")
 })
 
@@ -64,18 +67,18 @@ test_that("train and test set getter functions are working", {
     as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
 
-  spcv_rsp_no_buffer = spcv_rsp
-  spcv_rsp_no_buffer$`spcv-buffer` = NULL
+  spcv_rsp$`spcv-buffer` = NULL
+  spcv_rsp$`repeated-spcv-coords` = NULL
 
-  for (i in spcv_rsp_no_buffer) {
+  for (i in spcv_rsp) {
     i$instantiate(task)
     expect_silent(i$train_set(1))
     expect_silent(i$test_set(1))
   }
 
-  spcv_rsp$`spcv-buffer`$instantiate(task)
-  expect_silent(spcv_rsp$`spcv-buffer`$train_set(1))
-  expect_silent(spcv_rsp$`spcv-buffer`$test_set(1))
+  buffer = rsmp("spcv-buffer")
+  expect_silent(buffer$instantiate(task)$train_set(1))
+  expect_silent(buffer$instantiate(task)$test_set(1))
 })
 
 test_that("cloning works", {

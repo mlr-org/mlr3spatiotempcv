@@ -1,12 +1,13 @@
 context("autoplot")
 
-set.seed(42)
-
 test_that("autoplot works for SpCVCoords", {
 
   # SpCVCoords -----------------------------------------------------------------
 
-  resa_coords = mlr_resamplings$get("spcv-coords")
+  set.seed(42)
+
+  task = tsk("ecuador")
+  resa_coords = rsmp("spcv-coords")
   resa_coords$instantiate(task)
   coords1 = autoplot(resa_coords, task)
   coords2 = autoplot(resa_coords, task, 1)
@@ -22,11 +23,37 @@ test_that("autoplot works for SpCVCoords", {
   vdiffr::expect_doppelganger("SpCVCoords - Fold 1-4", coords3)
 })
 
+test_that("autoplot works for RepeatedSpCVCoords", {
+
+  # RepeatedSpCVCoords -----------------------------------------------------------------
+
+  set.seed(42)
+
+  task = tsk("diplodia")
+  rresa_coords = rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
+  rresa_coords$instantiate(task)
+  rcoords1 = autoplot(rresa_coords, task)
+  rcoords2 = autoplot(rresa_coords, task, 1)
+  rcoords3 = autoplot(rresa_coords, task, c(1, 2, 3, 4))
+
+  expect_true(is.ggplot(rcoords1))
+  expect_true(is.ggplot(rcoords2))
+  expect_true(is.ggplot(rcoords3))
+
+  skip_on_ci()
+  vdiffr::expect_doppelganger("RepeatedSpCVCoords all test sets", rcoords1)
+  vdiffr::expect_doppelganger("RepeatedSpCVCoords - Fold 1", rcoords2)
+  vdiffr::expect_doppelganger("RepeatedSpCVCoords - Fold 1-4", rcoords3)
+})
+
 test_that("autoplot works for SpCVBlock", {
 
   # SpCVBlock ------------------------------------------------------------------
 
-  resa_block = mlr_resamplings$get("spcv-block")
+  set.seed(42)
+
+  task = tsk("ecuador")
+  resa_block = rsmp("spcv-block")
   resa_block$instantiate(task)
   block1 = autoplot(resa_block, task)
   block2 = autoplot(resa_block, task, 1)
@@ -51,7 +78,10 @@ test_that("autoplot works for SpCVBuffer", {
 
   # SpCVBuffer -----------------------------------------------------------------
 
-  resa_buffer = mlr_resamplings$get("spcv-buffer")
+  set.seed(42)
+
+  task = tsk("ecuador")
+  resa_buffer = rsmp("spcv-buffer")
   resa_buffer$instantiate(task)
   # one does not want to see nrow plots in a grid
   expect_error(autoplot(resa_buffer, task))
@@ -67,11 +97,14 @@ test_that("autoplot works for SpCVEnv", {
 
   # SpCVEnv --------------------------------------------------------------------
 
-  resa_Env = mlr_resamplings$get("spcv-env")
-  resa_Env$instantiate(task)
-  env1 = autoplot(resa_Env, task)
-  env2 = autoplot(resa_Env, task, 1)
-  env3 = autoplot(resa_Env, task, c(1, 2, 3, 4))
+  set.seed(42)
+
+  task = tsk("ecuador")
+  resa_env = rsmp("spcv-env")
+  resa_env$instantiate(task)
+  env1 = autoplot(resa_env, task)
+  env2 = autoplot(resa_env, task, 1)
+  env3 = autoplot(resa_env, task, c(1, 2, 3, 4))
 
   skip_on_ci()
   vdiffr::expect_doppelganger("SpCVEnv all test sets", env1)
