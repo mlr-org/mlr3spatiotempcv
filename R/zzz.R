@@ -43,6 +43,7 @@ register_mlr3 = function() {
     mlr_resamplings$add("spcv-buffer", ResamplingSpCVBuffer)
     mlr_resamplings$add("spcv-coords", ResamplingSpCVCoords)
     mlr_resamplings$add("spcv-env", ResamplingSpCVEnv)
+    mlr_resamplings$add("repeated-spcv-coords", ResamplingRepeatedSpCVCoords)
   }
 
 }

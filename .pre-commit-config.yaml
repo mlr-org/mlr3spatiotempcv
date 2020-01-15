@@ -18,4 +18,4 @@ repos:
     rev: v2.4.0
     hooks:
     -   id: check-added-large-files
-        args: ['--maxkb=700']
+        args: ['--maxkb=800']

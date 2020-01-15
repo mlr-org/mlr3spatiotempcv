@@ -5,6 +5,7 @@
 \alias{autoplot.ResamplingSpCVEnv}
 \alias{autoplot.ResamplingSpCVBuffer}
 \alias{autoplot.ResamplingSpCVCoords}
+\alias{autoplot.ResamplingRepeatedSpCVCoords}
 \title{Visualization of spatial resampling.}
 \usage{
 \method{autoplot}{ResamplingSpCVBlock}(
@@ -46,6 +47,17 @@
   test_color = "#E18727",
   ...
 )
+
+\method{autoplot}{ResamplingRepeatedSpCVCoords}(
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = 1,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...
+)
 }
 \arguments{
 \item{object}{\link{Resampling}\cr
@@ -70,6 +82,9 @@ The color to use for the training set observations.}
 The color to use for the test set observations.}
 
 \item{...}{Not used.}
+
+\item{repeats_id}{\link{numeric}\cr
+Repetition ID to plot.}
 }
 \value{
 \code{\link[=ggplot]{ggplot()}} or list of ggplot2 objects.
@@ -140,6 +155,18 @@ resampling = rsmp("spcv-coords")
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
+autoplot(resampling, task, c(1, 2, 3, 4))
+}
+#####
+# RepeatedSpCVCoords
+#####
+\donttest{
+task = tsk("diplodia")
+resampling = rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
+resampling$instantiate(task)
+autoplot(resampling, task)
+autoplot(resampling, task, 1)
+autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 autoplot(resampling, task, c(1, 2, 3, 4))
 }
 }

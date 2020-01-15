@@ -32,9 +32,13 @@ Suggests:
     blockCV,
     cowplot,
     ggsci,
+    knitr,
+    rmarkdown,
     sf,
-    testthat,
+    testthat (>= 2.1.0),
     vdiffr
+VignetteBuilder: 
+    knitr
 RdMacros:
     mlr3misc
 Remotes: 
@@ -51,6 +55,7 @@ Collate:
     'ResamplingSpCVBuffer.R'
     'ResamplingSpCVCoords.R'
     'ResamplingSpCVEnv.R'
+    'ResamplingRepeatedSpCVCoords.R'
     'TaskClassifST.R'
     'TaskRegrST.R'
     'helper.R'

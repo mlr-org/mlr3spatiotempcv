@@ -13,6 +13,8 @@
 #'   mlr3 task object.
 #' @param fold_id [numeric]\cr
 #'   Fold IDs to plot.
+#' @param repeats_id [numeric]\cr
+#'   Repetition ID to plot.
 #' @param grid (`logical(1)`)\cr Should a gridded plot using
 #'   `cowplot::plot_grid()` be created? If `FALSE` only a list with all
 #'   \CRANpkg{ggplot2} resamplings is returned. Default is `TRUE`. Only applies
@@ -164,10 +166,44 @@ autoplot.ResamplingSpCVCoords = function(
     grid = grid)
 }
 
+#' @title Plot for Repeated Spatial Resampling
+#'
+#' @rdname autoplot_spatial_resampling
+#' @export
+#' @examples
+#' #####
+#' # RepeatedSpCVCoords
+#' #####
+#' \donttest{
+#' task = tsk("diplodia")
+#' resampling = rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
+#' resampling$instantiate(task)
+#' autoplot(resampling, task)
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
+#' autoplot(resampling, task, c(1, 2, 3, 4))
+#' }
+autoplot.ResamplingRepeatedSpCVCoords = function(
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = 1,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...) {
+  autoplot_spatial(resampling = object,
+    task = task,
+    fold_id = fold_id,
+    repeats_id = repeats_id,
+    grid = grid)
+}
+
 autoplot_spatial = function(
   resampling = NULL,
   task = NULL,
   fold_id = NULL,
+  repeats_id = NULL,
   grid = NULL,
   train_color = NULL,
   test_color = NULL) {
@@ -176,7 +212,16 @@ autoplot_spatial = function(
   coords$row_id = task$row_ids
   require_namespaces(c("sf", "cowplot"))
 
+  # instantiante if not yet done
+  if (!resampling$is_instantiated) {
+    resampling = resampling$instantiate(task)
+  }
+
   coords_resamp = merge(coords, resampling$instance, by = "row_id")
+
+  if (grepl("Repeated", class(resampling)[1])) {
+    coords_resamp = coords_resamp[rep == repeats_id, ]
+  }
 
   if (class(resampling)[1] == "ResamplingSpCVBuffer" && is.null(fold_id)) {
     stop("Plotting all folds of a LOOCV instance is not supported. Please provide a fold ID.") # nolint
@@ -223,8 +268,13 @@ autoplot_spatial = function(
     if (!grid) {
       return(plot_list)
     } else {
+      # for repeated cv we also print out the rep number
+      if (is.null(repeats_id)) {
+        repeats_id = 1
+      }
       plots = do.call(cowplot::plot_grid, list(plotlist = plot_list,
-        labels = sprintf("Fold %s", seq(1, length(plot_list)))))
+        labels = sprintf("Fold %s\nRep %s", fold_id,
+          repeats_id)))
 
       # Extract legend standalone, we only want one legend in the grid
       coords_resamp[, indicator := ifelse(fold == 1, "Test", "Train")]
@@ -257,10 +307,14 @@ autoplot_spatial = function(
     sf_df$fold = as.factor(as.character(sf_df$fold))
     sf_df$fold <- factor(sf_df$fold, levels = unique(as.character(sf_df$fold)))
 
+    # for all non-repeated rsmp cases
+    if (is.null(repeats_id)) {
+      repeats_id = 1
+    }
     ggplot() +
       geom_sf(data = sf_df, show.legend = "point",
         aes(color = fold)) +
       ggsci::scale_color_ucscgb() +
-      labs(color = "Partition #")
+      labs(color = sprintf("Partition #, Rep %s", repeats_id))
   }
 }
