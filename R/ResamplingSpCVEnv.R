@@ -2,15 +2,14 @@
 #'
 #' @import mlr3
 #'
-#' @description Environmental Block Cross Validation. This strategy uses k-means
-#' clustering to specify blocks of smilar environmental conditions. Only numeric
-#' features can be used. The `features` used for building blocks can be
-#' specified in the `param_set`. By default, all numeric features are used.
+#' @description
+#' Environmental Block Cross Validation. This strategy uses k-means clustering
+#' to specify blocks of similar environmental conditions. Only numeric features
+#' can be used. The `features` used for building blocks can be specified in the
+#' `param_set`. By default, all numeric features are used.
 #'
-#' @references Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV:
-#' An r package for generating spatially or environmentally separated folds for
-#' k-fold cross-validation of species distribution models. Methods Ecol Evol.
-#' 2019; 10:225–232. https://doi.org/10.1111/2041-210X.13107
+#' @references
+#' \cite{mlr3spatiotempcv}{valavi2018}
 #'
 #' @export
 #' @examples
@@ -80,8 +79,9 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv", inherit = mlr3::Resampling,
           # Check for selected features that are not in task
           diff = setdiff(pv$features, columns[, id])
           if (length(diff) > 0) {
-            stop(sprintf("'spcv-env' requires numeric features for clustering. Feature '%s' is either non-numeric or does not exist in the data",
-              diff))
+            stopf("'spcv-env' requires numeric features for clustering.
+              Feature '%s' is either non-numeric or does not exist in the data.",
+              diff, wrap = TRUE)
           }
           columns = columns[id %in% pv$features]
           columns = columns[, id]

@@ -32,6 +32,7 @@ Currently, the following ones are implemented:
 | Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVEnv`            | `rsmp("spcv-env")`             |
 | —                      | —                                                         | —             | —                              | —                              |
 | Repeated Spatial CV    | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `RepeatedResamplingSpCVCoords` | `rsmp("repeated-spcv-coords")` |
+| Repeated Env Blocking  | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `RepeatedResamplingSpCVEnv`    | `rsmp("repeated-spcv-env")`    |
 
 ## Spatial tasks
 

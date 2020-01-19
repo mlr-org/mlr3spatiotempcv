@@ -3987,9 +3987,9 @@
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)'><text x='380.60' y='286.34' style='font-size: 14.00px; font-weight: bold; font-family: Liberation Sans;' textLength='41.20px' lengthAdjust='spacingAndGlyphs'>Fold 4</text></g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)'><text x='379.05' y='306.50' style='font-size: 14.00px; font-weight: bold; font-family: Liberation Sans;' textLength='38.11px' lengthAdjust='spacingAndGlyphs'>Rep 1</text></g>
 <rect x='308.40' y='535.70' width='103.19' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
-<rect x='319.36' y='541.18' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
+<rect x='319.36' y='541.18' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #F2F2F2;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
 <circle cx='328.00' cy='549.82' r='1.95pt' style='stroke-width: 0.71; stroke: #0072B5; fill: #0072B5;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
-<rect x='366.93' y='541.18' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
+<rect x='366.93' y='541.18' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #F2F2F2;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
 <circle cx='375.57' cy='549.82' r='1.95pt' style='stroke-width: 0.71; stroke: #E18727; fill: #E18727;' clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)' />
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)'><text x='342.12' y='552.84' style='font-size: 8.80px; font-family: Liberation Sans;' textLength='19.70px' lengthAdjust='spacingAndGlyphs'>Train</text></g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8NTc2LjAwfDAuMDA=)'><text x='389.69' y='552.84' style='font-size: 8.80px; font-family: Liberation Sans;' textLength='16.14px' lengthAdjust='spacingAndGlyphs'>Test</text></g>

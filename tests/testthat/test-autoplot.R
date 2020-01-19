@@ -111,3 +111,26 @@ test_that("autoplot works for SpCVEnv", {
   vdiffr::expect_doppelganger("SpCVEnv - Fold 1", env2)
   vdiffr::expect_doppelganger("SpCVEnv - Fold 1-4", env3)
 })
+
+test_that("autoplot works for RepeatedSpCVEnv", {
+
+  # RepeatedSpCVEnv ------------------------------------------------------------
+
+  set.seed(42)
+
+  task = tsk("ecuador")
+  rresa_env = rsmp("repeated-spcv-env", folds = 10, repeats = 2)
+  rresa_env$instantiate(task)
+  renv1 = autoplot(rresa_env, task)
+  renv2 = autoplot(rresa_env, task, 1)
+  renv3 = autoplot(rresa_env, task, c(1, 2, 3, 4))
+
+  expect_true(is.ggplot(renv1))
+  expect_true(is.ggplot(renv2))
+  expect_true(is.ggplot(renv3))
+
+  skip_on_ci()
+  vdiffr::expect_doppelganger("RepeatedSpCVEnv all test sets", renv1)
+  vdiffr::expect_doppelganger("RepeatedSpCVEnv - Fold 1", renv2)
+  vdiffr::expect_doppelganger("RepeatedSpCVEnv - Fold 1-4", renv3)
+})
