@@ -42,6 +42,7 @@ VignetteBuilder:
 RdMacros:
     mlr3misc
 Remotes: 
+    mlr-org/mlr3misc,
     rvalavi/blockCV
 Encoding: UTF-8
 LazyData: true
@@ -56,6 +57,7 @@ Collate:
     'ResamplingSpCVCoords.R'
     'ResamplingSpCVEnv.R'
     'ResamplingRepeatedSpCVCoords.R'
+    'ResamplingRepeatedSpCVEnv.R'
     'TaskClassifST.R'
     'TaskRegrST.R'
     'helper.R'

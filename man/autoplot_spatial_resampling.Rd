@@ -6,6 +6,7 @@
 \alias{autoplot.ResamplingSpCVBuffer}
 \alias{autoplot.ResamplingSpCVCoords}
 \alias{autoplot.ResamplingRepeatedSpCVCoords}
+\alias{autoplot.ResamplingRepeatedSpCVEnv}
 \title{Visualization of spatial resampling.}
 \usage{
 \method{autoplot}{ResamplingSpCVBlock}(
@@ -49,6 +50,17 @@
 )
 
 \method{autoplot}{ResamplingRepeatedSpCVCoords}(
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = 1,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...
+)
+
+\method{autoplot}{ResamplingRepeatedSpCVEnv}(
   object,
   task,
   fold_id = NULL,
@@ -163,6 +175,18 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 \donttest{
 task = tsk("diplodia")
 resampling = rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
+resampling$instantiate(task)
+autoplot(resampling, task)
+autoplot(resampling, task, 1)
+autoplot(resampling, task, fold_id = 2, repeats_id = 2)
+autoplot(resampling, task, c(1, 2, 3, 4))
+}
+#####
+# RepeatedSpCVEnv
+#####
+\donttest{
+task = tsk("ecuador")
+resampling = rsmp("repeated-spcv-env", folds = 10, repeats = 2)
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
