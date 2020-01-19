@@ -37,7 +37,6 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv", inherit = mlr3::Resampling,
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv-env") {
       ps = ParamSet$new(params = list(
-        ParamUty$new("stratify", default = NULL),
         ParamInt$new("folds", lower = 1L, tags = "required"),
         ParamUty$new("features")
       ))
@@ -69,35 +68,28 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv", inherit = mlr3::Resampling,
       }
 
       groups = task$groups
-      stratify = pv$stratify
 
-      if (length(stratify) == 0L || isFALSE(stratify)) {
-        if (is.null(groups)) {
-          # Remove non-numeric features, target and coordinates
-          columns = task$col_info[!id %in% c(task$target_names, "x", "y") & type == "numeric"]
-
-          # Check for selected features that are not in task
-          diff = setdiff(pv$features, columns[, id])
-          if (length(diff) > 0) {
-            stopf("'spcv-env' requires numeric features for clustering.
-              Feature '%s' is either non-numeric or does not exist in the data.",
-              diff, wrap = TRUE)
-          }
-          columns = columns[id %in% pv$features]
-          columns = columns[, id]
-
-          data = task$data()[, columns, with = FALSE]
-
-          instance = private$.sample(task$row_ids, data)
-        } else {
-          stopf("Grouping is not supported for spatial resampling methods.")
-        }
-      } else {
-        if (!is.null(groups)) {
-          stopf("Grouping is not supported for spatial resampling methods")
-        }
-        stopf("Stratification is not supported for spatial resampling methods.")
+      if (!is.null(groups)) {
+        stopf("Grouping is not supported for spatial resampling methods")
       }
+
+      # Remove non-numeric features, target and coordinates
+      columns = task$col_info[!id %in%
+        c(task$target_names, "x", "y")][type == "numeric"]
+
+      # Check for selected features that are not in task
+      diff = setdiff(pv$features, columns[, id])
+      if (length(diff) > 0) {
+        stopf("'spcv-env' requires numeric features for clustering.
+              Feature '%s' is either non-numeric or does not exist in the data.",
+          diff, wrap = TRUE)
+      }
+      columns = columns[id %in% pv$features]
+      columns = columns[, id]
+
+      data = task$data()[, columns, with = FALSE]
+
+      instance = private$.sample(task$row_ids, data)
 
       self$instance = instance
       self$task_hash = task$hash
