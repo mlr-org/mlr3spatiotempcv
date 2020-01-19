@@ -5,10 +5,8 @@
 #' @description Spatial Buffer Cross validation implemented by the `blockCV`
 #' package.
 #'
-#' @references Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G. blockCV:
-#' An r package for generating spatially or environmentally separated folds for
-#' k-fold cross-validation of species distribution models. Methods Ecol Evol.
-#' 2019; 10:225–232. https://doi.org/10.1111/2041-210X.13107
+#' @references
+#' \cite{mlr3spatiotempcv}{valavi2018}
 #'
 #' @export
 #' @examples
@@ -37,7 +35,6 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv-buffer") {
       ps = ParamSet$new(params = list(
-        ParamUty$new("stratify", default = NULL),
         ParamInt$new("range", lower = 1L, tags = "required")
       ))
       ps$values = list(range = 100)
@@ -57,20 +54,13 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       assert_task(task)
 
       groups = task$groups
-      stratify = self$param_set$values$stratify
 
-      if (length(stratify) == 0L || isFALSE(stratify)) {
-        if (is.null(groups)) {
-          instance = private$.sample(task$row_ids, task$coordinates(), task$crs)
-        } else {
-          stopf("Grouping is not supported for spatial resampling methods.")
-        }
-      } else {
-        if (!is.null(groups)) {
-          stopf("Grouping is not supported for spatial resampling methods")
-        }
-        stopf("Stratification is not supported for spatial resampling methods.")
+
+      if (!is.null(groups)) {
+        stopf("Grouping is not supported for spatial resampling methods")
       }
+
+      instance = private$.sample(task$row_ids, task$coordinates(), task$crs)
 
       self$instance = instance
       self$task_hash = task$hash

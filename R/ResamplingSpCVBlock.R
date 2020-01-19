@@ -33,7 +33,6 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv-block") {
       ps = ParamSet$new(params = list(
-        ParamUty$new("stratify", default = NULL),
         ParamInt$new("folds", lower = 1L, tags = "required"),
         ParamInt$new("rows", lower = 1L, default = 4),
         ParamInt$new("cols", lower = 1L, default = 4),
@@ -75,29 +74,26 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       }
 
       # Check for valid combinations of rows, cols and folds
-      if ((self$param_set$values$rows * self$param_set$values$cols) < self$param_set$values$folds) {
+      if ((self$param_set$values$rows * self$param_set$values$cols) <
+        self$param_set$values$folds) {
         stopf("'nrow' * 'ncol' needs to be larger than 'folds'.")
       }
 
-      if (!is.null(self$param_set$values$rows) && !is.null(self$param_set$values$cols)) {
-        warning("Hyperparameters 'rows' and 'cols' not set. Using the default value of '4' set by 'mlr3spatiotempcv' for both which results in a grid of 16. You might want to set these values yourself during resampling construction.")
+      if (!is.null(self$param_set$values$rows) &&
+        !is.null(self$param_set$values$cols)) {
+        warningf("Hyperparameters 'rows' and 'cols' not set.
+                 Using the default value of '4' set by 'mlr3spatiotempcv' for
+                 both which results in a grid of 16.
+                 You might want to set these values yourself during resampling
+                 construction.", wrap = TRUE)
       }
 
       groups = task$groups
-      stratify = self$param_set$values$stratify
 
-      if (length(stratify) == 0L || isFALSE(stratify)) {
-        if (is.null(groups)) {
-          instance = private$.sample(task$row_ids, task$coordinates())
-        } else {
-          stopf("Grouping is not supported for spatial resampling methods.")
-        }
-      } else {
-        if (!is.null(groups)) {
-          stopf("Grouping is not supported for spatial resampling methods")
-        }
-        stopf("Stratification is not supported for spatial resampling methods.")
+      if (!is.null(groups)) {
+        stopf("Grouping is not supported for spatial resampling methods.")
       }
+      instance = private$.sample(task$row_ids, task$coordinates())
 
       self$instance = instance
       self$task_hash = task$hash
@@ -119,15 +115,16 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       points = sf::st_as_sf(coords, coords = c("x", "y"))
 
       # Suppress print message, warning crs and package load
-      capture.output(inds <- suppressMessages(suppressWarnings(blockCV::spatialBlock(
-        speciesData = points,
-        theRange = self$param_set$values$range,
-        rows = self$param_set$values$rows,
-        cols = self$param_set$values$cols,
-        k = self$param_set$values$folds,
-        selection = self$param_set$values$selection,
-        showBlocks = FALSE,
-        progress = FALSE))))
+      capture.output(inds <- suppressMessages(suppressWarnings(
+        blockCV::spatialBlock(
+          speciesData = points,
+          theRange = self$param_set$values$range,
+          rows = self$param_set$values$rows,
+          cols = self$param_set$values$cols,
+          k = self$param_set$values$folds,
+          selection = self$param_set$values$selection,
+          showBlocks = FALSE,
+          progress = FALSE))))
 
       data.table(
         row_id = ids,
