@@ -18,6 +18,8 @@ test_that("stratification throws errors", {
   )
   spcv_rsp$`spcv-buffer` = NULL
   spcv_rsp$`repeated-spcv-coords` = NULL
+  spcv_rsp$`repeated-spcv-env` = NULL
+
   for (i in spcv_rsp) {
     i$param_set$values = list(folds = 5, stratify = TRUE)
     expect_error(i$instantiate(task))
@@ -28,9 +30,9 @@ test_that("grouping throws errors when 'groups' is set", {
   spcv_rsp = mlr_resamplings$mget(
     as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
-  spcv_rsp_no_buffer = spcv_rsp
-  spcv_rsp_no_buffer$`spcv-buffer` = NULL
   spcv_rsp$`repeated-spcv-coords` = NULL
+  spcv_rsp$`repeated-spcv-env` = NULL
+
   for (i in spcv_rsp) {
     expect_error(i$instantiate(task_grp),
       "Grouping is not supported for spatial resampling methods")
@@ -43,6 +45,7 @@ test_that("grouping throws errors when 'groups' and 'stratify' is set", {
   )
   spcv_rsp$`spcv-buffer` = NULL
   spcv_rsp$`repeated-spcv-coords` = NULL
+  spcv_rsp$`repeated-spcv-env` = NULL
 
   for (i in spcv_rsp) {
     i$param_set$values = list(folds = 5, stratify = TRUE)

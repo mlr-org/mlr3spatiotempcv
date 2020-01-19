@@ -35,6 +35,15 @@ rrcv$instance # table
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingRepeatedSpCVCoords}
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{iters}}{\code{integer(1)}\cr
+Returns the number of resampling iterations, depending on the
+values stored in the \code{param_set}.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -75,18 +84,36 @@ Identifier for the resampling strategy.}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-folds"></a>}}
 \subsection{Method \code{folds()}}{
+Translates iteration numbers to fold number.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSpCVCoords$folds(iters)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{iters}}{\code{integer()}\cr
+Iteration number.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-repeats"></a>}}
 \subsection{Method \code{repeats()}}{
+Translates iteration numbers to repetition number.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSpCVCoords$repeats(iters)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{iters}}{\code{integer()}\cr
+Iteration number.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-instantiate"></a>}}

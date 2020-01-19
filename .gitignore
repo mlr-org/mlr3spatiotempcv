@@ -6,3 +6,4 @@
 renv
 renv.lock
 inst/doc
+man/figures/README*

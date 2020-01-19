@@ -1,27 +1,24 @@
-#' @title Repeated Spatial Cross Validation Resampling
+#' @title Repeated Environmental Block Cross Validation Resampling
 #'
 #' @import mlr3
 #'
-#' @description Spatial Cross validation following the "k-means" approach after
-#' Brenning 2012.
+#' @description Environmental Block Cross Validation. This strategy uses k-means
+#'   clustering to specify blocks of similar environmental conditions. Only
+#'   numeric features can be used. The `features` used for building blocks can
+#'   be specified in the `param_set`. By default, all numeric features are used.
 #'
 #' @references
-#' \cite{mlr3spatiotempcv}{brenning2012}
+#' \cite{mlr3spatiotempcv}{valavi2018}
 #'
 #' @export
 #' @examples
 #' library(mlr3)
-#' task = tsk("diplodia")
+#' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rrcv = rsmp("repeated-spcv-coords")
-#' rrcv$param_set$values = list(folds = 3, repeats = 5)
+#' rrcv = rsmp("repeated-spcv-env")
+#' rrcv$param_set$values = list(folds = 4, repeats = 2)
 #' rrcv$instantiate(task)
-#'
-#' # Individual sets:
-#' rrcv$iters
-#' rrcv$folds(1:6)
-#' rrcv$repeats(1:6)
 #'
 #' # Individual sets:
 #' rrcv$train_set(1)
@@ -29,8 +26,8 @@
 #' intersect(rrcv$train_set(1), rrcv$test_set(1))
 #'
 #' # Internal storage:
-#' rrcv$instance # table
-ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
+#' rrcv$instance
+ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
   inherit = mlr3::Resampling,
 
   public = list(
@@ -38,7 +35,7 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
     #' Create an "coordinate-based" repeated resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
-    initialize = function(id = "repeated-spcv-coords") {
+    initialize = function(id = "repeated-spcv-env") {
       ps = ParamSet$new(params = list(
         ParamInt$new("repeats", lower = 1),
         ParamInt$new("folds", lower = 1L, tags = "required")
@@ -47,7 +44,7 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
       super$initialize(
         id = id,
         param_set = ps,
-        man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcvcoords"
+        man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcv_env"
       )
 
     },
@@ -75,12 +72,36 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
     instantiate = function(task) {
 
       assert_task(task)
-      groups = task$groups
-      if (!is.null(groups)) {
-        stopf("Grouping is not supported for spatial resampling methods.")
+      pv = self$param_set$values
+
+      # Set values to default if missing
+      if (is.null(pv$rows)) {
+        pv$rows = self$param_set$default[["rows"]]
+      }
+      if (is.null(pv$cols)) {
+        pv$cols = self$param_set$default[["cols"]]
+      }
+      if (is.null(pv$features)) {
+        pv$features = task$feature_names
       }
 
-      instance = private$.sample(task$row_ids, task$coordinates())
+      # Remove non-numeric features, target and coordinates
+      columns = task$col_info[!id %in%
+        c(task$target_names, "x", "y")][type == "numeric"]
+
+      # Check for selected features that are not in task
+      diff = setdiff(pv$features, columns[, id])
+      if (length(diff) > 0) {
+        stopf("'spcv-env' requires numeric features for clustering.
+              Feature '%s' is either non-numeric or does not exist in the data.",
+          diff, wrap = TRUE)
+      }
+      columns = columns[id %in% pv$features]
+      columns = columns[, id]
+
+      data = task$data()[, columns, with = FALSE]
+
+      instance = private$.sample(task$row_ids, data)
 
       self$instance = instance
       self$task_hash = task$hash
