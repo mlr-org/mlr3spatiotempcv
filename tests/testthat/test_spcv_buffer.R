@@ -2,13 +2,6 @@ context("mlr_resampling_spcv-buffer")
 
 # run tests --------------------------------------------------------------------
 
-test_that("stratification throws errors", {
-  spcv_rsp_buffer = mlr_resamplings$get("spcv-buffer")
-
-  spcv_rsp_buffer$param_set$values = list(stratify = TRUE, range = 100)
-  expect_error(spcv_rsp_buffer$instantiate(task))
-})
-
 test_that("grouping throws errors when 'groups' is set", {
   spcv_rsp_buffer = mlr_resamplings$get("spcv-buffer")
 
