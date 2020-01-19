@@ -199,6 +199,39 @@ autoplot.ResamplingRepeatedSpCVCoords = function(
     grid = grid)
 }
 
+#' @title Plot for Repeated Spatial Resampling
+#'
+#' @rdname autoplot_spatial_resampling
+#' @export
+#' @examples
+#' #####
+#' # RepeatedSpCVEnv
+#' #####
+#' \donttest{
+#' task = tsk("ecuador")
+#' resampling = rsmp("repeated-spcv-env", folds = 10, repeats = 2)
+#' resampling$instantiate(task)
+#' autoplot(resampling, task)
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
+#' autoplot(resampling, task, c(1, 2, 3, 4))
+#' }
+autoplot.ResamplingRepeatedSpCVEnv = function(
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = 1,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...) {
+  autoplot_spatial(resampling = object,
+    task = task,
+    fold_id = fold_id,
+    repeats_id = repeats_id,
+    grid = grid)
+}
+
 autoplot_spatial = function(
   resampling = NULL,
   task = NULL,
