@@ -127,7 +127,6 @@ is used to display all partitions. If you want to change the colors,
 call \verb{<plot> + <color-palette>()}
 }
 \examples{
-\donttest{
 #####
 # SpCVBlock
 #####
@@ -148,10 +147,10 @@ autoplot(resampling, task, fold_id = c(1, 2, 3, 4))
 # return only a list of ggplot2 resamplings
 plot_list = autoplot(resampling, task,
   fold_id = c(1, 2, 3, 4), grid = FALSE)
-}
 #####
 # SpCVEnv
 #####
+library(mlr3)
 resampling = rsmp("spcv-env", folds = 4, features = c("dem"))
 resampling$instantiate(task)
 autoplot(resampling, task)
@@ -160,6 +159,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # SpCVBuffer
 #####
+library(mlr3)
 resampling = rsmp("spcv-buffer", range = 1000)
 resampling$instantiate(task)
 autoplot(resampling, task, 1)
@@ -167,6 +167,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # SpCVCoords
 #####
+library(mlr3)
 resampling = rsmp("spcv-coords")
 resampling$instantiate(task)
 autoplot(resampling, task)
@@ -175,6 +176,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # RepeatedSpCVCoords
 #####
+library(mlr3)
 task = tsk("diplodia")
 resampling = rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
 resampling$instantiate(task)
@@ -185,6 +187,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # RepeatedSpCVEnv
 #####
+library(mlr3)
 task = tsk("ecuador")
 resampling = rsmp("repeated-spcv-env", folds = 10, repeats = 2)
 resampling$instantiate(task)
@@ -195,6 +198,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # RepeatedSpCVBlock
 #####
+library(mlr3)
 task = tsk("ecuador")
 resampling = rsmp("repeated-spcv-block", folds = 5, repeats = 2,
   range = c(1000, 1500))
