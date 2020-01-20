@@ -7,6 +7,7 @@
 \alias{autoplot.ResamplingSpCVCoords}
 \alias{autoplot.ResamplingRepeatedSpCVCoords}
 \alias{autoplot.ResamplingRepeatedSpCVEnv}
+\alias{autoplot.ResamplingRepeatedSpCVBlock}
 \title{Visualization of spatial resampling.}
 \usage{
 \method{autoplot}{ResamplingSpCVBlock}(
@@ -70,6 +71,17 @@
   test_color = "#E18727",
   ...
 )
+
+\method{autoplot}{ResamplingRepeatedSpCVBlock}(
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = 1,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...
+)
 }
 \arguments{
 \item{object}{\link{Resampling}\cr
@@ -121,8 +133,7 @@ call \verb{<plot> + <color-palette>()}
 #####
 library(mlr3)
 task = tsk("ecuador")
-resampling = rsmp("spcv-block")
-resampling$param_set$values = list(folds = 4)
+resampling = rsmp("spcv-block", range = 1000)
 resampling$instantiate(task)
 
 ## Visualize all partitions
@@ -141,38 +152,29 @@ plot_list = autoplot(resampling, task,
 #####
 # SpCVEnv
 #####
-\donttest{
-resampling = rsmp("spcv-env")
-resampling$param_set$values = list(folds = 4, features = c("dem"))
+resampling = rsmp("spcv-env", folds = 4, features = c("dem"))
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, c(1, 2, 3, 4))
-}
 #####
 # SpCVBuffer
 #####
-\donttest{
-resampling = rsmp("spcv-buffer")
-resampling$param_set$values = list(range = 1000)
+resampling = rsmp("spcv-buffer", range = 1000)
 resampling$instantiate(task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, c(1, 2, 3, 4))
-}
 #####
 # SpCVCoords
 #####
-\donttest{
 resampling = rsmp("spcv-coords")
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, c(1, 2, 3, 4))
-}
 #####
 # RepeatedSpCVCoords
 #####
-\donttest{
 task = tsk("diplodia")
 resampling = rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
 resampling$instantiate(task)
@@ -180,11 +182,9 @@ autoplot(resampling, task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 autoplot(resampling, task, c(1, 2, 3, 4))
-}
 #####
 # RepeatedSpCVEnv
 #####
-\donttest{
 task = tsk("ecuador")
 resampling = rsmp("repeated-spcv-env", folds = 10, repeats = 2)
 resampling$instantiate(task)
@@ -192,5 +192,15 @@ autoplot(resampling, task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 autoplot(resampling, task, c(1, 2, 3, 4))
-}
+#####
+# RepeatedSpCVBlock
+#####
+task = tsk("ecuador")
+resampling = rsmp("repeated-spcv-block", folds = 5, repeats = 2,
+  range = c(1000, 1500))
+resampling$instantiate(task)
+autoplot(resampling, task)
+autoplot(resampling, task, 1)
+autoplot(resampling, task, fold_id = 2, repeats_id = 2)
+autoplot(resampling, task, c(1, 2, 3, 4))
 }
