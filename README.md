@@ -24,15 +24,16 @@ framework by spatiotemporal resampling and visualization methods.
 
 Currently, the following ones are implemented:
 
-| Literature             | Package                                                   | Reference     | Class Name                     | mlr3 Sugar                     |
-| ---------------------- | --------------------------------------------------------- | ------------- | ------------------------------ | ------------------------------ |
-| Spatial Buffering      | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVBuffer`         | `rsmp("spcv-buffer")`          |
-| Spatial Blocking       | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVBlock`          | `rsmp("spcv-block")`           |
-| Spatial CV             | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResamplingSpCVCoords`         | `rsmp("spcv-coords")`          |
-| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVEnv`            | `rsmp("spcv-env")`             |
-| —                      | —                                                         | —             | —                              | —                              |
-| Repeated Spatial CV    | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `RepeatedResamplingSpCVCoords` | `rsmp("repeated-spcv-coords")` |
-| Repeated Env Blocking  | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `RepeatedResamplingSpCVEnv`    | `rsmp("repeated-spcv-env")`    |
+| Literature                | Package                                                   | Reference     | Class Name                     | mlr3 Sugar                     |
+| ------------------------- | --------------------------------------------------------- | ------------- | ------------------------------ | ------------------------------ |
+| Spatial Buffering         | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVBuffer`         | `rsmp("spcv-buffer")`          |
+| Spatial Blocking          | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVBlock`          | `rsmp("spcv-block")`           |
+| Spatial CV                | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResamplingSpCVCoords`         | `rsmp("spcv-coords")`          |
+| Environmental Blocking    | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVEnv`            | `rsmp("spcv-env")`             |
+| —                         | —                                                         | —             | —                              | —                              |
+| Repeated Spatial Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `RepeatedResamplingSpCVBlock`  | `rsmp("repeated-spcv-block")`  |
+| Repeated Spatial CV       | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `RepeatedResamplingSpCVCoords` | `rsmp("repeated-spcv-coords")` |
+| Repeated Env Blocking     | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `RepeatedResamplingSpCVEnv`    | `rsmp("repeated-spcv-env")`    |
 
 ## Spatial tasks
 
