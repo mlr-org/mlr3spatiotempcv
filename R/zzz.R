@@ -46,6 +46,7 @@ register_mlr3 = function() {
 
     mlr_resamplings$add("repeated-spcv-coords", ResamplingRepeatedSpCVCoords)
     mlr_resamplings$add("repeated-spcv-env", ResamplingRepeatedSpCVEnv)
+    mlr_resamplings$add("repeated-spcv-block", ResamplingRepeatedSpCVBlock)
   }
 
 }

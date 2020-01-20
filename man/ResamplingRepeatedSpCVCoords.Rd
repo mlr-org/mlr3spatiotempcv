@@ -12,8 +12,7 @@ library(mlr3)
 task = tsk("diplodia")
 
 # Instantiate Resampling
-rrcv = rsmp("repeated-spcv-coords")
-rrcv$param_set$values = list(folds = 3, repeats = 5)
+rrcv = rsmp("repeated-spcv-coords", folds = 3, repeats = 5)
 rrcv$instantiate(task)
 
 # Individual sets:

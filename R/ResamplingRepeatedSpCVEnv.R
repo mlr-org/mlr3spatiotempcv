@@ -16,8 +16,7 @@
 #' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rrcv = rsmp("repeated-spcv-env")
-#' rrcv$param_set$values = list(folds = 4, repeats = 2)
+#' rrcv = rsmp("repeated-spcv-env", folds = 4, repeats = 2)
 #' rrcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -37,16 +36,15 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated-spcv-env") {
       ps = ParamSet$new(params = list(
-        ParamInt$new("repeats", lower = 1),
-        ParamInt$new("folds", lower = 1L, tags = "required")
+        ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
+        ParamInt$new("repeats", lower = 1, default = 10L, tags = "required")
       ))
-      ps$values = list(folds = 10L)
+      ps$values = list(folds = 10L, repeats = 1)
       super$initialize(
         id = id,
         param_set = ps,
         man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcv_env"
       )
-
     },
 
     #' @description Translates iteration numbers to fold number.
