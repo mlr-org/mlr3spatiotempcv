@@ -36,7 +36,6 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv-coords") {
       ps = ParamSet$new(params = list(
-        ParamUty$new("stratify", default = NULL),
         ParamInt$new("folds", lower = 1L, tags = "required")
       ))
       ps$values = list(folds = 10L)
@@ -56,20 +55,11 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
       groups = task$groups
 
 
-      stratify = self$param_set$values$stratify
-
-      if (length(stratify) == 0L || isFALSE(stratify)) {
-        if (is.null(groups)) {
-          instance = private$.sample(task$row_ids, task$coordinates())
-        } else {
-          stopf("Grouping is not supported for spatial resampling methods.")
-        }
-      } else {
-        if (!is.null(groups)) {
-          stopf("Grouping is not supported for spatial resampling methods")
-        }
-        stopf("Stratification is not supported for spatial resampling methods.")
+      if (!is.null(groups)) {
+        stopf("Grouping is not supported for spatial resampling methods")
       }
+
+      instance = private$.sample(task$row_ids, task$coordinates())
 
       self$instance = instance
       self$task_hash = task$hash
