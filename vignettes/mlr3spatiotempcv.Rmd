@@ -25,7 +25,7 @@ library("mlr3spatiotempcv")
 # Introduction
 
 This package provides resampling methods for the [mlr3] package framework suited for spatial and temporal data.
-**Currently, only spatial resampling are implemented.**
+**So far, only spatial resampling has been properly implemented.**
 
 After calling `library("mlr3spatiotempcv")`, the additional resampling methods and example tasks of this extension package are available to the user.
 
@@ -61,12 +61,13 @@ Currently, the following resampling methods are implemented:
 
 ## Usage
 
-To create a spatial task, use the classes `TaskClassifST` and `TaskRegrST`.
+To create a spatial task, use class `TaskClassifST` for classification and `TaskRegrST` for regression tasks.
 Your dataset needs to come with coordinates.
 The column names of these variables need to be passed during class construction via argument `coordinates_names`.
 
-In addition, one can can specify whether the coordinates should be used as features during modeling or not.
-By default they are not used and will be removed as features from the dataset after the coordinates have been created.
+In addition, one can can specify whether the coordinates should be used as features during modeling.
+<!-- coordinates are put into another R6 class?-->
+By default, coordinates are not used as features and will be removed from the dataset after the coordinates have been created.
 
 For optional plotting purposes, it is recommended to also pass the PROJ string via the `crs` argument to set a coordinate reference system for the supplied coordinates.
 
