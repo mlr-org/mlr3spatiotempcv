@@ -40,7 +40,6 @@
 
 #' @export
 #' @examples
-#' \donttest{
 #' #####
 #' # SpCVBlock
 #' #####
@@ -61,7 +60,6 @@
 #' # return only a list of ggplot2 resamplings
 #' plot_list = autoplot(resampling, task,
 #'   fold_id = c(1, 2, 3, 4), grid = FALSE)
-#' }
 autoplot.ResamplingSpCVBlock = function(
   object,
   task,
