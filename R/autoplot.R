@@ -82,6 +82,7 @@ autoplot.ResamplingSpCVBlock = function(
 #' #####
 #' # SpCVEnv
 #' #####
+#' library(mlr3)
 #' resampling = rsmp("spcv-env", folds = 4, features = c("dem"))
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
@@ -109,6 +110,7 @@ autoplot.ResamplingSpCVEnv = function(
 #' #####
 #' # SpCVBuffer
 #' #####
+#' library(mlr3)
 #' resampling = rsmp("spcv-buffer", range = 1000)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task, 1)
@@ -136,6 +138,7 @@ autoplot.ResamplingSpCVBuffer = function(
 #' #####
 #' # SpCVCoords
 #' #####
+#' library(mlr3)
 #' resampling = rsmp("spcv-coords")
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
@@ -163,6 +166,7 @@ autoplot.ResamplingSpCVCoords = function(
 #' #####
 #' # RepeatedSpCVCoords
 #' #####
+#' library(mlr3)
 #' task = tsk("diplodia")
 #' resampling = rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
 #' resampling$instantiate(task)
@@ -194,6 +198,7 @@ autoplot.ResamplingRepeatedSpCVCoords = function(
 #' #####
 #' # RepeatedSpCVEnv
 #' #####
+#' library(mlr3)
 #' task = tsk("ecuador")
 #' resampling = rsmp("repeated-spcv-env", folds = 10, repeats = 2)
 #' resampling$instantiate(task)
@@ -225,6 +230,7 @@ autoplot.ResamplingRepeatedSpCVEnv = function(
 #' #####
 #' # RepeatedSpCVBlock
 #' #####
+#' library(mlr3)
 #' task = tsk("ecuador")
 #' resampling = rsmp("repeated-spcv-block", folds = 5, repeats = 2,
 #'   range = c(1000, 1500))
