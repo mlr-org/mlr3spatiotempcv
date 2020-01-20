@@ -14,8 +14,7 @@ library(mlr3)
 task = tsk("ecuador")
 
 # Instantiate Resampling
-rcv = rsmp("spcv-env")
-rcv$param_set$values = list(folds = 4)
+rcv = rsmp("spcv-env", folds = 4)
 rcv$instantiate(task)
 
 # Individual sets:

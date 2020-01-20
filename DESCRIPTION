@@ -58,6 +58,7 @@ Collate:
     'ResamplingSpCVEnv.R'
     'ResamplingRepeatedSpCVCoords.R'
     'ResamplingRepeatedSpCVEnv.R'
+    'ResamplingRepeatedSpCVBlock.R'
     'TaskClassifST.R'
     'TaskRegrST.R'
     'helper.R'
