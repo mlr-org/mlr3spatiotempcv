@@ -1,6 +1,7 @@
 ---
 output: github_document
 bibliography: inst/references.bib
+biblio-style: apalike
 nocite: | 
   @brenning2012, @valavi2018, @schratz2019
 ---
@@ -10,7 +11,7 @@ nocite: |
 Spatio-temporal resampling methods for mlr3.
 
 <!-- badges: start -->
-[![Build Status](https://img.shields.io/travis/mlr-org/mlr3spatiotempcv/master?label=Linux&logo=travis&style=flat-square)](https://travis-ci.org/mlr-org/mlr3spatiotempcv)
+[![Build Status](https://img.shields.io/travis/mlr-org/mlr3spatiotempcv/master?label=macOS&logo=travis&style=flat-square)](https://travis-ci.org/mlr-org/mlr3spatiotempcv)
 [![CircleCI build status](https://circleci.com/gh/mlr-org/mlr3spatiotempcv.svg?style=svg)](https://circleci.com/gh/mlr-org/mlr3spatiotempcv)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/mlr3spatiotempcv)](https://cran.r-project.org/package=mlr3spatiotempcv)
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
@@ -23,15 +24,16 @@ This package extends the [mlr3](https://github.com/mlr-org/mlr3) package framewo
 
 Currently, the following ones are implemented:
 
-| Literature             | Package                                                   | Reference     | Class Name                      | mlr3 Sugar                     |
-| ---------------        | ---------                                                 | ---------     | --------------------            | ---------------------          |
-| Spatial Buffering      | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVBuffer`          | `rsmp("spcv-buffer")`          |
-| Spatial Blocking       | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVBlock`           | `rsmp("spcv-block")`           |
-| Spatial CV             | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResamplingSpCVCoords`          | `rsmp("spcv-coords")`          |
-| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVEnv`             | `rsmp("spcv-env")`             |
-| ---                    | ---                                                       | ---           | ---                             | ---                            |
-| Repeated Spatial CV    | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `RepeatedResamplingSpCVCoords`  | `rsmp("repeated-spcv-coords")` |
-| Repeated Env Blocking  | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `RepeatedResamplingSpCVEnv`     | `rsmp("repeated-spcv-env")`    |
+| Literature                | Package     | Reference     | mlr3 Sugar                     |
+| ---------------           | ---------   | ---------     | ---------------                |
+| Spatial Buffering         | blockCV     | Valavi 2019   | `rsmp("spcv-buffer")`          |
+| Spatial Blocking          | blockCV     | Valavi 2019   | `rsmp("spcv-block")`           |
+| Spatial CV                | sperrorest  | Brenning 2012 | `rsmp("spcv-coords")`          |
+| Environmental Blocking    | blockCV     | Valavi 2019   | `rsmp("spcv-env")`             |
+| ---                       | ---         | ---           | ---                            |
+| Repeated Spatial Blocking | blockCV     | Valavi 2019   | `rsmp("repeated-spcv-block")`  |
+| Repeated Spatial CV       | sperrorest  | Brenning 2012 | `rsmp("repeated-spcv-coords")` |
+| Repeated Env Blocking     | blockCV     | Valavi 2019   | `rsmp("repeated-spcv-env")`    |
 
 ## Spatial tasks
 

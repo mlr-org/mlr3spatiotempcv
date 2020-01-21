@@ -12,7 +12,7 @@ library(mlr3)
 task = tsk("ecuador")
 
 # Instantiate Resampling
-rcv = rsmp("spcv-block")
+rcv = rsmp("spcv-block", range = 1000)
 rcv$instantiate(task)
 
 # Individual sets:

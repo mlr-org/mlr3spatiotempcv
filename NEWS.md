@@ -1,6 +1,15 @@
+# mlr3spatiotempcv 0.0.0.9004
+
+* Add ResamplingRepeatedSpCVBlock (#35)
+* Add ResamplingRepeatedSpCVEnv (#32)
+* Remove `stratify` argument (#33)
+* Document defaults of param `folds`
+* Use mlr sugar notation in more places
+
+
 # mlr3spatiotempcv 0.0.0.9003
 
-* add class `RepeatedSpCVCoords`
+* add class `RepeatedSpCVCoords` (#30)
 * skip `vdiffr` tests on CI
 * add a "Getting Started" vignette
 * use .bib file for references

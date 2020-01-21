@@ -40,14 +40,12 @@
 
 #' @export
 #' @examples
-#' \donttest{
 #' #####
 #' # SpCVBlock
 #' #####
 #' library(mlr3)
 #' task = tsk("ecuador")
-#' resampling = rsmp("spcv-block")
-#' resampling$param_set$values = list(folds = 4)
+#' resampling = rsmp("spcv-block", range = 1000)
 #' resampling$instantiate(task)
 #'
 #' ## Visualize all partitions
@@ -62,7 +60,6 @@
 #' # return only a list of ggplot2 resamplings
 #' plot_list = autoplot(resampling, task,
 #'   fold_id = c(1, 2, 3, 4), grid = FALSE)
-#' }
 autoplot.ResamplingSpCVBlock = function(
   object,
   task,
@@ -85,14 +82,12 @@ autoplot.ResamplingSpCVBlock = function(
 #' #####
 #' # SpCVEnv
 #' #####
-#' \donttest{
-#' resampling = rsmp("spcv-env")
-#' resampling$param_set$values = list(folds = 4, features = c("dem"))
+#' library(mlr3)
+#' resampling = rsmp("spcv-env", folds = 4, features = c("dem"))
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-#' }
 autoplot.ResamplingSpCVEnv = function(
   object,
   task,
@@ -115,13 +110,11 @@ autoplot.ResamplingSpCVEnv = function(
 #' #####
 #' # SpCVBuffer
 #' #####
-#' \donttest{
-#' resampling = rsmp("spcv-buffer")
-#' resampling$param_set$values = list(range = 1000)
+#' library(mlr3)
+#' resampling = rsmp("spcv-buffer", range = 1000)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-#' }
 autoplot.ResamplingSpCVBuffer = function(
   object,
   task,
@@ -145,13 +138,12 @@ autoplot.ResamplingSpCVBuffer = function(
 #' #####
 #' # SpCVCoords
 #' #####
-#' \donttest{
+#' library(mlr3)
 #' resampling = rsmp("spcv-coords")
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-#' }
 autoplot.ResamplingSpCVCoords = function(
   object,
   task,
@@ -166,6 +158,65 @@ autoplot.ResamplingSpCVCoords = function(
     grid = grid)
 }
 
+#' @title Plot for Spatial Resampling
+#'
+#' @rdname autoplot_spatial_resampling
+#' @export
+#' @examples
+#' #####
+#' # Non-Spatial CV
+#' #####
+#' library(mlr3)
+#' resampling = rsmp("cv")
+#' resampling$instantiate(task)
+#' autoplot(resampling, task)
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, c(1, 2, 3, 4))
+autoplot.ResamplingCV = function(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...) {
+  autoplot_spatial(resampling = object,
+    task = task,
+    fold_id = fold_id,
+    grid = grid)
+}
+
+#' @title Plot for Spatial Resampling
+#'
+#' @rdname autoplot_spatial_resampling
+#' @export
+#' @examples
+#' #####
+#' # Repeated Non-Spatial CV
+#' #####
+#' library(mlr3)
+#' resampling = rsmp("repeated_cv", folds = 5, repeats = 2)
+#' resampling$instantiate(task)
+#' autoplot(resampling, task)
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
+#' autoplot(resampling, task, c(1, 2, 3, 4))
+autoplot.ResamplingRepeatedCV = function(
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = 1,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...) {
+  autoplot_spatial(resampling = object,
+    task = task,
+    fold_id = fold_id,
+    repeats_id = repeats_id,
+    grid = grid)
+}
+
 #' @title Plot for Repeated Spatial Resampling
 #'
 #' @rdname autoplot_spatial_resampling
@@ -174,7 +225,7 @@ autoplot.ResamplingSpCVCoords = function(
 #' #####
 #' # RepeatedSpCVCoords
 #' #####
-#' \donttest{
+#' library(mlr3)
 #' task = tsk("diplodia")
 #' resampling = rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
 #' resampling$instantiate(task)
@@ -182,7 +233,6 @@ autoplot.ResamplingSpCVCoords = function(
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-#' }
 autoplot.ResamplingRepeatedSpCVCoords = function(
   object,
   task,
@@ -207,7 +257,7 @@ autoplot.ResamplingRepeatedSpCVCoords = function(
 #' #####
 #' # RepeatedSpCVEnv
 #' #####
-#' \donttest{
+#' library(mlr3)
 #' task = tsk("ecuador")
 #' resampling = rsmp("repeated-spcv-env", folds = 10, repeats = 2)
 #' resampling$instantiate(task)
@@ -215,8 +265,40 @@ autoplot.ResamplingRepeatedSpCVCoords = function(
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-#' }
 autoplot.ResamplingRepeatedSpCVEnv = function(
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = 1,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...) {
+  autoplot_spatial(resampling = object,
+    task = task,
+    fold_id = fold_id,
+    repeats_id = repeats_id,
+    grid = grid)
+}
+
+#' @title Plot for Repeated Spatial Resampling
+#'
+#' @rdname autoplot_spatial_resampling
+#' @export
+#' @examples
+#' #####
+#' # RepeatedSpCVBlock
+#' #####
+#' library(mlr3)
+#' task = tsk("ecuador")
+#' resampling = rsmp("repeated-spcv-block", folds = 5, repeats = 2,
+#'   range = c(1000, 1500))
+#' resampling$instantiate(task)
+#' autoplot(resampling, task)
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
+#' autoplot(resampling, task, c(1, 2, 3, 4))
+autoplot.ResamplingRepeatedSpCVBlock = function(
   object,
   task,
   fold_id = NULL,
@@ -245,7 +327,7 @@ autoplot_spatial = function(
   coords$row_id = task$row_ids
   require_namespaces(c("sf", "cowplot"))
 
-  # instantiante if not yet done
+  # instantiate if not yet done
   if (!resampling$is_instantiated) {
     resampling = resampling$instantiate(task)
   }

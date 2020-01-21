@@ -44,6 +44,7 @@ jobs:
   deploy:
     environment:
       id_rsa: true
+      BUILD_PKGDOWN: true
     docker:
       - image: rocker/verse
     steps:
@@ -61,6 +62,7 @@ jobs:
             R -q -e 'install.packages("remotes")'
             R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
             R -q -e 'remotes::install_github("ropenscilabs/tic", upgrade = "always"); print(tic::dsl_load()); tic::prepare_all_stages()'
+            R -q -e 'tic::install()'
             R -q -e 'tic::before_deploy()'
             R -q -e 'tic::deploy()'
             R -q -e 'tic::after_deploy()'

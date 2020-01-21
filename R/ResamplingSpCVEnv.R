@@ -17,8 +17,7 @@
 #' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv = rsmp("spcv-env")
-#' rcv$param_set$values = list(folds = 4)
+#' rcv = rsmp("spcv-env", folds = 4)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -37,7 +36,7 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv", inherit = mlr3::Resampling,
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv-env") {
       ps = ParamSet$new(params = list(
-        ParamInt$new("folds", lower = 1L, tags = "required"),
+        ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
         ParamUty$new("features")
       ))
       ps$values = list(folds = 10L)

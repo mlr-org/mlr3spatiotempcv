@@ -130,15 +130,13 @@ Multiple options exists.
 If no specific fold is specified, all partitions will be returned distinguished by color.
 
 ```{r}
-autoplot(resampling_sp, ecuador)
+autoplot(object = resampling_sp, task = ecuador)
 ```
 
 ### Non-spatial
 
 ```{r}
-# Not yet supported
-
-# autoplot(resampling_nsp, ecuador)
+autoplot(object = resampling_nsp, task = ecuador)
 ```
 
 # References

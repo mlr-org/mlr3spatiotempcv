@@ -13,7 +13,7 @@
 #' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv = rsmp("spcv-block")
+#' rcv = rsmp("spcv-block", range = 1000)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -33,9 +33,9 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv-block") {
       ps = ParamSet$new(params = list(
-        ParamInt$new("folds", lower = 1L, tags = "required"),
-        ParamInt$new("rows", lower = 1L, default = 4),
-        ParamInt$new("cols", lower = 1L, default = 4),
+        ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
+        ParamInt$new("rows", lower = 1L),
+        ParamInt$new("cols", lower = 1L),
         ParamInt$new("range", lower = 1L),
         ParamFct$new("selection", levels = c("random", "systematic",
           "checkerboard"), default = "random")
@@ -57,8 +57,12 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       assert_task(task)
       pv = self$param_set$values
 
-      # Check combination
-      if (!is.null(pv$range) && (!is.null(pv$rows) || !is.null(pv$cols))) {
+      if (!is.null(pv$range)) {
+      } else if (is.null(pv$range) && is.null(pv$rows) | is.null(pv$cols)) {
+        stopf("Either 'range' or 'cols' & 'rows' need to be set.")
+      }
+
+      if (!is.null(pv$range) && (!is.null(pv$rows) | !is.null(pv$cols))) {
         warning("Cols and rows are ignored. Range is used to generated blocks.")
       }
 
@@ -74,18 +78,12 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       }
 
       # Check for valid combinations of rows, cols and folds
-      if ((self$param_set$values$rows * self$param_set$values$cols) <
-        self$param_set$values$folds) {
-        stopf("'nrow' * 'ncol' needs to be larger than 'folds'.")
-      }
-
-      if (!is.null(self$param_set$values$rows) &&
+      if (!is.null(self$param_set$values$row) &&
         !is.null(self$param_set$values$cols)) {
-        warningf("Hyperparameters 'rows' and 'cols' not set.
-                 Using the default value of '4' set by 'mlr3spatiotempcv' for
-                 both which results in a grid of 16.
-                 You might want to set these values yourself during resampling
-                 construction.", wrap = TRUE)
+        if ((self$param_set$values$rows * self$param_set$values$cols) <
+          self$param_set$values$folds) {
+          stopf("'nrow' * 'ncol' needs to be larger than 'folds'.")
+        }
       }
 
       groups = task$groups
