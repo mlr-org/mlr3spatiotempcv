@@ -5,6 +5,8 @@
 \alias{autoplot.ResamplingSpCVEnv}
 \alias{autoplot.ResamplingSpCVBuffer}
 \alias{autoplot.ResamplingSpCVCoords}
+\alias{autoplot.ResamplingCV}
+\alias{autoplot.ResamplingRepeatedCV}
 \alias{autoplot.ResamplingRepeatedSpCVCoords}
 \alias{autoplot.ResamplingRepeatedSpCVEnv}
 \alias{autoplot.ResamplingRepeatedSpCVBlock}
@@ -44,6 +46,27 @@
   object,
   task,
   fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...
+)
+
+\method{autoplot}{ResamplingCV}(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...
+)
+
+\method{autoplot}{ResamplingRepeatedCV}(
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = 1,
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
@@ -172,6 +195,25 @@ resampling = rsmp("spcv-coords")
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
+autoplot(resampling, task, c(1, 2, 3, 4))
+#####
+# Non-Spatial CV
+#####
+library(mlr3)
+resampling = rsmp("cv")
+resampling$instantiate(task)
+autoplot(resampling, task)
+autoplot(resampling, task, 1)
+autoplot(resampling, task, c(1, 2, 3, 4))
+#####
+# Repeated Non-Spatial CV
+#####
+library(mlr3)
+resampling = rsmp("repeated_cv", folds = 5, repeats = 2)
+resampling$instantiate(task)
+autoplot(resampling, task)
+autoplot(resampling, task, 1)
+autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # RepeatedSpCVCoords
