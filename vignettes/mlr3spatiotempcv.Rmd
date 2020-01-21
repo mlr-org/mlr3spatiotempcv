@@ -25,9 +25,9 @@ library("mlr3spatiotempcv")
 # Introduction
 
 This package provides resampling methods for the [mlr3] package framework suited for spatial and temporal data.
-**So far, only spatial resampling has been properly implemented.**
+**So far, only spatial resampling methods have been properly implemented.**
 
-After calling `library("mlr3spatiotempcv")`, the additional resampling methods and example tasks of this extension package are available to the user.
+Calling `library("mlr3spatiotempcv")`, makes the spatial resampling methods and example tasks available to the user.
 
 ### Task types
 
@@ -62,16 +62,13 @@ Currently, the following resampling methods are implemented:
 ## Usage
 
 To create a spatial task, use class `TaskClassifST` for classification and `TaskRegrST` for regression tasks.
-Your dataset needs to come with coordinates.
-The column names of these variables need to be passed during class construction via argument `coordinates_names`.
+Please make sure that your dataset comes with coordinates since they are needed during the construction of the class (see the next code chunk).
+In addition, one can specify whether the coordinates should be used as features during modeling.
+<!-- coordinates are put into another object? Question is if is important for the user to know that xy-columns will be removed from the feature dataset if he/she already specified that coords should not be used as predictors.-->
+By default, coordinates are not used as features and will be removed from the feature dataset after the coordinates have been created.
+For optional plotting purposes, it is recommended to also pass the PROJ string specifying the used coordinate reference system via the `crs` argument.
 
-In addition, one can can specify whether the coordinates should be used as features during modeling.
-<!-- coordinates are put into another R6 class?-->
-By default, coordinates are not used as features and will be removed from the dataset after the coordinates have been created.
-
-For optional plotting purposes, it is recommended to also pass the PROJ string via the `crs` argument to set a coordinate reference system for the supplied coordinates.
-
-When printing a spatial task, this package adds a preview of the stored coordinates.
+Printing a spatial task, also displays a preview of the coordinates.
 
 ```{r}
 data = mlr3::as_data_backend(readRDS(system.file("extdata", "ecuador.rda",
@@ -82,8 +79,8 @@ TaskClassifST$new(id = "ecuador", backend = data, target = "slides",
   crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
 ```
 
-After the task has been constructed, it can be used in conjunction with all resampling methods that contain `"spcv"` and all others.
-However, non-spatial methods should **only be used to showcase the degree of overoptimistic performance estimates** compared to the chosen spatiotemporal resampling method [@schratz2019].
+After the task has been constructed, it can be used in conjunction with all available resampling methods.
+However, non-spatial methods should **only be used to showcase the degree of overoptimistic performance estimates** compared to a chosen spatiotemporal resampling method [@schratz2019].
 
 ### Resampling
 
@@ -135,7 +132,7 @@ autoplot(object = resampling_sp, task = ecuador)
 
 ### Non-spatial
 
-```{r}
+```{r, eval=FALSE}
 autoplot(object = resampling_nsp, task = ecuador)
 ```
 
