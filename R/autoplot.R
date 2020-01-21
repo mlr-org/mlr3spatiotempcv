@@ -158,6 +158,65 @@ autoplot.ResamplingSpCVCoords = function(
     grid = grid)
 }
 
+#' @title Plot for Spatial Resampling
+#'
+#' @rdname autoplot_spatial_resampling
+#' @export
+#' @examples
+#' #####
+#' # Non-Spatial CV
+#' #####
+#' library(mlr3)
+#' resampling = rsmp("cv")
+#' resampling$instantiate(task)
+#' autoplot(resampling, task)
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, c(1, 2, 3, 4))
+autoplot.ResamplingCV = function(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...) {
+  autoplot_spatial(resampling = object,
+    task = task,
+    fold_id = fold_id,
+    grid = grid)
+}
+
+#' @title Plot for Spatial Resampling
+#'
+#' @rdname autoplot_spatial_resampling
+#' @export
+#' @examples
+#' #####
+#' # Repeated Non-Spatial CV
+#' #####
+#' library(mlr3)
+#' resampling = rsmp("repeated_cv", folds = 5, repeats = 2)
+#' resampling$instantiate(task)
+#' autoplot(resampling, task)
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
+#' autoplot(resampling, task, c(1, 2, 3, 4))
+autoplot.ResamplingRepeatedCV = function(
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = 1,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...) {
+  autoplot_spatial(resampling = object,
+    task = task,
+    fold_id = fold_id,
+    repeats_id = repeats_id,
+    grid = grid)
+}
+
 #' @title Plot for Repeated Spatial Resampling
 #'
 #' @rdname autoplot_spatial_resampling
@@ -268,7 +327,7 @@ autoplot_spatial = function(
   coords$row_id = task$row_ids
   require_namespaces(c("sf", "cowplot"))
 
-  # instantiante if not yet done
+  # instantiate if not yet done
   if (!resampling$is_instantiated) {
     resampling = resampling$instantiate(task)
   }
