@@ -180,3 +180,52 @@ test_that("autoplot works for RepeatedSpCVEnv", {
   vdiffr::expect_doppelganger("RepSpCVEnv - Fold 1, Rep 1", renv4)
   vdiffr::expect_doppelganger("RepSpCVEnv - Fold 1-4", renv5)
 })
+
+
+test_that("autoplot works for SpCVEnv", {
+
+  # CV -------------------------------------------------------------------------
+
+  set.seed(42)
+
+  task = tsk("ecuador")
+  resa_cv = rsmp("cv")
+  resa_cv$instantiate(task)
+  cv1 = autoplot(resa_cv, task)
+  cv2 = autoplot(resa_cv, task, 1)
+  cv3 = autoplot(resa_cv, task, c(1, 2, 3, 4))
+
+  skip_on_ci()
+  vdiffr::expect_doppelganger("CV all test sets", cv1)
+  vdiffr::expect_doppelganger("CV - Fold 1", cv2)
+  vdiffr::expect_doppelganger("CV - Fold 1-4", cv3)
+})
+
+test_that("autoplot works for RepeatedSpCVEnv", {
+
+  # RepeatedCV -----------------------------------------------------------------
+
+  set.seed(42)
+
+  task = tsk("ecuador")
+  rresa_cv = rsmp("repeated_cv", folds = 10, repeats = 2)
+  rresa_cv$instantiate(task)
+  rcv1 = autoplot(rresa_cv, task)
+  rcv2 = autoplot(rresa_cv, task, repeats_id = 2)
+  rcv3 = autoplot(rresa_cv, task, fold_id = 1)
+  rcv4 = autoplot(rresa_cv, task, fold_id = 1, repeats_id = 2)
+  rcv5 = autoplot(rresa_cv, task, fold_id = c(1, 2, 3, 4))
+
+  expect_true(is.ggplot(rcv1))
+  expect_true(is.ggplot(rcv2))
+  expect_true(is.ggplot(rcv3))
+  expect_true(is.ggplot(rcv4))
+  expect_true(is.ggplot(rcv5))
+
+  skip_on_ci()
+  vdiffr::expect_doppelganger("RepCV all test sets", rcv1)
+  vdiffr::expect_doppelganger("RepCV all test sets, Rep 2", rcv2)
+  vdiffr::expect_doppelganger("RepCV - Fold 1, Rep 2", rcv3)
+  vdiffr::expect_doppelganger("RepCV - Fold 1, Rep 1", rcv4)
+  vdiffr::expect_doppelganger("RepCV - Fold 1-4", rcv5)
+})
