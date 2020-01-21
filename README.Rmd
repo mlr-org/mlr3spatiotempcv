@@ -11,7 +11,7 @@ nocite: |
 Spatio-temporal resampling methods for mlr3.
 
 <!-- badges: start -->
-[![Build Status](https://img.shields.io/travis/mlr-org/mlr3spatiotempcv/master?label=Linux&logo=travis&style=flat-square)](https://travis-ci.org/mlr-org/mlr3spatiotempcv)
+[![Build Status](https://img.shields.io/travis/mlr-org/mlr3spatiotempcv/master?label=macOS&logo=travis&style=flat-square)](https://travis-ci.org/mlr-org/mlr3spatiotempcv)
 [![CircleCI build status](https://circleci.com/gh/mlr-org/mlr3spatiotempcv.svg?style=svg)](https://circleci.com/gh/mlr-org/mlr3spatiotempcv)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/mlr3spatiotempcv)](https://cran.r-project.org/package=mlr3spatiotempcv)
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)

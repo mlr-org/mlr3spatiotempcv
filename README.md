@@ -6,7 +6,7 @@ Spatio-temporal resampling methods for mlr3.
 <!-- badges: start -->
 
 [![Build
-Status](https://img.shields.io/travis/mlr-org/mlr3spatiotempcv/master?label=Linux&logo=travis&style=flat-square)](https://travis-ci.org/mlr-org/mlr3spatiotempcv)
+Status](https://img.shields.io/travis/mlr-org/mlr3spatiotempcv/master?label=macOS&logo=travis&style=flat-square)](https://travis-ci.org/mlr-org/mlr3spatiotempcv)
 [![CircleCI build
 status](https://circleci.com/gh/mlr-org/mlr3spatiotempcv.svg?style=svg)](https://circleci.com/gh/mlr-org/mlr3spatiotempcv)
 [![CRAN Status
