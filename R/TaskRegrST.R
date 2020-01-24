@@ -51,12 +51,6 @@ TaskRegrST <- R6::R6Class("TaskRegrST",
       super$initialize(id = id, backend = backend, target = target)
       self$crs = checkmate::assert_character(crs, null.ok = TRUE)
 
-      # check coordinates
-      assert_names(self$backend$colnames, must.include = coordinates)
-      for (coord in coordinates) {
-        assert_numeric(self$data(cols = coord)[[1L]], any.missing = FALSE)
-      }
-
       type = self$col_info[id == target]$type
       if (type %nin% c("integer", "numeric")) {
         stopf("Target column '%s' must be numeric", target)
