@@ -73,11 +73,11 @@ TaskRegrST <- R6::R6Class("TaskRegrST",
 
     #' @description
     #' Return the coordinates of the task
-    #' @param rows Row IDs
+    #' @param rows Row IDs. Can be used to subset the returned coordinates.
     coordinates = function(rows = NULL) {
       if (is.null(rows)) {
         # Return coords in task$data order
-        rows = self$rows
+        rows = self$row_ids
       }
       self$backend$data(rows = rows, cols = self$coordinate_names)
     },
