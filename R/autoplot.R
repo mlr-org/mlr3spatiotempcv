@@ -111,7 +111,7 @@ autoplot.ResamplingSpCVEnv = function(
 #' # SpCVBuffer
 #' #####
 #' library(mlr3)
-#' resampling = rsmp("spcv-buffer", range = 1000)
+#' resampling = rsmp("spcv-buffer", theRange = 1000)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
