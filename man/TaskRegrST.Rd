@@ -122,7 +122,7 @@ Return the coordinates of the task
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{rows}}{Row IDs}
+\item{\code{rows}}{Row IDs. Can be used to subset the returned coordinates.}
 }
 \if{html}{\out{</div>}}
 }

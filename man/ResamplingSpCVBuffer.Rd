@@ -7,12 +7,23 @@
 Spatial Buffer Cross validation implemented by the \code{blockCV}
 package.
 }
+\note{
+The \code{blockcv::buffering} function was written for species distribution modeling with presence-absence data.
+However, the default settings allow to conduct a leave-one-out cross validation
+for two-class, multi-class and continuous response data, where each observation is one test set.
+For each test, all observations outside the buffer around the test observation are included in the training set.
+
+The parameter \code{spDataType = PB} and \code{addBG} are designed for presence-background data in species distribution modelling.
+If \code{spDataType = PB}, test sets are only created for each presence observation (\verb{task\\$postive}).
+The option \code{addBG = TRUE} adds the background data inside the buffer to the corresponding test sets.
+For each test set, all observations outside the buffer around the test observation are included in the training set.
+}
 \examples{
 library(mlr3)
 task = tsk("ecuador")
 
 # Instantiate Resampling
-rcv = rsmp("spcv-buffer", range = 1000)
+rcv = rsmp("spcv-buffer", theRange = 1000)
 rcv$instantiate(task)
 
 # Individual sets:

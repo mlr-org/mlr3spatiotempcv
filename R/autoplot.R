@@ -123,11 +123,91 @@ autoplot.ResamplingSpCVBuffer = function(
   train_color = "#0072B5",
   test_color = "#E18727",
   ...) {
-  autoplot_spatial(resampling = object,
-    task = task,
-    fold_id = fold_id,
-    grid = grid)
 
+  resampling = object
+  coords = task$coordinates()
+  coords$row_id = task$row_ids
+  require_namespaces(c("sf", "cowplot"))
+
+  # instantiate if not yet done
+  if (!resampling$is_instantiated) {
+    resampling = resampling$instantiate(task)
+  }
+
+  if (is.null(fold_id)) {
+    stop("Plotting all folds of a LOOCV instance is not supported. Please provide a fold ID.") # nolint
+  }
+
+  # plot train and test of a specific fold?
+  if (length(fold_id) > resampling$iters) {
+    stop("More folds specified than stored in resampling.")
+  }
+  if (length(fold_id) == 1 && fold_id > resampling$iters) {
+    stop("Specified a fold id which exceeds the total number of folds.")
+  }
+  if (any(fold_id > resampling$iters)) {
+    stop("Specified a fold id which exceeds the total number of folds.")
+  }
+
+  plot_list = list()
+  for (i in fold_id) {
+    coords_train = coords[row_id %in% resampling$instance[[i]]$train]
+    coords_test = coords[row_id %in% resampling$instance[[i]]$test]
+
+    coords_train$indicator = "Train"
+    coords_test$indicator = "Test"
+
+    table = rbind(coords_train, coords_test)
+
+    sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
+    sf_df$indicator = as.factor(as.character(sf_df$indicator))
+
+    # reorder factor levels so that "train" comes first
+    sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
+
+    plot_list[[length(plot_list) + 1]] =
+      ggplot() +
+      geom_sf(data = sf_df, aes(color = indicator)) +
+      scale_color_manual(values = c("Train" = train_color, "Test" = test_color)) +
+      labs(color = "Set") +
+      theme(legend.position = "none")
+  }
+
+  # is a grid requested?
+  if (!grid) {
+    return(plot_list)
+  } else {
+    plots = do.call(cowplot::plot_grid, list(plotlist = plot_list,
+      labels = sprintf("Fold %s", fold_id)))
+
+    # Extract legend standalone, we only want one legend in the grid
+    coords_train = coords[row_id %in% resampling$instance[[1]]$train]
+    coords_test = coords[row_id %in% resampling$instance[[1]]$test]
+
+    coords_train$indicator = "Train"
+    coords_test$indicator = "Test"
+
+    table = rbind(coords_train, coords_test)
+
+    sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
+    # 'fold' needs to be a factor, otherwise `show.legend = "points" has no
+    # effect
+    sf_df$indicator = as.factor(as.character(sf_df$indicator))
+
+    # reorder factor levels so that "train" comes first
+    sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
+
+    legend = cowplot::get_legend(ggplot() +
+      geom_sf(data = sf_df, aes(color = indicator),
+        show.legend = "point") +
+      scale_color_manual(values = c("Train" = "#0072B5",
+        "Test" = "#E18727")) +
+      labs(color = "") +
+      theme(legend.position = "bottom"))
+
+    # Plot
+    cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
+  }
 }
 
 #' @title Plot for Spatial Resampling
@@ -336,10 +416,6 @@ autoplot_spatial = function(
 
   if (grepl("Repeated", class(resampling)[1])) {
     coords_resamp = coords_resamp[rep == repeats_id, ]
-  }
-
-  if (class(resampling)[1] == "ResamplingSpCVBuffer" && is.null(fold_id)) {
-    stop("Plotting all folds of a LOOCV instance is not supported. Please provide a fold ID.") # nolint
   }
 
   # plot train and test of a specific fold?
