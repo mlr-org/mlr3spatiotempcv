@@ -37,7 +37,8 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
     initialize = function(id = "repeated-spcv-env") {
       ps = ParamSet$new(params = list(
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
-        ParamInt$new("repeats", lower = 1, default = 10L, tags = "required")
+        ParamInt$new("repeats", lower = 1, default = 10L, tags = "required"),
+        ParamUty$new("features")
       ))
       ps$values = list(folds = 10L, repeats = 1)
       super$initialize(
@@ -73,12 +74,6 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
       pv = self$param_set$values
 
       # Set values to default if missing
-      if (is.null(pv$rows)) {
-        pv$rows = self$param_set$default[["rows"]]
-      }
-      if (is.null(pv$cols)) {
-        pv$cols = self$param_set$default[["cols"]]
-      }
       if (is.null(pv$features)) {
         pv$features = task$feature_names
       }
@@ -119,13 +114,13 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
   ),
 
   private = list(
-    .sample = function(ids, coords) {
+    .sample = function(ids, data) {
       pv = self$param_set$values
       folds = as.integer(pv$folds)
 
       map_dtr(seq_len(pv$repeats), function(i) {
         data.table(row_id = ids, rep = i,
-          fold = kmeans(coords, centers = folds)$cluster
+          fold = kmeans(data, centers = folds)$cluster
         )
       })
     },

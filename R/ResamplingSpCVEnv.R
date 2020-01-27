@@ -56,12 +56,6 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv", inherit = mlr3::Resampling,
       pv = self$param_set$values
 
       # Set values to default if missing
-      if (is.null(pv$rows)) {
-        pv$rows = self$param_set$default[["rows"]]
-      }
-      if (is.null(pv$cols)) {
-        pv$cols = self$param_set$default[["cols"]]
-      }
       if (is.null(pv$features)) {
         pv$features = task$feature_names
       }
