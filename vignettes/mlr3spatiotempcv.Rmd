@@ -1,6 +1,6 @@
 ---
 title: "Get Started"
-output: rmarkdown::html_vignette
+output: bookdown::html_vignette2
 bibliography: ../inst/references.bib
 link-citations: yes
 vignette: >
@@ -76,11 +76,13 @@ ecuador = TaskClassifST$new(id = "ecuador", backend = data, target = "slides",
   crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
 ```
 
-The "ecuador" dataset consists of a response variable named `slides` (boolean) and various predictor variables that might have an influence on the occurrence of landslides such as slope, curvature or catchment area.^[Please note that the "ecuador" task is also available via `tsk{ecuador}`.]
+The "ecuador" dataset consists of a response variable named `slides` (boolean; see Figure \@ref(fig:lsl)) and various predictor variables that might have an influence on the occurrence of landslides such as slope, curvature or catchment area.^[Please note that the "ecuador" task is also available via `tsk{ecuador}`.]
 For a detailed overview of the dataset, please refer to @brenning_landslide_2015 and/or Chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace_geocomputation_2019].
 
-<!-- maybe we can add a figure for illustration purposes, e.g., 11.1 from https://geocompr.robinlovelace.net/spatial-cv.html?-->
 
+```{r lsl, echo=FALSE, fig.cap="Landslide initiation points (red) and non-landslide points (blue) in Southern Ecuador. Figure taken from @lovelace_geocomputation_2019.", fig.align="center", out.width="70%"}
+knitr::include_graphics("https://geocompr.robinlovelace.net/figures/lsl-map-1.png")
+```
 Printing a spatial task, also displays a preview of the coordinates.
 
 ```{r}
@@ -107,7 +109,7 @@ rr_nsp$aggregate(measures = msr("classif.ce"))
 
 However, as emphasized before, the "ecuador" landslides dataset is a spatial dataset, i.e., that each observation comes with xy-coordinates.
 And points close to each other tend to be more similar than points further apart.
-Spatial cross-validation takes this into account.
+Spatial cross-validation takes this into account by putting points close to each other either into the training or the test dataset (see Figure \@ref(fig:ressp)).
 For more details on (spatial) cross-validation, please refer to @brenning2012 and @schratz2019.
 For a gentle introduction to spatial cross-validation, please refer to Chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace_geocomputation_2019].
 Hence, let's do the cross-validation again, this time taking into account the spatial dimension.
@@ -138,12 +140,13 @@ To showcase the usage, we will visualize both resampling methods which we create
 Multiple options exists.
 If no specific fold is specified, all partitions will be returned distinguished by color.
 
-```{r}
+```{r ressp, fig.cap="Example for five spatially disjoint partitions constructed with the `repeated_cv` resampling method."}
 autoplot(object = resampling_sp, task = ecuador)
 ```
 
 ### Non-spatial
 
+<!-- Error: Objects of type ResamplingRepeatedCV/Resampling/R6 not supported by autoplot.-->
 ```{r, eval=FALSE}
 autoplot(object = resampling_nsp, task = ecuador)
 ```
