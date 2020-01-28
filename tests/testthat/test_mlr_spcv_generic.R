@@ -1,7 +1,5 @@
 context("mlr_resampling_spcv-all")
 
-# run tests --------------------------------------------------------------------
-
 test_that("spcv has no duplicated ids", {
   spcv_rsp = mlr_resamplings$mget(
     as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
