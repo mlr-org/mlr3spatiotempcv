@@ -19,7 +19,7 @@ TEST_MAKE_SP = function() {
 }
 
 # Create regression task
-TEST_MAKE_REGR = function() {
+TEST_MAKE_REGR = function(coords_as_features = FALSE) {
   data = TEST_MAKE_SP()
   data$p_1 = c(rep("A", 18), rep("B", 18))
   data$response = rnorm(36)
@@ -29,11 +29,11 @@ TEST_MAKE_REGR = function() {
     coordinate_names = c("x", "y"),
     crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
     target = "response",
-    coords_as_features = FALSE)
+    coords_as_features = coords_as_features)
 }
 
 # Create twoclass task
-TEST_MAKE_TWOCLASS = function(group = FALSE) {
+TEST_MAKE_TWOCLASS = function(group = FALSE, coords_as_features = FALSE) {
   data = TEST_MAKE_SP()
   data$p_1 = c(rnorm(18, 0), rnorm(18, 10))
   data$p_2 = as.factor(c(rep("lvl_1", 18), rep("lvl_2", 18)))
@@ -49,7 +49,7 @@ TEST_MAKE_TWOCLASS = function(group = FALSE) {
     crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
     target = "response",
     positive = "A",
-    coords_as_features = FALSE)
+    coords_as_features = coords_as_features)
 
   if(group) {
     task$col_roles$group = "group"
