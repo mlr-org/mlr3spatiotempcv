@@ -25,12 +25,15 @@ test_that("error when number of desired folds is larger than number possible blo
 test_that("error when neither cols & rows | range is specified", {
   task = TEST_MAKE_TWOCLASS()
   rsp = rsmp("spcv-block")
+
   expect_error(rsp$instantiate(task),
     "Either 'range' or 'cols' & 'rows' need to be set.")
 })
 
 test_that("error when only one of rows or cols is set", {
+  task = TEST_MAKE_TWOCLASS()
   rsp = rsmp("spcv-block", rows = 4)
+
   expect_error(rsp$instantiate(task),
     "Either 'range' or 'cols' & 'rows' need to be set."
   )
