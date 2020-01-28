@@ -21,3 +21,21 @@ test_that("error when number of desired folds is larger than number possible blo
 
   expect_error(rsp$instantiate(task))
 })
+
+test_that("error when neither cols & rows | range is specified", {
+  task = TEST_MAKE_TWOCLASS()
+  rsp = rsmp("spcv-block")
+  expect_error(rsp$instantiate(task),
+    "Either 'range' or 'cols' & 'rows' need to be set.")
+})
+
+test_that("error when only one of rows or cols is set", {
+  rsp = rsmp("spcv-block", rows = 4)
+  expect_error(rsp$instantiate(task),
+    "Either 'range' or 'cols' & 'rows' need to be set."
+  )
+})
+
+test_that("Error when length(range) >= 2", {
+  expect_error(rsmp("spcv-block", range = c(500, 1000)))
+})
