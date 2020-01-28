@@ -33,19 +33,28 @@ TEST_MAKE_REGR = function() {
 }
 
 # Create twoclass task
-TEST_MAKE_TWOCLASS = function() {
+TEST_MAKE_TWOCLASS = function(group = FALSE) {
   data = TEST_MAKE_SP()
   data$p_1 = c(rnorm(18, 0), rnorm(18, 10))
   data$p_2 = as.factor(c(rep("lvl_1", 18), rep("lvl_2", 18)))
   data$response = as.factor(c(rep("A", 18), rep("B", 18)))
 
-  TaskClassifST$new(id = "sp_twoclass",
+  if(group) {
+    data$group = rep_len(letters[1:10], 36)
+  }
+
+  task = TaskClassifST$new(id = "sp_twoclass",
     backend = data,
     coordinate_names = c("x", "y"),
     crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
     target = "response",
     positive = "A",
     coords_as_features = FALSE)
+
+  if(group) {
+    task$col_roles$group = "group"
+  }
+  task
 }
 
 # Create multiclass task
