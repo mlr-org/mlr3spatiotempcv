@@ -35,7 +35,8 @@ TEST_MAKE_REGR = function() {
 # Create twoclass task
 TEST_MAKE_TWOCLASS = function() {
   data = TEST_MAKE_SP()
-  data$p_1 = rnorm(36)
+  data$p_1 = c(rnorm(18, 0), rnorm(18, 10))
+  data$p_2 = as.factor(c(rep("lvl_1", 18), rep("lvl_2", 18)))
   data$response = as.factor(c(rep("A", 18), rep("B", 18)))
 
   TaskClassifST$new(id = "sp_twoclass",
