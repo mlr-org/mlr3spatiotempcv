@@ -75,3 +75,11 @@ test_that("spDataType = 'PB' and multi-class response throws an error", {
 
   expect_error(rsp$instantiate(task))
 })
+
+test_that("grouping throws errors when 'groups' is set", {
+  task = TEST_MAKE_TWOCLASS(group = TRUE)
+  rsp = rsmp("spcv-buffer", theRange = 1)
+
+  expect_error(rsp$instantiate(task),
+    "Grouping is not supported for spatial resampling methods")
+})
