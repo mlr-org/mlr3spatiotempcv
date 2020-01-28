@@ -14,3 +14,10 @@ test_that("cols and rows are ignored when range is given", {
 
   expect_warning(rsp$instantiate(task), "Cols and rows are ignored. Range is used to generated blocks")
 })
+
+test_that("error when number of desired folds is larger than number possible blocks", {
+  task = TEST_MAKE_TWOCLASS()
+  rsp = rsmp("spcv-block", folds = 10, range = 4)
+
+  expect_error(rsp$instantiate(task))
+})
