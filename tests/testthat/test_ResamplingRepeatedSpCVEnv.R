@@ -40,7 +40,7 @@ test_that("feature p_1 seperates the observations in folds of equal size", {
 })
 
 test_that("non-numeric feature throws an error", {
-  task = TEST_MAKE_TWOCLASS()
+  task = TEST_MAKE_TWOCLASS(features = c("numeric", "factor"))
   rsp = rsmp("repeated-spcv-env", folds = 2, repeats = 5, features = "p_2")
 
   expect_error(rsp$instantiate(task))
