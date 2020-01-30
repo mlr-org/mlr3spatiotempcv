@@ -30,6 +30,7 @@ Imports:
 Suggests:
     bibtex,
     blockCV,
+    bookdown,
     cowplot,
     ggsci,
     knitr,
