@@ -35,6 +35,7 @@ Suggests:
     ggsci,
     knitr,
     rmarkdown,
+    rpart,
     sf,
     testthat (>= 2.1.0),
     vdiffr
