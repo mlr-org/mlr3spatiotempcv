@@ -10,7 +10,11 @@ Authors@R:
       person(given = "Marc",
              family = "Becker",
              role = "aut",
-             email = "marcbecker@posteo.de"))
+             email = "marcbecker@posteo.de"),
+      person(given = "Jannes",
+             family = "Muenchow",
+             role = "ctb",
+             email = "jannes.muenchow@uni-jena.de"))
 Description: Implements spatio-temporal methods to enhance the
     experience of mlr3.
 License: MIT + file LICENSE
