@@ -1,8 +1,10 @@
 ---
 title: "Get Started"
-output: bookdown::html_vignette2
+output: bookdown::html_document2
 bibliography: ../inst/references.bib
 link-citations: yes
+pkgdown:
+  as_is: true
 vignette: >
   %\VignetteIndexEntry{foo}
   %\VignetteEngine{knitr::rmarkdown}
@@ -83,6 +85,7 @@ For a detailed overview of the dataset, please refer to @brenning_landslide_2015
 ```{r lsl, echo=FALSE, fig.cap="Landslide initiation points (red) and non-landslide points (blue) in Southern Ecuador. Figure taken from @lovelace_geocomputation_2019.", fig.align="center", out.width="70%"}
 knitr::include_graphics("https://geocompr.robinlovelace.net/figures/lsl-map-1.png")
 ```
+
 Printing a spatial task, also displays a preview of the coordinates.
 
 ```{r}
@@ -146,7 +149,6 @@ autoplot(object = resampling_sp, task = ecuador)
 
 ### Non-spatial
 
-<!-- Error: Objects of type ResamplingRepeatedCV/Resampling/R6 not supported by autoplot.-->
 ```{r, eval=FALSE}
 autoplot(object = resampling_nsp, task = ecuador)
 ```
