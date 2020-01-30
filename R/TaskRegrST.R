@@ -20,7 +20,7 @@ TaskRegrST <- R6::R6Class("TaskRegrST",
   public = list(
 
     #' @description
-    #' Create a new spatiotemporal resampling instance.
+    #' Create a new spatiotemporal resampling Task
     #' @param id `character(1)`\cr
     #'   Identifier for the task.
     #' @param backend [DataBackend]\cr

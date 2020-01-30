@@ -65,7 +65,7 @@ The \code{proj4string} of the coordinate system.}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
-Create a new spatiotemporal resampling instance.
+Create a new spatiotemporal resampling Task
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TaskRegrST$new(
   id,
@@ -122,7 +122,7 @@ Return the coordinates of the task
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{rows}}{Row IDs}
+\item{\code{rows}}{Row IDs. Can be used to subset the returned coordinates.}
 }
 \if{html}{\out{</div>}}
 }
