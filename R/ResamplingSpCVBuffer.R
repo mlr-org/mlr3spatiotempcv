@@ -112,7 +112,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       }
 
       # Recode response to 0/1 for twoclass
-      if (isTRUE("twoclass" %in% properties)) {
+      if ("twoclass" %in% properties) {
         response = ifelse(response == positive, 1, 0)
         pars$species = "response"
       }
