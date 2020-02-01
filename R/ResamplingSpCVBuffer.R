@@ -6,15 +6,18 @@
 #' package.
 #'
 #' @note
-#' The `blockcv::buffering` function was written for species distribution modeling with presence-absence data.
-#' However, the default settings allow to conduct a leave-one-out cross validation
-#' for two-class, multi-class and continuous response data, where each observation is one test set.
-#' For each test, all observations outside the buffer around the test observation are included in the training set.
+#' However, the default settings allow to conduct a leave-one-out cross
+#' validation for two-class, multi-class and continuous response data, where
+#' each observation is one test set. For each test, all observations outside the
+#' buffer around the test observation are included in the training set.
 #'
-#' The parameter `spDataType = PB` and `addBG` are designed for presence-background data in species distribution modelling.
-#' If `spDataType = PB`, test sets are only created for each presence observation (`task\$postive`).
-#' The option `addBG = TRUE` adds the background data inside the buffer to the corresponding test sets.
-#' For each test set, all observations outside the buffer around the test observation are included in the training set.
+#' The parameter `spDataType = PB` and `addBG` are designed for
+#' presence-background data in species distribution modelling. If `spDataType =
+#' PB`, test sets are only created for each presence observation
+#' (`task\$postive`). The option `addBG = TRUE` adds the background data inside
+#' the buffer to the corresponding test sets. For each test set, all
+#' observations outside the buffer around the test observation are included in
+#' the training set.
 #'
 #' @references
 #' \cite{mlr3spatiotempcv}{valavi2018}
@@ -101,15 +104,15 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       pars = self$param_set$get_values()
 
       if (!isTRUE("twoclass" %in% properties) && isTRUE(pars$spDataType == "PB")) {
-        stop("spDataType = 'PB' should only be used with two-class response")
+        stopf("spDataType = 'PB' should only be used with two-class response")
       }
 
       if (!is.null(pars$addBG) && isTRUE(pars$spDataType == "PA")) {
-        stop("Parameter addBG should only be used with spDataType = 'PB'")
+        stopf("Parameter addBG should only be used with spDataType = 'PB'")
       }
 
       # Recode response to 0/1 for twoclass
-      if (isTRUE("twoclass" %in% properties)) {
+      if ("twoclass" %in% properties) {
         response = ifelse(response == positive, 1, 0)
         pars$species = "response"
       }
@@ -123,7 +126,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         progress = FALSE,
         .args = pars)
 
-      map(inds$folds, function(x) {
+      mlr3misc::map(inds$folds, function(x) {
         set = map(x, function(y) {
           ids[y]
         })
