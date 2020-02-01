@@ -1,3 +1,11 @@
+# mlr3spatiotempcv 0.0.0.9005
+
+* Add `spDataType` and `addBG` parameter to ResamplingSpCVBuffer
+* Fix TaskRegrST
+* Fix ResamplingSpCVEnv and ResamplingRepeatedSpCVEnv
+* Add generic unit tests
+
+
 # mlr3spatiotempcv 0.0.0.9004
 
 * Add ResamplingRepeatedSpCVBlock (#35)

@@ -1,6 +1,6 @@
 Package: mlr3spatiotempcv
 Title: Spatial support for mlr3
-Version: 0.0.0.9004
+Version: 0.0.0.9005
 Authors@R:
     c(person(given = "Patrick",
              family = "Schratz",
