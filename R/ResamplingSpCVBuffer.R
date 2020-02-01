@@ -6,15 +6,18 @@
 #' package.
 #'
 #' @note
-#' The `blockcv::buffering` function was written for species distribution modeling with presence-absence data.
-#' However, the default settings allow to conduct a leave-one-out cross validation
-#' for two-class, multi-class and continuous response data, where each observation is one test set.
-#' For each test, all observations outside the buffer around the test observation are included in the training set.
+#' However, the default settings allow to conduct a leave-one-out cross
+#' validation for two-class, multi-class and continuous response data, where
+#' each observation is one test set. For each test, all observations outside the
+#' buffer around the test observation are included in the training set.
 #'
-#' The parameter `spDataType = PB` and `addBG` are designed for presence-background data in species distribution modelling.
-#' If `spDataType = PB`, test sets are only created for each presence observation (`task\$postive`).
-#' The option `addBG = TRUE` adds the background data inside the buffer to the corresponding test sets.
-#' For each test set, all observations outside the buffer around the test observation are included in the training set.
+#' The parameter `spDataType = PB` and `addBG` are designed for
+#' presence-background data in species distribution modelling. If `spDataType =
+#' PB`, test sets are only created for each presence observation
+#' (`task\$postive`). The option `addBG = TRUE` adds the background data inside
+#' the buffer to the corresponding test sets. For each test set, all
+#' observations outside the buffer around the test observation are included in
+#' the training set.
 #'
 #' @references
 #' \cite{mlr3spatiotempcv}{valavi2018}
@@ -109,7 +112,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       }
 
       # Recode response to 0/1 for twoclass
-      if (isTRUE("twoclass" %in% properties)) {
+      if ("twoclass" %in% properties) {
         response = ifelse(response == positive, 1, 0)
         pars$species = "response"
       }

@@ -135,18 +135,18 @@ autoplot.ResamplingSpCVBuffer = function(
   }
 
   if (is.null(fold_id)) {
-    stop("Plotting all folds of a LOOCV instance is not supported. Please provide a fold ID.") # nolint
+    stopf("Plotting all folds of a LOOCV instance is not supported. Please provide a fold ID.", wrap=TRUE) # nolint
   }
 
   # plot train and test of a specific fold?
   if (length(fold_id) > resampling$iters) {
-    stop("More folds specified than stored in resampling.")
+    stopf("More folds specified than stored in resampling.")
   }
   if (length(fold_id) == 1 && fold_id > resampling$iters) {
-    stop("Specified a fold id which exceeds the total number of folds.")
+    stopf("Specified a fold id which exceeds the total number of folds.")
   }
   if (any(fold_id > resampling$iters)) {
-    stop("Specified a fold id which exceeds the total number of folds.")
+    stopf("Specified a fold id which exceeds the total number of folds.")
   }
 
   plot_list = list()
@@ -421,13 +421,13 @@ autoplot_spatial = function(
   # plot train and test of a specific fold?
   if (!is.null(fold_id)) {
     if (length(fold_id) > resampling$iters) {
-      stop("More folds specified than stored in resampling.")
+      stopf("More folds specified than stored in resampling.")
     }
     if (length(fold_id) == 1 && fold_id > resampling$iters) {
-      stop("Specified a fold id which exceeds the total number of folds.")
+      stopf("Specified a fold id which exceeds the total number of folds.")
     }
     if (any(fold_id > resampling$iters)) {
-      stop("Specified a fold id which exceeds the total number of folds.")
+      stopf("Specified a fold id which exceeds the total number of folds.")
     }
 
     # Multiplot with train and test set
