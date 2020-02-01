@@ -101,11 +101,11 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       pars = self$param_set$get_values()
 
       if (!isTRUE("twoclass" %in% properties) && isTRUE(pars$spDataType == "PB")) {
-        stop("spDataType = 'PB' should only be used with two-class response")
+        stopf("spDataType = 'PB' should only be used with two-class response")
       }
 
       if (!is.null(pars$addBG) && isTRUE(pars$spDataType == "PA")) {
-        stop("Parameter addBG should only be used with spDataType = 'PB'")
+        stopf("Parameter addBG should only be used with spDataType = 'PB'")
       }
 
       # Recode response to 0/1 for twoclass
@@ -123,8 +123,8 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         progress = FALSE,
         .args = pars)
 
-      map(inds$folds, function(x) {
-        set = map(x, function(y) {
+      mlr3misc::map(inds$folds, function(x) {
+        set = mlr3misc::map(x, function(y) {
           ids[y]
         })
         names(set) = c("train", "test")
