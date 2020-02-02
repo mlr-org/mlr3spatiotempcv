@@ -65,7 +65,7 @@ The \code{proj4string} of the coordinate system.}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
-Create a new spatiotemporal resampling instance.
+Create a new spatiotemporal resampling Task
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TaskRegrST$new(
   id,

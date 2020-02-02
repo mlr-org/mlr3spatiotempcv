@@ -21,16 +21,17 @@ TEST_MAKE_REGR = function(coords_as_features = FALSE) {
 
 # Create twoclass task
 TEST_MAKE_TWOCLASS = function(group = FALSE, coords_as_features = FALSE, features = "numeric") {
+
   data = TEST_MAKE_SP()
-  if("numeric" %in% features) {
+  if ("numeric" %in% features) {
     data$p_1 = c(rnorm(18, 0), rnorm(18, 10))
   }
-  if("factor" %in% features) {
+  if ("factor" %in% features) {
     data$p_2 = as.factor(c(rep("lvl_1", 18), rep("lvl_2", 18)))
   }
   data$response = as.factor(c(rep("A", 18), rep("B", 18)))
 
-  if(group) {
+  if (group) {
     data$group = rep_len(letters[1:10], 36)
   }
 
@@ -42,7 +43,7 @@ TEST_MAKE_TWOCLASS = function(group = FALSE, coords_as_features = FALSE, feature
     positive = "A",
     coords_as_features = coords_as_features)
 
-  if(group) {
+  if (group) {
     task$col_roles$group = "group"
   }
   task

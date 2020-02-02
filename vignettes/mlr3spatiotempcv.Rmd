@@ -1,8 +1,10 @@
 ---
 title: "Get Started"
-output: rmarkdown::html_vignette
+output: bookdown::html_document2
 bibliography: ../inst/references.bib
 link-citations: yes
+pkgdown:
+  as_is: true
 vignette: >
   %\VignetteIndexEntry{foo}
   %\VignetteEngine{knitr::rmarkdown}
@@ -25,9 +27,9 @@ library("mlr3spatiotempcv")
 # Introduction
 
 This package provides resampling methods for the [mlr3] package framework suited for spatial and temporal data.
-**Currently, only spatial resampling are implemented.**
+**So far, only spatial resampling methods have been properly implemented.**
 
-After calling `library("mlr3spatiotempcv")`, the additional resampling methods and example tasks of this extension package are available to the user.
+Calling `library("mlr3spatiotempcv")`, makes the spatial resampling methods and example tasks available to the user.
 
 ### Task types
 
@@ -61,38 +63,61 @@ Currently, the following resampling methods are implemented:
 
 ## Usage
 
-To create a spatial task, use the classes `TaskClassifST` and `TaskRegrST`.
-Your dataset needs to come with coordinates.
-The column names of these variables need to be passed during class construction via argument `coordinates_names`.
-
-In addition, one can can specify whether the coordinates should be used as features during modeling or not.
-By default they are not used and will be removed as features from the dataset after the coordinates have been created.
-
-For optional plotting purposes, it is recommended to also pass the PROJ string via the `crs` argument to set a coordinate reference system for the supplied coordinates.
-
-When printing a spatial task, this package adds a preview of the stored coordinates.
+To create a spatial task, use class `TaskClassifST` for classification and `TaskRegrST` for regression tasks.
+Please make sure that your dataset comes with coordinates since they are needed during the construction of the class (see the next code chunk).
+In addition, one can specify whether the coordinates should be used as features during the modeling.
+By default, coordinates are not used as features and will be removed from the feature dataset after the coordinates have been added as a method to the task.
+For optional plotting purposes, it is recommended to also pass the PROJ string specifying the used coordinate reference system via the `crs` argument.
 
 ```{r}
 data = mlr3::as_data_backend(readRDS(system.file("extdata", "ecuador.rda",
   package = "mlr3spatiotempcv")))
 
-TaskClassifST$new(id = "ecuador", backend = data, target = "slides",
+ecuador = TaskClassifST$new(id = "ecuador", backend = data, target = "slides",
   positive = "TRUE", coordinate_names = c("x", "y"), coords_as_features = FALSE,
   crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
 ```
 
-After the task has been constructed, it can be used in conjunction with all resampling methods that contain `"spcv"` and all others.
-However, non-spatial methods should **only be used to showcase the degree of overoptimistic performance estimates** compared to the chosen spatiotemporal resampling method [@schratz2019].
+The "ecuador" dataset consists of a response variable named `slides` (boolean; see Figure \@ref(fig:lsl)) and various predictor variables that might have an influence on the occurrence of landslides such as slope, curvature or catchment area.^[Please note that the "ecuador" task is also available via `tsk{ecuador}`.]
+For a detailed overview of the dataset, please refer to @brenning_landslide_2015 and/or Chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace_geocomputation_2019].
+
+
+```{r lsl, echo=FALSE, fig.cap="Landslide initiation points (red) and non-landslide points (blue) in Southern Ecuador. Figure taken from @lovelace_geocomputation_2019.", fig.align="center", out.width="70%"}
+knitr::include_graphics("https://geocompr.robinlovelace.net/figures/lsl-map-1.png")
+```
+
+Printing a spatial task, also displays a preview of the coordinates.
+
+```{r}
+ecuador
+```
+
+After the task has been constructed, it can be used in conjunction with all available resampling methods.
+However, non-spatial methods should **only be used to showcase the degree of overoptimistic performance estimates** compared to a chosen spatiotemporal resampling method [@schratz2019].
 
 ### Resampling
 
-To showcase the usage with code, we adapt the basic [resampling example of the mlr3book](https://mlr3book.mlr-org.com/resampling.html).
-
-However, here we are using the "ecuador" example task that comes with the {mlr3spatiotempcv} package and use the `"repeated-spcv-coords"` resampling method.
+To showcase the usage with code, we will adapt the basic [resampling example of the mlr3book](https://mlr3book.mlr-org.com/resampling.html) by using the "ecuador" example task that comes with the {mlr3spatiotempcv} package.
+To predict landslide occurence, we will use a simple decision tree.
+To emphasize that common, i.e., non-spatial, cross-validation is usually over-optimistic, we will first execute a 5-repeated 5-fold cross-validation with the help of the `"repeated-cv"` resampling method.
 
 ```{r}
-ecuador = tsk("ecuador")
 learner = lrn("classif.rpart", maxdepth = 3, predict_type = "prob")
+resampling_nsp = rsmp("repeated_cv", folds = 5, repeats = 5)
+rr_nsp = resample(task = ecuador, learner = learner,
+  resampling = resampling_nsp)
+
+rr_nsp$aggregate(measures = msr("classif.ce"))
+```
+
+However, as emphasized before, the "ecuador" landslides dataset is a spatial dataset, i.e., that each observation comes with xy-coordinates.
+And points close to each other tend to be more similar than points further apart.
+Spatial cross-validation takes this into account by putting points close to each other either into the training or the test dataset (see Figure \@ref(fig:ressp)).
+For more details on (spatial) cross-validation, please refer to @brenning2012 and @schratz2019.
+For a gentle introduction to spatial cross-validation, please refer to Chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace_geocomputation_2019].
+Hence, let's do the cross-validation again, this time taking into account the spatial dimension.
+
+```{r}
 resampling_sp = rsmp("repeated-spcv-coords", folds = 5, repeats = 5)
 
 rr_sp = resample(task = ecuador, learner = learner,
@@ -101,19 +126,9 @@ rr_sp = resample(task = ecuador, learner = learner,
 rr_sp$aggregate(measures = msr("classif.ce"))
 ```
 
-Now let's do the same with a classic non-spatial CV.
-
-```{r}
-resampling_nsp = rsmp("repeated_cv", folds = 5, repeats = 5)
-rr_nsp = resample(task = ecuador, learner = learner,
-  resampling = resampling_nsp)
-
-rr_nsp$aggregate(measures = msr("classif.ce"))
-```
-
 We see that the classical non-spatial CV performs better.
 However, "better" in this case actually means overoptimistic and biased [@burman1994; @cliff1970; @racine2000; @schratz2019].
-Hence, it is advised to **not** use classical CV methods for spatiotemporal data but rather choose an appropriate spatiotemporal method.
+Hence, it is highly recommended to **not** use classical CV methods with spatiotemporal data but rather choose an appropriate spatiotemporal method.
 
 ## Visualization
 
@@ -128,7 +143,7 @@ To showcase the usage, we will visualize both resampling methods which we create
 Multiple options exists.
 If no specific fold is specified, all partitions will be returned distinguished by color.
 
-```{r}
+```{r ressp, fig.cap="Example for five spatially disjoint partitions constructed with the `repeated_cv` resampling method."}
 autoplot(object = resampling_sp, task = ecuador)
 ```
 
