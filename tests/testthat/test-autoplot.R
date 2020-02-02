@@ -121,7 +121,7 @@ test_that("autoplot works for SpCVBuffer", {
   set.seed(42)
 
   task = tsk("ecuador")
-  resa_buffer = rsmp("spcv-buffer")
+  resa_buffer = rsmp("spcv-buffer", theRange = 100)
   resa_buffer$instantiate(task)
   # one does not want to see nrow plots in a grid
   expect_error(autoplot(resa_buffer, task))

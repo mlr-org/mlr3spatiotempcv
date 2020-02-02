@@ -18,6 +18,8 @@ test_that("grouping throws errors when 'groups' and 'stratify' is set", {
 
 test_that("train and test set getter functions are working", {
   spcv_rsp_buffer = mlr_resamplings$get("spcv-buffer")
+  spcv_rsp_buffer$param_set$values = insert_named(spcv_rsp_buffer$param_set$values,
+    list(theRange = 1))
 
   spcv_rsp_buffer$instantiate(task)
   expect_silent(spcv_rsp_buffer$train_set(1))
