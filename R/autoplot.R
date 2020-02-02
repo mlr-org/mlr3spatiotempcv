@@ -135,7 +135,8 @@ autoplot.ResamplingSpCVBuffer = function(
   }
 
   if (is.null(fold_id)) {
-    stopf("Plotting all folds of a LOOCV instance is not supported. Please provide a fold ID.", wrap=TRUE) # nolint
+    stopf("Plotting all folds of a LOOCV instance is not supported.
+          Please provide a fold ID.", wrap = TRUE) # nolint
   }
 
   # plot train and test of a specific fold?
@@ -168,7 +169,8 @@ autoplot.ResamplingSpCVBuffer = function(
     plot_list[[length(plot_list) + 1]] =
       ggplot() +
       geom_sf(data = sf_df, aes(color = indicator)) +
-      scale_color_manual(values = c("Train" = train_color, "Test" = test_color)) +
+      scale_color_manual(values = c("Train" = train_color,
+        "Test" = test_color)) +
       labs(color = "Set") +
       theme(legend.position = "none")
   }
@@ -450,7 +452,8 @@ autoplot_spatial = function(
       plot_list[[length(plot_list) + 1]] =
         ggplot() +
         geom_sf(data = sf_df, aes(color = indicator)) +
-        scale_color_manual(values = c("Train" = "#0072B5", "Test" = "#E18727")) +
+        scale_color_manual(values = c("Train" = "#0072B5",
+          "Test" = "#E18727")) +
         labs(color = "Set") +
         theme(legend.position = "none")
     }

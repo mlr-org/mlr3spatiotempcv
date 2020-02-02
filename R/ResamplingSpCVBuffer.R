@@ -127,7 +127,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         .args = pars)
 
       mlr3misc::map(inds$folds, function(x) {
-        set = map(x, function(y) {
+        set = mlr3misc::map(x, function(y) {
           ids[y]
         })
         names(set) = c("train", "test")
