@@ -103,7 +103,7 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
       pv = self$param_set$values
       folds = as.integer(pv$folds)
 
-      map_dtr(seq_len(pv$repeats), function(i) {
+      mlr3misc::map_dtr(seq_len(pv$repeats), function(i) {
         data.table(row_id = ids, rep = i,
           fold = kmeans(coords, centers = folds)$cluster
         )

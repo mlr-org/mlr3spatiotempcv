@@ -5,6 +5,20 @@
 #' @description Spatial Buffer Cross validation implemented by the `blockCV`
 #' package.
 #'
+#' @note
+#' However, the default settings allow to conduct a leave-one-out cross
+#' validation for two-class, multi-class and continuous response data, where
+#' each observation is one test set. For each test, all observations outside the
+#' buffer around the test observation are included in the training set.
+#'
+#' The parameter `spDataType = PB` and `addBG` are designed for
+#' presence-background data in species distribution modelling. If `spDataType =
+#' PB`, test sets are only created for each presence observation
+#' (`task\$postive`). The option `addBG = TRUE` adds the background data inside
+#' the buffer to the corresponding test sets. For each test set, all
+#' observations outside the buffer around the test observation are included in
+#' the training set.
+#'
 #' @references
 #' \cite{mlr3spatiotempcv}{valavi2018}
 #'
@@ -14,7 +28,7 @@
 #' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv = rsmp("spcv-buffer", range = 1000)
+#' rcv = rsmp("spcv-buffer", theRange = 1000)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -34,9 +48,11 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv-buffer") {
       ps = ParamSet$new(params = list(
-        ParamInt$new("range", lower = 1L, tags = "required")
+        ParamInt$new("theRange", lower = 1L, tags = "required"),
+        ParamFct$new("spDataType", default = "PA", levels = c("PA", "PB")),
+        ParamLgl$new("addBG", default = TRUE)
       ))
-      ps$values = list(range = 100)
+
       super$initialize(
         id = id,
         param_set = ps
@@ -54,12 +70,16 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
 
       groups = task$groups
 
-
       if (!is.null(groups)) {
         stopf("Grouping is not supported for spatial resampling methods")
       }
 
-      instance = private$.sample(task$row_ids, task$coordinates(), task$crs)
+      instance = private$.sample(task$row_ids,
+        task$data()[[task$target_names]],
+        task$coordinates(),
+        task$positive,
+        task$crs,
+        task$properties)
 
       self$instance = instance
       self$task_hash = task$hash
@@ -72,47 +92,55 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
-      as.integer(length(self$instance$fold))
+      as.integer(length(self$instance))
     }
   ),
 
   private = list(
-    .sample = function(ids, coords, crs) {
+    .sample = function(ids, response, coords, positive, crs, properties) {
 
       require_namespaces(c("blockCV", "sf"))
 
-      points = sf::st_as_sf(coords,
+      pars = self$param_set$get_values()
+
+      if (!isTRUE("twoclass" %in% properties) && isTRUE(pars$spDataType == "PB")) {
+        stopf("spDataType = 'PB' should only be used with two-class response")
+      }
+
+      if (!is.null(pars$addBG) && isTRUE(pars$spDataType == "PA")) {
+        stopf("Parameter addBG should only be used with spDataType = 'PB'")
+      }
+
+      # Recode response to 0/1 for twoclass
+      if ("twoclass" %in% properties) {
+        response = ifelse(response == positive, 1, 0)
+        pars$species = "response"
+      }
+
+      data = sf::st_as_sf(cbind(response, coords),
         coords = c("x", "y"),
         crs = crs)
 
-      inds = blockCV::buffering(
-        speciesData = points,
-        theRange = self$param_set$values$range,
-        progress = FALSE
-      )
+      inds = invoke(blockCV::buffering,
+        speciesData = data,
+        progress = FALSE,
+        .args = pars)
 
-      inds = map(inds$folds, function(x) {
-        set = map(x, function(y) {
+      mlr3misc::map(inds$folds, function(x) {
+        set = mlr3misc::map(x, function(y) {
           ids[y]
         })
         names(set) = c("train", "test")
         set
       })
-      test_inds = map_int(inds, function(x) as.integer(x[["test"]]))
-
-      data.table(
-        row_id = seq(1:length(test_inds)),
-        fold = test_inds,
-        key = "fold"
-      )
     },
 
     .get_train = function(i) {
-      self$instance[!list(i), "row_id", on = "fold"][[1L]]
+      self$instance[[i]]$train
     },
 
     .get_test = function(i) {
-      self$instance[list(i), "row_id", on = "fold"][[1L]]
+      self$instance[[i]]$test
     }
   )
 )
