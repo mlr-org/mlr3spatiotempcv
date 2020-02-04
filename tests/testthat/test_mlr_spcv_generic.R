@@ -1,15 +1,9 @@
 context("mlr_resampling_spcv-all")
 
-# run tests --------------------------------------------------------------------
-
 test_that("spcv has no duplicated ids", {
   spcv_rsp = mlr_resamplings$mget(
     as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
-  spcv_rsp$`repeated-spcv-coords` = NULL
-  spcv_rsp$`repeated-spcv-env` = NULL
-  spcv_rsp$`repeated-spcv-block` = NULL
-  spcv_rsp$`spcv-block` = NULL
 
   for (i in spcv_rsp) {
     expect_identical(i$duplicated_ids, FALSE)
@@ -17,6 +11,8 @@ test_that("spcv has no duplicated ids", {
 })
 
 test_that("grouping throws errors when 'groups' is set", {
+  task = TEST_MAKE_TWOCLASS(group = TRUE)
+
   spcv_rsp = mlr_resamplings$mget(
     as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
@@ -26,12 +22,14 @@ test_that("grouping throws errors when 'groups' is set", {
   spcv_rsp$`spcv-block` = NULL
 
   for (i in spcv_rsp) {
-    expect_error(i$instantiate(task_grp),
+    expect_error(i$instantiate(task),
       "Grouping is not supported for spatial resampling methods")
   }
 })
 
 test_that("train and test set getter functions are working", {
+  task = TEST_MAKE_TWOCLASS()
+
   spcv_rsp = mlr_resamplings$mget(
     as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
