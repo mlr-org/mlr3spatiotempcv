@@ -28,12 +28,12 @@ Imports:
     data.table,
     ggplot2,
     mlr3,
-    mlr3misc,
+    mlr3misc (>= 0.1.7),
     paradox,
     R6
 Suggests:
     bibtex,
-    blockCV,
+    blockCV (>= 2.1.1),
     bookdown,
     cowplot,
     ggsci,
