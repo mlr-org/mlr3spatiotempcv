@@ -47,9 +47,6 @@ VignetteBuilder:
     knitr
 RdMacros:
     mlr3misc
-Remotes: 
-    mlr-org/mlr3misc,
-    rvalavi/blockCV
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
