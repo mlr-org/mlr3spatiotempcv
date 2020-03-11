@@ -12,3 +12,6 @@
 ^pkgdown$
 ^docs$
 ^\.circleci$
+^\.ccache$
+^\.github$
+^clang-.*
