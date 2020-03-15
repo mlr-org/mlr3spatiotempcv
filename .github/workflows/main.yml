@@ -92,7 +92,7 @@ jobs:
       - name: "[Linux] ccache"
         if: runner.os == 'Linux'
         run: |
-          sudo apt install ccache libcurl4-openssl-dev
+          sudo apt install ccache libcurl4-openssl-dev libudunits2-dev libgdal-dev libproj-dev
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
 
       # install ccache and write config file
@@ -111,7 +111,11 @@ jobs:
       - name: "[macOS-devel] ccache"
         if: runner.os == 'macOS' && matrix.config.r == 'devel'
         run: |
-          brew install ccache
+          brew install ccache gdal geos udunits Caskroom/cask/xquartz freetype pkg-config
+          brew unlink proj
+          brew tap osgeo/osgeo4mac
+          brew install osgeo-proj@5
+          brew link --force osgeo-proj@5
           wget https://cran.r-project.org/bin/macosx/tools/clang-8.0.0.pkg
           sudo installer -package clang-8.0.0.pkg -target /
           mkdir -p ~/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache /usr/local/clang8/bin/clang\nCC11=ccache /usr/local/clang8/bin/clang\nCC14=ccache /usr/local/clang8/bin/clang\nCXX=ccache /usr/local/clang8/bin/clang++\nCXX11=ccache /usr/local/clang8/bin/clang++\nCXX14=ccache /usr/local/clang8/bin/clang++\nC11=ccache /usr/local/clang8/bin/clang++\nC14=ccache /usr/local/clang8/bin/clang++\nF88=ccache gfortran/nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCXXFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk\nCFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk' > $HOME/.R/Makevars
