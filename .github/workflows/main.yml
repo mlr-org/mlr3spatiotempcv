@@ -113,6 +113,7 @@ jobs:
         run: |
           brew install ccache gdal geos udunits Caskroom/cask/xquartz freetype pkg-config
           brew unlink proj
+          brew tap osgeo/osgeo4mac
           brew install osgeo-proj@5
           brew link --force osgeo-proj@5
           wget https://cran.r-project.org/bin/macosx/tools/clang-8.0.0.pkg
