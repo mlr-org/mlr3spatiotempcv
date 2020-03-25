@@ -6,7 +6,7 @@ Spatio-temporal resampling methods for mlr3.
 <!-- badges: start -->
 
 [![R CMD Check via
-{tic}](https://img.shields.io/github/workflow/status/mlr-org/mlr3spatiotempcv/R%20CMD%20Check%20via%20%7Btic%7D?logo=github&label=R%20CMD%20Check%20via%20%7Btic%7D&style=flat-square)](https://github.com/mlr-org/mlr3spatiotempcv/actions)
+{tic}](https://github.com/mlr-org/mlr3spatiotempcv/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg?branch=master)](https://github.com/mlr-org/mlr3spatiotempcv/actions)
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version-ago/mlr3spatiotempcv)](https://cran.r-project.org/package=mlr3spatiotempcv)
 [![Lifecycle:
@@ -52,8 +52,8 @@ library(mlr3)
 library(mlr3spatiotempcv)
 library(ggplot2)
 
-task = tsk("ecuador")
-resampling = rsmp("spcv-coords", folds = 5)
+task <- tsk("ecuador")
+resampling <- rsmp("spcv-coords", folds = 5)
 resampling$instantiate(task)
 
 autoplot(resampling, task)
