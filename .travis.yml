@@ -17,3 +17,10 @@ script:
   - R CMD INSTALL *.tar.gz
   - Rscript -e 'lintr::lint_package()'
 
+addons:
+  apt:
+    packages:
+      - libudunits2-dev
+      - libproj-dev
+      - libgeos-dev
+      - libgdal-dev
