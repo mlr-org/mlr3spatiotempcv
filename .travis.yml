@@ -6,10 +6,6 @@ language: r
 cache: packages
 latex: false
 
-r_packages:
-  - knitr
-  - bibtex
-
 # Stages -----------------------------------------------------------------------
 
 install: true
@@ -17,7 +13,7 @@ script:
   - Rscript -e 'if (!requireNamespace("lintr")) install.packages("lintr")'
   - Rscript -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
   - Rscript -e 'remotes::install_deps()'
-  - R CMD build .
+  - R CMD build --no-build-vignettes .
   - R CMD INSTALL *.tar.gz
   - Rscript -e 'lintr::lint_package()'
 
