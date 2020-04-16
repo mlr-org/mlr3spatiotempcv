@@ -6,6 +6,10 @@ language: r
 cache: packages
 latex: false
 
+r_packages:
+  - knitr
+  - bibtex
+
 # Stages -----------------------------------------------------------------------
 
 install: true
