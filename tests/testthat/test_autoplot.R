@@ -3,7 +3,7 @@ context("autoplot")
 test_that("autoplot works for SpCVCoords", {
   set.seed(1)
 
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("spcv-coords", folds = 4)
   rsp$instantiate(task)
   coords1 = autoplot(rsp, task)
@@ -23,7 +23,7 @@ test_that("autoplot works for SpCVCoords", {
 test_that("autoplot works for RepeatedSpCVCoords", {
   set.seed(1)
 
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("repeated-spcv-coords", folds = 4, repeats = 2)
   rsp$instantiate(task)
   rcoords1 = autoplot(rsp, task)
@@ -49,7 +49,7 @@ test_that("autoplot works for RepeatedSpCVCoords", {
 test_that("autoplot works for SpCVBlock", {
   set.seed(1)
 
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("spcv-block", cols = 2, rows = 2, folds = 4)
   rsp$instantiate(task)
   block1 = autoplot(rsp, task)
@@ -74,7 +74,7 @@ test_that("autoplot works for SpCVBlock", {
 test_that("autoplot works for RepeatedSpCVBlock", {
   set.seed(1)
 
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("repeated-spcv-block", folds = 4, repeats = 2, range = c(2, 4))
   rsp$instantiate(task)
   rblock1 = autoplot(rsp, task)
@@ -105,7 +105,7 @@ test_that("autoplot works for RepeatedSpCVBlock", {
 test_that("autoplot works for SpCVBuffer", {
   set.seed(1)
 
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("spcv-buffer", theRange = 2)
   rsp$instantiate(task)
   # one does not want to see nrow plots in a grid
@@ -121,7 +121,7 @@ test_that("autoplot works for SpCVBuffer", {
 test_that("autoplot works for SpCVEnv", {
   set.seed(1)
 
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("spcv-env", features = "p_1", folds = 2)
   rsp$instantiate(task)
   env1 = autoplot(rsp, task)
@@ -137,7 +137,7 @@ test_that("autoplot works for SpCVEnv", {
 test_that("autoplot works for RepeatedSpCVEnv", {
   set.seed(1)
 
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("repeated-spcv-env", features = "p_1", folds = 2, repeats = 2)
   rsp$instantiate(task)
   renv1 = autoplot(rsp, task)

@@ -60,7 +60,7 @@
 #' # return only a list of ggplot2 resamplings
 #' plot_list = autoplot(resampling, task,
 #'   fold_id = c(1, 2, 3, 4), grid = FALSE)
-autoplot.ResamplingSpCVBlock = function(
+autoplot.ResamplingSpCVBlock = function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -68,7 +68,8 @@ autoplot.ResamplingSpCVBlock = function(
   train_color = "#0072B5",
   test_color = "#E18727",
   ...) {
-  autoplot_spatial(resampling = object,
+  autoplot_spatial(
+    resampling = object,
     task = task,
     fold_id = fold_id,
     grid = grid)
@@ -88,7 +89,7 @@ autoplot.ResamplingSpCVBlock = function(
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingSpCVEnv = function(
+autoplot.ResamplingSpCVEnv = function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -96,7 +97,8 @@ autoplot.ResamplingSpCVEnv = function(
   train_color = "#0072B5",
   test_color = "#E18727",
   ...) {
-  autoplot_spatial(resampling = object,
+  autoplot_spatial(
+    resampling = object,
     task = task,
     fold_id = fold_id,
     grid = grid)
@@ -115,7 +117,7 @@ autoplot.ResamplingSpCVEnv = function(
 #' resampling$instantiate(task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingSpCVBuffer = function(
+autoplot.ResamplingSpCVBuffer = function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -169,7 +171,8 @@ autoplot.ResamplingSpCVBuffer = function(
     plot_list[[length(plot_list) + 1]] =
       ggplot() +
       geom_sf(data = sf_df, aes(color = indicator)) +
-      scale_color_manual(values = c("Train" = train_color,
+      scale_color_manual(values = c(
+        "Train" = train_color,
         "Test" = test_color)) +
       labs(color = "Set") +
       theme(legend.position = "none")
@@ -179,7 +182,8 @@ autoplot.ResamplingSpCVBuffer = function(
   if (!grid) {
     return(plot_list)
   } else {
-    plots = do.call(cowplot::plot_grid, list(plotlist = plot_list,
+    plots = do.call(cowplot::plot_grid, list(
+      plotlist = plot_list,
       labels = sprintf("Fold %s", fold_id)))
 
     # Extract legend standalone, we only want one legend in the grid
@@ -200,9 +204,11 @@ autoplot.ResamplingSpCVBuffer = function(
     sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
 
     legend = cowplot::get_legend(ggplot() +
-      geom_sf(data = sf_df, aes(color = indicator),
+      geom_sf(
+        data = sf_df, aes(color = indicator),
         show.legend = "point") +
-      scale_color_manual(values = c("Train" = "#0072B5",
+      scale_color_manual(values = c(
+        "Train" = "#0072B5",
         "Test" = "#E18727")) +
       labs(color = "") +
       theme(legend.position = "bottom"))
@@ -226,7 +232,7 @@ autoplot.ResamplingSpCVBuffer = function(
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingSpCVCoords = function(
+autoplot.ResamplingSpCVCoords = function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -234,7 +240,8 @@ autoplot.ResamplingSpCVCoords = function(
   train_color = "#0072B5",
   test_color = "#E18727",
   ...) {
-  autoplot_spatial(resampling = object,
+  autoplot_spatial(
+    resampling = object,
     task = task,
     fold_id = fold_id,
     grid = grid)
@@ -254,7 +261,7 @@ autoplot.ResamplingSpCVCoords = function(
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingCV = function(
+autoplot.ResamplingCV = function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -262,7 +269,8 @@ autoplot.ResamplingCV = function(
   train_color = "#0072B5",
   test_color = "#E18727",
   ...) {
-  autoplot_spatial(resampling = object,
+  autoplot_spatial(
+    resampling = object,
     task = task,
     fold_id = fold_id,
     grid = grid)
@@ -283,7 +291,7 @@ autoplot.ResamplingCV = function(
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingRepeatedCV = function(
+autoplot.ResamplingRepeatedCV = function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -292,7 +300,8 @@ autoplot.ResamplingRepeatedCV = function(
   train_color = "#0072B5",
   test_color = "#E18727",
   ...) {
-  autoplot_spatial(resampling = object,
+  autoplot_spatial(
+    resampling = object,
     task = task,
     fold_id = fold_id,
     repeats_id = repeats_id,
@@ -315,7 +324,7 @@ autoplot.ResamplingRepeatedCV = function(
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingRepeatedSpCVCoords = function(
+autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -324,7 +333,8 @@ autoplot.ResamplingRepeatedSpCVCoords = function(
   train_color = "#0072B5",
   test_color = "#E18727",
   ...) {
-  autoplot_spatial(resampling = object,
+  autoplot_spatial(
+    resampling = object,
     task = task,
     fold_id = fold_id,
     repeats_id = repeats_id,
@@ -347,7 +357,7 @@ autoplot.ResamplingRepeatedSpCVCoords = function(
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingRepeatedSpCVEnv = function(
+autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -356,7 +366,8 @@ autoplot.ResamplingRepeatedSpCVEnv = function(
   train_color = "#0072B5",
   test_color = "#E18727",
   ...) {
-  autoplot_spatial(resampling = object,
+  autoplot_spatial(
+    resampling = object,
     task = task,
     fold_id = fold_id,
     repeats_id = repeats_id,
@@ -373,14 +384,15 @@ autoplot.ResamplingRepeatedSpCVEnv = function(
 #' #####
 #' library(mlr3)
 #' task = tsk("ecuador")
-#' resampling = rsmp("repeated-spcv-block", folds = 5, repeats = 2,
+#' resampling = rsmp("repeated-spcv-block",
+#'   folds = 5, repeats = 2,
 #'   range = c(1000, 1500))
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingRepeatedSpCVBlock = function(
+autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -389,7 +401,8 @@ autoplot.ResamplingRepeatedSpCVBlock = function(
   train_color = "#0072B5",
   test_color = "#E18727",
   ...) {
-  autoplot_spatial(resampling = object,
+  autoplot_spatial(
+    resampling = object,
     task = task,
     fold_id = fold_id,
     repeats_id = repeats_id,
@@ -452,7 +465,8 @@ autoplot_spatial = function(
       plot_list[[length(plot_list) + 1]] =
         ggplot() +
         geom_sf(data = sf_df, aes(color = indicator)) +
-        scale_color_manual(values = c("Train" = "#0072B5",
+        scale_color_manual(values = c(
+          "Train" = "#0072B5",
           "Test" = "#E18727")) +
         labs(color = "Set") +
         theme(legend.position = "none")
@@ -466,8 +480,10 @@ autoplot_spatial = function(
       if (is.null(repeats_id)) {
         repeats_id = 1
       }
-      plots = do.call(cowplot::plot_grid, list(plotlist = plot_list,
-        labels = sprintf("Fold %s\nRep %s", fold_id,
+      plots = do.call(cowplot::plot_grid, list(
+        plotlist = plot_list,
+        labels = sprintf(
+          "Fold %s\nRep %s", fold_id,
           repeats_id)))
 
       # Extract legend standalone, we only want one legend in the grid
@@ -482,9 +498,11 @@ autoplot_spatial = function(
       sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
 
       legend = cowplot::get_legend(ggplot() +
-        geom_sf(data = sf_df, aes(color = indicator),
+        geom_sf(
+          data = sf_df, aes(color = indicator),
           show.legend = "point") +
-        scale_color_manual(values = c("Train" = "#0072B5",
+        scale_color_manual(values = c(
+          "Train" = "#0072B5",
           "Test" = "#E18727")) +
         labs(color = "") +
         theme(legend.position = "bottom"))
@@ -506,7 +524,8 @@ autoplot_spatial = function(
       repeats_id = 1
     }
     ggplot() +
-      geom_sf(data = sf_df, show.legend = "point",
+      geom_sf(
+        data = sf_df, show.legend = "point",
         aes(color = fold)) +
       ggsci::scale_color_ucscgb() +
       labs(color = sprintf("Partition #, Rep %s", repeats_id))

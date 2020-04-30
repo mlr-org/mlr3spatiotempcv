@@ -27,7 +27,8 @@ load_task_diplodia = function(id = "diplodia") {
   b = mlr3::as_data_backend(readRDS(system.file("extdata", "diplodia.rda",
     package = "mlr3spatiotempcv")))
   b$hash = "_mlr3_tasks_diplodia_"
-  task = TaskClassifST$new(id, b, target = "diplo01", positive = "1",
+  task = TaskClassifST$new(id, b,
+    target = "diplo01", positive = "1",
     coordinate_names = c("x", "y"), coords_as_features = FALSE,
     crs = "+proj=utm +zone=30 +south +datum=WGS84 +units=m +no_defs")
   return(task)

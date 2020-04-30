@@ -9,7 +9,6 @@
 
 register_mlr3 = function() {
   # reflections ----------------------------------------------------------------
-
   x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
 
   if (!grepl("ST", x$task_types[, "task"])) {
@@ -24,9 +23,11 @@ register_mlr3 = function() {
       "PredictionClassif", "MeasureClassif"
     )), "type")
 
-    x$task_col_roles$regr = c("feature", "target", "label", "order", "group",
+    x$task_col_roles$regr = c(
+      "feature", "target", "label", "order", "group",
       "weight", "coordinates")
-    x$task_col_roles$classif = c("feature", "target", "label", "order", "group",
+    x$task_col_roles$classif = c(
+      "feature", "target", "label", "order", "group",
       "weight", "coordinates")
 
     # tasks --------------------------------------------------------------------
@@ -51,7 +52,7 @@ register_mlr3 = function() {
 
 }
 
-.onLoad = function(libname, pkgname) {
+.onLoad = function(libname, pkgname) {  # nolint
   register_mlr3()
   setHook(packageEvent("mlr3", "onLoad"), function(...) register_mlr3(),
     action = "append")

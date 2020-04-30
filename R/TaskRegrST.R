@@ -15,7 +15,6 @@
 #' @family Task
 #' @export
 TaskRegrST <- R6::R6Class("TaskRegrST",
-
   inherit = TaskRegr,
   public = list(
 
@@ -66,7 +65,8 @@ TaskRegrST <- R6::R6Class("TaskRegrST",
       # as features
       self$col_roles$coordinates = coordinate_names
       if (isFALSE(coords_as_features)) {
-        self$col_roles$feature = setdiff(self$col_roles$feature,
+        self$col_roles$feature = setdiff(
+          self$col_roles$feature,
           coordinate_names)
       }
     },

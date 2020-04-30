@@ -1,7 +1,7 @@
 context("ResamplingRepeatedSpCVEnv")
 
 test_that("folds can be printed", {
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("repeated-spcv-env")
   rsp$param_set$values = list(folds = 3, repeats = 5, features = "p_1")
   rsp$instantiate(task)
@@ -10,7 +10,7 @@ test_that("folds can be printed", {
 })
 
 test_that("reps can be printed", {
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("repeated-spcv-env")
   rsp$param_set$values = list(folds = 3, repeats = 5, features = "p_1")
   rsp$instantiate(task)
@@ -19,7 +19,7 @@ test_that("reps can be printed", {
 })
 
 test_that("resampling iterations equals folds * repeats", {
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("repeated-spcv-env", folds = 2, repeats = 5, features = "p_1")
   rsp$instantiate(task)
 
@@ -29,7 +29,7 @@ test_that("resampling iterations equals folds * repeats", {
 test_that("feature p_1 seperates the observations in folds of equal size", {
   set.seed(1)
 
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("repeated-spcv-env", folds = 2, repeats = 5, features = "p_1")
   rsp$instantiate(task)
 
@@ -40,14 +40,14 @@ test_that("feature p_1 seperates the observations in folds of equal size", {
 })
 
 test_that("non-numeric feature throws an error", {
-  task = TEST_MAKE_TWOCLASS(features = c("numeric", "factor"))
+  task = test_make_twoclass(features = c("numeric", "factor"))
   rsp = rsmp("repeated-spcv-env", folds = 2, repeats = 5, features = "p_2")
 
   expect_error(rsp$instantiate(task))
 })
 
 test_that("non-existing feature throws an error", {
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("repeated-spcv-env", folds = 2, repeats = 5, features = "p_3")
 
   expect_error(rsp$instantiate(task))

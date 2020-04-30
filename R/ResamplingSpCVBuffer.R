@@ -74,7 +74,8 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         stopf("Grouping is not supported for spatial resampling methods")
       }
 
-      instance = private$.sample(task$row_ids,
+      instance = private$.sample(
+        task$row_ids,
         task$data()[[task$target_names]],
         task$coordinates(),
         task$positive,

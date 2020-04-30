@@ -1,7 +1,7 @@
 context("ResamplingSpCVBuffer")
 
 test_that("resampling iterations equals number of observations (two-class response)", {
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("spcv-buffer", theRange = 1)
   rsp$instantiate(task)
 
@@ -9,7 +9,7 @@ test_that("resampling iterations equals number of observations (two-class respon
 })
 
 test_that("resampling iterations equals number of observations (multi-class response)", {
-  task = TEST_MAKE_MULTICLASS()
+  task = test_make_multiclass()
   rsp = rsmp("spcv-buffer", theRange = 1)
   rsp$instantiate(task)
 
@@ -17,7 +17,7 @@ test_that("resampling iterations equals number of observations (multi-class resp
 })
 
 test_that("resampling iterations equals number of observations (continuous response)", {
-  task = TEST_MAKE_REGR()
+  task = test_make_regr()
   rsp = rsmp("spcv-buffer", theRange = 1)
   rsp$instantiate(task)
 
@@ -25,7 +25,7 @@ test_that("resampling iterations equals number of observations (continuous respo
 })
 
 test_that("buffered observations are excludes in train set", {
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("spcv-buffer", theRange = 1, spDataType = "PA")
   rsp$instantiate(task)
 
@@ -34,7 +34,7 @@ test_that("buffered observations are excludes in train set", {
 })
 
 test_that("test sets only include positive observations", {
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("spcv-buffer", theRange = 1, spDataType = "PB", addBG = FALSE)
   rsp$instantiate(task)
 
@@ -43,7 +43,7 @@ test_that("test sets only include positive observations", {
 })
 
 test_that("test sets include background observations", {
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("spcv-buffer", theRange = 1, spDataType = "PB", addBG = TRUE)
   rsp$instantiate(task)
 
@@ -56,30 +56,31 @@ test_that("test sets include background observations", {
 })
 
 test_that("spDataType = 'PA' and addBG = TRUE throws an error", {
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
   rsp = rsmp("spcv-buffer", theRange = 1, spDataType = "PA", addBG = TRUE)
 
   expect_error(rsp$instantiate(task))
 })
 
 test_that("spDataType = 'PB' and continuous response throws an error", {
-  task = TEST_MAKE_REGR()
+  task = test_make_regr()
   rsp = rsmp("spcv-buffer", theRange = 1, spDataType = "PB")
 
   expect_error(rsp$instantiate(task))
 })
 
 test_that("spDataType = 'PB' and multi-class response throws an error", {
-  task = TEST_MAKE_REGR()
+  task = test_make_regr()
   rsp = rsmp("spcv-buffer", theRange = 1, spDataType = "PB")
 
   expect_error(rsp$instantiate(task))
 })
 
 test_that("grouping throws errors when 'groups' is set", {
-  task = TEST_MAKE_TWOCLASS(group = TRUE)
+  task = test_make_twoclass(group = TRUE)
   rsp = rsmp("spcv-buffer", theRange = 1)
 
-  expect_error(rsp$instantiate(task),
+  expect_error(
+    rsp$instantiate(task),
     "Grouping is not supported for spatial resampling methods")
 })

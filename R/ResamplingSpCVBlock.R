@@ -37,7 +37,8 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         ParamInt$new("rows", lower = 1L),
         ParamInt$new("cols", lower = 1L),
         ParamInt$new("range", lower = 1L),
-        ParamFct$new("selection", levels = c("random", "systematic",
+        ParamFct$new("selection", levels = c(
+          "random", "systematic",
           "checkerboard"), default = "random")
       ))
       ps$values = list(folds = 10L)

@@ -87,7 +87,8 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
       if (length(diff) > 0) {
         stopf("'spcv-env' requires numeric features for clustering.
               Feature '%s' is either non-numeric or does not exist in the data.",
-          diff, wrap = TRUE)
+          diff,
+          wrap = TRUE)
       }
       columns = columns[id %in% pv$features]
       columns = columns[, id]
@@ -119,7 +120,8 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
       folds = as.integer(pv$folds)
 
       mlr3misc::map_dtr(seq_len(pv$repeats), function(i) {
-        data.table(row_id = ids, rep = i,
+        data.table(
+          row_id = ids, rep = i,
           fold = kmeans(data, centers = folds)$cluster
         )
       })
