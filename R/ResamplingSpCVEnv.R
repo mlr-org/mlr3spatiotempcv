@@ -27,7 +27,8 @@
 #'
 #' # Internal storage:
 #' rcv$instance
-ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv", inherit = mlr3::Resampling,
+ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
+  inherit = mlr3::Resampling,
 
   public = list(
     #' @description
@@ -75,7 +76,8 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv", inherit = mlr3::Resampling,
       if (length(diff) > 0) {
         stopf("'spcv-env' requires numeric features for clustering.
               Feature '%s' is either non-numeric or does not exist in the data.",
-          diff, wrap = TRUE)
+          diff,
+          wrap = TRUE)
       }
       columns = columns[id %in% pv$features]
       columns = columns[, id]

@@ -25,7 +25,8 @@
 #' task = tsk("diplodia")
 #'
 #' # Instantiate Resampling
-#' rrcv = rsmp("repeated-spcv-block", folds = 3, repeats = 2,
+#' rrcv = rsmp("repeated-spcv-block",
+#'   folds = 3, repeats = 2,
 #'   range = c(1000, 1500))
 #' rrcv$instantiate(task)
 #'
@@ -56,7 +57,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         ParamInt$new("rows", lower = 1L),
         ParamInt$new("cols", lower = 1L),
         ParamUty$new("range"),
-        ParamFct$new("selection", levels = c("random", "systematic",
+        ParamFct$new("selection", levels = c(
+          "random", "systematic",
           "checkerboard"), default = "random")
       ))
 
@@ -177,7 +179,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       }
 
       map_dtr(seq_len(pv$repeats), function(i) {
-        data.table(row_id = ids, rep = i,
+        data.table(
+          row_id = ids, rep = i,
           fold = create_blocks(coords, self$param_set$values$range[i])
         )
       })

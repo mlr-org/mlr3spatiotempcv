@@ -28,7 +28,7 @@ task = mlr3::mlr_tasks$get("ecuador")
 learner = mlr_learners$get("classif.rpart")
 
 rcv = ResamplingSpCVBlock$new()
-rcv$param_set$values = list(folds = 4, range=500, selection = "checkerboard")
+rcv$param_set$values = list(folds = 4, range = 500, selection = "checkerboard")
 rcv$instantiate(task)
 
 resampling = resample(task, learner, rcv)
@@ -54,7 +54,7 @@ task = mlr3::mlr_tasks$get("ecuador")
 learner = mlr_learners$get("classif.rpart")
 
 rcv = ResamplingSpCVBlock$new()
-rcv$param_set$values = list(folds = 4, rows = 10, cols = 10, range=1000)
+rcv$param_set$values = list(folds = 4, rows = 10, cols = 10, range = 1000)
 rcv$instantiate(task)
 
 
@@ -77,7 +77,7 @@ task = mlr3::mlr_tasks$get("ecuador")
 learner = mlr_learners$get("classif.rpart")
 
 rcv = ResamplingSpCVEnv$new()
-rcv$param_set$values = list(folds = 4, features=c("dem"))
+rcv$param_set$values = list(folds = 4, features = c("dem"))
 rcv$instantiate(task)
 
 resampling = resample(task, learner, rcv)
@@ -90,7 +90,7 @@ task = mlr3::mlr_tasks$get("ecuador")
 learner = mlr_learners$get("classif.rpart")
 
 rcv = ResamplingSpCVEnv$new()
-rcv$param_set$values = list(folds = 4, features=c("abc"))
+rcv$param_set$values = list(folds = 4, features = c("abc"))
 rcv$instantiate(task)
 
 resampling = resample(task, learner, rcv)
@@ -153,7 +153,7 @@ rcv = ResamplingSpCVBlock$new()
 rcv$param_set$values = list(folds = 4)
 rcv$instantiate(task)
 
-autoplot(rcv, task, fold_id=c(1,2,3,4))
+autoplot(rcv, task, fold_id = c(1, 2, 3, 4))
 
 # Vizualiation - Multiplot
 
@@ -164,7 +164,7 @@ rcv = ResamplingSpCVBlock$new()
 rcv$param_set$values = list(folds = 4)
 rcv$instantiate(task)
 
-autoplot(rcv, task, fold_id=c(1,2,3))
+autoplot(rcv, task, fold_id = c(1, 2, 3))
 
 # Vizualiation - Too many folds
 
@@ -175,7 +175,7 @@ rcv = ResamplingSpCVBlock$new()
 rcv$param_set$values = list(folds = 4)
 rcv$instantiate(task)
 
-autoplot(rcv, task, fold_id=c(1,2,3,4,5))
+autoplot(rcv, task, fold_id = c(1, 2, 3, 4, 5))
 
 # Vizualiation - One fold
 
@@ -186,7 +186,7 @@ rcv = ResamplingSpCVBlock$new()
 rcv$param_set$values = list(folds = 4)
 rcv$instantiate(task)
 
-autoplot(rcv, task, fold_id=1)
+autoplot(rcv, task, fold_id = 1)
 
 # Vizualiation - All folds one plot
 
@@ -198,4 +198,3 @@ rcv$param_set$values = list(folds = 4)
 rcv$instantiate(task)
 
 autoplot(rcv, task)
-

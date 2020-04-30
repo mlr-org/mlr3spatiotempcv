@@ -1,13 +1,13 @@
 context("TaskClassifST")
 
 test_that("coordinates can be used as features", {
-  task = TEST_MAKE_TWOCLASS(coords_as_features = TRUE)
+  task = test_make_twoclass(coords_as_features = TRUE)
 
   expect_names(c("x", "y"), subset.of = task$feature_names)
 })
 
 test_that("printing works", {
-  task = TEST_MAKE_TWOCLASS()
+  task = test_make_twoclass()
 
   expect_output(print(task))
   expect_data_table(task$coordinates())

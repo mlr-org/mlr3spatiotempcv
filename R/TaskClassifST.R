@@ -17,8 +17,10 @@
 #' @export
 #' @examples
 #' data = data.table::as.data.table(readRDS(system.file("extdata",
-#'   "ecuador.rda", package = "mlr3spatiotempcv")))
-#' task = TaskClassifST$new("ecuador", backend = data, target = "slides",
+#'   "ecuador.rda",
+#'   package = "mlr3spatiotempcv")))
+#' task = TaskClassifST$new("ecuador",
+#'   backend = data, target = "slides",
 #'   positive = "TRUE", coordinate_names = c("x", "y"))
 #'
 #' task$task_type
@@ -28,7 +30,8 @@
 #' task$negative
 #' task$coordinates()
 #' task$coordinate_names
-TaskClassifST = R6::R6Class("TaskClassifST", inherit = TaskClassif,
+TaskClassifST = R6::R6Class("TaskClassifST",
+  inherit = TaskClassif,
 
   public = list(
 
@@ -61,7 +64,8 @@ TaskClassifST = R6::R6Class("TaskClassifST", inherit = TaskClassif,
       self$crs = crs
 
       assert_string(target)
-      super$initialize(id = id, backend = backend, target = target,
+      super$initialize(
+        id = id, backend = backend, target = target,
         positive = positive)
       self$crs = checkmate::assert_character(crs, null.ok = TRUE)
 
@@ -75,7 +79,8 @@ TaskClassifST = R6::R6Class("TaskClassifST", inherit = TaskClassif,
         stopf("Target column '%s' must have at least two levels", target)
       }
 
-      self$properties = union(self$properties,
+      self$properties = union(
+        self$properties,
         if (length(levels) == 2L) "twoclass" else "multiclass")
       if (!is.null(positive)) {
         self$positive = positive
@@ -91,7 +96,8 @@ TaskClassifST = R6::R6Class("TaskClassifST", inherit = TaskClassif,
       # as features
       self$col_roles$coordinates = coordinate_names
       if (isFALSE(coords_as_features)) {
-        self$col_roles$feature = setdiff(self$col_roles$feature,
+        self$col_roles$feature = setdiff(
+          self$col_roles$feature,
           coordinate_names)
       }
     },
