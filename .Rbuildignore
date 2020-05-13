@@ -17,3 +17,4 @@
 ^clang-.*
 ^\.lintr$
 ^\.vscode$
+^gfortran.*
