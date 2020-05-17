@@ -1,5 +1,5 @@
 ## tic GitHub Actions template: linux-macos-windows-deploy
-## revision date: 19/04/2020
+## revision date: 2020-04-19
 on:
   push:
   pull_request:
