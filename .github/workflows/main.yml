@@ -103,7 +103,7 @@ jobs:
       - name: "[Custom block] [Linux] Install spatial libraries"
         if: runner.os == 'Linux'
         run: |
-          sudo apt install ccache libgdal-dev libgeos-dev libproj-dev libudunits2-dev Caskroom/cask/xquartz
+          sudo apt install ccache libgdal-dev libgeos-dev libproj-dev libudunits2-dev
 
       # install ccache and write config file
       # mirror the setup described in https://github.com/rmacoslib/r-macos-rtools
