@@ -5,7 +5,7 @@ if (ci_on_ghactions() && ci_has_env("BUILD_PKGDOWN")) {
   # only for the runner with the "BUILD_PKGDOWN" env var set
   get_stage("install") %>%
     add_step(step_install_github("mlr-org/mlr3pkgdowntemplate"))
-  do_pkgdown(orphan = TRUE)
+  do_pkgdown()
 }
 
 get_stage("after_success") %>%
