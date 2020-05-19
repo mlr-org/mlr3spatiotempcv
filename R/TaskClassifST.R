@@ -60,13 +60,13 @@ TaskClassifST = R6::R6Class("TaskClassifST",
     initialize = function(id, backend, target, positive = NULL,
       coords_as_features = FALSE, crs = NA, coordinate_names = NA) {
 
-      self$coordinate_names = coordinate_names
-      self$crs = crs
 
       assert_string(target)
       super$initialize(
         id = id, backend = backend, target = target,
         positive = positive)
+
+      self$coordinate_names = coordinate_names
       self$crs = checkmate::assert_character(crs, null.ok = TRUE)
 
       info = self$col_info[id == target]
