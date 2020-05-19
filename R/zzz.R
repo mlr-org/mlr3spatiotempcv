@@ -23,12 +23,9 @@ register_mlr3 = function() {
       "PredictionClassif", "MeasureClassif"
     )), "type")
 
-    x$task_col_roles$regr = c(
-      "feature", "target", "label", "order", "group",
-      "weight", "coordinates")
-    x$task_col_roles$classif = c(
-      "feature", "target", "label", "order", "group",
-      "weight", "coordinates")
+    # append "coordinates" to col_roles
+    append(x$task_col_roles$classif, "coordinates")
+    append(x$task_col_roles$regr, "coordinates")
 
     # tasks --------------------------------------------------------------------
 
@@ -49,7 +46,6 @@ register_mlr3 = function() {
     mlr_resamplings$add("repeated-spcv-env", ResamplingRepeatedSpCVEnv)
     mlr_resamplings$add("repeated-spcv-block", ResamplingRepeatedSpCVBlock)
   }
-
 }
 
 .onLoad = function(libname, pkgname) {  # nolint
