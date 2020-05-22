@@ -17,6 +17,10 @@ jobs:
         config:
           - { os: macOS-latest, r: "release" }
 
+    env:
+      # use GITHUB_TOKEN from GItHub to workaround rate limits in {remotes}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
       - uses: actions/checkout@v2
         with:
@@ -42,7 +46,7 @@ jobs:
         with:
           token: ${{ secrets.TIC_UPDATE }}
           title: "Update tic templates"
-          commit_message: "update tic templates"
+          commit-message: "update tic templates"
           body: "{tic} templates can be updated :rocket: :robot:"
           branch: update-tic
           base: master
