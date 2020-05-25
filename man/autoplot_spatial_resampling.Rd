@@ -242,7 +242,8 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 library(mlr3)
 task = tsk("ecuador")
-resampling = rsmp("repeated-spcv-block", folds = 5, repeats = 2,
+resampling = rsmp("repeated-spcv-block",
+  folds = 5, repeats = 2,
   range = c(1000, 1500))
 resampling$instantiate(task)
 autoplot(resampling, task)

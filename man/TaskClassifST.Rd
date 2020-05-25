@@ -14,8 +14,10 @@ not used as features. This can be changed by setting \code{coords_as_features = 
 }
 \examples{
 data = data.table::as.data.table(readRDS(system.file("extdata",
-  "ecuador.rda", package = "mlr3spatiotempcv")))
-task = TaskClassifST$new("ecuador", backend = data, target = "slides",
+  "ecuador.rda",
+  package = "mlr3spatiotempcv")))
+task = TaskClassifST$new("ecuador",
+  backend = data, target = "slides",
   positive = "TRUE", coordinate_names = c("x", "y"))
 
 task$task_type
@@ -30,7 +32,10 @@ task$coordinate_names
 Example spatial classification task: \code{\link[=mlr_tasks_ecuador]{ecuador}}.
 
 Other Task: 
-\code{\link{TaskRegrST}}
+\code{\link{TaskRegrST}},
+\code{\link{mlr_tasks_cookfarm}},
+\code{\link{mlr_tasks_diplodia}},
+\code{\link{mlr_tasks_ecuador}}
 }
 \concept{Task}
 \section{Super classes}{
@@ -60,8 +65,6 @@ The \code{proj4string} of the coordinate system.}
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="cbind">}\href{../../mlr3/html/Task.html#method-cbind}{\code{mlr3::Task$cbind()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="data">}\href{../../mlr3/html/Task.html#method-data}{\code{mlr3::Task$data()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="droplevels">}\href{../../mlr3/html/Task.html#method-droplevels}{\code{mlr3::Task$droplevels()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="filter">}\href{../../mlr3/html/Task.html#method-filter}{\code{mlr3::Task$filter()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="format">}\href{../../mlr3/html/Task.html#method-format}{\code{mlr3::Task$format()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="formula">}\href{../../mlr3/html/Task.html#method-formula}{\code{mlr3::Task$formula()}}\out{</span>}
@@ -74,12 +77,15 @@ The \code{proj4string} of the coordinate system.}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="select">}\href{../../mlr3/html/Task.html#method-select}{\code{mlr3::Task$select()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="set_col_role">}\href{../../mlr3/html/Task.html#method-set_col_role}{\code{mlr3::Task$set_col_role()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="set_row_role">}\href{../../mlr3/html/Task.html#method-set_row_role}{\code{mlr3::Task$set_row_role()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="TaskClassif" data-id="data">}\href{../../mlr3/html/TaskClassif.html#method-data}{\code{mlr3::TaskClassif$data()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="TaskClassif" data-id="droplevels">}\href{../../mlr3/html/TaskClassif.html#method-droplevels}{\code{mlr3::TaskClassif$droplevels()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="TaskClassif" data-id="truth">}\href{../../mlr3/html/TaskClassif.html#method-truth}{\code{mlr3::TaskClassif$truth()}}\out{</span>}
 }
 \out{</details>}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new spatiotemporal resampling Task
 \subsection{Usage}{
@@ -129,6 +135,7 @@ The variables names of the coordinates in the data.}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-coordinates"></a>}}
+\if{latex}{\out{\hypertarget{method-coordinates}{}}}
 \subsection{Method \code{coordinates()}}{
 Return the coordinates of the task
 \subsection{Usage}{
@@ -145,6 +152,7 @@ Return the coordinates of the task
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the task.
 \subsection{Usage}{
@@ -161,6 +169,7 @@ Print the task.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
