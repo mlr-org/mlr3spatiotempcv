@@ -7,7 +7,8 @@ set.seed(42)
 cookfarm_profiles = cookfarm$profiles
 
 cookfarm_mlr3 = cookfarm_profiles %>%
-  left_join(cookfarm$readings %>% select("Date", "SOURCEID"), by = "SOURCEID") %>%
+  left_join(cookfarm$readings %>%
+    select("Date", "SOURCEID"), by = "SOURCEID") %>%
   st_as_sf(coords = c("Easting", "Northing"), crs = 26911) %>%
   mutate(x = st_coordinates(.)[, "X"]) %>%
   mutate(y = st_coordinates(.)[, "Y"]) %>%
