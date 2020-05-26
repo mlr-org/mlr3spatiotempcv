@@ -9,14 +9,20 @@ Spatio-temporal resampling methods for mlr3.
 {tic}](https://github.com/mlr-org/mlr3spatiotempcv/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg?branch=master)](https://github.com/mlr-org/mlr3spatiotempcv/actions)
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version-ago/mlr3spatiotempcv)](https://cran.r-project.org/package=mlr3spatiotempcv)
-[![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Coverage
 status](https://codecov.io/gh/mlr-org/mlr3spatiotempcv/branch/master/graph/badge.svg)](https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=master)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 This package extends the [mlr3](https://github.com/mlr-org/mlr3) package
-framework by spatiotemporal resampling and visualization methods.
+framework with spatiotemporal resampling and visualization methods.
+
+⚠️⚠️⚠️  
+The package is in very early stages and breaking changes withour further
+notice are expected. If you want to use if for your research, you might
+need to refactor your analysis along the way.  
+⚠️⚠️⚠️
 
 ## Resampling methods
 
@@ -39,13 +45,14 @@ Currently, the following ones are implemented:
 | -------- | ----------------- | ------- |
 | ecuador  | `tsk("ecuador")`  | Classif |
 | diplodia | `tsk("diplodia")` | Classif |
+| cookfarm | `tsk("cookfarm")` | Regr    |
 
 ## Visualization
 
 Generic S3 function `autoplot()` for all implemented spatial resampling
 methods.
 
-### Visualization of all partitions
+### Visualization of all folds
 
 ``` r
 library(mlr3)
@@ -61,7 +68,7 @@ autoplot(resampling, task)
 
 ![](man/figures/README-spcv-coords-all-partitions-1.png)<!-- -->
 
-### Visualization of the first fold only
+### Visualization of a specific fold
 
 ``` r
 autoplot(resampling, task, fold_id = 1)
