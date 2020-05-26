@@ -1,3 +1,19 @@
+# mlr3spatiotempcv 0.0.0.9005
+
+* add/update unit tests, especially for `SpCVEnv`
+* `SpCVBuffer`: Enables spDataType and addBG parameter
+* `SpCVBuffer`: Adds parameter tests
+* `SpCVBuffer`: Fixes train and test set storage
+* `SpCVBuffer`: Add 6x6 point grid tasks (two-class, multi-class and continuous response)
+* `SpCVBuffer`: Add unit tests for `ResamplingSpCVBuffer` with 6x6 point grid tasks
+* `SpCVBuffer`: Update `autoplot` unit test `vdiffr` images
+* `SpCVEnv`: Remove setting of `cols` and `rows`
+* `SpCVEnv`: Add param `features` to parameter set
+* "Getting Started" vignette (#34)
+* `autoplot()`: support CV and RepeatedCV (#37)
+* Add "cookfarm" example regression task (spatiotemp)
+
+
 # mlr3spatiotempcv 0.0.0.9004
 
 * Add ResamplingRepeatedSpCVBlock (#35)
