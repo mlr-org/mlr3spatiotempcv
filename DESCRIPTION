@@ -51,10 +51,11 @@ Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Collate: 
     'Task_classif_ecuador.R'
     'Task_classif_diplodia.R'
+    'Task_regr_cookfarm_profiles.R'
     'ResamplingSpCVBlock.R'
     'ResamplingSpCVBuffer.R'
     'ResamplingSpCVCoords.R'

@@ -7,6 +7,7 @@
 #' @section Usage:
 #' ```
 #' mlr_tasks$get("ecuador")
+#' tsk("ecuador")
 #' ```
 #'
 #' @description
@@ -20,8 +21,7 @@
 #' @references Muenchow, J., Brenning, A., Richter, M., 2012. Geomorphic process
 #'   rates of landslides along a humidity gradient in the tropical Andes.
 #'   Geomorphology, 139-140: 271-284.
-NULL
-
+#' @template seealso_task
 load_task_ecuador = function(id = "ecuador") {
   b = mlr3::as_data_backend(readRDS(system.file("extdata", "ecuador.rda",
     package = "mlr3spatiotempcv")))

@@ -37,12 +37,22 @@ Authors:
   \item Marc Becker \email{marcbecker@posteo.de}
 }
 
+Other contributors:
+\itemize{
+  \item Jannes Muenchow \email{jannes.muenchow@uni-jena.de} [contributor]
+}
+
 
 \strong{Maintainer}: Patrick Schratz \email{patrick.schratz@gmail.com} (\href{https://orcid.org/0000-0003-0748-6624}{ORCID})
 
 Authors:
 \itemize{
   \item Marc Becker \email{marcbecker@posteo.de}
+}
+
+Other contributors:
+\itemize{
+  \item Jannes Muenchow \email{jannes.muenchow@uni-jena.de} [contributor]
 }
 
 }
