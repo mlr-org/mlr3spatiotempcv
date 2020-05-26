@@ -11,6 +11,10 @@ development:
   version_label: default
   version_tooltip: "Version"
 
+authors:
+  Patrick Schratz:
+    href: https://pat-s.me
+
 navbar:
   structure:
     left:  [reference, news, book]
