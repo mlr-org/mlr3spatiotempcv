@@ -7,6 +7,7 @@
 #' @section Usage:
 #' ```
 #' mlr_tasks$get("diplodia")
+#' tsk("diplodia")
 #' ```
 #'
 #' @description Data set created by Patrick Schratz, University of Jena
@@ -21,8 +22,7 @@
 #'   Brenning, A. (2019). Hyperparameter tuning and performance assessment of
 #'   statistical and machine-learning algorithms using spatial data. Ecological
 #'   Modelling, 406, 109–120. https://doi.org/10/gf34bd
-NULL
-
+#' @template seealso_task
 load_task_diplodia = function(id = "diplodia") {
   b = mlr3::as_data_backend(readRDS(system.file("extdata", "diplodia.rda",
     package = "mlr3spatiotempcv")))

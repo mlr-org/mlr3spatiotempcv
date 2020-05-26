@@ -36,6 +36,7 @@ register_mlr3 = function() {
 
     mlr_tasks$add("ecuador", load_task_ecuador)
     mlr_tasks$add("diplodia", load_task_diplodia)
+    mlr_tasks$add("cookfarm", load_task_cookfarm)
 
     # resampling methods ---------------------------------------------------------
 
@@ -52,7 +53,7 @@ register_mlr3 = function() {
 
 }
 
-.onLoad = function(libname, pkgname) {  # nolint
+.onLoad = function(libname, pkgname) { # nolint
   register_mlr3()
   setHook(packageEvent("mlr3", "onLoad"), function(...) register_mlr3(),
     action = "append")
