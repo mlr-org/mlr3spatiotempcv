@@ -5,8 +5,7 @@ Spatio-temporal resampling methods for mlr3.
 
 <!-- badges: start -->
 
-[![R CMD Check via
-{tic}](https://github.com/mlr-org/mlr3spatiotempcv/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg?branch=master)](https://github.com/mlr-org/mlr3spatiotempcv/actions)
+[![tic](https://github.com/mlr-org/mlr3spatiotempcv/workflows/tic/badge.svg?branch=master)](https://github.com/mlr-org/mlr3spatiotempcv/actions)
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version-ago/mlr3spatiotempcv)](https://cran.r-project.org/package=mlr3spatiotempcv)
 [![Coverage
