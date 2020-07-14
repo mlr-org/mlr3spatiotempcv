@@ -10,6 +10,7 @@
 \alias{autoplot.ResamplingRepeatedSpCVCoords}
 \alias{autoplot.ResamplingRepeatedSpCVEnv}
 \alias{autoplot.ResamplingRepeatedSpCVBlock}
+\alias{autoplot.ResamplingSptCVskmeans}
 \title{Visualization of spatial resampling.}
 \usage{
 \method{autoplot}{ResamplingSpCVBlock}(
@@ -105,6 +106,16 @@
   test_color = "#E18727",
   ...
 )
+
+\method{autoplot}{ResamplingSptCVskmeans}(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...
+)
 }
 \arguments{
 \item{object}{\link{Resampling}\cr
@@ -145,7 +156,7 @@ By default a plot is returned; if \code{fold_id} is set, a gridded plot
 is created. If \code{grid = FALSE}, only a list of ggplot2 resamplings is
 returned. This gives the option to align the single plots manually.
 
-When no single fold is selected, the \code{\link[ggsci:scale_color_ucscgb]{ggsci::scale_color_ucscgb()}} palette
+When no single fold is selected, the \code{\link[ggsci:scale_ucscgb]{ggsci::scale_color_ucscgb()}} palette
 is used to display all partitions. If you want to change the colors,
 call \verb{<plot> + <color-palette>()}
 }
@@ -154,8 +165,8 @@ call \verb{<plot> + <color-palette>()}
 # SpCVBlock
 #####
 library(mlr3)
-task = tsk("ecuador")
-resampling = rsmp("spcv-block", range = 1000)
+task <- tsk("ecuador")
+resampling <- rsmp("spcv-block", range = 1000)
 resampling$instantiate(task)
 
 ## Visualize all partitions
@@ -168,13 +179,14 @@ autoplot(resampling, task, fold_id = 1)
 autoplot(resampling, task, fold_id = c(1, 2, 3, 4))
 
 # return only a list of ggplot2 resamplings
-plot_list = autoplot(resampling, task,
-  fold_id = c(1, 2, 3, 4), grid = FALSE)
+plot_list <- autoplot(resampling, task,
+  fold_id = c(1, 2, 3, 4), grid = FALSE
+)
 #####
 # SpCVEnv
 #####
 library(mlr3)
-resampling = rsmp("spcv-env", folds = 4, features = c("dem"))
+resampling <- rsmp("spcv-env", folds = 4, features = c("dem"))
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
@@ -183,7 +195,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 # SpCVBuffer
 #####
 library(mlr3)
-resampling = rsmp("spcv-buffer", theRange = 1000)
+resampling <- rsmp("spcv-buffer", theRange = 1000)
 resampling$instantiate(task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, c(1, 2, 3, 4))
@@ -191,7 +203,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 # SpCVCoords
 #####
 library(mlr3)
-resampling = rsmp("spcv-coords")
+resampling <- rsmp("spcv-coords")
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
@@ -200,7 +212,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 # Non-Spatial CV
 #####
 library(mlr3)
-resampling = rsmp("cv")
+resampling <- rsmp("cv")
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
@@ -209,7 +221,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 # Repeated Non-Spatial CV
 #####
 library(mlr3)
-resampling = rsmp("repeated_cv", folds = 5, repeats = 2)
+resampling <- rsmp("repeated_cv", folds = 5, repeats = 2)
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
@@ -219,8 +231,8 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 # RepeatedSpCVCoords
 #####
 library(mlr3)
-task = tsk("diplodia")
-resampling = rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
+task <- tsk("diplodia")
+resampling <- rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
@@ -230,8 +242,8 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 # RepeatedSpCVEnv
 #####
 library(mlr3)
-task = tsk("ecuador")
-resampling = rsmp("repeated-spcv-env", folds = 10, repeats = 2)
+task <- tsk("ecuador")
+resampling <- rsmp("repeated-spcv-env", folds = 10, repeats = 2)
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
@@ -241,13 +253,28 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 # RepeatedSpCVBlock
 #####
 library(mlr3)
-task = tsk("ecuador")
-resampling = rsmp("repeated-spcv-block",
+task <- tsk("ecuador")
+resampling <- rsmp("repeated-spcv-block",
   folds = 5, repeats = 2,
-  range = c(1000, 1500))
+  range = c(1000, 1500)
+)
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 autoplot(resampling, task, c(1, 2, 3, 4))
+#####
+# SptCVskmeans
+#####
+library(mlr3)
+library(mlr3spatiotempcv)
+task_st <- tsk("cookfarm")
+resampling <- rsmp("spcv-cluto", folds = 5)
+resampling$instantiate(task_st, "Date")
+
+# plot
+resampling <- readRDS("inst/spt-plotting-data.rda")
+autoplot(resampling, task_st)
+autoplot(resampling, task_st, 1)
+autoplot(resampling, task_st, c(1, 2, 3, 4))
 }

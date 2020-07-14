@@ -44,8 +44,8 @@
 #' # SpCVBlock
 #' #####
 #' library(mlr3)
-#' task = tsk("ecuador")
-#' resampling = rsmp("spcv-block", range = 1000)
+#' task <- tsk("ecuador")
+#' resampling <- rsmp("spcv-block", range = 1000)
 #' resampling$instantiate(task)
 #'
 #' ## Visualize all partitions
@@ -58,9 +58,10 @@
 #' autoplot(resampling, task, fold_id = c(1, 2, 3, 4))
 #'
 #' # return only a list of ggplot2 resamplings
-#' plot_list = autoplot(resampling, task,
-#'   fold_id = c(1, 2, 3, 4), grid = FALSE)
-autoplot.ResamplingSpCVBlock = function( # nolint
+#' plot_list <- autoplot(resampling, task,
+#'   fold_id = c(1, 2, 3, 4), grid = FALSE
+#' )
+autoplot.ResamplingSpCVBlock <- function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -72,7 +73,8 @@ autoplot.ResamplingSpCVBlock = function( # nolint
     resampling = object,
     task = task,
     fold_id = fold_id,
-    grid = grid)
+    grid = grid
+  )
 }
 
 #' @title Plot for Spatial Resampling
@@ -84,12 +86,12 @@ autoplot.ResamplingSpCVBlock = function( # nolint
 #' # SpCVEnv
 #' #####
 #' library(mlr3)
-#' resampling = rsmp("spcv-env", folds = 4, features = c("dem"))
+#' resampling <- rsmp("spcv-env", folds = 4, features = c("dem"))
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingSpCVEnv = function( # nolint
+autoplot.ResamplingSpCVEnv <- function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -101,7 +103,8 @@ autoplot.ResamplingSpCVEnv = function( # nolint
     resampling = object,
     task = task,
     fold_id = fold_id,
-    grid = grid)
+    grid = grid
+  )
 }
 
 #' @title Plot for Spatial Resampling
@@ -113,11 +116,11 @@ autoplot.ResamplingSpCVEnv = function( # nolint
 #' # SpCVBuffer
 #' #####
 #' library(mlr3)
-#' resampling = rsmp("spcv-buffer", theRange = 1000)
+#' resampling <- rsmp("spcv-buffer", theRange = 1000)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingSpCVBuffer = function( # nolint
+autoplot.ResamplingSpCVBuffer <- function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -126,14 +129,14 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   test_color = "#E18727",
   ...) {
 
-  resampling = object
-  coords = task$coordinates()
-  coords$row_id = task$row_ids
+  resampling <- object
+  coords <- task$coordinates()
+  coords$row_id <- task$row_ids
   require_namespaces(c("sf", "cowplot"))
 
   # instantiate if not yet done
   if (!resampling$is_instantiated) {
-    resampling = resampling$instantiate(task)
+    resampling <- resampling$instantiate(task)
   }
 
   if (is.null(fold_id)) {
@@ -152,28 +155,29 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
     stopf("Specified a fold id which exceeds the total number of folds.")
   }
 
-  plot_list = list()
+  plot_list <- list()
   for (i in fold_id) {
-    coords_train = coords[row_id %in% resampling$instance[[i]]$train]
-    coords_test = coords[row_id %in% resampling$instance[[i]]$test]
+    coords_train <- coords[row_id %in% resampling$instance[[i]]$train]
+    coords_test <- coords[row_id %in% resampling$instance[[i]]$test]
 
-    coords_train$indicator = "Train"
-    coords_test$indicator = "Test"
+    coords_train$indicator <- "Train"
+    coords_test$indicator <- "Test"
 
-    table = rbind(coords_train, coords_test)
+    table <- rbind(coords_train, coords_test)
 
-    sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
-    sf_df$indicator = as.factor(as.character(sf_df$indicator))
+    sf_df <- sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
+    sf_df$indicator <- as.factor(as.character(sf_df$indicator))
 
     # reorder factor levels so that "train" comes first
-    sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
+    sf_df$indicator <- ordered(sf_df$indicator, levels = c("Train", "Test"))
 
-    plot_list[[length(plot_list) + 1]] =
+    plot_list[[length(plot_list) + 1]] <-
       ggplot() +
       geom_sf(data = sf_df, aes(color = indicator)) +
       scale_color_manual(values = c(
         "Train" = train_color,
-        "Test" = test_color)) +
+        "Test" = test_color
+      )) +
       labs(color = "Set") +
       theme(legend.position = "none")
   }
@@ -182,34 +186,37 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   if (!grid) {
     return(plot_list)
   } else {
-    plots = do.call(cowplot::plot_grid, list(
+    plots <- do.call(cowplot::plot_grid, list(
       plotlist = plot_list,
-      labels = sprintf("Fold %s", fold_id)))
+      labels = sprintf("Fold %s", fold_id)
+    ))
 
     # Extract legend standalone, we only want one legend in the grid
-    coords_train = coords[row_id %in% resampling$instance[[1]]$train]
-    coords_test = coords[row_id %in% resampling$instance[[1]]$test]
+    coords_train <- coords[row_id %in% resampling$instance[[1]]$train]
+    coords_test <- coords[row_id %in% resampling$instance[[1]]$test]
 
-    coords_train$indicator = "Train"
-    coords_test$indicator = "Test"
+    coords_train$indicator <- "Train"
+    coords_test$indicator <- "Test"
 
-    table = rbind(coords_train, coords_test)
+    table <- rbind(coords_train, coords_test)
 
-    sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
+    sf_df <- sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
     # 'fold' needs to be a factor, otherwise `show.legend = "points" has no
     # effect
-    sf_df$indicator = as.factor(as.character(sf_df$indicator))
+    sf_df$indicator <- as.factor(as.character(sf_df$indicator))
 
     # reorder factor levels so that "train" comes first
-    sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
+    sf_df$indicator <- ordered(sf_df$indicator, levels = c("Train", "Test"))
 
-    legend = cowplot::get_legend(ggplot() +
+    legend <- cowplot::get_legend(ggplot() +
       geom_sf(
         data = sf_df, aes(color = indicator),
-        show.legend = "point") +
+        show.legend = "point"
+      ) +
       scale_color_manual(values = c(
         "Train" = "#0072B5",
-        "Test" = "#E18727")) +
+        "Test" = "#E18727"
+      )) +
       labs(color = "") +
       theme(legend.position = "bottom"))
 
@@ -227,12 +234,12 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
 #' # SpCVCoords
 #' #####
 #' library(mlr3)
-#' resampling = rsmp("spcv-coords")
+#' resampling <- rsmp("spcv-coords")
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingSpCVCoords = function( # nolint
+autoplot.ResamplingSpCVCoords <- function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -244,7 +251,8 @@ autoplot.ResamplingSpCVCoords = function( # nolint
     resampling = object,
     task = task,
     fold_id = fold_id,
-    grid = grid)
+    grid = grid
+  )
 }
 
 #' @title Plot for Spatial Resampling
@@ -256,12 +264,12 @@ autoplot.ResamplingSpCVCoords = function( # nolint
 #' # Non-Spatial CV
 #' #####
 #' library(mlr3)
-#' resampling = rsmp("cv")
+#' resampling <- rsmp("cv")
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingCV = function( # nolint
+autoplot.ResamplingCV <- function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -273,7 +281,8 @@ autoplot.ResamplingCV = function( # nolint
     resampling = object,
     task = task,
     fold_id = fold_id,
-    grid = grid)
+    grid = grid
+  )
 }
 
 #' @title Plot for Spatial Resampling
@@ -285,13 +294,13 @@ autoplot.ResamplingCV = function( # nolint
 #' # Repeated Non-Spatial CV
 #' #####
 #' library(mlr3)
-#' resampling = rsmp("repeated_cv", folds = 5, repeats = 2)
+#' resampling <- rsmp("repeated_cv", folds = 5, repeats = 2)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingRepeatedCV = function( # nolint
+autoplot.ResamplingRepeatedCV <- function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -305,7 +314,8 @@ autoplot.ResamplingRepeatedCV = function( # nolint
     task = task,
     fold_id = fold_id,
     repeats_id = repeats_id,
-    grid = grid)
+    grid = grid
+  )
 }
 
 #' @title Plot for Repeated Spatial Resampling
@@ -317,14 +327,14 @@ autoplot.ResamplingRepeatedCV = function( # nolint
 #' # RepeatedSpCVCoords
 #' #####
 #' library(mlr3)
-#' task = tsk("diplodia")
-#' resampling = rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
+#' task <- tsk("diplodia")
+#' resampling <- rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
+autoplot.ResamplingRepeatedSpCVCoords <- function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -338,7 +348,8 @@ autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
     task = task,
     fold_id = fold_id,
     repeats_id = repeats_id,
-    grid = grid)
+    grid = grid
+  )
 }
 
 #' @title Plot for Repeated Spatial Resampling
@@ -350,14 +361,14 @@ autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
 #' # RepeatedSpCVEnv
 #' #####
 #' library(mlr3)
-#' task = tsk("ecuador")
-#' resampling = rsmp("repeated-spcv-env", folds = 10, repeats = 2)
+#' task <- tsk("ecuador")
+#' resampling <- rsmp("repeated-spcv-env", folds = 10, repeats = 2)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
+autoplot.ResamplingRepeatedSpCVEnv <- function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -371,7 +382,8 @@ autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
     task = task,
     fold_id = fold_id,
     repeats_id = repeats_id,
-    grid = grid)
+    grid = grid
+  )
 }
 
 #' @title Plot for Repeated Spatial Resampling
@@ -383,16 +395,17 @@ autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
 #' # RepeatedSpCVBlock
 #' #####
 #' library(mlr3)
-#' task = tsk("ecuador")
-#' resampling = rsmp("repeated-spcv-block",
+#' task <- tsk("ecuador")
+#' resampling <- rsmp("repeated-spcv-block",
 #'   folds = 5, repeats = 2,
-#'   range = c(1000, 1500))
+#'   range = c(1000, 1500)
+#' )
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 #' autoplot(resampling, task, c(1, 2, 3, 4))
-autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
+autoplot.ResamplingRepeatedSpCVBlock <- function( # nolint
   object,
   task,
   fold_id = NULL,
@@ -406,10 +419,46 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
     task = task,
     fold_id = fold_id,
     repeats_id = repeats_id,
-    grid = grid)
+    grid = grid
+  )
 }
 
-autoplot_spatial = function(
+#' @title Plot for Spatio-temporal clustering
+#'
+#' @rdname autoplot_spatial_resampling
+#' @export
+#' @examples
+#' #####
+#' # SptCVskmeans
+#' #####
+#' library(mlr3)
+#' library(mlr3spatiotempcv)
+#' task_st <- tsk("cookfarm")
+#' resampling <- rsmp("spcv-cluto", folds = 5)
+#' resampling$instantiate(task_st, "Date")
+#'
+#' # plot
+#' resampling <- readRDS("inst/spt-plotting-data.rda")
+#' autoplot(resampling, task_st)
+#' autoplot(resampling, task_st, 1)
+#' autoplot(resampling, task_st, c(1, 2, 3, 4))
+autoplot.ResamplingSptCVskmeans <- function( # nolint
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...) {
+  autoplot_spatiotemp(
+    resampling = object,
+    task = task,
+    fold_id = fold_id,
+    grid = grid
+  )
+}
+
+autoplot_spatial <- function(
   resampling = NULL,
   task = NULL,
   fold_id = NULL,
@@ -418,19 +467,19 @@ autoplot_spatial = function(
   train_color = NULL,
   test_color = NULL) {
 
-  coords = task$coordinates()
-  coords$row_id = task$row_ids
+  coords <- task$coordinates()
+  coords$row_id <- task$row_ids
   require_namespaces(c("sf", "cowplot"))
 
   # instantiate if not yet done
   if (!resampling$is_instantiated) {
-    resampling = resampling$instantiate(task)
+    resampling <- resampling$instantiate(task)
   }
 
-  coords_resamp = merge(coords, resampling$instance, by = "row_id")
+  coords_resamp <- merge(coords, resampling$instance, by = "row_id")
 
   if (grepl("Repeated", class(resampling)[1])) {
-    coords_resamp = coords_resamp[rep == repeats_id, ]
+    coords_resamp <- coords_resamp[rep == repeats_id, ]
   }
 
   # plot train and test of a specific fold?
@@ -446,28 +495,29 @@ autoplot_spatial = function(
     }
 
     # Multiplot with train and test set
-    plot_list = list()
+    plot_list <- list()
     for (i in fold_id) {
-      table = copy(coords_resamp)
+      table <- copy(coords_resamp)
 
       # suppress undefined global variables note
-      indicator = NULL
-      fold = NULL
+      indicator <- NULL
+      fold <- NULL
 
       table[, indicator := ifelse(fold == i, "Test", "Train")]
 
-      sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
-      sf_df$indicator = as.factor(as.character(sf_df$indicator))
+      sf_df <- sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
+      sf_df$indicator <- as.factor(as.character(sf_df$indicator))
 
       # reorder factor levels so that "train" comes first
-      sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
+      sf_df$indicator <- ordered(sf_df$indicator, levels = c("Train", "Test"))
 
-      plot_list[[length(plot_list) + 1]] =
+      plot_list[[length(plot_list) + 1]] <-
         ggplot() +
         geom_sf(data = sf_df, aes(color = indicator)) +
         scale_color_manual(values = c(
           "Train" = "#0072B5",
-          "Test" = "#E18727")) +
+          "Test" = "#E18727"
+        )) +
         labs(color = "Set") +
         theme(legend.position = "none")
     }
@@ -478,32 +528,36 @@ autoplot_spatial = function(
     } else {
       # for repeated cv we also print out the rep number
       if (is.null(repeats_id)) {
-        repeats_id = 1
+        repeats_id <- 1
       }
-      plots = do.call(cowplot::plot_grid, list(
+      plots <- do.call(cowplot::plot_grid, list(
         plotlist = plot_list,
         labels = sprintf(
           "Fold %s\nRep %s", fold_id,
-          repeats_id)))
+          repeats_id
+        )
+      ))
 
       # Extract legend standalone, we only want one legend in the grid
       coords_resamp[, indicator := ifelse(fold == 1, "Test", "Train")]
 
-      sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
+      sf_df <- sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
       # 'fold' needs to be a factor, otherwise `show.legend = "points" has no
       # effect
-      sf_df$indicator = as.factor(as.character(sf_df$indicator))
+      sf_df$indicator <- as.factor(as.character(sf_df$indicator))
 
       # reorder factor levels so that "train" comes first
-      sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
+      sf_df$indicator <- ordered(sf_df$indicator, levels = c("Train", "Test"))
 
-      legend = cowplot::get_legend(ggplot() +
+      legend <- cowplot::get_legend(ggplot() +
         geom_sf(
           data = sf_df, aes(color = indicator),
-          show.legend = "point") +
+          show.legend = "point"
+        ) +
         scale_color_manual(values = c(
           "Train" = "#0072B5",
-          "Test" = "#E18727")) +
+          "Test" = "#E18727"
+        )) +
         labs(color = "") +
         theme(legend.position = "bottom"))
 
@@ -512,22 +566,214 @@ autoplot_spatial = function(
     }
   } else {
     # Create one plot with all (test)-folds
-    sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
+    sf_df <- sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
 
     # order fold ids
-    sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
-    sf_df$fold = as.factor(as.character(sf_df$fold))
+    sf_df <- sf_df[order(sf_df$fold, decreasing = FALSE), ]
+    sf_df$fold <- as.factor(as.character(sf_df$fold))
     sf_df$fold <- factor(sf_df$fold, levels = unique(as.character(sf_df$fold)))
 
     # for all non-repeated rsmp cases
     if (is.null(repeats_id)) {
-      repeats_id = 1
+      repeats_id <- 1
     }
     ggplot() +
       geom_sf(
         data = sf_df, show.legend = "point",
-        aes(color = fold)) +
+        aes(color = fold)
+      ) +
       ggsci::scale_color_ucscgb() +
       labs(color = sprintf("Partition #, Rep %s", repeats_id))
+  }
+}
+
+autoplot_spatiotemp <- function(resampling = NULL,
+  task = NULL,
+  fold_id = NULL,
+  repeats_id = NULL,
+  grid = NULL,
+  train_color = NULL,
+  test_color = NULL) {
+
+  coords <- task$coordinates()
+  # add row_id for upcoming merge
+  coords$row_id <- task$row_ids
+  data <- task$data()
+  data$row_id <- task$row_ids
+  require_namespaces(c("plotly"))
+
+  # instantiate if not yet done
+  if (!resampling$is_instantiated) {
+    resampling <- resampling$instantiate(task)
+  }
+
+  coords_resamp <- merge(coords, resampling$instance, by = "row_id")
+  task_resamp_ids <- merge(data, coords_resamp, by = "row_id")
+
+  if (grepl("Repeated", class(resampling)[1])) {
+    task_resamp_ids <- task_resamp_ids[rep == repeats_id, ]
+  }
+
+  # Create one plot with all (test)-folds
+  task_resamp_ids <- task_resamp_ids[order(task_resamp_ids$fold, decreasing = FALSE), ]
+  task_resamp_ids$fold <- as.factor(as.character(task_resamp_ids$fold))
+  task_resamp_ids$fold <- factor(task_resamp_ids$fold,
+    levels = unique(as.character(task_resamp_ids$fold))
+  )
+
+  # for all non-repeated rsmp cases
+  if (is.null(repeats_id)) {
+    repeats_id <- 1
+  }
+
+  # plot train and test of a specific fold?
+  if (!is.null(fold_id)) {
+    if (length(fold_id) > resampling$iters) {
+      stopf("More folds specified than stored in resampling.")
+    }
+    if (length(fold_id) == 1 && fold_id > resampling$iters) {
+      stopf("Specified a fold id which exceeds the total number of folds.")
+    }
+    if (any(fold_id > resampling$iters)) {
+      stopf("Specified a fold id which exceeds the total number of folds.")
+    }
+
+    # suppress undefined global variables note
+    indicator <- NULL
+    fold <- NULL
+
+    task_resamp_ids$indicator <- as.factor(as.character(task_resamp_ids$indicator))
+
+    # reorder factor levels so that "train" comes first
+    task_resamp_ids$indicator <- ordered(task_resamp_ids$indicator,
+      levels = c("Train", "Test")
+    )
+
+    if (length(fold_id) == 1) {
+      # suppress undefined global variables note
+      indicator <- NULL
+      fold <- NULL
+
+      task_resamp_ids$indicator <- as.factor(as.character(task_resamp_ids$indicator))
+      task_resamp_ids[, indicator := ifelse(fold == fold_id, "Test", "Train")]
+      plot_single <- plotly::plot_ly(task_resamp_ids,
+        x = ~x, y = ~y, z = ~Date,
+        color = ~indicator, colors = c(
+          "#0072B5", "#E18727"
+        ),
+        sizes = c(20, 100)
+      ) %>%
+        plotly::add_markers(size = 25) %>%
+        plotly::layout(
+          title = sprintf("Partition #, Rep %s", repeats_id),
+          autosize = TRUE,
+          scene = list(
+            xaxis = list(title = "Lat", nticks = 3),
+            yaxis = list(title = "Lon", nticks = 3),
+            zaxis = list(
+              title = "Time",
+              type = "date"
+            )
+          )
+        )
+      print(plot_single)
+      return(invisible(plot_single))
+    } else {
+      # Multiplot across multiple folds with train and test set
+      plot_list <- list()
+      for (i in fold_id) {
+
+        # suppress undefined global variables note
+        indicator <- NULL
+        fold <- NULL
+
+        task_resamp_ids$indicator <- as.factor(as.character(task_resamp_ids$indicator))
+        task_resamp_ids[, indicator := ifelse(fold == i, "Test", "Train")]
+        plot_list[[length(plot_list) + 1]] <- plotly::plot_ly(task_resamp_ids,
+          x = ~x, y = ~y, z = ~Date,
+          color = ~indicator, colors = c(
+            "#0072B5", "#E18727"
+          ),
+          sizes = c(20, 100),
+          scene = paste0("scene", i),
+          showlegend = ifelse(i == 1, TRUE, FALSE)
+        ) %>%
+          plotly::add_markers(size = 25) %>%
+          plotly::layout(
+            title = sprintf("Partition #, Rep %s", repeats_id),
+            autosize = TRUE,
+            scene = list(
+              xaxis = list(title = "Lat", nticks = 3),
+              yaxis = list(title = "Lon", nticks = 3),
+              zaxis = list(
+                title = "Time",
+                type = "date"
+              )
+            )
+          )
+      }
+    }
+
+    # is a grid requested?
+    if (!grid) {
+      return(plot_list)
+    } else {
+
+      # FIXME: nrows is not accepted, only manual scenes make proper alignment work
+      # but this is not a dynamic solution
+      plotly::subplot(plot_list,
+        shareX = TRUE, shareY = TRUE,
+        nrows = 2
+      ) %>%
+        plotly::layout(
+          title = "Individual Folds" # ,
+          # scene = list(
+          #   domain = list(x = c(0, 0.5), y = c(0.5, 1)),
+          #   aspectmode = "cube"
+          # ),
+          # scene2 = list(
+          #   domain = list(x = c(0.5, 1), y = c(0.5, 1)),
+          #   aspectmode = "cube"
+          # ),
+          # scene3 = list(
+          #   domain = list(x = c(0, 0.5), y = c(0, 0.5)),
+          #   aspectmode = "cube"
+          # ),
+          # scene4 = list(
+          #   domain = list(x = c(0.5, 1), y = c(0, 0.5)),
+          #   aspectmode = "cube"
+          # )
+        )
+    }
+  } else {
+    plotly::plot_ly(task_resamp_ids,
+      x = ~x, y = ~y, z = ~Date,
+      color = ~fold, colors = ggsci::pal_ucscgb("default")(26),
+      sizes = c(20, 100)
+    ) %>%
+      plotly::add_markers(size = 25) %>%
+      plotly::layout(
+        title = sprintf("Partition #, Rep %s", repeats_id),
+        autosize = TRUE,
+        margin = list(
+          l = 10,
+          r = 10,
+          t = 40,
+          b = 10
+        ),
+        scene = list(
+          xaxis = list(title = "Lat"),
+          yaxis = list(title = "Lon"),
+          zaxis = list(
+            title = "Time",
+            type = "date"
+          ),
+          legend = list(
+            margin = list(
+              l = 5
+            )
+          )
+        )
+      )
   }
 }

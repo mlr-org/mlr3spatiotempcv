@@ -38,9 +38,11 @@ Suggests:
     cowplot,
     ggsci,
     knitr,
+    plotly,
     rmarkdown,
     rpart,
     sf,
+    skmeans,
     testthat (>= 2.1.0),
     vdiffr
 VignetteBuilder: 
@@ -51,7 +53,7 @@ Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Collate: 
     'Task_classif_ecuador.R'
     'Task_classif_diplodia.R'
@@ -63,6 +65,7 @@ Collate:
     'ResamplingRepeatedSpCVCoords.R'
     'ResamplingRepeatedSpCVEnv.R'
     'ResamplingRepeatedSpCVBlock.R'
+    'ResamplingSptCVskmeans.R'
     'TaskClassifST.R'
     'TaskRegrST.R'
     'helper.R'
