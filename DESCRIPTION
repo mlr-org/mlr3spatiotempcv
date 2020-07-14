@@ -39,6 +39,7 @@ Suggests:
     ggsci,
     knitr,
     plotly,
+    renv,
     rmarkdown,
     rpart,
     sf,
