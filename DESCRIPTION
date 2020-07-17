@@ -38,6 +38,7 @@ Suggests:
     bookdown,
     cowplot,
     ggsci,
+    GSIF,
     knitr,
     plotly,
     renv,
