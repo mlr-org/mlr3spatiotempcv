@@ -441,7 +441,7 @@ autoplot.ResamplingRepeatedSpCVBlock <- function( # nolint
 #'   resampling$instantiate(task_st, "Date")
 #'
 #'   # plot
-#'   resampling <- readRDS("inst/spt-plotting-data.rda")
+#'   # resampling <- readRDS("inst/spt-plotting-data.rda")
 #'   autoplot(resampling, task_st)
 #'   autoplot(resampling, task_st, 1)
 #'   autoplot(resampling, task_st, c(1, 2, 3, 4))
