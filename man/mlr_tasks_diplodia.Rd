@@ -2,13 +2,9 @@
 % Please edit documentation in R/Task_classif_diplodia.R
 \name{mlr_tasks_diplodia}
 \alias{mlr_tasks_diplodia}
-\alias{load_task_diplodia}
 \title{Diplodia Classification Task}
 \format{
 \link[R6:R6Class]{R6::R6Class} inheriting from \link{TaskClassif}.
-}
-\usage{
-load_task_diplodia(id = "diplodia")
 }
 \description{
 Data set created by Patrick Schratz, University of Jena

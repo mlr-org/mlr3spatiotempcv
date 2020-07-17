@@ -266,6 +266,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # SptCVskmeans
 #####
+if (Sys.info()[["sysname"]] != "Darwin") {
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st <- tsk("cookfarm")
@@ -277,4 +278,5 @@ resampling <- readRDS("inst/spt-plotting-data.rda")
 autoplot(resampling, task_st)
 autoplot(resampling, task_st, 1)
 autoplot(resampling, task_st, c(1, 2, 3, 4))
+}
 }

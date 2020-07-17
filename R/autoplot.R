@@ -155,6 +155,8 @@ autoplot.ResamplingSpCVBuffer <- function( # nolint
     stopf("Specified a fold id which exceeds the total number of folds.")
   }
 
+  indicator = NULL
+
   plot_list <- list()
   for (i in fold_id) {
     coords_train <- coords[row_id %in% resampling$instance[[i]]$train]
@@ -173,7 +175,7 @@ autoplot.ResamplingSpCVBuffer <- function( # nolint
 
     plot_list[[length(plot_list) + 1]] <-
       ggplot() +
-      geom_sf(data = sf_df, aes(color = indicator)) +
+      geom_sf(data = sf_df, aes(color = .data[["indicator"]])) +
       scale_color_manual(values = c(
         "Train" = train_color,
         "Test" = test_color
@@ -431,17 +433,19 @@ autoplot.ResamplingRepeatedSpCVBlock <- function( # nolint
 #' #####
 #' # SptCVskmeans
 #' #####
-#' library(mlr3)
-#' library(mlr3spatiotempcv)
-#' task_st <- tsk("cookfarm")
-#' resampling <- rsmp("spcv-cluto", folds = 5)
-#' resampling$instantiate(task_st, "Date")
+#' if (Sys.info()[["sysname"]] != "Darwin") {
+#'   library(mlr3)
+#'   library(mlr3spatiotempcv)
+#'   task_st <- tsk("cookfarm")
+#'   resampling <- rsmp("spcv-cluto", folds = 5)
+#'   resampling$instantiate(task_st, "Date")
 #'
-#' # plot
-#' resampling <- readRDS("inst/spt-plotting-data.rda")
-#' autoplot(resampling, task_st)
-#' autoplot(resampling, task_st, 1)
-#' autoplot(resampling, task_st, c(1, 2, 3, 4))
+#'   # plot
+#'   resampling <- readRDS("inst/spt-plotting-data.rda")
+#'   autoplot(resampling, task_st)
+#'   autoplot(resampling, task_st, 1)
+#'   autoplot(resampling, task_st, c(1, 2, 3, 4))
+#' }
 autoplot.ResamplingSptCVskmeans <- function( # nolint
   object,
   task,
@@ -662,20 +666,22 @@ autoplot_spatiotemp <- function(resampling = NULL,
           "#0072B5", "#E18727"
         ),
         sizes = c(20, 100)
-      ) %>%
-        plotly::add_markers(size = 25) %>%
-        plotly::layout(
-          title = sprintf("Partition #, Rep %s", repeats_id),
-          autosize = TRUE,
-          scene = list(
-            xaxis = list(title = "Lat", nticks = 3),
-            yaxis = list(title = "Lon", nticks = 3),
-            zaxis = list(
-              title = "Time",
-              type = "date"
-            )
+      )
+
+      plot_single_plotly = plotly::add_markers(plot_single_plotly,
+        size = 25)
+      plot_single_plotly = plotly::layout(plot_single_plotly,
+        title = sprintf("Partition #, Rep %s", repeats_id),
+        autosize = TRUE,
+        scene = list(
+          xaxis = list(title = "Lat", nticks = 3),
+          yaxis = list(title = "Lon", nticks = 3),
+          zaxis = list(
+            title = "Time",
+            type = "date"
           )
         )
+      )
       print(plot_single)
       return(invisible(plot_single))
     } else {
@@ -689,17 +695,18 @@ autoplot_spatiotemp <- function(resampling = NULL,
 
         task_resamp_ids$indicator <- as.factor(as.character(task_resamp_ids$indicator))
         task_resamp_ids[, indicator := ifelse(fold == i, "Test", "Train")]
-        plot_list[[length(plot_list) + 1]] <- plotly::plot_ly(task_resamp_ids,
-          x = ~x, y = ~y, z = ~Date,
-          color = ~indicator, colors = c(
-            "#0072B5", "#E18727"
-          ),
-          sizes = c(20, 100),
-          scene = paste0("scene", i),
-          showlegend = ifelse(i == 1, TRUE, FALSE)
-        ) %>%
-          plotly::add_markers(size = 25) %>%
-          plotly::layout(
+        plot_list[[length(plot_list) + 1]] <- {
+          pl = plotly::plot_ly(task_resamp_ids,
+            x = ~x, y = ~y, z = ~Date,
+            color = ~indicator, colors = c(
+              "#0072B5", "#E18727"
+            ),
+            sizes = c(20, 100),
+            scene = paste0("scene", i),
+            showlegend = ifelse(i == 1, TRUE, FALSE)
+          )
+          pl = plotly::add_markers(pl, size = 25)
+          pl = plotly::layout(pl,
             title = sprintf("Partition #, Rep %s", repeats_id),
             autosize = TRUE,
             scene = list(
@@ -711,6 +718,7 @@ autoplot_spatiotemp <- function(resampling = NULL,
               )
             )
           )
+        }
       }
     }
 
@@ -721,59 +729,59 @@ autoplot_spatiotemp <- function(resampling = NULL,
 
       # FIXME: nrows is not accepted, only manual scenes make proper alignment work
       # but this is not a dynamic solution
-      plotly::subplot(plot_list,
+      pl = plotly::subplot(plot_list,
         shareX = TRUE, shareY = TRUE,
         nrows = 2
-      ) %>%
-        plotly::layout(
-          title = "Individual Folds" # ,
-          # scene = list(
-          #   domain = list(x = c(0, 0.5), y = c(0.5, 1)),
-          #   aspectmode = "cube"
-          # ),
-          # scene2 = list(
-          #   domain = list(x = c(0.5, 1), y = c(0.5, 1)),
-          #   aspectmode = "cube"
-          # ),
-          # scene3 = list(
-          #   domain = list(x = c(0, 0.5), y = c(0, 0.5)),
-          #   aspectmode = "cube"
-          # ),
-          # scene4 = list(
-          #   domain = list(x = c(0.5, 1), y = c(0, 0.5)),
-          #   aspectmode = "cube"
-          # )
-        )
+      )
+      plotly::layout(pl,
+        title = "Individual Folds" # ,
+        # scene = list(
+        #   domain = list(x = c(0, 0.5), y = c(0.5, 1)),
+        #   aspectmode = "cube"
+        # ),
+        # scene2 = list(
+        #   domain = list(x = c(0.5, 1), y = c(0.5, 1)),
+        #   aspectmode = "cube"
+        # ),
+        # scene3 = list(
+        #   domain = list(x = c(0, 0.5), y = c(0, 0.5)),
+        #   aspectmode = "cube"
+        # ),
+        # scene4 = list(
+        #   domain = list(x = c(0.5, 1), y = c(0, 0.5)),
+        #   aspectmode = "cube"
+        # )
+      )
     }
   } else {
-    plotly::plot_ly(task_resamp_ids,
+    pl = plotly::plot_ly(task_resamp_ids,
       x = ~x, y = ~y, z = ~Date,
       color = ~fold, colors = ggsci::pal_ucscgb("default")(26),
       sizes = c(20, 100)
-    ) %>%
-      plotly::add_markers(size = 25) %>%
-      plotly::layout(
-        title = sprintf("Partition #, Rep %s", repeats_id),
-        autosize = TRUE,
-        margin = list(
-          l = 10,
-          r = 10,
-          t = 40,
-          b = 10
+    )
+    pl = plotly::add_markers(pl, size = 25)
+    plotly::layout(pl,
+      title = sprintf("Partition #, Rep %s", repeats_id),
+      autosize = TRUE,
+      margin = list(
+        l = 10,
+        r = 10,
+        t = 40,
+        b = 10
+      ),
+      scene = list(
+        xaxis = list(title = "Lat"),
+        yaxis = list(title = "Lon"),
+        zaxis = list(
+          title = "Time",
+          type = "date"
         ),
-        scene = list(
-          xaxis = list(title = "Lat"),
-          yaxis = list(title = "Lon"),
-          zaxis = list(
-            title = "Time",
-            type = "date"
-          ),
-          legend = list(
-            margin = list(
-              l = 5
-            )
+        legend = list(
+          margin = list(
+            l = 5
           )
         )
       )
+    )
   }
 }

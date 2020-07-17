@@ -5,6 +5,7 @@
 #' @import mlr3
 #' @import ggplot2
 #' @importFrom R6 R6Class
+#' @importFrom utils globalVariables
 "_PACKAGE"
 
 register_mlr3 = function() {
@@ -52,7 +53,7 @@ register_mlr3 = function() {
     mlr_resamplings$add("repeated-spcv-block", ResamplingRepeatedSpCVBlock)
   }
 
-  globalVariables("row_id")
+  utils::globalVariables("row_id")
 
 }
 

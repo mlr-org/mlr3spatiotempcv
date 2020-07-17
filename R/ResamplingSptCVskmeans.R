@@ -48,22 +48,24 @@
 #'
 #' @export
 #' @examples
-#' library(mlr3)
-#' library(mlr3spatiotempcv)
-#' task = tsk("cookfarm")
+#' if (Sys.info()[["sysname"]] != "Darwin") {
+#'   library(mlr3)
+#'   library(mlr3spatiotempcv)
+#'   task = tsk("cookfarm")
 #'
-#' # Instantiate Resampling
-#' rcv = rsmp("spcv-cluto", folds = 5)
-#' rcv$instantiate(task)
+#'   # Instantiate Resampling
+#'   rcv = rsmp("spcv-cluto", folds = 5)
+#'   rcv$instantiate(task, "Date")
 #'
-#' # Individual sets:
-#' rcv$train_set(1)
-#' rcv$test_set(1)
-#' # check that no obs are in both sets
-#' intersect(rcv$train_set(1), rcv$test_set(1)) # good!
+#'   # Individual sets:
+#'   rcv$train_set(1)
+#'   rcv$test_set(1)
+#'   # check that no obs are in both sets
+#'   intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 #'
-#' # Internal storage:
-#' rcv$instance # table
+#'   # Internal storage:
+#'   rcv$instance # table
+#' }
 ResamplingSptCVskmeans = R6Class("ResamplingSptCVskmeans",
   inherit = mlr3::Resampling,
 

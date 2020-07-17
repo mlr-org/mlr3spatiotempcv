@@ -22,6 +22,8 @@
 #'   rates of landslides along a humidity gradient in the tropical Andes.
 #'   Geomorphology, 139-140: 271-284.
 #' @template seealso_task
+NULL
+
 load_task_ecuador = function(id = "ecuador") {
   b = mlr3::as_data_backend(readRDS(system.file("extdata", "ecuador.rda",
     package = "mlr3spatiotempcv")))

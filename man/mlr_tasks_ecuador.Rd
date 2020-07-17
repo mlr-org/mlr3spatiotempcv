@@ -2,13 +2,9 @@
 % Please edit documentation in R/Task_classif_ecuador.R
 \name{mlr_tasks_ecuador}
 \alias{mlr_tasks_ecuador}
-\alias{load_task_ecuador}
 \title{Ecuador Classification Task}
 \format{
 \link[R6:R6Class]{R6::R6Class} inheriting from \link{TaskClassif}.
-}
-\usage{
-load_task_ecuador(id = "ecuador")
 }
 \description{
 Data set created by Jannes Muenchow, University of Erlangen-Nuernberg,

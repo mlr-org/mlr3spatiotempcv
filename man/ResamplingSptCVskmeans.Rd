@@ -13,12 +13,16 @@ The CLUTO manual is wrapped inside the tarball/zip release bundle which is
 available at http://glaros.dtc.umn.edu/gkhome/cluto/cluto/download.
 }
 \details{
-By default, \code{-clmethod='direct'} is passed to the \code{vcluster} executable in contrast to the upstream default
+By default, \code{-clmethod='direct'} is passed to the \code{vcluster} executable in
+contrast to the upstream default
 \code{-clmethod='rb'}.
-There is no evidence or research that this method is the best among the available ones
-("rb", "rbr", "direct", "agglo", "graph", "bagglo"). Also, various other
-parameters can be set via argument \code{cluto_parameters} to achieve different
-clustering results.
+There is no evidence or research that this method is the best among the
+available ones ("rb", "rbr", "direct", "agglo", "graph", "bagglo"). Also,
+various other parameters can be set via argument \code{cluto_parameters} to
+achieve different clustering results.
+
+Parameter \code{-clusterfile} is handled by \CRANpkg{skmeans} and cannot be
+changed.
 }
 \section{Copyright}{
 
@@ -42,22 +46,24 @@ change at any time without prior notice.
 }
 
 \examples{
-library(mlr3)
-library(mlr3spatiotempcv)
-task = tsk("cookfarm")
+if (Sys.info()[["sysname"]] != "Darwin") {
+  library(mlr3)
+  library(mlr3spatiotempcv)
+  task = tsk("cookfarm")
 
-# Instantiate Resampling
-rcv = rsmp("spcv-cluto", folds = 5)
-rcv$instantiate(task)
+  # Instantiate Resampling
+  rcv = rsmp("spcv-cluto", folds = 5)
+  rcv$instantiate(task, "Date")
 
-# Individual sets:
-rcv$train_set(1)
-rcv$test_set(1)
-# check that no obs are in both sets
-intersect(rcv$train_set(1), rcv$test_set(1)) # good!
+  # Individual sets:
+  rcv$train_set(1)
+  rcv$test_set(1)
+  # check that no obs are in both sets
+  intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 
-# Internal storage:
-rcv$instance # table
+  # Internal storage:
+  rcv$instance # table
+}
 }
 \references{
 FIXME: correct?

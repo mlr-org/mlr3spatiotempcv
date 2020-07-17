@@ -30,7 +30,8 @@ Imports:
     mlr3,
     mlr3misc (>= 0.1.7),
     paradox,
-    R6
+    R6,
+    utils
 Suggests:
     bibtex,
     blockCV (>= 2.1.1),
