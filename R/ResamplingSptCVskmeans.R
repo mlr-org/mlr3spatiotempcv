@@ -11,12 +11,16 @@
 #' available at http://glaros.dtc.umn.edu/gkhome/cluto/cluto/download.
 #'
 #' @details
-#' By default, `-clmethod='direct'` is passed to the `vcluster` executable in contrast to the upstream default
+#' By default, `-clmethod='direct'` is passed to the `vcluster` executable in
+#' contrast to the upstream default
 #' `-clmethod='rb'`.
-#' There is no evidence or research that this method is the best among the available ones
-#' ("rb", "rbr", "direct", "agglo", "graph", "bagglo"). Also, various other
-#' parameters can be set via argument `cluto_parameters` to achieve different
-#' clustering results.
+#' There is no evidence or research that this method is the best among the
+#' available ones ("rb", "rbr", "direct", "agglo", "graph", "bagglo"). Also,
+#' various other parameters can be set via argument `cluto_parameters` to
+#' achieve different clustering results.
+#'
+#' Parameter `-clusterfile` is handled by \CRANpkg{skmeans} and cannot be
+#' changed.
 #'
 #' @section Copyright:
 #'

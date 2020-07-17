@@ -52,6 +52,8 @@ register_mlr3 = function() {
     mlr_resamplings$add("repeated-spcv-block", ResamplingRepeatedSpCVBlock)
   }
 
+  globalVariables("row_id")
+
 }
 
 .onLoad = function(libname, pkgname) { # nolint
