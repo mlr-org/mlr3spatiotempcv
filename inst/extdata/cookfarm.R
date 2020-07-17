@@ -12,10 +12,12 @@ cookfarm_mlr3 = cookfarm_profiles %>%
   st_as_sf(coords = c("Easting", "Northing"), crs = 26911) %>%
   mutate(x = st_coordinates(.)[, "X"]) %>%
   mutate(y = st_coordinates(.)[, "Y"]) %>%
+  mutate(Date = as.character(Date)) %>%
+  st_set_geometry(NULL) %>%
   na.omit() %>%
   sample_n(500)
 
-saveRDS(cookfarm_mlr3, "inst/extdata/cookfarm.R")
+saveRDS(cookfarm_mlr3, "inst/extdata/cookfarm.rda")
 
 # mapview::mapview(cookfarm_mlr3)
 
