@@ -18,3 +18,5 @@
 ^\.lintr$
 ^\.vscode$
 ^gfortran.*
+^joss$
+^man-roxygen$
