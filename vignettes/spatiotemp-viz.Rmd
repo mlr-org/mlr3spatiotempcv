@@ -1,0 +1,72 @@
+---
+title: "Spatiotemporal Visualization"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{spatiotemp-viz}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+{mlr3spatiotempcv} makes use of {plotly} to create the 3D plots for visualizing spatiotemporal folds created via the CLUTO algorithm.
+Arranging multiple 3D plots in plotly is done via [3D subplots](https://plotly.com/r/3d-subplots/).
+Unfortunately, {plotl's} subplot implementation is not dynamic: multiple "scene" objects need to be specified in `plotly::layout()` which determine the coordinates of the respective subplot.
+Depending on the number of chosen folds by the user in `autoplot()`, a different number of scenes with different coordinates needs to be given to align the plots properly.
+
+At this point, manual action by the user is needed.
+
+Here is an example to create a 2x2 grid showing four folds as 3D subplots.
+It makes use of the returned 3D plotly objects which are returned in a list by `autoplot()`:
+
+```{r, fig.width=9, fig.height=8, fig.align='center'}
+library(mlr3)
+library(mlr3spatiotempcv)
+task_st = tsk("cookfarm")
+resampling = rsmp("spcv-cluto", folds = 5)
+
+# A saved R object is used here to make the plotting work on any OS for this article.
+# Usually macOS is not supported by the CLUTO algorithm.
+# resampling$instantiate(task_st, "Date")
+resampling = readRDS(system.file("spt-plotting-data.rda", package = "mlr3spatiotempcv"))
+
+# resampling = readRDS("inst/spt-plotting-data.rda")
+
+pl = autoplot(resampling, task_st, c(1, 2, 3, 4),
+  point_size = 3, axis_label_fontsize = 10)
+
+# Warnings can be ignored
+pl_subplot = plotly::subplot(pl)
+
+plotly::layout(pl_subplot,
+  title = "Individual Folds",
+  scene = list(
+    domain = list(x = c(0, 0.5), y = c(0.5, 1)),
+    aspectmode = "cube",
+    camera = list(eye = list(z = 2.5))
+  ),
+  scene2 = list(
+    domain = list(x = c(0.5, 1), y = c(0.5, 1)),
+    aspectmode = "cube",
+    camera = list(eye = list(z = 2.5))
+  ),
+  scene3 = list(
+    domain = list(x = c(0, 0.5), y = c(0, 0.5)),
+    aspectmode = "cube",
+    camera = list(eye = list(z = 2.5))
+  ),
+  scene4 = list(
+    domain = list(x = c(0.5, 1), y = c(0, 0.5)),
+    aspectmode = "cube",
+    camera = list(eye = list(z = 2.5))
+  )
+)
+```
+
+Subplot titles are not dynamically supported.
+However, there is also a manual workaround via [annotations](https://plotly.com/r/reference/#layout-annotations) show in this [RPubs post](https://rpubs.com/bcd/subplot-titles) which could be used.
