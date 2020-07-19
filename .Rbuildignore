@@ -20,3 +20,4 @@
 ^gfortran.*
 ^joss$
 ^man-roxygen$
+^BinaryFiles$
