@@ -90,7 +90,7 @@ autoplot.ResamplingSpCVBlock = function( # nolint
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
+#' # autoplot(resampling, task, c(1, 2, 3, 4))
 autoplot.ResamplingSpCVEnv = function( # nolint
   object,
   task,
@@ -119,7 +119,7 @@ autoplot.ResamplingSpCVEnv = function( # nolint
 #' resampling = rsmp("spcv-buffer", theRange = 1000)
 #' resampling$instantiate(task)
 #' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
+#' # autoplot(resampling, task, c(1, 2, 3, 4))
 autoplot.ResamplingSpCVBuffer = function( # nolint
   object,
   task,
@@ -240,7 +240,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
+#' # autoplot(resampling, task, c(1, 2, 3, 4))
 autoplot.ResamplingSpCVCoords = function( # nolint
   object,
   task,
@@ -270,7 +270,7 @@ autoplot.ResamplingSpCVCoords = function( # nolint
 #' resampling$instantiate(task)
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
+#' # autoplot(resampling, task, c(1, 2, 3, 4))
 autoplot.ResamplingCV = function( # nolint
   object,
   task,
@@ -301,7 +301,7 @@ autoplot.ResamplingCV = function( # nolint
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
+#' # autoplot(resampling, task, c(1, 2, 3, 4))
 autoplot.ResamplingRepeatedCV = function( # nolint
   object,
   task,
@@ -335,7 +335,7 @@ autoplot.ResamplingRepeatedCV = function( # nolint
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
 #' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
+#' # autoplot(resampling, task, c(1, 2, 3, 4))
 autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
   object,
   task,
@@ -427,6 +427,18 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
 
 #' @title Plot for Spatio-temporal clustering
 #'
+#' @param tickformat_date `[character]`\cr
+#'   Date format for z-axis.
+#' @param crs `[character]`\cr
+#'   EPSG code of the CRS for x and y axes.
+#' @param nticks_y `[integer]`\cr
+#'   Number of y axis breaks.
+#' @param nticks_x `[integer]`\cr
+#'   Number of x axis breaks.
+#' @param point_size `[numeric]`\cr
+#'   Point size of markers.
+#' @param axis_label_fontsize `[integer]`\cr
+#'   Font size of axis labels.
 #' @rdname autoplot_spatial_resampling
 #' @export
 #' @examples
@@ -453,12 +465,25 @@ autoplot.ResamplingSptCVskmeans = function( # nolint
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  tickformat_date = "%Y-%m",
+  crs = 4326,
+  nticks_x = 3,
+  nticks_y = 3,
+  point_size = 25,
+  axis_label_fontsize = 11,
   ...) {
+
   autoplot_spatiotemp(
     resampling = object,
     task = task,
     fold_id = fold_id,
-    grid = grid
+    grid = grid,
+    tickformat_date = tickformat_date,
+    crs = crs,
+    nticks_y = nticks_y,
+    nticks_x = nticks_y,
+    point_size = point_size,
+    axis_label_fontsize = axis_label_fontsize
   )
 }
 
@@ -591,13 +616,20 @@ autoplot_spatial = function(
   }
 }
 
-autoplot_spatiotemp = function(resampling = NULL,
+autoplot_spatiotemp = function(
+  resampling = NULL,
   task = NULL,
   fold_id = NULL,
   repeats_id = NULL,
   grid = NULL,
   train_color = NULL,
-  test_color = NULL) {
+  test_color = NULL,
+  tickformat_date = NULL,
+  crs = NULL,
+  nticks_x = NULL,
+  nticks_y = NULL,
+  point_size = NULL,
+  axis_label_fontsize = NULL) {
 
   coords = task$coordinates()
   # add row_id for upcoming merge
@@ -613,6 +645,18 @@ autoplot_spatiotemp = function(resampling = NULL,
 
   coords_resamp = merge(coords, resampling$instance, by = "row_id")
   task_resamp_ids = merge(data, coords_resamp, by = "row_id")
+
+  if (!is.null(crs)) {
+    require_namespaces(c("sf"))
+    # transform coordinates to WGS84
+    coords = sf::st_coordinates(
+      sf::st_transform(
+        sf::st_as_sf(task$coordinates(), coords = c("x", "y"), crs = task$crs),
+        crs = 4326)
+    )
+    task_resamp_ids$x = coords[, 1]
+    task_resamp_ids$y = coords[, 2]
+  }
 
   if (grepl("Repeated", class(resampling)[1])) {
     task_resamp_ids = task_resamp_ids[rep == repeats_id, ]
@@ -669,16 +713,18 @@ autoplot_spatiotemp = function(resampling = NULL,
       )
 
       plot_single_plotly = plotly::add_markers(plot_single_plotly,
-        size = 25)
+        marker = list(size = point_size))
       plot_single_plotly = plotly::layout(plot_single_plotly,
         title = sprintf("Partition #, Rep %s", repeats_id),
         autosize = TRUE,
         scene = list(
-          xaxis = list(title = "Lat", nticks = 3),
-          yaxis = list(title = "Lon", nticks = 3),
+          xaxis = list(title = "Lat", nticks = nticks_x),
+          yaxis = list(title = "Lon", nticks = nticks_y),
           zaxis = list(
             title = "Time",
-            type = "date"
+            type = "date",
+            tickformat = tickformat_date,
+            tickfont = list(size = axis_label_fontsize)
           ),
           camera = list(eye = list(z = 1.50))
         )
@@ -696,30 +742,54 @@ autoplot_spatiotemp = function(resampling = NULL,
 
         task_resamp_ids$indicator = as.factor(as.character(task_resamp_ids$indicator))
         task_resamp_ids[, indicator := ifelse(fold == i, "Test", "Train")]
+
+        task_resamp_ids$Date = as.Date(task_resamp_ids$Date)
+
+        # create plots for each fold
         plot_list[[length(plot_list) + 1]] = {
           pl = plotly::plot_ly(task_resamp_ids,
             x = ~x, y = ~y, z = ~Date,
             color = ~indicator, colors = c(
               "#0072B5", "#E18727"
             ),
-            sizes = c(20, 100),
+            # this is needed for later when doing 3D subplots
             scene = paste0("scene", i),
             showlegend = ifelse(i == 1, TRUE, FALSE)
           )
-          pl = plotly::add_markers(pl, size = 25)
-          pl = plotly::layout(pl,
-            title = sprintf("Partition #, Rep %s", repeats_id),
-            autosize = TRUE,
-            scene = list(
-              xaxis = list(title = "Lat", nticks = 3),
-              yaxis = list(title = "Lon", nticks = 3),
+          pl = plotly::add_markers(pl, marker = list(size = point_size))
+          layout_args = list(pl,
+            "title" = sprintf("Fold #%s", i),
+            list(
+              xaxis = list(
+                title = "Lat",
+                nticks = nticks_x,
+                tickfont = list(size = axis_label_fontsize)),
+              yaxis = list(
+                title = "Lon",
+                nticks = nticks_y,
+                tickfont = list(size = axis_label_fontsize)),
               zaxis = list(
                 title = "Time",
-                type = "date"
+                type = "date",
+                tickformat = tickformat_date,
+                tickfont = list(size = axis_label_fontsize)
+                # sets size of axis titles
+                # titlefont = list(size = 5)
               ),
               camera = list(eye = list(z = 1.50))
             )
           )
+          # -`p` is the name of the plotly object.
+          # - title sets the title of the plot
+          # - the "scene" name is dynamically generated and refers to the scene
+          #   name in the `plot_ly()` call
+          names(layout_args) = c(
+            "p",
+            "title",
+            paste0("scene", i)
+          )
+
+          pl = mlr3misc::invoke(plotly::layout, .args = layout_args)
         }
       }
     }
@@ -728,32 +798,15 @@ autoplot_spatiotemp = function(resampling = NULL,
     if (!grid) {
       return(plot_list)
     } else {
+      cli::cli_alert_info("Unfortunately plotly does not support a dynamic
+       arrangement of multiple subplots.
+       See article 'Visualization of spatiotemporal clusters'
+       ({.url https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz}) for a
+       manual workaround.
+       Use the objects in the returned list to arrange your custom grid.",
+        wrap = TRUE)
 
-      # FIXME: nrows is not accepted, only manual scenes make proper alignment work
-      # but this is not a dynamic solution
-      pl = plotly::subplot(plot_list,
-        shareX = TRUE, shareY = TRUE,
-        nrows = 2
-      )
-      plotly::layout(pl,
-        title = "Individual Folds" # ,
-        # scene = list(
-        #   domain = list(x = c(0, 0.5), y = c(0.5, 1)),
-        #   aspectmode = "cube"
-        # ),
-        # scene2 = list(
-        #   domain = list(x = c(0.5, 1), y = c(0.5, 1)),
-        #   aspectmode = "cube"
-        # ),
-        # scene3 = list(
-        #   domain = list(x = c(0, 0.5), y = c(0, 0.5)),
-        #   aspectmode = "cube"
-        # ),
-        # scene4 = list(
-        #   domain = list(x = c(0.5, 1), y = c(0, 0.5)),
-        #   aspectmode = "cube"
-        # )
-      )
+      return(invisible(plot_list))
     }
   } else {
     pl = plotly::plot_ly(task_resamp_ids,
@@ -761,10 +814,9 @@ autoplot_spatiotemp = function(resampling = NULL,
       color = ~fold, colors = ggsci::pal_ucscgb("default")(26),
       sizes = c(20, 100)
     )
-    pl = plotly::add_markers(pl, size = 25)
+    pl = plotly::add_markers(pl, marker = list(size = point_size))
     plotly::layout(pl,
       title = sprintf("Partition #, Rep %s", repeats_id),
-      # autosize = TRUE,
       margin = list(
         l = 10,
         r = 10,
@@ -772,11 +824,17 @@ autoplot_spatiotemp = function(resampling = NULL,
         b = 10
       ),
       scene = list(
-        xaxis = list(title = "Lat", nticks = 3),
-        yaxis = list(title = "Lon", nticks = 5),
+        xaxis = list(
+          title = "Lat",
+          nticks = nticks_x),
+        yaxis = list(
+          title = "Lon",
+          nticks = nticks_y),
         zaxis = list(
           title = "Time",
-          type = "date"
+          type = "date",
+          tickformat = tickformat_date,
+          tickfont = list(size = axis_label_fontsize)
         ),
         legend = list(
           margin = list(
