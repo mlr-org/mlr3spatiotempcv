@@ -19,9 +19,9 @@ test_that("reps can be printed", {
 })
 
 test_that("resampling iterations equals folds * repeats", {
-  task = test_make_twoclass()
-  rsp = rsmp("repeated-spcv-coords", folds = 3, repeats = 2)
-  rsp$instantiate(task)
+  task = tsk("cookfarm")
+  rsp = rsmp("repeated-spcv-cluto", folds = 3, repeats = 2)
+  rsp$instantiate(task, time_var = "Date")
 
   expect_equal(rsp$iters, 6)
 })
