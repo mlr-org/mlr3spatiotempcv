@@ -2,8 +2,10 @@
 #'
 #' @import mlr3
 #'
-#' @description Spatio-temporal cluster partitioning via the `vcluster` executable of
-#' the [CLUTO](http://glaros.dtc.umn.edu/gkhome/cluto/cluto/overview) clustering application.
+#' @description Spatio-temporal cluster partitioning via the `vcluster`
+#'   executable of the
+#'   [CLUTO](http://glaros.dtc.umn.edu/gkhome/cluto/cluto/overview) clustering
+#'   application.
 #'
 #' This package ships with standalone binaries for Linux (64bit) and Windows.
 #' macOS is not supported.
@@ -66,7 +68,7 @@
 #'   # Internal storage:
 #'   rcv$instance # table
 #' }
-ResamplingSptCVskmeans = R6Class("ResamplingSptCVskmeans",
+ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
   inherit = mlr3::Resampling,
 
   public = list(
