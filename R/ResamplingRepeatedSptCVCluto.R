@@ -125,15 +125,35 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
   ),
 
   private = list(
-    .sample = function(ids, coords) {
+    .sample = function(ids, data_matrix, clmethod, cluto_parameters, verbose) {
       pv = self$param_set$values
       folds = as.integer(pv$folds)
+
+      if (is.null(cluto_parameters)) {
+        control_cluto = sprintf("-clmethod='%s'", clmethod)
+      } else {
+        control_cluto = sprintf("-clmethod='%s''%s'", clmethod, cluto_parameters)
+      }
+
+      vcluster_loc = switch(Sys.info()[["sysname"]],
+        "Windows" = system.file("exec/vcluster.exe",
+          package = "mlr3spatiotempcv"),
+        "Linux" = system.file("exec/vcluster",
+          package = "mlr3spatiotempcv"),
+        "Darwin" = stop("macOS is not supported by CLUTO.")
+      )
 
       mlr3misc::map_dtr(seq_len(pv$repeats), function(i) {
         data.table(
           row_id = ids, rep = i,
-          fold = kmeans(coords, centers = folds)$cluster
-        )
+          fold = skmeans::skmeans(data_matrix,
+            k = folds,
+            method = "CLUTO",
+            control = list(
+              vcluster = vcluster_loc,
+              verbose = verbose,
+              control = control_cluto)$cluster
+        ))
       })
     },
 
