@@ -33,10 +33,12 @@ Currently, the following ones are implemented:
 | Spatial Blocking          | blockCV    | Valavi 2019   | `rsmp("spcv-block")`           |
 | Spatial CV                | sperrorest | Brenning 2012 | `rsmp("spcv-coords")`          |
 | Environmental Blocking    | blockCV    | Valavi 2019   | `rsmp("spcv-env")`             |
+| \-                        | \-         | \-            | `rsmp("spcv-cluto")`           |
 | —                         | —          | —             | —                              |
 | Repeated Spatial Blocking | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-block")`  |
 | Repeated Spatial CV       | sperrorest | Brenning 2012 | `rsmp("repeated-spcv-coords")` |
 | Repeated Env Blocking     | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-env")`    |
+| \-                        | \-         | \-            | `rsmp("repeated-spcv-cluto")`  |
 
 ## Spatial tasks
 
@@ -44,7 +46,12 @@ Currently, the following ones are implemented:
 | -------- | ----------------- | ------- |
 | ecuador  | `tsk("ecuador")`  | Classif |
 | diplodia | `tsk("diplodia")` | Classif |
-| cookfarm | `tsk("cookfarm")` | Regr    |
+
+## Spatiotemporal tasks
+
+| Name     | Code              | Type |
+| -------- | ----------------- | ---- |
+| cookfarm | `tsk("cookfarm")` | Regr |
 
 ## Visualization
 
@@ -58,8 +65,8 @@ library(mlr3)
 library(mlr3spatiotempcv)
 library(ggplot2)
 
-task <- tsk("ecuador")
-resampling <- rsmp("spcv-coords", folds = 5)
+task = tsk("ecuador")
+resampling = rsmp("spcv-coords", folds = 5)
 resampling$instantiate(task)
 
 autoplot(resampling, task)
@@ -74,6 +81,20 @@ autoplot(resampling, task, fold_id = 1)
 ```
 
 ![](man/figures/README-spcv-coords-fold-1.png)<!-- -->
+
+### Spatiotemporal Visualization
+
+Three-dimensional visualization via {plotly}
+
+``` r
+library(plotly)
+task_st = tsk("cookfarm")
+resampling = rsmp("spcv-cluto", folds = 5)
+resampling$instantiate(task_st, time_var = "Date")
+autoplot(resampling, task_st, fold_id = 1, point_size = 3)
+```
+
+![](man/figures/spt-viz.png)
 
 ## More resources
 
