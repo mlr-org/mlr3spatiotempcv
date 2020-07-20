@@ -3,9 +3,9 @@ context("ResamplingSptCVskmeans")
 test_that("resampling iterations equals folds", {
   skip_on_os("mac")
 
-  task = test_make_twoclass()
-  rsp = rsmp("spcv-cluto", folds = 2, features = "p_1")
-  rsp$instantiate(task)
+  task = tsk("cookfarm")
+  rsp = rsmp("spcv-cluto", folds = 2)
+  rsp$instantiate(task, time_var = "Date")
 
   expect_equal(rsp$iters, 2)
 })
@@ -15,8 +15,8 @@ test_that("feature p_1 seperates the observations in two folds of equal size", {
 
   skip_on_os("mac")
 
-  task = test_make_twoclass()
-  rsp = rsmp("spcv-cluto", folds = 2, features = "p_1")
+  task = tsk("cookfarm")
+  rsp = rsmp("spcv-cluto", folds = 2)
   rsp$instantiate(task)
 
   expect_equal(rsp$test_set(1), 19:36)
