@@ -97,8 +97,9 @@ ResamplingSptCVskmeans = R6Class("ResamplingSptCVskmeans",
     #'   See Details for more information.
     #' @param cluto_parameters [character]\cr
     #'   Additional parameters to pass to `vcluster`.
-    #'   Must be given as a single character string, e.g. `"param1='value1'param2='value2'"`.
-    #'   See the
+    #'   Must be given as a single character string, e.g.
+    #'   `"param1='value1'param2='value2'"`.
+    #'   See the CLUTO documentation for a full list of supported parameters.
     #' @param verbose [logical]\cr
     #'   Whether to show `vcluster` progress and summary output.
     instantiate = function(task, time_var, clmethod = "direct",

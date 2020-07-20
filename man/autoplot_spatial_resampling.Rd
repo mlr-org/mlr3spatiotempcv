@@ -5,12 +5,13 @@
 \alias{autoplot.ResamplingSpCVEnv}
 \alias{autoplot.ResamplingSpCVBuffer}
 \alias{autoplot.ResamplingSpCVCoords}
+\alias{autoplot.ResamplingSptCVCluto}
 \alias{autoplot.ResamplingCV}
 \alias{autoplot.ResamplingRepeatedCV}
 \alias{autoplot.ResamplingRepeatedSpCVCoords}
 \alias{autoplot.ResamplingRepeatedSpCVEnv}
 \alias{autoplot.ResamplingRepeatedSpCVBlock}
-\alias{autoplot.ResamplingSptCVskmeans}
+\alias{autoplot.ResamplingRepeatedSptCVCluto}
 \title{Visualization of spatial resampling.}
 \usage{
 \method{autoplot}{ResamplingSpCVBlock}(
@@ -50,6 +51,22 @@
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  ...
+)
+
+\method{autoplot}{ResamplingSptCVCluto}(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  tickformat_date = "\%Y-\%m",
+  crs = 4326,
+  nticks_x = 3,
+  nticks_y = 3,
+  point_size = 25,
+  axis_label_fontsize = 11,
   ...
 )
 
@@ -107,10 +124,11 @@
   ...
 )
 
-\method{autoplot}{ResamplingSptCVskmeans}(
+\method{autoplot}{ResamplingRepeatedSptCVCluto}(
   object,
   task,
   fold_id = NULL,
+  repeats_id = NULL,
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
@@ -147,9 +165,6 @@ The color to use for the test set observations.}
 
 \item{...}{Not used.}
 
-\item{repeats_id}{\link{numeric}\cr
-Repetition ID to plot.}
-
 \item{tickformat_date}{\verb{[character]}\cr
 Date format for z-axis.}
 
@@ -167,6 +182,9 @@ Point size of markers.}
 
 \item{axis_label_fontsize}{\verb{[integer]}\cr
 Font size of axis labels.}
+
+\item{repeats_id}{\link{numeric}\cr
+Repetition ID to plot.}
 }
 \value{
 \code{\link[=ggplot]{ggplot()}} or list of ggplot2 objects.
@@ -233,6 +251,22 @@ autoplot(resampling, task)
 autoplot(resampling, task, 1)
 # autoplot(resampling, task, c(1, 2, 3, 4))
 #####
+# SptCVCluto
+#####
+if (Sys.info()[["sysname"]] != "Darwin") {
+  library(mlr3)
+  library(mlr3spatiotempcv)
+  task_st = tsk("cookfarm")
+  resampling = rsmp("spcv-cluto", folds = 5)
+  resampling$instantiate(task_st, "Date")
+
+  # plot
+  # resampling = readRDS("inst/spt-plotting-data.rda")
+  autoplot(resampling, task_st)
+  autoplot(resampling, task_st, 1)
+  autoplot(resampling, task_st, c(1, 2, 3, 4))
+}
+#####
 # Non-Spatial CV
 #####
 library(mlr3)
@@ -288,19 +322,19 @@ autoplot(resampling, task, 1)
 autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 autoplot(resampling, task, c(1, 2, 3, 4))
 #####
-# SptCVskmeans
+# RepeatedSptCVCluto
 #####
 if (Sys.info()[["sysname"]] != "Darwin") {
   library(mlr3)
   library(mlr3spatiotempcv)
   task_st = tsk("cookfarm")
-  resampling = rsmp("spcv-cluto", folds = 5)
+  resampling = rsmp("repeated-spcv-cluto", folds = 5, repeats = 2)
   resampling$instantiate(task_st, "Date")
 
   # plot
   # resampling = readRDS("inst/spt-plotting-data.rda")
   autoplot(resampling, task_st)
-  autoplot(resampling, task_st, 1)
+  autoplot(resampling, task_st, 1, repeats_id = 2)
   autoplot(resampling, task_st, c(1, 2, 3, 4))
 }
 }

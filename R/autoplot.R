@@ -257,6 +257,68 @@ autoplot.ResamplingSpCVCoords = function( # nolint
   )
 }
 
+#' @title Plot for Spatio-temporal clustering
+#'
+#' @param tickformat_date `[character]`\cr
+#'   Date format for z-axis.
+#' @param crs `[character]`\cr
+#'   EPSG code of the CRS for x and y axes.
+#' @param nticks_y `[integer]`\cr
+#'   Number of y axis breaks.
+#' @param nticks_x `[integer]`\cr
+#'   Number of x axis breaks.
+#' @param point_size `[numeric]`\cr
+#'   Point size of markers.
+#' @param axis_label_fontsize `[integer]`\cr
+#'   Font size of axis labels.
+#' @rdname autoplot_spatial_resampling
+#' @export
+#' @examples
+#' #####
+#' # SptCVCluto
+#' #####
+#' if (Sys.info()[["sysname"]] != "Darwin") {
+#'   library(mlr3)
+#'   library(mlr3spatiotempcv)
+#'   task_st = tsk("cookfarm")
+#'   resampling = rsmp("spcv-cluto", folds = 5)
+#'   resampling$instantiate(task_st, "Date")
+#'
+#'   # plot
+#'   # resampling = readRDS("inst/spt-plotting-data.rda")
+#'   autoplot(resampling, task_st)
+#'   autoplot(resampling, task_st, 1)
+#'   autoplot(resampling, task_st, c(1, 2, 3, 4))
+#' }
+autoplot.ResamplingSptCVCluto = function( # nolint
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  tickformat_date = "%Y-%m",
+  crs = 4326,
+  nticks_x = 3,
+  nticks_y = 3,
+  point_size = 25,
+  axis_label_fontsize = 11,
+  ...) {
+
+  autoplot_spatiotemp(
+    resampling = object,
+    task = task,
+    fold_id = fold_id,
+    grid = grid,
+    tickformat_date = tickformat_date,
+    crs = crs,
+    nticks_y = nticks_y,
+    nticks_x = nticks_y,
+    point_size = point_size,
+    axis_label_fontsize = axis_label_fontsize
+  )
+}
+
 #' @title Plot for Spatial Resampling
 #'
 #' @rdname autoplot_spatial_resampling
@@ -425,6 +487,8 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
   )
 }
 
+
+
 #' @title Plot for Spatio-temporal clustering
 #'
 #' @param tickformat_date `[character]`\cr
@@ -443,25 +507,26 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
 #' @export
 #' @examples
 #' #####
-#' # SptCVskmeans
+#' # RepeatedSptCVCluto
 #' #####
 #' if (Sys.info()[["sysname"]] != "Darwin") {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
 #'   task_st = tsk("cookfarm")
-#'   resampling = rsmp("spcv-cluto", folds = 5)
+#'   resampling = rsmp("repeated-spcv-cluto", folds = 5, repeats = 2)
 #'   resampling$instantiate(task_st, "Date")
 #'
 #'   # plot
 #'   # resampling = readRDS("inst/spt-plotting-data.rda")
 #'   autoplot(resampling, task_st)
-#'   autoplot(resampling, task_st, 1)
+#'   autoplot(resampling, task_st, 1, repeats_id = 2)
 #'   autoplot(resampling, task_st, c(1, 2, 3, 4))
 #' }
-autoplot.ResamplingSptCVskmeans = function( # nolint
+autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
   object,
   task,
   fold_id = NULL,
+  repeats_id = NULL,
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
@@ -477,6 +542,7 @@ autoplot.ResamplingSptCVskmeans = function( # nolint
     resampling = object,
     task = task,
     fold_id = fold_id,
+    repeats_id = repeats_id,
     grid = grid,
     tickformat_date = tickformat_date,
     crs = crs,

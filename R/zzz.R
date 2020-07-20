@@ -44,13 +44,14 @@ register_mlr3 = function() {
     x = utils::getFromNamespace("mlr_resamplings", ns = "mlr3")
     mlr_resamplings$add("spcv-block", ResamplingSpCVBlock)
     mlr_resamplings$add("spcv-buffer", ResamplingSpCVBuffer)
+    mlr_resamplings$add("spcv-cluto", ResamplingSptCVskmeans)
     mlr_resamplings$add("spcv-coords", ResamplingSpCVCoords)
     mlr_resamplings$add("spcv-env", ResamplingSpCVEnv)
-    mlr_resamplings$add("spcv-cluto", ResamplingSptCVskmeans)
 
     mlr_resamplings$add("repeated-spcv-coords", ResamplingRepeatedSpCVCoords)
     mlr_resamplings$add("repeated-spcv-env", ResamplingRepeatedSpCVEnv)
     mlr_resamplings$add("repeated-spcv-block", ResamplingRepeatedSpCVBlock)
+    mlr_resamplings$add("repeated-spcv-cluto", ResamplingRepeatedSptCVCluto)
   }
 
   utils::globalVariables("row_id")
