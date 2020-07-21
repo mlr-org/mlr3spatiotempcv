@@ -154,7 +154,8 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
             control = list(
               vcluster = vcluster_loc,
               verbose = verbose,
-              control = control_cluto)
+              control = paste(control_cluto, sprintf("-seed='%s'", i))
+            )
           )$cluster
         )
       })
