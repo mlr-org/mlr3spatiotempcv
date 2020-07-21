@@ -526,7 +526,7 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
   object,
   task,
   fold_id = NULL,
-  repeats_id = NULL,
+  repeats_id = 1,
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
