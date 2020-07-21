@@ -10,26 +10,28 @@
 #'
 #' @export
 #' @examples
-#' library(mlr3)
-#' library(mlr3spatiotempcv)
-#' task = tsk("cookfarm")
+#' if (Sys.info()[["sysname"]] != "Darwin") {
+#'   library(mlr3)
+#'   library(mlr3spatiotempcv)
+#'   task = tsk("cookfarm")
 #'
-#' # Instantiate Resampling
-#' rrcv = rsmp("repeated-spcv-cluto", folds = 3, repeats = 5)
-#' rrcv$instantiate(task, time_var = "Date")
+#'   # Instantiate Resampling
+#'   rrcv = rsmp("repeated-spcv-cluto", folds = 3, repeats = 5)
+#'   rrcv$instantiate(task, time_var = "Date")
 #'
-#' # Individual sets:
-#' rrcv$iters
-#' rrcv$folds(1:6)
-#' rrcv$repeats(1:6)
+#'   # Individual sets:
+#'   rrcv$iters
+#'   rrcv$folds(1:6)
+#'   rrcv$repeats(1:6)
 #'
-#' # Individual sets:
-#' rrcv$train_set(1)
-#' rrcv$test_set(1)
-#' intersect(rrcv$train_set(1), rrcv$test_set(1))
+#'   # Individual sets:
+#'   rrcv$train_set(1)
+#'   rrcv$test_set(1)
+#'   intersect(rrcv$train_set(1), rrcv$test_set(1))
 #'
-#' # Internal storage:
-#' rrcv$instance # table
+#'   # Internal storage:
+#'   rrcv$instance # table
+#' }
 ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
   inherit = mlr3::Resampling,
 
@@ -153,7 +155,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
               vcluster = vcluster_loc,
               verbose = verbose,
               control = control_cluto)
-        )$cluster
+          )$cluster
         )
       })
     },
