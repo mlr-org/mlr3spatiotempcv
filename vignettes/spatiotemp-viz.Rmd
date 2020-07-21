@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+os = ifelse(!Sys.info()[["sysname"]] == "Darwin", TRUE, FALSE)
 ```
 
 {mlr3spatiotempcv} makes use of {plotly} to create the 3D plots for visualizing spatiotemporal folds created via the CLUTO algorithm.
@@ -24,18 +25,12 @@ At this point, manual action by the user is needed.
 Here is an example to create a 2x2 grid showing four folds as 3D subplots.
 It makes use of the returned 3D plotly objects which are returned in a list by `autoplot()`:
 
-```{r, fig.width=9, fig.height=8, fig.align='center'}
+```{r, fig.width=9, fig.height=8, fig.align='center', eval=os}
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm")
 resampling = rsmp("spcv-cluto", folds = 5)
-
-# A saved R object is used here to make the plotting work on any OS for this article.
-# Usually macOS is not supported by the CLUTO algorithm.
-# resampling$instantiate(task_st, "Date")
-resampling = readRDS(system.file("spt-plotting-data.rda", package = "mlr3spatiotempcv"))
-
-# resampling = readRDS("inst/spt-plotting-data.rda")
+resampling$instantiate(task_st, time_var = "Date")
 
 pl = autoplot(resampling, task_st, c(1, 2, 3, 4),
   point_size = 3, axis_label_fontsize = 10)
