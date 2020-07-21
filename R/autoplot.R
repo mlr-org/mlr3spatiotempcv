@@ -301,7 +301,7 @@ autoplot.ResamplingSptCVCluto = function( # nolint
   crs = 4326,
   nticks_x = 3,
   nticks_y = 3,
-  point_size = 25,
+  point_size = 3,
   axis_label_fontsize = 11,
   ...) {
 
@@ -534,7 +534,7 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
   crs = 4326,
   nticks_x = 3,
   nticks_y = 3,
-  point_size = 25,
+  point_size = 3,
   axis_label_fontsize = 11,
   ...) {
 
@@ -712,6 +712,10 @@ autoplot_spatiotemp = function(
   coords_resamp = merge(coords, resampling$instance, by = "row_id")
   task_resamp_ids = merge(data, coords_resamp, by = "row_id")
 
+  if (grepl("Repeated", class(resampling)[1])) {
+    task_resamp_ids = task_resamp_ids[rep == repeats_id, ]
+  }
+
   if (!is.null(crs)) {
     require_namespaces(c("sf"))
     # transform coordinates to WGS84
@@ -722,10 +726,6 @@ autoplot_spatiotemp = function(
     )
     task_resamp_ids$x = coords[, 1]
     task_resamp_ids$y = coords[, 2]
-  }
-
-  if (grepl("Repeated", class(resampling)[1])) {
-    task_resamp_ids = task_resamp_ids[rep == repeats_id, ]
   }
 
   # Create one plot with all (test)-folds

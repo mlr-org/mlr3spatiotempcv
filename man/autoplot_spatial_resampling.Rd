@@ -65,7 +65,7 @@
   crs = 4326,
   nticks_x = 3,
   nticks_y = 3,
-  point_size = 25,
+  point_size = 3,
   axis_label_fontsize = 11,
   ...
 )
@@ -128,7 +128,7 @@
   object,
   task,
   fold_id = NULL,
-  repeats_id = NULL,
+  repeats_id = 1,
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
@@ -136,7 +136,7 @@
   crs = 4326,
   nticks_x = 3,
   nticks_y = 3,
-  point_size = 25,
+  point_size = 3,
   axis_label_fontsize = 11,
   ...
 )
