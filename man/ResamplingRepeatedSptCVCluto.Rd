@@ -2,7 +2,7 @@
 % Please edit documentation in R/ResamplingRepeatedSptCVCluto.R
 \name{ResamplingRepeatedSptCVCluto}
 \alias{ResamplingRepeatedSptCVCluto}
-\title{Repeated Spatio-temporal Cluster Resampling}
+\title{Repeated Spatio-Temporal Cluster Resampling}
 \description{
 Spatio-temporal cluster partitioning via the \code{vcluster}
 executable of the
@@ -59,7 +59,7 @@ effect here.
 }
 
 \examples{
-if (Sys.info()[["sysname"]] != "Darwin") {
+\dontrun{
   library(mlr3)
   library(mlr3spatiotempcv)
   task = tsk("cookfarm")

@@ -56,7 +56,7 @@
 #'
 #' @export
 #' @examples
-#' if (Sys.info()[["sysname"]] != "Darwin") {
+#' \dontrun{
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
 #'   task = tsk("cookfarm")

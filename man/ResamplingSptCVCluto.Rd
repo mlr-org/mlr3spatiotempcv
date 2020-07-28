@@ -2,7 +2,7 @@
 % Please edit documentation in R/ResamplingSptCVCluto.R
 \name{ResamplingSptCVCluto}
 \alias{ResamplingSptCVCluto}
-\title{Spatio-temporal Cluster Resampling}
+\title{Spatio-Temporal Cluster Resampling}
 \description{
 Spatio-temporal cluster partitioning via the \code{vcluster}
 executable of the
