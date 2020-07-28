@@ -23,8 +23,7 @@ below.
 }
 \details{
 By default, \code{-clmethod='direct'} is passed to the \code{vcluster} executable in
-contrast to the upstream default
-\code{-clmethod='rb'}.
+contrast to the upstream default \code{-clmethod='rb'}.
 There is no evidence or research that this method is the best among the
 available ones ("rb", "rbr", "direct", "agglo", "graph", "bagglo"). Also,
 various other parameters can be set via argument \code{cluto_parameters} to
@@ -56,22 +55,22 @@ change at any time without prior notice.
 
 \examples{
 \dontrun{
-  library(mlr3)
-  library(mlr3spatiotempcv)
-  task = tsk("cookfarm")
+library(mlr3)
+library(mlr3spatiotempcv)
+task = tsk("cookfarm")
 
-  # Instantiate Resampling
-  rcv = rsmp("spcv-cluto", folds = 5)
-  rcv$instantiate(task, "Date")
+# Instantiate Resampling
+rcv = rsmp("spcv-cluto", folds = 5)
+rcv$instantiate(task, "Date")
 
-  # Individual sets:
-  rcv$train_set(1)
-  rcv$test_set(1)
-  # check that no obs are in both sets
-  intersect(rcv$train_set(1), rcv$test_set(1)) # good!
+# Individual sets:
+rcv$train_set(1)
+rcv$test_set(1)
+# check that no obs are in both sets
+intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 
-  # Internal storage:
-  rcv$instance # table
+# Internal storage:
+rcv$instance # table
 }
 }
 \references{
