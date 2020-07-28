@@ -14,13 +14,15 @@ knitr::opts_chunk$set(
 )
 os = ifelse(!Sys.info()[["sysname"]] == "Darwin", TRUE, FALSE)
 
-# dont run on CRAN
+
+# dont run on CRAN, only download if exec if missing
 is_cran = ifelse(Sys.getenv("NOT_CRAN") != "false", FALSE, TRUE)
-if (!is_cran && os &&
-  !file.exists(system.file("vcluster", package = "mlr3spatiotempcv")) |
-  !file.exists(system.file("vcluster.exe", package = "mlr3spatiotempcv"))
-) {
-  source("https://gist.githubusercontent.com/pat-s/6430470cf817050e27d26c43c0e9be72/raw/c90480893fdd57ce990795a702aada41382e03a9/install-cluto.R")
+if (!is_cran && os) {
+  if (!file.exists(system.file("vcluster", package = "mlr3spatiotempcv")) &
+    !file.exists(system.file("vcluster.exe", package = "mlr3spatiotempcv"))
+  ) {
+    source("https://gist.githubusercontent.com/pat-s/6430470cf817050e27d26c43c0e9be72/raw/c90480893fdd57ce990795a702aada41382e03a9/install-cluto.R")
+  }
 }
 ```
 
