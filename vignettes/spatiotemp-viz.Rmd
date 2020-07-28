@@ -13,6 +13,15 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 os = ifelse(!Sys.info()[["sysname"]] == "Darwin", TRUE, FALSE)
+
+# dont run on CRAN
+is_cran = ifelse(Sys.getenv("NOT_CRAN") != "false", FALSE, TRUE)
+if (!is_cran && os &&
+  !file.exists(system.file("vcluster", package = "mlr3spatiotempcv")) |
+  !file.exists(system.file("vcluster.exe", package = "mlr3spatiotempcv"))
+) {
+  source("https://gist.githubusercontent.com/pat-s/6430470cf817050e27d26c43c0e9be72/raw/c90480893fdd57ce990795a702aada41382e03a9/install-cluto.R")
+}
 ```
 
 {mlr3spatiotempcv} makes use of {plotly} to create the 3D plots for visualizing spatiotemporal folds created via the CLUTO algorithm.
@@ -25,7 +34,7 @@ At this point, manual action by the user is needed.
 Here is an example to create a 2x2 grid showing four folds as 3D subplots.
 It makes use of the returned 3D plotly objects which are returned in a list by `autoplot()`:
 
-```{r, fig.width=9, fig.height=8, fig.align='center', eval=os}
+```{r, fig.width=9, fig.height=8, fig.align='center', eval=os&&!is_cran}
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm")
