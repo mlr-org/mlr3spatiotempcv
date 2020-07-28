@@ -1,4 +1,4 @@
-#' @title Spatio-temporal Cluster Resampling
+#' @title Spatio-Temporal Cluster Resampling
 #'
 #' @import mlr3
 #'
@@ -21,8 +21,7 @@
 #'
 #' @details
 #' By default, `-clmethod='direct'` is passed to the `vcluster` executable in
-#' contrast to the upstream default
-#' `-clmethod='rb'`.
+#' contrast to the upstream default `-clmethod='rb'`.
 #' There is no evidence or research that this method is the best among the
 #' available ones ("rb", "rbr", "direct", "agglo", "graph", "bagglo"). Also,
 #' various other parameters can be set via argument `cluto_parameters` to
@@ -161,8 +160,9 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
         "Windows" = {
           if (!file.exists(system.file("vcluster.exe",
             package = "mlr3spatiotempcv"))) {
-            cli::cli_alert_danger("{.file vcluster.exe} not found. Please install CLUTO first.
-                                  See {.code ?ResamplingSptCVCluto} for instructions.")
+            cli::cli_alert_danger("{.file vcluster.exe} not found. Please
+              install CLUTO first. See {.code ?ResamplingSptCVCluto} for
+              instructions.", wrap = TRUE)
             stop("CLUTO executable not found.")
           }
           system.file("vcluster.exe",
@@ -171,8 +171,9 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
         "Linux" = {
           if (!file.exists(system.file("vcluster.exe",
             package = "mlr3spatiotempcv"))) {
-            cli::cli_alert_danger("{.file vcluster} not found. Please install CLUTO first.
-                                  See {.code ?ResamplingSptCVCluto} for instructions.")
+            cli::cli_alert_danger("{.file vcluster} not found. Please install
+              CLUTO first. See {.code ?ResamplingSptCVCluto} for
+              instructions.", wrap = TRUE)
             stop("CLUTO executable not found.")
           }
           system.file("vcluster",
