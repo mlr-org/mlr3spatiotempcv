@@ -1,4 +1,4 @@
-## tic GitHub Actions template: linux-macos-windows-deploy
+## tic GitHub Actions template: custom-deploy
 ## revision date: 2020-07-29
 on:
   push:
@@ -22,9 +22,11 @@ jobs:
         config:
           # use a different tic template type if you do not want to build on all listed platforms
           - { os: windows-latest, r: "release" }
-          - { os: macOS-latest, r: "release", pkgdown: "true", latex: "true" }
+          # [Custom matrix env var]
+          - { os: macOS-latest, r: "release", pkgdown: "false", latex: "true" }
           - { os: ubuntu-latest, r: "devel" }
-          - { os: ubuntu-latest, r: "release" }
+          # [Custom matrix env var]
+          - { os: ubuntu-latest, r: "release", pkgdown: "true" }
 
     env:
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
