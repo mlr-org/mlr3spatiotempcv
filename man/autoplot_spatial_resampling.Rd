@@ -253,7 +253,7 @@ autoplot(resampling, task, 1)
 #####
 # SptCVCluto
 #####
-if (Sys.info()[["sysname"]] != "Darwin") {
+\dontrun{
   library(mlr3)
   library(mlr3spatiotempcv)
   task_st = tsk("cookfarm")
@@ -324,7 +324,7 @@ autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # RepeatedSptCVCluto
 #####
-if (Sys.info()[["sysname"]] != "Darwin") {
+\dontrun{
   library(mlr3)
   library(mlr3spatiotempcv)
   task_st = tsk("cookfarm")

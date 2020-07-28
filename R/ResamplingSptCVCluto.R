@@ -7,10 +7,17 @@
 #'   [CLUTO](http://glaros.dtc.umn.edu/gkhome/cluto/cluto/overview) clustering
 #'   application.
 #'
-#' This package ships with standalone binaries for Linux (64bit) and Windows.
-#' macOS is not supported.
-#' The CLUTO manual is wrapped inside the tarball/zip release bundle which is
-#' available at http://glaros.dtc.umn.edu/gkhome/cluto/cluto/download.
+#' This partitioning method relies on the external CLUTO library.
+#' To use it, CLUTO's executables need to be downloaded and installed into
+#' this package.
+#'
+#' See \url{https://gist.github.com/pat-s/6430470cf817050e27d26c43c0e9be72} for an
+#' installation approach that should work on Windows and Linux.
+#' macOS is not supported by CLUTO.
+#'
+#' Before using this method, please check the restrictive
+#' [copyright](http://glaros.dtc.umn.edu/gkhome/cluto/cluto/download) shown
+#' below.
 #'
 #' @details
 #' By default, `-clmethod='direct'` is passed to the `vcluster` executable in
@@ -50,23 +57,23 @@
 #'
 #' @export
 #' @examples
-#' if (Sys.info()[["sysname"]] != "Darwin") {
-#'   library(mlr3)
-#'   library(mlr3spatiotempcv)
-#'   task = tsk("cookfarm")
+#' \dontrun{
+#' library(mlr3)
+#' library(mlr3spatiotempcv)
+#' task = tsk("cookfarm")
 #'
-#'   # Instantiate Resampling
-#'   rcv = rsmp("spcv-cluto", folds = 5)
-#'   rcv$instantiate(task, "Date")
+#' # Instantiate Resampling
+#' rcv = rsmp("spcv-cluto", folds = 5)
+#' rcv$instantiate(task, "Date")
 #'
-#'   # Individual sets:
-#'   rcv$train_set(1)
-#'   rcv$test_set(1)
-#'   # check that no obs are in both sets
-#'   intersect(rcv$train_set(1), rcv$test_set(1)) # good!
+#' # Individual sets:
+#' rcv$train_set(1)
+#' rcv$test_set(1)
+#' # check that no obs are in both sets
+#' intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 #'
-#'   # Internal storage:
-#'   rcv$instance # table
+#' # Internal storage:
+#' rcv$instance # table
 #' }
 ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
   inherit = mlr3::Resampling,
@@ -151,10 +158,26 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
       }
 
       vcluster_loc = switch(Sys.info()[["sysname"]],
-        "Windows" = system.file("exec/vcluster.exe",
-          package = "mlr3spatiotempcv"),
-        "Linux" = system.file("exec/vcluster",
-          package = "mlr3spatiotempcv"),
+        "Windows" = {
+          if (!file.exists(system.file("vcluster.exe",
+            package = "mlr3spatiotempcv"))) {
+            cli::cli_alert_danger("{.file vcluster.exe} not found. Please install CLUTO first.
+                                  See {.code ?ResamplingSptCVCluto} for instructions.")
+            stop("CLUTO executable not found.")
+          }
+          system.file("vcluster.exe",
+            package = "mlr3spatiotempcv")
+        },
+        "Linux" = {
+          if (!file.exists(system.file("vcluster.exe",
+            package = "mlr3spatiotempcv"))) {
+            cli::cli_alert_danger("{.file vcluster} not found. Please install CLUTO first.
+                                  See {.code ?ResamplingSptCVCluto} for instructions.")
+            stop("CLUTO executable not found.")
+          }
+          system.file("vcluster",
+            package = "mlr3spatiotempcv")
+        },
         "Darwin" = stop("macOS is not supported by CLUTO.")
       )
       inds = skmeans::skmeans(data_matrix,

@@ -9,10 +9,17 @@ executable of the
 \href{http://glaros.dtc.umn.edu/gkhome/cluto/cluto/overview}{CLUTO} clustering
 application.
 
-This package ships with standalone binaries for Linux (64bit) and Windows.
-macOS is not supported.
-The CLUTO manual is wrapped inside the tarball/zip release bundle which is
-available at http://glaros.dtc.umn.edu/gkhome/cluto/cluto/download.
+This partitioning method relies on the external CLUTO library.
+To use it, CLUTO's executables need to be downloaded and installed into
+this package.
+
+See \url{https://gist.github.com/pat-s/6430470cf817050e27d26c43c0e9be72} for an
+installation approach that should work on Windows and Linux.
+macOS is not supported by CLUTO.
+
+Before using this method, please check the restrictive
+\href{http://glaros.dtc.umn.edu/gkhome/cluto/cluto/download}{copyright} shown
+below.
 }
 \details{
 By default, \code{-clmethod='direct'} is passed to the \code{vcluster} executable in
@@ -48,7 +55,7 @@ change at any time without prior notice.
 }
 
 \examples{
-if (Sys.info()[["sysname"]] != "Darwin") {
+\dontrun{
   library(mlr3)
   library(mlr3spatiotempcv)
   task = tsk("cookfarm")

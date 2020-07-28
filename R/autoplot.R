@@ -277,18 +277,18 @@ autoplot.ResamplingSpCVCoords = function( # nolint
 #' #####
 #' # SptCVCluto
 #' #####
-#' if (Sys.info()[["sysname"]] != "Darwin") {
-#'   library(mlr3)
-#'   library(mlr3spatiotempcv)
-#'   task_st = tsk("cookfarm")
-#'   resampling = rsmp("spcv-cluto", folds = 5)
-#'   resampling$instantiate(task_st, "Date")
+#' \dontrun{
+#' library(mlr3)
+#' library(mlr3spatiotempcv)
+#' task_st = tsk("cookfarm")
+#' resampling = rsmp("spcv-cluto", folds = 5)
+#' resampling$instantiate(task_st, "Date")
 #'
-#'   # plot
-#'   # resampling = readRDS("inst/spt-plotting-data.rda")
-#'   autoplot(resampling, task_st)
-#'   autoplot(resampling, task_st, 1)
-#'   autoplot(resampling, task_st, c(1, 2, 3, 4))
+#' # plot
+#' # resampling = readRDS("inst/spt-plotting-data.rda")
+#' autoplot(resampling, task_st)
+#' autoplot(resampling, task_st, 1)
+#' autoplot(resampling, task_st, c(1, 2, 3, 4))
 #' }
 autoplot.ResamplingSptCVCluto = function( # nolint
   object,
@@ -509,18 +509,18 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
 #' #####
 #' # RepeatedSptCVCluto
 #' #####
-#' if (Sys.info()[["sysname"]] != "Darwin") {
-#'   library(mlr3)
-#'   library(mlr3spatiotempcv)
-#'   task_st = tsk("cookfarm")
-#'   resampling = rsmp("repeated-spcv-cluto", folds = 5, repeats = 2)
-#'   resampling$instantiate(task_st, "Date")
+#' \dontrun{
+#' library(mlr3)
+#' library(mlr3spatiotempcv)
+#' task_st = tsk("cookfarm")
+#' resampling = rsmp("repeated-spcv-cluto", folds = 5, repeats = 2)
+#' resampling$instantiate(task_st, "Date")
 #'
-#'   # plot
-#'   # resampling = readRDS("inst/spt-plotting-data.rda")
-#'   autoplot(resampling, task_st)
-#'   autoplot(resampling, task_st, 1, repeats_id = 2)
-#'   autoplot(resampling, task_st, c(1, 2, 3, 4))
+#' # plot
+#' # resampling = readRDS("inst/spt-plotting-data.rda")
+#' autoplot(resampling, task_st)
+#' autoplot(resampling, task_st, 1, repeats_id = 2)
+#' autoplot(resampling, task_st, c(1, 2, 3, 4))
 #' }
 autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
   object,
