@@ -26,8 +26,7 @@ library("mlr3spatiotempcv")
 
 # Introduction
 
-This package provides resampling methods for the [mlr3] package framework suited for spatial and temporal data.
-**So far, only spatial resampling methods have been properly implemented.**
+This package provides resampling methods for the {mlr3} package framework suited for spatial and temporal data.
 
 Calling `library("mlr3spatiotempcv")`, makes the spatial resampling methods and example tasks available to the user.
 
@@ -78,7 +77,7 @@ ecuador = TaskClassifST$new(
   crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
 ```
 
-The "ecuador" dataset consists of a response variable named `slides` (boolean; see Figure \@ref(fig:lsl)) and various predictor variables that might have an influence on the occurrence of landslides such as slope, curvature or catchment area.^[Please note that the "ecuador" task is also available via `tsk{ecuador}`.]
+The "ecuador" dataset consists of a response variable named `slides` (boolean; see Figure \@ref(fig:lsl)) and various predictor variables that might have an influence on the occurrence of landslides such as slope, curvature or catchment area.^[Please note that the "ecuador" task is also available via `tsk(ecuador)`.]
 For a detailed overview of the dataset, please refer to @brenning_landslide_2015 and/or Chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace_geocomputation_2019].
 
 
