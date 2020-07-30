@@ -7,7 +7,7 @@ translate_types = function(x) {
 
 check_cluto_path = function() {
   if (!Sys.getenv("CLUTO_PATH") == "") {
-    vcluster_loc = Sys.getenv("CLUTO_PATH")
+    vcluster_loc = normalizePath(Sys.getenv("CLUTO_PATH"))
   } else {
     cli::cli_alert_info("CLUTO executable path not set via env var
           {.var CLUTO_PATH}.
@@ -22,8 +22,8 @@ check_cluto_path = function() {
               instructions.", wrap = TRUE)
           stop("CLUTO executable not found.")
         }
-        system.file("vcluster.exe",
-          package = "mlr3spatiotempcv")
+        normalizePath(system.file("vcluster.exe",
+          package = "mlr3spatiotempcv"))
       },
       "Linux" = {
         if (!file.exists(system.file("vcluster",
