@@ -110,6 +110,10 @@ jobs:
           echo -e 'options(Ncpus = 4, pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
+      # [Custom block]
+      - name: "[Stage] Before Script"
+        run: Rscript -e 'tic::before_script()'
+
       - name: "[Stage] Script"
         run: Rscript -e 'tic::script()'
 
