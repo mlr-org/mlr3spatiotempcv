@@ -5,11 +5,13 @@
 \alias{autoplot.ResamplingSpCVEnv}
 \alias{autoplot.ResamplingSpCVBuffer}
 \alias{autoplot.ResamplingSpCVCoords}
+\alias{autoplot.ResamplingSptCVCluto}
 \alias{autoplot.ResamplingCV}
 \alias{autoplot.ResamplingRepeatedCV}
 \alias{autoplot.ResamplingRepeatedSpCVCoords}
 \alias{autoplot.ResamplingRepeatedSpCVEnv}
 \alias{autoplot.ResamplingRepeatedSpCVBlock}
+\alias{autoplot.ResamplingRepeatedSptCVCluto}
 \title{Visualization of spatial resampling.}
 \usage{
 \method{autoplot}{ResamplingSpCVBlock}(
@@ -49,6 +51,22 @@
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  ...
+)
+
+\method{autoplot}{ResamplingSptCVCluto}(
+  object,
+  task,
+  fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  tickformat_date = "\%Y-\%m",
+  crs = 4326,
+  nticks_x = 3,
+  nticks_y = 3,
+  point_size = 3,
+  axis_label_fontsize = 11,
   ...
 )
 
@@ -105,6 +123,23 @@
   test_color = "#E18727",
   ...
 )
+
+\method{autoplot}{ResamplingRepeatedSptCVCluto}(
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = 1,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  tickformat_date = "\%Y-\%m",
+  crs = 4326,
+  nticks_x = 3,
+  nticks_y = 3,
+  point_size = 3,
+  axis_label_fontsize = 11,
+  ...
+)
 }
 \arguments{
 \item{object}{\link{Resampling}\cr
@@ -130,6 +165,24 @@ The color to use for the test set observations.}
 
 \item{...}{Not used.}
 
+\item{tickformat_date}{\verb{[character]}\cr
+Date format for z-axis.}
+
+\item{crs}{\verb{[character]}\cr
+EPSG code of the CRS for x and y axes.}
+
+\item{nticks_x}{\verb{[integer]}\cr
+Number of x axis breaks.}
+
+\item{nticks_y}{\verb{[integer]}\cr
+Number of y axis breaks.}
+
+\item{point_size}{\verb{[numeric]}\cr
+Point size of markers.}
+
+\item{axis_label_fontsize}{\verb{[integer]}\cr
+Font size of axis labels.}
+
 \item{repeats_id}{\link{numeric}\cr
 Repetition ID to plot.}
 }
@@ -145,7 +198,7 @@ By default a plot is returned; if \code{fold_id} is set, a gridded plot
 is created. If \code{grid = FALSE}, only a list of ggplot2 resamplings is
 returned. This gives the option to align the single plots manually.
 
-When no single fold is selected, the \code{\link[ggsci:scale_color_ucscgb]{ggsci::scale_color_ucscgb()}} palette
+When no single fold is selected, the \code{\link[ggsci:scale_ucscgb]{ggsci::scale_color_ucscgb()}} palette
 is used to display all partitions. If you want to change the colors,
 call \verb{<plot> + <color-palette>()}
 }
@@ -169,7 +222,8 @@ autoplot(resampling, task, fold_id = c(1, 2, 3, 4))
 
 # return only a list of ggplot2 resamplings
 plot_list = autoplot(resampling, task,
-  fold_id = c(1, 2, 3, 4), grid = FALSE)
+  fold_id = c(1, 2, 3, 4), grid = FALSE
+)
 #####
 # SpCVEnv
 #####
@@ -178,7 +232,7 @@ resampling = rsmp("spcv-env", folds = 4, features = c("dem"))
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2, 3, 4))
+# autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # SpCVBuffer
 #####
@@ -186,7 +240,7 @@ library(mlr3)
 resampling = rsmp("spcv-buffer", theRange = 1000)
 resampling$instantiate(task)
 autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2, 3, 4))
+# autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # SpCVCoords
 #####
@@ -195,7 +249,23 @@ resampling = rsmp("spcv-coords")
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2, 3, 4))
+# autoplot(resampling, task, c(1, 2, 3, 4))
+#####
+# SptCVCluto
+#####
+\dontrun{
+library(mlr3)
+library(mlr3spatiotempcv)
+task_st = tsk("cookfarm")
+resampling = rsmp("spcv-cluto", folds = 5)
+resampling$instantiate(task_st, "Date")
+
+# plot
+# resampling = readRDS("inst/spt-plotting-data.rda")
+autoplot(resampling, task_st)
+autoplot(resampling, task_st, 1)
+autoplot(resampling, task_st, c(1, 2, 3, 4))
+}
 #####
 # Non-Spatial CV
 #####
@@ -204,7 +274,7 @@ resampling = rsmp("cv")
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2, 3, 4))
+# autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # Repeated Non-Spatial CV
 #####
@@ -214,7 +284,7 @@ resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, fold_id = 2, repeats_id = 2)
-autoplot(resampling, task, c(1, 2, 3, 4))
+# autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # RepeatedSpCVCoords
 #####
@@ -225,7 +295,7 @@ resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, fold_id = 2, repeats_id = 2)
-autoplot(resampling, task, c(1, 2, 3, 4))
+# autoplot(resampling, task, c(1, 2, 3, 4))
 #####
 # RepeatedSpCVEnv
 #####
@@ -244,10 +314,27 @@ library(mlr3)
 task = tsk("ecuador")
 resampling = rsmp("repeated-spcv-block",
   folds = 5, repeats = 2,
-  range = c(1000, 1500))
+  range = c(1000, 1500)
+)
 resampling$instantiate(task)
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 autoplot(resampling, task, c(1, 2, 3, 4))
+#####
+# RepeatedSptCVCluto
+#####
+\dontrun{
+library(mlr3)
+library(mlr3spatiotempcv)
+task_st = tsk("cookfarm")
+resampling = rsmp("repeated-spcv-cluto", folds = 5, repeats = 2)
+resampling$instantiate(task_st, "Date")
+
+# plot
+# resampling = readRDS("inst/spt-plotting-data.rda")
+autoplot(resampling, task_st)
+autoplot(resampling, task_st, 1, repeats_id = 2)
+autoplot(resampling, task_st, c(1, 2, 3, 4))
+}
 }

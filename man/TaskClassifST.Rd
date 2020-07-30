@@ -13,9 +13,7 @@ initialization, coordinates need to be passed. By default, coordinates are
 not used as features. This can be changed by setting \code{coords_as_features = TRUE}.
 }
 \examples{
-data = data.table::as.data.table(readRDS(system.file("extdata",
-  "ecuador.rda",
-  package = "mlr3spatiotempcv")))
+data = mlr3::as_data_backend(ecuador)
 task = TaskClassifST$new("ecuador",
   backend = data, target = "slides",
   positive = "TRUE", coordinate_names = c("x", "y"))

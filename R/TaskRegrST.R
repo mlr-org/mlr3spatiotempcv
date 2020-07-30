@@ -34,7 +34,8 @@ TaskRegrST <- R6::R6Class("TaskRegrST",
     #'   element of `$class_names` is the positive class, and the second element
     #'   is the negative class.
     #' @param crs `character(1)`\cr
-    #'   Coordinates reference system
+    #'   Coordinate reference system. Either a PROJ string or an
+    #'   [EPSG](https://epsg.io/) code.
     #' @param coords_as_features `logical(1)`\cr
     #'   Whether the coordinates should also be used as features.
     #'   Default is `FALSE`.
@@ -48,7 +49,6 @@ TaskRegrST <- R6::R6Class("TaskRegrST",
 
       assert_string(target)
       super$initialize(id = id, backend = backend, target = target)
-      self$crs = checkmate::assert_character(crs, null.ok = TRUE)
 
       type = self$col_info[id == target]$type
       if (type %nin% c("integer", "numeric")) {

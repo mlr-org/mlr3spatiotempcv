@@ -107,7 +107,8 @@ Whether the coordinates should also be used as features.
 Default is \code{FALSE}.}
 
 \item{\code{crs}}{\code{character(1)}\cr
-Coordinates reference system}
+Coordinate reference system. Either a PROJ string or an
+\href{https://epsg.io/}{EPSG} code.}
 
 \item{\code{coordinate_names}}{\code{character(2)}\cr
 The variables names of the coordinates in the data.}
