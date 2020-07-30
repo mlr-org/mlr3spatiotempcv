@@ -14,8 +14,8 @@ knitr::opts_chunk$set(
 )
 os = ifelse(!Sys.info()[["sysname"]] == "Darwin", TRUE, FALSE)
 
-
-# dont run on CRAN, only download if exec if missing
+# - dont run on CRAN
+# - only download if exec if missing
 is_cran = ifelse(Sys.getenv("NOT_CRAN") != "false", FALSE, TRUE)
 if (!is_cran && os) {
   if (!file.exists(system.file("vcluster", package = "mlr3spatiotempcv")) &
