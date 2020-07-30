@@ -1,5 +1,5 @@
 Package: mlr3spatiotempcv
-Title: Spatial support for mlr3
+Title: Spatiotemporal Resampling Methods for 'mlr3'
 Version: 0.0.0.9006
 Authors@R:
     c(person(given = "Patrick",
@@ -15,9 +15,9 @@ Authors@R:
              family = "Muenchow",
              role = "ctb",
              email = "jannes.muenchow@uni-jena.de"))
-Description: Implements spatio-temporal methods to enhance the
-    experience of mlr3.
-License: MIT + file LICENSE
+Description: Implements spatio-temporal methods to enhance the experience
+    of mlr3.
+License: LGPL-3
 URL: https://mlr3spatiotempcv.mlr-org.com/,
     https://github.com/mlr-org/mlr3spatiotempcv
 BugReports: https://github.com/mlr-org/mlr3spatiotempcv/issues
@@ -49,7 +49,7 @@ Suggests:
     skmeans,
     testthat (>= 2.1.0),
     vdiffr
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 RdMacros:
     mlr3misc
@@ -58,7 +58,7 @@ LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Collate: 
+Collate:
     'ResamplingRepeatedSpCVBlock.R'
     'ResamplingRepeatedSpCVCoords.R'
     'ResamplingRepeatedSpCVEnv.R'
