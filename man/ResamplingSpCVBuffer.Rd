@@ -25,7 +25,7 @@ library(mlr3)
 task = tsk("ecuador")
 
 # Instantiate Resampling
-rcv = rsmp("spcv-buffer", theRange = 1000)
+rcv = rsmp("spcv-buffer", theRange = 10000)
 rcv$instantiate(task)
 
 # Individual sets:
@@ -34,7 +34,7 @@ rcv$test_set(1)
 intersect(rcv$train_set(1), rcv$test_set(1))
 
 # Internal storage:
-rcv$instance
+# rcv$instance
 }
 \references{
 \cite{mlr3spatiotempcv}{valavi2018}

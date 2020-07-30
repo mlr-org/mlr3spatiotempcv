@@ -51,11 +51,6 @@ without warranty of any kind, either expressed or implied.
 The downloading, or executing any part of this software constitutes an
 implicit agreement to these terms. These terms and conditions are subject to
 change at any time without prior notice.
-
-In addition, a different seed is used in every repetition to enforce
-different clusters for each repetition. By default, all repetitions would use
-the same seed and hence be identical. Note that setting an R seed has no
-effect here.
 }
 
 \examples{
@@ -81,6 +76,11 @@ intersect(rrcv$train_set(1), rrcv$test_set(1))
 # Internal storage:
 rrcv$instance # table
 }
+}
+\references{
+FIXME: correct?
+Ying Zhao and George Karypis. 11th Conference of Information and Knowledge
+Management (CIKM), pp. 515-524, 2002.
 }
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingRepeatedSptCVCluto}

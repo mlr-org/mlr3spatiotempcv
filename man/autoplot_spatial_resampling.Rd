@@ -203,9 +203,10 @@ is used to display all partitions. If you want to change the colors,
 call \verb{<plot> + <color-palette>()}
 }
 \examples{
-#####
+##########
 # SpCVBlock
-#####
+##########
+\dontrun{
 library(mlr3)
 task = tsk("ecuador")
 resampling = rsmp("spcv-block", range = 1000)
@@ -220,39 +221,48 @@ autoplot(resampling, task, fold_id = 1)
 ## Visualize train/test splits of multiple folds
 autoplot(resampling, task, fold_id = c(1, 2, 3, 4))
 
-# return only a list of ggplot2 resamplings
+# list of ggplot2 resamplings
 plot_list = autoplot(resampling, task,
-  fold_id = c(1, 2, 3, 4), grid = FALSE
-)
-#####
+  fold_id = c(1, 2, 3, 4), grid = FALSE)
+}
+##########
 # SpCVEnv
-#####
+##########
+\dontrun{
 library(mlr3)
-resampling = rsmp("spcv-env", folds = 4, features = c("dem"))
+resampling = rsmp("spcv-env", folds = 4, features = "dem")
 resampling$instantiate(task)
+
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
-# autoplot(resampling, task, c(1, 2, 3, 4))
-#####
+autoplot(resampling, task, c(1, 2, 3, 4))
+}
+##########
 # SpCVBuffer
-#####
+##########
+\dontrun{
 library(mlr3)
 resampling = rsmp("spcv-buffer", theRange = 1000)
 resampling$instantiate(task)
+
 autoplot(resampling, task, 1)
-# autoplot(resampling, task, c(1, 2, 3, 4))
-#####
+autoplot(resampling, task, c(1, 2, 3, 4))
+}
+##########
 # SpCVCoords
-#####
+##########
+\dontrun{
 library(mlr3)
 resampling = rsmp("spcv-coords")
 resampling$instantiate(task)
+
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
-# autoplot(resampling, task, c(1, 2, 3, 4))
-#####
+autoplot(resampling, task, c(1, 2, 3, 4))
+}
+##########
 # SptCVCluto
-#####
+##########
 \dontrun{
 library(mlr3)
 library(mlr3spatiotempcv)
@@ -266,50 +276,63 @@ autoplot(resampling, task_st)
 autoplot(resampling, task_st, 1)
 autoplot(resampling, task_st, c(1, 2, 3, 4))
 }
-#####
+##########
 # Non-Spatial CV
-#####
+##########
+\dontrun{
 library(mlr3)
 resampling = rsmp("cv")
 resampling$instantiate(task)
+
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
-# autoplot(resampling, task, c(1, 2, 3, 4))
-#####
+autoplot(resampling, task, c(1, 2, 3, 4))
+}
+##########
 # Repeated Non-Spatial CV
-#####
+##########
+\dontrun{
 library(mlr3)
 resampling = rsmp("repeated_cv", folds = 5, repeats = 2)
 resampling$instantiate(task)
-autoplot(resampling, task)
-autoplot(resampling, task, 1)
-autoplot(resampling, task, fold_id = 2, repeats_id = 2)
-# autoplot(resampling, task, c(1, 2, 3, 4))
-#####
-# RepeatedSpCVCoords
-#####
-library(mlr3)
-task = tsk("diplodia")
-resampling = rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
-resampling$instantiate(task)
-autoplot(resampling, task)
-autoplot(resampling, task, 1)
-autoplot(resampling, task, fold_id = 2, repeats_id = 2)
-# autoplot(resampling, task, c(1, 2, 3, 4))
-#####
-# RepeatedSpCVEnv
-#####
-library(mlr3)
-task = tsk("ecuador")
-resampling = rsmp("repeated-spcv-env", folds = 10, repeats = 2)
-resampling$instantiate(task)
+
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 autoplot(resampling, task, c(1, 2, 3, 4))
-#####
+}
+##########
+# RepeatedSpCVCoords
+##########
+\dontrun{
+library(mlr3)
+task = tsk("diplodia")
+resampling = rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
+resampling$instantiate(task)
+
+autoplot(resampling, task)
+autoplot(resampling, task, 1)
+autoplot(resampling, task, fold_id = 2, repeats_id = 2)
+autoplot(resampling, task, c(1, 2, 3, 4))
+}
+##########
+# RepeatedSpCVEnv
+##########
+\dontrun{
+library(mlr3)
+task = tsk("ecuador")
+resampling = rsmp("repeated-spcv-env", folds = 10, repeats = 2)
+resampling$instantiate(task)
+
+autoplot(resampling, task)
+autoplot(resampling, task, 1)
+autoplot(resampling, task, fold_id = 2, repeats_id = 2)
+autoplot(resampling, task, c(1, 2, 3, 4))
+}
+##########
 # RepeatedSpCVBlock
-#####
+##########
+\dontrun{
 library(mlr3)
 task = tsk("ecuador")
 resampling = rsmp("repeated-spcv-block",
@@ -317,13 +340,15 @@ resampling = rsmp("repeated-spcv-block",
   range = c(1000, 1500)
 )
 resampling$instantiate(task)
+
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
 autoplot(resampling, task, fold_id = 2, repeats_id = 2)
 autoplot(resampling, task, c(1, 2, 3, 4))
-#####
+}
+##########
 # RepeatedSptCVCluto
-#####
+##########
 \dontrun{
 library(mlr3)
 library(mlr3spatiotempcv)
@@ -332,7 +357,6 @@ resampling = rsmp("repeated-spcv-cluto", folds = 5, repeats = 2)
 resampling$instantiate(task_st, "Date")
 
 # plot
-# resampling = readRDS("inst/spt-plotting-data.rda")
 autoplot(resampling, task_st)
 autoplot(resampling, task_st, 1, repeats_id = 2)
 autoplot(resampling, task_st, c(1, 2, 3, 4))
