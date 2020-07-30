@@ -40,8 +40,7 @@
 NULL
 
 load_task_cookfarm = function(id = "cookfarm") {
-  b = mlr3::as_data_backend(readRDS(system.file("extdata", "cookfarm.rda",
-    package = "mlr3spatiotempcv")))
+  b = mlr3::as_data_backend(cookfarm)
   b$hash = "_mlr3_tasks_cookfarm_"
   task = TaskRegrST$new(
     id = "cookfarm", b, target = "PHIHOX",

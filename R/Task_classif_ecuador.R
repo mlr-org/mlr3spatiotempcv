@@ -25,8 +25,7 @@
 NULL
 
 load_task_ecuador = function(id = "ecuador") {
-  b = mlr3::as_data_backend(readRDS(system.file("extdata", "ecuador.rda",
-    package = "mlr3spatiotempcv")))
+  b = mlr3::as_data_backend(ecuador)
   b$hash = "_mlr3_tasks_ecuador_"
   task = TaskClassifST$new(
     id = "ecuador", b, target = "slides", positive = "TRUE",
