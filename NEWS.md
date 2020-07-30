@@ -1,3 +1,8 @@
+# mlr3spatiotempcv 0.0.0.9006
+
+- Add `ResamplingSptCVCluto` (#53)
+
+
 # mlr3spatiotempcv 0.0.0.9005
 
 * add/update unit tests, especially for `SpCVEnv`
