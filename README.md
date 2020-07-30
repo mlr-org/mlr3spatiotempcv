@@ -1,5 +1,6 @@
 
-# mlr3spatiotempcv
+mlr3spatiotempcv
+================
 
 Spatio-temporal resampling methods for mlr3.
 
@@ -23,12 +24,13 @@ notice are expected. If you want to use if for your research, you might
 need to refactor your analysis along the way.  
 ⚠️⚠️⚠️
 
-## Resampling methods
+Resampling methods
+------------------
 
 Currently, the following ones are implemented:
 
 | Literature                | Package    | Reference     | mlr3 Sugar                     |
-| ------------------------- | ---------- | ------------- | ------------------------------ |
+|---------------------------|------------|---------------|--------------------------------|
 | Spatial Buffering         | blockCV    | Valavi 2019   | `rsmp("spcv-buffer")`          |
 | Spatial Blocking          | blockCV    | Valavi 2019   | `rsmp("spcv-block")`           |
 | Spatial CV                | sperrorest | Brenning 2012 | `rsmp("spcv-coords")`          |
@@ -40,45 +42,44 @@ Currently, the following ones are implemented:
 | Repeated Env Blocking     | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-env")`    |
 | \-                        | \-         | \-            | `rsmp("repeated-spcv-cluto")`  |
 
-## Spatial tasks
+Spatial tasks
+-------------
 
 | Name     | Code              | Type    |
-| -------- | ----------------- | ------- |
+|----------|-------------------|---------|
 | ecuador  | `tsk("ecuador")`  | Classif |
 | diplodia | `tsk("diplodia")` | Classif |
 
-## Spatiotemporal tasks
+Spatiotemporal tasks
+--------------------
 
 | Name     | Code              | Type |
-| -------- | ----------------- | ---- |
+|----------|-------------------|------|
 | cookfarm | `tsk("cookfarm")` | Regr |
 
-## Visualization
+Visualization
+-------------
 
 Generic S3 function `autoplot()` for all implemented spatial resampling
 methods.
 
 ### Visualization of all folds
 
-``` r
-library(mlr3)
-library(mlr3spatiotempcv)
-library(ggplot2)
+    library(mlr3)
+    library(mlr3spatiotempcv)
+    library(ggplot2)
 
-task = tsk("ecuador")
-resampling = rsmp("spcv-coords", folds = 5)
-resampling$instantiate(task)
+    task = tsk("ecuador")
+    resampling = rsmp("spcv-coords", folds = 5)
+    resampling$instantiate(task)
 
-autoplot(resampling, task)
-```
+    autoplot(resampling, task)
 
 ![](man/figures/README-spcv-coords-all-partitions-1.png)<!-- -->
 
 ### Visualization of a specific fold
 
-``` r
-autoplot(resampling, task, fold_id = 1)
-```
+    autoplot(resampling, task, fold_id = 1)
 
 ![](man/figures/README-spcv-coords-fold-1.png)<!-- -->
 
@@ -86,17 +87,20 @@ autoplot(resampling, task, fold_id = 1)
 
 Three-dimensional visualization via {plotly}
 
-``` r
-library(plotly)
-task_st = tsk("cookfarm")
-resampling = rsmp("spcv-cluto", folds = 5)
-resampling$instantiate(task_st, time_var = "Date")
-autoplot(resampling, task_st, fold_id = 1, point_size = 3)
-```
+(See vignette [“Spatiotemporal
+Visualization”](https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html)
+for an interactive 3D HTML variant.)
+
+    library(plotly)
+    task_st = tsk("cookfarm")
+    resampling = rsmp("spcv-cluto", folds = 5)
+    resampling$instantiate(task_st, time_var = "Date")
+    autoplot(resampling, task_st, fold_id = 1, point_size = 3)
 
 ![](man/figures/spt-viz.png)
 
-## More resources
+More resources
+--------------
 
 For detailed information on how to use spatial resampling in {mlr3}
 please read the section about [spatial analysis in the mlr3
@@ -105,7 +109,8 @@ book](https://mlr3book.mlr-org.com/spatial.html) and consult the
 Started](https://mlr3spatiotempcv.mlr-org.com/articles/mlr3spatiotempcv.html)
 vignette.
 
-# References
+References
+==========
 
 <div id="refs" class="references hanging-indent">
 
