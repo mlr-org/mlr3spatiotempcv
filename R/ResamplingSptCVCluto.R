@@ -151,7 +151,7 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
   private = list(
     .sample = function(ids, data_matrix, clmethod, cluto_parameters, verbose) {
 
-      check_cluto_path()
+      vcluster_loc = check_cluto_path()
 
       if (is.null(cluto_parameters)) {
         control_cluto = sprintf('-clmethod="%s"', clmethod)

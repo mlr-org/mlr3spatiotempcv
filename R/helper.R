@@ -39,4 +39,5 @@ check_cluto_path = function() {
       "Darwin" = stop("macOS is not supported by CLUTO.")
     )
   }
+  return(vcluster_loc)
 }
