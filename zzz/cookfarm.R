@@ -1,21 +1,19 @@
-library(dplyr)
-library(sf)
-library(GSIF)
+requireNamespace("GSIF", quietly = TRUE)
 data(cookfarm)
 set.seed(42)
 
 cookfarm_profiles = cookfarm$profiles
 
 cookfarm_mlr3 = cookfarm_profiles %>%
-  left_join(cookfarm$readings %>%
-    select("Date", "SOURCEID"), by = "SOURCEID") %>%
-  st_as_sf(coords = c("Easting", "Northing"), crs = 26911) %>%
-  mutate(x = st_coordinates(.)[, "X"]) %>%
-  mutate(y = st_coordinates(.)[, "Y"]) %>%
-  mutate(Date = as.character(Date)) %>%
-  st_set_geometry(NULL) %>%
+  dplyr::left_join(cookfarm$readings %>%
+                     dplyr::select("Date", "SOURCEID"), by = "SOURCEID") %>%
+  sf::st_as_sf(coords = c("Easting", "Northing"), crs = 26911) %>%
+  dplyr::mutate(x = sf::st_coordinates(.)[, "X"]) %>%
+  dplyr::mutate(y = sf::st_coordinates(.)[, "Y"]) %>%
+  dplyr::mutate(Date = as.character(Date)) %>%
+  sf::st_set_geometry(NULL) %>%
   na.omit() %>%
-  sample_n(500)
+  dplyr::sample_n(500)
 
 saveRDS(cookfarm_mlr3, "inst/extdata/cookfarm.rda")
 

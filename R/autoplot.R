@@ -702,7 +702,7 @@ autoplot_spatiotemp = function(
   coords$row_id = task$row_ids
   data = task$data()
   data$row_id = task$row_ids
-  require_namespaces(c("plotly"))
+  require_namespaces("plotly")
 
   # instantiate if not yet done
   if (!resampling$is_instantiated) {
@@ -717,7 +717,7 @@ autoplot_spatiotemp = function(
   }
 
   if (!is.null(crs)) {
-    require_namespaces(c("sf"))
+    require_namespaces("sf")
     # transform coordinates to WGS84
     coords = sf::st_coordinates(
       sf::st_transform(
