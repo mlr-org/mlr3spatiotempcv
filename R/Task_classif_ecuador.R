@@ -1,5 +1,7 @@
 #' @title Ecuador Classification Task
 #'
+#' @docType data
+#' @usage data(ecuador)
 #' @name mlr_tasks_ecuador
 #' @format [R6::R6Class] inheriting from [TaskClassif].
 #' @importFrom mlr3 as_data_backend
@@ -22,7 +24,7 @@
 #'   rates of landslides along a humidity gradient in the tropical Andes.
 #'   Geomorphology, 139-140: 271-284.
 #' @template seealso_task
-NULL
+"ecuador"
 
 load_task_ecuador = function(id = "ecuador") {
   b = mlr3::as_data_backend(ecuador)

@@ -169,7 +169,7 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
             package = "mlr3spatiotempcv")
         },
         "Linux" = {
-          if (!file.exists(system.file("vcluster.exe",
+          if (!file.exists(system.file("vcluster",
             package = "mlr3spatiotempcv"))) {
             cli::cli_alert_danger("{.file vcluster} not found. Please install
               CLUTO first. See {.code ?ResamplingSptCVCluto} for

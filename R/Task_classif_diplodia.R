@@ -1,5 +1,7 @@
 #' @title Diplodia Classification Task
 #'
+#' @docType data
+#' @usage data(diplodia)
 #' @name mlr_tasks_diplodia
 #' @format [R6::R6Class] inheriting from [TaskClassif].
 #' @importFrom mlr3 as_data_backend
@@ -23,7 +25,7 @@
 #'   statistical and machine-learning algorithms using spatial data. Ecological
 #'   Modelling, 406, 109–120. https://doi.org/10/gf34bd
 #' @template seealso_task
-NULL
+"diplodia"
 
 load_task_diplodia = function(id = "diplodia") {
   b = mlr3::as_data_backend(diplodia)

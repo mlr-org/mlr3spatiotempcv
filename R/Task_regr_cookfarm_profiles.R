@@ -1,5 +1,7 @@
 #' @title Cookfarm Profiles Regression Task
 #'
+#' @docType data
+#' @usage data(cookfarm)
 #' @name mlr_tasks_cookfarm
 #' @format [R6::R6Class] inheriting from [TaskRegr].
 #' @importFrom mlr3 as_data_backend
@@ -37,7 +39,7 @@
 #' modeling the spatial and temporal variation of soil moisture in a dryland
 #' agricultural field. Submitted to Water Resources Research.
 #' @template seealso_task
-NULL
+"cookfarm"
 
 load_task_cookfarm = function(id = "cookfarm") {
   b = mlr3::as_data_backend(cookfarm)
