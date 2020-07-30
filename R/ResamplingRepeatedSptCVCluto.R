@@ -1,7 +1,5 @@
 #' @title Repeated Spatio-Temporal Cluster Resampling
 #'
-#' @import mlr3
-#'
 #' @template rox_sptcv_cluto
 #'
 #' @export

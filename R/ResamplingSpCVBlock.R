@@ -1,12 +1,7 @@
 #' @title Spatial Block Cross Validation Resampling
 #'
-#' @import mlr3
+#' @template rox_spcv_block
 #'
-#' @description Spatial Block Cross validation implemented by the `blockCV`
-#' package.
-#'
-#' @references
-#' \cite{mlr3spatiotempcv}{valavi2018}
 #' @export
 #' @examples
 #' library(mlr3)

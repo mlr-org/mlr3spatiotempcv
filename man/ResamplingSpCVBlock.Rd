@@ -7,6 +7,16 @@
 Spatial Block Cross validation implemented by the \code{blockCV}
 package.
 }
+\details{
+By default \code{\link[blockCV:spatialBlock]{blockCV::spatialBlock()}} does not allow the creation of multiple
+repetitions. \code{mlr3spatiotempcv} adds support for this when using the \code{range}
+argument for fold creation. When supplying a vector of \code{length(repeats)} for
+argument \code{range}, these different settings will be used to create folds which
+differ among the repetitions.
+
+Multiple repetitions are not possible when using the "row & cols" approach
+because the created folds will always be the same.
+}
 \examples{
 library(mlr3)
 task = tsk("ecuador")
