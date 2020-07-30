@@ -57,26 +57,26 @@
 #' @export
 #' @examples
 #' \dontrun{
-#'   library(mlr3)
-#'   library(mlr3spatiotempcv)
-#'   task = tsk("cookfarm")
+#' library(mlr3)
+#' library(mlr3spatiotempcv)
+#' task = tsk("cookfarm")
 #'
-#'   # Instantiate Resampling
-#'   rrcv = rsmp("repeated-spcv-cluto", folds = 3, repeats = 5)
-#'   rrcv$instantiate(task, time_var = "Date")
+#' # Instantiate Resampling
+#' rrcv = rsmp("repeated-spcv-cluto", folds = 3, repeats = 5)
+#' rrcv$instantiate(task, time_var = "Date")
 #'
-#'   # Individual sets:
-#'   rrcv$iters
-#'   rrcv$folds(1:6)
-#'   rrcv$repeats(1:6)
+#' # Individual sets:
+#' rrcv$iters
+#' rrcv$folds(1:6)
+#' rrcv$repeats(1:6)
 #'
-#'   # Individual sets:
-#'   rrcv$train_set(1)
-#'   rrcv$test_set(1)
-#'   intersect(rrcv$train_set(1), rrcv$test_set(1))
+#' # Individual sets:
+#' rrcv$train_set(1)
+#' rrcv$test_set(1)
+#' intersect(rrcv$train_set(1), rrcv$test_set(1))
 #'
-#'   # Internal storage:
-#'   rrcv$instance # table
+#' # Internal storage:
+#' rrcv$instance # table
 #' }
 ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
   inherit = mlr3::Resampling,
@@ -183,13 +183,39 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
         control_cluto = sprintf("-clmethod='%s''%s'", clmethod, cluto_parameters)
       }
 
-      vcluster_loc = switch(Sys.info()[["sysname"]],
-        "Windows" = system.file("exec/vcluster.exe",
-          package = "mlr3spatiotempcv"),
-        "Linux" = system.file("exec/vcluster",
-          package = "mlr3spatiotempcv"),
-        "Darwin" = stop("macOS is not supported by CLUTO.")
-      )
+      if (!Sys.getenv("CLUTO_PATH") == "") {
+        vcluster_loc = Sys.getenv("CLUTO_PATH")
+      } else {
+        cli::cli_alert_info("CLUTO executable path not set via env var
+          {.var CLUTO_PATH}.
+          Trying to find it in {.pkg mlr3spatiotempcv}.", wrap = TRUE)
+
+        vcluster_loc = switch(Sys.info()[["sysname"]],
+          "Windows" = {
+            if (!file.exists(system.file("vcluster.exe",
+              package = "mlr3spatiotempcv"))) {
+              cli::cli_alert_danger("{.file vcluster.exe} not found. Please
+              install CLUTO first. See {.code ?ResamplingSptCVCluto} for
+              instructions.", wrap = TRUE)
+              stop("CLUTO executable not found.")
+            }
+            system.file("vcluster.exe",
+              package = "mlr3spatiotempcv")
+          },
+          "Linux" = {
+            if (!file.exists(system.file("vcluster",
+              package = "mlr3spatiotempcv"))) {
+              cli::cli_alert_danger("{.file vcluster} not found. Please install
+              CLUTO first. See {.code ?ResamplingSptCVCluto} for
+              instructions.", wrap = TRUE)
+              stop("CLUTO executable not found.")
+            }
+            system.file("vcluster",
+              package = "mlr3spatiotempcv")
+          },
+          "Darwin" = stop("macOS is not supported by CLUTO.")
+        )
+      }
 
       mlr3misc::map_dtr(seq_len(pv$repeats), function(i) {
         data.table(
