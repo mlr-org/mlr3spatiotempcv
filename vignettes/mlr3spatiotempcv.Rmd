@@ -82,7 +82,7 @@ The "ecuador" dataset consists of a response variable named `slides` (boolean; s
 For a detailed overview of the dataset, please refer to @brenning_landslide_2015 and/or Chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace_geocomputation_2019].
 
 
-```{r lsl, echo=FALSE, fig.cap="Landslide initiation points (red) and non-landslide points (blue) in Southern Ecuador. Figure taken from @lovelace_geocomputation_2019.", fig.align="center", out.width="70%"}
+```{r lsl, echo=FALSE, fig.cap="Landslide initiation points (red) and non-landslide points (blue) in Southern Ecuador. Figure taken from @lovelace_geocomputation_2019.", fig.align="center", out.width="70%", dpi=75}
 knitr::include_graphics("https://geocompr.robinlovelace.net/figures/lsl-map-1.png")
 ```
 
@@ -145,13 +145,13 @@ To showcase the usage, we will visualize both resampling methods which we create
 Multiple options exists.
 If no specific fold is specified, all partitions will be returned distinguished by color.
 
-```{r ressp, fig.cap="Example for five spatially disjoint partitions constructed with the `repeated_cv` resampling method."}
+```{r ressp, fig.align='center', dpi=75, fig.cap="Example for five spatially disjoint partitions constructed with the `repeated_cv` resampling method."}
 autoplot(object = resampling_sp, task = ecuador)
 ```
 
 ### Non-spatial
 
-```{r}
+```{r, fig.align='center', dpi=75}
 autoplot(object = resampling_nsp, task = ecuador)
 ```
 
