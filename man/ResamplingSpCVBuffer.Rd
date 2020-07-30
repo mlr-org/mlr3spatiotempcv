@@ -15,7 +15,7 @@ buffer around the test observation are included in the training set.
 
 The parameter \code{spDataType = PB} and \code{addBG} are designed for
 presence-background data in species distribution modelling. If \code{spDataType = PB}, test sets are only created for each presence observation
-(\verb{task\\$postive}). The option \code{addBG = TRUE} adds the background data inside
+(\verb{task\\$positive}). The option \code{addBG = TRUE} adds the background data inside
 the buffer to the corresponding test sets. For each test set, all
 observations outside the buffer around the test observation are included in
 the training set.

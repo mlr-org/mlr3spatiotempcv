@@ -4,10 +4,10 @@
 \alias{ResamplingSpCVEnv}
 \title{Environmental Block Cross Validation Resampling}
 \description{
-Environmental Block Cross Validation. This strategy uses k-means clustering
-to specify blocks of similar environmental conditions. Only numeric features
-can be used. The \code{features} used for building blocks can be specified in the
-\code{param_set}. By default, all numeric features are used.
+Environmental Block Cross Validation. This strategy uses k-means
+clustering to specify blocks of similar environmental conditions. Only
+numeric features can be used. The \code{features} used for building blocks can
+be specified in the \code{param_set}. By default, all numeric features are used.
 }
 \examples{
 library(mlr3)
