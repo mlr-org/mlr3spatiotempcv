@@ -26,7 +26,7 @@ jobs:
           - { os: macOS-latest, r: "release", pkgdown: "false", latex: "true" }
           - { os: ubuntu-latest, r: "devel" }
           # [Custom matrix env var]
-          - { os: ubuntu-latest, r: "4.0", pkgdown: "true" }
+          - { os: ubuntu-latest, r: "release", pkgdown: "true" }
 
     env:
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
@@ -74,8 +74,8 @@ jobs:
         uses: pat-s/always-upload-cache@v2.1.0
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}1
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}1
 
       - name: "[Custom block] [Linux] Install spatial libraries"
         if: runner.os == 'Linux'
