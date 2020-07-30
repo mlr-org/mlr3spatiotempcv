@@ -150,13 +150,14 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
 
   private = list(
     .sample = function(ids, data_matrix, clmethod, cluto_parameters, verbose) {
-      if (is.null(cluto_parameters)) {
-        control_cluto = sprintf("-clmethod='%s'", clmethod)
-      } else {
-        control_cluto = sprintf("-clmethod='%s''%s'", clmethod, cluto_parameters)
-      }
 
       check_cluto_path()
+
+      if (is.null(cluto_parameters)) {
+        control_cluto = sprintf('-clmethod="%s"', clmethod)
+      } else {
+        control_cluto = sprintf('-clmethod="%s""%s"', clmethod, cluto_parameters)
+      }
 
       inds = skmeans::skmeans(data_matrix,
         k = self$param_set$values$folds,

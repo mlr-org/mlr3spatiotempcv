@@ -174,16 +174,17 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
 
   private = list(
     .sample = function(ids, data_matrix, clmethod, cluto_parameters, verbose) {
+
+      check_cluto_path()
+
       pv = self$param_set$values
       folds = as.integer(pv$folds)
 
       if (is.null(cluto_parameters)) {
-        control_cluto = sprintf("-clmethod='%s'", clmethod)
+        control_cluto = sprintf('-clmethod="%s"', clmethod)
       } else {
-        control_cluto = sprintf("-clmethod='%s''%s'", clmethod, cluto_parameters)
+        control_cluto = sprintf('-clmethod="%s""%s"', clmethod, cluto_parameters)
       }
-
-      check_cluto_path()
 
       mlr3misc::map_dtr(seq_len(pv$repeats), function(i) {
         data.table(
