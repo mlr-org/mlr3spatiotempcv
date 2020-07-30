@@ -18,3 +18,8 @@
 ^\.lintr$
 ^\.vscode$
 ^gfortran.*
+^joss$
+^man-roxygen$
+^BinaryFiles$
+^cluto$
+^zzz$

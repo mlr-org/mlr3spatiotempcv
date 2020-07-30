@@ -70,10 +70,10 @@ By default, coordinates are not used as features and will be removed from the fe
 For optional plotting purposes, it is recommended to also pass the PROJ string specifying the used coordinate reference system via the `crs` argument.
 
 ```{r}
-data = mlr3::as_data_backend(readRDS(system.file("extdata", "ecuador.rda",
-  package = "mlr3spatiotempcv")))
+data = mlr3::as_data_backend(ecuador)
 
-ecuador = TaskClassifST$new(id = "ecuador", backend = data, target = "slides",
+ecuador = TaskClassifST$new(
+  id = "ecuador", backend = data, target = "slides",
   positive = "TRUE", coordinate_names = c("x", "y"), coords_as_features = FALSE,
   crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
 ```
@@ -104,7 +104,8 @@ To emphasize that common, i.e., non-spatial, cross-validation is usually over-op
 ```{r}
 learner = lrn("classif.rpart", maxdepth = 3, predict_type = "prob")
 resampling_nsp = rsmp("repeated_cv", folds = 5, repeats = 5)
-rr_nsp = resample(task = ecuador, learner = learner,
+rr_nsp = resample(
+  task = ecuador, learner = learner,
   resampling = resampling_nsp)
 
 rr_nsp$aggregate(measures = msr("classif.ce"))
@@ -120,7 +121,8 @@ Hence, let's do the cross-validation again, this time taking into account the sp
 ```{r}
 resampling_sp = rsmp("repeated-spcv-coords", folds = 5, repeats = 5)
 
-rr_sp = resample(task = ecuador, learner = learner,
+rr_sp = resample(
+  task = ecuador, learner = learner,
   resampling = resampling_sp)
 
 rr_sp$aggregate(measures = msr("classif.ce"))

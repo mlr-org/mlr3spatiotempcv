@@ -1,5 +1,7 @@
 #' @title Diplodia Classification Task
 #'
+#' @docType data
+#' @usage data(diplodia)
 #' @name mlr_tasks_diplodia
 #' @format [R6::R6Class] inheriting from [TaskClassif].
 #' @importFrom mlr3 as_data_backend
@@ -23,11 +25,13 @@
 #'   statistical and machine-learning algorithms using spatial data. Ecological
 #'   Modelling, 406, 109–120. https://doi.org/10/gf34bd
 #' @template seealso_task
+"diplodia"
+
 load_task_diplodia = function(id = "diplodia") {
-  b = mlr3::as_data_backend(readRDS(system.file("extdata", "diplodia.rda",
-    package = "mlr3spatiotempcv")))
+  b = mlr3::as_data_backend(diplodia)
   b$hash = "_mlr3_tasks_diplodia_"
-  task = TaskClassifST$new(id, b,
+  task = TaskClassifST$new(
+    id = "diplodia", b,
     target = "diplo01", positive = "1",
     coordinate_names = c("x", "y"), coords_as_features = FALSE,
     crs = "+proj=utm +zone=30 +south +datum=WGS84 +units=m +no_defs")

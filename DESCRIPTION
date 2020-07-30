@@ -22,25 +22,31 @@ URL: https://mlr3spatiotempcv.mlr-org.com/,
     https://github.com/mlr-org/mlr3spatiotempcv
 BugReports: https://github.com/mlr-org/mlr3spatiotempcv/issues
 Depends:
-    R (>= 3.1.0)
+    R (>= 3.5.0)
 Imports:
     checkmate,
+    cli,
     data.table,
     ggplot2,
     mlr3,
     mlr3misc (>= 0.1.7),
     paradox,
-    R6
+    R6,
+    utils
 Suggests:
     bibtex,
     blockCV (>= 2.1.1),
     bookdown,
     cowplot,
     ggsci,
+    GSIF,
     knitr,
+    plotly,
+    renv,
     rmarkdown,
     rpart,
     sf,
+    skmeans,
     testthat (>= 2.1.0),
     vdiffr
 VignetteBuilder: 
@@ -51,16 +57,18 @@ Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Collate: 
     'Task_classif_ecuador.R'
     'Task_classif_diplodia.R'
     'Task_regr_cookfarm_profiles.R'
     'ResamplingSpCVBlock.R'
     'ResamplingSpCVBuffer.R'
+    'ResamplingSptCVCluto.R'
     'ResamplingSpCVCoords.R'
     'ResamplingSpCVEnv.R'
     'ResamplingRepeatedSpCVCoords.R'
+    'ResamplingRepeatedSptCVCluto.R'
     'ResamplingRepeatedSpCVEnv.R'
     'ResamplingRepeatedSpCVBlock.R'
     'TaskClassifST.R'
