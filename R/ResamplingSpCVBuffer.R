@@ -28,7 +28,7 @@
 #' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv = rsmp("spcv-buffer", theRange = 1000)
+#' rcv = rsmp("spcv-buffer", theRange = 10000)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -37,7 +37,7 @@
 #' intersect(rcv$train_set(1), rcv$test_set(1))
 #'
 #' # Internal storage:
-#' rcv$instance
+#' # rcv$instance
 ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
   inherit = mlr3::Resampling,
 
