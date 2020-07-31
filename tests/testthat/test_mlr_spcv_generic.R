@@ -44,6 +44,7 @@ test_that("train and test set getter functions are working", {
   spcv_rsp$`repeated-spcv-env` = NULL
   spcv_rsp$`spcv-block` = NULL
   spcv_rsp$`spcv-cluto` = NULL
+  spcv_rsp$`spcv-cstf` = NULL
   spcv_rsp$`repeated-spcv-cluto` = NULL
   # nolint end
 
