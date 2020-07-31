@@ -4,7 +4,7 @@
 \name{mlr3spatiotempcv-package}
 \alias{mlr3spatiotempcv}
 \alias{mlr3spatiotempcv-package}
-\title{mlr3spatiotempcv: Spatial support for mlr3}
+\title{mlr3spatiotempcv: Spatiotemporal Resampling Methods for 'mlr3'}
 \description{
 Implements spatio-temporal methods to enhance the
     experience of mlr3.
