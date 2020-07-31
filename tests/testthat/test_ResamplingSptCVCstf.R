@@ -1,12 +1,9 @@
 context("ResamplingSptCVCstf")
 
 test_that("mlr3spatiotempcv implementation is equal to CAST: time + space", {
-  library(mlr3)
-  library(mlr3spatiotempcv)
-  set.seed(42)
-
   task = tsk("cookfarm")
   rsp = rsmp("spcv-cstf", folds = 10)
+  set.seed(42)
   rsp$instantiate(task, time_var = "Date", space_var = "SOURCEID")
   rsp$test_set(1)
 
@@ -18,12 +15,9 @@ test_that("mlr3spatiotempcv implementation is equal to CAST: time + space", {
 })
 
 test_that("mlr3spatiotempcv implementation is equal to CAST: time ", {
-  library(mlr3)
-  library(mlr3spatiotempcv)
-  set.seed(42)
-
   task = tsk("cookfarm")
   rsp = rsmp("spcv-cstf", folds = 10)
+  set.seed(42)
   rsp$instantiate(task, time_var = "Date")
   rsp$test_set(1)
 
@@ -35,12 +29,9 @@ test_that("mlr3spatiotempcv implementation is equal to CAST: time ", {
 })
 
 test_that("mlr3spatiotempcv implementation is equal to CAST: space", {
-  library(mlr3)
-  library(mlr3spatiotempcv)
-  set.seed(42)
-
   task = tsk("cookfarm")
   rsp = rsmp("spcv-cstf", folds = 10)
+  set.seed(42)
   rsp$instantiate(task, space_var = "SOURCEID")
   rsp$test_set(1)
 
@@ -52,12 +43,9 @@ test_that("mlr3spatiotempcv implementation is equal to CAST: space", {
 })
 
 test_that("mlr3spatiotempcv implementation is equal to CAST: space", {
-  library(mlr3)
-  library(mlr3spatiotempcv)
-  set.seed(42)
-
   task = tsk("cookfarm")
   rsp = rsmp("spcv-cstf", folds = 10)
+  set.seed(42)
   rsp$instantiate(task, space_var = "SOURCEID", class = "TAXSUSDA")
   rsp$test_set(1)
 
