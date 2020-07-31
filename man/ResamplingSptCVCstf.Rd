@@ -15,7 +15,7 @@ should be similar in each fold (class="LUC").
 }
 \examples{
 library(mlr3)
-task = tsk("ecuador")
+task = tsk("cookfarm")
 
 # Instantiate Resampling
 rcv = rsmp("spcv-cstf", folds = 5)
