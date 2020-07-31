@@ -14,7 +14,7 @@
 #'
 #' @family Task
 #' @export
-TaskRegrST <- R6::R6Class("TaskRegrST",
+TaskRegrST = R6::R6Class("TaskRegrST",
   inherit = TaskRegr,
   public = list(
 
