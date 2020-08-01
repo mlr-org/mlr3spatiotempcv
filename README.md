@@ -36,7 +36,7 @@ Currently, the following ones are implemented:
 | Spatial CV                  | sperrorest | Brenning 2012 | `rsmp("spcv-coords")`          |
 | Environmental Blocking      | blockCV    | Valavi 2019   | `rsmp("spcv-env")`             |
 | \-                          | \-         | \-            | `rsmp("sptcv-cluto")`          |
-| Leave-Location-and-Time-Out | CAST       | Meyer 2018    | `rsmp("sptcv-cast")`           |
+| Leave-Location-and-Time-Out | CAST       | Meyer 2018    | `rsmp("sptcv-cstf")`           |
 | —                           | —          | —             | —                              |
 | Repeated Spatial Blocking   | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-block")`  |
 | Repeated Spatial CV         | sperrorest | Brenning 2012 | `rsmp("repeated-spcv-coords")` |
@@ -61,8 +61,7 @@ Spatiotemporal tasks
 Visualization
 -------------
 
-Generic S3 function `autoplot()` for all implemented spatial resampling
-methods.
+S3 `autoplot()` for all implemented spatial resampling methods.
 
 ### Visualization of all folds
 
