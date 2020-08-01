@@ -57,7 +57,7 @@ Currently, the following ones are implemented:
 
 ## Visualization
 
-Generic S3 function `autoplot()` for all implemented spatial resampling methods.
+S3 `autoplot()` for all implemented spatial resampling methods.
 
 ### Visualization of all folds
 
