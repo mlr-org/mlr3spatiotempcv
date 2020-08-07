@@ -1,6 +1,8 @@
 ## tic GitHub Actions template: custom-deploy
 ## revision date: 2020-07-29
+# [Custom header]
 on:
+  workflow_dispatch:
   push:
   pull_request:
   # for now, CRON jobs only run on the default branch of the repo (i.e. usually on master)
@@ -110,8 +112,7 @@ jobs:
           echo -e 'options(Ncpus = 4, pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
           Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
-      # [Custom block]
-      - name: "[Stage] Before Script"
+      - name: "[Custom block] [Stage] Before Script"
         run: Rscript -e 'tic::before_script()'
 
       - name: "[Stage] Script"
