@@ -115,7 +115,7 @@ values stored in the \code{param_set}.}
 \subsection{Method \code{new()}}{
 FIXME.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCluto$new(id = "spcv-cluto")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCluto$new(id = "sptcv-cluto")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

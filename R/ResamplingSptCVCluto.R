@@ -31,7 +31,7 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
     #' FIXME.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
-    initialize = function(id = "spcv-cluto") {
+    initialize = function(id = "sptcv-cluto") {
       ps = ParamSet$new(params = list(
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required")
       ))

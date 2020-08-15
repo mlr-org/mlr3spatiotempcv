@@ -121,7 +121,7 @@ values stored in the \code{param_set}.}
 \subsection{Method \code{new()}}{
 Create an "coordinate-based" repeated resampling instance.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCluto$new(id = "repeated-spcv-cluto")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCluto$new(id = "repeated-sptcv-cluto")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
