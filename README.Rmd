@@ -11,49 +11,46 @@ nocite: |
 Spatio-temporal resampling methods for mlr3.
 
 <!-- badges: start -->
-[![tic](https://github.com/mlr-org/mlr3spatiotempcv/workflows/tic/badge.svg?branch=master)](https://github.com/mlr-org/mlr3spatiotempcv/actions)
-[![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/mlr3spatiotempcv)](https://cran.r-project.org/package=mlr3spatiotempcv)
-[![Coverage status](https://codecov.io/gh/mlr-org/mlr3spatiotempcv/branch/master/graph/badge.svg)](https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=master)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-<!-- badges: end -->
+
+[![tic](https://github.com/mlr-org/mlr3spatiotempcv/workflows/tic/badge.svg?branch=master)](https://github.com/mlr-org/mlr3spatiotempcv/actions) [![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/mlr3spatiotempcv)](https://cran.r-project.org/package=mlr3spatiotempcv) [![Coverage status](https://codecov.io/gh/mlr-org/mlr3spatiotempcv/branch/master/graph/badge.svg)](https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=master) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) <!-- badges: end -->
 
 This package extends the [mlr3](https://github.com/mlr-org/mlr3) package framework with spatiotemporal resampling and visualization methods.
 
-⚠️⚠️⚠️  
-The package is in very early stages and breaking changes withour further notice are expected.
-If you want to use if for your research, you might need to refactor your analysis along the way.  
+⚠️⚠️⚠️\
+The package is in very early stages and breaking changes withour further notice are expected. If you want to use if for your research, you might need to refactor your analysis along the way.\
 ⚠️⚠️⚠️
 
 ## Resampling methods
 
 Currently, the following ones are implemented:
 
-| Literature                  | Package    | Reference     | mlr3 Sugar                     |
-| --------------------------- | ---------- | ------------- | ------------------------------ |
-| Spatial Buffering           | blockCV    | Valavi 2019   | `rsmp("spcv-buffer")`          |
-| Spatial Blocking            | blockCV    | Valavi 2019   | `rsmp("spcv-block")`           |
-| Spatial CV                  | sperrorest | Brenning 2012 | `rsmp("spcv-coords")`          |
-| Environmental Blocking      | blockCV    | Valavi 2019   | `rsmp("spcv-env")`             |
-| -                           | -          | -             | `rsmp("sptcv-cluto")`          |
-| Leave-Location-and-Time-Out | CAST       | Meyer 2018    | `rsmp("sptcv-cstf")`           |
-| ---                         | ---        | ---           | ---                            |
-| Repeated Spatial Blocking   | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-block")`  |
-| Repeated Spatial CV         | sperrorest | Brenning 2012 | `rsmp("repeated-spcv-coords")` |
-| Repeated Env Blocking       | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-env")`    |
-| -                           | -          | -             | `rsmp("repeated-sptcv-cluto")` |
+| Literature                           | Package    | Reference     | mlr3 Sugar                     |
+|--------------------------------------|------------|---------------|--------------------------------|
+| Spatial Buffering                    | blockCV    | Valavi 2019   | `rsmp("spcv-buffer")`          |
+| Spatial Blocking                     | blockCV    | Valavi 2019   | `rsmp("spcv-block")`           |
+| Spatial CV                           | sperrorest | Brenning 2012 | `rsmp("spcv-coords")`          |
+| Environmental Blocking               | blockCV    | Valavi 2019   | `rsmp("spcv-env")`             |
+| \-                                   | \-         | \-            | `rsmp("sptcv-cluto")`          |
+| Leave-Location-and-Time-Out          | CAST       | Meyer 2018    | `rsmp("sptcv-cstf")`           |
+| ---                                  | ---        | ---           | ---                            |
+| Repeated Spatial Blocking            | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-block")`  |
+| Repeated Spatial CV                  | sperrorest | Brenning 2012 | `rsmp("repeated-spcv-coords")` |
+| Repeated Env Blocking                | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-env")`    |
+| \-                                   | \-         | \-            | `rsmp("repeated-sptcv-cluto")` |
+| Repeated Leave-Location-and-Time-Out | CAST       | Meyer 2018    | `rsmp("repeated-sptcv-cstf")`  |
 
 ## Spatial tasks
 
 | Name     | Code              | Type    |
-| ---      | ---               | ---     |
+|----------|-------------------|---------|
 | ecuador  | `tsk("ecuador")`  | Classif |
 | diplodia | `tsk("diplodia")` | Classif |
 
 ## Spatiotemporal tasks
 
-| Name     | Code              | Type    |
-| ---      | ---               | ---     |
-| cookfarm | `tsk("cookfarm")` | Regr    |
+| Name     | Code              | Type |
+|----------|-------------------|------|
+| cookfarm | `tsk("cookfarm")` | Regr |
 
 ## Visualization
 
@@ -65,7 +62,6 @@ S3 `autoplot()` for all implemented spatial resampling methods.
 set.seed(123)
 knitr::opts_chunk$set(fig.path = "man/figures/README-")
 ```
-
 
 ```{r spcv-coords-all-partitions, warning=FALSE}
 library(mlr3)

@@ -29,19 +29,20 @@ Resampling methods
 
 Currently, the following ones are implemented:
 
-| Literature                  | Package    | Reference     | mlr3 Sugar                     |
-|-----------------------------|------------|---------------|--------------------------------|
-| Spatial Buffering           | blockCV    | Valavi 2019   | `rsmp("spcv-buffer")`          |
-| Spatial Blocking            | blockCV    | Valavi 2019   | `rsmp("spcv-block")`           |
-| Spatial CV                  | sperrorest | Brenning 2012 | `rsmp("spcv-coords")`          |
-| Environmental Blocking      | blockCV    | Valavi 2019   | `rsmp("spcv-env")`             |
-| \-                          | \-         | \-            | `rsmp("sptcv-cluto")`          |
-| Leave-Location-and-Time-Out | CAST       | Meyer 2018    | `rsmp("sptcv-cstf")`           |
-| —                           | —          | —             | —                              |
-| Repeated Spatial Blocking   | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-block")`  |
-| Repeated Spatial CV         | sperrorest | Brenning 2012 | `rsmp("repeated-spcv-coords")` |
-| Repeated Env Blocking       | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-env")`    |
-| \-                          | \-         | \-            | `rsmp("repeated-sptcv-cluto")` |
+| Literature                           | Package    | Reference     | mlr3 Sugar                     |
+|--------------------------------------|------------|---------------|--------------------------------|
+| Spatial Buffering                    | blockCV    | Valavi 2019   | `rsmp("spcv-buffer")`          |
+| Spatial Blocking                     | blockCV    | Valavi 2019   | `rsmp("spcv-block")`           |
+| Spatial CV                           | sperrorest | Brenning 2012 | `rsmp("spcv-coords")`          |
+| Environmental Blocking               | blockCV    | Valavi 2019   | `rsmp("spcv-env")`             |
+| \-                                   | \-         | \-            | `rsmp("sptcv-cluto")`          |
+| Leave-Location-and-Time-Out          | CAST       | Meyer 2018    | `rsmp("sptcv-cstf")`           |
+| —                                    | —          | —             | —                              |
+| Repeated Spatial Blocking            | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-block")`  |
+| Repeated Spatial CV                  | sperrorest | Brenning 2012 | `rsmp("repeated-spcv-coords")` |
+| Repeated Env Blocking                | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-env")`    |
+| \-                                   | \-         | \-            | `rsmp("repeated-sptcv-cluto")` |
+| Repeated Leave-Location-and-Time-Out | CAST       | Meyer 2018    | `rsmp("repeated-sptcv-cstf")`  |
 
 Spatial tasks
 -------------
