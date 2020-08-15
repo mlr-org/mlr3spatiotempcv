@@ -77,6 +77,7 @@ Collate:
     'Task_classif_ecuador.R'
     'Task_regr_cookfarm_profiles.R'
     'autoplot.R'
+    'autoplot_helper.R'
     'helper.R'
     'mlr3spatiotempcv-package.R'
     'reexports.R'
