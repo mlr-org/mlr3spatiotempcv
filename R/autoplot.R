@@ -399,7 +399,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
 
     if (length(fold_id) == 1) {
       ### only one fold
-      data_coords = prepare_autoplot_cstf()
+      data_coords = prepare_autoplot_cstf(task)
 
       # suppress undefined global variables note
       indicator = NULL

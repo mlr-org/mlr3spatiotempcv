@@ -1,5 +1,5 @@
 # reducing redundant code parts
-prepare_autoplot_cstf = function() {
+prepare_autoplot_cstf = function(task) {
 
   data = task$data()
   data$row_id = task$row_ids
