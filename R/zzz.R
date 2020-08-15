@@ -55,7 +55,9 @@ register_mlr3 = function() {
     mlr_resamplings$add("repeated-spcv-cluto", ResamplingRepeatedSptCVCluto)
   }
 
-  utils::globalVariables(c("row_id", "cookfarm", "ecuador", "diplodia"))
+  utils::globalVariables(c(
+    "row_id", "cookfarm", "ecuador", "diplodia",
+    "resampling", "task"))
 
 }
 
