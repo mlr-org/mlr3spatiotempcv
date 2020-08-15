@@ -6,6 +6,7 @@
 \alias{autoplot.ResamplingSpCVBuffer}
 \alias{autoplot.ResamplingSpCVCoords}
 \alias{autoplot.ResamplingSptCVCluto}
+\alias{autoplot.ResamplingSptCVCstf}
 \alias{autoplot.ResamplingCV}
 \alias{autoplot.ResamplingRepeatedCV}
 \alias{autoplot.ResamplingRepeatedSpCVCoords}
@@ -58,6 +59,23 @@
   object,
   task,
   fold_id = NULL,
+  grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  tickformat_date = "\%Y-\%m",
+  crs = 4326,
+  nticks_x = 3,
+  nticks_y = 3,
+  point_size = 3,
+  axis_label_fontsize = 11,
+  ...
+)
+
+\method{autoplot}{ResamplingSptCVCstf}(
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = NULL,
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
@@ -272,6 +290,21 @@ resampling$instantiate(task_st, "Date")
 
 # plot
 # resampling = readRDS("inst/spt-plotting-data.rda")
+autoplot(resampling, task_st)
+autoplot(resampling, task_st, 1)
+autoplot(resampling, task_st, c(1, 2, 3, 4))
+}
+##########
+# SptCVCstf
+##########
+\dontrun{
+library(mlr3)
+library(mlr3spatiotempcv)
+task_st = tsk("cookfarm")
+resampling = rsmp("spcv-cstf", folds = 5)
+resampling$instantiate(task_st, "Date")
+
+# plot
 autoplot(resampling, task_st)
 autoplot(resampling, task_st, 1)
 autoplot(resampling, task_st, c(1, 2, 3, 4))
