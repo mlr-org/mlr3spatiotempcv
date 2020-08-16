@@ -4,12 +4,12 @@ sample_cstf <- function(self, task, space_var, time_var, class, k, data) {
   # distributed across folds
 
   if (!is.null(class)) {
-    unit = unique(data[, .(space_var, class)])
+    select_cols = c(space_var, class)
+    unit = unique(data[, select_cols, with = FALSE])
     # unit needs to be a data.frame here
     unit$cstf_fold = caret::createFolds(
       as.data.frame(unit)[, which(names(unit) == class)],
       k = k, list = FALSE)
-    unit$cstf_fold = as.factor(as.character(unit$cstf_fold))
     data = merge(data, unit,
       by.x = c(space_var, class),
       by.y = c(space_var, class), all.x = TRUE, sort = FALSE)
@@ -17,7 +17,6 @@ sample_cstf <- function(self, task, space_var, time_var, class, k, data) {
   }
 
   if (!is.null(space_var)) {
-    checkmate::assert_factor(data[[space_var]], null.ok = TRUE)
     if (k > uniqueN(data[[space_var]])) {
       k = uniqueN(data[[space_var]])
       cli::cli_alert_warning("Number of folds is higher than number of
@@ -27,7 +26,6 @@ sample_cstf <- function(self, task, space_var, time_var, class, k, data) {
     }
   }
   if (!is.null(time_var)) {
-    checkmate::assert_factor(data[[time_var]], null.ok = TRUE)
     if (k > uniqueN(data[[time_var]])) {
       k = uniqueN(data[[time_var]])
       cli::cli_alert_warning("Number of folds is higher than number of
@@ -61,5 +59,7 @@ sample_cstf <- function(self, task, space_var, time_var, class, k, data) {
   } else {
     timefolds = NULL
   }
-  return(list(spacefolds = spacefolds, timefolds = timefolds))
+  return(list(
+    spacefolds = spacefolds, timefolds = timefolds,
+    space_var = space_var, data = data))
 }

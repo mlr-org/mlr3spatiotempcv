@@ -101,22 +101,22 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
 
       # combine space and time folds
       for (i in 1:k) {
-        if (!is.null(time_var) & !is.null(space_var)) {
-          self$instance$test[[i]] = which(data[[space_var]] %in%
+        if (!is.null(sptfolds$time_var) & !is.null(sptfolds$space_var)) {
+          self$instance$test[[i]] = which(sptfolds$data[[sptfolds$space_var]] %in%
             sptfolds$spacefolds[[i]] &
-            data[[time_var]] %in% sptfolds$timefolds[[i]])
-          self$instance$train[[i]] = which(!data[[space_var]] %in%
+            sptfolds$data[[sptfolds$time_var]] %in% sptfolds$timefolds[[i]])
+          self$instance$train[[i]] = which(!sptfolds$data[[sptfolds$space_var]] %in%
             sptfolds$spacefolds[[i]] &
-            data[[time_var]] %in% sptfolds$timefolds[[i]])
-        } else if (is.null(time_var) & !is.null(space_var)) {
-          self$instance$test[[i]] = which(data[[space_var]] %in%
+            sptfolds$data[[sptfolds$time_var]] %in% sptfolds$timefolds[[i]])
+        } else if (is.null(sptfolds$time_var) & !is.null(sptfolds$space_var)) {
+          self$instance$test[[i]] = which(sptfolds$data[[sptfolds$space_var]] %in%
             sptfolds$spacefolds[[i]])
-          self$instance$train[[i]] = which(!data[[space_var]] %in%
+          self$instance$train[[i]] = which(!sptfolds$data[[sptfolds$space_var]] %in%
             sptfolds$spacefolds[[i]])
-        } else if (!is.null(time_var) & is.null(space_var)) {
-          self$instance$test[[i]] = which(data[[time_var]] %in%
+        } else if (!is.null(sptfolds$time_var) & is.null(sptfolds$space_var)) {
+          self$instance$test[[i]] = which(sptfolds$data[[sptfolds$time_var]] %in%
             sptfolds$timefolds[[i]])
-          self$instance$train[[i]] = which(!data[[time_var]] %in%
+          self$instance$train[[i]] = which(!sptfolds$data[[sptfolds$time_var]] %in%
             sptfolds$timefolds[[i]])
         }
       }
