@@ -4,7 +4,7 @@ sample_cstf <- function(self, task, space_var, time_var, class, k, data) {
   # distributed across folds
 
   if (!is.null(class)) {
-    unit = unique(data[, c(..space_var, ..class)])
+    unit = unique(data[, c("..space_var", "..class")])
     # unit needs to be a data.frame here
     unit$cstf_fold = caret::createFolds(
       as.data.frame(unit)[, which(names(unit) == class)],
