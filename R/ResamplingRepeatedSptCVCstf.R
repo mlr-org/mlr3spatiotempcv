@@ -4,7 +4,6 @@
 #'
 #' @export
 #' @examples
-#' \dontrun{
 #' library(mlr3)
 #' library(mlr3spatiotempcv)
 #' task = tsk("cookfarm")
@@ -12,7 +11,6 @@
 #' # Instantiate Resampling
 #' rrcv = rsmp("repeated-sptcv-cstf", folds = 3, repeats = 5)
 #' rrcv$instantiate(task, time_var = "Date")
-#' }
 #' # Individual sets:
 #' rrcv$iters
 #' rrcv$folds(1:6)

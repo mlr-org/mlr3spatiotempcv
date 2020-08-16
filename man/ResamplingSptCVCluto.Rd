@@ -60,7 +60,7 @@ library(mlr3spatiotempcv)
 task = tsk("cookfarm")
 
 # Instantiate Resampling
-rcv = rsmp("spcv-cluto", folds = 5)
+rcv = rsmp("sptcv-cluto", folds = 5)
 rcv$instantiate(task, "Date")
 
 # Individual sets:
