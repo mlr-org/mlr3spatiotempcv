@@ -34,7 +34,7 @@ It makes use of the returned 3D plotly objects which are returned in a list by `
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm")
-resampling = rsmp("spcv-cluto", folds = 5)
+resampling = rsmp("sptcv-cluto", folds = 5)
 resampling$instantiate(task_st, time_var = "Date")
 
 pl = autoplot(resampling, task_st, c(1, 2, 3, 4),
