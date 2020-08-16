@@ -31,6 +31,10 @@ register_mlr3 = function() {
       "feature", "target", "label", "order", "group",
       "weight", "coordinates")
 
+    # append "coordinates" to col_roles
+    x$task_col_roles$classif_st = append(x$task_col_roles$classif, "coordinates")
+    x$task_col_roles$regr_st = append(x$task_col_roles$regr, "coordinates")
+
     # tasks --------------------------------------------------------------------
 
     x = utils::getFromNamespace("mlr_tasks", ns = "mlr3")
