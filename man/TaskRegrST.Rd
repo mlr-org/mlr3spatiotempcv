@@ -14,7 +14,10 @@ This can be changed by setting \code{coords_as_features = TRUE}.
 }
 \seealso{
 Other Task: 
-\code{\link{TaskClassifST}}
+\code{\link{TaskClassifST}},
+\code{\link{mlr_tasks_cookfarm}},
+\code{\link{mlr_tasks_diplodia}},
+\code{\link{mlr_tasks_ecuador}}
 }
 \concept{Task}
 \section{Super classes}{
@@ -64,6 +67,7 @@ The \code{proj4string} of the coordinate system.}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new spatiotemporal resampling Task
 \subsection{Usage}{
@@ -103,7 +107,8 @@ Whether the coordinates should also be used as features.
 Default is \code{FALSE}.}
 
 \item{\code{crs}}{\code{character(1)}\cr
-Coordinates reference system}
+Coordinate reference system. Either a PROJ string or an
+\href{https://epsg.io/}{EPSG} code.}
 
 \item{\code{coordinate_names}}{\code{character(2)}\cr
 The variables names of the coordinates in the data.}
@@ -113,6 +118,7 @@ The variables names of the coordinates in the data.}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-coordinates"></a>}}
+\if{latex}{\out{\hypertarget{method-coordinates}{}}}
 \subsection{Method \code{coordinates()}}{
 Return the coordinates of the task
 \subsection{Usage}{
@@ -129,6 +135,7 @@ Return the coordinates of the task
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Print the task.
 \subsection{Usage}{
@@ -145,6 +152,7 @@ Print the task.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

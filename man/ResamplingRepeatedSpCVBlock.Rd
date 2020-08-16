@@ -22,7 +22,8 @@ library(mlr3)
 task = tsk("diplodia")
 
 # Instantiate Resampling
-rrcv = rsmp("repeated-spcv-block", folds = 3, repeats = 2,
+rrcv = rsmp("repeated-spcv-block",
+  folds = 3, repeats = 2,
   range = c(1000, 1500))
 rrcv$instantiate(task)
 
@@ -68,6 +69,7 @@ values stored in the \code{param_set}.}
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="format">}\href{../../mlr3/html/Resampling.html#method-format}{\code{mlr3::Resampling$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="help">}\href{../../mlr3/html/Resampling.html#method-help}{\code{mlr3::Resampling$help()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="print">}\href{../../mlr3/html/Resampling.html#method-print}{\code{mlr3::Resampling$print()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="test_set">}\href{../../mlr3/html/Resampling.html#method-test_set}{\code{mlr3::Resampling$test_set()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="train_set">}\href{../../mlr3/html/Resampling.html#method-train_set}{\code{mlr3::Resampling$train_set()}}\out{</span>}
@@ -76,6 +78,7 @@ values stored in the \code{param_set}.}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create an "coordinate-based" repeated resampling instance.
 \subsection{Usage}{
@@ -93,6 +96,7 @@ Identifier for the resampling strategy.}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-folds"></a>}}
+\if{latex}{\out{\hypertarget{method-folds}{}}}
 \subsection{Method \code{folds()}}{
 Translates iteration numbers to fold number.
 \subsection{Usage}{
@@ -110,6 +114,7 @@ Iteration number.}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-repeats"></a>}}
+\if{latex}{\out{\hypertarget{method-repeats}{}}}
 \subsection{Method \code{repeats()}}{
 Translates iteration numbers to repetition number.
 \subsection{Usage}{
@@ -127,6 +132,7 @@ Iteration number.}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-instantiate"></a>}}
+\if{latex}{\out{\hypertarget{method-instantiate}{}}}
 \subsection{Method \code{instantiate()}}{
 Materializes fixed training and test splits for a given task.
 \subsection{Usage}{
@@ -144,6 +150,7 @@ A task to instantiate.}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -1,15 +1,6 @@
 #' @title Environmental Block Cross Validation Resampling
 #'
-#' @import mlr3
-#'
-#' @description
-#' Environmental Block Cross Validation. This strategy uses k-means clustering
-#' to specify blocks of similar environmental conditions. Only numeric features
-#' can be used. The `features` used for building blocks can be specified in the
-#' `param_set`. By default, all numeric features are used.
-#'
-#' @references
-#' \cite{mlr3spatiotempcv}{valavi2018}
+#' @template rox_spcv_env
 #'
 #' @export
 #' @examples

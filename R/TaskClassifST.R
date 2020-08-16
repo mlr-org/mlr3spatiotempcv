@@ -16,9 +16,7 @@
 #' @seealso Example spatial classification task: [`ecuador`][mlr_tasks_ecuador].
 #' @export
 #' @examples
-#' data = data.table::as.data.table(readRDS(system.file("extdata",
-#'   "ecuador.rda",
-#'   package = "mlr3spatiotempcv")))
+#' data = mlr3::as_data_backend(ecuador)
 #' task = TaskClassifST$new("ecuador",
 #'   backend = data, target = "slides",
 #'   positive = "TRUE", coordinate_names = c("x", "y"))
@@ -59,7 +57,6 @@ TaskClassifST = R6::R6Class("TaskClassifST",
     #'   The variables names of the coordinates in the data.
     initialize = function(id, backend, target, positive = NULL,
       coords_as_features = FALSE, crs = NA, coordinate_names = NA) {
-
 
       assert_string(target)
       super$initialize(

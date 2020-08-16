@@ -15,7 +15,7 @@ buffer around the test observation are included in the training set.
 
 The parameter \code{spDataType = PB} and \code{addBG} are designed for
 presence-background data in species distribution modelling. If \code{spDataType = PB}, test sets are only created for each presence observation
-(\verb{task\\$postive}). The option \code{addBG = TRUE} adds the background data inside
+(\verb{task\\$positive}). The option \code{addBG = TRUE} adds the background data inside
 the buffer to the corresponding test sets. For each test set, all
 observations outside the buffer around the test observation are included in
 the training set.
@@ -25,7 +25,7 @@ library(mlr3)
 task = tsk("ecuador")
 
 # Instantiate Resampling
-rcv = rsmp("spcv-buffer", theRange = 1000)
+rcv = rsmp("spcv-buffer", theRange = 10000)
 rcv$instantiate(task)
 
 # Individual sets:
@@ -34,7 +34,7 @@ rcv$test_set(1)
 intersect(rcv$train_set(1), rcv$test_set(1))
 
 # Internal storage:
-rcv$instance
+# rcv$instance
 }
 \references{
 \cite{mlr3spatiotempcv}{valavi2018}
@@ -63,6 +63,7 @@ values stored in the \code{param_set}.}
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="format">}\href{../../mlr3/html/Resampling.html#method-format}{\code{mlr3::Resampling$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="help">}\href{../../mlr3/html/Resampling.html#method-help}{\code{mlr3::Resampling$help()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="print">}\href{../../mlr3/html/Resampling.html#method-print}{\code{mlr3::Resampling$print()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="test_set">}\href{../../mlr3/html/Resampling.html#method-test_set}{\code{mlr3::Resampling$test_set()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="train_set">}\href{../../mlr3/html/Resampling.html#method-train_set}{\code{mlr3::Resampling$train_set()}}\out{</span>}
@@ -71,6 +72,7 @@ values stored in the \code{param_set}.}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create an "Environmental Block" resampling instance.
 \subsection{Usage}{
@@ -88,6 +90,7 @@ Identifier for the resampling strategy.}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-instantiate"></a>}}
+\if{latex}{\out{\hypertarget{method-instantiate}{}}}
 \subsection{Method \code{instantiate()}}{
 Materializes fixed training and test splits for a given task.
 \subsection{Usage}{
@@ -105,6 +108,7 @@ A task to instantiate.}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

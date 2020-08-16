@@ -1,23 +1,6 @@
 #' @title Spatial Buffer Cross Validation Resampling
 #'
-#' @import mlr3
-#'
-#' @description Spatial Buffer Cross validation implemented by the `blockCV`
-#' package.
-#'
-#' @note
-#' However, the default settings allow to conduct a leave-one-out cross
-#' validation for two-class, multi-class and continuous response data, where
-#' each observation is one test set. For each test, all observations outside the
-#' buffer around the test observation are included in the training set.
-#'
-#' The parameter `spDataType = PB` and `addBG` are designed for
-#' presence-background data in species distribution modelling. If `spDataType =
-#' PB`, test sets are only created for each presence observation
-#' (`task\$postive`). The option `addBG = TRUE` adds the background data inside
-#' the buffer to the corresponding test sets. For each test set, all
-#' observations outside the buffer around the test observation are included in
-#' the training set.
+#' @template rox_spcv_buffer
 #'
 #' @references
 #' \cite{mlr3spatiotempcv}{valavi2018}
@@ -28,7 +11,7 @@
 #' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv = rsmp("spcv-buffer", theRange = 1000)
+#' rcv = rsmp("spcv-buffer", theRange = 10000)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -37,7 +20,7 @@
 #' intersect(rcv$train_set(1), rcv$test_set(1))
 #'
 #' # Internal storage:
-#' rcv$instance
+#' # rcv$instance
 ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
   inherit = mlr3::Resampling,
 

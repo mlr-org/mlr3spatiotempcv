@@ -1,6 +1,6 @@
 Package: mlr3spatiotempcv
-Title: Spatial support for mlr3
-Version: 0.0.0.9004
+Title: Spatiotemporal Resampling Methods for 'mlr3'
+Version: 0.0.0.9006
 Authors@R:
     c(person(given = "Patrick",
              family = "Schratz",
@@ -17,33 +17,41 @@ Authors@R:
              email = "jannes.muenchow@uni-jena.de"))
 Description: Implements spatio-temporal methods to enhance the
     experience of mlr3.
-License: MIT + file LICENSE
+License: LGPL-3
 URL: https://mlr3spatiotempcv.mlr-org.com/,
     https://github.com/mlr-org/mlr3spatiotempcv
 BugReports: https://github.com/mlr-org/mlr3spatiotempcv/issues
 Depends:
-    R (>= 3.1.0)
+    R (>= 3.5.0)
 Imports:
     checkmate,
+    cli,
     data.table,
     ggplot2,
     mlr3,
     mlr3misc (>= 0.1.7),
     paradox,
-    R6
+    R6,
+    utils
 Suggests:
     bibtex,
     blockCV (>= 2.1.1),
     bookdown,
+    caret,
+    CAST,
     cowplot,
     ggsci,
+    GSIF,
     knitr,
+    plotly,
+    renv,
     rmarkdown,
     rpart,
     sf,
+    skmeans,
     testthat (>= 2.1.0),
     vdiffr
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 RdMacros:
     mlr3misc
@@ -51,21 +59,26 @@ Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
-Collate: 
-    'Task_classif_ecuador.R'
-    'Task_classif_diplodia.R'
+RoxygenNote: 7.1.1
+Collate:
+    'ResamplingRepeatedSpCVBlock.R'
+    'ResamplingRepeatedSpCVCoords.R'
+    'ResamplingRepeatedSpCVEnv.R'
+    'ResamplingRepeatedSptCVCluto.R'
     'ResamplingSpCVBlock.R'
     'ResamplingSpCVBuffer.R'
     'ResamplingSpCVCoords.R'
+    'ResamplingSptCVCstf.R'
     'ResamplingSpCVEnv.R'
-    'ResamplingRepeatedSpCVCoords.R'
-    'ResamplingRepeatedSpCVEnv.R'
-    'ResamplingRepeatedSpCVBlock.R'
+    'ResamplingSptCVCluto.R'
     'TaskClassifST.R'
     'TaskRegrST.R'
+    'Task_classif_diplodia.R'
+    'Task_classif_ecuador.R'
+    'Task_regr_cookfarm_profiles.R'
+    'autoplot.R'
+    'autoplot_helper.R'
     'helper.R'
     'mlr3spatiotempcv-package.R'
     'reexports.R'
-    'autoplot.R'
     'zzz.R'

@@ -26,8 +26,7 @@ library("mlr3spatiotempcv")
 
 # Introduction
 
-This package provides resampling methods for the [mlr3] package framework suited for spatial and temporal data.
-**So far, only spatial resampling methods have been properly implemented.**
+This package provides resampling methods for the {mlr3} package framework suited for spatial and temporal data.
 
 Calling `library("mlr3spatiotempcv")`, makes the spatial resampling methods and example tasks available to the user.
 
@@ -70,19 +69,19 @@ By default, coordinates are not used as features and will be removed from the fe
 For optional plotting purposes, it is recommended to also pass the PROJ string specifying the used coordinate reference system via the `crs` argument.
 
 ```{r}
-data = mlr3::as_data_backend(readRDS(system.file("extdata", "ecuador.rda",
-  package = "mlr3spatiotempcv")))
+data = mlr3::as_data_backend(ecuador)
 
-ecuador = TaskClassifST$new(id = "ecuador", backend = data, target = "slides",
+ecuador = TaskClassifST$new(
+  id = "ecuador", backend = data, target = "slides",
   positive = "TRUE", coordinate_names = c("x", "y"), coords_as_features = FALSE,
   crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
 ```
 
-The "ecuador" dataset consists of a response variable named `slides` (boolean; see Figure \@ref(fig:lsl)) and various predictor variables that might have an influence on the occurrence of landslides such as slope, curvature or catchment area.^[Please note that the "ecuador" task is also available via `tsk{ecuador}`.]
+The "ecuador" dataset consists of a response variable named `slides` (boolean; see Figure \@ref(fig:lsl)) and various predictor variables that might have an influence on the occurrence of landslides such as slope, curvature or catchment area.^[Please note that the "ecuador" task is also available via `tsk(ecuador)`.]
 For a detailed overview of the dataset, please refer to @brenning_landslide_2015 and/or Chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace_geocomputation_2019].
 
 
-```{r lsl, echo=FALSE, fig.cap="Landslide initiation points (red) and non-landslide points (blue) in Southern Ecuador. Figure taken from @lovelace_geocomputation_2019.", fig.align="center", out.width="70%"}
+```{r lsl, echo=FALSE, fig.cap="Landslide initiation points (red) and non-landslide points (blue) in Southern Ecuador. Figure taken from @lovelace_geocomputation_2019.", fig.align="center", out.width="70%", dpi=75}
 knitr::include_graphics("https://geocompr.robinlovelace.net/figures/lsl-map-1.png")
 ```
 
@@ -104,7 +103,8 @@ To emphasize that common, i.e., non-spatial, cross-validation is usually over-op
 ```{r}
 learner = lrn("classif.rpart", maxdepth = 3, predict_type = "prob")
 resampling_nsp = rsmp("repeated_cv", folds = 5, repeats = 5)
-rr_nsp = resample(task = ecuador, learner = learner,
+rr_nsp = resample(
+  task = ecuador, learner = learner,
   resampling = resampling_nsp)
 
 rr_nsp$aggregate(measures = msr("classif.ce"))
@@ -120,7 +120,8 @@ Hence, let's do the cross-validation again, this time taking into account the sp
 ```{r}
 resampling_sp = rsmp("repeated-spcv-coords", folds = 5, repeats = 5)
 
-rr_sp = resample(task = ecuador, learner = learner,
+rr_sp = resample(
+  task = ecuador, learner = learner,
   resampling = resampling_sp)
 
 rr_sp$aggregate(measures = msr("classif.ce"))
@@ -143,13 +144,13 @@ To showcase the usage, we will visualize both resampling methods which we create
 Multiple options exists.
 If no specific fold is specified, all partitions will be returned distinguished by color.
 
-```{r ressp, fig.cap="Example for five spatially disjoint partitions constructed with the `repeated_cv` resampling method."}
+```{r ressp, fig.align='center', dpi=75, fig.cap="Example for five spatially disjoint partitions constructed with the `repeated_cv` resampling method."}
 autoplot(object = resampling_sp, task = ecuador)
 ```
 
 ### Non-spatial
 
-```{r}
+```{r, fig.align='center', dpi=75}
 autoplot(object = resampling_nsp, task = ecuador)
 ```
 
