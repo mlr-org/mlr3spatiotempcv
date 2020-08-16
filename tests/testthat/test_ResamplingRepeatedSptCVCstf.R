@@ -25,4 +25,3 @@ test_that("resampling iterations equals folds * repeats", {
 
   expect_equal(rsp$iters, 15)
 })
-
