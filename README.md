@@ -94,7 +94,7 @@ for an interactive 3D HTML variant.)
 
     library(plotly)
     task_st = tsk("cookfarm")
-    resampling = rsmp("spcv-cluto", folds = 5)
+    resampling = rsmp("sptcv-cluto", folds = 5)
     resampling$instantiate(task_st, time_var = "Date")
     autoplot(resampling, task_st, fold_id = 1, point_size = 3)
 
