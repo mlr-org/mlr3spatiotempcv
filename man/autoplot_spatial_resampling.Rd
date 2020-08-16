@@ -301,7 +301,7 @@ autoplot(resampling, task_st, c(1, 2, 3, 4))
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm")
-resampling = rsmp("spcv-cstf", folds = 5)
+resampling = rsmp("sptcv-cstf", folds = 5)
 resampling$instantiate(task_st, "Date")
 
 # plot
