@@ -116,23 +116,23 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
 
         # combine space and time folds
         for (i in 1:k) {
-          if (!is.null(sptfolds$time_var) & !is.null(sptfolds$space_var)) {
+          if (!is.null(time_var) & !is.null(sptfolds$space_var)) {
             self$instance[[rep]]$test[[i]] = which(sptfolds$data[[sptfolds$space_var]] %in%
-              sptfoldss$spacefolds[[i]] &&
-              sptfolds$data[[sptfolds$time_var]] %in% sptfoldss$timefolds[[i]])
+              sptfolds$spacefolds[[i]] &&
+              sptfolds$data[[time_var]] %in% sptfolds$timefolds[[i]])
             self$instance[[rep]]$train[[i]] = which(!sptfolds$data[[sptfolds$space_var]] %in%
-              sptfoldss$spacefolds[[i]] &&
-              sptfolds$data[[sptfolds$time_var]] %in% timefolds[[i]])
-          } else if (is.null(sptfolds$time_var) && !is.null(sptfolds$space_var)) {
+              sptfolds$spacefolds[[i]] &&
+              sptfolds$data[[time_var]] %in% timefolds[[i]])
+          } else if (is.null(time_var) && !is.null(sptfolds$space_var)) {
             self$instance[[rep]]$test[[i]] = which(sptfolds$data[[sptfolds$space_var]] %in%
-              sptfoldss$spacefolds[[i]])
+              sptfolds$spacefolds[[i]])
             self$instance[[rep]]$train[[i]] = which(!sptfolds$data[[sptfolds$space_var]] %in%
-              sptfoldss$spacefolds[[i]])
-          } else if (!is.null(sptfolds$time_var) && is.null(sptfolds$space_var)) {
-            self$instance[[rep]]$test[[i]] = which(sptfolds$data[[sptfolds$time_var]] %in%
-              sptfoldss$timefolds[[i]])
-            self$instance[[rep]]$train[[i]] = which(!sptfolds$data[[sptfolds$time_var]] %in%
-              sptfoldss$timefolds[[i]])
+              sptfolds$spacefolds[[i]])
+          } else if (!is.null(time_var) && is.null(sptfolds$space_var)) {
+            self$instance[[rep]]$test[[i]] = which(sptfolds$data[[time_var]] %in%
+              sptfolds$timefolds[[i]])
+            self$instance[[rep]]$train[[i]] = which(!sptfolds$data[[time_var]] %in%
+              sptfolds$timefolds[[i]])
           }
         }
       }
