@@ -4,15 +4,13 @@
 #'
 #' @export
 #' @examples
-#' \dontrun{
 #' library(mlr3)
 #' library(mlr3spatiotempcv)
 #' task = tsk("cookfarm")
 #'
 #' # Instantiate Resampling
-#' rrcv = rsmp("repeated-sptcv-cluto", folds = 3, repeats = 5)
+#' rrcv = rsmp("repeated-sptcv-cstf", folds = 3, repeats = 5)
 #' rrcv$instantiate(task, time_var = "Date")
-#'
 #' # Individual sets:
 #' rrcv$iters
 #' rrcv$folds(1:6)
@@ -25,8 +23,7 @@
 #'
 #' # Internal storage:
 #' rrcv$instance # table
-#' }
-ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
+ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
   inherit = mlr3::Resampling,
 
   public = list(
@@ -34,7 +31,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
     #' Create an "coordinate-based" repeated resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
-    initialize = function(id = "repeated-sptcv-cluto") {
+    initialize = function(id = "repeated-sptcv-cstf") {
       ps = ParamSet$new(params = list(
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
         ParamInt$new("repeats", lower = 1, default = 1L, tags = "required")
@@ -43,7 +40,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
       super$initialize(
         id = id,
         param_set = ps,
-        man = "mlr3spatiotempcv::mlr_resamplings_repeated_SptCVCluto"
+        man = "mlr3spatiotempcv::mlr_resamplings_repeated_SptCVCstf"
       )
     },
 
@@ -66,24 +63,15 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
     #' @description
     #'  Materializes fixed training and test splits for a given task.
     #' @param task [Task]\cr
-    #'  A task to instantiate.
-    #' @param time_var [character]\cr
-    #'  The name of the variable which represents the time dimension.
-    #'  Must be of type numeric.
-    #' @param clmethod [character]\cr
-    #'   Name of the clustering method to use within `vcluster`.
-    #'   See Details for more information.
-    #' @param cluto_parameters [character]\cr
-    #'   Additional parameters to pass to `vcluster`.
-    #'   Must be given as a single character string, e.g.
-    #'   `"param1='value1'param2='value2'"`.
-    #'   See the CLUTO documentation for a full list of supported parameters.
-    #' @param verbose [logical]\cr
-    #'   Whether to show `vcluster` progress and summary output.
-    instantiate = function(task, time_var, clmethod = "direct",
-      cluto_parameters = NULL, verbose = TRUE) {
-
-      requireNamespace("skmeans", quietly = TRUE)
+    #'   A task to instantiate.
+    #' @param space_var `[character]`\cr
+    #'   Column name identifying the spatial units.
+    #' @param time_var `[character]`\cr
+    #'   Column name identifying the temporal units.
+    #' @param class `[character]`\cr
+    #'   Column name identifying a class unit (e.g. land cover).
+    instantiate = function(task, space_var = NULL, time_var = NULL,
+      class = NULL) {
 
       assert_task(task)
       groups = task$groups
@@ -92,18 +80,8 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
         stopf("Grouping is not supported for spatial resampling methods")
       }
 
-      time = as.POSIXct(task$data()[[time_var]])
-      # time in seconds since 1/1/1970
-      time_num = as.numeric(time)
+      private$.sample(task, space_var, time_var, class)
 
-      data_matrix = data.matrix(data.frame(task$coordinates(), time_num))
-      colnames(data_matrix) = c("x", "y", "z")
-
-      instance = private$.sample(
-        task$row_ids, data_matrix, clmethod, cluto_parameters, verbose
-      )
-
-      self$instance = instance
       self$task_hash = task$hash
       invisible(self)
     }
@@ -121,32 +99,44 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
   ),
 
   private = list(
-    .sample = function(ids, data_matrix, clmethod, cluto_parameters, verbose) {
-      vcluster_loc = check_cluto_path()
+    .sample = function(task, space_var, time_var, class) {
 
-      pv = self$param_set$values
-      folds = as.integer(pv$folds)
+      reps = self$param_set$values$repeats
+      # declare empty list so the for-loop can write to its fields
+      self$instance = vector("list", length = reps)
 
-      if (is.null(cluto_parameters)) {
-        control_cluto = sprintf('-clmethod="%s"', clmethod)
-      } else {
-        control_cluto = sprintf('-clmethod="%s""%s"', clmethod, cluto_parameters)
+      k = self$param_set$values$folds
+      data = task$data()
+
+      for (rep in seq_len(reps)) {
+
+        sptfolds = sample_cstf(
+          self = self, task, space_var, time_var,
+          class, k, data)
+
+        # combine space and time folds
+        for (i in 1:k) {
+          if (!is.null(time_var) & !is.null(sptfolds$space_var)) {
+            self$instance[[rep]]$test[[i]] = which(sptfolds$data[[sptfolds$space_var]] %in%
+              sptfolds$spacefolds[[i]] &&
+              sptfolds$data[[time_var]] %in% sptfolds$timefolds[[i]])
+            self$instance[[rep]]$train[[i]] = which(!sptfolds$data[[sptfolds$space_var]] %in%
+              sptfolds$spacefolds[[i]] &&
+              sptfolds$data[[time_var]] %in% timefolds[[i]])
+          } else if (is.null(time_var) && !is.null(sptfolds$space_var)) {
+            self$instance[[rep]]$test[[i]] = which(sptfolds$data[[sptfolds$space_var]] %in%
+              sptfolds$spacefolds[[i]])
+            self$instance[[rep]]$train[[i]] = which(!sptfolds$data[[sptfolds$space_var]] %in%
+              sptfolds$spacefolds[[i]])
+          } else if (!is.null(time_var) && is.null(sptfolds$space_var)) {
+            self$instance[[rep]]$test[[i]] = which(sptfolds$data[[time_var]] %in%
+              sptfolds$timefolds[[i]])
+            self$instance[[rep]]$train[[i]] = which(!sptfolds$data[[time_var]] %in%
+              sptfolds$timefolds[[i]])
+          }
+        }
       }
-
-      mlr3misc::map_dtr(seq_len(pv$repeats), function(i) {
-        data.table(
-          row_id = ids, rep = i,
-          fold = skmeans::skmeans(data_matrix,
-            k = folds,
-            method = "CLUTO",
-            control = list(
-              vcluster = vcluster_loc,
-              verbose = verbose,
-              control = paste(control_cluto, sprintf("-seed='%s'", i))
-            )
-          )$cluster
-        )
-      })
+      invisible(self)
     },
 
     .get_train = function(i) {
@@ -154,8 +144,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
       folds = as.integer(self$param_set$values$folds)
       rep = i %/% folds + 1L
       fold = i %% folds + 1L
-      ii = data.table(rep = rep, fold = seq_len(folds)[-fold])
-      self$instance[ii, "row_id", on = names(ii), nomatch = 0L][[1L]]
+      self$instance[[rep]]$train[[fold]]
     },
 
     .get_test = function(i) {
@@ -163,8 +152,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
       folds = as.integer(self$param_set$values$folds)
       rep = i %/% folds + 1L
       fold = i %% folds + 1L
-      ii = data.table(rep = rep, fold = fold)
-      self$instance[ii, "row_id", on = names(ii), nomatch = 0L][[1L]]
+      self$instance[[rep]]$test[[fold]]
     }
   )
 )

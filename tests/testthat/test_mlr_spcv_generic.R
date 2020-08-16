@@ -43,9 +43,9 @@ test_that("train and test set getter functions are working", {
   spcv_rsp$`repeated-spcv-coords` = NULL
   spcv_rsp$`repeated-spcv-env` = NULL
   spcv_rsp$`spcv-block` = NULL
-  spcv_rsp$`spcv-cluto` = NULL
-  spcv_rsp$`spcv-cstf` = NULL
-  spcv_rsp$`repeated-spcv-cluto` = NULL
+  spcv_rsp$`sptcv-cluto` = NULL
+  spcv_rsp$`sptcv-cstf` = NULL
+  spcv_rsp$`repeated-sptcv-cluto` = NULL
   # nolint end
 
   for (i in spcv_rsp) {
@@ -69,8 +69,8 @@ test_that("cloning works", {
   spcv_rsp$`repeated-spcv-coords` = NULL
   spcv_rsp$`repeated-spcv-env` = NULL
   spcv_rsp$`repeated-spcv-block` = NULL
-  spcv_rsp$`spcv-cluto` = NULL
-  spcv_rsp$`repeated-spcv-cluto` = NULL
+  spcv_rsp$`sptcv-cluto` = NULL
+  spcv_rsp$`repeated-sptcv-cluto` = NULL
   # nolint end
 
   for (i in spcv_rsp) {

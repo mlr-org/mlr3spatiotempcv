@@ -7,7 +7,7 @@
 #' task = tsk("cookfarm")
 #'
 #' # Instantiate Resampling
-#' rcv = rsmp("spcv-cstf", folds = 5)
+#' rcv = rsmp("sptcv-cstf", folds = 5)
 #' rcv$instantiate(task, time_var = "Date", space_var = "SOURCEID")
 #'
 #' # Individual sets:
@@ -26,15 +26,32 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
     #' Create a "Spacetime Folds" resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
-    initialize = function(id = "spcv-cstf") {
+    initialize = function(id = "sptcv-cstf") {
       ps = ParamSet$new(params = list(
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required")
       ))
       ps$values = list(folds = 10L)
       super$initialize(
         id = id,
-        param_set = ps
+        param_set = ps,
+        man = "mlr3spatiotempcv::mlr_resamplings_SptCVCstf"
       )
+    },
+
+    #' @description Translates iteration numbers to fold number.
+    #' @param iters `integer()`\cr
+    #'   Iteration number.
+    folds = function(iters) {
+      iters = assert_integerish(iters, any.missing = FALSE, coerce = TRUE)
+      ((iters - 1L) %% as.integer(self$param_set$values$repeats)) + 1L
+    },
+
+    #' @description Translates iteration numbers to repetition number.
+    #' @param iters `integer()`\cr
+    #'   Iteration number.
+    repeats = function(iters) {
+      iters = assert_integerish(iters, any.missing = FALSE, coerce = TRUE)
+      ((iters - 1L) %/% as.integer(self$param_set$values$folds)) + 1L
     },
 
     #' @description
@@ -75,86 +92,32 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
 
   private = list(
     .sample = function(task, space_var, time_var, class) {
-
       k = self$param_set$values$folds
       data = task$data()
 
-      # if classification is used, make sure that classes are equally
-      # distributed across folds
-      if (!is.null(class)) {
-        unit = unique(data[, c(..space_var, ..class)])
-        # unit needs to be a data.frame here
-        unit$cstf_fold = caret::createFolds(
-          as.data.frame(unit)[, which(names(unit) == class)],
-          k = k, list = FALSE)
-        unit$cstf_fold = as.factor(as.character(unit$cstf_fold))
-        data = merge(data, unit,
-          by.x = c(space_var, class),
-          by.y = c(space_var, class), all.x = TRUE, sort = FALSE)
-        space_var = "cstf_fold"
-      }
-
-      if (!is.null(space_var)) {
-        checkmate::assert_factor(data[[space_var]], null.ok = TRUE)
-        if (k > uniqueN(data[[space_var]])) {
-          k = uniqueN(data[[space_var]])
-          cli::cli_alert_warning("Number of folds is higher than number of
-            unique locations.
-            Setting folds to the maximum amount of unique levels of variable
-            {space_var} which is {k}.", wrap = TRUE)
-        }
-      }
-      if (!is.null(time_var)) {
-        checkmate::assert_factor(data[[time_var]], null.ok = TRUE)
-        if (k > uniqueN(data[[time_var]])) {
-          k = uniqueN(data[[time_var]])
-          cli::cli_alert_warning("Number of folds is higher than number of
-            unique points in time.
-            Setting folds to the maximum amount of unique levels of variable
-            {time_var} which is {k}.", wrap = TRUE)
-        }
-      }
-
-      seed = sample(1:1000, 1)
-
-      # split space into k folds
-      if (!is.null(space_var)) {
-        set.seed(seed)
-        spacefolds = lapply(caret::createFolds(
-          1:uniqueN(data[[space_var]]),
-          k), function(y) {
-          unique(data[[space_var]])[y]
-        })
-      }
-      # split time into k folds
-      if (!is.null(time_var)) {
-        set.seed(seed)
-        timefolds = lapply(caret::createFolds(
-          1:uniqueN(data[[time_var]]),
-          k), function(y) {
-          unique(data[[time_var]])[y]
-        })
-      }
+      sptfolds = sample_cstf(
+        self = self, task, space_var, time_var,
+        class, k, data)
 
       # combine space and time folds
       for (i in 1:k) {
-        if (!is.null(time_var) & !is.null(space_var)) {
-          self$instance$test[[i]] = which(data[[space_var]] %in%
-            spacefolds[[i]] &
-            data[[time_var]] %in% timefolds[[i]])
-          self$instance$train[[i]] = which(!data[[space_var]] %in%
-            spacefolds[[i]] &
-            data[[time_var]] %in% timefolds[[i]])
-        } else if (is.null(time_var) & !is.null(space_var)) {
-          self$instance$test[[i]] = which(data[[space_var]] %in%
-            spacefolds[[i]])
-          self$instance$train[[i]] = which(!data[[space_var]] %in%
-            spacefolds[[i]])
-        } else if (!is.null(time_var) & is.null(space_var)) {
-          self$instance$test[[i]] = which(data[[time_var]] %in%
-            timefolds[[i]])
-          self$instance$train[[i]] = which(!data[[time_var]] %in%
-            timefolds[[i]])
+        if (!is.null(time_var) & !is.null(sptfolds$space_var)) {
+          self$instance$test[[i]] = which(sptfolds$data[[sptfolds$space_var]] %in%
+            sptfolds$spacefolds[[i]] &
+            sptfolds$data[[time_var]] %in% sptfolds$timefolds[[i]])
+          self$instance$train[[i]] = which(!sptfolds$data[[sptfolds$space_var]] %in%
+            sptfolds$spacefolds[[i]] &
+            sptfolds$data[[time_var]] %in% sptfolds$timefolds[[i]])
+        } else if (is.null(time_var) & !is.null(sptfolds$space_var)) {
+          self$instance$test[[i]] = which(sptfolds$data[[sptfolds$space_var]] %in%
+            sptfolds$spacefolds[[i]])
+          self$instance$train[[i]] = which(!sptfolds$data[[sptfolds$space_var]] %in%
+            sptfolds$spacefolds[[i]])
+        } else if (!is.null(time_var) & is.null(sptfolds$space_var)) {
+          self$instance$test[[i]] = which(sptfolds$data[[time_var]] %in%
+            sptfolds$timefolds[[i]])
+          self$instance$train[[i]] = which(!sptfolds$data[[time_var]] %in%
+            sptfolds$timefolds[[i]])
         }
       }
       invisible(self)
