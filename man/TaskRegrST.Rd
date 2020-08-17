@@ -26,11 +26,9 @@ Other Task:
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{coordinate_names}}{\link{character}\cr
-The variables names of the coordinates in the data.}
-
-\item{\code{crs}}{\link{character}\cr
-The \code{proj4string} of the coordinate system.}
+\item{\code{extra_args}}{(named \code{list()})\cr
+Additional task arguments set during construction.
+Required for \code{\link[=convert_task]{convert_task()}}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -75,17 +73,14 @@ Create a new spatiotemporal resampling Task
   id,
   backend,
   target,
-  positive = NULL,
-  coords_as_features = FALSE,
-  crs = NA,
-  coordinate_names = NA
+  extra_args = list(coords_as_features = FALSE, crs = NA, coordinate_names = NA)
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{\code{character(1)}\cr
+\item{\code{id}}{\verb{[character(1)]}\cr
 Identifier for the task.}
 
 \item{\code{backend}}{\link{DataBackend}\cr
@@ -93,25 +88,22 @@ Either a \link{DataBackend}, or any object which is convertible to a
 DataBackend with \code{as_data_backend()}. E.g., a \code{data.frame()} will be
 converted to a \link{DataBackendDataTable}.}
 
-\item{\code{target}}{\code{character(1)}\cr
+\item{\code{target}}{\verb{[character(1)]}\cr
 Name of the target column.}
 
-\item{\code{positive}}{\code{character(1)}\cr
-Only for binary classification: Name of the positive class. The levels
-of the target columns are reordered accordingly, so that the first
-element of \verb{$class_names} is the positive class, and the second element
-is the negative class.}
-
-\item{\code{coords_as_features}}{\code{logical(1)}\cr
-Whether the coordinates should also be used as features.
-Default is \code{FALSE}.}
-
-\item{\code{crs}}{\code{character(1)}\cr
+\item{\code{extra_args}}{\verb{[named list]}\cr
+Additional task arguments set during construction. Required for
+\code{\link[=convert_task]{convert_task()}}.
+\itemize{
+\item crs \verb{[character(1)]}\cr
 Coordinate reference system. Either a PROJ string or an
-\href{https://epsg.io/}{EPSG} code.}
-
-\item{\code{coordinate_names}}{\code{character(2)}\cr
-The variables names of the coordinates in the data.}
+\href{https://epsg.io/}{EPSG} code.
+\item coords_as_features \verb{[logical(1)]}\cr
+Whether the coordinates should also be used as features.
+Default is \code{FALSE}.
+\item coordinate_names \verb{[character(2)]}\cr
+The variables names of the coordinates in the data.
+}}
 }
 \if{html}{\out{</div>}}
 }

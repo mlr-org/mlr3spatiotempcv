@@ -33,7 +33,8 @@ load_task_diplodia = function(id = "diplodia") {
   task = TaskClassifST$new(
     id = "diplodia", b,
     target = "diplo01", positive = "1",
-    coordinate_names = c("x", "y"), coords_as_features = FALSE,
-    crs = "+proj=utm +zone=30 +south +datum=WGS84 +units=m +no_defs")
+    extra_args = list(
+      coordinate_names = c("x", "y"), coords_as_features = FALSE,
+      crs = "+proj=utm +zone=30 +south +datum=WGS84 +units=m +no_defs"))
   return(task)
 }
