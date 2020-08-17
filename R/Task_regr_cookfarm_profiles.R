@@ -46,7 +46,8 @@ load_task_cookfarm = function(id = "cookfarm") {
   b$hash = "_mlr3_tasks_cookfarm_"
   task = TaskRegrST$new(
     id = "cookfarm", b, target = "PHIHOX",
-    coordinate_names = c("x", "y"), coords_as_features = FALSE,
-    crs = 26911)
+    extra_args = list(
+      coordinate_names = c("x", "y"), coords_as_features = FALSE,
+      crs = 26911))
   return(task)
 }
