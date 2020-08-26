@@ -174,7 +174,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
 
     table = rbind(coords_train, coords_test)
 
-    sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
+    sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$extra_args$crs)
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
     # reorder factor levels so that "train" comes first
@@ -209,7 +209,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
 
     table = rbind(coords_train, coords_test)
 
-    sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
+    sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$extra_args$crs)
     # 'fold' needs to be a factor, otherwise `show.legend = "points" has no
     # effect
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
@@ -858,7 +858,7 @@ autoplot_spatial = function(
 
       table[, indicator := ifelse(fold == i, "Test", "Train")]
 
-      sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
+      sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$extra_args$crs)
       sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
       # reorder factor levels so that "train" comes first
@@ -894,7 +894,7 @@ autoplot_spatial = function(
       # Extract legend standalone, we only want one legend in the grid
       coords_resamp[, indicator := ifelse(fold == 1, "Test", "Train")]
 
-      sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
+      sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$extra_args$crs)
       # 'fold' needs to be a factor, otherwise `show.legend = "points" has no
       # effect
       sf_df$indicator = as.factor(as.character(sf_df$indicator))
@@ -919,7 +919,7 @@ autoplot_spatial = function(
     }
   } else {
     # Create one plot with all (test)-folds
-    sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
+    sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$extra_args$crs)
 
     # order fold ids
     sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
@@ -979,7 +979,7 @@ autoplot_spatiotemp = function(
     # transform coordinates to WGS84
     coords = sf::st_coordinates(
       sf::st_transform(
-        sf::st_as_sf(task$coordinates(), coords = c("x", "y"), crs = task$crs),
+        sf::st_as_sf(task$coordinates(), coords = c("x", "y"), crs = task$extra_args$crs),
         crs = 4326)
     )
     task_resamp_ids$x = coords[, 1]
