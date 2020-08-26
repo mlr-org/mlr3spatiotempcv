@@ -35,8 +35,8 @@ TaskRegrST = R6::R6Class("TaskRegrST",
         coords_as_features = FALSE, crs = NA,
         coordinate_names = NA)) {
 
-      self$extra_args$coordinate_names = coordinate_names
-      self$extra_args$crs = crs
+      self$extra_args$coordinate_names = extra_args$coordinate_names
+      self$extra_args$crs = extra_args$crs
 
       assert_string(target)
       super$initialize(
@@ -49,15 +49,15 @@ TaskRegrST = R6::R6Class("TaskRegrST",
       }
 
       # check coordinates
-      assert_names(self$backend$colnames, must.include = coordinate_names)
-      for (coord in coordinate_names) {
+      assert_names(self$backend$colnames, must.include = extra_args$coordinate_names)
+      for (coord in extra_args$coordinate_names) {
         assert_numeric(self$data(cols = coord)[[1L]], any.missing = FALSE)
       }
 
       # mark columns as coordinates and check if coordinates should be included
       # as features
       self$col_roles$coordinates = extra_args$coordinate_names
-      if (isFALSE(coords_as_features)) {
+      if (isFALSE(extra_args$coords_as_features)) {
         self$col_roles$feature = setdiff(
           self$col_roles$feature,
           extra_args$coordinate_names)

@@ -8,9 +8,10 @@ This task specializes \link{Task} and \link{TaskSupervised} for spatio-temporal
 regression problems. The target column is assumed to be a factor.
 The \code{task_type} is set to \code{"classif"} and \code{"spatiotemporal"}.
 
+#' A spatial example task is available via \code{tsk("cookfarm")}.
 During initialization, coordinates need to be passed.
 By default, coordinates are not used as features.
-This can be changed by setting \code{coords_as_features = TRUE}.
+This can be changed by setting \code{extra_args$coords_as_features = TRUE}.
 }
 \seealso{
 Other Task: 
