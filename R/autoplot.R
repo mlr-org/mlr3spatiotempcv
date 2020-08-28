@@ -136,30 +136,18 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   test_color = "#E18727",
   ...) {
 
+  require_namespaces(c("sf", "cowplot"))
   resampling = object
+
+  resampling = assert_autoplot(resampling, fold_id, task)
+
+  # add the row_ids of the task to the coordinates
   coords = task$coordinates()
   coords$row_id = task$row_ids
-  require_namespaces(c("sf", "cowplot"))
-
-  # instantiate if not yet done
-  if (!resampling$is_instantiated) {
-    resampling = resampling$instantiate(task)
-  }
 
   if (is.null(fold_id)) {
     stopf("Plotting all folds of a LOOCV instance is not supported.
           Please provide a fold ID.", wrap = TRUE) # nolint
-  }
-
-  # plot train and test of a specific fold?
-  if (length(fold_id) > resampling$iters) {
-    stopf("More folds specified than stored in resampling.")
-  }
-  if (length(fold_id) == 1 && fold_id > resampling$iters) {
-    stopf("Specified a fold id which exceeds the total number of folds.")
-  }
-  if (any(fold_id > resampling$iters)) {
-    stopf("Specified a fold id which exceeds the total number of folds.")
   }
 
   indicator = NULL
@@ -820,14 +808,13 @@ autoplot_spatial = function(
   train_color = NULL,
   test_color = NULL) {
 
-  coords = task$coordinates()
-  coords$row_id = task$row_ids
   require_namespaces(c("sf", "cowplot"))
 
-  # instantiate if not yet done
-  if (!resampling$is_instantiated) {
-    resampling = resampling$instantiate(task)
-  }
+  resampling = assert_autoplot(resampling, fold_id, task)
+
+  # add the row_ids of the task to the coordinates
+  coords = task$coordinates()
+  coords$row_id = task$row_ids
 
   coords_resamp = merge(coords, resampling$instance, by = "row_id")
 
@@ -835,19 +822,10 @@ autoplot_spatial = function(
     coords_resamp = coords_resamp[rep == repeats_id, ]
   }
 
-  # plot train and test of a specific fold?
   if (!is.null(fold_id)) {
-    if (length(fold_id) > resampling$iters) {
-      stopf("More folds specified than stored in resampling.")
-    }
-    if (length(fold_id) == 1 && fold_id > resampling$iters) {
-      stopf("Specified a fold id which exceeds the total number of folds.")
-    }
-    if (any(fold_id > resampling$iters)) {
-      stopf("Specified a fold id which exceeds the total number of folds.")
-    }
 
-    # Multiplot with train and test set
+    # Multiplot with train and test set for each fold --------------------------
+
     plot_list = list()
     for (i in fold_id) {
       table = copy(coords_resamp)
@@ -859,10 +837,8 @@ autoplot_spatial = function(
       table[, indicator := ifelse(fold == i, "Test", "Train")]
 
       sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
-      sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
-      # reorder factor levels so that "train" comes first
-      sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
+      sf_df = reorder_levels(sf_df)
 
       plot_list[[length(plot_list) + 1]] =
         ggplot() +
@@ -875,7 +851,8 @@ autoplot_spatial = function(
         theme(legend.position = "none")
     }
 
-    # is a grid requested?
+    # Return a plot grid via cowplot? ------------------------------------------
+
     if (!grid) {
       return(plot_list)
     } else {
@@ -895,12 +872,8 @@ autoplot_spatial = function(
       coords_resamp[, indicator := ifelse(fold == 1, "Test", "Train")]
 
       sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
-      # 'fold' needs to be a factor, otherwise `show.legend = "points" has no
-      # effect
-      sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
-      # reorder factor levels so that "train" comes first
-      sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
+      sf_df = reorder_levels(sf_df)
 
       legend = cowplot::get_legend(ggplot() +
         geom_sf(
@@ -918,7 +891,9 @@ autoplot_spatial = function(
       cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
     }
   } else {
-    # Create one plot with all (test)-folds
+
+    # Create one plot colored by all test folds --------------------------------
+
     sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
 
     # order fold ids
@@ -955,25 +930,29 @@ autoplot_spatiotemp = function(
   point_size = NULL,
   axis_label_fontsize = NULL) {
 
+  require_namespaces("plotly")
+  resampling = assert_autoplot(resampling, fold_id, task)
+
+  # add the row_ids of the task to the coordinates
   coords = task$coordinates()
-  # add row_id for upcoming merge
   coords$row_id = task$row_ids
+
   data = task$data()
   data$row_id = task$row_ids
-  require_namespaces("plotly")
-
-  # instantiate if not yet done
-  if (!resampling$is_instantiated) {
-    resampling = resampling$instantiate(task)
-  }
 
   coords_resamp = merge(coords, resampling$instance, by = "row_id")
   task_resamp_ids = merge(data, coords_resamp, by = "row_id")
 
+  # set some required defaults
   if (grepl("Repeated", class(resampling)[1])) {
     task_resamp_ids = task_resamp_ids[rep == repeats_id, ]
   }
+  # for all non-repeated rsmp cases
+  if (is.null(repeats_id)) {
+    repeats_id = 1
+  }
 
+  # set fallback crs if missing
   if (!is.null(crs)) {
     require_namespaces("sf")
     # transform coordinates to WGS84
@@ -993,22 +972,8 @@ autoplot_spatiotemp = function(
     levels = unique(as.character(task_resamp_ids$fold))
   )
 
-  # for all non-repeated rsmp cases
-  if (is.null(repeats_id)) {
-    repeats_id = 1
-  }
-
   # plot train and test of a specific fold?
   if (!is.null(fold_id)) {
-    if (length(fold_id) > resampling$iters) {
-      stopf("More folds specified than stored in resampling.")
-    }
-    if (length(fold_id) == 1 && fold_id > resampling$iters) {
-      stopf("Specified a fold id which exceeds the total number of folds.")
-    }
-    if (any(fold_id > resampling$iters)) {
-      stopf("Specified a fold id which exceeds the total number of folds.")
-    }
 
     # suppress undefined global variables note
     indicator = NULL
