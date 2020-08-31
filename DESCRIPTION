@@ -55,6 +55,7 @@ VignetteBuilder:
     knitr
 RdMacros:
     mlr3misc
+Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
@@ -78,6 +79,8 @@ Collate:
     'Task_classif_ecuador.R'
     'Task_regr_cookfarm_profiles.R'
     'autoplot.R'
+    'autoplot_SpCVBuffer.R'
+    'autoplot_SptCVCstf.R'
     'helper_autoplot.R'
     'helper_sample.R'
     'helper.R'
