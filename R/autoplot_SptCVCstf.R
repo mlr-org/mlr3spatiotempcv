@@ -1,5 +1,3 @@
-#' @title Plot for Spatio-temporal clustering
-#'
 #' @param tickformat_date `[character]`\cr
 #'   Date format for z-axis.
 #' @param crs `[character]`\cr
@@ -35,8 +33,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   object,
   task,
   fold_id = NULL,
-  repeats_id = NULL,
-  grid = TRUE,
+  plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
   tickformat_date = "%Y-%m",
@@ -47,29 +44,32 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   axis_label_fontsize = 11,
   ...) {
 
+  dots = list(...)
+
   resampling = object
   coords = task$coordinates()
   coords$row_id = task$row_ids
   require_namespaces(c("sf", "cowplot"))
 
-  # instantiate if not yet done
-  if (!resampling$is_instantiated) {
-    resampling = resampling$instantiate(task)
+  resampling = assert_autoplot(resampling, fold_id, task)
+
+  if (is.null(dots$repeats_id)) {
+    repeats_id = 1
+  } else {
+    repeats_id = dots$repeats_id
   }
+
+  resampling_sub = resampling$clone()
 
   if (grepl("Repeated", class(resampling)[1])) {
-    coords_resamp = coords_resamp[rep == repeats_id, ]
-  }
-
-  if (is.null(repeats_id)) {
-    repeats_id = 1
+    resampling_sub$instance = resampling_sub$instance[[repeats_id]]
   }
 
   if (!is.null(fold_id)) {
 
     if (length(fold_id) == 1) {
       ### only one fold
-      data_coords = prepare_autoplot_cstf(task)
+      data_coords = prepare_autoplot_cstf(task, resampling_sub)
 
       # suppress undefined global variables note
       indicator = NULL
@@ -110,11 +110,11 @@ autoplot.ResamplingSptCVCstf = function( # nolint
     } else {
 
       ### Multiplot of multiple partitions with train and test set
-      plot_list = list()
+      plot = list()
       for (i in fold_id) {
 
-        coords_train = coords[row_id %in% resampling$instance$train[[i]]]
-        coords_test = coords[row_id %in% resampling$instance$test[[i]]]
+        coords_train = coords[row_id %in% resampling_sub$instance$train[[i]]]
+        coords_test = coords[row_id %in% resampling_sub$instance$test[[i]]]
 
         coords_train$indicator = "Train"
         coords_test$indicator = "Test"
@@ -127,7 +127,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
         table_data$Date = as.Date(table_data$Date)
 
         # create plots for each fold
-        plot_list[[length(plot_list) + 1]] = {
+        plot[[length(plot) + 1]] = {
           pl = plotly::plot_ly(table_data,
             x = ~x, y = ~y, z = ~Date,
             color = ~indicator, colors = c(
@@ -176,8 +176,8 @@ autoplot.ResamplingSptCVCstf = function( # nolint
     }
 
     # is a grid requested?
-    if (!grid) {
-      return(plot_list)
+    if (!plot_as_grid) {
+      return(plot)
     } else {
       cli::cli_alert_info("Unfortunately plotly does not support a dynamic
        arrangement of multiple subplots.
@@ -187,12 +187,12 @@ autoplot.ResamplingSptCVCstf = function( # nolint
        Use the objects in the returned list to arrange your custom grid.",
         wrap = TRUE)
 
-      return(invisible(plot_list))
+      return(invisible(plot))
     }
   } else {
 
     ### all test sets in one plot, each with a different colour
-    data_coords = prepare_autoplot_cstf()
+    data_coords = prepare_autoplot_cstf(task, resampling_sub)
 
     # fold ID needs to a factor
     data_coords$indicator = as.factor(as.character(data_coords$indicator))
@@ -235,8 +235,48 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   }
 }
 
+autoplot.ResamplingRepeatedSptCVCstf = function( # nolint
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = NULL,
+  plot_as_grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  tickformat_date = "%Y-%m",
+  crs = NULL,
+  nticks_x = 3,
+  nticks_y = 3,
+  point_size = 3,
+  axis_label_fontsize = 11,
+  ...) {
+
+  autoplot.ResamplingSptCVCstf(
+    object = object,
+    task = task,
+    fold_id = fold_id,
+    plot_as_grid = plot_as_grid,
+    train_color = train_color,
+    test_color = test_color,
+    tickformat_date = tickformat_date,
+    crs = crs,
+    nticks_x = nticks_x,
+    nticks_y = nticks_y,
+    point_size = point_size,
+    axis_label_fontsize = axis_label_fontsize,
+    # ellipsis
+    repeats_id = repeats_id
+  )
+}
+
 #' @rdname autoplot_spatial_resampling
 #' @export
 plot.ResamplingSptCVCstf <- function(x, ...) {
+  print(autoplot(x, ...))
+}
+
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingRepeatedSptCVCstf <- function(x, ...) {
   print(autoplot(x, ...))
 }

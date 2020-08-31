@@ -1,5 +1,5 @@
 # reducing redundant code parts
-prepare_autoplot_cstf = function(task) {
+prepare_autoplot_cstf = function(task, resampling) {
 
   data = task$data()
   data$row_id = task$row_ids
@@ -7,19 +7,26 @@ prepare_autoplot_cstf = function(task) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
-  for (i in seq_len(resampling$iters)) {
+  if (grepl("Repeated", class(resampling)[1])) {
+    n_iters = resampling$iters / resampling$repeats(resampling$iters)
+  } else {
+    n_iters = resampling$iters
+  }
+
+  for (i in seq_len(n_iters)) {
 
     row_id = resampling$instance$test[[i]]
 
     data$indicator[data$row_id %in% row_id] = i
   }
+  rm(resampling)
   data$Date = as.Date(data$Date)
   # merge the coords for the 3D plot
   data_coords = merge(data, coords, by = "row_id")
   return(data_coords)
 }
 
-# some checks
+# some checks on the resampling object
 assert_autoplot = function(object, fold_id, task) {
 
   # instantiate if not yet done
@@ -38,7 +45,6 @@ assert_autoplot = function(object, fold_id, task) {
       stopf("Specified a fold id which exceeds the total number of folds.")
     }
   }
-
   return(object)
 }
 
