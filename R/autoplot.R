@@ -3,41 +3,38 @@
 #' @description Generates plots for [ResamplingSpCVBlock], [ResamplingSpCVEnv],
 #'   [ResamplingSpCVBuffer] and [ResamplingSpCVCoords].
 #'
-#' @importFrom data.table data.table rbindlist
+#' @importFrom data.table rbindlist
 #' @import ggplot2
 #'
-#' @param object [Resampling]\cr
+#' @param object `[Resampling]`\cr
 #'   mlr3 spatial resampling object. One of class [ResamplingSpCVBuffer],
 #'   [ResamplingSpCVBlock], [ResamplingSpCVCoords], [ResamplingSpCVEnv].
-#' @param task [TaskClassifST]/[TaskRegrST]\cr
+#' @param task `[TaskClassifST]/[TaskRegrST]`\cr
 #'   mlr3 task object.
-#' @param fold_id [numeric]\cr
+#' @param fold_id `[numeric]`\cr
 #'   Fold IDs to plot.
-#' @param repeats_id [numeric]\cr
+#' @param repeats_id `[numeric]`\cr
 #'   Repetition ID to plot.
-#' @param grid (`logical(1)`)\cr Should a gridded plot using
-#'   `cowplot::plot_grid()` be created? If `FALSE` only a list with all
-#'   \CRANpkg{ggplot2} resamplings is returned. Default is `TRUE`. Only applies
-#'   if a numeric vector is passed to argument `fold_id`.
-#' @param train_color `character(1)`\cr
+#' @param plot_as_grid `[logical(1)]`\cr
+#'   Should a gridded plot using `cowplot::plot_grid()` be created? If `FALSE`
+#'   only a list with all \CRANpkg{ggplot2} resamplings is returned. Default is
+#'   `TRUE`. Only applies if a numeric vector is passed to argument `fold_id`.
+#' @param train_color `[character(1)]`\cr
 #'   The color to use for the training set observations.
-#' @param test_color `character(1)`\cr
+#' @param test_color `[character(1)]`\cr
 #'   The color to use for the test set observations.
 #' @param ... Not used.
 #'
-#' @details By default a plot is returned; if `fold_id` is set, a gridded plot
-#'   is created. If `grid = FALSE`, only a list of ggplot2 resamplings is
-#'   returned. This gives the option to align the single plots manually.
+#' @details
+#' By default a plot is returned; if `fold_id` is set, a gridded plot is
+#' created. If `plot_as_grid = FALSE`, a list of plot objects is returned.
+#' This can be used to align the plots individually.
 #'
-#'   When no single fold is selected, the [ggsci::scale_color_ucscgb()] palette
-#'   is used to display all partitions. If you want to change the colors,
-#'   call `<plot> + <color-palette>()`
+#' When no single fold is selected, the [ggsci::scale_color_ucscgb()] palette
+#' is used to display all partitions.
+#' If you want to change the colors, call `<plot> + <color-palette>()`.
 #' @return [ggplot()] or list of ggplot2 objects.
-
-#' @title Plot for Spatial Resampling
-#'
-#' @rdname autoplot_spatial_resampling
-
+#' @name autoplot_spatial_resampling
 #' @export
 #' @examples
 #' ##########
@@ -69,13 +66,22 @@ autoplot.ResamplingSpCVBlock = function( # nolint
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  crs = NULL,
   ...) {
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
-    grid = grid
+    grid = grid,
+    crs = crs
   )
+}
+
+#' @importFrom graphics plot
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingSpCVBlock <- function(x, ...) {
+  print(autoplot(x, ...))
 }
 
 #' @title Plot for Spatial Resampling
@@ -111,8 +117,12 @@ autoplot.ResamplingSpCVEnv = function( # nolint
   )
 }
 
-#' @title Plot for Spatial Resampling
-#'
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingSpCVEnv <- function(x, ...) {
+  print(autoplot(x, ...))
+}
+
 #' @rdname autoplot_spatial_resampling
 #' @export
 #' @examples
@@ -222,6 +232,12 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   }
 }
 
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingSpCVBuffer <- function(x, ...) {
+  print(autoplot(x, ...))
+}
+
 #' @title Plot for Spatial Resampling
 #'
 #' @rdname autoplot_spatial_resampling
@@ -246,13 +262,21 @@ autoplot.ResamplingSpCVCoords = function( # nolint
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  crs = NULL,
   ...) {
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
-    grid = grid
+    grid = grid,
+    crs = crs
   )
+}
+
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingSpCVCoords <- function(x, ...) {
+  print(autoplot(x, ...))
 }
 
 #' @title Plot for Spatio-temporal clustering
@@ -296,7 +320,7 @@ autoplot.ResamplingSptCVCluto = function( # nolint
   train_color = "#0072B5",
   test_color = "#E18727",
   tickformat_date = "%Y-%m",
-  crs = 4326,
+  crs = NULL,
   nticks_x = 3,
   nticks_y = 3,
   point_size = 3,
@@ -317,12 +341,19 @@ autoplot.ResamplingSptCVCluto = function( # nolint
   )
 }
 
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingSptCVCluto <- function(x, ...) {
+  print(autoplot(x, ...))
+}
+
 #' @title Plot for Spatio-temporal clustering
 #'
 #' @param tickformat_date `[character]`\cr
 #'   Date format for z-axis.
 #' @param crs `[character]`\cr
 #'   EPSG code of the CRS for x and y axes.
+#'   If not set, EPSG 4326 (WGS84) is used.
 #' @param nticks_y `[integer]`\cr
 #'   Number of y axis breaks.
 #' @param nticks_x `[integer]`\cr
@@ -358,7 +389,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   train_color = "#0072B5",
   test_color = "#E18727",
   tickformat_date = "%Y-%m",
-  crs = 4326,
+  crs = NULL,
   nticks_x = 3,
   nticks_y = 3,
   point_size = 3,
@@ -553,6 +584,12 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   }
 }
 
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingSptCVCstf <- function(x, ...) {
+  print(autoplot(x, ...))
+}
+
 #' @title Plot for Spatial Resampling
 #'
 #' @rdname autoplot_spatial_resampling
@@ -586,6 +623,12 @@ autoplot.ResamplingCV = function( # nolint
   )
 }
 
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingCV <- function(x, ...) {
+  print(autoplot(x, ...))
+}
+
 #' @title Plot for Spatial Resampling
 #'
 #' @rdname autoplot_spatial_resampling
@@ -612,14 +655,23 @@ autoplot.ResamplingRepeatedCV = function( # nolint
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  crs = NULL,
   ...) {
+
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
     repeats_id = repeats_id,
-    grid = grid
+    grid = grid,
+    crs = crs
   )
+}
+
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingRepeatedCV <- function(x, ...) {
+  print(autoplot(x, ...))
 }
 
 #' @title Plot for Repeated Spatial Resampling
@@ -649,14 +701,23 @@ autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  crs = NULL,
   ...) {
+
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
     repeats_id = repeats_id,
-    grid = grid
+    grid = grid,
+    crs = crs
   )
+}
+
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingRepeatedSpCVCoords <- function(x, ...) {
+  print(autoplot(x, ...))
 }
 
 #' @title Plot for Repeated Spatial Resampling
@@ -686,14 +747,23 @@ autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  crs = NULL,
   ...) {
+
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
     repeats_id = repeats_id,
-    grid = grid
+    grid = grid,
+    crs = crs
   )
+}
+
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingRepeatedSpCVEnv <- function(x, ...) {
+  print(autoplot(x, ...))
 }
 
 #' @title Plot for Repeated Spatial Resampling
@@ -726,14 +796,23 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
   grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  crs = NULL,
   ...) {
+
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
     repeats_id = repeats_id,
-    grid = grid
+    grid = grid,
+    crs = crs
   )
+}
+
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingRepeatedSpCVBlock <- function(x, ...) {
+  print(autoplot(x, ...))
 }
 
 #' @title Plot for Spatio-temporal clustering
@@ -777,7 +856,7 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
   train_color = "#0072B5",
   test_color = "#E18727",
   tickformat_date = "%Y-%m",
-  crs = 4326,
+  crs = NULL,
   nticks_x = 3,
   nticks_y = 3,
   point_size = 3,
@@ -799,6 +878,12 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
   )
 }
 
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingRepeatedSptCVCluto <- function(x, ...) {
+  print(autoplot(x, ...))
+}
+
 autoplot_spatial = function(
   resampling = NULL,
   task = NULL,
@@ -806,7 +891,8 @@ autoplot_spatial = function(
   repeats_id = NULL,
   grid = NULL,
   train_color = NULL,
-  test_color = NULL) {
+  test_color = NULL,
+  crs = NULL) {
 
   require_namespaces(c("sf", "cowplot"))
 
@@ -836,11 +922,20 @@ autoplot_spatial = function(
 
       table[, indicator := ifelse(fold == i, "Test", "Train")]
 
-      sf_df = sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs)
+      # set fallback crs if missing
+      if (is.null(crs)) {
+        # use 4326 (WGS84) as fallback
+        crs = 4326
+        cli::cli_alert_info("CRS not set, transforming to WGS84 (EPSG: 4326).")
+      }
+      # transform to selected crs
+      sf_df = sf::st_transform(
+        sf::st_as_sf(table, coords = c("x", "y"), crs = task$crs),
+        crs = crs)
 
       sf_df = reorder_levels(sf_df)
 
-      plot_list[[length(plot_list) + 1]] =
+      plot[[length(plot) + 1]] =
         ggplot() +
         geom_sf(data = sf_df, aes(color = indicator)) +
         scale_color_manual(values = c(
@@ -888,13 +983,22 @@ autoplot_spatial = function(
         theme(legend.position = "bottom"))
 
       # Plot
-      cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
+      plot = cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
     }
   } else {
 
     # Create one plot colored by all test folds --------------------------------
 
-    sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs)
+    # set fallback crs if missing
+    if (is.null(crs)) {
+      # use 4326 (WGS84) as fallback
+      crs = 4326
+      cli::cli_alert_info("CRS not set, transforming to WGS84 (EPSG: 4326).")
+    }
+    # transform to selected crs
+    sf_df = sf::st_transform(
+      sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$crs),
+      crs = crs)
 
     # order fold ids
     sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
@@ -905,7 +1009,7 @@ autoplot_spatial = function(
     if (is.null(repeats_id)) {
       repeats_id = 1
     }
-    ggplot() +
+    plot = ggplot() +
       geom_sf(
         data = sf_df, show.legend = "point",
         aes(color = fold)
@@ -913,6 +1017,8 @@ autoplot_spatial = function(
       ggsci::scale_color_ucscgb() +
       labs(color = sprintf("Partition #, Rep %s", repeats_id))
   }
+
+  return(plot)
 }
 
 autoplot_spatiotemp = function(
@@ -953,17 +1059,20 @@ autoplot_spatiotemp = function(
   }
 
   # set fallback crs if missing
-  if (!is.null(crs)) {
+  if (is.null(crs)) {
     require_namespaces("sf")
-    # transform coordinates to WGS84
-    coords = sf::st_coordinates(
-      sf::st_transform(
-        sf::st_as_sf(task$coordinates(), coords = c("x", "y"), crs = task$crs),
-        crs = 4326)
-    )
-    task_resamp_ids$x = coords[, 1]
-    task_resamp_ids$y = coords[, 2]
+    cli::cli_alert_info("CRS not set, transforming to WGS84 (EPSG: 4326).")
+
+    crs = 4326
   }
+  # transform coordinates to selected crs
+  coords = sf::st_coordinates(
+    sf::st_transform(
+      sf::st_as_sf(task$coordinates(), coords = c("x", "y"), crs = task$crs),
+      crs = crs)
+  )
+  task_resamp_ids$x = coords[, 1]
+  task_resamp_ids$y = coords[, 2]
 
   # Create one plot with all (test)-folds
   task_resamp_ids = task_resamp_ids[order(task_resamp_ids$fold, decreasing = FALSE), ]
