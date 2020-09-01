@@ -84,7 +84,7 @@ jobs:
       - name: "[Custom block] [Linux] Install spatial libraries"
         if: runner.os == 'Linux'
         run: |
-          sudo apt install ccache libgdal-dev libgeos-dev libproj-dev libudunits2-dev
+          sudo apt install ccache libgdal-dev libgeos-dev libproj-dev libudunits2-dev pandoc-citeproc
 
       - name: "[Custom block] [macOS] Install spatial libraries"
         if: runner.os == 'macOS'
