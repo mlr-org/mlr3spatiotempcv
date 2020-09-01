@@ -39,15 +39,15 @@ test_that("plot() works for 'repeated-sptcv-cluto'", {
   p2 = autoplot(rsp, task, 1, crs = 4326)
   p3 = autoplot(rsp, task, c(1, 2, 3, 4), crs = 4326)
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
-  expect_true(is.ggplot(p2))
+  expect_s3_class(p1, "plotly")
+  expect_s3_class(p2, "plotly")
+  expect_list(p3)
 
   p4 = autoplot(rsp, task, crs = 4326, repeats_id = 2)
   p5 = autoplot(rsp, task, crs = 4326, fold_id = 1, repeats_id = 2)
 
-  expect_true(is.ggplot(p4))
-  expect_true(is.ggplot(p5))
+  expect_s3_class(p4, "plotly")
+  expect_s3_class(p5, "plotly")
 
   skip_on_ci()
   vdiffr::expect_doppelganger("RepSptCVCluto all test sets", p1)
