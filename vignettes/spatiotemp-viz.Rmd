@@ -2,7 +2,7 @@
 title: "Spatiotemporal Visualization"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{spatiotemp-viz}
+  %\VignetteIndexEntry{Spatiotemporal Visualization}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
