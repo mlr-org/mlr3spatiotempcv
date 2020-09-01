@@ -3,10 +3,8 @@ title: "Get Started"
 output: rmarkdown::html_vignette
 bibliography: ../inst/references.bib
 link-citations: yes
-pkgdown:
-  as_is: true
 vignette: >
-  %\VignetteIndexEntry{foo}
+  %\VignetteIndexEntry{mlr3spatiotempcv}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -51,14 +49,20 @@ as.data.table(mlr_resamplings)
 
 Currently, the following resampling methods are implemented:
 
-| Literature             | Package                                                   | Reference     | Class Name                      | mlr3 Sugar                     |
-| ---------------        | ---------                                                 | ---------     | --------------------            | ---------------------          |
-| Spatial Buffering      | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVBuffer`          | `rsmp("spcv-buffer")`          |
-| Spatial Blocking       | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVBlock`           | `rsmp("spcv-block")`           |
-| Spatial CV             | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `ResamplingSpCVCoords`          | `rsmp("spcv-coords")`          |
-| Environmental Blocking | [blockCV](https://github.com/rvalavi/blockCV)             | Valavi 2019   | `ResamplingSpCVEnv`             | `rsmp("spcv-env")`             |
-| ---                    | ---                                                       | ---           | ---                             | ---                            |
-| Repeated Spatial CV    | [sperrorest](https://github.com/giscience-fsu/sperrorest) | Brenning 2012 | `RepeatedResamplingSpCVCoords` | `rsmp("repeated-spcv-coords")` |
+| Literature                           | Package    | Reference     | mlr3 Sugar                     |
+|--------------------------------------|------------|---------------|--------------------------------|
+| Spatial Buffering                    | blockCV    | Valavi 2019   | `rsmp("spcv-buffer")`          |
+| Spatial Blocking                     | blockCV    | Valavi 2019   | `rsmp("spcv-block")`           |
+| Spatial CV                           | sperrorest | Brenning 2012 | `rsmp("spcv-coords")`          |
+| Environmental Blocking               | blockCV    | Valavi 2019   | `rsmp("spcv-env")`             |
+| \-                                   | \-         | \-            | `rsmp("sptcv-cluto")`          |
+| Leave-Location-and-Time-Out          | CAST       | Meyer 2018    | `rsmp("sptcv-cstf")`           |
+| ---                                  | ---        | ---           | ---                            |
+| Repeated Spatial Blocking            | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-block")`  |
+| Repeated Spatial CV                  | sperrorest | Brenning 2012 | `rsmp("repeated-spcv-coords")` |
+| Repeated Env Blocking                | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-env")`    |
+| \-                                   | \-         | \-            | `rsmp("repeated-sptcv-cluto")` |
+| Repeated Leave-Location-and-Time-Out | CAST       | Meyer 2018    | `rsmp("repeated-sptcv-cstf")`  |
 
 ## Usage
 
@@ -81,7 +85,7 @@ The "ecuador" dataset consists of a response variable named `slides` (boolean; s
 For a detailed overview of the dataset, please refer to @brenning_landslide_2015 and/or Chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace_geocomputation_2019].
 
 
-```{r lsl, echo=FALSE, fig.cap="Landslide initiation points (red) and non-landslide points (blue) in Southern Ecuador. Figure taken from @lovelace_geocomputation_2019.", fig.align="center", out.width="70%", dpi=75}
+```{r lsl, echo=FALSE, fig.cap="Landslide initiation points (red) and non-landslide points (blue) in Southern Ecuador. Figure taken from @lovelace_geocomputation_2019.", fig.align="center", out.width="70%"}
 knitr::include_graphics("https://geocompr.robinlovelace.net/figures/lsl-map-1.png")
 ```
 
@@ -144,13 +148,13 @@ To showcase the usage, we will visualize both resampling methods which we create
 Multiple options exists.
 If no specific fold is specified, all partitions will be returned distinguished by color.
 
-```{r ressp, fig.align='center', dpi=75, fig.cap="Example for five spatially disjoint partitions constructed with the `repeated_cv` resampling method."}
+```{r ressp, fig.align='center', fig.cap="Example for five spatially disjoint partitions constructed with the `repeated_cv` resampling method."}
 plot(resampling_sp, task = ecuador, crs = 4326)
 ```
 
 ### Non-spatial
 
-```{r, fig.align='center', dpi=75}
+```{r, fig.align='center'}
 plot(resampling_nsp, task = ecuador, crs = 4326)
 ```
 
