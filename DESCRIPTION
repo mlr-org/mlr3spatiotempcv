@@ -32,6 +32,7 @@ Imports:
     mlr3misc (>= 0.1.7),
     paradox,
     R6,
+    testthat (>= 2.99.0.9000),
     utils
 Suggests:
     bibtex,
@@ -49,12 +50,14 @@ Suggests:
     rpart,
     sf,
     skmeans,
-    testthat (>= 2.1.0),
     vdiffr
 VignetteBuilder:
     knitr
 RdMacros:
     mlr3misc
+Remotes: 
+    r-lib/testthat
+Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
