@@ -276,8 +276,8 @@ Font size of axis labels.}
 }
 \description{
 Generates plots for \link{ResamplingSpCVBlock}, \link{ResamplingSpCVEnv},
-\link{ResamplingSpCVBuffer}, \link{ResamplingSpCVCoords}, [ResamplingSpCVCstf and
-\link{ResamplingSpCVCluto}.
+\link{ResamplingSpCVBuffer}, \link{ResamplingSpCVCoords}, [ResamplingSptCVCstf and
+\link{ResamplingSptCVCluto}.
 }
 \details{
 By default a plot is returned; if \code{fold_id} is set, a gridded plot is

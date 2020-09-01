@@ -221,7 +221,7 @@ test_that("plot() works for 'repeated_spcv_env'", {
 
 # sptcv_cstf -------------------------------------------------------------------
 
-test_that("plot() works for 'spcv_cstf'", {
+test_that("plot() works for 'sptcv_cstf'", {
   set.seed(42)
 
   task = tsk("cookfarm")
@@ -268,9 +268,9 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
   expect_s3_class(p5, "plotly")
 
   skip_on_ci()
-  vdiffr::expect_doppelganger("RepSpCVCstf all test sets", p1)
-  vdiffr::expect_doppelganger("RepSpCVCstf Fold 1 Rep 1", p2)
-  vdiffr::expect_doppelganger("RepSpCVCstf - Fold 1-4 Rep 1", p3)
-  vdiffr::expect_doppelganger("RepSpCVCstf - Fold 1-4, Rep 2", p4)
-  vdiffr::expect_doppelganger("RepSpCVCstf - Fold 1, Rep 2", p5)
+  vdiffr::expect_doppelganger("RepSptCVCstf all test sets", p1)
+  vdiffr::expect_doppelganger("RepSptCVCstf Fold 1 Rep 1", p2)
+  vdiffr::expect_doppelganger("RepSptCVCstf - Fold 1-4 Rep 1", p3)
+  vdiffr::expect_doppelganger("RepSptCVCstf - Fold 1-4, Rep 2", p4)
+  vdiffr::expect_doppelganger("RepSptCVCstf - Fold 1, Rep 2", p5)
 })
