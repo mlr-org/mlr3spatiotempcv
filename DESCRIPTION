@@ -78,6 +78,8 @@ Collate:
     'Task_classif_ecuador.R'
     'Task_regr_cookfarm_profiles.R'
     'autoplot.R'
+    'autoplot_spcv_buffer.R'
+    'autoplot_spcv_cstf.R'
     'helper_autoplot.R'
     'helper_sample.R'
     'helper.R'
