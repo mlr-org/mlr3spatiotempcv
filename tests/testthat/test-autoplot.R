@@ -5,7 +5,7 @@ context("plot")
 test_that("errors are thrown for non-valid argument settings", {
   task = test_make_twoclass()
   # type does not matter here
-  rsp = rsmp("spcv-coords")
+  rsp = rsmp("spcv_coords")
   rsp$instantiate(task)
 
   # these error checks apply to all resampling methods.
@@ -66,12 +66,12 @@ test_that("plot() works for 'repeated-cv'", {
   vdiffr::expect_doppelganger("RepCV - Fold 1, Rep 2", p5)
 })
 
-# spcv-coords ------------------------------------------------------------------
+# spcv_coords ------------------------------------------------------------------
 
-test_that("plot() works for 'spcv-coords'", {
+test_that("plot() works for 'spcv_coords'", {
   set.seed(42)
 
-  plots = prepare_autoplot("spcv-coords", folds = 4)
+  plots = prepare_autoplot("spcv_coords", folds = 4)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
   p1 = autoplot(plots$rsp, plots$task, crs = 4326)
@@ -88,10 +88,10 @@ test_that("plot() works for 'spcv-coords'", {
   vdiffr::expect_doppelganger("SpCVCoords - Fold 1-4", p3)
 })
 
-test_that("plot() works for 'repeated-spcv-coords'", {
+test_that("plot() works for 'repeated_spcv_coords'", {
   set.seed(42)
 
-  plots = prepare_autoplot("repeated-spcv-coords",
+  plots = prepare_autoplot("repeated_spcv_coords",
     folds = 4, repeats = 2)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
@@ -117,12 +117,12 @@ test_that("plot() works for 'repeated-spcv-coords'", {
   vdiffr::expect_doppelganger("RepSpCVCoords - Fold 1, Rep 2", p5)
 })
 
-# spcv-block -------------------------------------------------------------------
+# spcv_block -------------------------------------------------------------------
 
-test_that("plot() works for 'spcv-block'", {
+test_that("plot() works for 'spcv_block'", {
   set.seed(42)
 
-  plots = prepare_autoplot("spcv-block", cols = 2, rows = 2, folds = 4)
+  plots = prepare_autoplot("spcv_block", cols = 2, rows = 2, folds = 4)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
   p1 = autoplot(plots$rsp, plots$task, crs = 4326)
@@ -139,10 +139,10 @@ test_that("plot() works for 'spcv-block'", {
   vdiffr::expect_doppelganger("SpCVBlock - Fold 1-4", p3)
 })
 
-test_that("plot() works for 'repeated-spcv-block'", {
+test_that("plot() works for 'repeated_spcv_block'", {
   set.seed(42)
 
-  plots = prepare_autoplot("repeated-spcv-block",
+  plots = prepare_autoplot("repeated_spcv_block",
     folds = 4, range = c(2, 4), repeats = 2)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
@@ -168,12 +168,12 @@ test_that("plot() works for 'repeated-spcv-block'", {
   vdiffr::expect_doppelganger("RepSpCVBlock - Fold 1, Rep 2", p5)
 })
 
-# spcv-env ---------------------------------------------------------------------
+# spcv_env ---------------------------------------------------------------------
 
-test_that("plot() works for 'spcv-env'", {
+test_that("plot() works for 'spcv_env'", {
   set.seed(42)
 
-  plots = prepare_autoplot("spcv-env", folds = 4)
+  plots = prepare_autoplot("spcv_env", folds = 4)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
   p1 = autoplot(plots$rsp, plots$task, crs = 4326)
@@ -190,10 +190,10 @@ test_that("plot() works for 'spcv-env'", {
   vdiffr::expect_doppelganger("SpCVEnv - Fold 1-4", p3)
 })
 
-test_that("plot() works for 'repeated-spcv-env'", {
+test_that("plot() works for 'repeated_spcv_env'", {
   set.seed(42)
 
-  plots = prepare_autoplot("repeated-spcv-env",
+  plots = prepare_autoplot("repeated_spcv_env",
     folds = 4, repeats = 2)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
@@ -219,13 +219,13 @@ test_that("plot() works for 'repeated-spcv-env'", {
   vdiffr::expect_doppelganger("RepSpCVEnv - Fold 1, Rep 2", p5)
 })
 
-# sptcv-cstf -------------------------------------------------------------------
+# sptcv_cstf -------------------------------------------------------------------
 
-test_that("plot() works for 'spcv-cstf'", {
+test_that("plot() works for 'spcv_cstf'", {
   set.seed(42)
 
   task = tsk("cookfarm")
-  rsp = rsmp("sptcv-cstf", folds = 4)
+  rsp = rsmp("sptcv_cstf", folds = 4)
   rsp$instantiate(task, time_var = "Date")
 
   p1 = plot(rsp, task = task, crs = 4326)
@@ -245,11 +245,11 @@ test_that("plot() works for 'spcv-cstf'", {
 
 
 
-test_that("plot() works for 'repeated-spcv-cstf'", {
+test_that("plot() works for 'repeated_spcv_cstf'", {
   set.seed(42)
 
   task = tsk("cookfarm")
-  rsp = rsmp("repeated-sptcv-cstf", folds = 4, repeats = 2)
+  rsp = rsmp("repeated_sptcv_cstf", folds = 4, repeats = 2)
   rsp$instantiate(task, time_var = "Date")
 
   p1 = autoplot(rsp, task = task, crs = 4326)

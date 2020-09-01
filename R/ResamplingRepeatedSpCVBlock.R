@@ -8,7 +8,7 @@
 #' task = tsk("diplodia")
 #'
 #' # Instantiate Resampling
-#' rrcv = rsmp("repeated-spcv-block",
+#' rrcv = rsmp("repeated_spcv_block",
 #'   folds = 3, repeats = 2,
 #'   range = c(5000, 10000))
 #' rrcv$instantiate(task)
@@ -33,7 +33,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     #' Create an "coordinate-based" repeated resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
-    initialize = function(id = "repeated-spcv-block") {
+    initialize = function(id = "repeated_spcv_block") {
       ps = ParamSet$new(params = list(
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
         ParamInt$new("repeats", lower = 1, default = 1L, tags = "required"),

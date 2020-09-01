@@ -1,11 +1,11 @@
 context("plot")
 
-# spcv-buffer ------------------------------------------------------------------
+# spcv_buffer ------------------------------------------------------------------
 
-test_that("plot() works for 'spcv-buffer'", {
+test_that("plot() works for 'spcv_buffer'", {
   set.seed(42)
 
-  plots = prepare_autoplot("spcv-buffer", theRange = 2)
+  plots = prepare_autoplot("spcv_buffer", theRange = 2)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
   expect_error(autoplot(plots$rsp, plots$task, crs = 4326))

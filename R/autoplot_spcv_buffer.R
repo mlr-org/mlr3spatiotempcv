@@ -6,7 +6,7 @@
 #' ##########
 #' \dontrun{
 #' library(mlr3)
-#' resampling = rsmp("spcv-buffer", theRange = 1000)
+#' resampling = rsmp("spcv_buffer", theRange = 1000)
 #' resampling$instantiate(task)
 #'
 #' autoplot(resampling, task, 1)

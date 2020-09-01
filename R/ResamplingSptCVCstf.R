@@ -7,7 +7,7 @@
 #' task = tsk("cookfarm")
 #'
 #' # Instantiate Resampling
-#' rcv = rsmp("sptcv-cstf", folds = 5)
+#' rcv = rsmp("sptcv_cstf", folds = 5)
 #' rcv$instantiate(task, time_var = "Date", space_var = "SOURCEID")
 #'
 #' # Individual sets:
@@ -26,7 +26,7 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
     #' Create a "Spacetime Folds" resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
-    initialize = function(id = "sptcv-cstf") {
+    initialize = function(id = "sptcv_cstf") {
       ps = ParamSet$new(params = list(
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required")
       ))

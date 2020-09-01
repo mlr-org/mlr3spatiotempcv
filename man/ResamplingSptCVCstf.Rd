@@ -18,7 +18,7 @@ library(mlr3)
 task = tsk("cookfarm")
 
 # Instantiate Resampling
-rcv = rsmp("sptcv-cstf", folds = 5)
+rcv = rsmp("sptcv_cstf", folds = 5)
 rcv$instantiate(task, time_var = "Date", space_var = "SOURCEID")
 
 # Individual sets:
@@ -72,7 +72,7 @@ values stored in the \code{param_set}.}
 \subsection{Method \code{new()}}{
 Create a "Spacetime Folds" resampling instance.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCstf$new(id = "sptcv-cstf")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCstf$new(id = "sptcv_cstf")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

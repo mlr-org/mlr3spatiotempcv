@@ -51,18 +51,18 @@ Currently, the following resampling methods are implemented:
 
 | Literature                           | Package    | Reference     | mlr3 Sugar                     |
 |--------------------------------------|------------|---------------|--------------------------------|
-| Spatial Buffering                    | blockCV    | Valavi 2019   | `rsmp("spcv-buffer")`          |
-| Spatial Blocking                     | blockCV    | Valavi 2019   | `rsmp("spcv-block")`           |
-| Spatial CV                           | sperrorest | Brenning 2012 | `rsmp("spcv-coords")`          |
-| Environmental Blocking               | blockCV    | Valavi 2019   | `rsmp("spcv-env")`             |
-| \-                                   | \-         | \-            | `rsmp("sptcv-cluto")`          |
-| Leave-Location-and-Time-Out          | CAST       | Meyer 2018    | `rsmp("sptcv-cstf")`           |
+| Spatial Buffering                    | blockCV    | Valavi 2019   | `rsmp("spcv_buffer")`          |
+| Spatial Blocking                     | blockCV    | Valavi 2019   | `rsmp("spcv_block")`           |
+| Spatial CV                           | sperrorest | Brenning 2012 | `rsmp("spcv_coords")`          |
+| Environmental Blocking               | blockCV    | Valavi 2019   | `rsmp("spcv_env")`             |
+| \-                                   | \-         | \-            | `rsmp("sptcv_cluto")`          |
+| Leave-Location-and-Time-Out          | CAST       | Meyer 2018    | `rsmp("sptcv_cstf")`           |
 | ---                                  | ---        | ---           | ---                            |
-| Repeated Spatial Blocking            | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-block")`  |
-| Repeated Spatial CV                  | sperrorest | Brenning 2012 | `rsmp("repeated-spcv-coords")` |
-| Repeated Env Blocking                | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-env")`    |
-| \-                                   | \-         | \-            | `rsmp("repeated-sptcv-cluto")` |
-| Repeated Leave-Location-and-Time-Out | CAST       | Meyer 2018    | `rsmp("repeated-sptcv-cstf")`  |
+| Repeated Spatial Blocking            | blockCV    | Valavi 2019   | `rsmp("repeated_spcv_block")`  |
+| Repeated Spatial CV                  | sperrorest | Brenning 2012 | `rsmp("repeated_spcv_coords")` |
+| Repeated Env Blocking                | blockCV    | Valavi 2019   | `rsmp("repeated_spcv_env")`    |
+| \-                                   | \-         | \-            | `rsmp("repeated_sptcv_cluto")` |
+| Repeated Leave-Location-and-Time-Out | CAST       | Meyer 2018    | `rsmp("repeated_sptcv_cstf")`  |
 
 ## Usage
 
@@ -122,7 +122,7 @@ For a gentle introduction to spatial cross-validation, please refer to Chapter 1
 Hence, let's do the cross-validation again, this time taking into account the spatial dimension.
 
 ```{r}
-resampling_sp = rsmp("repeated-spcv-coords", folds = 5, repeats = 5)
+resampling_sp = rsmp("repeated_spcv_coords", folds = 5, repeats = 5)
 
 rr_sp = resample(
   task = ecuador, learner = learner,

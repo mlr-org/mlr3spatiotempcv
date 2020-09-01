@@ -45,7 +45,7 @@
 #' \dontrun{
 #' library(mlr3)
 #' task = tsk("ecuador")
-#' resampling = rsmp("spcv-block", range = 1000)
+#' resampling = rsmp("spcv_block", range = 1000)
 #' resampling$instantiate(task)
 #'
 #' ## Visualize all partitions
@@ -139,7 +139,7 @@ plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
 #' ##########
 #' \dontrun{
 #' library(mlr3)
-#' resampling = rsmp("spcv-env", folds = 4, features = "dem")
+#' resampling = rsmp("spcv_env", folds = 4, features = "dem")
 #' resampling$instantiate(task)
 #'
 #' autoplot(resampling, task)
@@ -219,7 +219,7 @@ plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
 #' ##########
 #' \dontrun{
 #' library(mlr3)
-#' resampling = rsmp("spcv-coords")
+#' resampling = rsmp("spcv_coords")
 #' resampling$instantiate(task)
 #'
 #' autoplot(resampling, task)
@@ -313,7 +313,7 @@ plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
 #' library(mlr3)
 #' library(mlr3spatiotempcv)
 #' task_st = tsk("cookfarm")
-#' resampling = rsmp("sptcv-cluto", folds = 5)
+#' resampling = rsmp("sptcv_cluto", folds = 5)
 #' resampling$instantiate(task_st, "Date")
 #'
 #' # plot

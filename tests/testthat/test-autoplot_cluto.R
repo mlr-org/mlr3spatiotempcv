@@ -1,13 +1,13 @@
 context("plot")
 
-# SptCV-Cluto ------------------------------------------------------------------
+# sptcv_Cluto ------------------------------------------------------------------
 
-test_that("plot() works for 'sptcv-cluto'", {
+test_that("plot() works for 'sptcv_cluto'", {
   skip_on_os("mac")
   set.seed(42)
 
   task = tsk("cookfarm")
-  rsp = rsmp("sptcv-cluto", folds = 4)
+  rsp = rsmp("sptcv_cluto", folds = 4)
   rsp$instantiate(task, time_var = "Date")
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
@@ -25,13 +25,13 @@ test_that("plot() works for 'sptcv-cluto'", {
   vdiffr::expect_doppelganger("SptCVCluto - Fold 1-4", p3)
 })
 
-test_that("plot() works for 'repeated-sptcv-cluto'", {
+test_that("plot() works for 'repeated_sptcv_cluto'", {
   skip_on_os("mac")
 
   set.seed(42)
 
   task = tsk("cookfarm")
-  rsp = rsmp("repeated-sptcv-cluto", folds = 4)
+  rsp = rsmp("repeated_sptcv_cluto", folds = 4)
   rsp$instantiate(task, time_var = "Date")
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
