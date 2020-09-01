@@ -12,7 +12,6 @@ test_that("plot() works for 'spcv-buffer'", {
   p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
   p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
 
-  expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
 

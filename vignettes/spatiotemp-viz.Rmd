@@ -37,7 +37,7 @@ task_st = tsk("cookfarm")
 resampling = rsmp("sptcv-cluto", folds = 5)
 resampling$instantiate(task_st, time_var = "Date")
 
-pl = autoplot(resampling, task_st, c(1, 2, 3, 4),
+pl = plot(resampling, task_st, c(1, 2, 3, 4),
   point_size = 3, axis_label_fontsize = 10)
 
 # Warnings can be ignored

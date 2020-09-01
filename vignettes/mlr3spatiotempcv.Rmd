@@ -1,6 +1,6 @@
 ---
 title: "Get Started"
-output: bookdown::html_document2
+output: rmarkdown::html_vignette
 bibliography: ../inst/references.bib
 link-citations: yes
 pkgdown:
@@ -97,7 +97,7 @@ However, non-spatial methods should **only be used to showcase the degree of ove
 ### Resampling
 
 To showcase the usage with code, we will adapt the basic [resampling example of the mlr3book](https://mlr3book.mlr-org.com/resampling.html) by using the "ecuador" example task that comes with the {mlr3spatiotempcv} package.
-To predict landslide occurence, we will use a simple decision tree.
+To predict landslide occurrence, we will use a simple decision tree.
 To emphasize that common, i.e., non-spatial, cross-validation is usually over-optimistic, we will first execute a 5-repeated 5-fold cross-validation with the help of the `"repeated-cv"` resampling method.
 
 ```{r}
@@ -145,13 +145,13 @@ Multiple options exists.
 If no specific fold is specified, all partitions will be returned distinguished by color.
 
 ```{r ressp, fig.align='center', dpi=75, fig.cap="Example for five spatially disjoint partitions constructed with the `repeated_cv` resampling method."}
-autoplot(object = resampling_sp, task = ecuador)
+plot(resampling_sp, task = ecuador, crs = 4326)
 ```
 
 ### Non-spatial
 
 ```{r, fig.align='center', dpi=75}
-autoplot(object = resampling_nsp, task = ecuador)
+plot(resampling_nsp, task = ecuador, crs = 4326)
 ```
 
 # References
