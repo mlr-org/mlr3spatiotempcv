@@ -3,8 +3,8 @@
 #' @title Visualization of spatiotemporal resampling methods.
 #'
 #' @description Generates plots for [ResamplingSpCVBlock], [ResamplingSpCVEnv],
-#'   [ResamplingSpCVBuffer], [ResamplingSpCVCoords], [ResamplingSpCVCstf and
-#'   [ResamplingSpCVCluto].
+#'   [ResamplingSpCVBuffer], [ResamplingSpCVCoords], [ResamplingSptCVCstf and
+#'   [ResamplingSptCVCluto].
 #'
 #' @importFrom data.table rbindlist
 #' @import ggplot2
