@@ -29,7 +29,7 @@
 \alias{autoplot.ResamplingRepeatedSptCVCstf}
 \alias{plot.ResamplingSptCVCstf}
 \alias{plot.ResamplingRepeatedSptCVCstf}
-\title{Visualization of spatial resampling.}
+\title{Visualization of spatiotemporal resampling methods.}
 \usage{
 \method{autoplot}{ResamplingSpCVBlock}(
   object,
@@ -276,7 +276,8 @@ Font size of axis labels.}
 }
 \description{
 Generates plots for \link{ResamplingSpCVBlock}, \link{ResamplingSpCVEnv},
-\link{ResamplingSpCVBuffer} and \link{ResamplingSpCVCoords}.
+\link{ResamplingSpCVBuffer}, \link{ResamplingSpCVCoords}, [ResamplingSpCVCstf and
+\link{ResamplingSpCVCluto}.
 }
 \details{
 By default a plot is returned; if \code{fold_id} is set, a gridded plot is
