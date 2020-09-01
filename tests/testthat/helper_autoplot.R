@@ -1,5 +1,5 @@
 # for tsk()
-library(mlr3)
+loadNamespace("mlr3")
 
 prepare_autoplot = function(resampling_type, task = NULL, ...) {
   if (is.null(task)) {

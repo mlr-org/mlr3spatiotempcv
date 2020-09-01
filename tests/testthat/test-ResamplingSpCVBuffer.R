@@ -39,7 +39,7 @@ test_that("test sets only include positive observations", {
   rsp$instantiate(task)
 
   expect_equal(rsp$iters, 18)
-  expect_equal(sapply(1:18, rsp$test_set), 1:18)
+  expect_equal(mlr3misc::map_int(1:18, rsp$test_set), 1:18)
 })
 
 test_that("test sets include background observations", {
