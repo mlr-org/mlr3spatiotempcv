@@ -43,8 +43,8 @@ test_that("plot() works for 'repeated-sptcv-cluto'", {
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
 
-  p4 = autoplot(plots$rsp, plots$task, crs = 4326, repeats_id = 2)
-  p5 = autoplot(plots$rsp, plots$task, crs = 4326, fold_id = 1, repeats_id = 2)
+  p4 = autoplot(rsp, task, crs = 4326, repeats_id = 2)
+  p5 = autoplot(rsp, task, crs = 4326, fold_id = 1, repeats_id = 2)
 
   expect_true(is.ggplot(p4))
   expect_true(is.ggplot(p5))

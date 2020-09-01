@@ -112,15 +112,18 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
 }
 
 #' @importFrom graphics plot
+#' @param x `[Resampling]`\cr
+#'   mlr3 spatial resampling object. One of class [ResamplingSpCVBuffer],
+#'   [ResamplingSpCVBlock], [ResamplingSpCVCoords], [ResamplingSpCVEnv].
 #' @rdname autoplot_spatial_resampling
 #' @export
-plot.ResamplingSpCVBlock <- function(x, ...) {
+plot.ResamplingSpCVBlock = function(x, ...) {
   print(autoplot(x, ...))
 }
 
 #' @rdname autoplot_spatial_resampling
 #' @export
-plot.ResamplingRepeatedSpCVBlock <- function(x, ...) {
+plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
   print(autoplot(x, ...))
 }
 
@@ -194,13 +197,13 @@ autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
 #' @importFrom graphics plot
 #' @rdname autoplot_spatial_resampling
 #' @export
-plot.ResamplingSpCVEnv <- function(x, ...) {
+plot.ResamplingSpCVEnv = function(x, ...) {
   print(autoplot(x, ...))
 }
 
 #' @rdname autoplot_spatial_resampling
 #' @export
-plot.ResamplingRepeatedSpCVEnv <- function(x, ...) {
+plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
   print(autoplot(x, ...))
 }
 
@@ -274,13 +277,13 @@ autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
 #' @importFrom graphics plot
 #' @rdname autoplot_spatial_resampling
 #' @export
-plot.ResamplingSpCVCoords <- function(x, ...) {
+plot.ResamplingSpCVCoords = function(x, ...) {
   print(autoplot(x, ...))
 }
 
 #' @rdname autoplot_spatial_resampling
 #' @export
-plot.ResamplingRepeatedSpCVCoords <- function(x, ...) {
+plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
   print(autoplot(x, ...))
 }
 
@@ -380,13 +383,13 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
 #' @importFrom graphics plot
 #' @rdname autoplot_spatial_resampling
 #' @export
-plot.ResamplingSptCVCluto <- function(x, ...) {
+plot.ResamplingSptCVCluto = function(x, ...) {
   print(autoplot(x, ...))
 }
 
 #' @rdname autoplot_spatial_resampling
 #' @export
-plot.ResamplingRepeatedSptCVCluto <- function(x, ...) {
+plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
   print(autoplot(x, ...))
 }
 
@@ -441,7 +444,8 @@ autoplot.ResamplingRepeatedCV = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL) {
+  crs = NULL,
+  ...) {
 
   autoplot.ResamplingCV(
     object = object,
@@ -459,13 +463,13 @@ autoplot.ResamplingRepeatedCV = function( # nolint
 #' @importFrom graphics plot
 #' @rdname autoplot_spatial_resampling
 #' @export
-plot.ResamplingCV <- function(x, ...) {
+plot.ResamplingCV = function(x, ...) {
   print(autoplot(x, ...))
 }
 
 #' @rdname autoplot_spatial_resampling
 #' @export
-plot.ResamplingRepeatedCV <- function(x, ...) {
+plot.ResamplingRepeatedCV = function(x, ...) {
   print(autoplot(x, ...))
 }
 

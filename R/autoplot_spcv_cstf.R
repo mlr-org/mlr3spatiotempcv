@@ -273,12 +273,12 @@ autoplot.ResamplingRepeatedSptCVCstf = function( # nolint
 
 #' @rdname autoplot_spatial_resampling
 #' @export
-plot.ResamplingSptCVCstf <- function(x, ...) {
+plot.ResamplingSptCVCstf = function(x, ...) {
   print(autoplot(x, ...))
 }
 
 #' @rdname autoplot_spatial_resampling
 #' @export
-plot.ResamplingRepeatedSptCVCstf <- function(x, ...) {
+plot.ResamplingRepeatedSptCVCstf = function(x, ...) {
   print(autoplot(x, ...))
 }
