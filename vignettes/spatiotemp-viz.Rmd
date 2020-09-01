@@ -18,6 +18,9 @@ os = ifelse(!Sys.info()[["sysname"]] == "Darwin", TRUE, FALSE)
 
 # - dont run on CRAN
 is_cran = ifelse(Sys.getenv("NOT_CRAN") != "false", FALSE, TRUE)
+
+# run on ci
+on_ci = Sys.getenv("CI") != ""
 ```
 
 {mlr3spatiotempcv} makes use of {plotly} to create the 3D plots for visualizing spatiotemporal folds created via the CLUTO algorithm.
@@ -30,7 +33,7 @@ At this point, manual action by the user is needed.
 Here is an example to create a 2x2 grid showing four folds as 3D subplots.
 It makes use of the returned 3D plotly objects which are returned in a list by `autoplot()`:
 
-```{r, fig.align='center', eval=os&&!is_cran}
+```{r, fig.align='center', eval=os&&!is_cran&&on_ci}
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm")
@@ -66,6 +69,10 @@ plotly::layout(pl_subplot,
     camera = list(eye = list(z = 2.5))
   )
 )
+```
+
+```{r, eval=os&&!is_cran&&!on_ci, echo=FALSE, results='asis'}
+cat("(The actual graphic here only rendered on the pkgdown site: please visit https://mlr3spatiotempcv.mlr-org.com.)")
 ```
 
 Subplot titles are not dynamically supported.
