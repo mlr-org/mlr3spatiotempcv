@@ -1,3 +1,11 @@
+# mlr3spatiotempcv 0.0.0.9007
+
+- add pkgdown reference grouping, (fixes #67)
+- use underscores instead of hyphens for resampling method naming
+- Optimize `autoplot()` and add `plot()`
+- update registering of column roles: append instead of overwrite
+
+
 # mlr3spatiotempcv 0.0.0.9006
 
 - Add `ResamplingSptCVCluto` (#53)
