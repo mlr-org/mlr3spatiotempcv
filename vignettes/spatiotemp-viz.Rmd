@@ -75,7 +75,7 @@ plotly::layout(pl_subplot,
 cat("(The actual graphic here only rendered on the pkgdown site: please visit https://mlr3spatiotempcv.mlr-org.com.)")
 ```
 
-```{r, eval=os!, results='asis'}
+```{r, eval=!os, results='asis'}
 cat("(The Cluto method does not work on macOS: please visit https://mlr3spatiotempcv.mlr-org.com to see the rendered plot.)")
 ```
 
