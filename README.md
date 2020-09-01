@@ -62,7 +62,7 @@ Spatiotemporal tasks
 Visualization
 -------------
 
-S3 `autoplot()` for all implemented spatial resampling methods.
+S3 `plot()` method for all implemented spatial resampling methods.
 
 ### Visualization of all folds
 
@@ -74,13 +74,13 @@ S3 `autoplot()` for all implemented spatial resampling methods.
     resampling = rsmp("spcv-coords", folds = 5)
     resampling$instantiate(task)
 
-    autoplot(resampling, task)
+    plot(resampling, task, crs = 4326)
 
 ![](man/figures/README-spcv-coords-all-partitions-1.png)<!-- -->
 
 ### Visualization of a specific fold
 
-    autoplot(resampling, task, fold_id = 1)
+    plot(resampling, task, fold_id = 1, crs = 4326)
 
 ![](man/figures/README-spcv-coords-fold-1.png)<!-- -->
 
@@ -96,7 +96,7 @@ for an interactive 3D HTML variant.)
     task_st = tsk("cookfarm")
     resampling = rsmp("sptcv-cluto", folds = 5)
     resampling$instantiate(task_st, time_var = "Date")
-    autoplot(resampling, task_st, fold_id = 1, point_size = 3)
+    plot(resampling, task_st, fold_id = 1, point_size = 3)
 
 ![](man/figures/spt-viz.png)
 

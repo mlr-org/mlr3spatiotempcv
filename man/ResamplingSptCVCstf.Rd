@@ -2,7 +2,7 @@
 % Please edit documentation in R/ResamplingSptCVCstf.R
 \name{ResamplingSptCVCstf}
 \alias{ResamplingSptCVCstf}
-\title{Create spatio-temporal Folds Using Predefined Groups}
+\title{Create Spatio-Temporal Folds Using Predefined Groups}
 \description{
 Implementation of \code{CAST::CreateSpaceTimeFolds()}.
 }
