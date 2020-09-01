@@ -75,5 +75,9 @@ plotly::layout(pl_subplot,
 cat("(The actual graphic here only rendered on the pkgdown site: please visit https://mlr3spatiotempcv.mlr-org.com.)")
 ```
 
+```{r, eval=os!, results='asis'}
+cat("(The Cluto method does not work on macOS: please visit https://mlr3spatiotempcv.mlr-org.com to see the rendered plot.)")
+```
+
 Subplot titles are not dynamically supported.
 However, there is also a manual workaround via [annotations](https://plotly.com/r/reference/#layout-annotations) show in this [RPubs post](https://rpubs.com/bcd/subplot-titles) which could be used.
