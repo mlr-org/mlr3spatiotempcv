@@ -4,7 +4,7 @@ output: rmarkdown::html_vignette
 bibliography: ../inst/references.bib
 link-citations: yes
 vignette: >
-  %\VignetteIndexEntry{mlr3spatiotempcv}
+  %\VignetteIndexEntry{Get Started}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
