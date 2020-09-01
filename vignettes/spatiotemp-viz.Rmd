@@ -30,7 +30,7 @@ At this point, manual action by the user is needed.
 Here is an example to create a 2x2 grid showing four folds as 3D subplots.
 It makes use of the returned 3D plotly objects which are returned in a list by `autoplot()`:
 
-```{r, fig.width=9, fig.height=8, fig.align='center', eval=os&&!is_cran}
+```{r, fig.align='center', eval=os&&!is_cran}
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm")
