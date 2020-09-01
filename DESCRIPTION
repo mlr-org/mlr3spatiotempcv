@@ -55,7 +55,6 @@ VignetteBuilder:
     knitr
 RdMacros:
     mlr3misc
-Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
