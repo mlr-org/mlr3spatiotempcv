@@ -60,7 +60,7 @@ library(mlr3spatiotempcv)
 task = tsk("cookfarm")
 
 # Instantiate Resampling
-rrcv = rsmp("repeated-sptcv-cluto", folds = 3, repeats = 5)
+rrcv = rsmp("repeated_sptcv_cluto", folds = 3, repeats = 5)
 rrcv$instantiate(task, time_var = "Date")
 
 # Individual sets:
@@ -121,7 +121,7 @@ values stored in the \code{param_set}.}
 \subsection{Method \code{new()}}{
 Create an "coordinate-based" repeated resampling instance.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCluto$new(id = "repeated-sptcv-cluto")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCluto$new(id = "repeated_sptcv_cluto")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

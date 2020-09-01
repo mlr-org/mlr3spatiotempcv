@@ -12,7 +12,7 @@ library(mlr3)
 task = tsk("ecuador")
 
 # Instantiate Resampling
-rcv = rsmp("spcv-coords", folds = 5)
+rcv = rsmp("spcv_coords", folds = 5)
 rcv$instantiate(task)
 
 # Individual sets:
@@ -64,7 +64,7 @@ values stored in the \code{param_set}.}
 \subsection{Method \code{new()}}{
 Create an "Environmental Block" resampling instance.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVCoords$new(id = "spcv-coords")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVCoords$new(id = "spcv_coords")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

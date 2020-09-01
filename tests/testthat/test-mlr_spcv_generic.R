@@ -1,4 +1,4 @@
-context("mlr_resampling_spcv-all")
+context("mlr_resampling_spcv_all")
 
 test_that("spcv has no duplicated ids", {
   spcv_rsp = mlr_resamplings$mget(
@@ -17,10 +17,10 @@ test_that("grouping throws errors when 'groups' is set", {
     as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
   # nolint start
-  spcv_rsp$`repeated-spcv-coords` = NULL
-  spcv_rsp$`repeated-spcv-env` = NULL
-  spcv_rsp$`repeated-spcv-block` = NULL
-  spcv_rsp$`spcv-block` = NULL
+  spcv_rsp$`repeated_spcv_coords` = NULL
+  spcv_rsp$`repeated_spcv_env` = NULL
+  spcv_rsp$`repeated_spcv_block` = NULL
+  spcv_rsp$`spcv_block` = NULL
   # nolint end
 
   for (i in spcv_rsp) {
@@ -38,14 +38,14 @@ test_that("train and test set getter functions are working", {
   )
 
   # nolint start
-  spcv_rsp$`spcv-buffer` = NULL
-  spcv_rsp$`repeated-spcv-block` = NULL
-  spcv_rsp$`repeated-spcv-coords` = NULL
-  spcv_rsp$`repeated-spcv-env` = NULL
-  spcv_rsp$`spcv-block` = NULL
-  spcv_rsp$`sptcv-cluto` = NULL
-  spcv_rsp$`sptcv-cstf` = NULL
-  spcv_rsp$`repeated-sptcv-cluto` = NULL
+  spcv_rsp$`spcv_buffer` = NULL
+  spcv_rsp$`repeated_spcv_block` = NULL
+  spcv_rsp$`repeated_spcv_coords` = NULL
+  spcv_rsp$`repeated_spcv_env` = NULL
+  spcv_rsp$`spcv_block` = NULL
+  spcv_rsp$`sptcv_cluto` = NULL
+  spcv_rsp$`sptcv_cstf` = NULL
+  spcv_rsp$`repeated_sptcv_cluto` = NULL
   # nolint end
 
   for (i in spcv_rsp) {
@@ -66,11 +66,11 @@ test_that("cloning works", {
   )
 
   # nolint start
-  spcv_rsp$`repeated-spcv-coords` = NULL
-  spcv_rsp$`repeated-spcv-env` = NULL
-  spcv_rsp$`repeated-spcv-block` = NULL
-  spcv_rsp$`sptcv-cluto` = NULL
-  spcv_rsp$`repeated-sptcv-cluto` = NULL
+  spcv_rsp$`repeated_spcv_coords` = NULL
+  spcv_rsp$`repeated_spcv_env` = NULL
+  spcv_rsp$`repeated_spcv_block` = NULL
+  spcv_rsp$`sptcv_cluto` = NULL
+  spcv_rsp$`repeated_sptcv_cluto` = NULL
   # nolint end
 
   for (i in spcv_rsp) {

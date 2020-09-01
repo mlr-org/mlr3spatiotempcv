@@ -8,7 +8,7 @@
 #' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv = rsmp("spcv-env", folds = 4)
+#' rcv = rsmp("spcv_env", folds = 4)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -26,7 +26,7 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
     #' Create an "Environmental Block" resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
-    initialize = function(id = "spcv-env") {
+    initialize = function(id = "spcv_env") {
       ps = ParamSet$new(params = list(
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
         ParamUty$new("features")
@@ -65,7 +65,7 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
       # Check for selected features that are not in task
       diff = setdiff(pv$features, columns[, id])
       if (length(diff) > 0) {
-        stopf("'spcv-env' requires numeric features for clustering.
+        stopf("'spcv_env' requires numeric features for clustering.
               Feature '%s' is either non-numeric or does not exist in the data.",
           diff,
           wrap = TRUE)
