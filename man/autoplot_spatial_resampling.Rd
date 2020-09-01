@@ -213,8 +213,7 @@
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
-  ...
+  crs = NULL
 )
 
 \method{plot}{ResamplingCV}(x, ...)
