@@ -1,3 +1,5 @@
+# SpCV Block -------------------------------------------------------------------
+
 #' @title Visualization of spatial resampling.
 #'
 #' @description Generates plots for [ResamplingSpCVBlock], [ResamplingSpCVEnv],
@@ -63,17 +65,49 @@ autoplot.ResamplingSpCVBlock = function( # nolint
   object,
   task,
   fold_id = NULL,
-  grid = TRUE,
+  plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
   crs = NULL,
   ...) {
+
+  ellip = list(...)
+
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
-    grid = grid,
+    repeats_id = ellip$repeats_id,
+    plot_as_grid = plot_as_grid,
+    train_color = train_color,
+    test_color = test_color,
     crs = crs
+  )
+}
+
+#' @rdname autoplot_spatial_resampling
+#' @export
+autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = NULL,
+  plot_as_grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  crs = NULL,
+  ...) {
+
+  autoplot.ResamplingSpCVBlock(
+    object = object,
+    task = task,
+    fold_id = fold_id,
+    plot_as_grid = plot_as_grid,
+    train_color = train_color,
+    test_color = test_color,
+    crs = crs,
+    # ellipsis
+    repeats_id = repeats_id
   )
 }
 
@@ -83,6 +117,14 @@ autoplot.ResamplingSpCVBlock = function( # nolint
 plot.ResamplingSpCVBlock <- function(x, ...) {
   print(autoplot(x, ...))
 }
+
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingRepeatedSpCVBlock <- function(x, ...) {
+  print(autoplot(x, ...))
+}
+
+# SpCV Env ---------------------------------------------------------------------
 
 #' @title Plot for Spatial Resampling
 #'
@@ -105,23 +147,64 @@ autoplot.ResamplingSpCVEnv = function( # nolint
   object,
   task,
   fold_id = NULL,
-  grid = TRUE,
+  plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  crs = NULL,
   ...) {
+
+  ellip = list(...)
+
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
-    grid = grid
+    repeats_id = ellip$repeats_id,
+    plot_as_grid = plot_as_grid,
+    crs = crs
   )
 }
 
 #' @rdname autoplot_spatial_resampling
 #' @export
+autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = NULL,
+  plot_as_grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  crs = NULL,
+  ...) {
+
+  autoplot.ResamplingSpCVEnv(
+    object = object,
+    task = task,
+    fold_id = fold_id,
+    plot_as_grid = plot_as_grid,
+    train_color = train_color,
+    test_color = test_color,
+    crs = crs,
+    # ellipsis
+    repeats_id = repeats_id
+  )
+}
+
+#' @importFrom graphics plot
+#' @rdname autoplot_spatial_resampling
+#' @export
 plot.ResamplingSpCVEnv <- function(x, ...) {
   print(autoplot(x, ...))
 }
+
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingRepeatedSpCVEnv <- function(x, ...) {
+  print(autoplot(x, ...))
+}
+
+# SpCV Coords-------------------------------------------------------------------
 
 #' @title Plot for Spatial Resampling
 #'
@@ -144,25 +227,64 @@ autoplot.ResamplingSpCVCoords = function( # nolint
   object,
   task,
   fold_id = NULL,
-  grid = TRUE,
+  plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
   crs = NULL,
   ...) {
+
+  ellip = list(...)
+
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
-    grid = grid,
+    repeats_id = ellip$repeats_id,
+    plot_as_grid = plot_as_grid,
     crs = crs
   )
 }
 
 #' @rdname autoplot_spatial_resampling
 #' @export
+autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = NULL,
+  plot_as_grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  crs = NULL,
+  ...) {
+
+  autoplot.ResamplingSpCVCoords(
+    object = object,
+    task = task,
+    fold_id = fold_id,
+    plot_as_grid = plot_as_grid,
+    train_color = train_color,
+    test_color = test_color,
+    crs = crs,
+    # ellipsis
+    repeats_id = repeats_id
+  )
+}
+
+#' @importFrom graphics plot
+#' @rdname autoplot_spatial_resampling
+#' @export
 plot.ResamplingSpCVCoords <- function(x, ...) {
   print(autoplot(x, ...))
 }
+
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingRepeatedSpCVCoords <- function(x, ...) {
+  print(autoplot(x, ...))
+}
+
+# SptCV Cluto ------------------------------------------------------------------
 
 #' @title Plot for Spatio-temporal clustering
 #'
@@ -201,7 +323,7 @@ autoplot.ResamplingSptCVCluto = function( # nolint
   object,
   task,
   fold_id = NULL,
-  grid = TRUE,
+  plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
   tickformat_date = "%Y-%m",
@@ -212,11 +334,14 @@ autoplot.ResamplingSptCVCluto = function( # nolint
   axis_label_fontsize = 11,
   ...) {
 
+  ellip = list(...)
+
   autoplot_spatiotemp(
     resampling = object,
     task = task,
     fold_id = fold_id,
-    grid = grid,
+    repeats_id = ellip$repeats_id,
+    plot_as_grid = plot_as_grid,
     tickformat_date = tickformat_date,
     crs = crs,
     nticks_y = nticks_y,
@@ -228,9 +353,44 @@ autoplot.ResamplingSptCVCluto = function( # nolint
 
 #' @rdname autoplot_spatial_resampling
 #' @export
+autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = NULL,
+  plot_as_grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  crs = NULL,
+  ...) {
+
+  autoplot.ResamplingSptCVCluto(
+    object = object,
+    task = task,
+    fold_id = fold_id,
+    plot_as_grid = plot_as_grid,
+    train_color = train_color,
+    test_color = test_color,
+    crs = crs,
+    # ellipsis
+    repeats_id = repeats_id
+  )
+}
+
+#' @importFrom graphics plot
+#' @rdname autoplot_spatial_resampling
+#' @export
 plot.ResamplingSptCVCluto <- function(x, ...) {
   print(autoplot(x, ...))
 }
+
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingRepeatedSptCVCluto <- function(x, ...) {
+  print(autoplot(x, ...))
+}
+
+# CV ---------------------------------------------------------------------------
 
 #' @title Plot for Spatial Resampling
 #'
@@ -253,61 +413,54 @@ autoplot.ResamplingCV = function( # nolint
   object,
   task,
   fold_id = NULL,
-  grid = TRUE,
+  plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  crs = crs,
   ...) {
+
+  ellip = list(...)
+
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
-    grid = grid
+    plot_as_grid = plot_as_grid,
+    crs = crs,
+    repeats_id = ellip$repeats_id
   )
 }
 
 #' @rdname autoplot_spatial_resampling
 #' @export
-plot.ResamplingCV <- function(x, ...) {
-  print(autoplot(x, ...))
-}
-
-#' @title Plot for Spatial Resampling
-#'
-#' @rdname autoplot_spatial_resampling
-#' @export
-#' @examples
-#' ##########
-#' # Repeated Non-Spatial CV
-#' ##########
-#' \dontrun{
-#' library(mlr3)
-#' resampling = rsmp("repeated_cv", folds = 5, repeats = 2)
-#' resampling$instantiate(task)
-#'
-#' autoplot(resampling, task)
-#' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
-#' }
 autoplot.ResamplingRepeatedCV = function( # nolint
   object,
   task,
   fold_id = NULL,
-  repeats_id = 1,
-  grid = TRUE,
+  repeats_id = NULL,
+  plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
-  ...) {
+  crs = NULL) {
 
-  autoplot_spatial(
-    resampling = object,
+  autoplot.ResamplingCV(
+    object = object,
     task = task,
     fold_id = fold_id,
-    repeats_id = repeats_id,
-    grid = grid,
-    crs = crs
+    plot_as_grid = plot_as_grid,
+    train_color = train_color,
+    test_color = test_color,
+    crs = crs,
+    # ellipsis
+    repeats_id = repeats_id
   )
+}
+
+#' @importFrom graphics plot
+#' @rdname autoplot_spatial_resampling
+#' @export
+plot.ResamplingCV <- function(x, ...) {
+  print(autoplot(x, ...))
 }
 
 #' @rdname autoplot_spatial_resampling
@@ -316,229 +469,26 @@ plot.ResamplingRepeatedCV <- function(x, ...) {
   print(autoplot(x, ...))
 }
 
-#' @title Plot for Repeated Spatial Resampling
-#'
-#' @rdname autoplot_spatial_resampling
-#' @export
-#' @examples
-#' ##########
-#' # RepeatedSpCVCoords
-#' ##########
-#' \dontrun{
-#' library(mlr3)
-#' task = tsk("diplodia")
-#' resampling = rsmp("repeated-spcv-coords", folds = 10, repeats = 2)
-#' resampling$instantiate(task)
-#'
-#' autoplot(resampling, task)
-#' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
-#' }
-autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
-  object,
-  task,
-  fold_id = NULL,
-  repeats_id = 1,
-  grid = TRUE,
-  train_color = "#0072B5",
-  test_color = "#E18727",
-  crs = NULL,
-  ...) {
-
-  autoplot_spatial(
-    resampling = object,
-    task = task,
-    fold_id = fold_id,
-    repeats_id = repeats_id,
-    grid = grid,
-    crs = crs
-  )
-}
-
-#' @rdname autoplot_spatial_resampling
-#' @export
-plot.ResamplingRepeatedSpCVCoords <- function(x, ...) {
-  print(autoplot(x, ...))
-}
-
-#' @title Plot for Repeated Spatial Resampling
-#'
-#' @rdname autoplot_spatial_resampling
-#' @export
-#' @examples
-#' ##########
-#' # RepeatedSpCVEnv
-#' ##########
-#' \dontrun{
-#' library(mlr3)
-#' task = tsk("ecuador")
-#' resampling = rsmp("repeated-spcv-env", folds = 10, repeats = 2)
-#' resampling$instantiate(task)
-#'
-#' autoplot(resampling, task)
-#' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
-#' }
-autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
-  object,
-  task,
-  fold_id = NULL,
-  repeats_id = 1,
-  grid = TRUE,
-  train_color = "#0072B5",
-  test_color = "#E18727",
-  crs = NULL,
-  ...) {
-
-  autoplot_spatial(
-    resampling = object,
-    task = task,
-    fold_id = fold_id,
-    repeats_id = repeats_id,
-    grid = grid,
-    crs = crs
-  )
-}
-
-#' @rdname autoplot_spatial_resampling
-#' @export
-plot.ResamplingRepeatedSpCVEnv <- function(x, ...) {
-  print(autoplot(x, ...))
-}
-
-#' @title Plot for Repeated Spatial Resampling
-#'
-#' @rdname autoplot_spatial_resampling
-#' @export
-#' @examples
-#' ##########
-#' # RepeatedSpCVBlock
-#' ##########
-#' \dontrun{
-#' library(mlr3)
-#' task = tsk("ecuador")
-#' resampling = rsmp("repeated-spcv-block",
-#'   folds = 5, repeats = 2,
-#'   range = c(1000, 1500)
-#' )
-#' resampling$instantiate(task)
-#'
-#' autoplot(resampling, task)
-#' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, fold_id = 2, repeats_id = 2)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
-#' }
-autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
-  object,
-  task,
-  fold_id = NULL,
-  repeats_id = 1,
-  grid = TRUE,
-  train_color = "#0072B5",
-  test_color = "#E18727",
-  crs = NULL,
-  ...) {
-
-  autoplot_spatial(
-    resampling = object,
-    task = task,
-    fold_id = fold_id,
-    repeats_id = repeats_id,
-    grid = grid,
-    crs = crs
-  )
-}
-
-#' @rdname autoplot_spatial_resampling
-#' @export
-plot.ResamplingRepeatedSpCVBlock <- function(x, ...) {
-  print(autoplot(x, ...))
-}
-
-#' @title Plot for Spatio-temporal clustering
-#'
-#' @param tickformat_date `[character]`\cr
-#'   Date format for z-axis.
-#' @param crs `[character]`\cr
-#'   EPSG code of the CRS for x and y axes.
-#' @param nticks_y `[integer]`\cr
-#'   Number of y axis breaks.
-#' @param nticks_x `[integer]`\cr
-#'   Number of x axis breaks.
-#' @param point_size `[numeric]`\cr
-#'   Point size of markers.
-#' @param axis_label_fontsize `[integer]`\cr
-#'   Font size of axis labels.
-#' @rdname autoplot_spatial_resampling
-#' @export
-#' @examples
-#' ##########
-#' # RepeatedSptCVCluto
-#' ##########
-#' \dontrun{
-#' library(mlr3)
-#' library(mlr3spatiotempcv)
-#' task_st = tsk("cookfarm")
-#' resampling = rsmp("repeated-sptcv-cluto", folds = 5, repeats = 2)
-#' resampling$instantiate(task_st, "Date")
-#'
-#' # plot
-#' autoplot(resampling, task_st)
-#' autoplot(resampling, task_st, 1, repeats_id = 2)
-#' autoplot(resampling, task_st, c(1, 2, 3, 4))
-#' }
-autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
-  object,
-  task,
-  fold_id = NULL,
-  repeats_id = 1,
-  grid = TRUE,
-  train_color = "#0072B5",
-  test_color = "#E18727",
-  tickformat_date = "%Y-%m",
-  crs = NULL,
-  nticks_x = 3,
-  nticks_y = 3,
-  point_size = 3,
-  axis_label_fontsize = 11,
-  ...) {
-
-  autoplot_spatiotemp(
-    resampling = object,
-    task = task,
-    fold_id = fold_id,
-    repeats_id = repeats_id,
-    grid = grid,
-    tickformat_date = tickformat_date,
-    crs = crs,
-    nticks_y = nticks_y,
-    nticks_x = nticks_y,
-    point_size = point_size,
-    axis_label_fontsize = axis_label_fontsize
-  )
-}
-
-#' @rdname autoplot_spatial_resampling
-#' @export
-plot.ResamplingRepeatedSptCVCluto <- function(x, ...) {
-  print(autoplot(x, ...))
-}
+# autoplot_spatial -------------------------------------------------------------
 
 autoplot_spatial = function(
   resampling = NULL,
   task = NULL,
   fold_id = NULL,
   repeats_id = NULL,
-  grid = NULL,
+  plot_as_grid = NULL,
   train_color = NULL,
   test_color = NULL,
-  crs = NULL) {
+  crs = NULL,
+  ...) {
 
   require_namespaces(c("sf", "cowplot"))
 
   resampling = assert_autoplot(resampling, fold_id, task)
+
+  if (is.null(repeats_id)) {
+    repeats_id = 1
+  }
 
   # add the row_ids of the task to the coordinates
   coords = task$coordinates()
@@ -554,7 +504,7 @@ autoplot_spatial = function(
 
     # Multiplot with train and test set for each fold --------------------------
 
-    plot_list = list()
+    plot = list()
     for (i in fold_id) {
       table = copy(coords_resamp)
 
@@ -590,15 +540,15 @@ autoplot_spatial = function(
 
     # Return a plot grid via cowplot? ------------------------------------------
 
-    if (!grid) {
-      return(plot_list)
+    if (!plot_as_grid) {
+      return(plot)
     } else {
       # for repeated cv we also print out the rep number
       if (is.null(repeats_id)) {
         repeats_id = 1
       }
-      plots = do.call(cowplot::plot_grid, list(
-        plotlist = plot_list,
+      plot = do.call(cowplot::plot_grid, list(
+        plotlist = plot,
         labels = sprintf(
           "Fold %s\nRep %s", fold_id,
           repeats_id
@@ -625,7 +575,7 @@ autoplot_spatial = function(
         theme(legend.position = "bottom"))
 
       # Plot
-      plot = cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
+      plot = cowplot::plot_grid(plot, legend, ncol = 1, rel_heights = c(1, .1))
     }
   } else {
 
@@ -659,16 +609,17 @@ autoplot_spatial = function(
       ggsci::scale_color_ucscgb() +
       labs(color = sprintf("Partition #, Rep %s", repeats_id))
   }
-
   return(plot)
 }
+
+# autoplot_spatiotemp ----------------------------------------------------------
 
 autoplot_spatiotemp = function(
   resampling = NULL,
   task = NULL,
   fold_id = NULL,
   repeats_id = NULL,
-  grid = NULL,
+  plot_as_grid = NULL,
   train_color = NULL,
   test_color = NULL,
   tickformat_date = NULL,
@@ -691,13 +642,13 @@ autoplot_spatiotemp = function(
   coords_resamp = merge(coords, resampling$instance, by = "row_id")
   task_resamp_ids = merge(data, coords_resamp, by = "row_id")
 
+  if (is.null(repeats_id)) {
+    repeats_id = 1
+  }
+
   # set some required defaults
   if (grepl("Repeated", class(resampling)[1])) {
     task_resamp_ids = task_resamp_ids[rep == repeats_id, ]
-  }
-  # for all non-repeated rsmp cases
-  if (is.null(repeats_id)) {
-    repeats_id = 1
   }
 
   # set fallback crs if missing
@@ -773,7 +724,7 @@ autoplot_spatiotemp = function(
       return(invisible(plot_single_plotly))
     } else {
       # Multiplot across multiple folds with train and test set
-      plot_list = list()
+      plot = list()
       for (i in fold_id) {
 
         # suppress undefined global variables note
@@ -786,7 +737,7 @@ autoplot_spatiotemp = function(
         task_resamp_ids$Date = as.Date(task_resamp_ids$Date)
 
         # create plots for each fold
-        plot_list[[length(plot_list) + 1]] = {
+        plot[[length(plot) + 1]] = {
           pl = plotly::plot_ly(task_resamp_ids,
             x = ~x, y = ~y, z = ~Date,
             color = ~indicator, colors = c(
@@ -835,8 +786,8 @@ autoplot_spatiotemp = function(
     }
 
     # is a grid requested?
-    if (!grid) {
-      return(plot_list)
+    if (!plot_as_grid) {
+      return(plot)
     } else {
       cli::cli_alert_info("Unfortunately plotly does not support a dynamic
        arrangement of multiple subplots.
@@ -846,7 +797,7 @@ autoplot_spatiotemp = function(
        Use the objects in the returned list to arrange your custom grid.",
         wrap = TRUE)
 
-      return(invisible(plot_list))
+      return(invisible(plot))
     }
   } else {
     pl = plotly::plot_ly(task_resamp_ids,
@@ -885,4 +836,5 @@ autoplot_spatiotemp = function(
       )
     )
   }
+  return(pl)
 }
