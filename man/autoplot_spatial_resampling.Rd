@@ -5,6 +5,7 @@
 \alias{autoplot.ResamplingSpCVBuffer}
 \alias{plot.ResamplingSpCVBuffer}
 \alias{autoplot.ResamplingSptCVCstf}
+\alias{autoplot.ResamplingRepeatedSptCVCstf}
 \alias{plot.ResamplingSptCVCstf}
 \alias{plot.ResamplingRepeatedSptCVCstf}
 \alias{autoplot_spatial_resampling}
@@ -47,6 +48,23 @@
   object,
   task,
   fold_id = NULL,
+  plot_as_grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  tickformat_date = "\%Y-\%m",
+  crs = NULL,
+  nticks_x = 3,
+  nticks_y = 3,
+  point_size = 3,
+  axis_label_fontsize = 11,
+  ...
+)
+
+\method{autoplot}{ResamplingRepeatedSptCVCstf}(
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = NULL,
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",

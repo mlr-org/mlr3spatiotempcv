@@ -235,6 +235,8 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   }
 }
 
+#' @rdname autoplot_spatial_resampling
+#' @export
 autoplot.ResamplingRepeatedSptCVCstf = function( # nolint
   object,
   task,
