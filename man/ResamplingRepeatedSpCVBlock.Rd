@@ -24,7 +24,7 @@ task = tsk("diplodia")
 # Instantiate Resampling
 rrcv = rsmp("repeated-spcv-block",
   folds = 3, repeats = 2,
-  range = c(1000, 1500))
+  range = c(5000, 10000))
 rrcv$instantiate(task)
 
 # Individual sets:

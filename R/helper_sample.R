@@ -1,4 +1,4 @@
-sample_cstf <- function(self, task, space_var, time_var, class, k, data) {
+sample_cstf = function(self, task, space_var, time_var, class, k, data) {
 
   # if classification is used, make sure that classes are equally
   # distributed across folds

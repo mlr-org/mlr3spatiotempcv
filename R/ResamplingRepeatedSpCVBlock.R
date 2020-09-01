@@ -10,7 +10,7 @@
 #' # Instantiate Resampling
 #' rrcv = rsmp("repeated-spcv-block",
 #'   folds = 3, repeats = 2,
-#'   range = c(1000, 1500))
+#'   range = c(5000, 10000))
 #' rrcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -148,7 +148,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         points = sf::st_as_sf(coords, coords = c("x", "y"))
 
         # Suppress print message, warning crs and package load
-        capture.output(inds <- suppressMessages(suppressWarnings(
+        capture.output(inds = suppressMessages(suppressWarnings(
           blockCV::spatialBlock(
             speciesData = points,
             theRange = range,

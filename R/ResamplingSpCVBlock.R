@@ -109,7 +109,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       points = sf::st_as_sf(coords, coords = c("x", "y"))
 
       # Suppress print message, warning crs and package load
-      capture.output(inds <- suppressMessages(suppressWarnings(
+      capture.output(inds = suppressMessages(suppressWarnings(
         blockCV::spatialBlock(
           speciesData = points,
           theRange = self$param_set$values$range,
