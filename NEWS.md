@@ -1,3 +1,11 @@
+# mlr3spatiotempcv 0.0.0.9008
+
+- Adapt to mlr3 "extra_args" approach for tasks arguments
+- Use {cli} for warnings (#71)
+- Enable visual tests via {vdiffr} on CI (#72)
+- Store SpCVBuffer more efficiently (#70)
+
+
 # mlr3spatiotempcv 0.0.0.9007
 
 - add pkgdown reference grouping, (fixes #67)
