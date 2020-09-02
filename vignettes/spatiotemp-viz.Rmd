@@ -33,7 +33,7 @@ At this point, manual action by the user is needed.
 Here is an example to create a 2x2 grid showing four folds as 3D subplots.
 It makes use of the returned 3D plotly objects which are returned in a list by `autoplot()`:
 
-```{r, fig.align='center', eval=os&&!is_cran&&pkgdown}
+```{r, fig.align='center', eval=os&&!is_cran&&pkgdown, fig.width=8, fig.height=9}
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm")
@@ -75,7 +75,7 @@ plotly::layout(pl_subplot,
 cat("(The actual graphic here only rendered on the pkgdown site: please visit https://mlr3spatiotempcv.mlr-org.com.)")
 ```
 
-```{r, eval=!os, results='asis'}
+```{r, eval=!os, results='asis', echo=FALSE}
 cat("(The Cluto method does not work on macOS: please visit https://mlr3spatiotempcv.mlr-org.com to see the rendered plot.)")
 ```
 
