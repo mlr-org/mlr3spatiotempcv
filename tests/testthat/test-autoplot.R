@@ -31,7 +31,6 @@ test_that("plot() works for 'cv'", {
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
 
-  skip_on_ci()
   vdiffr::expect_doppelganger("CV all test sets", p1)
   vdiffr::expect_doppelganger("CV - Fold 1", p2)
   vdiffr::expect_doppelganger("CV - Fold 1-4", p3)
@@ -58,7 +57,6 @@ test_that("plot() works for 'repeated-cv'", {
   expect_true(is.ggplot(p4))
   expect_true(is.ggplot(p5))
 
-  skip_on_ci()
   vdiffr::expect_doppelganger("RepCV all test sets", p1)
   vdiffr::expect_doppelganger("RepCV Fold 1 Rep 1", p2)
   vdiffr::expect_doppelganger("RepCV - Fold 1-4 Rep 1", p3)
@@ -82,7 +80,6 @@ test_that("plot() works for 'spcv_coords'", {
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
 
-  skip_on_ci()
   vdiffr::expect_doppelganger("SpCVCoords all test sets", p1)
   vdiffr::expect_doppelganger("SpCVCoords - Fold 1", p2)
   vdiffr::expect_doppelganger("SpCVCoords - Fold 1-4", p3)
@@ -109,7 +106,6 @@ test_that("plot() works for 'repeated_spcv_coords'", {
   expect_true(is.ggplot(p4))
   expect_true(is.ggplot(p5))
 
-  skip_on_ci()
   vdiffr::expect_doppelganger("RepSpCVCoords all test sets", p1)
   vdiffr::expect_doppelganger("RepSpCVCoords Fold 1 Rep 1", p2)
   vdiffr::expect_doppelganger("RepSpCVCoords - Fold 1-4 Rep 1", p3)
@@ -133,7 +129,6 @@ test_that("plot() works for 'spcv_block'", {
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
 
-  skip_on_ci()
   vdiffr::expect_doppelganger("SpCVBlock all test sets", p1)
   vdiffr::expect_doppelganger("SpCVBlock - Fold 1", p2)
   vdiffr::expect_doppelganger("SpCVBlock - Fold 1-4", p3)
@@ -160,7 +155,6 @@ test_that("plot() works for 'repeated_spcv_block'", {
   expect_true(is.ggplot(p4))
   expect_true(is.ggplot(p5))
 
-  skip_on_ci()
   vdiffr::expect_doppelganger("RepSpCVBlock all test sets", p1)
   vdiffr::expect_doppelganger("RepSpCVBlock Fold 1 Rep 1", p2)
   vdiffr::expect_doppelganger("RepSpCVBlock - Fold 1-4 Rep 1", p3)
@@ -184,7 +178,6 @@ test_that("plot() works for 'spcv_env'", {
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
 
-  skip_on_ci()
   vdiffr::expect_doppelganger("SpCVEnv all test sets", p1)
   vdiffr::expect_doppelganger("SpCVEnv - Fold 1", p2)
   vdiffr::expect_doppelganger("SpCVEnv - Fold 1-4", p3)
@@ -211,7 +204,6 @@ test_that("plot() works for 'repeated_spcv_env'", {
   expect_true(is.ggplot(p4))
   expect_true(is.ggplot(p5))
 
-  skip_on_ci()
   vdiffr::expect_doppelganger("RepSpCVEnv all test sets", p1)
   vdiffr::expect_doppelganger("RepSpCVEnv Fold 1 Rep 1", p2)
   vdiffr::expect_doppelganger("RepSpCVEnv - Fold 1-4 Rep 1", p3)
@@ -237,7 +229,6 @@ test_that("plot() works for 'sptcv_cstf'", {
   expect_s3_class(p2, "plotly")
   expect_list(p3)
 
-  skip_on_ci()
   vdiffr::expect_doppelganger("SptCVCstf all test sets", p1)
   vdiffr::expect_doppelganger("SptCVCstf - Fold 1", p2)
   vdiffr::expect_doppelganger("SptCVCstf - Fold 1-4", p3)
@@ -267,7 +258,6 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
   expect_s3_class(p4, "plotly")
   expect_s3_class(p5, "plotly")
 
-  skip_on_ci()
   vdiffr::expect_doppelganger("RepSptCVCstf all test sets", p1)
   vdiffr::expect_doppelganger("RepSptCVCstf Fold 1 Rep 1", p2)
   vdiffr::expect_doppelganger("RepSptCVCstf - Fold 1-4 Rep 1", p3)

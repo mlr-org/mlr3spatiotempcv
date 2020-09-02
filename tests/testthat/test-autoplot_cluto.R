@@ -19,7 +19,6 @@ test_that("plot() works for 'sptcv_cluto'", {
   expect_s3_class(p2, "plotly")
   expect_list(p3)
 
-  skip_on_ci()
   vdiffr::expect_doppelganger("SptCVCluto all test sets", p1)
   vdiffr::expect_doppelganger("SptCVCluto - Fold 1", p2)
   vdiffr::expect_doppelganger("SptCVCluto - Fold 1-4", p3)
@@ -49,7 +48,6 @@ test_that("plot() works for 'repeated_sptcv_cluto'", {
   expect_s3_class(p4, "plotly")
   expect_s3_class(p5, "plotly")
 
-  skip_on_ci()
   vdiffr::expect_doppelganger("RepSptCVCluto all test sets", p1)
   vdiffr::expect_doppelganger("RepSptCVCluto all test sets, Rep 2", p2)
   vdiffr::expect_doppelganger("RepSptCVCluto - Fold 1, Rep 2", p3)
