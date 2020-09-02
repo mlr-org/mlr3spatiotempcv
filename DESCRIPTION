@@ -1,6 +1,6 @@
 Package: mlr3spatiotempcv
 Title: Spatiotemporal Resampling Methods for 'mlr3'
-Version: 0.0.0.9006
+Version: 0.0.0.9007
 Authors@R:
     c(person(given = "Patrick",
              family = "Schratz",
@@ -32,6 +32,7 @@ Imports:
     mlr3misc (>= 0.1.7),
     paradox,
     R6,
+    testthat (>= 2.99.0.9000),
     utils
 Suggests:
     bibtex,
@@ -49,7 +50,6 @@ Suggests:
     rpart,
     sf,
     skmeans,
-    testthat (>= 2.1.0),
     vdiffr
 VignetteBuilder:
     knitr
@@ -80,6 +80,8 @@ Collate:
     'Task_classif_ecuador.R'
     'Task_regr_cookfarm_profiles.R'
     'autoplot.R'
+    'autoplot_spcv_buffer.R'
+    'autoplot_spcv_cstf.R'
     'helper_autoplot.R'
     'helper_sample.R'
     'helper.R'

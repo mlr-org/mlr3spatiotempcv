@@ -8,7 +8,7 @@
 #' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv = rsmp("spcv-coords", folds = 5)
+#' rcv = rsmp("spcv_coords", folds = 5)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -27,7 +27,7 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
     #' Create an "Environmental Block" resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
-    initialize = function(id = "spcv-coords") {
+    initialize = function(id = "spcv_coords") {
       ps = ParamSet$new(params = list(
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required")
       ))

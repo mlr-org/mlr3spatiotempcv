@@ -14,7 +14,7 @@ library(mlr3)
 task = tsk("ecuador")
 
 # Instantiate Resampling
-rrcv = rsmp("repeated-spcv-env", folds = 4, repeats = 2)
+rrcv = rsmp("repeated_spcv_env", folds = 4, repeats = 2)
 rrcv$instantiate(task)
 
 # Individual sets:
@@ -67,7 +67,7 @@ values stored in the \code{param_set}.}
 \subsection{Method \code{new()}}{
 Create an "coordinate-based" repeated resampling instance.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSpCVEnv$new(id = "repeated-spcv-env")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSpCVEnv$new(id = "repeated_spcv_env")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

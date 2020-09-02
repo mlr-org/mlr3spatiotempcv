@@ -25,7 +25,7 @@ library(mlr3)
 task = tsk("ecuador")
 
 # Instantiate Resampling
-rcv = rsmp("spcv-buffer", theRange = 10000)
+rcv = rsmp("spcv_buffer", theRange = 10000)
 rcv$instantiate(task)
 
 # Individual sets:
@@ -76,7 +76,7 @@ values stored in the \code{param_set}.}
 \subsection{Method \code{new()}}{
 Create an "Environmental Block" resampling instance.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVBuffer$new(id = "spcv-buffer")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVBuffer$new(id = "spcv_buffer")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

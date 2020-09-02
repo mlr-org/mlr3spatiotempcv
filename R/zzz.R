@@ -46,18 +46,18 @@ register_mlr3 = function() {
     # resampling methods ---------------------------------------------------------
 
     x = utils::getFromNamespace("mlr_resamplings", ns = "mlr3")
-    mlr_resamplings$add("spcv-block", ResamplingSpCVBlock)
-    mlr_resamplings$add("spcv-buffer", ResamplingSpCVBuffer)
-    mlr_resamplings$add("sptcv-cstf", ResamplingSptCVCstf)
-    mlr_resamplings$add("sptcv-cluto", ResamplingSptCVCluto)
-    mlr_resamplings$add("spcv-coords", ResamplingSpCVCoords)
-    mlr_resamplings$add("spcv-env", ResamplingSpCVEnv)
+    mlr_resamplings$add("spcv_block", ResamplingSpCVBlock)
+    mlr_resamplings$add("spcv_buffer", ResamplingSpCVBuffer)
+    mlr_resamplings$add("sptcv_cstf", ResamplingSptCVCstf)
+    mlr_resamplings$add("sptcv_cluto", ResamplingSptCVCluto)
+    mlr_resamplings$add("spcv_coords", ResamplingSpCVCoords)
+    mlr_resamplings$add("spcv_env", ResamplingSpCVEnv)
 
-    mlr_resamplings$add("repeated-spcv-coords", ResamplingRepeatedSpCVCoords)
-    mlr_resamplings$add("repeated-spcv-env", ResamplingRepeatedSpCVEnv)
-    mlr_resamplings$add("repeated-spcv-block", ResamplingRepeatedSpCVBlock)
-    mlr_resamplings$add("repeated-sptcv-cluto", ResamplingRepeatedSptCVCluto)
-    mlr_resamplings$add("repeated-sptcv-cstf", ResamplingRepeatedSptCVCstf)
+    mlr_resamplings$add("repeated_spcv_coords", ResamplingRepeatedSpCVCoords)
+    mlr_resamplings$add("repeated_spcv_env", ResamplingRepeatedSpCVEnv)
+    mlr_resamplings$add("repeated_spcv_block", ResamplingRepeatedSpCVBlock)
+    mlr_resamplings$add("repeated_sptcv_cluto", ResamplingRepeatedSptCVCluto)
+    mlr_resamplings$add("repeated_sptcv_cstf", ResamplingRepeatedSptCVCstf)
   }
 
   utils::globalVariables(c(

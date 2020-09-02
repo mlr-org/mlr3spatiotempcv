@@ -29,19 +29,20 @@ Resampling methods
 
 Currently, the following ones are implemented:
 
-| Literature                  | Package    | Reference     | mlr3 Sugar                     |
-|-----------------------------|------------|---------------|--------------------------------|
-| Spatial Buffering           | blockCV    | Valavi 2019   | `rsmp("spcv-buffer")`          |
-| Spatial Blocking            | blockCV    | Valavi 2019   | `rsmp("spcv-block")`           |
-| Spatial CV                  | sperrorest | Brenning 2012 | `rsmp("spcv-coords")`          |
-| Environmental Blocking      | blockCV    | Valavi 2019   | `rsmp("spcv-env")`             |
-| \-                          | \-         | \-            | `rsmp("sptcv-cluto")`          |
-| Leave-Location-and-Time-Out | CAST       | Meyer 2018    | `rsmp("sptcv-cstf")`           |
-| —                           | —          | —             | —                              |
-| Repeated Spatial Blocking   | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-block")`  |
-| Repeated Spatial CV         | sperrorest | Brenning 2012 | `rsmp("repeated-spcv-coords")` |
-| Repeated Env Blocking       | blockCV    | Valavi 2019   | `rsmp("repeated-spcv-env")`    |
-| \-                          | \-         | \-            | `rsmp("repeated-sptcv-cluto")` |
+| Literature                           | Package    | Reference     | mlr3 Sugar                     |
+|--------------------------------------|------------|---------------|--------------------------------|
+| Spatial Buffering                    | blockCV    | Valavi 2019   | `rsmp("spcv_buffer")`          |
+| Spatial Blocking                     | blockCV    | Valavi 2019   | `rsmp("spcv_block")`           |
+| Spatial CV                           | sperrorest | Brenning 2012 | `rsmp("spcv_coords")`          |
+| Environmental Blocking               | blockCV    | Valavi 2019   | `rsmp("spcv_env")`             |
+| \-                                   | \-         | \-            | `rsmp("sptcv_cluto")`          |
+| Leave-Location-and-Time-Out          | CAST       | Meyer 2018    | `rsmp("sptcv_cstf")`           |
+| —                                    | —          | —             | —                              |
+| Repeated Spatial Blocking            | blockCV    | Valavi 2019   | `rsmp("repeated_spcv_block")`  |
+| Repeated Spatial CV                  | sperrorest | Brenning 2012 | `rsmp("repeated_spcv_coords")` |
+| Repeated Env Blocking                | blockCV    | Valavi 2019   | `rsmp("repeated_spcv_env")`    |
+| \-                                   | \-         | \-            | `rsmp("repeated_sptcv_cluto")` |
+| Repeated Leave-Location-and-Time-Out | CAST       | Meyer 2018    | `rsmp("repeated_sptcv_cstf")`  |
 
 Spatial tasks
 -------------
@@ -61,7 +62,7 @@ Spatiotemporal tasks
 Visualization
 -------------
 
-S3 `autoplot()` for all implemented spatial resampling methods.
+S3 `plot()` method for all implemented spatial resampling methods.
 
 ### Visualization of all folds
 
@@ -70,18 +71,18 @@ S3 `autoplot()` for all implemented spatial resampling methods.
     library(ggplot2)
 
     task = tsk("ecuador")
-    resampling = rsmp("spcv-coords", folds = 5)
+    resampling = rsmp("spcv_coords", folds = 5)
     resampling$instantiate(task)
 
-    autoplot(resampling, task)
+    plot(resampling, task, crs = 4326)
 
-![](man/figures/README-spcv-coords-all-partitions-1.png)<!-- -->
+![](man/figures/README-spcv_coords-all-partitions-1.png)<!-- -->
 
 ### Visualization of a specific fold
 
-    autoplot(resampling, task, fold_id = 1)
+    plot(resampling, task, fold_id = 1, crs = 4326)
 
-![](man/figures/README-spcv-coords-fold-1.png)<!-- -->
+![](man/figures/README-spcv_coords-fold-1.png)<!-- -->
 
 ### Spatiotemporal Visualization
 
@@ -93,9 +94,9 @@ for an interactive 3D HTML variant.)
 
     library(plotly)
     task_st = tsk("cookfarm")
-    resampling = rsmp("spcv-cluto", folds = 5)
+    resampling = rsmp("sptcv_cluto", folds = 5)
     resampling$instantiate(task_st, time_var = "Date")
-    autoplot(resampling, task_st, fold_id = 1, point_size = 3)
+    plot(resampling, task_st, fold_id = 1, point_size = 3)
 
 ![](man/figures/spt-viz.png)
 

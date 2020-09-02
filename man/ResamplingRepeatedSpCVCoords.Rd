@@ -12,7 +12,7 @@ library(mlr3)
 task = tsk("diplodia")
 
 # Instantiate Resampling
-rrcv = rsmp("repeated-spcv-coords", folds = 3, repeats = 5)
+rrcv = rsmp("repeated_spcv_coords", folds = 3, repeats = 5)
 rrcv$instantiate(task)
 
 # Individual sets:
@@ -70,7 +70,7 @@ values stored in the \code{param_set}.}
 \subsection{Method \code{new()}}{
 Create an "coordinate-based" repeated resampling instance.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSpCVCoords$new(id = "repeated-spcv-coords")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSpCVCoords$new(id = "repeated_spcv_coords")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
