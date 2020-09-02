@@ -8,15 +8,6 @@ test_that("resampling iterations equals folds", {
   expect_equal(rsp$iters, 2)
 })
 
-test_that("cols and rows are ignored when range is given", {
-  task = test_make_twoclass()
-  rsp = rsmp("spcv_block", cols = 2, rows = 3, range = 2, folds = 2)
-
-  expect_warning(
-    rsp$instantiate(task),
-    "Cols and rows are ignored. Range is used to generated blocks")
-})
-
 test_that("error when number of desired folds is larger than number possible blocks", {
   task = test_make_twoclass()
   rsp = rsmp("spcv_block", folds = 10, range = 4)
