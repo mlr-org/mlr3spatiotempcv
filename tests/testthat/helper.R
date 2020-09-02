@@ -14,10 +14,12 @@ test_make_regr = function(coords_as_features = FALSE) {
   TaskRegrST$new(
     id = "sp_regression",
     backend = data,
-    coordinate_names = c("x", "y"),
-    crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
     target = "response",
-    coords_as_features = coords_as_features)
+    extra_args = list(
+      coordinate_names = c("x", "y"),
+      crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
+      coords_as_features = coords_as_features)
+  )
 }
 
 # Create twoclass task
@@ -39,11 +41,13 @@ test_make_twoclass = function(group = FALSE, coords_as_features = FALSE, feature
   task = TaskClassifST$new(
     id = "sp_twoclass",
     backend = data,
-    coordinate_names = c("x", "y"),
-    crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
     target = "response",
-    positive = "A",
-    coords_as_features = coords_as_features)
+    extra_args = list(
+      coordinate_names = c("x", "y"),
+      crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
+      positive = "A",
+      coords_as_features = coords_as_features)
+  )
 
   if (group) {
     task$col_roles$group = "group"
@@ -60,8 +64,10 @@ test_make_multiclass = function() {
   TaskClassifST$new(
     id = "sp_multiclass",
     backend = data,
-    coordinate_names = c("x", "y"),
-    crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
     target = "response",
-    coords_as_features = FALSE)
+    extra_args = list(
+      coordinate_names = c("x", "y"),
+      crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
+      coords_as_features = FALSE)
+  )
 }
