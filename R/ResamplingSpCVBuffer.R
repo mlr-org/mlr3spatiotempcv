@@ -125,7 +125,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         })
         train_list = set_names(
           train_list,
-          sprintf("train_fold_%s", 1:length(train_list)))
+          sprintf("train_fold_%s", seq_along(train_list)))
       }
     },
 
