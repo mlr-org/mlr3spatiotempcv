@@ -88,11 +88,11 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       pars = self$param_set$get_values()
 
       if (!isTRUE("twoclass" %in% properties) && isTRUE(pars$spDataType == "PB")) {
-        stopf("spDataType = 'PB' should only be used with two-class response")
+        stopf("spDataType = 'PB' should only be used with two-class response.")
       }
 
       if (!is.null(pars$addBG) && isTRUE(pars$spDataType == "PA")) {
-        stopf("Parameter addBG should only be used with spDataType = 'PB'")
+        stopf("Parameter addBG should only be used with spDataType = 'PB'.")
       }
 
       # Recode response to 0/1 for twoclass
@@ -110,21 +110,41 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         progress = FALSE,
         .args = pars)
 
-      mlr3misc::map(inds$folds, function(x) {
-        set = mlr3misc::map(x, function(y) {
-          ids[y]
+      # if addBG = TRUE, the test set can contain more than one element
+      if (!is.null(pars$addBG)) {
+        mlr3misc::map(inds$folds, function(x) {
+          set = mlr3misc::map(x, function(y) {
+            ids[y]
+          })
+          names(set) = c("train", "test")
+          set
         })
-        names(set) = c("train", "test")
-        set
-      })
+      } else {
+        train_list = mlr3misc::map(inds$folds, function(x) {
+          x[[1]]
+        })
+        train_list = set_names(
+          train_list,
+          sprintf("train_fold_%s", seq_along(train_list)))
+      }
     },
 
     .get_train = function(i) {
-      self$instance[[i]]$train
+      if (!is.null(self$param_set$values$addBG)) {
+
+        self$instance[[i]]$train
+      } else {
+        self$instance[[i]]
+      }
     },
 
     .get_test = function(i) {
-      self$instance[[i]]$test
+      if (!is.null(self$param_set$values$addBG)) {
+
+        self$instance[[i]]$test
+      } else {
+        i
+      }
     }
   )
 )
