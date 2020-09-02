@@ -59,7 +59,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       }
 
       if (!is.null(pv$range) && (!is.null(pv$rows) | !is.null(pv$cols))) {
-        cli::cli_alert_warning("{.field repeated_spcv_block}: Arguments
+        cli::cli_alert_warning("{.field spcv_block}: Arguments
           {.code cols} and {.code rows} will be ignored. {.code range} is used
           to generated blocks.", wrap = TRUE)
       }
