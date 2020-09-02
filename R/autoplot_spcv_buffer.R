@@ -40,8 +40,8 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
 
   plot_list = list()
   for (i in fold_id) {
-    coords_train = coords[row_id %in% resampling$instance[[i]]$train]
-    coords_test = coords[row_id %in% resampling$instance[[i]]$test]
+    coords_train = coords[row_id %in% resampling$train_set(i)]
+    coords_test = coords[row_id %in% resampling$test_set(i)]
 
     coords_train$indicator = "Train"
     coords_test$indicator = "Test"
@@ -85,8 +85,8 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
     ))
 
     # Extract legend standalone, we only want one legend in the grid
-    coords_train = coords[row_id %in% resampling$instance[[1]]$train]
-    coords_test = coords[row_id %in% resampling$instance[[1]]$test]
+    coords_train = coords[row_id %in% resampling$train_set(1)]
+    coords_test = coords[row_id %in% resampling$test_set(1)]
 
     coords_train$indicator = "Train"
     coords_test$indicator = "Test"
