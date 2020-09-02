@@ -55,6 +55,7 @@ VignetteBuilder:
     knitr
 RdMacros:
     mlr3misc
+Remotes:
     mlr-org/mlr3
 Encoding: UTF-8
 LazyData: true
