@@ -83,8 +83,10 @@ data = mlr3::as_data_backend(ecuador)
 
 ecuador = TaskClassifST$new(
   id = "ecuador", backend = data, target = "slides",
-  positive = "TRUE", coordinate_names = c("x", "y"), coords_as_features = FALSE,
-  crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
+  extra_args = list(
+    positive = "TRUE", coordinate_names = c("x", "y"), coords_as_features = FALSE,
+    crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
+)
 ```
 
 The "ecuador" dataset consists of a response variable named `slides` (boolean; see Figure \@ref(fig:lsl)) and various predictor variables that might have an influence on the occurrence of landslides such as slope, curvature or catchment area.^[Please note that the "ecuador" task is also available via `tsk(ecuador)`.]

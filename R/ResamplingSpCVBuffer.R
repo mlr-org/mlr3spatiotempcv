@@ -61,8 +61,8 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         task$row_ids,
         task$data()[[task$target_names]],
         task$coordinates(),
-        task$positive,
-        task$crs,
+        task$extra_args$positive,
+        task$extra_args$crs,
         task$properties)
 
       self$instance = instance

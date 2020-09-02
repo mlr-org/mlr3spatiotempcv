@@ -31,7 +31,8 @@ load_task_ecuador = function(id = "ecuador") {
   b$hash = "_mlr3_tasks_ecuador_"
   task = TaskClassifST$new(
     id = "ecuador", b, target = "slides", positive = "TRUE",
-    coordinate_names = c("x", "y"), coords_as_features = FALSE,
-    crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
+    extra_args = list(
+      coordinate_names = c("x", "y"), coords_as_features = FALSE,
+      crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs"))
   return(task)
 }
