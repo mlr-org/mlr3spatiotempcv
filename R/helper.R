@@ -20,7 +20,7 @@ check_cluto_path = function() {
           cli::cli_alert_danger("{.file vcluster.exe} not found. Please
               install CLUTO first. See {.code ?ResamplingSptCVCluto} for
               instructions.", wrap = TRUE)
-          stop("CLUTO executable not found.")
+          stopf("'CLUTO' executable not found.")
         }
         normalizePath(system.file("vcluster.exe",
           package = "mlr3spatiotempcv"))
@@ -31,12 +31,12 @@ check_cluto_path = function() {
           cli::cli_alert_danger("{.file vcluster} not found. Please install
               CLUTO first. See {.code ?ResamplingSptCVCluto} for
               instructions.", wrap = TRUE)
-          stop("CLUTO executable not found.")
+          stopf("'CLUTO' executable not found.")
         }
         system.file("vcluster",
           package = "mlr3spatiotempcv")
       },
-      "Darwin" = stop("macOS is not supported by CLUTO.")
+      "Darwin" = stop("macOS is not supported by method 'CLUTO'.")
     )
   }
   return(vcluster_loc)

@@ -32,8 +32,8 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   coords$row_id = task$row_ids
 
   if (is.null(fold_id)) {
-    stopf("Plotting all folds of a LOOCV instance is not supported.
-          Please provide a fold ID.", wrap = TRUE) # nolint
+    cli::cli_alert_danger("Please provide a fold ID.")
+    stopf("Plotting all folds of a LOOCV instance is not supported")
   }
 
   indicator = NULL
