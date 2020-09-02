@@ -8,7 +8,7 @@
 #' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rrcv = rsmp("repeated-spcv-env", folds = 4, repeats = 2)
+#' rrcv = rsmp("repeated_spcv_env", folds = 4, repeats = 2)
 #' rrcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -26,7 +26,7 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
     #' Create an "coordinate-based" repeated resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
-    initialize = function(id = "repeated-spcv-env") {
+    initialize = function(id = "repeated_spcv_env") {
       ps = ParamSet$new(params = list(
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
         ParamInt$new("repeats", lower = 1, default = 10L, tags = "required"),
@@ -77,7 +77,7 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
       # Check for selected features that are not in task
       diff = setdiff(pv$features, columns[, id])
       if (length(diff) > 0) {
-        stopf("'spcv-env' requires numeric features for clustering.
+        stopf("'spcv_env' requires numeric features for clustering.
               Feature '%s' is either non-numeric or does not exist in the data.",
           diff,
           wrap = TRUE)

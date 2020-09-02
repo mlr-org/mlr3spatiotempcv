@@ -60,7 +60,7 @@ library(mlr3spatiotempcv)
 task = tsk("cookfarm")
 
 # Instantiate Resampling
-rcv = rsmp("sptcv-cluto", folds = 5)
+rcv = rsmp("sptcv_cluto", folds = 5)
 rcv$instantiate(task, "Date")
 
 # Individual sets:
@@ -115,7 +115,7 @@ values stored in the \code{param_set}.}
 \subsection{Method \code{new()}}{
 FIXME.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCluto$new(id = "sptcv-cluto")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCluto$new(id = "sptcv_cluto")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

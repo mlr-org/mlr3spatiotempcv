@@ -11,7 +11,7 @@
 #' task = tsk("ecuador")
 #'
 #' # Instantiate Resampling
-#' rcv = rsmp("spcv-buffer", theRange = 10000)
+#' rcv = rsmp("spcv_buffer", theRange = 10000)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -29,7 +29,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
     #' Create an "Environmental Block" resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
-    initialize = function(id = "spcv-buffer") {
+    initialize = function(id = "spcv_buffer") {
       ps = ParamSet$new(params = list(
         ParamInt$new("theRange", lower = 1L, tags = "required"),
         ParamFct$new("spDataType", default = "PA", levels = c("PA", "PB")),

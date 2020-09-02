@@ -10,7 +10,7 @@
 #' task = tsk("cookfarm")
 #'
 #' # Instantiate Resampling
-#' rrcv = rsmp("repeated-sptcv-cluto", folds = 3, repeats = 5)
+#' rrcv = rsmp("repeated_sptcv_cluto", folds = 3, repeats = 5)
 #' rrcv$instantiate(task, time_var = "Date")
 #'
 #' # Individual sets:
@@ -34,7 +34,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
     #' Create an "coordinate-based" repeated resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
-    initialize = function(id = "repeated-sptcv-cluto") {
+    initialize = function(id = "repeated_sptcv_cluto") {
       ps = ParamSet$new(params = list(
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
         ParamInt$new("repeats", lower = 1, default = 1L, tags = "required")
