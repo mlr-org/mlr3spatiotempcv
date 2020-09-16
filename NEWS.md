@@ -1,3 +1,8 @@
+# mlr3spatiotempcv 0.0.0.9009
+
+- set `self$task_nrow` during construction in all resampling methods (#75)
+
+
 # mlr3spatiotempcv 0.0.0.9008
 
 - Adapt to mlr3 "extra_args" approach for tasks arguments
