@@ -35,6 +35,7 @@ Imports:
     testthat,
     utils
 Suggests:
+    bbotk,
     bibtex,
     blockCV (>= 2.1.1),
     bookdown,
@@ -44,6 +45,10 @@ Suggests:
     ggsci,
     GSIF,
     knitr,
+    lgr,
+    mlr3filters,
+    mlr3pipelines,
+    mlr3tuning,
     plotly,
     renv,
     rmarkdown,

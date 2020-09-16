@@ -71,3 +71,48 @@ test_make_multiclass = function() {
       coords_as_features = FALSE)
   )
 }
+
+# mlr3pipelines Graph learner --------------------------------------------------
+
+test_graph_learner = function(task, resampling) {
+
+  lgr::get_logger("mlr3")$set_threshold("warn")
+  lgr::get_logger("bbotk")$set_threshold("warn")
+
+  # This example uses the ranger package to do model and perform feature filtering
+  # In order to do this, pipeops need to be used
+  lrn <- lrn(
+    "classif.featureless"
+  )
+  po_lrn <- mlr3pipelines::po("learner", lrn)
+
+  # Create feature filter based on variable importance
+  po_filter <- mlr3pipelines::po("filter",
+    filter = mlr3filters::flt("importance", learner = lrn))
+
+  # Create process (new learner) for filtering the task
+  glrn <- mlr3pipelines::GraphLearner$new(po_filter %>>% po_lrn)
+  glrn$predict_type <- "prob"
+
+  # Create filter parameters
+  param_set <- paradox::ParamSet$new(
+    params = list(paradox::ParamDbl$new("importance.filter.frac",
+      lower = 0.1, upper = 1))
+  )
+
+  # Create filtering instance
+  instance <- mlr3tuning::TuningInstanceSingleCrit$new(
+    task = task,
+    learner = glrn,
+    resampling = resampling,
+    measure = msr("classif.ce"),
+    search_space = param_set,
+    terminator = mlr3tuning::trm("none")
+  )
+
+  # Create tuner
+  tuner <- mlr3tuning::tnr("grid_search", resolution = 2)
+  tuner$optimize(instance)
+
+  return(TRUE)
+}
