@@ -1,3 +1,6 @@
+# for graph learner tests
+loadNamespace("mlr3pipelines")
+
 # Create 6x6 point grid with 1m distance between points
 test_make_sp = function() {
   coordinates = expand.grid(315172:315177, 5690670:5690675)
@@ -79,8 +82,6 @@ test_graph_learner = function(task, resampling) {
   lgr::get_logger("mlr3")$set_threshold("warn")
   lgr::get_logger("bbotk")$set_threshold("warn")
 
-  # This example uses the ranger package to do model and perform feature filtering
-  # In order to do this, pipeops need to be used
   lrn <- lrn(
     "classif.featureless"
   )
@@ -91,7 +92,8 @@ test_graph_learner = function(task, resampling) {
     filter = mlr3filters::flt("importance", learner = lrn))
 
   # Create process (new learner) for filtering the task
-  glrn <- mlr3pipelines::GraphLearner$new(po_filter %>>% po_lrn)
+  grph = mlr3pipelines::Graph$new()$add_pipeop(po_filter)$add_pipeop(po_lrn)$add_edge("importance", "classif.featureless") # nolint
+  glrn = mlr3pipelines::GraphLearner$new(grph)
   glrn$predict_type <- "prob"
 
   # Create filter parameters
