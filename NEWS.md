@@ -1,3 +1,8 @@
+# mlr3spatiotempcv 0.0.0.9010
+
+- return descriptive error message if a non-spatiotemporal task was provided (#74)
+
+
 # mlr3spatiotempcv 0.0.0.9009
 
 - set `self$task_nrow` during construction in all resampling methods (#75)
