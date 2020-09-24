@@ -13,3 +13,9 @@ test_that("printing works", {
   expect_data_table(task$coordinates())
   expect_output(print(task$truth()))
 })
+
+test_that("Supplying a non-spatio temporal task gives descriptive error message", {
+  expect_error(
+    rsmp("spcv_coords")$instantiate(tsk("boston_housing")),
+    "Assertion on 'task' failed: Must inherit from class 'TaskClassifST', but")
+})

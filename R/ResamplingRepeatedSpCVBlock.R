@@ -77,6 +77,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     instantiate = function(task) {
 
       assert_task(task)
+      checkmate::assert_class(task, c("TaskClassifST", "TaskRegrST"))
       pv = self$param_set$values
       assert_numeric(pv$repeats, min.len = 1)
 
