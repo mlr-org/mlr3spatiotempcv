@@ -74,7 +74,7 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
       class = NULL) {
 
       assert_task(task)
-      checkmate::assert_class(task, c("TaskClassifST", "TaskRegrST"))
+      checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
       groups = task$groups
 
       if (!is.null(groups)) {

@@ -68,7 +68,7 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
     instantiate = function(task) {
 
       assert_task(task)
-      checkmate::assert_class(task, c("TaskClassifST", "TaskRegrST"))
+      checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
       groups = task$groups
       if (!is.null(groups)) {
         stopf("Grouping is not supported for spatial resampling methods.")
