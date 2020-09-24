@@ -51,6 +51,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     instantiate = function(task) {
 
       assert_task(task)
+      checkmate::assert_class(task, c("TaskClassifST", "TaskRegrST"))
       pv = self$param_set$values
 
       if (!is.null(pv$range)) {

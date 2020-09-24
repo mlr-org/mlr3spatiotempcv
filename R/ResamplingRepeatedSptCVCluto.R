@@ -86,6 +86,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
       requireNamespace("skmeans", quietly = TRUE)
 
       assert_task(task)
+      checkmate::assert_class(task, c("TaskClassifST", "TaskRegrST"))
       groups = task$groups
 
       if (!is.null(groups)) {
