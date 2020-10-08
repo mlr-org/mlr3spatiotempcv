@@ -708,7 +708,6 @@ autoplot_spatiotemp = function(
     } else {
       # Multiplot across multiple folds with train and test set
 
-
       task_resamp_ids$indicator = as.factor(as.character(task_resamp_ids$indicator))
       plot_list = mlr3misc::map(fold_id, function(.x) {
 
@@ -723,7 +722,7 @@ autoplot_spatiotemp = function(
             "#0072B5", "#E18727"
           ),
           # this is needed for later when doing 3D subplots
-          scene = paste0("scene", i),
+          scene = paste0("scene", .x),
           showlegend = ifelse(i == 1, TRUE, FALSE)
         )
 
@@ -734,12 +733,12 @@ autoplot_spatiotemp = function(
             "#0072B5", "#E18727"
           ),
           # this is needed for later when doing 3D subplots
-          scene = paste0("scene", i),
+          scene = paste0("scene", .x),
           showlegend = ifelse(i == 1, TRUE, FALSE)
         )
         pl = plotly::add_markers(pl, marker = list(size = point_size))
         layout_args = list(pl,
-          "title" = sprintf("Fold #%s", i),
+          "title" = sprintf("Fold #%s", .x),
           list(
             xaxis = list(
               title = "Lat",
@@ -754,8 +753,6 @@ autoplot_spatiotemp = function(
               type = "date",
               tickformat = tickformat_date,
               tickfont = list(size = axis_label_fontsize)
-              # sets size of axis titles
-              # titlefont = list(size = 5)
             ),
             camera = list(eye = list(z = 1.50))
           )
@@ -767,73 +764,13 @@ autoplot_spatiotemp = function(
         names(layout_args) = c(
           "p",
           "title",
-          paste0("scene", i)
+          paste0("scene", .x)
         )
 
         pl = mlr3misc::invoke(plotly::layout, .args = layout_args)
 
       })
-
       return(plot_list)
-
-      plot = list()
-      for (i in fold_id) {
-
-        # suppress undefined global variables note
-        indicator = NULL
-        fold = NULL
-
-        task_resamp_ids[, indicator := ifelse(fold == i, "Test", "Train")]
-
-        task_resamp_ids$Date = as.Date(task_resamp_ids$Date)
-
-        # create plots for each fold
-        plot[[length(plot) + 1]] = {
-          pl = plotly::plot_ly(task_resamp_ids,
-            x = ~x, y = ~y, z = ~Date,
-            color = ~indicator, colors = c(
-              "#0072B5", "#E18727"
-            ),
-            # this is needed for later when doing 3D subplots
-            scene = paste0("scene", i),
-            showlegend = ifelse(i == 1, TRUE, FALSE)
-          )
-          pl = plotly::add_markers(pl, marker = list(size = point_size))
-          layout_args = list(pl,
-            "title" = sprintf("Fold #%s", i),
-            list(
-              xaxis = list(
-                title = "Lat",
-                nticks = nticks_x,
-                tickfont = list(size = axis_label_fontsize)),
-              yaxis = list(
-                title = "Lon",
-                nticks = nticks_y,
-                tickfont = list(size = axis_label_fontsize)),
-              zaxis = list(
-                title = "Time",
-                type = "date",
-                tickformat = tickformat_date,
-                tickfont = list(size = axis_label_fontsize)
-                # sets size of axis titles
-                # titlefont = list(size = 5)
-              ),
-              camera = list(eye = list(z = 1.50))
-            )
-          )
-          # -`p` is the name of the plotly object.
-          # - title sets the title of the plot
-          # - the "scene" name is dynamically generated and refers to the scene
-          #   name in the `plot_ly()` call
-          names(layout_args) = c(
-            "p",
-            "title",
-            paste0("scene", i)
-          )
-
-          pl = mlr3misc::invoke(plotly::layout, .args = layout_args)
-        }
-      }
     }
 
     # is a grid requested?
