@@ -723,7 +723,7 @@ autoplot_spatiotemp = function(
           ),
           # this is needed for later when doing 3D subplots
           scene = paste0("scene", .x),
-          showlegend = ifelse(i == 1, TRUE, FALSE)
+          showlegend = ifelse(.x == 1, TRUE, FALSE)
         )
 
         # create plots for each fold
@@ -734,7 +734,7 @@ autoplot_spatiotemp = function(
           ),
           # this is needed for later when doing 3D subplots
           scene = paste0("scene", .x),
-          showlegend = ifelse(i == 1, TRUE, FALSE)
+          showlegend = ifelse(.x == 1, TRUE, FALSE)
         )
         pl = plotly::add_markers(pl, marker = list(size = point_size))
         layout_args = list(pl,
