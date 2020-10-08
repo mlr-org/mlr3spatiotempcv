@@ -49,7 +49,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   resampling = object
   coords = task$coordinates()
   coords$row_id = task$row_ids
-  require_namespaces(c("sf", "patchwork"))
+  require_namespaces(c("sf", "patchwork", "ggtext"))
 
   resampling = assert_autoplot(resampling, fold_id, task)
 

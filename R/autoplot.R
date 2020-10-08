@@ -487,7 +487,7 @@ autoplot_spatial = function(
   crs = NULL,
   ...) {
 
-  require_namespaces(c("sf", "patchwork"))
+  require_namespaces(c("sf", "patchwork", "ggtext"))
 
   resampling = assert_autoplot(resampling, fold_id, task)
 
