@@ -13,7 +13,7 @@ test_that("plot() works for 'sptcv_cluto'", {
   # autoplot() is used instead of plot() to prevent side-effect plotting
   p1 = autoplot(rsp, task, crs = 4326)
   p2 = autoplot(rsp, task, 1, crs = 4326)
-  p3 = autoplot(rsp, task, c(1, 2, 3, 4), crs = 4326)
+  p3 = autoplot(rsp, task, c(1, 2), crs = 4326)
 
   expect_s3_class(p1, "plotly")
   expect_s3_class(p2, "plotly")
@@ -21,7 +21,7 @@ test_that("plot() works for 'sptcv_cluto'", {
 
   vdiffr::expect_doppelganger("SptCVCluto all test sets", p1)
   vdiffr::expect_doppelganger("SptCVCluto - Fold 1", p2)
-  vdiffr::expect_doppelganger("SptCVCluto - Fold 1-4", p3)
+  vdiffr::expect_doppelganger("SptCVCluto - Fold 1-2", p3)
 })
 
 test_that("plot() works for 'repeated_sptcv_cluto'", {
@@ -36,7 +36,7 @@ test_that("plot() works for 'repeated_sptcv_cluto'", {
   # autoplot() is used instead of plot() to prevent side-effect plotting
   p1 = autoplot(rsp, task, crs = 4326)
   p2 = autoplot(rsp, task, 1, crs = 4326)
-  p3 = autoplot(rsp, task, c(1, 2, 3, 4), crs = 4326)
+  p3 = autoplot(rsp, task, c(1, 2), crs = 4326)
 
   expect_s3_class(p1, "plotly")
   expect_s3_class(p2, "plotly")
@@ -51,6 +51,6 @@ test_that("plot() works for 'repeated_sptcv_cluto'", {
   vdiffr::expect_doppelganger("RepSptCVCluto all test sets", p1)
   vdiffr::expect_doppelganger("RepSptCVCluto all test sets, Rep 2", p2)
   vdiffr::expect_doppelganger("RepSptCVCluto - Fold 1, Rep 2", p3)
-  vdiffr::expect_doppelganger("RepSptCVCluto - Fold 1-4, Rep 2", p4)
+  vdiffr::expect_doppelganger("RepSptCVCluto - Fold 1-2, Rep 2", p4)
   vdiffr::expect_doppelganger("RepSptCVCluto - Fold 1, Rep 2", p5)
 })

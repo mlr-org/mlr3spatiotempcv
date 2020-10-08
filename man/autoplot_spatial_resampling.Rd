@@ -305,11 +305,11 @@ autoplot(resampling, task)
 autoplot(resampling, task, fold_id = 1)
 
 ## Visualize train/test splits of multiple folds
-autoplot(resampling, task, fold_id = c(1, 2, 3, 4))
+autoplot(resampling, task, fold_id = c(1, 2))
 
 # list of ggplot2 resamplings
 plot_list = autoplot(resampling, task,
-  fold_id = c(1, 2, 3, 4), grid = FALSE)
+  fold_id = c(1, 2), grid = FALSE)
 }
 ##########
 # SpCVEnv
@@ -321,19 +321,20 @@ resampling$instantiate(task)
 
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2, 3, 4))
+autoplot(resampling, task, c(1, 2))
 }
 ##########
 # SpCVCoords
 ##########
 \dontrun{
 library(mlr3)
+task = tsk("ecuador")
 resampling = rsmp("spcv_coords")
 resampling$instantiate(task)
 
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2, 3, 4))
+autoplot(resampling, task, c(1, 2))
 }
 ##########
 # SptCVCluto
@@ -346,10 +347,9 @@ resampling = rsmp("sptcv_cluto", folds = 5)
 resampling$instantiate(task_st, "Date")
 
 # plot
-# resampling = readRDS("inst/spt-plotting-data.rda")
 autoplot(resampling, task_st)
 autoplot(resampling, task_st, 1)
-autoplot(resampling, task_st, c(1, 2, 3, 4))
+autoplot(resampling, task_st, c(1, 2))
 }
 ##########
 # Non-Spatial CV
@@ -361,18 +361,19 @@ resampling$instantiate(task)
 
 autoplot(resampling, task)
 autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2, 3, 4))
+autoplot(resampling, task, c(1, 2))
 }
 ##########
 # SpCVBuffer
 ##########
 \dontrun{
 library(mlr3)
+task = tsk("ecuador")
 resampling = rsmp("spcv_buffer", theRange = 1000)
 resampling$instantiate(task)
 
 autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2, 3, 4))
+autoplot(resampling, task, c(1, 2))
 }
 ##########
 # SptCVCstf
@@ -387,6 +388,6 @@ resampling$instantiate(task_st, "Date")
 # plot
 autoplot(resampling, task_st)
 autoplot(resampling, task_st, 1)
-autoplot(resampling, task_st, c(1, 2, 3, 4))
+autoplot(resampling, task_st, c(1, 2))
 }
 }
