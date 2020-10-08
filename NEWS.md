@@ -1,3 +1,8 @@
+# mlr3spatiotempcv 0.0.0.9011
+
+- replace {cowplot} by {patchwork} and make visualization of multiple folds more flexible and eye appealing (#80)
+
+
 # mlr3spatiotempcv 0.0.0.9010
 
 - return descriptive error message if a non-spatiotemporal task was provided (#74)
