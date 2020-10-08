@@ -23,7 +23,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   crs = NULL,
   ...) {
 
-  require_namespaces(c("sf", "patchwork"))
+  require_namespaces(c("sf", "patchwork", "ggtext"))
   resampling = object
 
   resampling = assert_autoplot(resampling, fold_id, task)
