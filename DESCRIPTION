@@ -28,7 +28,7 @@ Imports:
     cli,
     data.table,
     ggplot2,
-    mlr3 (>= 0.5.0.9000),
+    mlr3 (>= 0.7.0),
     mlr3misc (>= 0.1.7),
     paradox,
     R6,
