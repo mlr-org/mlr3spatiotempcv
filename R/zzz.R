@@ -62,7 +62,7 @@ register_mlr3 = function() {
 
   utils::globalVariables(c(
     "row_id", "cookfarm", "ecuador", "diplodia",
-    "resampling", "task"))
+    "resampling", "task", "indicator", "fold"))
 
 }
 

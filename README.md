@@ -74,13 +74,17 @@ S3 `plot()` method for all implemented spatial resampling methods.
     resampling = rsmp("spcv_coords", folds = 5)
     resampling$instantiate(task)
 
-    plot(resampling, task, crs = 4326)
+    autoplot(resampling, task, crs = 4326) +
+        ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) +
+      ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 
 ![](man/figures/README-spcv_coords-all-partitions-1.png)<!-- -->
 
-### Visualization of a specific fold
+### Visualization of specific folds
 
-    plot(resampling, task, fold_id = 1, crs = 4326)
+    autoplot(resampling, task, fold_id = c(1, 2), crs = 4326) *
+      ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
+      ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 
 ![](man/figures/README-spcv_coords-fold-1.png)<!-- -->
 
