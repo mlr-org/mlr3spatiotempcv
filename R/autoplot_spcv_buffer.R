@@ -6,11 +6,12 @@
 #' ##########
 #' \dontrun{
 #' library(mlr3)
+#' task = tsk("ecuador")
 #' resampling = rsmp("spcv_buffer", theRange = 1000)
 #' resampling$instantiate(task)
 #'
 #' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
+#' autoplot(resampling, task, c(1, 2))
 #' }
 autoplot.ResamplingSpCVBuffer = function( # nolint
   object,
@@ -22,7 +23,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   crs = NULL,
   ...) {
 
-  require_namespaces(c("sf", "cowplot"))
+  require_namespaces(c("sf", "patchwork"))
   resampling = object
 
   resampling = assert_autoplot(resampling, fold_id, task)
@@ -36,12 +37,10 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
     stopf("Plotting all folds of a LOOCV instance is not supported")
   }
 
-  indicator = NULL
+  plot_list = mlr3misc::map(fold_id, function(.x) {
 
-  plot_list = list()
-  for (i in fold_id) {
-    coords_train = coords[row_id %in% resampling$train_set(i)]
-    coords_test = coords[row_id %in% resampling$test_set(i)]
+    coords_train = coords[row_id %in% resampling$train_set(.x)]
+    coords_test = coords[row_id %in% resampling$test_set(.x)]
 
     coords_train$indicator = "Train"
     coords_test$indicator = "Test"
@@ -64,67 +63,32 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
     # reorder factor levels so that "train" comes first
     sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
 
-    plot_list[[length(plot_list) + 1]] =
-      ggplot() +
+    ggplot() +
       geom_sf(data = sf_df, aes(color = .data[["indicator"]])) +
       scale_color_manual(values = c(
         "Train" = train_color,
         "Test" = test_color
       )) +
-      labs(color = "Set") +
-      theme(legend.position = "none")
-  }
+      labs(color = "Set", title = sprintf("Fold %s", .x)) +
+      theme(plot.title = ggtext::element_textbox(
+        size = 10,
+        color = "black", fill = "#ebebeb", box.color = "black",
+        height = unit(0.33, "inch"), width = unit(1, "npc"),
+        linetype = 1, r = unit(5, "pt"),
+        valign = 0.5, halign = 0.5,
+        padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3)
+      )
+      )
+
+  })
 
   # is a grid requested?
   if (!plot_as_grid) {
     return(plot_list)
   } else {
-    plots = do.call(cowplot::plot_grid, list(
-      plotlist = plot_list,
-      labels = sprintf("Fold %s", fold_id)
-    ))
-
-    # Extract legend standalone, we only want one legend in the grid
-    coords_train = coords[row_id %in% resampling$train_set(1)]
-    coords_test = coords[row_id %in% resampling$test_set(1)]
-
-    coords_train$indicator = "Train"
-    coords_test$indicator = "Test"
-
-    table = rbind(coords_train, coords_test)
-
-    # set fallback crs if missing
-    if (is.null(crs)) {
-      # use 4326 (WGS84) as fallback
-      crs = 4326
-      cli::cli_alert_info("CRS not set, transforming to WGS84 (EPSG: 4326).")
-    }
-    # transform to selected crs
-    sf_df = sf::st_transform(
-      sf::st_as_sf(table, coords = c("x", "y"), crs = task$extra_args$crs),
-      crs = crs)
-
-    # 'fold' needs to be a factor, otherwise `show.legend = "points" has no
-    # effect
-    sf_df$indicator = as.factor(as.character(sf_df$indicator))
-
-    # reorder factor levels so that "train" comes first
-    sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
-
-    legend = cowplot::get_legend(ggplot() +
-      geom_sf(
-        data = sf_df, aes(color = indicator),
-        show.legend = "point"
-      ) +
-      scale_color_manual(values = c(
-        "Train" = "#0072B5",
-        "Test" = "#E18727"
-      )) +
-      labs(color = "") +
-      theme(legend.position = "bottom"))
-
-    # Plot
-    cowplot::plot_grid(plots, legend, ncol = 1, rel_heights = c(1, .1))
+    plot_list_pw = patchwork::wrap_plots(plot_list) +
+      patchwork::plot_layout(guides = "collect")
+    return(plot_list_pw)
   }
 }
 
