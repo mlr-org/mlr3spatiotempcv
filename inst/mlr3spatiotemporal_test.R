@@ -153,7 +153,7 @@ rcv = ResamplingSpCVBlock$new()
 rcv$param_set$values = list(folds = 4)
 rcv$instantiate(task)
 
-autoplot(rcv, task, fold_id = c(1, 2, 3, 4))
+autoplot(rcv, task, fold_id = c(1, 2))
 
 # Vizualiation - Multiplot
 

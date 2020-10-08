@@ -12,7 +12,7 @@ test_that("errors are thrown for non-valid argument settings", {
   expect_message(plot(rsp, task))
   expect_error(plot(rsp, task, 30))
   expect_error(plot(rsp, task, c(1, 30)))
-  expect_list(plot(rsp, task, c(1, 2, 3, 4), plot_as_grid = FALSE))
+  expect_list(plot(rsp, task, c(1, 2), plot_as_grid = FALSE))
 })
 
 # cv ---------------------------------------------------------------------------
@@ -25,7 +25,7 @@ test_that("plot() works for 'cv'", {
   # autoplot() is used instead of plot() to prevent side-effect plotting
   p1 = autoplot(plots$rsp, plots$task, crs = 4326)
   p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2, 3, 4), crs = 4326)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
@@ -33,7 +33,7 @@ test_that("plot() works for 'cv'", {
 
   vdiffr::expect_doppelganger("CV all test sets", p1)
   vdiffr::expect_doppelganger("CV - Fold 1", p2)
-  vdiffr::expect_doppelganger("CV - Fold 1-4", p3)
+  vdiffr::expect_doppelganger("CV - Fold 1-2", p3)
 })
 
 test_that("plot() works for 'repeated-cv'", {
@@ -45,7 +45,7 @@ test_that("plot() works for 'repeated-cv'", {
   # autoplot() is used instead of plot() to prevent side-effect plotting
   p1 = autoplot(plots$rsp, plots$task, crs = 4326)
   p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2, 3, 4), crs = 4326)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
@@ -59,8 +59,8 @@ test_that("plot() works for 'repeated-cv'", {
 
   vdiffr::expect_doppelganger("RepCV all test sets", p1)
   vdiffr::expect_doppelganger("RepCV Fold 1 Rep 1", p2)
-  vdiffr::expect_doppelganger("RepCV - Fold 1-4 Rep 1", p3)
-  vdiffr::expect_doppelganger("RepCV - Fold 1-4, Rep 2", p4)
+  vdiffr::expect_doppelganger("RepCV - Fold 1-2 Rep 1", p3)
+  vdiffr::expect_doppelganger("RepCV - Fold 1-2, Rep 2", p4)
   vdiffr::expect_doppelganger("RepCV - Fold 1, Rep 2", p5)
 })
 
@@ -74,7 +74,7 @@ test_that("plot() works for 'spcv_coords'", {
   # autoplot() is used instead of plot() to prevent side-effect plotting
   p1 = autoplot(plots$rsp, plots$task, crs = 4326)
   p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2, 3, 4), crs = 4326)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
@@ -82,7 +82,7 @@ test_that("plot() works for 'spcv_coords'", {
 
   vdiffr::expect_doppelganger("SpCVCoords all test sets", p1)
   vdiffr::expect_doppelganger("SpCVCoords - Fold 1", p2)
-  vdiffr::expect_doppelganger("SpCVCoords - Fold 1-4", p3)
+  vdiffr::expect_doppelganger("SpCVCoords - Fold 1-2", p3)
 })
 
 test_that("plot() works for 'repeated_spcv_coords'", {
@@ -94,7 +94,7 @@ test_that("plot() works for 'repeated_spcv_coords'", {
   # autoplot() is used instead of plot() to prevent side-effect plotting
   p1 = autoplot(plots$rsp, plots$task, crs = 4326)
   p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2, 3, 4), crs = 4326)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
@@ -108,8 +108,8 @@ test_that("plot() works for 'repeated_spcv_coords'", {
 
   vdiffr::expect_doppelganger("RepSpCVCoords all test sets", p1)
   vdiffr::expect_doppelganger("RepSpCVCoords Fold 1 Rep 1", p2)
-  vdiffr::expect_doppelganger("RepSpCVCoords - Fold 1-4 Rep 1", p3)
-  vdiffr::expect_doppelganger("RepSpCVCoords - Fold 1-4, Rep 2", p4)
+  vdiffr::expect_doppelganger("RepSpCVCoords - Fold 1-2 Rep 1", p3)
+  vdiffr::expect_doppelganger("RepSpCVCoords - Fold 1-2, Rep 2", p4)
   vdiffr::expect_doppelganger("RepSpCVCoords - Fold 1, Rep 2", p5)
 })
 
@@ -123,7 +123,7 @@ test_that("plot() works for 'spcv_block'", {
   # autoplot() is used instead of plot() to prevent side-effect plotting
   p1 = autoplot(plots$rsp, plots$task, crs = 4326)
   p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2, 3, 4), crs = 4326)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
@@ -131,7 +131,7 @@ test_that("plot() works for 'spcv_block'", {
 
   vdiffr::expect_doppelganger("SpCVBlock all test sets", p1)
   vdiffr::expect_doppelganger("SpCVBlock - Fold 1", p2)
-  vdiffr::expect_doppelganger("SpCVBlock - Fold 1-4", p3)
+  vdiffr::expect_doppelganger("SpCVBlock - Fold 1-2", p3)
 })
 
 test_that("plot() works for 'repeated_spcv_block'", {
@@ -143,7 +143,7 @@ test_that("plot() works for 'repeated_spcv_block'", {
   # autoplot() is used instead of plot() to prevent side-effect plotting
   p1 = autoplot(plots$rsp, plots$task, crs = 4326)
   p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2, 3, 4), crs = 4326)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
@@ -157,8 +157,8 @@ test_that("plot() works for 'repeated_spcv_block'", {
 
   vdiffr::expect_doppelganger("RepSpCVBlock all test sets", p1)
   vdiffr::expect_doppelganger("RepSpCVBlock Fold 1 Rep 1", p2)
-  vdiffr::expect_doppelganger("RepSpCVBlock - Fold 1-4 Rep 1", p3)
-  vdiffr::expect_doppelganger("RepSpCVBlock - Fold 1-4, Rep 2", p4)
+  vdiffr::expect_doppelganger("RepSpCVBlock - Fold 1-2 Rep 1", p3)
+  vdiffr::expect_doppelganger("RepSpCVBlock - Fold 1-2, Rep 2", p4)
   vdiffr::expect_doppelganger("RepSpCVBlock - Fold 1, Rep 2", p5)
 })
 
@@ -172,7 +172,7 @@ test_that("plot() works for 'spcv_env'", {
   # autoplot() is used instead of plot() to prevent side-effect plotting
   p1 = autoplot(plots$rsp, plots$task, crs = 4326)
   p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2, 3, 4), crs = 4326)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
@@ -180,7 +180,7 @@ test_that("plot() works for 'spcv_env'", {
 
   vdiffr::expect_doppelganger("SpCVEnv all test sets", p1)
   vdiffr::expect_doppelganger("SpCVEnv - Fold 1", p2)
-  vdiffr::expect_doppelganger("SpCVEnv - Fold 1-4", p3)
+  vdiffr::expect_doppelganger("SpCVEnv - Fold 1-2", p3)
 })
 
 test_that("plot() works for 'repeated_spcv_env'", {
@@ -192,7 +192,7 @@ test_that("plot() works for 'repeated_spcv_env'", {
   # autoplot() is used instead of plot() to prevent side-effect plotting
   p1 = autoplot(plots$rsp, plots$task, crs = 4326)
   p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2, 3, 4), crs = 4326)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
@@ -206,8 +206,8 @@ test_that("plot() works for 'repeated_spcv_env'", {
 
   vdiffr::expect_doppelganger("RepSpCVEnv all test sets", p1)
   vdiffr::expect_doppelganger("RepSpCVEnv Fold 1 Rep 1", p2)
-  vdiffr::expect_doppelganger("RepSpCVEnv - Fold 1-4 Rep 1", p3)
-  vdiffr::expect_doppelganger("RepSpCVEnv - Fold 1-4, Rep 2", p4)
+  vdiffr::expect_doppelganger("RepSpCVEnv - Fold 1-2 Rep 1", p3)
+  vdiffr::expect_doppelganger("RepSpCVEnv - Fold 1-2, Rep 2", p4)
   vdiffr::expect_doppelganger("RepSpCVEnv - Fold 1, Rep 2", p5)
 })
 
@@ -223,7 +223,7 @@ test_that("plot() works for 'sptcv_cstf'", {
   p1 = plot(rsp, task = task, crs = 4326)
   p2 = plot(rsp, task, 1, crs = 4326)
   # plot() would force image printing here
-  p3 = autoplot(rsp, task, c(1, 2, 3, 4), crs = 4326)
+  p3 = autoplot(rsp, task, c(1, 2), crs = 4326)
 
   expect_s3_class(p1, "plotly")
   expect_s3_class(p2, "plotly")
@@ -231,7 +231,7 @@ test_that("plot() works for 'sptcv_cstf'", {
 
   vdiffr::expect_doppelganger("SptCVCstf all test sets", p1)
   vdiffr::expect_doppelganger("SptCVCstf - Fold 1", p2)
-  vdiffr::expect_doppelganger("SptCVCstf - Fold 1-4", p3)
+  vdiffr::expect_doppelganger("SptCVCstf - Fold 1-2", p3)
 })
 
 
@@ -246,7 +246,7 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
   p1 = autoplot(rsp, task = task, crs = 4326)
   p2 = autoplot(rsp, task, 1, crs = 4326)
   # plot() would force image printing here
-  p3 = autoplot(rsp, task, c(1, 2, 3, 4), crs = 4326)
+  p3 = autoplot(rsp, task, c(1, 2), crs = 4326)
 
   expect_s3_class(p1, "plotly")
   expect_s3_class(p2, "plotly")
@@ -260,7 +260,7 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
 
   vdiffr::expect_doppelganger("RepSptCVCstf all test sets", p1)
   vdiffr::expect_doppelganger("RepSptCVCstf Fold 1 Rep 1", p2)
-  vdiffr::expect_doppelganger("RepSptCVCstf - Fold 1-4 Rep 1", p3)
-  vdiffr::expect_doppelganger("RepSptCVCstf - Fold 1-4, Rep 2", p4)
+  vdiffr::expect_doppelganger("RepSptCVCstf - Fold 1-2 Rep 1", p3)
+  vdiffr::expect_doppelganger("RepSptCVCstf - Fold 1-2, Rep 2", p4)
   vdiffr::expect_doppelganger("RepSptCVCstf - Fold 1, Rep 2", p5)
 })

@@ -56,11 +56,11 @@
 #' autoplot(resampling, task, fold_id = 1)
 #'
 #' ## Visualize train/test splits of multiple folds
-#' autoplot(resampling, task, fold_id = c(1, 2, 3, 4))
+#' autoplot(resampling, task, fold_id = c(1, 2))
 #'
 #' # list of ggplot2 resamplings
 #' plot_list = autoplot(resampling, task,
-#'   fold_id = c(1, 2, 3, 4), grid = FALSE)
+#'   fold_id = c(1, 2), grid = FALSE)
 #' }
 autoplot.ResamplingSpCVBlock = function( # nolint
   object,
@@ -145,7 +145,7 @@ plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
 #'
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
+#' autoplot(resampling, task, c(1, 2))
 #' }
 autoplot.ResamplingSpCVEnv = function( # nolint
   object,
@@ -220,12 +220,13 @@ plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
 #' ##########
 #' \dontrun{
 #' library(mlr3)
+#' task = tsk("ecuador")
 #' resampling = rsmp("spcv_coords")
 #' resampling$instantiate(task)
 #'
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
+#' autoplot(resampling, task, c(1, 2))
 #' }
 autoplot.ResamplingSpCVCoords = function( # nolint
   object,
@@ -290,7 +291,7 @@ plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
 
 # SptCV Cluto ------------------------------------------------------------------
 
-#' @title Plot for Spatio-temporal clustering
+#' @title Plot for spatio-temporal clustering
 #'
 #' @param tickformat_date `[character]`\cr
 #'   Date format for z-axis.
@@ -318,10 +319,9 @@ plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
 #' resampling$instantiate(task_st, "Date")
 #'
 #' # plot
-#' # resampling = readRDS("inst/spt-plotting-data.rda")
 #' autoplot(resampling, task_st)
 #' autoplot(resampling, task_st, 1)
-#' autoplot(resampling, task_st, c(1, 2, 3, 4))
+#' autoplot(resampling, task_st, c(1, 2))
 #' }
 autoplot.ResamplingSptCVCluto = function( # nolint
   object,
@@ -411,7 +411,7 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
 #'
 #' autoplot(resampling, task)
 #' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2, 3, 4))
+#' autoplot(resampling, task, c(1, 2))
 #' }
 autoplot.ResamplingCV = function( # nolint
   object,
@@ -487,7 +487,7 @@ autoplot_spatial = function(
   crs = NULL,
   ...) {
 
-  require_namespaces(c("sf", "cowplot"))
+  require_namespaces(c("sf", "patchwork"))
 
   resampling = assert_autoplot(resampling, fold_id, task)
 
@@ -509,15 +509,11 @@ autoplot_spatial = function(
 
     # Multiplot with train and test set for each fold --------------------------
 
-    plot = list()
-    for (i in fold_id) {
-      table = copy(coords_resamp)
+    plot_list = mlr3misc::map(fold_id, function(.x) {
 
-      # suppress undefined global variables note
-      indicator = NULL
-      fold = NULL
-
-      table[, indicator := ifelse(fold == i, "Test", "Train")]
+      dt = coords_resamp
+      dt$indicator = rep("foo", nrow(dt))
+      dt[, indicator := ifelse(fold == .x, "Test", "Train")]
 
       # set fallback crs if missing
       if (is.null(crs)) {
@@ -527,60 +523,42 @@ autoplot_spatial = function(
       }
       # transform to selected crs
       sf_df = sf::st_transform(
-        sf::st_as_sf(table, coords = c("x", "y"), crs = task$extra_args$crs),
+        sf::st_as_sf(dt, coords = c("x", "y"), crs = task$extra_args$crs),
         crs = crs)
 
       sf_df = reorder_levels(sf_df)
 
-      plot[[length(plot) + 1]] =
-        ggplot() +
+      ggplot() +
         geom_sf(data = sf_df, aes(color = indicator)) +
         scale_color_manual(values = c(
           "Train" = "#0072B5",
           "Test" = "#E18727"
         )) +
-        labs(color = "Set") +
-        theme(legend.position = "none")
-    }
+        labs(color = "Set", title = sprintf("Fold %s, Repetition %s", .x, repeats_id)) +
+        theme(plot.title = ggtext::element_textbox(
+          size = 10,
+          color = "black", fill = "#ebebeb", box.color = "black",
+          height = unit(0.33, "inch"), width = unit(1, "npc"),
+          linetype = 1, r = unit(5, "pt"),
+          valign = 0.5, halign = 0.5,
+          padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3)
+        )
+        )
+    })
 
-    # Return a plot grid via cowplot? ------------------------------------------
+    # Return a plot grid via patchwork? ----------------------------------------
 
     if (!plot_as_grid) {
-      return(plot)
+      return(plot_list)
     } else {
       # for repeated cv we also print out the rep number
       if (is.null(repeats_id)) {
         repeats_id = 1
       }
-      plot = do.call(cowplot::plot_grid, list(
-        plotlist = plot,
-        labels = sprintf(
-          "Fold %s\nRep %s", fold_id,
-          repeats_id
-        )
-      ))
 
-      # Extract legend standalone, we only want one legend in the grid
-      coords_resamp[, indicator := ifelse(fold == 1, "Test", "Train")]
-
-      sf_df = sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$extra_args$crs)
-
-      sf_df = reorder_levels(sf_df)
-
-      legend = cowplot::get_legend(ggplot() +
-        geom_sf(
-          data = sf_df, aes(color = indicator),
-          show.legend = "point"
-        ) +
-        scale_color_manual(values = c(
-          "Train" = "#0072B5",
-          "Test" = "#E18727"
-        )) +
-        labs(color = "") +
-        theme(legend.position = "bottom"))
-
-      # Plot
-      plot = cowplot::plot_grid(plot, legend, ncol = 1, rel_heights = c(1, .1))
+      plot_list_pw = patchwork::wrap_plots(plot_list) +
+        patchwork::plot_layout(guides = "collect")
+      return(plot_list_pw)
     }
   } else {
 
@@ -613,8 +591,8 @@ autoplot_spatial = function(
       ) +
       ggsci::scale_color_ucscgb() +
       labs(color = sprintf("Partition #, Rep %s", repeats_id))
+    return(plot)
   }
-  return(plot)
 }
 
 # autoplot_spatiotemp ----------------------------------------------------------
@@ -729,6 +707,75 @@ autoplot_spatiotemp = function(
       return(invisible(plot_single_plotly))
     } else {
       # Multiplot across multiple folds with train and test set
+
+
+      task_resamp_ids$indicator = as.factor(as.character(task_resamp_ids$indicator))
+      plot_list = mlr3misc::map(fold_id, function(.x) {
+
+        dt = task_resamp_ids
+        dt[, indicator := ifelse(fold == .x, "Test", "Train")]
+
+        dt$Date = as.Date(dt$Date)
+
+        pl = plotly::plot_ly(task_resamp_ids,
+          x = ~x, y = ~y, z = ~Date,
+          color = ~indicator, colors = c(
+            "#0072B5", "#E18727"
+          ),
+          # this is needed for later when doing 3D subplots
+          scene = paste0("scene", i),
+          showlegend = ifelse(i == 1, TRUE, FALSE)
+        )
+
+        # create plots for each fold
+        pl = plotly::plot_ly(task_resamp_ids,
+          x = ~x, y = ~y, z = ~Date,
+          color = ~indicator, colors = c(
+            "#0072B5", "#E18727"
+          ),
+          # this is needed for later when doing 3D subplots
+          scene = paste0("scene", i),
+          showlegend = ifelse(i == 1, TRUE, FALSE)
+        )
+        pl = plotly::add_markers(pl, marker = list(size = point_size))
+        layout_args = list(pl,
+          "title" = sprintf("Fold #%s", i),
+          list(
+            xaxis = list(
+              title = "Lat",
+              nticks = nticks_x,
+              tickfont = list(size = axis_label_fontsize)),
+            yaxis = list(
+              title = "Lon",
+              nticks = nticks_y,
+              tickfont = list(size = axis_label_fontsize)),
+            zaxis = list(
+              title = "Time",
+              type = "date",
+              tickformat = tickformat_date,
+              tickfont = list(size = axis_label_fontsize)
+              # sets size of axis titles
+              # titlefont = list(size = 5)
+            ),
+            camera = list(eye = list(z = 1.50))
+          )
+        )
+        # -`p` is the name of the plotly object.
+        # - title sets the title of the plot
+        # - the "scene" name is dynamically generated and refers to the scene
+        #   name in the `plot_ly()` call
+        names(layout_args) = c(
+          "p",
+          "title",
+          paste0("scene", i)
+        )
+
+        pl = mlr3misc::invoke(plotly::layout, .args = layout_args)
+
+      })
+
+      return(plot_list)
+
       plot = list()
       for (i in fold_id) {
 
@@ -736,7 +783,6 @@ autoplot_spatiotemp = function(
         indicator = NULL
         fold = NULL
 
-        task_resamp_ids$indicator = as.factor(as.character(task_resamp_ids$indicator))
         task_resamp_ids[, indicator := ifelse(fold == i, "Test", "Train")]
 
         task_resamp_ids$Date = as.Date(task_resamp_ids$Date)
