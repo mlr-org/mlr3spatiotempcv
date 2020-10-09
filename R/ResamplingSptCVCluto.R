@@ -28,7 +28,6 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
 
   public = list(
 
-
     #' @field time_var [character]\cr
     #'  The name of the variable which represents the time dimension.
     #'  Must be of type numeric.
@@ -54,6 +53,19 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
     #' FIXME.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
+    #' @param time_var [character]\cr
+    #'  The name of the variable which represents the time dimension.
+    #'  Must be of type numeric.
+    #' @param clmethod [character]\cr
+    #'   Name of the clustering method to use within `vcluster`.
+    #'   See Details for more information.
+    #' @param cluto_parameters [character]\cr
+    #'   Additional parameters to pass to `vcluster`.
+    #'   Must be given as a single character string, e.g.
+    #'   `"param1='value1'param2='value2'"`.
+    #'   See the CLUTO documentation for a full list of supported parameters.
+    #' @param verbose [logical]\cr
+    #'   Whether to show `vcluster` progress and summary output.
     initialize = function(id = "sptcv_cluto",
       time_var,
       clmethod = "direct",
