@@ -55,6 +55,11 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required")
       ))
       ps$values = list(folds = 10L)
+
+      self$space_var = space_var
+      self$time_var = time_var
+      self$class = class
+
       super$initialize(
         id = id,
         param_set = ps,
