@@ -60,6 +60,7 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
         ParamInt$new("repeats", lower = 1, default = 1L, tags = "required")
       ))
       ps$values = list(folds = 10L, repeats = 1)
+
       self$space_var = space_var
       self$time_var = time_var
       self$class = class
