@@ -11,8 +11,8 @@
 #' task = tsk("cookfarm")
 #'
 #' # Instantiate Resampling
-#' rcv = rsmp("sptcv_cluto", folds = 5)
-#' rcv$instantiate(task, "Date")
+#' rcv = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
+#' rcv$instantiate(task)
 #'
 #' # Individual sets:
 #' rcv$train_set(1)
@@ -27,15 +27,49 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
   inherit = mlr3::Resampling,
 
   public = list(
+
+
+    #' @field time_var [character]\cr
+    #'  The name of the variable which represents the time dimension.
+    #'  Must be of type numeric.
+    time_var = NULL,
+
+    #' @field clmethod [character]\cr
+    #'   Name of the clustering method to use within `vcluster`.
+    #'   See Details for more information.
+    clmethod = NULL,
+
+    #' @field cluto_parameters [character]\cr
+    #'   Additional parameters to pass to `vcluster`.
+    #'   Must be given as a single character string, e.g.
+    #'   `"param1='value1'param2='value2'"`.
+    #'   See the CLUTO documentation for a full list of supported parameters.
+    cluto_parameters = NULL,
+
+    #' @field verbose [logical]\cr
+    #'   Whether to show `vcluster` progress and summary output.
+    verbose = NULL,
+
     #' @description
     #' FIXME.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
-    initialize = function(id = "sptcv_cluto") {
+    initialize = function(id = "sptcv_cluto",
+      time_var,
+      clmethod = "direct",
+      cluto_parameters = NULL,
+      verbose = TRUE) {
+
       ps = ParamSet$new(params = list(
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required")
       ))
       ps$values = list(folds = 10L)
+
+      self$time_var = time_var
+      self$clmethod = clmethod
+      self$cluto_parameters = cluto_parameters
+      self$verbose = verbose
+
       super$initialize(
         id = id,
         param_set = ps
@@ -46,21 +80,7 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
     #'  Materializes fixed training and test splits for a given task.
     #' @param task [Task]\cr
     #'  A task to instantiate.
-    #' @param time_var [character]\cr
-    #'  The name of the variable which represents the time dimension.
-    #'  Must be of type numeric.
-    #' @param clmethod [character]\cr
-    #'   Name of the clustering method to use within `vcluster`.
-    #'   See Details for more information.
-    #' @param cluto_parameters [character]\cr
-    #'   Additional parameters to pass to `vcluster`.
-    #'   Must be given as a single character string, e.g.
-    #'   `"param1='value1'param2='value2'"`.
-    #'   See the CLUTO documentation for a full list of supported parameters.
-    #' @param verbose [logical]\cr
-    #'   Whether to show `vcluster` progress and summary output.
-    instantiate = function(task, time_var, clmethod = "direct",
-      cluto_parameters = NULL, verbose = TRUE) {
+    instantiate = function(task) {
 
       requireNamespace("skmeans", quietly = TRUE)
 
@@ -72,7 +92,7 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
         stopf("Grouping is not supported for spatial resampling methods")
       }
 
-      time = as.POSIXct(task$data()[[time_var]])
+      time = as.POSIXct(task$data()[[self$time_var]])
       # time in seconds since 1/1/1970
       time_num = as.numeric(time)
 
@@ -80,8 +100,8 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
       colnames(data_matrix) = c("x", "y", "z")
 
       instance = private$.sample(
-        task$row_ids, data_matrix, clmethod,
-        cluto_parameters, verbose)
+        task$row_ids, data_matrix, self$clmethod,
+        self$cluto_parameters, self$verbose)
 
       self$instance = instance
       self$task_hash = task$hash
