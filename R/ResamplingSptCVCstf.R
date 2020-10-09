@@ -103,7 +103,7 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
         stopf("Grouping is not supported for spatial resampling methods")
       }
 
-      private$.sample(task, space_var, time_var, class)
+      private$.sample(task, self$space_var, self$time_var, self$class)
 
       self$task_hash = task$hash
       self$task_nrow = task$nrow
