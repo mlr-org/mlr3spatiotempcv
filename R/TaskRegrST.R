@@ -5,13 +5,15 @@
 #'
 #' @description
 #' This task specializes [Task] and [TaskSupervised] for spatio-temporal
-#' regression problems. The target column is assumed to be a factor.
-#' The `task_type` is set to `"classif"` and `"spatiotemporal"`.
+#' classification problems.
 #'
-#' #' A spatial example task is available via `tsk("cookfarm")`.
-#' During initialization, coordinates need to be passed.
-#' By default, coordinates are not used as features.
-#' This can be changed by setting `extra_args$coords_as_features = TRUE`.
+#' A spatial example task is available via `tsk("ecuador")`, a spatiotemporal
+#' one via `tsk("cookfarm")`.
+#'
+#' The coordinate reference system passed during initialization must match the
+#' one which was used during data creation, otherwise offsets of multiple meters
+#' may occur. By default, coordinates are not used as features. This can be
+#' changed by setting `extra_args$coords_as_features = TRUE`.
 #'
 #' @family Task
 #' @export

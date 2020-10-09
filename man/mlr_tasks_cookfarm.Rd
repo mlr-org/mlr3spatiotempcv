@@ -54,6 +54,12 @@ Other Task:
 \code{\link{TaskRegrST}},
 \code{\link{mlr_tasks_diplodia}},
 \code{\link{mlr_tasks_ecuador}}
+
+Other Task: 
+\code{\link{TaskClassifST}},
+\code{\link{TaskRegrST}},
+\code{\link{mlr_tasks_diplodia}},
+\code{\link{mlr_tasks_ecuador}}
 }
 \concept{Task}
 \keyword{datasets}
