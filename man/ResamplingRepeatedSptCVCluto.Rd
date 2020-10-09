@@ -141,7 +141,7 @@ values stored in the \code{param_set}.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create an "coordinate-based" repeated resampling instance.
+Create an repeated resampling instance using the CLUTO algorithm.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCluto$new(
   id = "repeated_sptcv_cluto",
