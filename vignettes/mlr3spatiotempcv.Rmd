@@ -168,17 +168,17 @@ All methods can be visualized via the following logic:
 
 ### Spatial 
 
-```{r ressp, fig.align='center', fig.cap="Fig.2: Example for five spatially disjoint partitions constructed with the `spcv_coords` resampling method."}
-autoplot(resampling_sp, task = ecuador, crs = 4326) +
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) +
+```{r rspcv, fig.align='center', fig.cap="Fig.2: Plot of two spatially disjoint partitions instantiated with the `spcv_coords` resampling method."}
+autoplot(resampling_sp, task = ecuador, fold_id = c(1, 2), crs = 4326) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
 ### Non-spatial
 
-```{r, fig.align='center'}
-plot(resampling_nsp, task = ecuador, crs = 4326) +
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) +
+```{r rnspcv, fig.align='center', fig.cap="Fig.3: Plot of two non-spatial (= random) partitions instantiated with the `cv` resampling method."}
+autoplot(resampling_nsp, task = ecuador, fold_id = c(1, 2), crs = 4326) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
