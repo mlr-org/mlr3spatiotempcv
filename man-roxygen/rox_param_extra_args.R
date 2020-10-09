@@ -4,6 +4,7 @@
 #'   - crs `[character(1)]`\cr
 #'     Coordinate reference system. Either a PROJ string or an
 #'     [EPSG](https://epsg.io/) code.
+#'
 #'   - coords_as_features `[logical(1)]`\cr
 #'     Whether the coordinates should also be used as features.
 #'     Default is `FALSE`.
