@@ -53,7 +53,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
     verbose = NULL,
 
     #' @description
-    #' Create an "coordinate-based" repeated resampling instance.
+    #' Create an repeated resampling instance using the CLUTO algorithm.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     #' @param time_var [character]\cr

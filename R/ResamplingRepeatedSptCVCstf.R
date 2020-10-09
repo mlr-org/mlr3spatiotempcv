@@ -41,7 +41,7 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
     class = NULL,
 
     #' @description
-    #' Create an "coordinate-based" repeated resampling instance.
+    #' Create a "Spacetime Folds" resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     #' @param space_var `character(1)`\cr
