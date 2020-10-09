@@ -44,6 +44,12 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
     #' Create an "coordinate-based" repeated resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
+    #' @param space_var `character(1)`\cr
+    #'   Column name identifying the spatial units.
+    #' @param time_var `character(1)`\cr
+    #'  Column name identifying the temporal units.
+    #' @param class `character(1)`\cr
+    #'  Column name identifying a class unit (e.g. land cover).
     initialize = function(id = "repeated_sptcv_cstf",
       space_var = NULL,
       time_var = NULL,

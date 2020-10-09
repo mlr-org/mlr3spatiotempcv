@@ -22,6 +22,19 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
   inherit = mlr3::Resampling,
 
   public = list(
+
+    #' @field space_var `character(1)`\cr
+    #'   Column name identifying the spatial units.
+    space_var = NULL,
+
+    #' @field time_var `character(1)`\cr
+    #'  Column name identifying the temporal units.
+    time_var = NULL,
+
+    #' @field class `character(1)`\cr
+    #'  Column name identifying a class unit (e.g. land cover).
+    class = NULL,
+
     #' @description
     #' Create a "Spacetime Folds" resampling instance.
     #' @param id `character(1)`\cr
@@ -64,8 +77,7 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
     #'   Column name identifying the temporal units.
     #' @param class `[character]`\cr
     #'   Column name identifying a class unit (e.g. land cover).
-    instantiate = function(task, space_var = NULL, time_var = NULL,
-      class = NULL) {
+    instantiate = function(task) {
 
       assert_task(task)
       checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
