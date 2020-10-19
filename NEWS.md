@@ -1,3 +1,8 @@
+# mlr3spatiotempcv 0.0.0.9012
+
+- SptCV methods: move arguments from `$instantiate()` to constructor
+
+
 # mlr3spatiotempcv 0.0.0.9011
 
 - replace {cowplot} by {patchwork} and make visualization of multiple folds more flexible and eye appealing (#80)
