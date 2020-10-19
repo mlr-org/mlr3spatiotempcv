@@ -18,8 +18,10 @@ library(mlr3)
 task = tsk("cookfarm")
 
 # Instantiate Resampling
-rcv = rsmp("sptcv_cstf", folds = 5)
-rcv$instantiate(task, time_var = "Date", space_var = "SOURCEID")
+rcv = rsmp("sptcv_cstf",
+  folds = 5,
+  time_var = "Date", space_var = "SOURCEID")
+rcv$instantiate(task)
 
 # Individual sets:
 rcv$train_set(1)
@@ -35,6 +37,20 @@ rcv$instance # table
 }
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingSptCVCstf}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{space_var}}{\code{character(1)}\cr
+Column name identifying the spatial units.}
+
+\item{\code{time_var}}{\code{character(1)}\cr
+Column name identifying the temporal units.}
+
+\item{\code{class}}{\code{character(1)}\cr
+Column name identifying a class unit (e.g. land cover).}
+}
+\if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -72,7 +88,12 @@ values stored in the \code{param_set}.}
 \subsection{Method \code{new()}}{
 Create a "Spacetime Folds" resampling instance.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCstf$new(id = "sptcv_cstf")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCstf$new(
+  id = "sptcv_cstf",
+  space_var = NULL,
+  time_var = NULL,
+  class = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -80,6 +101,15 @@ Create a "Spacetime Folds" resampling instance.
 \describe{
 \item{\code{id}}{\code{character(1)}\cr
 Identifier for the resampling strategy.}
+
+\item{\code{space_var}}{\code{character(1)}\cr
+Column name identifying the spatial units.}
+
+\item{\code{time_var}}{\code{character(1)}\cr
+Column name identifying the temporal units.}
+
+\item{\code{class}}{\code{character(1)}\cr
+Column name identifying a class unit (e.g. land cover).}
 }
 \if{html}{\out{</div>}}
 }
@@ -126,12 +156,7 @@ Iteration number.}
 \subsection{Method \code{instantiate()}}{
 Materializes fixed training and test splits for a given task.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCstf$instantiate(
-  task,
-  space_var = NULL,
-  time_var = NULL,
-  class = NULL
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCstf$instantiate(task)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

@@ -7,8 +7,10 @@
 #' task = tsk("cookfarm")
 #'
 #' # Instantiate Resampling
-#' rcv = rsmp("sptcv_cstf", folds = 5)
-#' rcv$instantiate(task, time_var = "Date", space_var = "SOURCEID")
+#' rcv = rsmp("sptcv_cstf",
+#'   folds = 5,
+#'   time_var = "Date", space_var = "SOURCEID")
+#' rcv$instantiate(task)
 #'
 #' # Individual sets:
 #' rcv$train_set(1)
@@ -22,15 +24,43 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
   inherit = mlr3::Resampling,
 
   public = list(
+
+    #' @field space_var `character(1)`\cr
+    #'   Column name identifying the spatial units.
+    space_var = NULL,
+
+    #' @field time_var `character(1)`\cr
+    #'  Column name identifying the temporal units.
+    time_var = NULL,
+
+    #' @field class `character(1)`\cr
+    #'  Column name identifying a class unit (e.g. land cover).
+    class = NULL,
+
     #' @description
     #' Create a "Spacetime Folds" resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
-    initialize = function(id = "sptcv_cstf") {
+    #' @param space_var `character(1)`\cr
+    #'   Column name identifying the spatial units.
+    #' @param time_var `character(1)`\cr
+    #'  Column name identifying the temporal units.
+    #' @param class `character(1)`\cr
+    #'  Column name identifying a class unit (e.g. land cover).
+    initialize = function(id = "sptcv_cstf",
+      space_var = NULL,
+      time_var = NULL,
+      class = NULL) {
+
       ps = ParamSet$new(params = list(
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required")
       ))
       ps$values = list(folds = 10L)
+
+      self$space_var = space_var
+      self$time_var = time_var
+      self$class = class
+
       super$initialize(
         id = id,
         param_set = ps,
@@ -64,18 +94,23 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
     #'   Column name identifying the temporal units.
     #' @param class `[character]`\cr
     #'   Column name identifying a class unit (e.g. land cover).
-    instantiate = function(task, space_var = NULL, time_var = NULL,
-      class = NULL) {
+    instantiate = function(task) {
 
       assert_task(task)
       checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
+      checkmate::assert_subset(self$time_var,
+        choices = task$feature_names,
+        empty.ok = TRUE)
+      checkmate::assert_subset(self$space_var,
+        choices = task$feature_names,
+        empty.ok = TRUE)
       groups = task$groups
 
       if (!is.null(groups)) {
         stopf("Grouping is not supported for spatial resampling methods")
       }
 
-      private$.sample(task, space_var, time_var, class)
+      private$.sample(task, self$space_var, self$time_var, self$class)
 
       self$task_hash = task$hash
       self$task_nrow = task$nrow

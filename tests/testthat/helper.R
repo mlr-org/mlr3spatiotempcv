@@ -77,13 +77,14 @@ test_make_multiclass = function() {
 
 # mlr3pipelines Graph learner --------------------------------------------------
 
-test_graph_learner = function(task, resampling) {
+test_graph_learner = function(task, resampling, learner = "classif.featureless",
+                              measure = "classif.ce") {
 
   lgr::get_logger("mlr3")$set_threshold("warn")
   lgr::get_logger("bbotk")$set_threshold("warn")
 
   lrn <- lrn(
-    "classif.featureless"
+    learner
   )
   po_lrn <- mlr3pipelines::po("learner", lrn)
 
@@ -92,9 +93,8 @@ test_graph_learner = function(task, resampling) {
     filter = mlr3filters::flt("importance", learner = lrn))
 
   # Create process (new learner) for filtering the task
-  grph = mlr3pipelines::Graph$new()$add_pipeop(po_filter)$add_pipeop(po_lrn)$add_edge("importance", "classif.featureless") # nolint
+  grph = mlr3pipelines::Graph$new()$add_pipeop(po_filter)$add_pipeop(po_lrn)$add_edge("importance", learner) # nolint
   glrn = mlr3pipelines::GraphLearner$new(grph)
-  glrn$predict_type <- "prob"
 
   # Create filter parameters
   param_set <- paradox::ParamSet$new(
@@ -107,7 +107,7 @@ test_graph_learner = function(task, resampling) {
     task = task,
     learner = glrn,
     resampling = resampling,
-    measure = msr("classif.ce"),
+    measure = msr(measure),
     search_space = param_set,
     terminator = mlr3tuning::trm("none")
   )

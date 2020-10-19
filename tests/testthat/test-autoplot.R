@@ -217,8 +217,8 @@ test_that("plot() works for 'sptcv_cstf'", {
   set.seed(42)
 
   task = tsk("cookfarm")
-  rsp = rsmp("sptcv_cstf", folds = 4)
-  rsp$instantiate(task, time_var = "Date")
+  rsp = rsmp("sptcv_cstf", folds = 4, time_var = "Date")
+  rsp$instantiate(task)
 
   p1 = plot(rsp, task = task, crs = 4326)
   p2 = plot(rsp, task, 1, crs = 4326)
@@ -240,8 +240,8 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
   set.seed(42)
 
   task = tsk("cookfarm")
-  rsp = rsmp("repeated_sptcv_cstf", folds = 4, repeats = 2)
-  rsp$instantiate(task, time_var = "Date")
+  rsp = rsmp("repeated_sptcv_cstf", folds = 4, repeats = 2, time_var = "Date")
+  rsp$instantiate(task)
 
   p1 = autoplot(rsp, task = task, crs = 4326)
   p2 = autoplot(rsp, task, 1, crs = 4326)

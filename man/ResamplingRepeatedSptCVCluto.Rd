@@ -85,6 +85,28 @@ Management (CIKM), pp. 515-524, 2002.
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingRepeatedSptCVCluto}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{time_var}}{\link{character}\cr
+The name of the variable which represents the time dimension.
+Must be of type numeric.}
+
+\item{\code{clmethod}}{\link{character}\cr
+Name of the clustering method to use within \code{vcluster}.
+See Details for more information.}
+
+\item{\code{cluto_parameters}}{\link{character}\cr
+Additional parameters to pass to \code{vcluster}.
+Must be given as a single character string, e.g.
+\code{"param1='value1'param2='value2'"}.
+See the CLUTO documentation for a full list of supported parameters.}
+
+\item{\code{verbose}}{\link{logical}\cr
+Whether to show \code{vcluster} progress and summary output.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -119,9 +141,15 @@ values stored in the \code{param_set}.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create an "coordinate-based" repeated resampling instance.
+Create an repeated resampling instance using the CLUTO algorithm.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCluto$new(id = "repeated_sptcv_cluto")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCluto$new(
+  id = "repeated_sptcv_cluto",
+  time_var = NULL,
+  clmethod = "direct",
+  cluto_parameters = NULL,
+  verbose = TRUE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -129,6 +157,23 @@ Create an "coordinate-based" repeated resampling instance.
 \describe{
 \item{\code{id}}{\code{character(1)}\cr
 Identifier for the resampling strategy.}
+
+\item{\code{time_var}}{\link{character}\cr
+The name of the variable which represents the time dimension.
+Must be of type numeric.}
+
+\item{\code{clmethod}}{\link{character}\cr
+Name of the clustering method to use within \code{vcluster}.
+See Details for more information.}
+
+\item{\code{cluto_parameters}}{\link{character}\cr
+Additional parameters to pass to \code{vcluster}.
+Must be given as a single character string, e.g.
+\code{"param1='value1'param2='value2'"}.
+See the CLUTO documentation for a full list of supported parameters.}
+
+\item{\code{verbose}}{\link{logical}\cr
+Whether to show \code{vcluster} progress and summary output.}
 }
 \if{html}{\out{</div>}}
 }
@@ -175,13 +220,7 @@ Iteration number.}
 \subsection{Method \code{instantiate()}}{
 Materializes fixed training and test splits for a given task.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCluto$instantiate(
-  task,
-  time_var,
-  clmethod = "direct",
-  cluto_parameters = NULL,
-  verbose = TRUE
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCluto$instantiate(task)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
