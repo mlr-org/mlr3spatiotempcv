@@ -70,7 +70,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
     #' @param verbose [logical]\cr
     #'   Whether to show `vcluster` progress and summary output.
     initialize = function(id = "repeated_sptcv_cluto",
-      time_var,
+      time_var = NULL,
       clmethod = "direct",
       cluto_parameters = NULL,
       verbose = TRUE) {
@@ -132,6 +132,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
 
       assert_task(task)
       checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
+      checkmate::assert_character(self$time_var)
       groups = task$groups
 
       if (!is.null(groups)) {

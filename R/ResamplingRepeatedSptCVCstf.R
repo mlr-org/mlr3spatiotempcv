@@ -96,6 +96,7 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
 
       assert_task(task)
       checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
+      checkmate::assert_character(self$time_var)
       groups = task$groups
 
       if (!is.null(groups)) {
