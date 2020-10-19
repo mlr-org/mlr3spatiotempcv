@@ -51,6 +51,7 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
       space_var = NULL,
       time_var = NULL,
       class = NULL) {
+
       ps = ParamSet$new(params = list(
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required")
       ))
@@ -97,9 +98,12 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
 
       assert_task(task)
       checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
-      checkmate::assert_character(self$time_var)
-      checkmate::assert_subset(self$time_var, choices = task$feature_names, empty.ok = TRUE)
-      checkmate::assert_subset(self$space_var, choices = task$feature_names, empty.ok = TRUE)
+      checkmate::assert_subset(self$time_var,
+        choices = task$feature_names,
+        empty.ok = TRUE)
+      checkmate::assert_subset(self$space_var,
+        choices = task$feature_names,
+        empty.ok = TRUE)
       groups = task$groups
 
       if (!is.null(groups)) {
