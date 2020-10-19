@@ -139,7 +139,7 @@ Create an repeated resampling instance using the CLUTO algorithm.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCluto$new(
   id = "sptcv_cluto",
-  time_var,
+  time_var = NULL,
   clmethod = "direct",
   cluto_parameters = NULL,
   verbose = TRUE
