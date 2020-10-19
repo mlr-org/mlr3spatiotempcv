@@ -59,8 +59,8 @@ library(mlr3spatiotempcv)
 task = tsk("cookfarm")
 
 # Instantiate Resampling
-rrcv = rsmp("repeated_sptcv_cstf", folds = 3, repeats = 5)
-rrcv$instantiate(task, time_var = "Date")
+rrcv = rsmp("repeated_sptcv_cstf", folds = 3, repeats = 5, time_var = "Date")
+rrcv$instantiate(task)
 # Individual sets:
 rrcv$iters
 rrcv$folds(1:6)
@@ -81,6 +81,20 @@ Management (CIKM), pp. 515-524, 2002.
 }
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingRepeatedSptCVCstf}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{space_var}}{\code{character(1)}\cr
+Column name identifying the spatial units.}
+
+\item{\code{time_var}}{\code{character(1)}\cr
+Column name identifying the temporal units.}
+
+\item{\code{class}}{\code{character(1)}\cr
+Column name identifying a class unit (e.g. land cover).}
+}
+\if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -116,9 +130,14 @@ values stored in the \code{param_set}.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create an "coordinate-based" repeated resampling instance.
+Create a "Spacetime Folds" resampling instance.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCstf$new(id = "repeated_sptcv_cstf")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCstf$new(
+  id = "repeated_sptcv_cstf",
+  space_var = NULL,
+  time_var = NULL,
+  class = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -126,6 +145,15 @@ Create an "coordinate-based" repeated resampling instance.
 \describe{
 \item{\code{id}}{\code{character(1)}\cr
 Identifier for the resampling strategy.}
+
+\item{\code{space_var}}{\code{character(1)}\cr
+Column name identifying the spatial units.}
+
+\item{\code{time_var}}{\code{character(1)}\cr
+Column name identifying the temporal units.}
+
+\item{\code{class}}{\code{character(1)}\cr
+Column name identifying a class unit (e.g. land cover).}
 }
 \if{html}{\out{</div>}}
 }
@@ -172,12 +200,7 @@ Iteration number.}
 \subsection{Method \code{instantiate()}}{
 Materializes fixed training and test splits for a given task.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCstf$instantiate(
-  task,
-  space_var = NULL,
-  time_var = NULL,
-  class = NULL
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCstf$instantiate(task)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -185,15 +208,6 @@ Materializes fixed training and test splits for a given task.
 \describe{
 \item{\code{task}}{\link{Task}\cr
 A task to instantiate.}
-
-\item{\code{space_var}}{\verb{[character]}\cr
-Column name identifying the spatial units.}
-
-\item{\code{time_var}}{\verb{[character]}\cr
-Column name identifying the temporal units.}
-
-\item{\code{class}}{\verb{[character]}\cr
-Column name identifying a class unit (e.g. land cover).}
 }
 \if{html}{\out{</div>}}
 }
