@@ -17,6 +17,7 @@ Useful links:
 \itemize{
   \item \url{https://mlr3spatiotempcv.mlr-org.com/}
   \item \url{https://github.com/mlr-org/mlr3spatiotempcv}
+  \item \url{https://mlr3book.mlr-org.com}
   \item Report bugs at \url{https://github.com/mlr-org/mlr3spatiotempcv/issues}
 }
 
@@ -25,6 +26,7 @@ Useful links:
 \itemize{
   \item \url{https://mlr3spatiotempcv.mlr-org.com/}
   \item \url{https://github.com/mlr-org/mlr3spatiotempcv}
+  \item \url{https://mlr3book.mlr-org.com}
   \item Report bugs at \url{https://github.com/mlr-org/mlr3spatiotempcv/issues}
 }
 
@@ -34,12 +36,12 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Marc Becker \email{marcbecker@posteo.de}
+  \item Marc Becker \email{marcbecker@posteo.de} (\href{https://orcid.org/0000-0002-8115-0400}{ORCID})
 }
 
 Other contributors:
 \itemize{
-  \item Jannes Muenchow \email{jannes.muenchow@uni-jena.de} [contributor]
+  \item Jannes Muenchow \email{jannes.muenchow@uni-jena.de} (\href{https://orcid.org/0000-0001-7834-4717}{ORCID}) [contributor]
 }
 
 
@@ -47,12 +49,12 @@ Other contributors:
 
 Authors:
 \itemize{
-  \item Marc Becker \email{marcbecker@posteo.de}
+  \item Marc Becker \email{marcbecker@posteo.de} (\href{https://orcid.org/0000-0002-8115-0400}{ORCID})
 }
 
 Other contributors:
 \itemize{
-  \item Jannes Muenchow \email{jannes.muenchow@uni-jena.de} [contributor]
+  \item Jannes Muenchow \email{jannes.muenchow@uni-jena.de} (\href{https://orcid.org/0000-0001-7834-4717}{ORCID}) [contributor]
 }
 
 }
