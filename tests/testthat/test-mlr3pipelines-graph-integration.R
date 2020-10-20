@@ -17,8 +17,8 @@ test_that("sptcv methods work in a Graph Learner", {
 
   out = mlr3misc::map_lgl(rsmps, function(x) {
     test_graph_learner(tsk("cookfarm"), x,
-                       learner = "regr.featureless",
-                       measure = "regr.mse")
+      learner = "regr.featureless",
+      measure = "regr.mse")
   })
 
   expect_true(all(out))
