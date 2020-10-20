@@ -9,177 +9,114 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include=FALSE}
+set.seed(42)
+library("mlr3")
+library("mlr3spatiotempcv")
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r setup}
-set.seed(42)
-library("mlr3")
-library("mlr3spatiotempcv")
-```
-
 # Introduction
 
-This package provides resampling methods for the {mlr3} package framework suited for spatial and temporal data.
+This package adds resampling methods for the {mlr3} package framework suited for spatial, temporal and spatiotemporal data.
 
-After attaching the namespace via `library("mlr3spatiotempcv")`, the spatial resampling methods and example tasks provided by {mlr3spatiotempcv} are available to the user.
+After attaching the package namespace via `library("mlr3spatiotempcv")`, the spatial resampling methods and example tasks provided by {mlr3spatiotempcv} are available to the user.
 
-This can be verified by printing the mlr3 dictionaries which got extended after loading {mlr3spatiotempcv}:
+This can be verified by printing the {mlr3} dictionaries after loading {mlr3spatiotempcv}.
 
-### Task types
+# Task Types
+
+Additional task types:
+
+-   `TaskClassifST`
+
+-   `TaskRegrST`
 
 ```{r}
 mlr_reflections$task_types
 ```
 
-### Task column roles
+# Task Column Roles
+
+Additional column roles:
+
+-   `coordinates`
 
 ```{r}
-# note the additional "coordinates" slot
 mlr_reflections$task_col_roles
 ```
 
-### Resampling methods
+# Resampling Methods
+
+Additonal resampling methods:
+
+-   `spcv_block`
+
+-   `spcv_buffer`
+
+-   `spcv_coords`
+
+-   `spcv_env`
+
+-   `sptcv_cluto`
+
+-   `sptcv_cstf`
+
+and their respective repeated versions.
 
 ```{r, warning=FALSE}
 as.data.table(mlr_resamplings)
 ```
 
-The following HTML table lists the implemented methods in a more appealing way:
+# Examples Tasks
 
-| Literature                           | Package    | Reference     | mlr3 Sugar                     |
-|--------------------------------------|------------|---------------|--------------------------------|
-| Spatial Buffering                    | blockCV    | Valavi 2019   | `rsmp("spcv_buffer")`          |
-| Spatial Blocking                     | blockCV    | Valavi 2019   | `rsmp("spcv_block")`           |
-| Spatial CV                           | sperrorest | Brenning 2012 | `rsmp("spcv_coords")`          |
-| Environmental Blocking               | blockCV    | Valavi 2019   | `rsmp("spcv_env")`             |
-| \-                                   | \-         | \-            | `rsmp("sptcv_cluto")`          |
-| Leave-Location-and-Time-Out          | CAST       | Meyer 2018    | `rsmp("sptcv_cstf")`           |
-| ---                                  | ---        | ---           | ---                            |
-| Repeated Spatial Blocking            | blockCV    | Valavi 2019   | `rsmp("repeated_spcv_block")`  |
-| Repeated Spatial CV                  | sperrorest | Brenning 2012 | `rsmp("repeated_spcv_coords")` |
-| Repeated Env Blocking                | blockCV    | Valavi 2019   | `rsmp("repeated_spcv_env")`    |
-| \-                                   | \-         | \-            | `rsmp("repeated_sptcv_cluto")` |
-| Repeated Leave-Location-and-Time-Out | CAST       | Meyer 2018    | `rsmp("repeated_sptcv_cstf")`  |
+Additional example tasks:
 
-## Creating a spatiotemporal task from scratch
+- `tsk("ecuador")` (spatial, classif)
+- `tsk("cookfarm")` (spatiotemp, regr)
 
-{mlr3spatiotempcv} comes with two specific Task classes, namely `TaskClassifST` (for classification) and `TaskRegrST` (for regression tasks).
-In order to create such a task, you need at least a set of spatial coordinates (x, y) to spatially locate your observations.
+# Upstream Packages and Scientific References
 
-During construction it can be can specified whether the coordinates should be used as features during modeling or not.
-By default, coordinates are not used as features and will be removed from the feature dataset after the coordinates have been added as a method to the task.
+The following table lists all implemented methods, their underlying R package and eventual scientific references.
 
-It is good practice to also provide a coordinate reference system (CRS) along with the coordinates.
-If none is set, EPSG 4326 (WGS84) will be used as a fallback for plotting purposes.
-Note however that not providing a CRS during construction might lead to substantial spatial offsets.
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Literature                                                               | Package                                                                  | Reference                                                                | mlr3 Sugar                                                               |
++==========================================================================+==========================================================================+==========================================================================+==========================================================================+
+| Spatial Buffering                                                        | [blockCV](https://github.com/rvalavi/blockCV)                            | @valavi2018                                                              | `rsmp("spcv_buffer")`                                                    |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Spatial Blocking                                                         | [blockCV](https://github.com/rvalavi/blockCV)                            | @valavi2018                                                              | `rsmp("spcv_block")`                                                     |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Spatial CV                                                               | [sperrorest](https://github.com/giscience-fsu/sperrorest)                | @brenning2012                                                            | `rsmp("spcv_coords")`                                                    |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Environmental Blocking                                                   | [blockCV](https://github.com/rvalavi/blockCV)                            | @valavi2018                                                              | `rsmp("spcv_env")`                                                       |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| \-                                                                       | \-                                                                       | \-                                                                       | `rsmp("sptcv_cluto")`                                                    |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Leave-Location-and-Time-Out                                              | [CAST](https://github.com/HannaMeyer/CAST)                               | @meyer2018                                                               | `rsmp("sptcv_cstf")`                                                     |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Spatiotemporal Clustering                                                | [skmeans](https://github.com/cran/skmeans)                               | @zhao2002                                                                | `rsmp("repeated_sptcv_cluto")`                                           |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Repeated Spatial Blocking                                                | [blockCV](https://github.com/rvalavi/blockCV)                            | @valavi2018                                                              | `rsmp("repeated_spcv_block")`                                            |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Repeated Spatial CV                                                      | [sperrorest](https://github.com/giscience-fsu/sperrorest)                | @brenning2012                                                            | `rsmp("repeated_spcv_coords")`                                           |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Repeated Env Blocking                                                    | [blockCV](https://github.com/rvalavi/blockCV)                            | @valavi2018                                                              | `rsmp("repeated_spcv_env")`                                              |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| \-                                                                       | \-                                                                       | \-                                                                       | `rsmp("repeated_sptcv_cluto")`                                           |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Repeated Leave-Location-and-Time-Out                                     | [CAST](https://github.com/HannaMeyer/CAST)                               | [@meyer2018                                                              | `rsmp("repeated_sptcv_cstf")`                                            |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Repeated Spatiotemporal Clustering                                       | [skmeans](https://github.com/cran/skmeans)                               | @zhao2002                                                                | `rsmp("repeated_sptcv_cluto")`                                           |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
 
-```{r}
-data = mlr3::as_data_backend(ecuador)
+# More Information
 
-ecuador = TaskClassifST$new(
-  id = "ecuador", backend = data, target = "slides",
-  extra_args = list(
-    positive = "TRUE", coordinate_names = c("x", "y"), coords_as_features = FALSE,
-    crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
-)
-```
-
-The "ecuador" dataset consists of a response variable named `slides` (boolean; see Figure \@ref(fig:lsl)) and various predictor variables that might have an influence on the occurrence of landslides such as slope, curvature or catchment area.^[Please note that the "ecuador" task is also available via `tsk(ecuador)`.]
-For a detailed overview of the dataset, please refer to @brenning_landslide_2015 and/or Chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace_geocomputation_2019].
-
-```{r lsl, echo=FALSE, fig.cap="Fig.1: Landslide initiation points (red) and non-landslide points (blue) in Southern Ecuador. Figure taken from @lovelace_geocomputation_2019.", fig.align="center", out.width="70%"}
-knitr::include_graphics("https://geocompr.robinlovelace.net/figures/lsl-map-1.png")
-```
-
-## Task properties
-
-Spatiotemporal tasks share all properties of a normal classification or regression task.
-In addition, they store the coordinates alongside the dataset.
-They can be retrieved via the active binding `$coordinates()`.
-Printing a spatial task, also displays a preview of the coordinates.
-
-```{r}
-ecuador
-```
-
-After the task has been constructed, it can be used in conjunction with all available resampling methods, including non-spatial ones.
-
-Note however that non-spatial methods should **only be used to showcase the degree of overoptimistic performance estimates** when compared to spatiotemporal resampling methods [@schratz2019].
-
-### Spatiotemporal resampling
-
-To stay close to upstream [resampling example of the mlr3book](https://mlr3book.mlr-org.com/resampling.html), this example will use the "ecuador" example task which comes bundled with the {mlr3spatiotempcv} package.
-
-The goal of this usecase is to predict landslide occurrence using a simple decision tree.
-To showcase that standard, i.e., non-spatial, cross-validation usually shows an over-optimistic performance, first a 5-repeated 5-fold cross-validation will be performed, using the `"repeated-cv"` resampling method.
-
-```{r}
-learner = lrn("classif.rpart", maxdepth = 3, predict_type = "prob")
-resampling_nsp = rsmp("repeated_cv", folds = 5, repeats = 5)
-rr_nsp = resample(
-  task = ecuador, learner = learner,
-  resampling = resampling_nsp)
-
-rr_nsp$aggregate(measures = msr("classif.ce"))
-```
-
-Yet the "ecuador" landslides dataset is a spatial dataset, i.e., that each observation comes with xy-coordinates.
-Spatial points close to each other tend to be more similar than points with greater distance between each other.
-Spatial cross-validation takes this into account by putting points close to each other either into the training or the test dataset (see Figure \@ref(fig:ressp)).
-
-For more details on (spatial) cross-validation, please refer to @brenning2012 and @schratz2019.
-For a gentle introduction to spatial cross-validation, please refer to Chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace_geocomputation_2019].
-In the next code chunk we execute the cross-validation again, this time taking into account the spatial dimension by using a spatial resampling method.
-
-```{r}
-resampling_sp = rsmp("repeated_spcv_coords", folds = 5, repeats = 5)
-
-rr_sp = resample(
-  task = ecuador, learner = learner,
-  resampling = resampling_sp)
-
-rr_sp$aggregate(measures = msr("classif.ce"))
-```
-
-It can be seen that the non-spatial CV performed better.
-However, "better" in this case actually means overoptimistic and **biased** [@burman1994; @cliff1970; @racine2000; @schratz2019].
-Hence, it is highly recommended to **not** use classical, non-spatial CV methods with spatiotemporal data but rather choose an appropriate spatiotemporal method.
-
-## Visualization
-
-This package provides generic S3 `plot()` and `autoplot()` methods for all implemented resampling methods.
-While `plot()` only triggers the plotting as an side-effect, `autoplot()` is able to return the plots silently in a list or modify them on the fly (see below).
-Note that when plotting multiple folds, the returned object is of class `patchwork`.
-This enables all [patchwork-powered modifications](https://patchwork.data-imaginist.com/articles/guides/assembly.html) to `ggplot2` plots, including overwriting axes for all objects contained in the returned list using the operator `*` instead of the usual `+` (see example below).
-
-For an exhaustive overview, have a look at the [reference section for the autoplot methods](https://mlr3spatiotempcv.mlr-org.com/reference/index.html#section-visualization).
-
-All methods can be visualized via the following logic:
-
-- If no specific fold is specified, all partitions of a specific repetition will be returned.
-  In this setting, each partition corresponds to one test set.
-- If a fold ID is provided via `fold_id`, the train and test sets for this given fold are visualized.
-- If multiple fold IDs are provided, a list of plots is returned, optionally arranged in a grid (`plot_as_grid = TRUE/FALSE`).
-
-### Spatial 
-
-```{r rspcv, fig.align='center', fig.cap="Fig.2: Plot of two spatially disjoint partitions instantiated with the `spcv_coords` resampling method."}
-autoplot(resampling_sp, task = ecuador, fold_id = c(1, 2), crs = 4326) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
-```
-
-### Non-spatial
-
-```{r rnspcv, fig.align='center', fig.cap="Fig.3: Plot of two non-spatial (= random) partitions instantiated with the `cv` resampling method."}
-autoplot(resampling_nsp, task = ecuador, fold_id = c(1, 2), crs = 4326) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
-```
+Please see the ["Spatiotemporal"](https://mlr3book.mlr-org.com/spatiotemporal.html) section in the mlr3book for more information including a detailed tutorial how to use the package.
 
 # References
