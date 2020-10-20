@@ -78,7 +78,7 @@ test_make_multiclass = function() {
 # mlr3pipelines Graph learner --------------------------------------------------
 
 test_graph_learner = function(task, resampling, learner = "classif.featureless",
-                              measure = "classif.ce") {
+  measure = "classif.ce") {
 
   lgr::get_logger("mlr3")$set_threshold("warn")
   lgr::get_logger("bbotk")$set_threshold("warn")

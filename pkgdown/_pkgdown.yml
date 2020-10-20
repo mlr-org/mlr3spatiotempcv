@@ -40,15 +40,15 @@ navbar:
       href: https://mlr-org.com/
 
 reference:
-  - title: Spatial resampling methods
+  - title: Spatial Resampling Methods
     contents:
       - starts_with("ResamplingSpCV")
       - starts_with("ResamplingRepeatedSpCV")
-  - title: Spatiotemporal resampling methods
+  - title: Spatiotemporal Resampling Methods
     contents:
       - starts_with("ResamplingSptCV")
       - starts_with("ResamplingRepeatedSptCV")
-  - title: Tasks and datasets
+  - title: Tasks and Datasets
     contents:
       - TaskRegrST
       - TaskClassifST
