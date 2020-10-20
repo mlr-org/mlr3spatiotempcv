@@ -20,3 +20,5 @@ PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
 PackageCheckArgs: --no-tests --run-donttest --as-cran
 PackageRoxygenize: rd,collate,namespace
+
+MarkdownWrap: Sentence
