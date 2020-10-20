@@ -10,16 +10,19 @@ Authors@R:
       person(given = "Marc",
              family = "Becker",
              role = "aut",
-             email = "marcbecker@posteo.de"),
+             email = "marcbecker@posteo.de",
+             comment = c(ORCID = "0000-0002-8115-0400")),
       person(given = "Jannes",
              family = "Muenchow",
              role = "ctb",
-             email = "jannes.muenchow@uni-jena.de"))
+             email = "jannes.muenchow@uni-jena.de",
+             comment = c(ORCID = "0000-0001-7834-4717")))
 Description: Implements spatio-temporal methods to enhance the
     experience of mlr3.
 License: LGPL-3
 URL: https://mlr3spatiotempcv.mlr-org.com/,
-    https://github.com/mlr-org/mlr3spatiotempcv
+    https://github.com/mlr-org/mlr3spatiotempcv,
+    https://mlr3book.mlr-org.com
 BugReports: https://github.com/mlr-org/mlr3spatiotempcv/issues
 Depends:
     R (>= 3.5.0)
@@ -61,8 +64,6 @@ VignetteBuilder:
     knitr
 RdMacros:
     mlr3misc
-Remotes:
-    mlr-org/mlr3
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
