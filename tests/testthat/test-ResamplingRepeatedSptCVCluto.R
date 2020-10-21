@@ -31,7 +31,7 @@ test_that("resampling iterations equals folds * repeats", {
 test_that("resampling iterations equals folds * repeats", {
   skip_on_os("mac")
   task = tsk("cookfarm")
-  rsp = rsmp("repeated_sptcv_cluto", folds = 3, repeats = 5,time_var = "Date")
+  rsp = rsmp("repeated_sptcv_cluto", folds = 3, repeats = 5, time_var = "Date")
   rsp$instantiate(task)
 
   expect_equal(rsp$iters, 15)
