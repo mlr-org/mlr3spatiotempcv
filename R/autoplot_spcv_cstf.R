@@ -279,5 +279,5 @@ plot.ResamplingSptCVCstf = function(x, ...) {
 #' @rdname autoplot_spatial_resampling
 #' @export
 plot.ResamplingRepeatedSptCVCstf = function(x, ...) {
-  print(autoplot(x, ...))
+  print(autoplot(x, ...)) # nocov
 }
