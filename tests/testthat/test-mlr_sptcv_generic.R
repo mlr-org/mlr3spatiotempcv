@@ -58,6 +58,19 @@ test_that("train and test set getter functions are working", {
   }
 })
 
+test_that("train and test set getter functions are working for sptcv", {
+  task = tsk("cookfarm")
+
+  sptcv_rsp = rsmps(c("repeated_sptcv_cluto", "repeated_sptcv_cstf"),
+    folds = 2, time_var = "Date")
+
+  for (i in sptcv_rsp) {
+    i$instantiate(task)
+    expect_silent(i$train_set(1))
+    expect_silent(i$test_set(1))
+  }
+})
+
 test_that("cloning works", {
   spcv_rsp = rsmps(c("spcv_coords", "spcv_env"), folds = 2)
   spcv_rsp = append(spcv_rsp, rsmp("spcv_block", folds = 2, rows = 2, cols = 2))
