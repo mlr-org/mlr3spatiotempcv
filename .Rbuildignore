@@ -27,3 +27,4 @@
 ^doc$
 ^Meta$
 ^codemeta\.json$
+^\.pre-commit-config\.yaml$
