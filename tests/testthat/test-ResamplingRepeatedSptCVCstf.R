@@ -23,3 +23,13 @@ test_that("resampling iterations equals folds * repeats", {
 
   expect_equal(rsp$iters, 15)
 })
+
+test_that("resampling iterations equals folds * repeats", {
+  task = tsk("cookfarm")
+  rsp = rsmp("repeated_sptcv_cstf",
+    folds = 3, repeats = 5,
+    time_var = "Date", space_var = "SOURCEID")
+  rsp$instantiate(task)
+
+  expect_equal(rsp$iters, 15)
+})

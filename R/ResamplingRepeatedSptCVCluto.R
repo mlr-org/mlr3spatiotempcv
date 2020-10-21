@@ -136,7 +136,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
       groups = task$groups
 
       if (!is.null(groups)) {
-        stopf("Grouping is not supported for spatial resampling methods")
+        stopf("Grouping is not supported for spatial resampling methods") # nocov
       }
 
       time = as.POSIXct(task$data()[[self$time_var]])
@@ -179,7 +179,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
       if (is.null(cluto_parameters)) {
         control_cluto = sprintf('-clmethod="%s"', clmethod)
       } else {
-        control_cluto = sprintf('-clmethod="%s""%s"', clmethod, cluto_parameters)
+        control_cluto = sprintf('-clmethod="%s""%s"', clmethod, cluto_parameters) # nocov nolint
       }
 
       mlr3misc::map_dtr(seq_len(pv$repeats), function(i) {

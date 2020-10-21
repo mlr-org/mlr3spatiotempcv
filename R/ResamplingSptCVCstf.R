@@ -91,7 +91,7 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
       groups = task$groups
 
       if (!is.null(groups)) {
-        stopf("Grouping is not supported for spatial resampling methods") #nocov # nolint
+        stopf("Grouping is not supported for spatial resampling methods") # nocov # nolint
       }
 
       private$.sample(task, self$space_var, self$time_var, self$class)
@@ -118,7 +118,8 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
 
       sptfolds = sample_cstf(
         self = self, task, space_var, time_var,
-        class, k, data)
+        class, k, data
+      )
 
       # combine space and time folds
       for (i in 1:k) {
