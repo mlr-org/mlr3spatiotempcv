@@ -65,8 +65,6 @@ values stored in the \code{param_set}.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{ResamplingSptCVCstf$new()}}
-\item \href{#method-folds}{\code{ResamplingSptCVCstf$folds()}}
-\item \href{#method-repeats}{\code{ResamplingSptCVCstf$repeats()}}
 \item \href{#method-instantiate}{\code{ResamplingSptCVCstf$instantiate()}}
 \item \href{#method-clone}{\code{ResamplingSptCVCstf$clone()}}
 }
@@ -110,42 +108,6 @@ Column name identifying the temporal units.}
 
 \item{\code{class}}{\code{character(1)}\cr
 Column name identifying a class unit (e.g. land cover).}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-folds"></a>}}
-\if{latex}{\out{\hypertarget{method-folds}{}}}
-\subsection{Method \code{folds()}}{
-Translates iteration numbers to fold number.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCstf$folds(iters)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{iters}}{\code{integer()}\cr
-Iteration number.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-repeats"></a>}}
-\if{latex}{\out{\hypertarget{method-repeats}{}}}
-\subsection{Method \code{repeats()}}{
-Translates iteration numbers to repetition number.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCstf$repeats(iters)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{iters}}{\code{integer()}\cr
-Iteration number.}
 }
 \if{html}{\out{</div>}}
 }

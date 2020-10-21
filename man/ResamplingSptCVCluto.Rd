@@ -4,10 +4,8 @@
 \alias{ResamplingSptCVCluto}
 \title{Spatio-Temporal Cluster Resampling}
 \description{
-Spatio-temporal cluster partitioning via the \code{vcluster}
-executable of the
-\href{http://glaros.dtc.umn.edu/gkhome/cluto/cluto/overview}{CLUTO} clustering
-application.
+Spatio-temporal cluster partitioning via the \code{vcluster} executable of the
+CLUTO clustering application.
 
 This partitioning method relies on the external CLUTO library.
 To use it, CLUTO's executables need to be downloaded and installed into
