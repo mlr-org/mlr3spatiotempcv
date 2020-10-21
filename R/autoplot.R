@@ -119,13 +119,13 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
 #' @rdname autoplot_spatial_resampling
 #' @export
 plot.ResamplingSpCVBlock = function(x, ...) {
-  print(autoplot(x, ...))
+  print(autoplot(x, ...)) # nocov
 }
 
 #' @rdname autoplot_spatial_resampling
 #' @export
 plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
-  print(autoplot(x, ...))
+  print(autoplot(x, ...)) # nocov
 }
 
 # SpCV Env ---------------------------------------------------------------------
@@ -199,13 +199,13 @@ autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
 #' @rdname autoplot_spatial_resampling
 #' @export
 plot.ResamplingSpCVEnv = function(x, ...) {
-  print(autoplot(x, ...))
+  print(autoplot(x, ...)) # nocov
 }
 
 #' @rdname autoplot_spatial_resampling
 #' @export
 plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
-  print(autoplot(x, ...))
+  print(autoplot(x, ...)) # nocov
 }
 
 # SpCV Coords-------------------------------------------------------------------
@@ -286,7 +286,7 @@ plot.ResamplingSpCVCoords = function(x, ...) {
 #' @rdname autoplot_spatial_resampling
 #' @export
 plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
-  print(autoplot(x, ...))
+  print(autoplot(x, ...)) # nocov
 }
 
 # SptCV Cluto ------------------------------------------------------------------
@@ -385,13 +385,13 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
 #' @rdname autoplot_spatial_resampling
 #' @export
 plot.ResamplingSptCVCluto = function(x, ...) {
-  print(autoplot(x, ...))
+  print(autoplot(x, ...)) # nocov
 }
 
 #' @rdname autoplot_spatial_resampling
 #' @export
 plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
-  print(autoplot(x, ...))
+  print(autoplot(x, ...)) # nocov
 }
 
 # CV ---------------------------------------------------------------------------
@@ -465,13 +465,13 @@ autoplot.ResamplingRepeatedCV = function( # nolint
 #' @rdname autoplot_spatial_resampling
 #' @export
 plot.ResamplingCV = function(x, ...) {
-  print(autoplot(x, ...))
+  print(autoplot(x, ...)) # nocov
 }
 
 #' @rdname autoplot_spatial_resampling
 #' @export
 plot.ResamplingRepeatedCV = function(x, ...) {
-  print(autoplot(x, ...))
+  print(autoplot(x, ...)) # nocov
 }
 
 # autoplot_spatial -------------------------------------------------------------
@@ -553,7 +553,7 @@ autoplot_spatial = function(
     } else {
       # for repeated cv we also print out the rep number
       if (is.null(repeats_id)) {
-        repeats_id = 1
+        repeats_id = 1 # nocov
       }
 
       plot_list_pw = patchwork::wrap_plots(plot_list) +
@@ -582,7 +582,7 @@ autoplot_spatial = function(
 
     # for all non-repeated rsmp cases
     if (is.null(repeats_id)) {
-      repeats_id = 1
+      repeats_id = 1 # nocov
     }
     plot = ggplot() +
       geom_sf(

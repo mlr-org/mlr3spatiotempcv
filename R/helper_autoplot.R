@@ -31,12 +31,12 @@ assert_autoplot = function(object, fold_id, task) {
 
   # instantiate if not yet done
   if (!object$is_instantiated) {
-    object = object$instantiate(task)
+    object = object$instantiate(task) # nocov
   }
 
   if (!is.null(fold_id)) {
     if (length(fold_id) > object$iters) {
-      stopf("More folds specified than stored in resampling.")
+      stopf("More folds specified than stored in resampling.") # nocov
     }
     if (length(fold_id) == 1 && fold_id > object$iters) {
       stopf("Specified a fold id which exceeds the total number of folds.")

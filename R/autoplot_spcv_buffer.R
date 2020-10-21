@@ -95,5 +95,5 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
 #' @rdname autoplot_spatial_resampling
 #' @export
 plot.ResamplingSpCVBuffer = function(x, ...) {
-  print(autoplot(x, ...))
+  print(autoplot(x, ...)) # nocov
 }

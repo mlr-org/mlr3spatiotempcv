@@ -102,7 +102,7 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
       groups = task$groups
 
       if (!is.null(groups)) {
-        stopf("Grouping is not supported for spatial resampling methods")
+        stopf("Grouping is not supported for spatial resampling methods") # nocov # nolint
       }
 
       time = as.POSIXct(task$data()[[self$time_var]])
@@ -139,7 +139,7 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
       if (is.null(cluto_parameters)) {
         control_cluto = sprintf('-clmethod="%s"', clmethod)
       } else {
-        control_cluto = sprintf('-clmethod="%s""%s"', clmethod, cluto_parameters)
+        control_cluto = sprintf('-clmethod="%s""%s"', clmethod, cluto_parameters) #nocov # nolint
       }
 
       inds = skmeans::skmeans(data_matrix,

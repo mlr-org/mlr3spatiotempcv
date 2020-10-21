@@ -68,22 +68,6 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
       )
     },
 
-    #' @description Translates iteration numbers to fold number.
-    #' @param iters `integer()`\cr
-    #'   Iteration number.
-    folds = function(iters) {
-      iters = assert_integerish(iters, any.missing = FALSE, coerce = TRUE)
-      ((iters - 1L) %% as.integer(self$param_set$values$repeats)) + 1L
-    },
-
-    #' @description Translates iteration numbers to repetition number.
-    #' @param iters `integer()`\cr
-    #'   Iteration number.
-    repeats = function(iters) {
-      iters = assert_integerish(iters, any.missing = FALSE, coerce = TRUE)
-      ((iters - 1L) %/% as.integer(self$param_set$values$folds)) + 1L
-    },
-
     #' @description
     #'  Materializes fixed training and test splits for a given task.
     #' @param task [Task]\cr
@@ -107,7 +91,7 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
       groups = task$groups
 
       if (!is.null(groups)) {
-        stopf("Grouping is not supported for spatial resampling methods")
+        stopf("Grouping is not supported for spatial resampling methods") #nocov # nolint
       }
 
       private$.sample(task, self$space_var, self$time_var, self$class)

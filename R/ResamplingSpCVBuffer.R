@@ -132,8 +132,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
 
     .get_train = function(i) {
       if (!is.null(self$param_set$values$addBG)) {
-
-        self$instance[[i]]$train
+        self$instance[[i]]$train # nocov
       } else {
         self$instance[[i]]
       }
