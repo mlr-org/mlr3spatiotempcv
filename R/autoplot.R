@@ -399,6 +399,7 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
 #' # Non-Spatial CV
 #' ##########
 #' library(mlr3)
+#' task = tsk("ecuador")
 #' resampling = rsmp("cv")
 #' resampling$instantiate(task)
 #'
@@ -412,7 +413,7 @@ autoplot.ResamplingCV = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = crs,
+  crs = NULL,
   ...) {
 
   ellip = list(...)
