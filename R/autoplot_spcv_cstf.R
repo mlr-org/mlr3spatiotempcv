@@ -17,18 +17,16 @@
 #' ##########
 #' # SptCVCstf
 #' ##########
-#' \dontrun{
 #' library(mlr3)
 #' library(mlr3spatiotempcv)
 #' task_st = tsk("cookfarm")
-#' resampling = rsmp("sptcv_cstf", folds = 5)
-#' resampling$instantiate(task_st, "Date")
+#' resampling = rsmp("sptcv_cstf", folds = 5, time_var = "Date")
+#' resampling$instantiate(task_st)
 #'
 #' # plot
 #' autoplot(resampling, task_st)
-#' autoplot(resampling, task_st, 1)
-#' autoplot(resampling, task_st, c(1, 2))
-#' }
+#' # autoplot(resampling, task_st, 1)
+#' # autoplot(resampling, task_st, c(1, 2))
 autoplot.ResamplingSptCVCstf = function( # nolint
   object,
   task,

@@ -43,7 +43,6 @@
 #' ##########
 #' # SpCVBlock
 #' ##########
-#' \dontrun{
 #' library(mlr3)
 #' task = tsk("ecuador")
 #' resampling = rsmp("spcv_block", range = 1000)
@@ -53,15 +52,14 @@
 #' autoplot(resampling, task)
 #'
 #' ## Visualize the train/test split of a single fold
-#' autoplot(resampling, task, fold_id = 1)
+#' # autoplot(resampling, task, fold_id = 1)
 #'
 #' ## Visualize train/test splits of multiple folds
-#' autoplot(resampling, task, fold_id = c(1, 2))
+#' # autoplot(resampling, task, fold_id = c(1, 2))
 #'
 #' # list of ggplot2 resamplings
 #' plot_list = autoplot(resampling, task,
 #'   fold_id = c(1, 2), grid = FALSE)
-#' }
 autoplot.ResamplingSpCVBlock = function( # nolint
   object,
   task,
@@ -138,15 +136,13 @@ plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
 #' ##########
 #' # SpCVEnv
 #' ##########
-#' \dontrun{
 #' library(mlr3)
 #' resampling = rsmp("spcv_env", folds = 4, features = "dem")
 #' resampling$instantiate(task)
 #'
 #' autoplot(resampling, task)
-#' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2))
-#' }
+#' # autoplot(resampling, task, 1)
+#' # autoplot(resampling, task, c(1, 2))
 autoplot.ResamplingSpCVEnv = function( # nolint
   object,
   task,
@@ -218,16 +214,14 @@ plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
 #' ##########
 #' # SpCVCoords
 #' ##########
-#' \dontrun{
 #' library(mlr3)
 #' task = tsk("ecuador")
 #' resampling = rsmp("spcv_coords")
 #' resampling$instantiate(task)
 #'
 #' autoplot(resampling, task)
-#' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2))
-#' }
+#' # autoplot(resampling, task, 1)
+#' # autoplot(resampling, task, c(1, 2))
 autoplot.ResamplingSpCVCoords = function( # nolint
   object,
   task,
@@ -315,8 +309,8 @@ plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
 #' library(mlr3)
 #' library(mlr3spatiotempcv)
 #' task_st = tsk("cookfarm")
-#' resampling = rsmp("sptcv_cluto", folds = 5)
-#' resampling$instantiate(task_st, "Date")
+#' resampling = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
+#' resampling$instantiate(task_st)
 #'
 #' # plot
 #' autoplot(resampling, task_st)
@@ -404,15 +398,14 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
 #' ##########
 #' # Non-Spatial CV
 #' ##########
-#' \dontrun{
 #' library(mlr3)
+#' task = tsk("ecuador")
 #' resampling = rsmp("cv")
 #' resampling$instantiate(task)
 #'
 #' autoplot(resampling, task)
-#' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2))
-#' }
+#' # autoplot(resampling, task, 1)
+#' # autoplot(resampling, task, c(1, 2))
 autoplot.ResamplingCV = function( # nolint
   object,
   task,
@@ -420,7 +413,7 @@ autoplot.ResamplingCV = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = crs,
+  crs = NULL,
   ...) {
 
   ellip = list(...)
@@ -549,7 +542,7 @@ autoplot_spatial = function(
     # Return a plot grid via patchwork? ----------------------------------------
 
     if (!plot_as_grid) {
-      return(plot_list)
+      return(invisible(plot_list))
     } else {
       # for repeated cv we also print out the rep number
       if (is.null(repeats_id)) {
@@ -770,12 +763,11 @@ autoplot_spatiotemp = function(
         pl = mlr3misc::invoke(plotly::layout, .args = layout_args)
 
       })
-      return(plot_list)
     }
 
     # is a grid requested?
     if (!plot_as_grid) {
-      return(plot)
+      return(invisible(plot_list))
     } else {
       cli::cli_alert_info("Unfortunately plotly does not support a dynamic
        arrangement of multiple subplots.
@@ -785,7 +777,7 @@ autoplot_spatiotemp = function(
        Use the objects in the returned list to arrange your custom grid.",
         wrap = TRUE)
 
-      return(invisible(plot))
+      return(invisible(plot_list))
     }
   } else {
     pl = plotly::plot_ly(task_resamp_ids,

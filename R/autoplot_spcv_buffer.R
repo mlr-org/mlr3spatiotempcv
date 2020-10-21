@@ -4,15 +4,13 @@
 #' ##########
 #' # SpCVBuffer
 #' ##########
-#' \dontrun{
 #' library(mlr3)
 #' task = tsk("ecuador")
 #' resampling = rsmp("spcv_buffer", theRange = 1000)
 #' resampling$instantiate(task)
 #'
 #' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2))
-#' }
+#' # autoplot(resampling, task, c(1, 2))
 autoplot.ResamplingSpCVBuffer = function( # nolint
   object,
   task,
