@@ -151,7 +151,7 @@
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = crs,
+  crs = NULL,
   ...
 )
 
@@ -292,7 +292,6 @@ If you want to change the colors, call \verb{<plot> + <color-palette>()}.
 ##########
 # SpCVBlock
 ##########
-\dontrun{
 library(mlr3)
 task = tsk("ecuador")
 resampling = rsmp("spcv_block", range = 1000)
@@ -302,40 +301,35 @@ resampling$instantiate(task)
 autoplot(resampling, task)
 
 ## Visualize the train/test split of a single fold
-autoplot(resampling, task, fold_id = 1)
+# autoplot(resampling, task, fold_id = 1)
 
 ## Visualize train/test splits of multiple folds
-autoplot(resampling, task, fold_id = c(1, 2))
+# autoplot(resampling, task, fold_id = c(1, 2))
 
 # list of ggplot2 resamplings
 plot_list = autoplot(resampling, task,
   fold_id = c(1, 2), grid = FALSE)
-}
 ##########
 # SpCVEnv
 ##########
-\dontrun{
 library(mlr3)
 resampling = rsmp("spcv_env", folds = 4, features = "dem")
 resampling$instantiate(task)
 
 autoplot(resampling, task)
-autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2))
-}
+# autoplot(resampling, task, 1)
+# autoplot(resampling, task, c(1, 2))
 ##########
 # SpCVCoords
 ##########
-\dontrun{
 library(mlr3)
 task = tsk("ecuador")
 resampling = rsmp("spcv_coords")
 resampling$instantiate(task)
 
 autoplot(resampling, task)
-autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2))
-}
+# autoplot(resampling, task, 1)
+# autoplot(resampling, task, c(1, 2))
 ##########
 # SptCVCluto
 ##########
@@ -343,8 +337,8 @@ autoplot(resampling, task, c(1, 2))
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm")
-resampling = rsmp("sptcv_cluto", folds = 5)
-resampling$instantiate(task_st, "Date")
+resampling = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
+resampling$instantiate(task_st)
 
 # plot
 autoplot(resampling, task_st)
@@ -354,40 +348,35 @@ autoplot(resampling, task_st, c(1, 2))
 ##########
 # Non-Spatial CV
 ##########
-\dontrun{
 library(mlr3)
+task = tsk("ecuador")
 resampling = rsmp("cv")
 resampling$instantiate(task)
 
 autoplot(resampling, task)
-autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2))
-}
+# autoplot(resampling, task, 1)
+# autoplot(resampling, task, c(1, 2))
 ##########
 # SpCVBuffer
 ##########
-\dontrun{
 library(mlr3)
 task = tsk("ecuador")
 resampling = rsmp("spcv_buffer", theRange = 1000)
 resampling$instantiate(task)
 
 autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2))
-}
+# autoplot(resampling, task, c(1, 2))
 ##########
 # SptCVCstf
 ##########
-\dontrun{
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm")
-resampling = rsmp("sptcv_cstf", folds = 5)
-resampling$instantiate(task_st, "Date")
+resampling = rsmp("sptcv_cstf", folds = 5, time_var = "Date")
+resampling$instantiate(task_st)
 
 # plot
 autoplot(resampling, task_st)
-autoplot(resampling, task_st, 1)
-autoplot(resampling, task_st, c(1, 2))
-}
+# autoplot(resampling, task_st, 1)
+# autoplot(resampling, task_st, c(1, 2))
 }
