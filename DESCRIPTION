@@ -59,7 +59,8 @@ Suggests:
     rpart,
     sf,
     skmeans,
-    vdiffr
+    vdiffr,
+    withr
 VignetteBuilder:
     knitr
 RdMacros:
