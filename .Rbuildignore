@@ -26,3 +26,4 @@
 ^LICENSE\.md$
 ^doc$
 ^Meta$
+^codemeta\.json$
