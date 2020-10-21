@@ -151,7 +151,7 @@
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = crs,
+  crs = NULL,
   ...
 )
 
@@ -349,6 +349,7 @@ autoplot(resampling, task_st, c(1, 2))
 # Non-Spatial CV
 ##########
 library(mlr3)
+task = tsk("ecuador")
 resampling = rsmp("cv")
 resampling$instantiate(task)
 
@@ -358,15 +359,13 @@ autoplot(resampling, task)
 ##########
 # SpCVBuffer
 ##########
-\dontrun{
 library(mlr3)
 task = tsk("ecuador")
 resampling = rsmp("spcv_buffer", theRange = 1000)
 resampling$instantiate(task)
 
 autoplot(resampling, task, 1)
-autoplot(resampling, task, c(1, 2))
-}
+# autoplot(resampling, task, c(1, 2))
 ##########
 # SptCVCstf
 ##########
