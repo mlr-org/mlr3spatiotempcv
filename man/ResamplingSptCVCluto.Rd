@@ -13,20 +13,18 @@ This partitioning method relies on the external CLUTO library.
 To use it, CLUTO's executables need to be downloaded and installed into
 this package.
 
-See \url{https://gist.github.com/pat-s/6430470cf817050e27d26c43c0e9be72} for an
-installation approach that should work on Windows and Linux.
-macOS is not supported by CLUTO.
+See \url{https://gist.github.com/pat-s/6430470cf817050e27d26c43c0e9be72} for
+an installation approach that should work on Windows and Linux. macOS is not
+supported by CLUTO.
 
-Before using this method, please check the restrictive
-\href{http://glaros.dtc.umn.edu/gkhome/cluto/cluto/download}{copyright} shown
-below.
+Before using this method, please check the restrictive copyright shown below.
 }
 \details{
 By default, \code{-clmethod='direct'} is passed to the \code{vcluster} executable in
 contrast to the upstream default \code{-clmethod='rb'}.
 There is no evidence or research that this method is the best among the
-available ones ("rb", "rbr", "direct", "agglo", "graph", "bagglo"). Also,
-various other parameters can be set via argument \code{cluto_parameters} to
+available ones ("rb", "rbr", "direct", "agglo", "graph", "bagglo").
+Also, various other parameters can be set via argument \code{cluto_parameters} to
 achieve different clustering results.
 
 Parameter \code{-clusterfile} is handled by \CRANpkg{skmeans} and cannot be
@@ -74,7 +72,6 @@ rcv$instance # table
 }
 }
 \references{
-FIXME: correct?
 Ying Zhao and George Karypis. 11th Conference of Information and Knowledge
 Management (CIKM), pp. 515-524, 2002.
 }
