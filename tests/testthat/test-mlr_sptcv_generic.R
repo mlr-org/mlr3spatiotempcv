@@ -44,6 +44,21 @@ test_that("train and test set getter functions are working", {
   }
 })
 
+test_that("train and test set getter functions are working", {
+  task = test_make_twoclass()
+
+  spcv_rsp = rsmps(c("repeated_spcv_coords", "repeated_spcv_env"), folds = 2)
+  spcv_rsp = append(spcv_rsp, rsmp("repeated_spcv_block",
+    folds = 2, rows = 2, cols = 2))
+  spcv_rsp = append(spcv_rsp, rsmp("repeated_spcv_buffer", theRange = 1000))
+
+  for (i in spcv_rsp) {
+    i$instantiate(task)
+    expect_silent(i$train_set(1))
+    expect_silent(i$test_set(1))
+  }
+})
+
 test_that("cloning works", {
   spcv_rsp = rsmps(c("spcv_coords", "spcv_env"), folds = 2)
   spcv_rsp = append(spcv_rsp, rsmp("spcv_block", folds = 2, rows = 2, cols = 2))

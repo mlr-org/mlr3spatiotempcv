@@ -1,5 +1,3 @@
-context("plot")
-
 # generic tests
 
 test_that("errors are thrown for non-valid argument settings", {
@@ -244,9 +242,10 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
   rsp$instantiate(task)
 
   p1 = autoplot(rsp, task = task, crs = 4326)
-  p2 = autoplot(rsp, task, 1, crs = 4326)
+  p2 = autoplot(rsp, task, 1) # missing on purpose for codecov reasons
   # plot() would force image printing here
   p3 = autoplot(rsp, task, c(1, 2), crs = 4326)
+  p4 = autoplot(rsp, task, c(1, 2), crs = 4326, plot_as_grid = FALSE)
 
   expect_s3_class(p1, "plotly")
   expect_s3_class(p2, "plotly")

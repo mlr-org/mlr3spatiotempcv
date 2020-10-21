@@ -59,18 +59,18 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         stopf("Either 'range' or 'cols' & 'rows' need to be set.")
       }
 
-      if (!is.null(pv$range) && (!is.null(pv$rows) | !is.null(pv$cols))) {
+      if (!is.null(pv$range) && (!is.null(pv$rows) | !is.null(pv$cols))) { # nocov start
         cli::cli_alert_warning("{.field spcv_block}: Arguments
           {.code cols} and {.code rows} will be ignored. {.code range} is used
           to generated blocks.", wrap = TRUE)
-      }
+      } # nocov end
 
       # Set values to default if missing
       if (is.null(pv$rows) & is.null(pv$range)) {
-        self$param_set$values$rows = self$param_set$default[["rows"]]
+        self$param_set$values$rows = self$param_set$default[["rows"]] # nocov
       }
       if (is.null(pv$cols) & is.null(pv$range)) {
-        self$param_set$values$cols = self$param_set$default[["cols"]]
+        self$param_set$values$cols = self$param_set$default[["cols"]] # nocov
       }
       if (is.null(self$param_set$selection)) {
         self$param_set$values$selection = self$param_set$default[["selection"]]
@@ -81,7 +81,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         !is.null(self$param_set$values$cols)) {
         if ((self$param_set$values$rows * self$param_set$values$cols) <
           self$param_set$values$folds) {
-          stopf("'nrow' * 'ncol' needs to be larger than 'folds'.")
+          stopf("'nrow' * 'ncol' needs to be larger than 'folds'.") # nocov
         }
       }
 

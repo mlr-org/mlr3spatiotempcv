@@ -1,14 +1,14 @@
 #' @rawNamespace import(data.table, except = transpose)
-#' @import paradox
+#' @importFrom R6 R6Class
+#' @import mlr3
 #' @import mlr3misc
 #' @import checkmate
-#' @import mlr3
+#' @import paradox
 #' @import ggplot2
-#' @importFrom R6 R6Class
 #' @importFrom utils globalVariables
 "_PACKAGE"
 
-register_mlr3 = function() {
+register_mlr3 = function() { # nocov start
   # reflections ----------------------------------------------------------------
   x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
 
@@ -63,4 +63,4 @@ register_mlr3 = function() {
   register_mlr3()
   setHook(packageEvent("mlr3", "onLoad"), function(...) register_mlr3(),
     action = "append")
-}
+} # nocov end
