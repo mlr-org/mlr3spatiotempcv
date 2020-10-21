@@ -50,7 +50,6 @@ test_that("train and test set getter functions are working", {
   spcv_rsp = rsmps(c("repeated_spcv_coords", "repeated_spcv_env"), folds = 2)
   spcv_rsp = append(spcv_rsp, rsmp("repeated_spcv_block",
     folds = 2, rows = 2, cols = 2))
-  spcv_rsp = append(spcv_rsp, rsmp("repeated_spcv_buffer", theRange = 1000))
 
   for (i in spcv_rsp) {
     i$instantiate(task)
