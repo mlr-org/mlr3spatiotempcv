@@ -14,6 +14,7 @@ test_that("plot() works for 'sptcv_cluto'", {
   p1 = autoplot(rsp, task, crs = 4326)
   p2 = autoplot(rsp, task, 1, crs = 4326)
   p3 = autoplot(rsp, task, c(1, 2), crs = 4326)
+  p4 = autoplot(rsp, task, c(1, 2), plot_as_grid = FALSE)
 
   expect_s3_class(p1, "plotly")
   expect_s3_class(p2, "plotly")

@@ -69,10 +69,10 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       levels = info$levels[[1L]]
 
       if (info$type %nin% c("factor", "character")) {
-        stopf("Target column '%s' must be a factor or character", target)
+        stopf("Target column '%s' must be a factor or character", target) # nocov
       }
       if (length(levels) < 2L) {
-        stopf("Target column '%s' must have at least two levels", target)
+        stopf("Target column '%s' must have at least two levels", target) # nocov
       }
 
       self$properties = union(

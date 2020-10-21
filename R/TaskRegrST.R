@@ -47,7 +47,7 @@ TaskRegrST = R6::R6Class("TaskRegrST",
 
       type = self$col_info[id == target]$type
       if (type %nin% c("integer", "numeric")) {
-        stopf("Target column '%s' must be numeric", target)
+        stopf("Target column '%s' must be numeric", target) # nocov
       }
 
       # check coordinates
