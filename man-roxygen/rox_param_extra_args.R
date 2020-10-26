@@ -7,6 +7,5 @@
 #'
 #'   - coords_as_features `[logical(1)]`\cr
 #'     Whether the coordinates should also be used as features.
-#'     Default is `FALSE`.
 #'   - coordinate_names `[character(2)]`\cr
 #'     The variables names of the coordinates in the data.

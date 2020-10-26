@@ -1,11 +1,17 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "mlr3spatiotempcv",
-  "description": "Implements spatio-temporal methods to enhance the\n    experience of mlr3.",
-  "name": "mlr3spatiotempcv: Spatiotemporal Resampling Methods for 'mlr3'",
+  "description": "Extends the mlr3 ML framework with spatio-temporal\n    resampling methods to account for the presence of spatiotemporal\n    autocorrelation (STAC) in predictor variables. STAC may cause highly\n    biased performance estimates in cross-validation if ignored.",
+  "name": "mlr3spatiotempcv: Spatiotemporal Resampling Methods for mlr3",
   "codeRepository": "https://github.com/mlr-org/mlr3spatiotempcv",
-  "relatedLink": ["https://mlr3spatiotempcv.mlr-org.com/", "https://mlr3book.mlr-org.com"],
+  "relatedLink": [
+    "https://mlr3spatiotempcv.mlr-org.com/",
+    "https://mlr3book.mlr-org.com"
+  ],
   "issueTracker": "https://github.com/mlr-org/mlr3spatiotempcv/issues",
   "license": "https://spdx.org/licenses/LGPL-3.0",
   "version": "0.0.0.9012",
@@ -38,6 +44,13 @@
       "familyName": "Muenchow",
       "email": "jannes.muenchow@uni-jena.de",
       "@id": "https://orcid.org/0000-0001-7834-4717"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Michel",
+      "familyName": "Lang",
+      "email": "michellang@gmail.com",
+      "@id": "https://orcid.org/0000-0001-9754-0393"
     }
   ],
   "copyrightHolder": {},
@@ -63,18 +76,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=bbotk"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "bibtex",
-      "name": "bibtex",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=bibtex"
     },
     {
       "@type": "SoftwareApplication",
@@ -316,6 +317,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=vdiffr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "withr",
+      "name": "withr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=withr"
     }
   ],
   "softwareRequirements": [
@@ -443,8 +456,15 @@
   ],
   "releaseNotes": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/NEWS.md",
   "readme": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/README.md",
-  "fileSize": "8122.488KB",
+  "fileSize": "10086.068KB",
   "contIntegration": "https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=master",
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#experimental",
-  "keywords": ["mlr3", "resampling", "spatial", "cross-validation", "temporal", "resampling-methods"]
+  "keywords": [
+    "mlr3",
+    "resampling",
+    "spatial",
+    "cross-validation",
+    "temporal",
+    "resampling-methods"
+  ]
 }
