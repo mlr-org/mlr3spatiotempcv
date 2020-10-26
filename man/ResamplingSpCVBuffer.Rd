@@ -37,7 +37,10 @@ intersect(rcv$train_set(1), rcv$test_set(1))
 # rcv$instance
 }
 \references{
-\cite{mlr3spatiotempcv}{valavi2018}
+Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G (2018).
+\dQuote{blockCV: an R package for generating spatially or environmentally separated folds for k-fold cross-validation of species distribution models.}
+\emph{bioRxiv}.
+\doi{10.1101/357798}.
 }
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingSpCVBuffer}

@@ -1,6 +1,10 @@
 #' @title Create Spatio-Temporal Folds Using Predefined Groups
 #'
 #' @template rox_sptcv_cstf
+#'
+#' @references
+#' `r tools::toRd(bibentries["meyer2018"])`
+#'
 #' @export
 #' @examples
 #' library(mlr3)

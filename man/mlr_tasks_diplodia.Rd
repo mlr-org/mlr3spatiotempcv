@@ -27,10 +27,10 @@ tsk("diplodia")
 }
 
 \references{
-Schratz, P., Muenchow, J., Iturritxa, E., Richter, J., &
-Brenning, A. (2019). Hyperparameter tuning and performance assessment of
-statistical and machine-learning algorithms using spatial data. Ecological
-Modeling, 406, 109–120. https://doi.org/10/gf34bd
+Schratz P, Muenchow J, Iturritxa E, Richter J, Brenning A (2019).
+\dQuote{Hyperparameter tuning and performance assessment of statistical and machine-learning algorithms using spatial data.}
+\emph{Ecological Modelling}, \bold{406}, 109--120.
+\doi{10.1016/j.ecolmodel.2019.06.002}.
 }
 \seealso{
 \link[mlr3misc:Dictionary]{Dictionary} of \link[=Task]{Tasks}: \link{mlr_tasks}
