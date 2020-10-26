@@ -33,7 +33,10 @@ intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 rcv$instance # table
 }
 \references{
-\cite{mlr3spatiotempcv}{meyer2018}
+Meyer H, Reudenbach C, Hengl T, Katurji M, Nauss T (2018).
+\dQuote{Improving performance of spatio-temporal machine learning models using forward feature selection and target-oriented validation.}
+\emph{Environmental Modelling & Software}, \bold{101}, 1--9.
+\doi{10.1016/j.envsoft.2017.12.001}, \url{https://doi.org/10.1016\%2Fj.envsoft.2017.12.001}.
 }
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingSptCVCstf}

@@ -3,9 +3,6 @@
 #' @description Spatial Block Cross validation implemented by the `blockCV`
 #' package.
 #'
-#' @references
-#' \cite{mlr3spatiotempcv}{valavi2018}
-#'
 #' @details
 #'
 #' By default [blockCV::spatialBlock()] does not allow the creation of multiple
