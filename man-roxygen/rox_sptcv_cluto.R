@@ -41,7 +41,3 @@
 #' The downloading, or executing any part of this software constitutes an
 #' implicit agreement to these terms. These terms and conditions are subject to
 #' change at any time without prior notice.
-#'
-#' @references
-#' Ying Zhao and George Karypis. 11th Conference of Information and Knowledge
-#' Management (CIKM), pp. 515-524, 2002.
