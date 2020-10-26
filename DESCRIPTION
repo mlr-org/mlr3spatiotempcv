@@ -17,7 +17,12 @@ Authors@R:
              family = "Muenchow",
              role = "ctb",
              email = "jannes.muenchow@uni-jena.de",
-             comment = c(ORCID = "0000-0001-7834-4717")))
+             comment = c(ORCID = "0000-0001-7834-4717")),
+      person(given = "Michel",
+             family = "Lang",
+             role = "ctb",
+             email = "michellang@gmail.com",
+             comment = c(ORCID = "0000-0001-9754-0393")))
 Description: Extends the mlr3 ML framework with spatio-temporal
     resampling methods to account for the presence of spatiotemporal
     autocorrelation (STAC) in predictor variables. STAC may cause highly
@@ -42,7 +47,6 @@ Imports:
     utils
 Suggests:
     bbotk,
-    bibtex,
     blockCV (>= 2.1.1),
     bookdown,
     caret,
@@ -66,35 +70,8 @@ Suggests:
     withr
 VignetteBuilder:
     knitr
-RdMacros:
-    mlr3misc
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Collate:
-    'ResamplingRepeatedSpCVBlock.R'
-    'ResamplingRepeatedSpCVCoords.R'
-    'ResamplingRepeatedSpCVEnv.R'
-    'ResamplingRepeatedSptCVCluto.R'
-    'ResamplingRepeatedSptCVCstf.R'
-    'ResamplingSpCVBlock.R'
-    'ResamplingSpCVBuffer.R'
-    'ResamplingSpCVCoords.R'
-    'ResamplingSptCVCstf.R'
-    'ResamplingSpCVEnv.R'
-    'ResamplingSptCVCluto.R'
-    'TaskClassifST.R'
-    'TaskRegrST.R'
-    'Task_classif_diplodia.R'
-    'Task_classif_ecuador.R'
-    'Task_regr_cookfarm_profiles.R'
-    'autoplot.R'
-    'autoplot_spcv_buffer.R'
-    'autoplot_spcv_cstf.R'
-    'helper_autoplot.R'
-    'helper_sample.R'
-    'helper.R'
-    'reexports.R'
-    'zzz.R'

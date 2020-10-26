@@ -3,7 +3,7 @@
 #' @template rox_spcv_buffer
 #'
 #' @references
-#' \cite{mlr3spatiotempcv}{valavi2018}
+#' `r tools::toRd(bibentries["valavi2018"])`
 #'
 #' @export
 #' @examples

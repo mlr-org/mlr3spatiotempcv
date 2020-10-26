@@ -20,10 +20,9 @@
 #'   Sapinea_ in the Basque Country in Spain. Predictors are environmental
 #'   variables like temperature, precipitation, soil and more.
 #'
-#' @references Schratz, P., Muenchow, J., Iturritxa, E., Richter, J., &
-#'   Brenning, A. (2019). Hyperparameter tuning and performance assessment of
-#'   statistical and machine-learning algorithms using spatial data. Ecological
-#'   Modeling, 406, 109–120. https://doi.org/10/gf34bd
+#' @references
+#' `r tools::toRd(bibentries["schratz2019"])`
+#'
 #' @template seealso_task
 "diplodia"
 

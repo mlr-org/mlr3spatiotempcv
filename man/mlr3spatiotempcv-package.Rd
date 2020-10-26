@@ -68,6 +68,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Jannes Muenchow \email{jannes.muenchow@uni-jena.de} (\href{https://orcid.org/0000-0001-7834-4717}{ORCID}) [contributor]
+  \item Michel Lang \email{michellang@gmail.com} (\href{https://orcid.org/0000-0001-9754-0393}{ORCID}) [contributor]
 }
 
 }

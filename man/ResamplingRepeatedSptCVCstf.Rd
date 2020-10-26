@@ -71,8 +71,10 @@ intersect(rrcv$train_set(1), rrcv$test_set(1))
 rrcv$instance # table
 }
 \references{
-Ying Zhao and George Karypis. 11th Conference of Information and Knowledge
-Management (CIKM), pp. 515-524, 2002.
+Zhao Y, Karypis G (2002).
+\dQuote{Evaluation of Hierarchical Clustering Algorithms for Document Datasets.}
+\emph{11th Conference of Information and Knowledge Management (CIKM)}, 51-524.
+\url{http://glaros.dtc.umn.edu/gkhome/node/167}.
 }
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingRepeatedSptCVCstf}

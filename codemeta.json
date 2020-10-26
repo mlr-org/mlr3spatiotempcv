@@ -44,6 +44,13 @@
       "familyName": "Muenchow",
       "email": "jannes.muenchow@uni-jena.de",
       "@id": "https://orcid.org/0000-0001-7834-4717"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Michel",
+      "familyName": "Lang",
+      "email": "michellang@gmail.com",
+      "@id": "https://orcid.org/0000-0001-9754-0393"
     }
   ],
   "copyrightHolder": {},
@@ -69,18 +76,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=bbotk"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "bibtex",
-      "name": "bibtex",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=bibtex"
     },
     {
       "@type": "SoftwareApplication",
@@ -461,7 +456,7 @@
   ],
   "releaseNotes": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/NEWS.md",
   "readme": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/README.md",
-  "fileSize": "10078.556KB",
+  "fileSize": "10086.068KB",
   "contIntegration": "https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=master",
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#experimental",
   "keywords": [

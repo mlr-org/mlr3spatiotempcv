@@ -2,6 +2,9 @@
 #'
 #' @template rox_sptcv_cluto
 #'
+#' @references
+#' `r tools::toRd(bibentries["zhao2002"])`
+#'
 #' @export
 #' @examples
 #' \dontrun{

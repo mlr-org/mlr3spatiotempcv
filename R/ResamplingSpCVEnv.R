@@ -2,6 +2,9 @@
 #'
 #' @template rox_spcv_env
 #'
+#' @references
+#' `r tools::toRd(bibentries["valavi2018"])`
+#'
 #' @export
 #' @examples
 #' library(mlr3)
