@@ -39,7 +39,6 @@ Imports:
     utils
 Suggests:
     bbotk,
-    bibtex,
     blockCV (>= 2.1.1),
     bookdown,
     caret,
@@ -63,8 +62,6 @@ Suggests:
     withr
 VignetteBuilder:
     knitr
-RdMacros:
-    mlr3misc
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no

@@ -29,7 +29,10 @@ intersect(rrcv$train_set(1), rrcv$test_set(1))
 rrcv$instance # table
 }
 \references{
-\cite{mlr3spatiotempcv}{brenning2012}
+Brenning A (2012).
+\dQuote{Spatial cross-validation and bootstrap for the assessment of prediction rules in remote sensing: The R package sperrorest.}
+In \emph{2012 IEEE International Geoscience and Remote Sensing Symposium}.
+\doi{10.1109/igarss.2012.6352393}.
 }
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingRepeatedSpCVCoords}
