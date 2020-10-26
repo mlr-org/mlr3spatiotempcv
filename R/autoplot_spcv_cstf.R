@@ -1,3 +1,16 @@
+#' @title Visualization Functions for SptCV Cstf Methods.
+#'
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods.
+#'
+#' @name autoplot.ResamplingSptCVCstf
+#' @inheritParams autoplot.ResamplingSpCVBlock
+#'
+#' @param object `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingSptCVCstf] or
+#'   [ResamplingRepeatedSptCVCstf].
+#' @param x `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingSptCVCstf] or
+#'   [ResamplingRepeatedSptCVCstf].
 #' @param tickformat_date `[character]`\cr
 #'   Date format for z-axis.
 #' @param crs `[character]`\cr
@@ -11,12 +24,8 @@
 #'   Point size of markers.
 #' @param axis_label_fontsize `[integer]`\cr
 #'   Font size of axis labels.
-#' @rdname autoplot_spatial_resampling
 #' @export
 #' @examples
-#' ##########
-#' # SptCVCstf
-#' ##########
 #' library(mlr3)
 #' library(mlr3spatiotempcv)
 #' task_st = tsk("cookfarm")
@@ -232,7 +241,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   }
 }
 
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSptCVCstf
 #' @export
 autoplot.ResamplingRepeatedSptCVCstf = function( # nolint
   object,
@@ -268,13 +277,13 @@ autoplot.ResamplingRepeatedSptCVCstf = function( # nolint
   )
 }
 
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSptCVCstf
 #' @export
 plot.ResamplingSptCVCstf = function(x, ...) {
   print(autoplot(x, ...))
 }
 
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSptCVCstf
 #' @export
 plot.ResamplingRepeatedSptCVCstf = function(x, ...) {
   print(autoplot(x, ...)) # nocov

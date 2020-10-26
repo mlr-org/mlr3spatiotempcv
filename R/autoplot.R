@@ -1,31 +1,35 @@
 # SpCV Block -------------------------------------------------------------------
 
-#' @title Visualization of spatiotemporal resampling methods.
+#' @title Visualization Functions for SpCV Block Methods.
 #'
-#' @description Generates plots for [ResamplingSpCVBlock], [ResamplingSpCVEnv],
-#'   [ResamplingSpCVBuffer], [ResamplingSpCVCoords], [ResamplingSptCVCstf and
-#'   [ResamplingSptCVCluto].
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods.
 #'
 #' @importFrom data.table rbindlist
 #' @import ggplot2
 #'
 #' @param object `[Resampling]`\cr
-#'   mlr3 spatial resampling object. One of class [ResamplingSpCVBuffer],
-#'   [ResamplingSpCVBlock], [ResamplingSpCVCoords], [ResamplingSpCVEnv].
+#'   mlr3 spatial resampling object of class [ResamplingSpCVBlock] or
+#'   [ResamplingRepeatedSpCVBlock].
 #' @param task `[TaskClassifST]/[TaskRegrST]`\cr
+#'   mlr3 task object.
+#' @param x `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingSpCVBlock] or
+#'   [ResamplingRepeatedSpCVBlock].
 #'   mlr3 task object.
 #' @param fold_id `[numeric]`\cr
 #'   Fold IDs to plot.
 #' @param repeats_id `[numeric]`\cr
 #'   Repetition ID to plot.
 #' @param plot_as_grid `[logical(1)]`\cr
-#'   Should a gridded plot using `cowplot::plot_grid()` be created? If `FALSE`
-#'   only a list with all \CRANpkg{ggplot2} resamplings is returned. Default is
-#'   `TRUE`. Only applies if a numeric vector is passed to argument `fold_id`.
+#' Should a gridded plot using via \CRANpkg{patchwork} be created? If `FALSE`
+#' only a list with all \CRANpkg{ggplot2} resamplings is returned. Only applies
+#' if a numeric vector is passed to argument `fold_id`.
 #' @param train_color `[character(1)]`\cr
 #'   The color to use for the training set observations.
 #' @param test_color `[character(1)]`\cr
 #'   The color to use for the test set observations.
+#' @param crs `[character]`\cr
+#'   EPSG code of the CRS for x and y axes.
 #' @param ... Not used.
 #'
 #' @details
@@ -37,19 +41,18 @@
 #' is used to display all partitions.
 #' If you want to change the colors, call `<plot> + <color-palette>()`.
 #' @return [ggplot()] or list of ggplot2 objects.
-#' @name autoplot_spatial_resampling
+#' @name autoplot.ResamplingSpCVBlock
 #' @export
 #' @examples
-#' ##########
-#' # SpCVBlock
-#' ##########
 #' library(mlr3)
+#' library(mlr3spatiotempcv)
 #' task = tsk("ecuador")
 #' resampling = rsmp("spcv_block", range = 1000)
 #' resampling$instantiate(task)
 #'
 #' ## Visualize all partitions
-#' autoplot(resampling, task)
+#' autoplot(resampling, task) +
+#'   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #'
 #' ## Visualize the train/test split of a single fold
 #' # autoplot(resampling, task, fold_id = 1)
@@ -84,7 +87,7 @@ autoplot.ResamplingSpCVBlock = function( # nolint
   )
 }
 
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSpCVBlock
 #' @export
 autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
   object,
@@ -114,13 +117,13 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
 #' @param x `[Resampling]`\cr
 #'   mlr3 spatial resampling object. One of class [ResamplingSpCVBuffer],
 #'   [ResamplingSpCVBlock], [ResamplingSpCVCoords], [ResamplingSpCVEnv].
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSpCVBlock
 #' @export
 plot.ResamplingSpCVBlock = function(x, ...) {
   print(autoplot(x, ...)) # nocov
 }
 
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSpCVBlock
 #' @export
 plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
   print(autoplot(x, ...)) # nocov
@@ -128,19 +131,27 @@ plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
 
 # SpCV Env ---------------------------------------------------------------------
 
-#' @title Plot for Spatial Resampling
+#' @title Visualization Functions for SpCV Env Methods.
 #'
-#' @rdname autoplot_spatial_resampling
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods.
+#'
+#' @inheritParams autoplot.ResamplingSpCVBlock
+#' @param object `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingSpCVEnv] or
+#'   [ResamplingRepeatedSpCVEnv].
+#' @param x `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingSpCVEnv] or
+#'   [ResamplingRepeatedSpCVEnv].
 #' @export
 #' @examples
-#' ##########
-#' # SpCVEnv
-#' ##########
 #' library(mlr3)
+#' library(mlr3spatiotempcv)
+#' task = tsk("ecuador")
 #' resampling = rsmp("spcv_env", folds = 4, features = "dem")
 #' resampling$instantiate(task)
 #'
-#' autoplot(resampling, task)
+#' autoplot(resampling, task) +
+#'   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' # autoplot(resampling, task, 1)
 #' # autoplot(resampling, task, c(1, 2))
 autoplot.ResamplingSpCVEnv = function( # nolint
@@ -165,7 +176,7 @@ autoplot.ResamplingSpCVEnv = function( # nolint
   )
 }
 
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSpCVEnv
 #' @export
 autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
   object,
@@ -192,13 +203,13 @@ autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
 }
 
 #' @importFrom graphics plot
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSpCVEnv
 #' @export
 plot.ResamplingSpCVEnv = function(x, ...) {
   print(autoplot(x, ...)) # nocov
 }
 
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSpCVEnv
 #' @export
 plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
   print(autoplot(x, ...)) # nocov
@@ -206,20 +217,29 @@ plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
 
 # SpCV Coords-------------------------------------------------------------------
 
-#' @title Plot for Spatial Resampling
+#' @title Visualization Functions for SpCV Coords Methods.
 #'
-#' @rdname autoplot_spatial_resampling
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods.
+#'
+#' @inheritParams autoplot.ResamplingSpCVBlock
+#' @name autoplot.ResamplingSpCVCoords
+#'
+#' @param object `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingSpCVCoords] or
+#'   [ResamplingRepeatedSpCVCoords].
+#' @param x `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingSpCVCoords] or
+#'   [ResamplingRepeatedSpCVCoords].
 #' @export
 #' @examples
-#' ##########
-#' # SpCVCoords
-#' ##########
 #' library(mlr3)
+#' library(mlr3spatiotempcv)
 #' task = tsk("ecuador")
 #' resampling = rsmp("spcv_coords")
 #' resampling$instantiate(task)
 #'
-#' autoplot(resampling, task)
+#' autoplot(resampling, task) +
+#'   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' # autoplot(resampling, task, 1)
 #' # autoplot(resampling, task, c(1, 2))
 autoplot.ResamplingSpCVCoords = function( # nolint
@@ -244,7 +264,7 @@ autoplot.ResamplingSpCVCoords = function( # nolint
   )
 }
 
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSpCVCoords
 #' @export
 autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
   object,
@@ -271,13 +291,13 @@ autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
 }
 
 #' @importFrom graphics plot
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSpCVCoords
 #' @export
 plot.ResamplingSpCVCoords = function(x, ...) {
   print(autoplot(x, ...))
 }
 
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSpCVCoords
 #' @export
 plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
   print(autoplot(x, ...)) # nocov
@@ -285,26 +305,30 @@ plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
 
 # SptCV Cluto ------------------------------------------------------------------
 
-#' @title Plot for spatio-temporal clustering
+#' @title Visualization Functions for SptCV Cluto Methods.
 #'
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods.
+#'
+#' @inheritParams autoplot.ResamplingSpCVBlock
+#' @param object `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingSptCVCluto] or
+#'   [ResamplingRepeatedSptCVCluto].
+#' @param x `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingSptCVCluto] or
+#'   [ResamplingRepeatedSptCVCluto].
 #' @param tickformat_date `[character]`\cr
 #'   Date format for z-axis.
-#' @param crs `[character]`\cr
-#'   EPSG code of the CRS for x and y axes.
 #' @param nticks_y `[integer]`\cr
-#'   Number of y axis breaks.
+#'   Number of y axis breaks. Only applies to SptCVCluto.
 #' @param nticks_x `[integer]`\cr
-#'   Number of x axis breaks.
+#'   Number of x axis breaks. Only applies to SptCVCluto.
 #' @param point_size `[numeric]`\cr
 #'   Point size of markers.
 #' @param axis_label_fontsize `[integer]`\cr
 #'   Font size of axis labels.
-#' @rdname autoplot_spatial_resampling
+#' @name autoplot.ResamplingSptCVCluto
 #' @export
 #' @examples
-#' ##########
-#' # SptCVCluto
-#' ##########
 #' \dontrun{
 #' library(mlr3)
 #' library(mlr3spatiotempcv)
@@ -349,7 +373,7 @@ autoplot.ResamplingSptCVCluto = function( # nolint
   )
 }
 
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSptCVCluto
 #' @export
 autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
   object,
@@ -376,13 +400,13 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
 }
 
 #' @importFrom graphics plot
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSptCVCluto
 #' @export
 plot.ResamplingSptCVCluto = function(x, ...) {
   print(autoplot(x, ...)) # nocov
 }
 
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingSptCVCluto
 #' @export
 plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
   print(autoplot(x, ...)) # nocov
@@ -390,20 +414,28 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
 
 # CV ---------------------------------------------------------------------------
 
-#' @title Plot for Spatial Resampling
+#' @title Visualization Functions for Non-Spatial CV Methods.
 #'
-#' @rdname autoplot_spatial_resampling
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods.
+#'
+#' @name autoplot.ResamplingCV
+#' @param object `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingCV] or
+#'   [ResamplingRepeatedCV].
+#' @param x `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingCV] or
+#'   [ResamplingRepeatedCV].
+#' @inheritParams autoplot.ResamplingSpCVBlock
 #' @export
 #' @examples
-#' ##########
-#' # Non-Spatial CV
-#' ##########
 #' library(mlr3)
+#' library(mlr3spatiotempcv)
 #' task = tsk("ecuador")
 #' resampling = rsmp("cv")
 #' resampling$instantiate(task)
 #'
-#' autoplot(resampling, task)
+#' autoplot(resampling, task) +
+#'   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' # autoplot(resampling, task, 1)
 #' # autoplot(resampling, task, c(1, 2))
 autoplot.ResamplingCV = function( # nolint
@@ -428,7 +460,7 @@ autoplot.ResamplingCV = function( # nolint
   )
 }
 
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingCV
 #' @export
 autoplot.ResamplingRepeatedCV = function( # nolint
   object,
@@ -455,13 +487,13 @@ autoplot.ResamplingRepeatedCV = function( # nolint
 }
 
 #' @importFrom graphics plot
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingCV
 #' @export
 plot.ResamplingCV = function(x, ...) {
   print(autoplot(x, ...)) # nocov
 }
 
-#' @rdname autoplot_spatial_resampling
+#' @rdname autoplot.ResamplingCV
 #' @export
 plot.ResamplingRepeatedCV = function(x, ...) {
   print(autoplot(x, ...)) # nocov

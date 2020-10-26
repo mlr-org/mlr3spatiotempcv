@@ -1,6 +1,7 @@
 Package: mlr3spatiotempcv
-Title: Spatiotemporal Resampling Methods for 'mlr3'
+Title: Spatiotemporal Resampling Methods for mlr3
 Version: 0.0.0.9012
+Date: 2020-10-27
 Authors@R:
     c(person(given = "Patrick",
              family = "Schratz",
@@ -17,8 +18,10 @@ Authors@R:
              role = "ctb",
              email = "jannes.muenchow@uni-jena.de",
              comment = c(ORCID = "0000-0001-7834-4717")))
-Description: Implements spatio-temporal methods to enhance the
-    experience of mlr3.
+Description: Extends the mlr3 ML framework with spatio-temporal
+    resampling methods to account for the presence of spatiotemporal
+    autocorrelation (STAC) in predictor variables. STAC may cause highly
+    biased performance estimates in cross-validation if ignored.
 License: LGPL-3
 URL: https://mlr3spatiotempcv.mlr-org.com/,
     https://github.com/mlr-org/mlr3spatiotempcv,
@@ -93,6 +96,5 @@ Collate:
     'helper_autoplot.R'
     'helper_sample.R'
     'helper.R'
-    'mlr3spatiotempcv-package.R'
     'reexports.R'
     'zzz.R'
