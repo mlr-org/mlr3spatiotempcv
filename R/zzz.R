@@ -6,6 +6,32 @@
 #' @import paradox
 #' @import ggplot2
 #' @importFrom utils globalVariables
+#' @section Additional resources:
+#' * Book on mlr3: \url{https://mlr3book.mlr-org.com}
+#' * Use cases and examples: \url{https://mlr3gallery.mlr-org.com}
+#' * More classification and regression tasks: \CRANpkg{mlr3data}
+#' * Connector to [OpenML](https://www.openml.org): \CRANpkg{mlr3oml}
+#' * More classification and regression learners: \CRANpkg{mlr3learners}
+#' * Even more learners: \url{https://github.com/mlr-org/mlr3extralearners}
+#' * Preprocessing and machine learning pipelines: \CRANpkg{mlr3pipelines}
+#' * Tuning of hyperparameters: \CRANpkg{mlr3tuning}
+#' * Visualizations for many \pkg{mlr3} objects: \CRANpkg{mlr3viz}
+#' * Survival analysis and probabilistic regression: \CRANpkg{mlr3proba}
+#' * Cluster analysis: \CRANpkg{mlr3cluster}
+#' * Feature selection filters: \CRANpkg{mlr3filters}
+#' * Feature selection wrappers: \CRANpkg{mlr3fselect}
+#' * Interface to real (out-of-memory) data bases: \CRANpkg{mlr3db}
+#' * Performance measures as plain functions: \CRANpkg{mlr3measures}
+#' * Spatiotemporal resampling methods: \CRANpkg{mlr3spatiotempcv}
+#' * Parallelization framework: \CRANpkg{future}
+#' * Progress bars: \CRANpkg{progressr}
+#' @references
+#' `r tools::toRd(citation("mlr3spatiotempcv"))`
+#'
+#' Schratz, P., Muenchow, J., Iturritxa, E., Richter, J., &
+#'   Brenning, A. (2019). Hyperparameter tuning and performance assessment of
+#'   statistical and machine-learning algorithms using spatial data. Ecological
+#'   Modeling, 406, 109–120. \url{https://doi.org/10/gf34bd}
 "_PACKAGE"
 
 register_mlr3 = function() { # nocov start
