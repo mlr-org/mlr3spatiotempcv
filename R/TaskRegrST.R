@@ -1,6 +1,5 @@
 #' @title SpatioTemporal Regression Task
 #'
-#' @import data.table
 #' @import mlr3
 #'
 #' @description

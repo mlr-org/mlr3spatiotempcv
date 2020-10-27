@@ -4,7 +4,6 @@
 #' @usage data(ecuador)
 #' @name mlr_tasks_ecuador
 #' @format [R6::R6Class] inheriting from [TaskClassif].
-#' @importFrom mlr3 as_data_backend
 #'
 #' @section Usage:
 #' ```

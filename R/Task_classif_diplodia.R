@@ -4,7 +4,6 @@
 #' @usage data(diplodia)
 #' @name mlr_tasks_diplodia
 #' @format [R6::R6Class] inheriting from [TaskClassif].
-#' @importFrom mlr3 as_data_backend
 #'
 #' @section Usage:
 #' ```

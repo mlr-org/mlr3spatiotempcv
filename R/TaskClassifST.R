@@ -1,6 +1,5 @@
 #' @title SpatioTemporal Classification Task
 #'
-#' @import data.table
 #' @import mlr3
 #'
 #' @description This task specializes [Task] and [TaskSupervised] for

@@ -4,7 +4,7 @@
 \name{mlr3spatiotempcv-package}
 \alias{mlr3spatiotempcv}
 \alias{mlr3spatiotempcv-package}
-\title{mlr3spatiotempcv: Spatiotemporal Resampling Methods for mlr3}
+\title{mlr3spatiotempcv: Spatiotemporal Resampling Methods for 'mlr3'}
 \description{
 Extends the mlr3 ML framework with spatio-temporal
     resampling methods to account for the presence of spatiotemporal
@@ -37,7 +37,7 @@ Extends the mlr3 ML framework with spatio-temporal
 
 \references{
 Schratz P, Becker M (2020).
-\emph{mlr3spatiotempcv: Spatiotemporal Resampling Methods for mlr3}.
+\emph{mlr3spatiotempcv: Spatiotemporal Resampling Methods for 'mlr3'}.
 https://mlr3spatiotempcv.mlr-org.com/,
 https://github.com/mlr-org/mlr3spatiotempcv,
 https://mlr3book.mlr-org.com.
