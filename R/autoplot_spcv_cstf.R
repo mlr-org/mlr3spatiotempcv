@@ -185,12 +185,12 @@ autoplot.ResamplingSptCVCstf = function( # nolint
     if (!plot_as_grid) {
       return(plot)
     } else {
-      cli::cli_alert_info("Unfortunately plotly does not support a dynamic
+      messagef("Unfortunately plotly does not support a dynamic
        arrangement of multiple subplots.
        See article 'Visualization of spatiotemporal clusters'
-       ({.url https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz}) for a
+       (https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz) for a
        manual workaround.
-       Use the objects in the returned list to arrange your custom grid.",
+       Use the objects in the returned list to arrange a custom grid.",
         wrap = TRUE)
 
       return(invisible(plot))

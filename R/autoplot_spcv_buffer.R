@@ -39,8 +39,8 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   coords$row_id = task$row_ids
 
   if (is.null(fold_id)) {
-    cli::cli_alert_danger("Please provide a fold ID.")
-    stopf("Plotting all folds of a LOOCV instance is not supported")
+    stopf("Please provide a fold ID.
+      Plotting all folds of a LOOCV instance is not supported", wrap = TRUE)
   }
 
   plot_list = mlr3misc::map(fold_id, function(.x) {
@@ -57,7 +57,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
     if (is.null(crs)) {
       # use 4326 (WGS84) as fallback
       crs = 4326
-      cli::cli_alert_info("CRS not set, transforming to WGS84 (EPSG: 4326).")
+      messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
     }
     # transform to selected crs
     sf_df = sf::st_transform(

@@ -81,7 +81,7 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
       # Check for selected features that are not in task
       diff = setdiff(pv$features, columns[, id])
       if (length(diff) > 0) {
-        cli::cli_alert_warning("Feature {diff} is either non-numeric or does not exist in data.") # nolint
+        warningf("Feature '%s' is either non-numeric or does not exist in data.")
         stopf("Method 'spcv_env' requires numeric features for clustering.")
       }
       columns = columns[id %in% pv$features]

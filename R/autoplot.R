@@ -544,7 +544,7 @@ autoplot_spatial = function(
       if (is.null(crs)) {
         # use 4326 (WGS84) as fallback
         crs = 4326
-        cli::cli_alert_info("CRS not set, transforming to WGS84 (EPSG: 4326).")
+        messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
       }
       # transform to selected crs
       sf_df = sf::st_transform(
@@ -593,7 +593,7 @@ autoplot_spatial = function(
     if (is.null(crs)) {
       # use 4326 (WGS84) as fallback
       crs = 4326
-      cli::cli_alert_info("CRS not set, transforming to WGS84 (EPSG: 4326).")
+      messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
     }
     # transform to selected crs
     sf_df = sf::st_transform(
@@ -662,8 +662,7 @@ autoplot_spatiotemp = function(
   # set fallback crs if missing
   if (is.null(crs)) {
     require_namespaces("sf")
-    cli::cli_alert_info("CRS not set, transforming to WGS84 (EPSG: 4326).")
-
+    messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
     crs = 4326
   }
   # transform coordinates to selected crs
@@ -801,12 +800,12 @@ autoplot_spatiotemp = function(
     if (!plot_as_grid) {
       return(invisible(plot_list))
     } else {
-      cli::cli_alert_info("Unfortunately plotly does not support a dynamic
+      messagef("Unfortunately plotly does not support a dynamic
        arrangement of multiple subplots.
        See article 'Visualization of spatiotemporal clusters'
-       ({.url https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz}) for a
+       (https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz) for a
        manual workaround.
-       Use the objects in the returned list to arrange your custom grid.",
+       Use the objects in the returned list to arrange a custom grid.",
         wrap = TRUE)
 
       return(invisible(plot_list))
