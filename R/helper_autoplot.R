@@ -19,7 +19,6 @@ prepare_autoplot_cstf = function(task, resampling) {
 
     data$indicator[data$row_id %in% row_id] = i
   }
-  rm(resampling)
   data$Date = as.Date(data$Date)
   # merge the coords for the 3D plot
   data_coords = merge(data, coords, by = "row_id")

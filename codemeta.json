@@ -92,18 +92,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "bookdown",
-      "name": "bookdown",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=bookdown"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "caret",
       "name": "caret",
       "provider": {
@@ -456,7 +444,7 @@
   ],
   "releaseNotes": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/NEWS.md",
   "readme": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/README.md",
-  "fileSize": "10083.776KB",
+  "fileSize": "10084.203KB",
   "contIntegration": "https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=master",
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#experimental",
   "keywords": [

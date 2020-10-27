@@ -4,7 +4,6 @@
 #' @usage data(cookfarm)
 #' @name mlr_tasks_cookfarm
 #' @format [R6::R6Class] inheriting from [TaskRegr].
-#' @importFrom mlr3 as_data_backend
 #' @family Task
 #'
 #' @section Usage:

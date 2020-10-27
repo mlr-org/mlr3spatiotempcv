@@ -4,7 +4,6 @@
 #'
 #' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods.
 #'
-#' @importFrom data.table rbindlist
 #' @import ggplot2
 #'
 #' @param object `[Resampling]`\cr
