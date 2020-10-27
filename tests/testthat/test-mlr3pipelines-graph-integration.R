@@ -12,6 +12,7 @@ test_that("spcv methods work in a Graph Learner", {
 })
 
 test_that("sptcv methods work in a Graph Learner", {
+  skip_on_cran()
   skip_on_os("mac")
   rsmps = rsmps(c("sptcv_cstf", "sptcv_cluto"), folds = 2, time_var = "Date")
 
