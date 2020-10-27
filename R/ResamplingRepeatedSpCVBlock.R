@@ -97,7 +97,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
 
       if (!is.null(pv$range) && (!is.null(pv$rows) | !is.null(pv$cols))) {
         # nocov start
-        cli::cli_alert_warning("{.field repeated_spcv_block}: Arguments
+        warningf("'repeated_spcv_block: Arguments
           {.code cols} and {.code rows} will be ignored. {.code range} is used
           to generated blocks.", wrap = TRUE)
         # nocov end

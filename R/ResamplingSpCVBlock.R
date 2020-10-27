@@ -63,9 +63,8 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       }
 
       if (!is.null(pv$range) && (!is.null(pv$rows) | !is.null(pv$cols))) { # nocov start
-        cli::cli_alert_warning("{.field spcv_block}: Arguments
-          {.code cols} and {.code rows} will be ignored. {.code range} is used
-          to generated blocks.", wrap = TRUE)
+        messagef("'spcv_block': Arguments 'cols' and 'rows' will be ignored.
+                 'range' is used to generate blocks.", wrap = TRUE)
       } # nocov end
 
       # Set values to default if missing

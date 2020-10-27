@@ -19,19 +19,19 @@ sample_cstf = function(self, task, space_var, time_var, class, k, data) {
   if (!is.null(space_var)) {
     if (k > uniqueN(data[[space_var]])) {
       k = uniqueN(data[[space_var]]) # nocov start
-      cli::cli_alert_warning("{.field sptcv_cstf}: Number of folds is higher
-        than number of unique locations.
+      warningf("'sptcv_cstf': Number of folds is higher than number of unique
+        locations.
         Setting folds to the maximum amount of unique levels of variable
-        {space_var} which is {k}.", wrap = TRUE) # nocov end
+        '%s' which is '%s'.", space_var, k, wrap = TRUE) # nocov end
     }
   }
   if (!is.null(time_var)) {
     if (k > uniqueN(data[[time_var]])) {
       k = uniqueN(data[[time_var]]) # nocov start
-      cli::cli_alert_warning("{.field sptcv_cstf}: Number of folds is higher
-        than number of unique points in time.
+      warningf("'sptcv_cstf': Number of folds is higher than unique points in
+        time.
         Setting folds to the maximum amount of unique levels of variable
-        {time_var} which is {k}.", wrap = TRUE) # nocov end
+        '%s' which is '%s'.", time_var, k, wrap = TRUE) # nocov end
     }
   }
 
