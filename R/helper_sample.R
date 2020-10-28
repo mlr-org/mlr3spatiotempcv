@@ -8,7 +8,7 @@ sample_cstf = function(self, task, space_var, time_var, class, k, data) {
     unit = unique(data[, select_cols, with = FALSE])
 
     # unit needs to be a data.frame here
-    unit$cstf_fold = createFolds2(
+    unit$cstf_fold = create_folds_caret(
       as.data.frame(unit)[, which(names(unit) == class)],
       k = k, list = FALSE)
 
@@ -43,7 +43,7 @@ sample_cstf = function(self, task, space_var, time_var, class, k, data) {
   if (!is.null(space_var)) {
     set.seed(seed)
 
-    spacefolds = lapply(createFolds2(
+    spacefolds = lapply(create_folds_caret(
       1:uniqueN(data[[space_var]]),
       k), function(y) {
       unique(data[[space_var]])[y]
@@ -54,7 +54,7 @@ sample_cstf = function(self, task, space_var, time_var, class, k, data) {
   # split time into k folds
   if (!is.null(time_var)) {
     set.seed(seed)
-    timefolds = lapply(createFolds2(
+    timefolds = lapply(create_folds_caret(
       1:uniqueN(data[[time_var]]),
       k), function(y) {
       unique(data[[time_var]])[y]
@@ -70,7 +70,7 @@ sample_cstf = function(self, task, space_var, time_var, class, k, data) {
 # taken from https://github.com/topepo/caret/blob/master/pkg/caret/R/createDataPartition.R
 # to avoid having to include {caret} as a dependency
 #' @importFrom stats quantile
-createFolds2 = function(y, k = 10, list = TRUE, returnTrain = FALSE) {
+create_folds_caret = function(y, k = 10, list = TRUE, return_train = FALSE) {
   if (is.numeric(y)) {
     cuts = floor(length(y) / k)
     if (cuts < 2) cuts = 2
@@ -82,35 +82,35 @@ createFolds2 = function(y, k = 10, list = TRUE, returnTrain = FALSE) {
   if (k < length(y)) {
 
     y = factor(as.character(y))
-    numInClass = table(y)
-    foldVector = vector(mode = "integer", length(y))
+    num_in_class = table(y)
+    fold_vector = vector(mode = "integer", length(y))
 
-    for (i in 1:length(numInClass)) {
-      min_reps = numInClass[i] %/% k
+    for (i in seq_len(num_in_class)) {
+      min_reps = num_in_class[i] %/% k
       if (min_reps > 0) {
         spares = numInClass[i] %% k
-        seqVector = rep(1:k, min_reps)
-        if (spares > 0) seqVector = c(seqVector, sample(1:k, spares))
-        foldVector[which(y == names(numInClass)[i])] = sample(seqVector)
+        seq_vector = rep(1:k, min_reps)
+        if (spares > 0) seq_vector = c(seq_vector, sample(1:k, spares))
+        fold_vector[which(y == names(num_in_class)[i])] = sample(seq_vector)
       } else {
-        foldVector[which(y == names(numInClass)[i])] = sample(1:k,
-          size = numInClass[i])
+        fold_vector[which(y == names(num_in_class)[i])] = sample(1:k,
+          size = num_in_class[i])
       }
     }
   } else {
-    foldVector = seq(along = y)
+    fold_vector = seq(along = y)
   }
   if (list) {
-    out = split(seq(along = y), foldVector)
+    out = split(seq(along = y), fold_vector)
     names(out) = paste("Fold",
       gsub(" ", "0", format(seq(along = out))),
       sep = "")
-    if (returnTrain) {
+    if (return_train) {
       out = lapply(out, function(data, y) y[-data],
         y = seq(along = y))
     }
   } else {
-    out = foldVector
+    out = fold_vector
   }
   out
 }
