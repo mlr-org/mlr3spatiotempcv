@@ -85,7 +85,7 @@ create_folds_caret = function(y, k = 10, list = TRUE, return_train = FALSE) {
     num_in_class = table(y)
     fold_vector = vector(mode = "integer", length(y))
 
-    for (i in seq_len(num_in_class)) {
+    for (i in seq_along(num_in_class)) {
       min_reps = num_in_class[i] %/% k
       if (min_reps > 0) {
         spares = num_in_class[i] %% k
