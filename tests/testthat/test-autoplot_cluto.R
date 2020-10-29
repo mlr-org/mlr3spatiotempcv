@@ -3,6 +3,7 @@ context("plot")
 # sptcv_Cluto ------------------------------------------------------------------
 
 test_that("plot() works for 'sptcv_cluto'", {
+  skip_on_cran()
   skip_on_os("mac")
   set.seed(42)
 
@@ -26,6 +27,7 @@ test_that("plot() works for 'sptcv_cluto'", {
 })
 
 test_that("plot() works for 'repeated_sptcv_cluto'", {
+  skip_on_cran()
   skip_on_os("mac")
 
   set.seed(42)

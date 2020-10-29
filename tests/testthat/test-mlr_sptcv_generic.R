@@ -59,6 +59,7 @@ test_that("train and test set getter functions are working", {
 })
 
 test_that("train and test set getter functions are working for sptcv", {
+  skip_on_cran()
   skip_on_os("mac")
   task = tsk("cookfarm")
 

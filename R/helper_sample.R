@@ -88,7 +88,7 @@ create_folds_caret = function(y, k = 10, list = TRUE, return_train = FALSE) {
     for (i in seq_len(num_in_class)) {
       min_reps = num_in_class[i] %/% k
       if (min_reps > 0) {
-        spares = numInClass[i] %% k
+        spares = num_in_class[i] %% k
         seq_vector = rep(1:k, min_reps)
         if (spares > 0) seq_vector = c(seq_vector, sample(1:k, spares))
         fold_vector[which(y == names(num_in_class)[i])] = sample(seq_vector)
