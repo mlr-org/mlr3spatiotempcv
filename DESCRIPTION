@@ -1,7 +1,7 @@
 Package: mlr3spatiotempcv
 Title: Spatiotemporal Resampling Methods for 'mlr3'
-Version: 0.0.0.9012
-Date: 2020-10-27
+Version: 0.0.0.9013
+Date: 2020-10-30
 Authors@R:
     c(person(given = "Patrick",
              family = "Schratz",
