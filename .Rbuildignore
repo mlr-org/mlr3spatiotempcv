@@ -28,3 +28,4 @@
 ^Meta$
 ^codemeta\.json$
 ^\.pre-commit-config\.yaml$
+^cran-comments\.md$
