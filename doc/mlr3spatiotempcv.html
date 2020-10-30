@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Getting Started</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Getting Started</h1>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This package adds resampling methods for the {mlr3} package framework suited for spatial, temporal and spatiotemporal data. These methods can help to reduce the influence of <a href="https://mlr3book.mlr-org.com/spatiotemporal.html#spatiotemporal-intro">autocorrelation</a> on performance estimates when performing cross-validation. While this article gives a rather technical introduction to the package, a more applied approach can be found in the <a href="https://mlr3book.mlr-org.com/spatiotemporal.html#spatiotemporal">mlr3book section on “Spatiotemporal Analysis”</a>.</p>
+<p>After loading the package via <code>library(&quot;mlr3spatiotempcv&quot;)</code>, the spatiotemporal resampling methods and example tasks provided by {mlr3spatiotempcv} are available to the user.</p>
+<p>In mlr3, dictionaries are used for overview purposes of available methods. The following shows which dictionaries get appended with new entries.</p>
+</div>
+<div id="task-type" class="section level1">
+<h1>Task Type</h1>
+<p>Additional task types:</p>
+<ul>
+<li><p><code>TaskClassifST</code></p></li>
+<li><p><code>TaskRegrST</code></p></li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mlr_reflections<span class="sc">$</span>task_types</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       type          package          task        learner        prediction</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1: classif             mlr3   TaskClassif LearnerClassif PredictionClassif</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2: classif mlr3spatiotempcv TaskClassifST LearnerClassif PredictionClassif</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3:    regr             mlr3      TaskRegr    LearnerRegr    PredictionRegr</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4:    regr mlr3spatiotempcv    TaskRegrST    LearnerRegr    PredictionRegr</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           measure</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1: MeasureClassif</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2: MeasureClassif</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3:    MeasureRegr</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4:    MeasureRegr</span></span></code></pre></div>
+</div>
+<div id="task-column-roles" class="section level1">
+<h1>Task Column Roles</h1>
+<p>Additional column roles:</p>
+<ul>
+<li><code>coordinates</code></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mlr_reflections<span class="sc">$</span>task_col_roles</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $regr</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;feature&quot; &quot;target&quot;  &quot;name&quot;    &quot;order&quot;   &quot;stratum&quot; &quot;group&quot;   &quot;weight&quot; </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $classif</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;feature&quot; &quot;target&quot;  &quot;name&quot;    &quot;order&quot;   &quot;stratum&quot; &quot;group&quot;   &quot;weight&quot; </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $classif_st</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;feature&quot;     &quot;target&quot;      &quot;name&quot;        &quot;order&quot;       &quot;stratum&quot;    </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6] &quot;group&quot;       &quot;weight&quot;      &quot;coordinates&quot;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $regr_st</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;feature&quot;     &quot;target&quot;      &quot;name&quot;        &quot;order&quot;       &quot;stratum&quot;    </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6] &quot;group&quot;       &quot;weight&quot;      &quot;coordinates&quot;</span></span></code></pre></div>
+</div>
+<div id="resampling-methods" class="section level1">
+<h1>Resampling Methods</h1>
+<p>Additional resampling methods:</p>
+<ul>
+<li><p><code>spcv_block</code></p></li>
+<li><p><code>spcv_buffer</code></p></li>
+<li><p><code>spcv_coords</code></p></li>
+<li><p><code>spcv_env</code></p></li>
+<li><p><code>sptcv_cluto</code></p></li>
+<li><p><code>sptcv_cstf</code></p></li>
+</ul>
+<p>and their respective repeated versions.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.data.table</span>(mlr_resamplings)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                      key                                  params iters</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1:            bootstrap                           repeats,ratio    30</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2:               custom                                             0</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3:                   cv                                   folds    10</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4:              holdout                                   ratio     1</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5:             insample                                             1</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6:                  loo                                            NA</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7:          repeated_cv                           repeats,folds   100</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8:  repeated_spcv_block folds,repeats,rows,cols,range,selection    10</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9: repeated_spcv_coords                           folds,repeats    10</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10:    repeated_spcv_env                  folds,repeats,features    10</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11: repeated_sptcv_cluto                           folds,repeats    10</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12:  repeated_sptcv_cstf                           folds,repeats    10</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13:           spcv_block         folds,rows,cols,range,selection    10</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14:          spcv_buffer               theRange,spDataType,addBG     0</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15:          spcv_coords                                   folds    10</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16:             spcv_env                          folds,features    10</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17:          sptcv_cluto                                   folds    10</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18:           sptcv_cstf                                   folds    10</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19:          subsampling                           repeats,ratio    30</span></span></code></pre></div>
+</div>
+<div id="examples-tasks" class="section level1">
+<h1>Examples Tasks</h1>
+<p>Additional example tasks:</p>
+<ul>
+<li><code>tsk(&quot;ecuador&quot;)</code> (spatial, classif)</li>
+<li><code>tsk(&quot;cookfarm&quot;)</code> (spatiotemp, regr)</li>
+</ul>
+</div>
+<div id="upstream-packages-and-scientific-references" class="section level1">
+<h1>Upstream Packages and Scientific References</h1>
+<p>The following table lists all methods implemented in {mlr3spatiotempcv}, their upstream R package and scientific references.</p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Literature</th>
+<th>Package</th>
+<th>Reference</th>
+<th>mlr3 Sugar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Spatial Buffering</td>
+<td><a href="https://github.com/rvalavi/blockCV">blockCV</a></td>
+<td><span class="citation"><a href="#ref-valavi2018" role="doc-biblioref">Valavi et al.</a> (<a href="#ref-valavi2018" role="doc-biblioref">2018</a>)</span></td>
+<td><code>rsmp(&quot;spcv_buffer&quot;)</code></td>
+</tr>
+<tr class="even">
+<td>Spatial Blocking</td>
+<td><a href="https://github.com/rvalavi/blockCV">blockCV</a></td>
+<td><span class="citation"><a href="#ref-valavi2018" role="doc-biblioref">Valavi et al.</a> (<a href="#ref-valavi2018" role="doc-biblioref">2018</a>)</span></td>
+<td><code>rsmp(&quot;spcv_block&quot;)</code></td>
+</tr>
+<tr class="odd">
+<td>Spatial CV</td>
+<td><a href="https://github.com/giscience-fsu/sperrorest">sperrorest</a></td>
+<td><span class="citation"><a href="#ref-brenning2012" role="doc-biblioref">Brenning</a> (<a href="#ref-brenning2012" role="doc-biblioref">2012</a>)</span></td>
+<td><code>rsmp(&quot;spcv_coords&quot;)</code></td>
+</tr>
+<tr class="even">
+<td>Environmental Blocking</td>
+<td><a href="https://github.com/rvalavi/blockCV">blockCV</a></td>
+<td><span class="citation"><a href="#ref-valavi2018" role="doc-biblioref">Valavi et al.</a> (<a href="#ref-valavi2018" role="doc-biblioref">2018</a>)</span></td>
+<td><code>rsmp(&quot;spcv_env&quot;)</code></td>
+</tr>
+<tr class="odd">
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td><code>rsmp(&quot;sptcv_cluto&quot;)</code></td>
+</tr>
+<tr class="even">
+<td>Leave-Location-and-Time-Out</td>
+<td><a href="https://github.com/HannaMeyer/CAST">CAST</a></td>
+<td><span class="citation"><a href="#ref-meyer2018" role="doc-biblioref">Meyer et al.</a> (<a href="#ref-meyer2018" role="doc-biblioref">2018</a>)</span></td>
+<td><code>rsmp(&quot;sptcv_cstf&quot;)</code></td>
+</tr>
+<tr class="odd">
+<td>Spatiotemporal Clustering</td>
+<td><a href="https://github.com/cran/skmeans">skmeans</a></td>
+<td><span class="citation"><a href="#ref-zhao2002" role="doc-biblioref">Zhao and Karypis</a> (<a href="#ref-zhao2002" role="doc-biblioref">2002</a>)</span></td>
+<td><code>rsmp(&quot;repeated_sptcv_cluto&quot;)</code></td>
+</tr>
+<tr class="even">
+<td><hr /></td>
+<td><hr /></td>
+<td><hr /></td>
+<td><hr /></td>
+</tr>
+<tr class="odd">
+<td>Repeated Spatial Blocking</td>
+<td><a href="https://github.com/rvalavi/blockCV">blockCV</a></td>
+<td><span class="citation"><a href="#ref-valavi2018" role="doc-biblioref">Valavi et al.</a> (<a href="#ref-valavi2018" role="doc-biblioref">2018</a>)</span></td>
+<td><code>rsmp(&quot;repeated_spcv_block&quot;)</code></td>
+</tr>
+<tr class="even">
+<td>Repeated Spatial CV</td>
+<td><a href="https://github.com/giscience-fsu/sperrorest">sperrorest</a></td>
+<td><span class="citation"><a href="#ref-brenning2012" role="doc-biblioref">Brenning</a> (<a href="#ref-brenning2012" role="doc-biblioref">2012</a>)</span></td>
+<td><code>rsmp(&quot;repeated_spcv_coords&quot;)</code></td>
+</tr>
+<tr class="odd">
+<td>Repeated Env Blocking</td>
+<td><a href="https://github.com/rvalavi/blockCV">blockCV</a></td>
+<td><span class="citation"><a href="#ref-valavi2018" role="doc-biblioref">Valavi et al.</a> (<a href="#ref-valavi2018" role="doc-biblioref">2018</a>)</span></td>
+<td><code>rsmp(&quot;repeated_spcv_env&quot;)</code></td>
+</tr>
+<tr class="even">
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td><code>rsmp(&quot;repeated_sptcv_cluto&quot;)</code></td>
+</tr>
+<tr class="odd">
+<td>Repeated Leave-Location-and-Time-Out</td>
+<td><a href="https://github.com/HannaMeyer/CAST">CAST</a></td>
+<td><span class="citation"><a href="#ref-meyer2018" role="doc-biblioref">Meyer et al.</a> (<a href="#ref-meyer2018" role="doc-biblioref">2018</a>)</span> |</td>
+<td><code>rsmp(&quot;repeated_sptcv_cstf&quot;)</code></td>
+</tr>
+<tr class="even">
+<td>Repeated Spatiotemporal Clustering</td>
+<td><a href="https://github.com/cran/skmeans">skmeans</a></td>
+<td><span class="citation"><a href="#ref-zhao2002" role="doc-biblioref">Zhao and Karypis</a> (<a href="#ref-zhao2002" role="doc-biblioref">2002</a>)</span></td>
+<td><code>rsmp(&quot;repeated_sptcv_cluto&quot;)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-brenning2012" class="csl-entry">
+Brenning, Alexander. 2012. <span>“<span class="nocase">Spatial cross-validation and bootstrap for the assessment of prediction rules in remote sensing: The R package sperrorest</span>.”</span> In <em>2012 <span>IEEE</span> International Geoscience and Remote Sensing Symposium</em>. <span>IEEE</span>. <a href="https://doi.org/10.1109/igarss.2012.6352393">https://doi.org/10.1109/igarss.2012.6352393</a>.
+</div>
+<div id="ref-meyer2018" class="csl-entry">
+Meyer, Hanna, Christoph Reudenbach, Tomislav Hengl, Marwan Katurji, and Thomas Nauss. 2018. <span>“Improving Performance of Spatio-Temporal Machine Learning Models Using Forward Feature Selection and Target-Oriented Validation.”</span> <em>Environmental Modelling <span>&amp;</span> Software</em> 101 (March): 1–9. <a href="https://doi.org/10.1016/j.envsoft.2017.12.001">https://doi.org/10.1016/j.envsoft.2017.12.001</a>.
+</div>
+<div id="ref-valavi2018" class="csl-entry">
+Valavi, Roozbeh, Jane Elith, Jose J. Lahoz-Monfort, and Gurutzeta Guillera-Arroita. 2018. <span>“<span class="nocase">blockCV: an R package for generating spatially or environmentally separated folds for k-fold cross-validation of species distribution models</span>.”</span> <em><span>bioRxiv</span></em>, June. <a href="https://doi.org/10.1101/357798">https://doi.org/10.1101/357798</a>.
+</div>
+<div id="ref-zhao2002" class="csl-entry">
+Zhao, Ying, and George Karypis. 2002. <span>“Evaluation of Hierarchical Clustering Algorithms for Document Datasets.”</span> <em>11th Conference of Information and Knowledge Management (CIKM)</em>, 515–24. <a href="http://glaros.dtc.umn.edu/gkhome/node/167">http://glaros.dtc.umn.edu/gkhome/node/167</a>.
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

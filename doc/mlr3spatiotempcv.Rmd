@@ -1,0 +1,122 @@
+---
+title: "Getting Started"
+output: rmarkdown::html_vignette
+bibliography: ../inst/references.bib
+link-citations: yes
+vignette: >
+  %\VignetteIndexEntry{Getting Started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+set.seed(42)
+library("mlr3")
+library("mlr3spatiotempcv")
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+This package adds resampling methods for the {mlr3} package framework suited for spatial, temporal and spatiotemporal data.
+These methods can help to reduce the influence of [autocorrelation](https://mlr3book.mlr-org.com/spatiotemporal.html#spatiotemporal-intro) on performance estimates when performing cross-validation.
+While this article gives a rather technical introduction to the package, a more applied approach can be found in the [mlr3book section on "Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/spatiotemporal.html#spatiotemporal).
+
+
+After loading the package via `library("mlr3spatiotempcv")`, the spatiotemporal resampling methods and example tasks provided by {mlr3spatiotempcv} are available to the user.
+
+In mlr3, dictionaries are used for overview purposes of available methods.
+The following shows which dictionaries get appended with new entries.
+
+# Task Type
+
+Additional task types:
+
+-   `TaskClassifST`
+
+-   `TaskRegrST`
+
+```{r}
+mlr_reflections$task_types
+```
+
+# Task Column Roles
+
+Additional column roles:
+
+-   `coordinates`
+
+```{r}
+mlr_reflections$task_col_roles
+```
+
+# Resampling Methods
+
+Additional resampling methods:
+
+-   `spcv_block`
+
+-   `spcv_buffer`
+
+-   `spcv_coords`
+
+-   `spcv_env`
+
+-   `sptcv_cluto`
+
+-   `sptcv_cstf`
+
+and their respective repeated versions.
+
+```{r, warning=FALSE}
+as.data.table(mlr_resamplings)
+```
+
+# Examples Tasks
+
+Additional example tasks:
+
+- `tsk("ecuador")` (spatial, classif)
+- `tsk("cookfarm")` (spatiotemp, regr)
+
+# Upstream Packages and Scientific References
+
+The following table lists all methods implemented in {mlr3spatiotempcv}, their upstream R package and scientific references.
+
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Literature                                                               | Package                                                                  | Reference                                                                | mlr3 Sugar                                                               |
++==========================================================================+==========================================================================+==========================================================================+==========================================================================+
+| Spatial Buffering                                                        | [blockCV](https://github.com/rvalavi/blockCV)                            | @valavi2018                                                              | `rsmp("spcv_buffer")`                                                    |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Spatial Blocking                                                         | [blockCV](https://github.com/rvalavi/blockCV)                            | @valavi2018                                                              | `rsmp("spcv_block")`                                                     |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Spatial CV                                                               | [sperrorest](https://github.com/giscience-fsu/sperrorest)                | @brenning2012                                                            | `rsmp("spcv_coords")`                                                    |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Environmental Blocking                                                   | [blockCV](https://github.com/rvalavi/blockCV)                            | @valavi2018                                                              | `rsmp("spcv_env")`                                                       |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| \-                                                                       | \-                                                                       | \-                                                                       | `rsmp("sptcv_cluto")`                                                    |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Leave-Location-and-Time-Out                                              | [CAST](https://github.com/HannaMeyer/CAST)                               | @meyer2018                                                               | `rsmp("sptcv_cstf")`                                                     |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Spatiotemporal Clustering                                                | [skmeans](https://github.com/cran/skmeans)                               | @zhao2002                                                                | `rsmp("repeated_sptcv_cluto")`                                           |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Repeated Spatial Blocking                                                | [blockCV](https://github.com/rvalavi/blockCV)                            | @valavi2018                                                              | `rsmp("repeated_spcv_block")`                                            |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Repeated Spatial CV                                                      | [sperrorest](https://github.com/giscience-fsu/sperrorest)                | @brenning2012                                                            | `rsmp("repeated_spcv_coords")`                                           |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Repeated Env Blocking                                                    | [blockCV](https://github.com/rvalavi/blockCV)                            | @valavi2018                                                              | `rsmp("repeated_spcv_env")`                                              |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| \-                                                                       | \-                                                                       | \-                                                                       | `rsmp("repeated_sptcv_cluto")`                                           |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Repeated Leave-Location-and-Time-Out                                     | [CAST](https://github.com/HannaMeyer/CAST)                               | @meyer2018                                                              | `rsmp("repeated_sptcv_cstf")`                                            |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+| Repeated Spatiotemporal Clustering                                       | [skmeans](https://github.com/cran/skmeans)                               | @zhao2002                                                                | `rsmp("repeated_sptcv_cluto")`                                           |
++--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------+
+
+# References
