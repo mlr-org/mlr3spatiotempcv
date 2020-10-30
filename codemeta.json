@@ -14,7 +14,7 @@
   ],
   "issueTracker": "https://github.com/mlr-org/mlr3spatiotempcv/issues",
   "license": "https://spdx.org/licenses/LGPL-3.0",
-  "version": "0.0.0.9012",
+  "version": "0.1.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -328,18 +328,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "cli",
-      "name": "cli",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=cli"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "data.table",
       "name": "data.table",
       "provider": {
@@ -432,9 +420,9 @@
   ],
   "releaseNotes": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/NEWS.md",
   "readme": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/README.md",
-  "fileSize": "10084.502KB",
+  "fileSize": "9708.293KB",
   "contIntegration": "https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=master",
-  "developmentStatus": "https://www.tidyverse.org/lifecycle/#experimental",
+  "developmentStatus": "https://www.tidyverse.org/lifecycle/#maturing",
   "keywords": [
     "mlr3",
     "resampling",
