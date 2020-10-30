@@ -36,7 +36,6 @@ Depends:
     R (>= 3.5.0)
 Imports:
     checkmate,
-    cli,
     data.table,
     ggplot2,
     mlr3 (>= 0.7.0),
