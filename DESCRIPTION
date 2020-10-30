@@ -58,7 +58,6 @@ Suggests:
     mlr3tuning,
     patchwork,
     plotly,
-    renv,
     rmarkdown,
     rpart,
     sf,
