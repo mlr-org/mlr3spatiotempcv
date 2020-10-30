@@ -3,7 +3,7 @@
 #' @import mlr3
 #'
 #' @description This task specializes [Task] and [TaskSupervised] for
-#' spatio-temporal classification problems. The target column is assumed to be a
+#' spatiotemporal classification problems. The target column is assumed to be a
 #' factor. The `task_type` is set to `"classif"` and `"spatiotemporal"`.
 #'
 #' A spatial example task is available via `tsk("ecuador")`, a spatiotemporal

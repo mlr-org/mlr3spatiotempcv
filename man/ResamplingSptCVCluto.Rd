@@ -2,9 +2,9 @@
 % Please edit documentation in R/ResamplingSptCVCluto.R
 \name{ResamplingSptCVCluto}
 \alias{ResamplingSptCVCluto}
-\title{Spatio-Temporal Cluster Resampling}
+\title{Spatioemporal Cluster Resampling}
 \description{
-Spatio-temporal cluster partitioning via the \code{vcluster} executable of the
+Spatiotemporal cluster partitioning via the \code{vcluster} executable of the
 CLUTO clustering application.
 
 This partitioning method relies on the external CLUTO library.

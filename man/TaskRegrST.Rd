@@ -4,7 +4,7 @@
 \alias{TaskRegrST}
 \title{SpatioTemporal Regression Task}
 \description{
-This task specializes \link{Task} and \link{TaskSupervised} for spatio-temporal
+This task specializes \link{Task} and \link{TaskSupervised} for spatiotemporal
 classification problems.
 
 A spatial example task is available via \code{tsk("ecuador")}, a spatiotemporal

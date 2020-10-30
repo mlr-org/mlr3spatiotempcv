@@ -1,5 +1,5 @@
 #' @description
-#'  Spatio-temporal cluster partitioning via the `vcluster` executable of the
+#'  Spatiotemporal cluster partitioning via the `vcluster` executable of the
 #'  CLUTO clustering application.
 #'
 #' This partitioning method relies on the external CLUTO library.

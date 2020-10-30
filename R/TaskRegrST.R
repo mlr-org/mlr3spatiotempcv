@@ -3,7 +3,7 @@
 #' @import mlr3
 #'
 #' @description
-#' This task specializes [Task] and [TaskSupervised] for spatio-temporal
+#' This task specializes [Task] and [TaskSupervised] for spatiotemporal
 #' classification problems.
 #'
 #' A spatial example task is available via `tsk("ecuador")`, a spatiotemporal

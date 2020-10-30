@@ -1,4 +1,4 @@
-#' @title Create Spatio-Temporal Folds Using Predefined Groups
+#' @title Create Spatiotemporal Folds Using Predefined Groups
 #'
 #' @template rox_sptcv_cstf
 #'
