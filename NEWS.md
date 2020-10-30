@@ -1,3 +1,12 @@
+# mlr3spatiotempcv 0.0.0.9013
+
+- Add mlr3book section
+- Polish vignettes and README
+- Add codefactor badge
+- Lifecycle: maturing
+- Remove orphaned {bibtex} package
+
+
 # mlr3spatiotempcv 0.0.0.9012
 
 - SptCV methods: move arguments from `$instantiate()` to constructor
