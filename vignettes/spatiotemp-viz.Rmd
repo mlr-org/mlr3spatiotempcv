@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # don't run on mac
 os = ifelse(!Sys.info()[["sysname"]] == "Darwin", TRUE, FALSE)
 
-# - dont run on CRAN
+# - don't run on CRAN
 is_cran = ifelse(Sys.getenv("NOT_CRAN") != "false", FALSE, TRUE)
 
 # run on ci
@@ -24,13 +24,15 @@ pkgdown = Sys.getenv("IN_PKGDOWN") != ""
 ```
 
 {mlr3spatiotempcv} makes use of {plotly} to create the 3D plots for visualizing spatiotemporal folds created via the CLUTO algorithm.
-Arranging multiple 3D plots in plotly is done via [3D subplots](https://plotly.com/r/3d-subplots/).
-Unfortunately, {plotl's} subplot implementation is not dynamic: multiple "scene" objects need to be specified in `plotly::layout()` which determine the coordinates of the respective subplot.
+Arranging multiple 3D plots in {plotly} is done via [3D subplots](https://plotly.com/r/3d-subplots/).
+
+Unfortunately, {plotly}'s subplot implementation is not dynamic.
+This means that multiple "scene" objects need to be specified in `plotly::layout()` to determine the coordinates of the respective subplot.
 Depending on the number of chosen folds by the user in `autoplot()`, a different number of scenes with different coordinates needs to be given to align the plots properly.
 
-At this point, manual action by the user is needed.
+Hence, manual action is needed to create a properly aligned grid of 3D plots.
 
-Here is an example to create a 2x2 grid showing four folds as 3D subplots.
+Below is an example how to create a 2x2 grid showing four folds as 3D subplots.
 It makes use of the returned 3D plotly objects which are returned in a list by `autoplot()`:
 
 ```{r, fig.align='center', eval=os&&!is_cran&&pkgdown, fig.width=8, fig.height=9}
@@ -40,7 +42,7 @@ task_st = tsk("cookfarm")
 resampling = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
 resampling$instantiate(task_st)
 
-pl = plot(resampling, task_st, c(1, 2),
+pl = plot(resampling, task_st, c(1, 2, 3, 4),
   point_size = 3, axis_label_fontsize = 10)
 
 # Warnings can be ignored
@@ -79,5 +81,5 @@ cat("(The actual graphic here only rendered on the pkgdown site: please visit ht
 cat("(The Cluto method does not work on macOS: please visit https://mlr3spatiotempcv.mlr-org.com to see the rendered plot.)")
 ```
 
-Subplot titles are not dynamically supported.
-However, there is also a manual workaround via [annotations](https://plotly.com/r/reference/#layout-annotations) show in this [RPubs post](https://rpubs.com/bcd/subplot-titles) which could be used.
+Subplot titles can unfortunately not created dynamically.
+However, there is also a manual workaround via [annotations](https://plotly.com/r/reference/#layout-annotations) show in this [RPubs post](https://rpubs.com/bcd/subplot-titles).
