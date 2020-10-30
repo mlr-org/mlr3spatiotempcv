@@ -5,7 +5,7 @@
 \title{SpatioTemporal Classification Task}
 \description{
 This task specializes \link{Task} and \link{TaskSupervised} for
-spatio-temporal classification problems. The target column is assumed to be a
+spatiotemporal classification problems. The target column is assumed to be a
 factor. The \code{task_type} is set to \code{"classif"} and \code{"spatiotemporal"}.
 
 A spatial example task is available via \code{tsk("ecuador")}, a spatiotemporal

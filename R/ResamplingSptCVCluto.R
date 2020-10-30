@@ -1,4 +1,4 @@
-#' @title Spatio-Temporal Cluster Resampling
+#' @title Spatioemporal Cluster Resampling
 #'
 #' @import mlr3
 #' @template rox_sptcv_cluto
@@ -142,7 +142,7 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
       if (is.null(cluto_parameters)) {
         control_cluto = sprintf('-clmethod="%s"', clmethod)
       } else {
-        control_cluto = sprintf('-clmethod="%s""%s"', clmethod, cluto_parameters) #nocov # nolint
+        control_cluto = sprintf('-clmethod="%s""%s"', clmethod, cluto_parameters) # nocov # nolint
       }
 
       inds = skmeans::skmeans(data_matrix,

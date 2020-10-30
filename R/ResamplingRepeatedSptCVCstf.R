@@ -1,4 +1,4 @@
-#' @title Repeated Spatio-Temporal Cluster Resampling
+#' @title Repeated Spatiotemporal Cluster Resampling
 #'
 #' @template rox_sptcv_cluto
 #'
