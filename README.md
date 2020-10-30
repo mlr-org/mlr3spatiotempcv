@@ -14,7 +14,7 @@ This package extends the [mlr3](https://github.com/mlr-org/mlr3) package framewo
 
 The package is not yet on CRAN but can be installed from GitHub via
 
-``` {r}
+```r
 remotes::install_github("mlr-org/mlr3spatiotempcv")
 ```
 
