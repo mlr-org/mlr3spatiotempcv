@@ -37,7 +37,7 @@ csl: apa.csl
 # Summary
 
 The R package [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is an extension package of the machine learning framework [mlr3](https://mlr3.mlr-org.com) [@mlr3].
-It adds support for spatiotemporal resampling methods and respective visualization methods of.
+It adds support for spatiotemporal resampling methods and respective visualization methods.
 Spatiotemporal resampling methods are needed to account for the existence of different autocorrelation types (spatial autocorrelation (SAC), temporal autocorrelation (TAC) or spatio-temporal autocorrelation (STAC)) in datasets.
 These autocorrelation types cause biased performance estimates of varying magnitude in cross-validation when ignored.
 
@@ -69,10 +69,10 @@ The following example showcases how a spatial dataset can be used to retrieve a 
 The following examples use the [ecuador](https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_ecuador.html) dataset created by [Jannes Muenchow](https://scholar.google.com/citations?user=Slq94Y4AAAAJ&hl=de&authuser=1&oi=ao).
 It contains information on the occurrence of landslides (binary) in the Andes of Southern Ecuador.
 The landslides were mapped from aerial photos taken in 2000.
-The dataset is well suited to serve as an example because it it relatively small and of course due to the spatial nature of the observations.
+The dataset is well suited to serve as an example because it is relatively small and of course due to the spatial nature of the observations.
 Please refer to @muenchow2012 for a detailed description of the dataset.
 
-To account for the spatial autocorrelation probably present in the landslide data, we will make use one of the most used spatial partitioning methods, a cluster-based k-means grouping [@brenning2012], (`"spcv_coords"` in [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com)).
+To account for the spatial autocorrelation probably present in the landslide data, we will make use one of the most used spatial partitioning methods, a cluster-based $k$-means grouping [@brenning2012], (`"spcv_coords"` in [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com)).
 This method performs a clustering in 2D space which contrasts with the commonly used random partitioning for non-spatial data.
 The grouping has the effect that train and test data are more separated in space as they would be by conducting a random partitioning, thereby reducing the effect of STAC.
 
@@ -84,7 +84,7 @@ However, these low error rates are mainly caused due to the STAC in the observat
 
 In the following a spatial and a non-spatial CV will be conducted to showcase the mentioned performance differences.
 
-The performance of a simple classification tree (`"classif.rpart"`) is evaluated on a random partitioning (`"repeated_cv"`) with four folds and two repetitions.
+The performance of a simple classification tree (`"classif.rpart"`) is evaluated on a random repeated cross-validation (`"repeated_cv"`) with four folds and two repetitions.
 The chosen evaluation measure is "classification error" (`"classif.ce"`).
 The only difference in the spatial setting is that `"repeated_spcv_coords"` is chosen instead of `"repeated_cv"`.
 
