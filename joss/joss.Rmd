@@ -80,6 +80,10 @@ By contrast, when using the classical random partitioning approach with spatial 
 This leads to a high similarity between train and test sets, resulting in "better" but biased performance estimates in every fold of a CV compared to the spatial CV approach.
 However, these low error rates are mainly caused due to the STAC in the observations and the lack of appropriate partitioning methods and not by the power of the fitted model.
 
+Rephrased in other words: the higher performance results in a non-spatial CV scenario should not be relied on or used for reporting.
+The positive bias in these results is substantial and the actual performance of the model is nowhere near this result.
+Results from a SptCV are not unbiased but more close in reflecting the actual performance of the learner on unknown datasets.
+
 ## Comparing Spatial Resampling & Non-Spatial Resampling
 
 In the following a spatial and a non-spatial CV will be conducted to showcase the mentioned performance differences.
@@ -93,6 +97,7 @@ The only difference in the spatial setting is that `"repeated_spcv_coords"` is c
 ```{r rr-nspcv}
 library("mlr3")
 library("mlr3spatiotempcv")
+library("mlr3learners")
 set.seed(42)
 
 # be less verbose
@@ -101,34 +106,31 @@ lgr::get_logger("mlr3")$set_threshold("warn")
 
 task = tsk("ecuador")
 
-learner = lrn("classif.rpart", maxdepth = 3, predict_type = "prob")
+learner = lrn("classif.ranger", predict_type = "prob")
 resampling_nsp = rsmp("repeated_cv", folds = 4, repeats = 2)
 rr_nsp = resample(
   task = task, learner = learner,
   resampling = resampling_nsp
 )
 
-rr_nsp$aggregate(measures = msr("classif.ce"))
+rr_nsp$aggregate(measures = msr("classif.auc"))
 ```
 
 ### Spatial Cross-Validation
 
 ```{r rr-spcv}
-task = tsk("ecuador")
-
-learner = lrn("classif.rpart", maxdepth = 3, predict_type = "prob")
 resampling_sp = rsmp("repeated_spcv_coords", folds = 4, repeats = 2)
 rr_sp = resample(
   task = task, learner = learner,
   resampling = resampling_sp
 )
 
-rr_sp$aggregate(measures = msr("classif.ce"))
+rr_sp$aggregate(measures = msr("classif.auc"))
 ```
 
-Here, the classification tree learner is around 0.05 percentage points worse when using Spatial Cross-Validation (SpCV) compared to Non-Spatial Cross-Validation (NSpCV).
+Here, the the random forest learners is around 0.15 worse in AUC when using Spatial Cross-Validation (SpCV) compared to Non-Spatial Cross-Validation (NSpCV).
 The magnitude of this difference is variable as it depends on the dataset, the magnitude of STAC and the learner itself.
-For algorithms with a higher tendency of overfitting to the training set, the difference between the two methods will be larger.
+Algorithms with a higher tendency of overfitting to the training set will have a large spread in such scenarios.
 
 ## Visualization of Spatiotemporal Partitions
 
