@@ -77,7 +77,7 @@ This method performs a clustering in 2D space which contrasts with the commonly 
 The grouping has the effect that train and test data are more separated in space as they would be by conducting a random partitioning, thereby reducing the effect of STAC.
 
 By contrast, when using the classical random partitioning approach with spatial data, train and test observations would be located side-by-side across the full study area (a visual example is provided further below).
-This leads to a high similarity between train and test sets, resulting in "better" but biased performance estimates in every fold of a CV compared to the spatial CV approach.
+This leads to a high similarity between train and test sets, resulting in "better" but over-optimistic performance estimates in every fold of a CV compared to the spatial CV approach.
 However, these low error rates are mainly caused due to the STAC in the observations and the lack of appropriate partitioning methods and not by the power of the fitted model.
 
 Rephrased in other words: the higher performance results in a non-spatial CV scenario should not be relied on or used for reporting.
@@ -128,7 +128,9 @@ rr_sp = resample(
 rr_sp$aggregate(measures = msr("classif.auc"))
 ```
 
-Here, the the random forest learners is around 0.15 worse in AUC when using Spatial Cross-Validation (SpCV) compared to Non-Spatial Cross-Validation (NSpCV).
+Here, the estimated AUC using Non-Spatial Cross-Validation (NSpCV) is around 0.15 better compared to the Spatial Cross-Validation (SpCV).
+Remember that the better performance score results from over-optimism in the estimation with NSpCV.
+The actual predictive performance on new data is much more realistically reflected by the performance estimated via SpCV.
 The magnitude of this difference is variable as it depends on the dataset, the magnitude of STAC and the learner itself.
 Algorithms with a higher tendency of overfitting to the training set will have a large spread in such scenarios.
 
