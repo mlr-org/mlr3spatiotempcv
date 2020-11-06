@@ -80,6 +80,6 @@ resampling$instantiate(task)
 
 autoplot(resampling, task) +
   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-# autoplot(resampling, task, 1)
-# autoplot(resampling, task, c(1, 2))
+autoplot(resampling, task, 1)
+autoplot(resampling, task, c(1, 2))
 }

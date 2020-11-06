@@ -5,7 +5,7 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "mlr3spatiotempcv",
-  "description": "Extends the mlr3 ML framework with spatio-temporal\n    resampling methods to account for the presence of spatiotemporal\n    autocorrelation (STAC) in predictor variables. STAC may cause highly\n    biased performance estimates in cross-validation if ignored.",
+  "description": "Extends the mlr3 ML framework with spatio-temporal resampling\n    methods to account for the presence of spatiotemporal autocorrelation\n    (STAC) in predictor variables. STAC may cause highly biased\n    performance estimates in cross-validation if ignored.",
   "name": "mlr3spatiotempcv: Spatiotemporal Resampling Methods for 'mlr3'",
   "codeRepository": "https://github.com/mlr-org/mlr3spatiotempcv",
   "relatedLink": [
@@ -392,6 +392,7 @@
       "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
+      "version": ">= 3.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -408,7 +409,7 @@
   ],
   "releaseNotes": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/NEWS.md",
   "readme": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/README.md",
-  "fileSize": "9707.908KB",
+  "fileSize": "11324.078KB",
   "contIntegration": "https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=master",
   "developmentStatus": "https://www.tidyverse.org/lifecycle/#maturing",
   "keywords": [
