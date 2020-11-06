@@ -64,10 +64,9 @@ The magnitude of this decrease is linked to the magnitude of STAC in the dataset
 
 One approach to account for the existence of STAC is to use dedicated resampling methods.
 [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) provides access to the most frequently used spatiotemporal resampling methods.
-The following example showcases how a spatial dataset can be used to retrieve a bias-reduced performance estimate of a learner.
+The following example, which uses the [ecuador](https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_ecuador.html) dataset created by [Jannes Muenchow](https://scholar.google.com/citations?user=Slq94Y4AAAAJ&hl=de&authuser=1&oi=ao), showcases how a spatial dataset can be used to retrieve a bias-reduced performance estimate of a learner.
 
-The following examples use the [ecuador](https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_ecuador.html) dataset created by [Jannes Muenchow](https://scholar.google.com/citations?user=Slq94Y4AAAAJ&hl=de&authuser=1&oi=ao).
-It contains information on the occurrence of landslides (binary) in the Andes of Southern Ecuador.
+This dataset contains information on the occurrence of landslides (binary) in the Andes of Southern Ecuador.
 The landslides were mapped from aerial photos taken in 2000.
 The dataset is well suited to serve as an example because it is relatively small and of course due to the spatial nature of the observations.
 Please refer to @muenchow2012 for a detailed description of the dataset.
@@ -86,15 +85,30 @@ Results from a SptCV are not unbiased but more close in reflecting the actual pe
 
 ## Comparing Spatial Resampling & Non-Spatial Resampling
 
-In the following a spatial and a non-spatial CV will be conducted to showcase the mentioned performance differences.
+In the following, a spatial and a non-spatial CV will be conducted to showcase the mentioned performance differences.
 
-The performance of a simple classification tree (`"classif.rpart"`) is evaluated on a random repeated cross-validation (`"repeated_cv"`) with four folds and two repetitions.
-The chosen evaluation measure is "classification error" (`"classif.ce"`).
+The performance of a simple classification tree (`"classif.ranger"`) is evaluated on a random repeated cross-validation (`"repeated_cv"`) with four folds and two repetitions.
+The chosen evaluation measure is the "Area Under the ROC Curve" (`"classif.auc"`).
 The only difference in the spatial setting is that `"repeated_spcv_coords"` is chosen instead of `"repeated_cv"`.
 
-### Non-Spatial Cross-Validation
+### Data Preparation
 
-```{r rr-nspcv}
+The following code chunk first loads all necessary R packages and sets a low verbosity for this example.
+A seed is set for deterministic execution.
+
+Next the mlr3 builtin task `"ecuador"` is loaded via `tsk()`, which is a convenience wrapper around the underlying R6 construction method for a spatiotemporal classification task (`mlr3spatiotempcv::TaskClassifST$new()`).
+
+Last, the random forest learner (`"classif.ranger")` is initialized with default hyperparameters and the prediction type set to `"probability"` due to the binary response variable.
+
+```{r setup, echo=FALSE}
+# important for correct figure placement
+# see https://stackoverflow.com/a/49395389/4185785
+knitr::knit_hooks$set(plot = function(x, options) {
+  knitr::hook_plot_tex(x, options)
+})
+```
+
+```{r prepare}
 library("mlr3")
 library("mlr3spatiotempcv")
 library("mlr3learners")
@@ -107,6 +121,11 @@ lgr::get_logger("mlr3")$set_threshold("warn")
 task = tsk("ecuador")
 
 learner = lrn("classif.ranger", predict_type = "prob")
+```
+
+### Non-Spatial Cross-Validation
+
+```{r rr-nspcv}
 resampling_nsp = rsmp("repeated_cv", folds = 4, repeats = 2)
 rr_nsp = resample(
   task = task, learner = learner,
@@ -139,11 +158,12 @@ Algorithms with a higher tendency of overfitting to the training set will have a
 Every partitioning method in [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) comes with a generic `plot()` method to visualize the created groups.
 In a 2D space this happens via [ggplot2](https://ggplot2.tidyverse.org) [@ggplot2] while for spatiotemporal methods 3D visualizations via [plotly](https://github.com/ropensci/plotly) [@plotly] are created.
 
-```{r vis-spcv, fig.cap="Visualization of spatial partitioning", fig.pos="h!", fig.height=6, fig.width=8}
+```{r vis-spcv, fig.cap="Visualization of spatial partitioning", fig.pos="!b", fig.height=6, fig.width=8}
 autoplot(resampling_sp, task, fold_id = c(1:4)) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
+\
 
 Unless specified by the user, the coordinate reference system (CRS) defaults to EPSG code 4326 (WGS84).
 This is because a lat/lon based CRS is better suited for plotting purposes than a Mercator (UTM) one.
@@ -155,7 +175,7 @@ In practice however, one needs to create a spatiotemporal task via `TaskClassifS
 
 The spatial grouping of the k-means based approach above (Figure 1) contrasts visually very well compared to the NSpCV (random) partitioning (Figure 2):
 
-```{r vis-nspcv, fig.cap="Visualization of random partitioning", fig.pos="h!", fig.height=6, fig.width=8}
+```{r vis-nspcv, fig.cap="Visualization of random partitioning", fig.pos="!b", fig.height=6, fig.width=8}
 autoplot(resampling_nsp, task, fold_id = c(1:4), crs = 4326) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
