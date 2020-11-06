@@ -98,6 +98,7 @@ mlr3 spatial resampling object of class \link{ResamplingSptCVCstf} or
 Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods.
 }
 \examples{
+\donttest{
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm")
@@ -106,6 +107,7 @@ resampling$instantiate(task_st)
 
 # plot
 autoplot(resampling, task_st)
-# autoplot(resampling, task_st, 1)
-# autoplot(resampling, task_st, c(1, 2))
+autoplot(resampling, task_st, 1)
+autoplot(resampling, task_st, c(1, 2))
+}
 }

@@ -26,6 +26,7 @@
 #'   Font size of axis labels.
 #' @export
 #' @examples
+#' \donttest{
 #' library(mlr3)
 #' library(mlr3spatiotempcv)
 #' task_st = tsk("cookfarm")
@@ -34,8 +35,9 @@
 #'
 #' # plot
 #' autoplot(resampling, task_st)
-#' # autoplot(resampling, task_st, 1)
-#' # autoplot(resampling, task_st, c(1, 2))
+#' autoplot(resampling, task_st, 1)
+#' autoplot(resampling, task_st, c(1, 2))
+#' }
 autoplot.ResamplingSptCVCstf = function( # nolint
   object,
   task,
