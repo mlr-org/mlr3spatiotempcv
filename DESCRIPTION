@@ -23,10 +23,10 @@ Authors@R:
              role = "ctb",
              email = "michellang@gmail.com",
              comment = c(ORCID = "0000-0001-9754-0393")))
-Description: Extends the mlr3 ML framework with spatio-temporal
-    resampling methods to account for the presence of spatiotemporal
-    autocorrelation (STAC) in predictor variables. STAC may cause highly
-    biased performance estimates in cross-validation if ignored.
+Description: Extends the mlr3 ML framework with spatio-temporal resampling
+    methods to account for the presence of spatiotemporal autocorrelation
+    (STAC) in predictor variables. STAC may cause highly biased
+    performance estimates in cross-validation if ignored.
 License: LGPL-3
 URL: https://mlr3spatiotempcv.mlr-org.com/,
     https://github.com/mlr-org/mlr3spatiotempcv,
@@ -42,7 +42,7 @@ Imports:
     mlr3misc (>= 0.1.7),
     paradox,
     R6,
-    testthat,
+    testthat (>= 3.0.0),
     utils
 Suggests:
     bbotk,
@@ -66,6 +66,8 @@ Suggests:
     withr
 VignetteBuilder:
     knitr
+Config/testthat/edition: 3
+Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no

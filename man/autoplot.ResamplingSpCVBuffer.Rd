@@ -51,6 +51,7 @@ mlr3 spatial resampling object of class \link{ResamplingSpCVBuffer}.}
 Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods.
 }
 \examples{
+\donttest{
 library(mlr3)
 library(mlr3spatiotempcv)
 task = tsk("ecuador")
@@ -59,5 +60,6 @@ resampling$instantiate(task)
 
 autoplot(resampling, task, 1) +
   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-# autoplot(resampling, task, c(1, 2))
+autoplot(resampling, task, c(1, 2))
+}
 }

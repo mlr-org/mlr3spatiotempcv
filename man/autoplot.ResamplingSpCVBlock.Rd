@@ -95,10 +95,10 @@ autoplot(resampling, task) +
   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 
 ## Visualize the train/test split of a single fold
-# autoplot(resampling, task, fold_id = 1)
+autoplot(resampling, task, fold_id = 1)
 
 ## Visualize train/test splits of multiple folds
-# autoplot(resampling, task, fold_id = c(1, 2))
+autoplot(resampling, task, fold_id = c(1, 2))
 
 # list of ggplot2 resamplings
 plot_list = autoplot(resampling, task,
