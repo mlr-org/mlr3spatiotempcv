@@ -10,6 +10,7 @@
 #'   mlr3 spatial resampling object of class [ResamplingSpCVBuffer].
 #' @export
 #' @examples
+#' \donttest{
 #' library(mlr3)
 #' library(mlr3spatiotempcv)
 #' task = tsk("ecuador")
@@ -18,7 +19,8 @@
 #'
 #' autoplot(resampling, task, 1) +
 #'   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-#' # autoplot(resampling, task, c(1, 2))
+#' autoplot(resampling, task, c(1, 2))
+#' }
 autoplot.ResamplingSpCVBuffer = function( # nolint
   object,
   task,

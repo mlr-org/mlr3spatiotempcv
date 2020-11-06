@@ -54,10 +54,10 @@
 #'   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #'
 #' ## Visualize the train/test split of a single fold
-#' # autoplot(resampling, task, fold_id = 1)
+#' autoplot(resampling, task, fold_id = 1)
 #'
 #' ## Visualize train/test splits of multiple folds
-#' # autoplot(resampling, task, fold_id = c(1, 2))
+#' autoplot(resampling, task, fold_id = c(1, 2))
 #'
 #' # list of ggplot2 resamplings
 #' plot_list = autoplot(resampling, task,
@@ -151,8 +151,8 @@ plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
 #'
 #' autoplot(resampling, task) +
 #'   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-#' # autoplot(resampling, task, 1)
-#' # autoplot(resampling, task, c(1, 2))
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, c(1, 2))
 autoplot.ResamplingSpCVEnv = function( # nolint
   object,
   task,
@@ -239,8 +239,8 @@ plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
 #'
 #' autoplot(resampling, task) +
 #'   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-#' # autoplot(resampling, task, 1)
-#' # autoplot(resampling, task, c(1, 2))
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, c(1, 2))
 autoplot.ResamplingSpCVCoords = function( # nolint
   object,
   task,
@@ -435,8 +435,8 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
 #'
 #' autoplot(resampling, task) +
 #'   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-#' # autoplot(resampling, task, 1)
-#' # autoplot(resampling, task, c(1, 2))
+#' autoplot(resampling, task, 1)
+#' autoplot(resampling, task, c(1, 2))
 autoplot.ResamplingCV = function( # nolint
   object,
   task,

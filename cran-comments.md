@@ -8,3 +8,9 @@
 0 errors | 0 warnings | 1 note
 
 * This is a new release.
+
+Changes to previous submission:
+
+- Commented in some examples in `autoplot()`
+- Wrapped one example in `\dontrun{}` because it requires external software
+- Require testthat v3.0.0 and run tests in parallel
