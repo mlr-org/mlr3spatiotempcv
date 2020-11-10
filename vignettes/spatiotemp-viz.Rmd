@@ -17,10 +17,7 @@ knitr::opts_chunk$set(
 os = ifelse(!Sys.info()[["sysname"]] == "Darwin", TRUE, FALSE)
 
 # - don't run on CRAN
-is_cran = ifelse(Sys.getenv("NOT_CRAN") != "false", FALSE, TRUE)
-
-# run on ci
-pkgdown = Sys.getenv("IN_PKGDOWN") != ""
+is_cran = ifelse(Sys.getenv("NOT_CRAN") != "", FALSE, TRUE)
 ```
 
 {mlr3spatiotempcv} makes use of {plotly} to create the 3D plots for visualizing spatiotemporal folds created via the CLUTO algorithm.
@@ -35,7 +32,7 @@ Hence, manual action is needed to create a properly aligned grid of 3D plots.
 Below is an example how to create a 2x2 grid showing four folds as 3D subplots.
 It makes use of the returned 3D plotly objects which are returned in a list by `autoplot()`:
 
-```{r, fig.align='center', eval=os&&!is_cran&&pkgdown, fig.width=8, fig.height=9}
+```{r, fig.align='center', eval=os&&!is_cran, fig.width=8, fig.height=9}
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm")
@@ -73,8 +70,8 @@ plotly::layout(pl_subplot,
 )
 ```
 
-```{r, eval=os&&!is_cran&&!pkgdown, echo=FALSE, results='asis'}
-cat("(The actual graphic here only rendered on the pkgdown site: please visit https://mlr3spatiotempcv.mlr-org.com.)")
+```{r, eval=os&&!is_cran, echo=FALSE, results='asis'}
+cat("(The actual graphic here is only rendered on the pkgdown site: please visit https://mlr3spatiotempcv.mlr-org.com.)")
 ```
 
 ```{r, eval=!os, results='asis', echo=FALSE}
