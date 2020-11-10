@@ -1,5 +1,3 @@
-context("TaskClassifST")
-
 test_that("coordinates can be used as features", {
   task = test_make_twoclass(coords_as_features = TRUE)
 

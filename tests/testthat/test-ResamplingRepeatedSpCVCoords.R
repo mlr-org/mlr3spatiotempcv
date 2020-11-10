@@ -1,5 +1,3 @@
-context("ResamplingRepeatedSpCVCoords")
-
 test_that("folds can be printed", {
   task = test_make_twoclass()
   rsp = rsmp("repeated_spcv_coords", folds = 3, repeats = 5)

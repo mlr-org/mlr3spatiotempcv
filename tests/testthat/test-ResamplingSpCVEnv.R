@@ -1,5 +1,3 @@
-context("ResamplingSpCVEnv")
-
 test_that("resampling iterations equals folds", {
   task = test_make_twoclass()
   rsp = rsmp("spcv_env", folds = 2, features = "p_1")

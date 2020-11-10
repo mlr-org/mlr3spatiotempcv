@@ -1,5 +1,3 @@
-context("TaskRegrST")
-
 test_that("coordinates can be used as features", {
   task = test_make_regr(coords_as_features = TRUE)
 

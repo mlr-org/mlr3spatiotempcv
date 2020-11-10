@@ -1,5 +1,3 @@
-context("plot")
-
 # sptcv_Cluto ------------------------------------------------------------------
 
 test_that("plot() works for 'sptcv_cluto'", {
