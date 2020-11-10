@@ -1,5 +1,3 @@
-context("plot")
-
 # spcv_buffer ------------------------------------------------------------------
 
 test_that("plot() works for 'spcv_buffer'", {

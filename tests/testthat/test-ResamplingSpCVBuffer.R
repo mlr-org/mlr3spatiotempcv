@@ -1,5 +1,3 @@
-context("ResamplingSpCVBuffer")
-
 test_that("resampling iterations equals number of observations (two-class response)", {
   task = test_make_twoclass()
   rsp = rsmp("spcv_buffer", theRange = 1)

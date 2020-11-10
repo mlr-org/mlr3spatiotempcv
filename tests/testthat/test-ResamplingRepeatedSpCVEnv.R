@@ -1,5 +1,3 @@
-context("ResamplingRepeatedSpCVEnv")
-
 test_that("folds can be printed", {
   task = test_make_twoclass()
   rsp = rsmp("repeated_spcv_env")

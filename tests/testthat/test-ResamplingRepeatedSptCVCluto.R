@@ -1,5 +1,3 @@
-context("ResamplingRepeatedSptCVcluto")
-
 test_that("folds can be printed", {
   skip_on_cran()
   skip_on_os("mac")
