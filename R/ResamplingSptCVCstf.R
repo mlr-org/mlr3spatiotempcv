@@ -3,7 +3,7 @@
 #' @template rox_sptcv_cstf
 #'
 #' @references
-#' `r tools::toRd(bibentries["meyer2018"])`
+#' `r format_bib("meyer2018")`
 #'
 #' @export
 #' @examples

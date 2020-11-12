@@ -26,7 +26,7 @@
 #' * Parallelization framework: \CRANpkg{future}
 #' * Progress bars: \CRANpkg{progressr}
 #' @references
-#' `r tools::toRd(citation("mlr3spatiotempcv"))`
+#' `r format_bib("mlr3spatiotempcv))`
 #'
 #' Schratz, P., Muenchow, J., Iturritxa, E., Richter, J., &
 #'   Brenning, A. (2019). Hyperparameter tuning and performance assessment of
