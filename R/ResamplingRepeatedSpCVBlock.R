@@ -3,7 +3,7 @@
 #' @template rox_spcv_block
 #'
 #' @references
-#' `r tools::toRd(bibentries["valavi2018"])`
+#' `r format_bib("valavi2018")`
 #'
 #' @export
 #' @examples

@@ -3,7 +3,7 @@
 #' @template rox_spcv_coords
 #'
 #' @references
-#' `r tools::toRd(bibentries["brenning2012"])`
+#' `r format_bib("brenning2012")`
 #'
 #' @export
 #' @examples

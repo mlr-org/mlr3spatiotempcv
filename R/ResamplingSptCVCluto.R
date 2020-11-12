@@ -4,7 +4,7 @@
 #' @template rox_sptcv_cluto
 #'
 #' @references
-#' `r tools::toRd(bibentries["zhao2002"])`
+#' `r format_bib("zhao2002")`
 #'
 #' @export
 #' @examples
