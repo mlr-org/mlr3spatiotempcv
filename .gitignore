@@ -406,3 +406,4 @@ TSWLatexianTemp*
 *.pdf
 joss.md
 joss.tex
+inst/debug.R

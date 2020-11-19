@@ -30,3 +30,4 @@
 ^\.pre-commit-config\.yaml$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^inst/debug\.R$
