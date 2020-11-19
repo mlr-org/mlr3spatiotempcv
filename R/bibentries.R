@@ -1,3 +1,4 @@
+# nocov start
 format_bib = function(...) {
   str = vapply(list(...), function(entry) tools::toRd(bibentries[[entry]]), FUN.VALUE = "")
   paste0(str, collapse = "\n\n")
@@ -116,3 +117,4 @@ bibentries = c( # nolint start
     journal = "11th Conference of Information and Knowledge Management (CIKM)"
   )
 ) # nolint end
+# nocov end
