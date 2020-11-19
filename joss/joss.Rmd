@@ -42,7 +42,7 @@ Spatiotemporal resampling methods are needed to account for the existence of dif
 These autocorrelation types cause biased performance estimates of varying magnitude in cross-validation when ignored.
 
 At the time of writing, various R packages implementing different spatiotemporal partitioning strategies exist: CAST [@cast], blockCV [@blockCV] or sperrorest [@brenning2012].
-There are some resampling methods used in scientific studies for which the source code is either not available or a different programming language has been used [@roberts2017, @pohjankukka2017]
+There are some resampling methods used in scientific studies for which the source code is either not available or a different programming language has been used [@roberts2017; @pohjankukka2017]
 
 The goal of [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is to gather the available spatiotemporal resampling methods in R and make them available to users through a simplified and generic interface.
 The latter is made possible by integrating the package directly into the [mlr3](https://mlr3.mlr-org.com) machine learning framework.
