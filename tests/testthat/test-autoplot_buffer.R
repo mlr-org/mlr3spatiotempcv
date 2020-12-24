@@ -15,6 +15,6 @@ test_that("plot() works for 'spcv_buffer'", {
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
 
-  vdiffr::expect_doppelganger("SpCVBuffer - Fold 1", p2)
-  vdiffr::expect_doppelganger("SpCVBuffer - Fold 1-2", p3)
+  expect_doppelganger("SpCVBuffer - Fold 1", p2)
+  expect_doppelganger("SpCVBuffer - Fold 1-2", p3)
 })
