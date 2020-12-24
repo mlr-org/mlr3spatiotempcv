@@ -36,16 +36,10 @@ Extends the mlr3 ML framework with spatio-temporal resampling
 }
 
 \references{
-Schratz P, Becker M (2020).
-\emph{mlr3spatiotempcv: Spatiotemporal Resampling Methods for 'mlr3'}.
-https://mlr3spatiotempcv.mlr-org.com/,
-https://github.com/mlr-org/mlr3spatiotempcv,
-https://mlr3book.mlr-org.com.
-
-Schratz, P., Muenchow, J., Iturritxa, E., Richter, J., &
-Brenning, A. (2019). Hyperparameter tuning and performance assessment of
-statistical and machine-learning algorithms using spatial data. Ecological
-Modeling, 406, 109–120. \url{https://doi.org/10/gf34bd}
+Schratz P, Muenchow J, Iturritxa E, Richter J, Brenning A (2019).
+\dQuote{Hyperparameter tuning and performance assessment of statistical and machine-learning algorithms using spatial data.}
+\emph{Ecological Modelling}, \bold{406}, 109--120.
+\doi{10.1016/j.ecolmodel.2019.06.002}.
 }
 \seealso{
 Useful links:

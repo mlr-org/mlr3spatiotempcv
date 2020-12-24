@@ -26,12 +26,7 @@
 #' * Parallelization framework: \CRANpkg{future}
 #' * Progress bars: \CRANpkg{progressr}
 #' @references
-#' `r format_bib("mlr3spatiotempcv))`
-#'
-#' Schratz, P., Muenchow, J., Iturritxa, E., Richter, J., &
-#'   Brenning, A. (2019). Hyperparameter tuning and performance assessment of
-#'   statistical and machine-learning algorithms using spatial data. Ecological
-#'   Modeling, 406, 109–120. \url{https://doi.org/10/gf34bd}
+#' `r format_bib("schratz2019")`
 "_PACKAGE"
 
 register_mlr3 = function() { # nocov start
