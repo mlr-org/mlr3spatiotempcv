@@ -52,14 +52,16 @@ Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods.
 }
 \examples{
 \donttest{
-library(mlr3)
-library(mlr3spatiotempcv)
-task = tsk("ecuador")
-resampling = rsmp("spcv_buffer", theRange = 10000)
-resampling$instantiate(task)
+if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
+  library(mlr3)
+  library(mlr3spatiotempcv)
+  task = tsk("ecuador")
+  resampling = rsmp("spcv_buffer", theRange = 10000)
+  resampling$instantiate(task)
 
-autoplot(resampling, task, 1) +
-  ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-autoplot(resampling, task, c(1, 2))
+  autoplot(resampling, task, 1) +
+    ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+  autoplot(resampling, task, c(1, 2))
+}
 }
 }
