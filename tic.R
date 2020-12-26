@@ -1,3 +1,6 @@
+# check for unescaped suggested packages in examples: https://cran.r-project.org/doc/manuals/r-devel/R-ints.html#Tools
+Sys.setenv("_R_CHECK_DEPENDS_ONLY_" = true)
+
 do_package_checks(error_on = "warning")
 
 if (ci_on_ghactions() && ci_has_env("BUILD_PKGDOWN")) {
