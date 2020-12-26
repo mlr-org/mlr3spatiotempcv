@@ -7,20 +7,22 @@
 #'
 #' @export
 #' @examples
-#' library(mlr3)
-#' task = tsk("ecuador")
+#' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
+#'   library(mlr3)
+#'   task = tsk("ecuador")
 #'
-#' # Instantiate Resampling
-#' rcv = rsmp("spcv_env", folds = 4)
-#' rcv$instantiate(task)
+#'   # Instantiate Resampling
+#'   rcv = rsmp("spcv_env", folds = 4)
+#'   rcv$instantiate(task)
 #'
-#' # Individual sets:
-#' rcv$train_set(1)
-#' rcv$test_set(1)
-#' intersect(rcv$train_set(1), rcv$test_set(1))
+#'   # Individual sets:
+#'   rcv$train_set(1)
+#'   rcv$test_set(1)
+#'   intersect(rcv$train_set(1), rcv$test_set(1))
 #'
-#' # Internal storage:
-#' rcv$instance
+#'   # Internal storage:
+#'   rcv$instance
+#' }
 ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
   inherit = mlr3::Resampling,
 

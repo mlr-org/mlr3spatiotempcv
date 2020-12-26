@@ -93,15 +93,17 @@ Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods.
 }
 \examples{
 \dontrun{
-library(mlr3)
-library(mlr3spatiotempcv)
-task_st = tsk("cookfarm")
-resampling = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
-resampling$instantiate(task_st)
+if (mlr3misc::require_namespaces(c("sf", "skmeans", "plotly"), quietly = TRUE)) {
+  library(mlr3)
+  library(mlr3spatiotempcv)
+  task_st = tsk("cookfarm")
+  resampling = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
+  resampling$instantiate(task_st)
 
-# plot
-autoplot(resampling, task_st)
-autoplot(resampling, task_st, 1)
-autoplot(resampling, task_st, c(1, 2))
+  # plot
+  autoplot(resampling, task_st)
+  autoplot(resampling, task_st, 1)
+  autoplot(resampling, task_st, c(1, 2))
+}
 }
 }
