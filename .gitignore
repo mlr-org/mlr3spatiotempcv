@@ -103,3 +103,4 @@ $RECYCLE.BIN/
 *.code-workspace
 .vscode
 inst/debug.R
+paper
