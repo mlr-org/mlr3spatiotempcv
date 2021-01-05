@@ -104,3 +104,4 @@ $RECYCLE.BIN/
 .vscode
 inst/debug.R
 paper
+CRAN-RELEASE
