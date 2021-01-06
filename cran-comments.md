@@ -1,16 +1,20 @@
-## Test environments
-* local R installation, R 4.0.3
-* GitHub Actions, R 4.0.3 and R-devel
-* win-builder (devel)
+mlr3spatiotempcv 0.1.1
+
+## Cran Repository Policy
+
+- [x] Reviewed CRP last edited 2020-10-29.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+- [x] Checked locally, R 4.0.3
+- [x] Checked on CI system, R 4.0.3
+- [x] Checked on win-builder, R devel
 
-* This is a new release.
+## Current CRAN check results
 
-Changes to previous submission:
+- [x] Checked on 2021-01-05, problems found: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
+- [x] NOTE: r-devel-linux-x86_64-fedora-clang
+- [x] NOTE: r-devel-linux-x86_64-fedora-clang, r-devel-linux-x86_64-fedora-gcc, r-patched-solaris-x86, r-release-macos-x86_64, r-oldrel-macos-x86_64
+- [x] other_issue: NA
 
-- Commented in some examples in `autoplot()`
-- Wrapped one example in `\dontrun{}` because it requires external software
-- Require testthat v3.0.0 and run tests in parallel
+Check results at: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html

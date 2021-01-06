@@ -1,8 +1,3 @@
-# mlr3spatiotempcv 0.1.1.9000
-
-- Internal changes only.
-
-
 # mlr3spatiotempcv 0.1.1
 
 - CRAN-related changes
