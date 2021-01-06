@@ -42,7 +42,6 @@ Imports:
     mlr3misc (>= 0.1.7),
     paradox,
     R6,
-    testthat (>= 3.0.0),
     utils
 Suggests:
     bbotk,
@@ -62,6 +61,7 @@ Suggests:
     rpart,
     sf,
     skmeans,
+    testthat (>= 3.0.0),
     vdiffr,
     withr
 VignetteBuilder:
