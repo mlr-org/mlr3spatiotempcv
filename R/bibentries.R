@@ -1,9 +1,4 @@
 # nocov start
-format_bib = function(...) {
-  str = vapply(list(...), function(entry) tools::toRd(bibentries[[entry]]), FUN.VALUE = "")
-  paste0(str, collapse = "\n\n")
-}
-
 #' @importFrom utils bibentry
 bibentries = c( # nolint start
   brenning2012 = bibentry("inproceedings",
