@@ -39,7 +39,7 @@ Imports:
     data.table,
     ggplot2,
     mlr3 (>= 0.7.0),
-    mlr3misc (>= 0.1.7),
+    mlr3misc (>= 0.7.0),
     paradox,
     R6,
     utils
