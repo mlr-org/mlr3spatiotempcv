@@ -17,6 +17,8 @@ Spatiotemporal resampling methods for mlr3.
 
 This package extends the [mlr3](https://github.com/mlr-org/mlr3) package framework with spatiotemporal resampling and visualization methods.
 
+If you prefer the [tidymodels](https://www.tidymodels.org/) ecosystem, have a look at the [{spatialsample}](https://spatialsample.tidymodels.org/index.html) package for spatial sampling methods.
+
 # Installation
 
 CRAN version
