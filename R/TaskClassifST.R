@@ -23,6 +23,12 @@
 #'   positive = "TRUE", extra_args = list(coordinate_names = c("x", "y"))
 #' )
 #'
+#' # passing objects of class 'sf' is also supported
+#' data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 4326)
+#' task = TaskClassifST$new("ecuador_sf",
+#'   backend = data_sf, target = "slides", positive = "TRUE"
+#' )
+#'
 #' task$task_type
 #' task$formula()
 #' task$class_names
@@ -57,6 +63,18 @@ TaskClassifST = R6::R6Class("TaskClassifST",
         coordinate_names = NA)) {
 
       assert_string(target)
+
+      # support for 'sf' tasks
+      if (inherits(backend, "sf")) {
+        extra_args$crs = sf::st_crs(backend)$input
+        coordinates = sf::st_coordinates(backend)
+        # ensure a point feature has been passed
+        checkmate::assert_character(as.character(sf::st_geometry_type(backend, by_geometry = FALSE)), fixed = "POINT") # nolint
+        backend = sf::st_set_geometry(backend, NULL)
+        backend = merge(backend, coordinates)
+        extra_args$coordinate_names = colnames(coordinates)
+      }
+
       super$initialize(
         id = id, backend = backend, target = target,
         positive = positive, extra_args = extra_args)

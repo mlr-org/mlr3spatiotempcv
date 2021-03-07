@@ -8,6 +8,8 @@ test_make_sp = function() {
   coordinates
 }
 
+# regr tasks -------------------------------------------------------------------
+
 # Create regression task
 test_make_regr = function(coords_as_features = FALSE) {
   data = test_make_sp()
@@ -24,6 +26,27 @@ test_make_regr = function(coords_as_features = FALSE) {
       coords_as_features = coords_as_features)
   )
 }
+
+# Create regression task
+test_make_sf_regr_task = function(coords_as_features = FALSE) {
+  data = test_make_sp()
+  data$p_1 = c(rep("A", 18), rep("B", 18))
+  data$response = rnorm(36)
+
+  data_sf = sf::st_as_sf(data, coords = c("x", "y"), crs = "epsg:4326")
+
+  TaskRegrST$new(
+    id = "sf_regr",
+    backend = data_sf,
+    target = "response",
+    extra_args = list(
+      coordinate_names = c("x", "y"),
+      crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
+      coords_as_features = FALSE)
+  )
+}
+
+# classif tasks ----------------------------------------------------------------
 
 # Create twoclass task
 test_make_twoclass = function(group = FALSE, coords_as_features = FALSE, features = "numeric") {
@@ -48,6 +71,39 @@ test_make_twoclass = function(group = FALSE, coords_as_features = FALSE, feature
     extra_args = list(
       coordinate_names = c("x", "y"),
       crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
+      positive = "A",
+      coords_as_features = coords_as_features)
+  )
+
+  if (group) {
+    task$col_roles$group = "group"
+  }
+  task
+}
+
+# Create twoclass sf task
+test_make_sf_twoclass_task = function(group = FALSE, coords_as_features = FALSE, features = "numeric") {
+
+  data = test_make_sp()
+  if ("numeric" %in% features) {
+    data$p_1 = c(rnorm(18, 0), rnorm(18, 10))
+  }
+  if ("factor" %in% features) {
+    data$p_2 = as.factor(c(rep("lvl_1", 18), rep("lvl_2", 18)))
+  }
+  data$response = as.factor(c(rep("A", 18), rep("B", 18)))
+
+  if (group) {
+    data$group = rep_len(letters[1:10], 36)
+  }
+
+  data_sf = sf::st_as_sf(data, coords = c("x", "y"), crs = "epsg:4326")
+
+  task = TaskClassifST$new(
+    id = "sf_twoclass",
+    backend = data_sf,
+    target = "response",
+    extra_args = list(
       positive = "A",
       coords_as_features = coords_as_features)
   )
