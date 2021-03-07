@@ -36,6 +36,18 @@ TaskRegrST = R6::R6Class("TaskRegrST",
         coords_as_features = FALSE, crs = NA,
         coordinate_names = NA)) {
 
+      # support for 'sf' tasks
+
+      if (inherits(backend, "sf")) {
+        extra_args$crs = sf::st_crs(backend)$input
+        coordinates = sf::st_coordinates(backend)
+        # ensure a point feature has been passed
+        checkmate::assert_character(as.character(sf::st_geometry_type(backend, by_geometry = FALSE)), fixed = "POINT") # nolint
+        backend = sf::st_set_geometry(backend, NULL)
+        backend = merge(backend, coordinates)
+        extra_args$coordinate_names = colnames(coordinates)
+      }
+
       self$extra_args$coordinate_names = extra_args$coordinate_names
       self$extra_args$crs = extra_args$crs
 
