@@ -1,6 +1,7 @@
 # mlr3spatiotempcv 0.2.0
 
-- Internal changes only.
+- Add support for {sf} objects for Task*ST creation (#90)
+- "Getting Started" vignette: add example how to create a spatial task
 
 
 # mlr3spatiotempcv 0.1.1
