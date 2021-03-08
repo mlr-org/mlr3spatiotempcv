@@ -1,3 +1,8 @@
+# mlr3spatiotempcv 0.2.0.9000
+
+- Internal changes only.
+
+
 # mlr3spatiotempcv 0.2.0
 
 - Add support for {sf} objects for Task*ST creation (#90)
