@@ -10,7 +10,7 @@ Spatiotemporal resampling methods for mlr3.
 [![tic](https://github.com/mlr-org/mlr3spatiotempcv/workflows/tic/badge.svg?branch=master)](https://github.com/mlr-org/mlr3spatiotempcv/actions)
 [![CRAN Status](https://www.r-pkg.org/badges/version-ago/mlr3spatiotempcv)](https://cran.r-project.org/package=mlr3spatiotempcv)
 [![Coverage status](https://codecov.io/gh/mlr-org/mlr3spatiotempcv/branch/master/graph/badge.svg)](https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=master)
-[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![CodeFactor](https://www.codefactor.io/repository/github/mlr-org/mlr3spatiotempcv/badge)](https://www.codefactor.io/repository/github/mlr-org/mlr3spatiotempcv)
 
 <!-- badges: end -->
