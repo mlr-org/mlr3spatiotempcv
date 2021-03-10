@@ -1,3 +1,11 @@
+# mlr3spatiotempcv 0.2.0.9001
+
+- Ensure that `blockCV::spatialBlock()` functions actually returns the same result when invoked via {mlr3spatiotempcv} (#93).
+  Among other issues, `blockCV::spatialBlock(selection = "checkerboard")` was ignored.
+- Get coordinates names from {sf} objects dynamically.
+  Before some functions would have errored if the coordinate names were not named "x" and "y".
+
+
 # mlr3spatiotempcv 0.2.0.9000
 
 - Internal changes only.
