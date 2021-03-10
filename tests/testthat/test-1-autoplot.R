@@ -1,7 +1,7 @@
 # generic tests
 
 test_that("errors are thrown for non-valid argument settings", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
   # type does not matter here
   rsp = rsmp("spcv_coords")
   rsp$instantiate(task)
