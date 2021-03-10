@@ -557,7 +557,9 @@ autoplot_spatial = function(
       }
       # transform to selected crs
       sf_df = sf::st_transform(
-        sf::st_as_sf(dt, coords = c("x", "y"), crs = task$extra_args$crs),
+        sf::st_as_sf(dt,
+          coords = task$extra_args$coordinate_names,
+          crs = task$extra_args$crs),
         crs = crs)
 
       sf_df = reorder_levels(sf_df)
@@ -606,7 +608,9 @@ autoplot_spatial = function(
     }
     # transform to selected crs
     sf_df = sf::st_transform(
-      sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$extra_args$crs),
+      sf::st_as_sf(coords_resamp,
+        coords = task$extra_args$coordinate_names,
+        crs = task$extra_args$crs),
       crs = crs)
 
     # order fold ids
@@ -677,7 +681,9 @@ autoplot_spatiotemp = function(
   # transform coordinates to selected crs
   coords = sf::st_coordinates(
     sf::st_transform(
-      sf::st_as_sf(task$coordinates(), coords = c("x", "y"), crs = task$extra_args$crs),
+      sf::st_as_sf(task$coordinates(),
+        coords = task$extra_args$coordinate_names,
+        crs = task$extra_args$crs),
       crs = crs)
   )
   task_resamp_ids$x = coords[, 1]

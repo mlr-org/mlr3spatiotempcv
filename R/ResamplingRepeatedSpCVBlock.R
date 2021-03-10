@@ -132,7 +132,9 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       if (!is.null(groups)) {
         stopf("Grouping is not supported for spatial resampling methods.") # nocov # nolint
       }
-      instance = private$.sample(task$row_ids, task$coordinates())
+      instance = private$.sample(
+        task$row_ids, task$coordinates(),
+        task$extra_args$crs)
 
       self$instance = instance
       self$task_hash = task$hash
@@ -158,7 +160,9 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       folds = as.integer(pv$folds)
 
       create_blocks = function(coords, range) {
-        points = sf::st_as_sf(coords, coords = c("x", "y"))
+        points = sf::st_as_sf(coords,
+          coords = colnames(coords),
+          crs = crs)
 
         # Suppress print message, warning crs and package load
         capture.output(inds <- suppressMessages(suppressWarnings(
@@ -170,6 +174,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
             k = self$param_set$values$folds,
             selection = self$param_set$values$selection,
             showBlocks = FALSE,
+            verbose = FALSE,
             progress = FALSE)$foldID)))
         return(inds)
       }

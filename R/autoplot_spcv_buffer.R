@@ -65,7 +65,9 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
     }
     # transform to selected crs
     sf_df = sf::st_transform(
-      sf::st_as_sf(table, coords = c("x", "y"), crs = task$extra_args$crs),
+      sf::st_as_sf(table,
+        coords = task$extra_args$coordinate_names,
+        crs = task$extra_args$crs),
       crs = crs)
 
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
