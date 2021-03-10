@@ -105,7 +105,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       }
 
       data = sf::st_as_sf(cbind(response, coords),
-        coords = c("x", "y"),
+        coords = colnames(coords),
         crs = crs)
 
       inds = invoke(blockCV::buffering,

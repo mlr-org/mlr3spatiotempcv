@@ -15,7 +15,7 @@ test_that("no duplicated ids", {
 })
 
 test_that("grouping throws errors when 'groups' is set", {
-  task = test_make_twoclass(group = TRUE)
+  task = test_make_twoclass_task(group = TRUE)
 
   spcv_rsp = rsmps(c("spcv_coords", "spcv_env"), folds = 2)
   spcv_rsp = append(spcv_rsp, rsmp("spcv_block", folds = 2, rows = 2, cols = 2))
@@ -29,7 +29,7 @@ test_that("grouping throws errors when 'groups' is set", {
 })
 
 test_that("train and test set getter functions are working", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
 
   spcv_rsp = rsmps(c("spcv_coords", "spcv_env"), folds = 2)
   spcv_rsp = append(spcv_rsp, rsmp("spcv_block", folds = 2, rows = 2, cols = 2))
@@ -43,7 +43,7 @@ test_that("train and test set getter functions are working", {
 })
 
 test_that("train and test set getter functions are working", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
 
   spcv_rsp = rsmps(c("repeated_spcv_coords", "repeated_spcv_env"), folds = 2)
   spcv_rsp = append(spcv_rsp, rsmp("repeated_spcv_block",

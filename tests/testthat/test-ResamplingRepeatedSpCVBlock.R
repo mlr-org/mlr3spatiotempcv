@@ -1,5 +1,5 @@
 test_that("folds can be printed", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", folds = 3, repeats = 2, range = c(2, 4))
   rsp$instantiate(task)
 
@@ -7,7 +7,7 @@ test_that("folds can be printed", {
 })
 
 test_that("reps can be printed", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", folds = 3, repeats = 2, range = c(2, 4))
   rsp$instantiate(task)
 
@@ -15,7 +15,7 @@ test_that("reps can be printed", {
 })
 
 test_that("resampling iterations equals folds * repeats", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", folds = 3, repeats = 2, range = c(2, 4))
   rsp$instantiate(task)
 
@@ -23,7 +23,7 @@ test_that("resampling iterations equals folds * repeats", {
 })
 
 test_that("error when neither cols & rows | range is specified", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
   rsmp = rsmp("repeated_spcv_block", repeats = 2)
   expect_error(
     rsmp$instantiate(task),
@@ -31,7 +31,7 @@ test_that("error when neither cols & rows | range is specified", {
 })
 
 test_that("error when length(range) != length(repeats)", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", repeats = 2, range = 5)
   expect_error(
     rsp$instantiate(task),
@@ -40,13 +40,42 @@ test_that("error when length(range) != length(repeats)", {
 })
 
 test_that("no error when length(range) == repeats", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", folds = 3, repeats = 2, range = c(2, 4))
   expect_silent(rsp$instantiate(task))
 })
 
 test_that("error when number of desired folds is larger than number possible blocks", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", folds = 10, repeats = 2, range = c(2, 4))
   expect_error(rsp$instantiate(task))
+})
+
+test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and rows", {
+  task = test_make_blockCV_test_task()
+
+  set.seed(42)
+  rsmp <- rsmp("repeated_spcv_block",
+    repeats = 2,
+    folds = 5,
+    rows = 3,
+    cols = 4)
+  rsmp$instantiate(task)
+
+  testSF = test_make_blockCV_test_df()
+
+  set.seed(42)
+  capture.output(testBlock <- suppressMessages(
+    blockCV::spatialBlock(
+      speciesData = testSF,
+      k = 5,
+      rows = 3,
+      cols = 4,
+      showBlocks = FALSE,
+      verbose = FALSE,
+      progress = FALSE)
+  ))
+
+  # only use the first iteration
+  expect_equal(rsmp$instance$fold[1:5000], testBlock$foldID)
 })
