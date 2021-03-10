@@ -133,8 +133,10 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         stopf("Grouping is not supported for spatial resampling methods.") # nocov # nolint
       }
       instance = private$.sample(
-        task$row_ids, task$coordinates(),
-        task$extra_args$crs)
+        task$row_ids,
+        task$coordinates(),
+        task$extra_args$crs
+      )
 
       self$instance = instance
       self$task_hash = task$hash
@@ -155,7 +157,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
   ),
 
   private = list(
-    .sample = function(ids, coords) {
+    .sample = function(ids, coords, crs) {
       pv = self$param_set$values
       folds = as.integer(pv$folds)
 
