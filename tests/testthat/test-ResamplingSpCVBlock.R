@@ -1,6 +1,6 @@
 test_that("resampling iterations equals folds", {
   task = test_make_twoclass_task()
-  rsp = rsmp("spcv_block", folds = 2, range = 2)
+  rsp = rsmp("spcv_block", folds = 2, range = 2L)
   rsp$instantiate(task)
 
   expect_equal(rsp$iters, 2)
@@ -8,7 +8,7 @@ test_that("resampling iterations equals folds", {
 
 test_that("error when number of desired folds is larger than number possible blocks", {
   task = test_make_twoclass_task()
-  rsp = rsmp("spcv_block", folds = 10, range = 4)
+  rsp = rsmp("spcv_block", folds = 10, range = 4L)
 
   expect_error(rsp$instantiate(task))
 })
@@ -33,7 +33,7 @@ test_that("error when only one of rows or cols is set", {
 })
 
 test_that("Error when length(range) >= 2", {
-  expect_error(rsmp("spcv_block", range = c(500, 1000)))
+  expect_error(rsmp("spcv_block", range = c(500L, 1000L)))
 })
 
 
@@ -44,7 +44,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: selection =
   task = test_make_blockCV_test_task()
 
   rsmp <- rsmp("spcv_block",
-    range = 50000,
+    range = 50000L,
     selection = "checkerboard")
   rsmp$instantiate(task)
 
@@ -53,7 +53,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: selection =
   capture.output(testBlock <- suppressMessages(
     suppressWarnings(blockCV::spatialBlock(
       speciesData = testSF,
-      theRange = 50000,
+      theRange = 50000L,
       selection = "checkerboard",
       showBlocks = FALSE)
   )))
@@ -98,7 +98,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer
   r[] <- 10
 
   rsmp <- rsmp("spcv_block",
-    range = 50000,
+    range = 50000L,
     selection = "checkerboard",
     rasterLayer = r)
   rsmp$instantiate(task)
@@ -108,7 +108,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer
   capture.output(testBlock <- suppressMessages(
     blockCV::spatialBlock(
       speciesData = testSF,
-      theRange = 50000,
+      theRange = 50000L,
       selection = "checkerboard",
       rasterLayer = r,
       showBlocks = FALSE,
