@@ -25,7 +25,7 @@ if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   # Instantiate Resampling
   rrcv = rsmp("repeated_spcv_block",
     folds = 3, repeats = 2,
-    range = c(5000, 10000))
+    range = c(5000L, 10000L))
   rrcv$instantiate(task)
 
   # Individual sets:
