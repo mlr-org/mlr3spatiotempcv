@@ -12,7 +12,7 @@
 #'   task = tsk("ecuador")
 #'
 #'   # Instantiate Resampling
-#'   rcv = rsmp("spcv_block", range = 1000)
+#'   rcv = rsmp("spcv_block", range = 1000L)
 #'   rcv$instantiate(task)
 #'
 #'   # Individual sets:
