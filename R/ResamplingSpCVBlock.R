@@ -36,12 +36,13 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
         ParamInt$new("rows", lower = 1L),
         ParamInt$new("cols", lower = 1L),
-        ParamInt$new("range", lower = 1L),
+        ParamInt$new("range"),
         ParamFct$new("selection", levels = c(
           "random", "systematic",
           "checkerboard"), default = "random"),
         ParamUty$new("rasterLayer",
-          custom_check = function(x) checkmate::check_class(x, "RasterLayer"))
+          default = NULL,
+          custom_check = function(x) checkmate::check_class(x, "RasterLayer", null.ok = TRUE))
       ))
       ps$values = list(folds = 10L)
       super$initialize(

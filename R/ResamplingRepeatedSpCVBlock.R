@@ -14,7 +14,7 @@
 #'   # Instantiate Resampling
 #'   rrcv = rsmp("repeated_spcv_block",
 #'     folds = 3, repeats = 2,
-#'     range = c(5000, 10000))
+#'     range = c(5000L, 10000L))
 #'   rrcv$instantiate(task)
 #'
 #'   # Individual sets:
@@ -44,12 +44,17 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         ParamInt$new("repeats", lower = 1, default = 1L, tags = "required"),
         ParamInt$new("rows", lower = 1L),
         ParamInt$new("cols", lower = 1L),
-        ParamInt$new("range", lower = 1L),
+        ParamUty$new("range",
+          custom_check = function(x) checkmate::assert_integer(x)),
         ParamFct$new("selection", levels = c(
           "random", "systematic",
           "checkerboard"), default = "random"),
         ParamUty$new("rasterLayer",
-          custom_check = function(x) checkmate::check_class(x, "RasterLayer"))
+          default = NULL,
+          custom_check = function(x) {
+            checkmate::check_class(x, "RasterLayer",
+              null.ok = TRUE)
+          })
       ))
 
       ps$values = list(folds = 10L, repeats = 1L)
