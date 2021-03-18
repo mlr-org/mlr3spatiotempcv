@@ -1,3 +1,8 @@
+# mlr3spatiotempcv 0.2.0.9002
+
+- add support for `rasterLayer` argument in `blockCV::spatialBlock()`
+
+
 # mlr3spatiotempcv 0.2.0.9001
 
 - Ensure that `blockCV::spatialBlock()` functions actually returns the same result when invoked via {mlr3spatiotempcv} (#93).
