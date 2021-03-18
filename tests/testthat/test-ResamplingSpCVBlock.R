@@ -87,3 +87,34 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
 
   expect_equal(rsmp$instance$fold, testBlock$foldID)
 })
+
+test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer", {
+  set.seed(42)
+
+  task = test_make_blockCV_test_task()
+  testSF = test_make_blockCV_test_df()
+
+  r <- raster::raster(raster::extent(testSF), crs = "EPSG:4326")
+  r[] <- 10
+
+  rsmp <- rsmp("spcv_block",
+    range = 50000,
+    selection = "checkerboard",
+    rasterLayer = r)
+  rsmp$instantiate(task)
+
+
+  # blockCV
+  capture.output(testBlock <- suppressMessages(
+    blockCV::spatialBlock(
+      speciesData = testSF,
+      theRange = 50000,
+      selection = "checkerboard",
+      rasterLayer = r,
+      showBlocks = FALSE,
+      verbose = FALSE,
+      progress = FALSE)
+  ))
+
+  expect_equal(rsmp$instance$fold, testBlock$foldID)
+})

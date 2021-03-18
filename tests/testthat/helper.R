@@ -156,7 +156,7 @@ test_make_blockCV_test_df = function() {
 
   data_sf = sf::st_as_sf(data,
     coords = c("x", "y"),
-    crs = "EPSG: 4326")
+    crs = "EPSG:4326")
 
   return(data_sf)
 

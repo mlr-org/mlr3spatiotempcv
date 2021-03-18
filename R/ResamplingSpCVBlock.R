@@ -39,7 +39,9 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         ParamInt$new("range", lower = 1L),
         ParamFct$new("selection", levels = c(
           "random", "systematic",
-          "checkerboard"), default = "random")
+          "checkerboard"), default = "random"),
+        ParamUty$new("rasterLayer",
+          custom_check = function(x) checkmate::check_class(x, "RasterLayer"))
       ))
       ps$values = list(folds = 10L)
       super$initialize(
@@ -78,6 +80,9 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       }
       if (is.null(self$param_set$values$selection)) {
         self$param_set$values$selection = self$param_set$default[["selection"]]
+      }
+      if (is.null(self$param_set$values$rasterLayer)) {
+        self$param_set$values$rasterLayer = self$param_set$default[["rasterLayer"]]
       }
 
       # Check for valid combinations of rows, cols and folds
@@ -128,6 +133,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
           rows = self$param_set$values$rows,
           cols = self$param_set$values$cols,
           k = self$param_set$values$folds,
+          rasterLayer = self$param_set$values$rasterLayer,
           selection = self$param_set$values$selection,
           showBlocks = FALSE,
           progress = FALSE,

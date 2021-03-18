@@ -44,10 +44,12 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         ParamInt$new("repeats", lower = 1, default = 1L, tags = "required"),
         ParamInt$new("rows", lower = 1L),
         ParamInt$new("cols", lower = 1L),
-        ParamUty$new("range"),
+        ParamInt$new("range", lower = 1L),
         ParamFct$new("selection", levels = c(
           "random", "systematic",
-          "checkerboard"), default = "random")
+          "checkerboard"), default = "random"),
+        ParamUty$new("rasterLayer",
+          custom_check = function(x) checkmate::check_class(x, "RasterLayer"))
       ))
 
       ps$values = list(folds = 10L, repeats = 1L)
