@@ -88,7 +88,7 @@ if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   library(mlr3)
   library(mlr3spatiotempcv)
   task = tsk("ecuador")
-  resampling = rsmp("spcv_block", range = 1000)
+  resampling = rsmp("spcv_block", range = 1000L)
   resampling$instantiate(task)
 
   ## Visualize all partitions

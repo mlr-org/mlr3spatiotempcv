@@ -12,7 +12,7 @@
 #'   task = tsk("ecuador")
 #'
 #'   # Instantiate Resampling
-#'   rcv = rsmp("spcv_block", range = 1000)
+#'   rcv = rsmp("spcv_block", range = 1000L)
 #'   rcv$instantiate(task)
 #'
 #'   # Individual sets:
@@ -36,10 +36,13 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
         ParamInt$new("rows", lower = 1L),
         ParamInt$new("cols", lower = 1L),
-        ParamInt$new("range", lower = 1L),
+        ParamInt$new("range"),
         ParamFct$new("selection", levels = c(
           "random", "systematic",
-          "checkerboard"), default = "random")
+          "checkerboard"), default = "random"),
+        ParamUty$new("rasterLayer",
+          default = NULL,
+          custom_check = function(x) checkmate::check_class(x, "RasterLayer", null.ok = TRUE))
       ))
       ps$values = list(folds = 10L)
       super$initialize(
@@ -78,6 +81,9 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       }
       if (is.null(self$param_set$values$selection)) {
         self$param_set$values$selection = self$param_set$default[["selection"]]
+      }
+      if (is.null(self$param_set$values$rasterLayer)) {
+        self$param_set$values$rasterLayer = self$param_set$default[["rasterLayer"]]
       }
 
       # Check for valid combinations of rows, cols and folds
@@ -128,6 +134,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
           rows = self$param_set$values$rows,
           cols = self$param_set$values$cols,
           k = self$param_set$values$folds,
+          rasterLayer = self$param_set$values$rasterLayer,
           selection = self$param_set$values$selection,
           showBlocks = FALSE,
           progress = FALSE,
