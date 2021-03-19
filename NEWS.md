@@ -9,11 +9,6 @@
   Before some functions would have errored if the coordinate names were not named "x" and "y".
 
 
-# mlr3spatiotempcv 0.2.0.9000
-
-- Internal changes only.
-
-
 # mlr3spatiotempcv 0.2.0
 
 - Add support for {sf} objects for Task*ST creation (#90)
