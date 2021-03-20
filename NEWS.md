@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 0.2.1.9000
+
+- Same as previous version.
+
+
 # mlr3spatiotempcv 0.2.1
 
 - Add support for `rasterLayer` argument in `blockCV::spatialBlock()` (#94)
