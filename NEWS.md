@@ -1,3 +1,10 @@
+<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+
+# mlr3spatiotempcv 0.2.2
+
+- Internal changes only.
+
+
 # mlr3spatiotempcv 0.2.1.9001
 
 - Skip a test on Solaris and macOS 3.6
