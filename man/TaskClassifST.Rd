@@ -17,25 +17,28 @@ may occur. By default, coordinates are not used as features. This can be
 changed by setting \code{extra_args$coords_as_features = TRUE}.
 }
 \examples{
-data = mlr3::as_data_backend(ecuador)
-task = TaskClassifST$new("ecuador",
-  backend = data, target = "slides",
-  positive = "TRUE", extra_args = list(coordinate_names = c("x", "y"))
-)
+if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 
-# passing objects of class 'sf' is also supported
-data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 4326)
-task = TaskClassifST$new("ecuador_sf",
-  backend = data_sf, target = "slides", positive = "TRUE"
-)
+  data = mlr3::as_data_backend(ecuador)
+  task = TaskClassifST$new("ecuador",
+    backend = data, target = "slides",
+    positive = "TRUE", extra_args = list(coordinate_names = c("x", "y"))
+  )
 
-task$task_type
-task$formula()
-task$class_names
-task$positive
-task$negative
-task$coordinates()
-task$coordinate_names
+  # passing objects of class 'sf' is also supported
+  data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 4326)
+  task = TaskClassifST$new("ecuador_sf",
+    backend = data_sf, target = "slides", positive = "TRUE"
+  )
+
+  task$task_type
+  task$formula()
+  task$class_names
+  task$positive
+  task$negative
+  task$coordinates()
+  task$coordinate_names
+}
 }
 \seealso{
 Other Task: 
