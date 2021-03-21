@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 0.2.2.9000
+
+- Internal changes only.
+
+
 # mlr3spatiotempcv 0.2.2
 
 - Internal changes only.
