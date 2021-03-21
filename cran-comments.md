@@ -1,4 +1,4 @@
-mlr3spatiotempcv 0.2.1
+mlr3spatiotempcv 0.2.2
 
 ## Cran Repository Policy
 
@@ -7,18 +7,14 @@ mlr3spatiotempcv 0.2.1
 ## R CMD check results
 
 - [x] Checked locally, R 4.0.4
-- [x] Checked on CI system, R 4.0.4
-- [x] Checked on win-builder, R devel
+- [ ] Checked on CI system, R 4.0.4
+- [ ] Checked on win-builder, R devel
 
 Check the boxes above after successful execution and remove this line. Then run `fledge::release()`.
 
 ## Current CRAN check results
 
-- [x] Checked on 2021-03-18, problems found: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
-- [x] NOTE: r-devel-windows-x86_64-gcc10-UCRT
-- [x] NOTE: r-devel-windows-x86_64-gcc10-UCRT
-- [x] ERROR: r-devel-windows-x86_64-gcc10-UCRT
-- [x] ERROR: r-devel-windows-x86_64-gcc10-UCRT
-- [x] WARN: r-devel-windows-x86_64-gcc10-UCRT
+- [x] Checked on 2021-03-21, problems found: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
+- [ ] ERROR: r-patched-solaris-x86
 
 Check results at: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
