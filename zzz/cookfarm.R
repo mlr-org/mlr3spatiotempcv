@@ -1,4 +1,4 @@
-requireNamespace("GSIF", quietly = TRUE)
+mlr3misc::require_namespaces("GSIF", quietly = TRUE)
 data(cookfarm)
 set.seed(42)
 
@@ -6,7 +6,7 @@ cookfarm_profiles = cookfarm$profiles
 
 cookfarm_mlr3 = cookfarm_profiles %>%
   dplyr::left_join(cookfarm$readings %>%
-                     dplyr::select("Date", "SOURCEID"), by = "SOURCEID") %>%
+    dplyr::select("Date", "SOURCEID"), by = "SOURCEID") %>%
   sf::st_as_sf(coords = c("Easting", "Northing"), crs = 26911) %>%
   dplyr::mutate(x = sf::st_coordinates(.)[, "X"]) %>%
   dplyr::mutate(y = sf::st_coordinates(.)[, "Y"]) %>%

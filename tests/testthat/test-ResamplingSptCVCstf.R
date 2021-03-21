@@ -1,5 +1,3 @@
-context("ResamplingSptCVCstf")
-
 test_that("mlr3spatiotempcv implementation is equal to CAST: time + space", {
   task = tsk("cookfarm")
   rsp = rsmp("sptcv_cstf", folds = 10, time_var = "Date", space_var = "SOURCEID")

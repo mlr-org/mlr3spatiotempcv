@@ -102,6 +102,7 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 *.code-workspace
 .vscode
+<<<<<<< HEAD
 
 # File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
 
@@ -407,3 +408,4 @@ TSWLatexianTemp*
 joss.md
 joss.tex
 inst/debug.R
+CRAN-RELEASE

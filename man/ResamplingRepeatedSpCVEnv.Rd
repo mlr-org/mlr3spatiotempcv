@@ -10,20 +10,22 @@ numeric features can be used. The \code{features} used for building blocks can
 be specified in the \code{param_set}. By default, all numeric features are used.
 }
 \examples{
-library(mlr3)
-task = tsk("ecuador")
+if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
+  library(mlr3)
+  task = tsk("ecuador")
 
-# Instantiate Resampling
-rrcv = rsmp("repeated_spcv_env", folds = 4, repeats = 2)
-rrcv$instantiate(task)
+  # Instantiate Resampling
+  rrcv = rsmp("repeated_spcv_env", folds = 4, repeats = 2)
+  rrcv$instantiate(task)
 
-# Individual sets:
-rrcv$train_set(1)
-rrcv$test_set(1)
-intersect(rrcv$train_set(1), rrcv$test_set(1))
+  # Individual sets:
+  rrcv$train_set(1)
+  rrcv$test_set(1)
+  intersect(rrcv$train_set(1), rrcv$test_set(1))
 
-# Internal storage:
-rrcv$instance
+  # Internal storage:
+  rrcv$instance
+}
 }
 \references{
 Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G (2018).

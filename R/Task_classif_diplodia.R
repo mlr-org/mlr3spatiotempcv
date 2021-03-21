@@ -20,7 +20,7 @@
 #'   variables like temperature, precipitation, soil and more.
 #'
 #' @references
-#' `r tools::toRd(bibentries["schratz2019"])`
+#' `r format_bib("schratz2019")`
 #'
 #' @template seealso_task
 "diplodia"

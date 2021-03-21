@@ -1,7 +1,5 @@
-context("ResamplingRepeatedSptCVCstf")
-
 test_that("folds can be printed", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
   rsp = rsmp("repeated_sptcv_cstf", folds = 3, repeats = 5)
   rsp$instantiate(task)
 
