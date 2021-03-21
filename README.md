@@ -1,17 +1,12 @@
 # mlr3spatiotempcv
 
-Package website: [release](https://mlr3spatiotempcv.mlr-org.com/) \|
-[dev](https://mlr3spatiotempcv.mlr-org.com/dev/)
+Package website: [release](https://mlr3spatiotempcv.mlr-org.com/) \| [dev](https://mlr3spatiotempcv.mlr-org.com/dev/)
 
 Spatiotemporal resampling methods for mlr3.
 
 <!-- badges: start -->
 
-[![tic](https://github.com/mlr-org/mlr3spatiotempcv/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/mlr3spatiotempcv/actions)
-[![CRAN Status](https://www.r-pkg.org/badges/version-ago/mlr3spatiotempcv)](https://cran.r-project.org/package=mlr3spatiotempcv)
-[![Coverage status](https://codecov.io/gh/mlr-org/mlr3spatiotempcv/branch/main/graph/badge.svg)](https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=main)
-[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![CodeFactor](https://www.codefactor.io/repository/github/mlr-org/mlr3spatiotempcv/badge)](https://www.codefactor.io/repository/github/mlr-org/mlr3spatiotempcv)
+[![tic](https://github.com/mlr-org/mlr3spatiotempcv/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/mlr3spatiotempcv/actions) [![CRAN Status](https://www.r-pkg.org/badges/version-ago/mlr3spatiotempcv)](https://cran.r-project.org/package=mlr3spatiotempcv) [![Coverage status](https://codecov.io/gh/mlr-org/mlr3spatiotempcv/branch/main/graph/badge.svg)](https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=main) [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html) [![CodeFactor](https://www.codefactor.io/repository/github/mlr-org/mlr3spatiotempcv/badge)](https://www.codefactor.io/repository/github/mlr-org/mlr3spatiotempcv)
 
 <!-- badges: end -->
 
@@ -23,14 +18,17 @@ If you prefer the [tidymodels](https://www.tidymodels.org/) ecosystem, have a lo
 
 CRAN version
 
-```r
+``` r
 install.packages("mlr3spatiotempcv")
 ```
 
 Development version
 
-```r
+``` r
 remotes::install_github("mlr-org/mlr3spatiotempcv")
+
+# R Universe Repo
+install.packages('mlr3spatiotempcv', mlrorg = 'https://mlr-org.r-universe.dev')
 ```
 
 # Get Started
