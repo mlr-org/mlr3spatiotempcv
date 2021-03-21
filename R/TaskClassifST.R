@@ -17,19 +17,28 @@
 #' @family Task
 #' @export
 #' @examples
-#' data = mlr3::as_data_backend(ecuador)
-#' task = TaskClassifST$new("ecuador",
-#'   backend = data, target = "slides",
-#'   positive = "TRUE", extra_args = list(coordinate_names = c("x", "y"))
-#' )
+#' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 #'
-#' task$task_type
-#' task$formula()
-#' task$class_names
-#' task$positive
-#' task$negative
-#' task$coordinates()
-#' task$coordinate_names
+#'   data = mlr3::as_data_backend(ecuador)
+#'   task = TaskClassifST$new("ecuador",
+#'     backend = data, target = "slides",
+#'     positive = "TRUE", extra_args = list(coordinate_names = c("x", "y"))
+#'   )
+#'
+#'   # passing objects of class 'sf' is also supported
+#'   data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 4326)
+#'   task = TaskClassifST$new("ecuador_sf",
+#'     backend = data_sf, target = "slides", positive = "TRUE"
+#'   )
+#'
+#'   task$task_type
+#'   task$formula()
+#'   task$class_names
+#'   task$positive
+#'   task$negative
+#'   task$coordinates()
+#'   task$coordinate_names
+#' }
 TaskClassifST = R6::R6Class("TaskClassifST",
   inherit = TaskClassif,
 
@@ -57,6 +66,18 @@ TaskClassifST = R6::R6Class("TaskClassifST",
         coordinate_names = NA)) {
 
       assert_string(target)
+
+      # support for 'sf' tasks
+      if (inherits(backend, "sf")) {
+        extra_args$crs = sf::st_crs(backend)$input
+        coordinates = sf::st_coordinates(backend)
+        # ensure a point feature has been passed
+        checkmate::assert_character(as.character(sf::st_geometry_type(backend, by_geometry = FALSE)), fixed = "POINT") # nolint
+        backend = sf::st_set_geometry(backend, NULL)
+        backend = cbind(backend, coordinates)
+        extra_args$coordinate_names = colnames(coordinates)
+      }
+
       super$initialize(
         id = id, backend = backend, target = target,
         positive = positive, extra_args = extra_args)
@@ -67,11 +88,8 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       info = self$col_info[id == target]
       levels = info$levels[[1L]]
 
-      if (info$type %nin% c("factor", "character")) {
-        stopf("Target column '%s' must be a factor or character", target) # nocov
-      }
-      if (length(levels) < 2L) {
-        stopf("Target column '%s' must have at least two levels", target) # nocov
+      if (info$type %nin% c("factor", "character", "ordered")) {
+        stopf("Target column '%s' must be a factor, character or ordered.", target) # nocov
       }
 
       self$properties = union(

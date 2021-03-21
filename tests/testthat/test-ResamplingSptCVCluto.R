@@ -1,5 +1,3 @@
-context("ResamplingSptCVCluto")
-
 test_that("resampling iterations equals folds", {
   skip_on_cran()
   skip_on_os("mac")

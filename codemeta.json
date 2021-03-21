@@ -10,17 +10,18 @@
   "codeRepository": "https://github.com/mlr-org/mlr3spatiotempcv",
   "relatedLink": [
     "https://mlr3spatiotempcv.mlr-org.com/",
-    "https://mlr3book.mlr-org.com"
+    "https://mlr3book.mlr-org.com",
+    "https://CRAN.R-project.org/package=mlr3spatiotempcv"
   ],
   "issueTracker": "https://github.com/mlr-org/mlr3spatiotempcv/issues",
   "license": "https://spdx.org/licenses/LGPL-3.0",
-  "version": "0.1.0",
+  "version": "0.2.2.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.3 Patched (2020-10-27 r79379)",
+  "runtimePlatform": "R version 4.0.4 Patched (2021-02-17 r80031)",
   "author": [
     {
       "@type": "Person",
@@ -224,6 +225,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "raster",
+      "name": "raster",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=raster"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "rmarkdown",
       "name": "rmarkdown",
       "provider": {
@@ -269,6 +282,19 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=skmeans"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "version": ">= 3.0.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
     },
     {
       "@type": "SoftwareApplication",
@@ -355,7 +381,7 @@
       "@type": "SoftwareApplication",
       "identifier": "mlr3misc",
       "name": "mlr3misc",
-      "version": ">= 0.1.7",
+      "version": ">= 0.7.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -390,34 +416,28 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "testthat",
-      "name": "testthat",
-      "version": ">= 3.0.0",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=testthat"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     }
   ],
   "releaseNotes": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/NEWS.md",
-  "readme": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/README.md",
-  "fileSize": "11324.078KB",
-  "contIntegration": "https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=master",
-  "developmentStatus": "https://www.tidyverse.org/lifecycle/#maturing",
+  "readme": "https://github.com/mlr-org/mlr3spatiotempcv/blob/main/README.md",
+  "fileSize": "13394.599KB",
+  "contIntegration": "https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=main",
+  "developmentStatus": "https://lifecycle.r-lib.org/articles/stages.html",
   "keywords": [
     "mlr3",
     "resampling",
     "spatial",
     "cross-validation",
     "temporal",
-    "resampling-methods"
-  ]
+    "resampling-methods",
+    "r"
+  ],
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  }
 }

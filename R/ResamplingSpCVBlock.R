@@ -3,24 +3,26 @@
 #' @template rox_spcv_block
 #'
 #' @references
-#' `r tools::toRd(bibentries["valavi2018"])`
+#' `r format_bib("valavi2018")`
 #'
 #' @export
 #' @examples
-#' library(mlr3)
-#' task = tsk("ecuador")
+#' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
+#'   library(mlr3)
+#'   task = tsk("ecuador")
 #'
-#' # Instantiate Resampling
-#' rcv = rsmp("spcv_block", range = 1000)
-#' rcv$instantiate(task)
+#'   # Instantiate Resampling
+#'   rcv = rsmp("spcv_block", range = 1000L)
+#'   rcv$instantiate(task)
 #'
-#' # Individual sets:
-#' rcv$train_set(1)
-#' rcv$test_set(1)
-#' intersect(rcv$train_set(1), rcv$test_set(1))
+#'   # Individual sets:
+#'   rcv$train_set(1)
+#'   rcv$test_set(1)
+#'   intersect(rcv$train_set(1), rcv$test_set(1))
 #'
-#' # Internal storage:
-#' rcv$instance
+#'   # Internal storage:
+#'   rcv$instance
+#' }
 ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
   inherit = mlr3::Resampling,
 
@@ -34,17 +36,20 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
         ParamInt$new("rows", lower = 1L),
         ParamInt$new("cols", lower = 1L),
-        ParamInt$new("range", lower = 1L),
+        ParamInt$new("range"),
         ParamFct$new("selection", levels = c(
           "random", "systematic",
-          "checkerboard"), default = "random")
+          "checkerboard"), default = "random"),
+        ParamUty$new("rasterLayer",
+          default = NULL,
+          custom_check = function(x) checkmate::check_class(x, "RasterLayer", null.ok = TRUE))
       ))
       ps$values = list(folds = 10L)
       super$initialize(
         id = id,
         param_set = ps
       )
-      require_namespaces(c("blockCV", "sf"))
+      mlr3misc::require_namespaces(c("blockCV", "sf"))
     },
 
     #' @description
@@ -74,8 +79,11 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       if (is.null(pv$cols) & is.null(pv$range)) {
         self$param_set$values$cols = self$param_set$default[["cols"]] # nocov
       }
-      if (is.null(self$param_set$selection)) {
+      if (is.null(self$param_set$values$selection)) {
         self$param_set$values$selection = self$param_set$default[["selection"]]
+      }
+      if (is.null(self$param_set$values$rasterLayer)) {
+        self$param_set$values$rasterLayer = self$param_set$default[["rasterLayer"]]
       }
 
       # Check for valid combinations of rows, cols and folds
@@ -92,7 +100,9 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       if (!is.null(groups)) {
         stopf("Grouping is not supported for spatial resampling methods.")
       }
-      instance = private$.sample(task$row_ids, task$coordinates())
+      instance = private$.sample(
+        task$row_ids, task$coordinates(),
+        task$extra_args$crs)
 
       self$instance = instance
       self$task_hash = task$hash
@@ -111,26 +121,29 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
   ),
 
   private = list(
-    .sample = function(ids, coords) {
-      points = sf::st_as_sf(coords, coords = c("x", "y"))
-
+    .sample = function(ids, coords, crs) {
+      points = sf::st_as_sf(coords,
+        coords = colnames(coords),
+        crs = crs)
       # Suppress print message, warning crs and package load
       # Note: Do not replace the assignment operator here.
-      capture.output(inds <- suppressMessages(suppressWarnings(
+      capture.output(inds <- suppressMessages((
         blockCV::spatialBlock(
           speciesData = points,
           theRange = self$param_set$values$range,
           rows = self$param_set$values$rows,
           cols = self$param_set$values$cols,
           k = self$param_set$values$folds,
+          rasterLayer = self$param_set$values$rasterLayer,
           selection = self$param_set$values$selection,
           showBlocks = FALSE,
-          progress = FALSE))))
+          progress = FALSE,
+          verbose = FALSE))))
 
       data.table(
         row_id = ids,
-        fold = inds$foldID,
-        key = "fold"
+        fold = inds$foldID # ,
+        # key = "fold"
       )
     },
     # private get funs for train and test which are used by

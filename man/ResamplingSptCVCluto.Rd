@@ -51,22 +51,24 @@ change at any time without prior notice.
 
 \examples{
 \dontrun{
-library(mlr3)
-library(mlr3spatiotempcv)
-task = tsk("cookfarm")
+if (mlr3misc::require_namespaces("skmeans", quietly = TRUE)) {
+  library(mlr3)
+  library(mlr3spatiotempcv)
+  task = tsk("cookfarm")
 
-# Instantiate Resampling
-rcv = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
-rcv$instantiate(task)
+  # Instantiate Resampling
+  rcv = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
+  rcv$instantiate(task)
 
-# Individual sets:
-rcv$train_set(1)
-rcv$test_set(1)
-# check that no obs are in both sets
-intersect(rcv$train_set(1), rcv$test_set(1)) # good!
+  # Individual sets:
+  rcv$train_set(1)
+  rcv$test_set(1)
+  # check that no obs are in both sets
+  intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 
-# Internal storage:
-rcv$instance # table
+  # Internal storage:
+  rcv$instance # table
+}
 }
 }
 \references{

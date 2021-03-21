@@ -1,3 +1,4 @@
+# nocov start
 #' @importFrom utils bibentry
 bibentries = c( # nolint start
   brenning2012 = bibentry("inproceedings",
@@ -91,7 +92,6 @@ bibentries = c( # nolint start
 
   meyer2018 = bibentry("article",
     doi = "10.1016/j.envsoft.2017.12.001",
-    url = "https://doi.org/10.1016%2Fj.envsoft.2017.12.001",
     year = "2018",
     month = "mar",
     publisher = "Elsevier {BV}",
@@ -111,3 +111,4 @@ bibentries = c( # nolint start
     journal = "11th Conference of Information and Knowledge Management (CIKM)"
   )
 ) # nolint end
+# nocov end

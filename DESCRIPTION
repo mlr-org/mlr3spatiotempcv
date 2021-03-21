@@ -1,7 +1,7 @@
 Package: mlr3spatiotempcv
 Title: Spatiotemporal Resampling Methods for 'mlr3'
-Version: 0.1.0
-Date: 2020-10-30
+Version: 0.2.2.9000
+Date: 2021-03-21
 Authors@R:
     c(person(given = "Patrick",
              family = "Schratz",
@@ -39,10 +39,9 @@ Imports:
     data.table,
     ggplot2,
     mlr3 (>= 0.7.0),
-    mlr3misc (>= 0.1.7),
+    mlr3misc (>= 0.7.0),
     paradox,
     R6,
-    testthat (>= 3.0.0),
     utils
 Suggests:
     bbotk,
@@ -58,10 +57,12 @@ Suggests:
     mlr3tuning,
     patchwork,
     plotly,
+    raster,
     rmarkdown,
     rpart,
     sf,
     skmeans,
+    testthat (>= 3.0.0),
     vdiffr,
     withr
 VignetteBuilder:

@@ -3,24 +3,26 @@
 #' @template rox_spcv_buffer
 #'
 #' @references
-#' `r tools::toRd(bibentries["valavi2018"])`
+#' `r format_bib("valavi2018")`
 #'
 #' @export
 #' @examples
-#' library(mlr3)
-#' task = tsk("ecuador")
+#' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
+#'   library(mlr3)
+#'   task = tsk("ecuador")
 #'
-#' # Instantiate Resampling
-#' rcv = rsmp("spcv_buffer", theRange = 10000)
-#' rcv$instantiate(task)
+#'   # Instantiate Resampling
+#'   rcv = rsmp("spcv_buffer", theRange = 10000)
+#'   rcv$instantiate(task)
 #'
-#' # Individual sets:
-#' rcv$train_set(1)
-#' rcv$test_set(1)
-#' intersect(rcv$train_set(1), rcv$test_set(1))
+#'   # Individual sets:
+#'   rcv$train_set(1)
+#'   rcv$test_set(1)
+#'   intersect(rcv$train_set(1), rcv$test_set(1))
 #'
-#' # Internal storage:
-#' # rcv$instance
+#'   # Internal storage:
+#'   # rcv$instance
+#' }
 ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
   inherit = mlr3::Resampling,
 
@@ -40,7 +42,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         id = id,
         param_set = ps
       )
-      require_namespaces(c("blockCV", "sf"))
+      mlr3misc::require_namespaces(c("blockCV", "sf"))
     },
 
     #' @description
@@ -84,7 +86,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
   private = list(
     .sample = function(ids, response, coords, positive, crs, properties) {
 
-      require_namespaces(c("blockCV", "sf"))
+      mlr3misc::require_namespaces(c("blockCV", "sf"))
 
       pars = self$param_set$get_values()
 
@@ -103,7 +105,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       }
 
       data = sf::st_as_sf(cbind(response, coords),
-        coords = c("x", "y"),
+        coords = colnames(coords),
         crs = crs)
 
       inds = invoke(blockCV::buffering,

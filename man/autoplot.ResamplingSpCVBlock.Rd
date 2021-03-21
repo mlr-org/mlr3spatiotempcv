@@ -84,23 +84,25 @@ is used to display all partitions.
 If you want to change the colors, call \verb{<plot> + <color-palette>()}.
 }
 \examples{
-library(mlr3)
-library(mlr3spatiotempcv)
-task = tsk("ecuador")
-resampling = rsmp("spcv_block", range = 1000)
-resampling$instantiate(task)
+if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
+  library(mlr3)
+  library(mlr3spatiotempcv)
+  task = tsk("ecuador")
+  resampling = rsmp("spcv_block", range = 1000L)
+  resampling$instantiate(task)
 
-## Visualize all partitions
-autoplot(resampling, task) +
-  ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+  ## Visualize all partitions
+  autoplot(resampling, task) +
+    ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 
-## Visualize the train/test split of a single fold
-autoplot(resampling, task, fold_id = 1)
+  ## Visualize the train/test split of a single fold
+  autoplot(resampling, task, fold_id = 1)
 
-## Visualize train/test splits of multiple folds
-autoplot(resampling, task, fold_id = c(1, 2))
+  ## Visualize train/test splits of multiple folds
+  autoplot(resampling, task, fold_id = c(1, 2))
 
-# list of ggplot2 resamplings
-plot_list = autoplot(resampling, task,
-  fold_id = c(1, 2), grid = FALSE)
+  # list of ggplot2 resamplings
+  plot_list = autoplot(resampling, task,
+    fold_id = c(1, 2), grid = FALSE)
+}
 }

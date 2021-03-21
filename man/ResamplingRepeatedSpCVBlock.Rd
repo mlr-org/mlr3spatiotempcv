@@ -18,27 +18,29 @@ Multiple repetitions are not possible when using the "row & cols" approach
 because the created folds will always be the same.
 }
 \examples{
-library(mlr3)
-task = tsk("diplodia")
+if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
+  library(mlr3)
+  task = tsk("diplodia")
 
-# Instantiate Resampling
-rrcv = rsmp("repeated_spcv_block",
-  folds = 3, repeats = 2,
-  range = c(5000, 10000))
-rrcv$instantiate(task)
+  # Instantiate Resampling
+  rrcv = rsmp("repeated_spcv_block",
+    folds = 3, repeats = 2,
+    range = c(5000L, 10000L))
+  rrcv$instantiate(task)
 
-# Individual sets:
-rrcv$iters
-rrcv$folds(1:6)
-rrcv$repeats(1:6)
+  # Individual sets:
+  rrcv$iters
+  rrcv$folds(1:6)
+  rrcv$repeats(1:6)
 
-# Individual sets:
-rrcv$train_set(1)
-rrcv$test_set(1)
-intersect(rrcv$train_set(1), rrcv$test_set(1))
+  # Individual sets:
+  rrcv$train_set(1)
+  rrcv$test_set(1)
+  intersect(rrcv$train_set(1), rrcv$test_set(1))
 
-# Internal storage:
-rrcv$instance # table
+  # Internal storage:
+  rrcv$instance # table
+}
 }
 \references{
 Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G (2018).

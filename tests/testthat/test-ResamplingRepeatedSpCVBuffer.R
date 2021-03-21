@@ -1,5 +1,5 @@
 test_that("resampling with twoclass response is correctly instantiated", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
   rsp = rsmp("spcv_buffer", theRange = 1)
   rsp$instantiate(task)
 
@@ -17,7 +17,7 @@ test_that("resampling with multiclass response is correctly instantiated", {
 })
 
 test_that("resampling with continuous response is correctly instantiated", {
-  task = test_make_regr()
+  task = test_make_regr_task()
   rsp = rsmp("spcv_buffer", theRange = 1)
   rsp$instantiate(task)
 
@@ -26,7 +26,7 @@ test_that("resampling with continuous response is correctly instantiated", {
 })
 
 test_that("buffer is corretly applied", {
-  task = test_make_regr()
+  task = test_make_regr_task()
   rcv = rsmp("spcv_buffer", theRange = 1)
   rcv$instantiate(task)
 
@@ -35,13 +35,13 @@ test_that("buffer is corretly applied", {
 })
 
 test_that("spDataType = 'PA' and addBG = TRUE throws an error", {
-  task = test_make_regr()
+  task = test_make_regr_task()
   rsp = rsmp("spcv_buffer", theRange = 1, spDataType = "PA", addBG = TRUE)
   expect_error(rsp$instantiate(task))
 })
 
 test_that("spDataType = 'PB' and regression task throws and error", {
-  task = test_make_regr()
+  task = test_make_regr_task()
   rsp = rsmp("spcv_buffer", theRange = 1, spDataType = "PB")
   expect_error(rsp$instantiate(task))
 })

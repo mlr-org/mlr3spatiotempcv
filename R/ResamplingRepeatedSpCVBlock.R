@@ -3,31 +3,33 @@
 #' @template rox_spcv_block
 #'
 #' @references
-#' `r tools::toRd(bibentries["valavi2018"])`
+#' `r format_bib("valavi2018")`
 #'
 #' @export
 #' @examples
-#' library(mlr3)
-#' task = tsk("diplodia")
+#' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
+#'   library(mlr3)
+#'   task = tsk("diplodia")
 #'
-#' # Instantiate Resampling
-#' rrcv = rsmp("repeated_spcv_block",
-#'   folds = 3, repeats = 2,
-#'   range = c(5000, 10000))
-#' rrcv$instantiate(task)
+#'   # Instantiate Resampling
+#'   rrcv = rsmp("repeated_spcv_block",
+#'     folds = 3, repeats = 2,
+#'     range = c(5000L, 10000L))
+#'   rrcv$instantiate(task)
 #'
-#' # Individual sets:
-#' rrcv$iters
-#' rrcv$folds(1:6)
-#' rrcv$repeats(1:6)
+#'   # Individual sets:
+#'   rrcv$iters
+#'   rrcv$folds(1:6)
+#'   rrcv$repeats(1:6)
 #'
-#' # Individual sets:
-#' rrcv$train_set(1)
-#' rrcv$test_set(1)
-#' intersect(rrcv$train_set(1), rrcv$test_set(1))
+#'   # Individual sets:
+#'   rrcv$train_set(1)
+#'   rrcv$test_set(1)
+#'   intersect(rrcv$train_set(1), rrcv$test_set(1))
 #'
-#' # Internal storage:
-#' rrcv$instance # table
+#'   # Internal storage:
+#'   rrcv$instance # table
+#' }
 ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
   inherit = mlr3::Resampling,
 
@@ -42,10 +44,17 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         ParamInt$new("repeats", lower = 1, default = 1L, tags = "required"),
         ParamInt$new("rows", lower = 1L),
         ParamInt$new("cols", lower = 1L),
-        ParamUty$new("range"),
+        ParamUty$new("range",
+          custom_check = function(x) checkmate::assert_integer(x)),
         ParamFct$new("selection", levels = c(
           "random", "systematic",
-          "checkerboard"), default = "random")
+          "checkerboard"), default = "random"),
+        ParamUty$new("rasterLayer",
+          default = NULL,
+          custom_check = function(x) {
+            checkmate::check_class(x, "RasterLayer",
+              null.ok = TRUE)
+          })
       ))
 
       ps$values = list(folds = 10L, repeats = 1L)
@@ -130,7 +139,11 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       if (!is.null(groups)) {
         stopf("Grouping is not supported for spatial resampling methods.") # nocov # nolint
       }
-      instance = private$.sample(task$row_ids, task$coordinates())
+      instance = private$.sample(
+        task$row_ids,
+        task$coordinates(),
+        task$extra_args$crs
+      )
 
       self$instance = instance
       self$task_hash = task$hash
@@ -151,12 +164,14 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
   ),
 
   private = list(
-    .sample = function(ids, coords) {
+    .sample = function(ids, coords, crs) {
       pv = self$param_set$values
       folds = as.integer(pv$folds)
 
       create_blocks = function(coords, range) {
-        points = sf::st_as_sf(coords, coords = c("x", "y"))
+        points = sf::st_as_sf(coords,
+          coords = colnames(coords),
+          crs = crs)
 
         # Suppress print message, warning crs and package load
         capture.output(inds <- suppressMessages(suppressWarnings(
@@ -168,6 +183,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
             k = self$param_set$values$folds,
             selection = self$param_set$values$selection,
             showBlocks = FALSE,
+            verbose = FALSE,
             progress = FALSE)$foldID)))
         return(inds)
       }

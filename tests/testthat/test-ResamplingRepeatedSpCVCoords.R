@@ -1,7 +1,5 @@
-context("ResamplingRepeatedSpCVCoords")
-
 test_that("folds can be printed", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_coords", folds = 3, repeats = 5)
   rsp$instantiate(task)
 
@@ -9,7 +7,7 @@ test_that("folds can be printed", {
 })
 
 test_that("reps can be printed", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_coords", folds = 3, repeats = 5)
   rsp$instantiate(task)
 
@@ -17,7 +15,7 @@ test_that("reps can be printed", {
 })
 
 test_that("resampling iterations equals folds * repeats", {
-  task = test_make_twoclass()
+  task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_coords", folds = 3, repeats = 2)
   rsp$instantiate(task)
 

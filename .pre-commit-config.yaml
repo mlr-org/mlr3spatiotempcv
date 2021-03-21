@@ -12,7 +12,7 @@ repos:
     -   id: readme-rmd-rendered
     #  R package development
     -   id: roxygenize
-    -   id: deps-in-desc
+    # -   id: deps-in-desc
     -   id: codemeta-description-updated
     -   id: use-tidy-description
 -   repo: https://github.com/pre-commit/pre-commit-hooks

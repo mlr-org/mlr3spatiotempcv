@@ -43,25 +43,27 @@
 #' @name autoplot.ResamplingSpCVBlock
 #' @export
 #' @examples
-#' library(mlr3)
-#' library(mlr3spatiotempcv)
-#' task = tsk("ecuador")
-#' resampling = rsmp("spcv_block", range = 1000)
-#' resampling$instantiate(task)
+#' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
+#'   library(mlr3)
+#'   library(mlr3spatiotempcv)
+#'   task = tsk("ecuador")
+#'   resampling = rsmp("spcv_block", range = 1000L)
+#'   resampling$instantiate(task)
 #'
-#' ## Visualize all partitions
-#' autoplot(resampling, task) +
-#'   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+#'   ## Visualize all partitions
+#'   autoplot(resampling, task) +
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #'
-#' ## Visualize the train/test split of a single fold
-#' autoplot(resampling, task, fold_id = 1)
+#'   ## Visualize the train/test split of a single fold
+#'   autoplot(resampling, task, fold_id = 1)
 #'
-#' ## Visualize train/test splits of multiple folds
-#' autoplot(resampling, task, fold_id = c(1, 2))
+#'   ## Visualize train/test splits of multiple folds
+#'   autoplot(resampling, task, fold_id = c(1, 2))
 #'
-#' # list of ggplot2 resamplings
-#' plot_list = autoplot(resampling, task,
-#'   fold_id = c(1, 2), grid = FALSE)
+#'   # list of ggplot2 resamplings
+#'   plot_list = autoplot(resampling, task,
+#'     fold_id = c(1, 2), grid = FALSE)
+#' }
 autoplot.ResamplingSpCVBlock = function( # nolint
   object,
   task,
@@ -143,16 +145,18 @@ plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
 #'   [ResamplingRepeatedSpCVEnv].
 #' @export
 #' @examples
-#' library(mlr3)
-#' library(mlr3spatiotempcv)
-#' task = tsk("ecuador")
-#' resampling = rsmp("spcv_env", folds = 4, features = "dem")
-#' resampling$instantiate(task)
+#' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
+#'   library(mlr3)
+#'   library(mlr3spatiotempcv)
+#'   task = tsk("ecuador")
+#'   resampling = rsmp("spcv_env", folds = 4, features = "dem")
+#'   resampling$instantiate(task)
 #'
-#' autoplot(resampling, task) +
-#'   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-#' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2))
+#'   autoplot(resampling, task) +
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+#'   autoplot(resampling, task, 1)
+#'   autoplot(resampling, task, c(1, 2))
+#' }
 autoplot.ResamplingSpCVEnv = function( # nolint
   object,
   task,
@@ -214,7 +218,7 @@ plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
   print(autoplot(x, ...)) # nocov
 }
 
-# SpCV Coords-------------------------------------------------------------------
+# SpCV Coords ------------------------------------------------------------------
 
 #' @title Visualization Functions for SpCV Coords Methods.
 #'
@@ -231,16 +235,18 @@ plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
 #'   [ResamplingRepeatedSpCVCoords].
 #' @export
 #' @examples
-#' library(mlr3)
-#' library(mlr3spatiotempcv)
-#' task = tsk("ecuador")
-#' resampling = rsmp("spcv_coords")
-#' resampling$instantiate(task)
+#' if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
+#'   library(mlr3)
+#'   library(mlr3spatiotempcv)
+#'   task = tsk("ecuador")
+#'   resampling = rsmp("spcv_coords")
+#'   resampling$instantiate(task)
 #'
-#' autoplot(resampling, task) +
-#'   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-#' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2))
+#'   autoplot(resampling, task) +
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+#'   autoplot(resampling, task, 1)
+#'   autoplot(resampling, task, c(1, 2))
+#' }
 autoplot.ResamplingSpCVCoords = function( # nolint
   object,
   task,
@@ -329,16 +335,18 @@ plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
 #' @export
 #' @examples
 #' \dontrun{
-#' library(mlr3)
-#' library(mlr3spatiotempcv)
-#' task_st = tsk("cookfarm")
-#' resampling = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
-#' resampling$instantiate(task_st)
+#' if (mlr3misc::require_namespaces(c("sf", "skmeans", "plotly"), quietly = TRUE)) {
+#'   library(mlr3)
+#'   library(mlr3spatiotempcv)
+#'   task_st = tsk("cookfarm")
+#'   resampling = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
+#'   resampling$instantiate(task_st)
 #'
-#' # plot
-#' autoplot(resampling, task_st)
-#' autoplot(resampling, task_st, 1)
-#' autoplot(resampling, task_st, c(1, 2))
+#'   # plot
+#'   autoplot(resampling, task_st)
+#'   autoplot(resampling, task_st, 1)
+#'   autoplot(resampling, task_st, c(1, 2))
+#' }
 #' }
 autoplot.ResamplingSptCVCluto = function( # nolint
   object,
@@ -427,16 +435,18 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
 #' @inheritParams autoplot.ResamplingSpCVBlock
 #' @export
 #' @examples
-#' library(mlr3)
-#' library(mlr3spatiotempcv)
-#' task = tsk("ecuador")
-#' resampling = rsmp("cv")
-#' resampling$instantiate(task)
+#' if (mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"), quietly = TRUE)) {
+#'   library(mlr3)
+#'   library(mlr3spatiotempcv)
+#'   task = tsk("ecuador")
+#'   resampling = rsmp("cv")
+#'   resampling$instantiate(task)
 #'
-#' autoplot(resampling, task) +
-#'   ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-#' autoplot(resampling, task, 1)
-#' autoplot(resampling, task, c(1, 2))
+#'   autoplot(resampling, task) +
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+#'   autoplot(resampling, task, 1)
+#'   autoplot(resampling, task, c(1, 2))
+#' }
 autoplot.ResamplingCV = function( # nolint
   object,
   task,
@@ -511,7 +521,7 @@ autoplot_spatial = function(
   crs = NULL,
   ...) {
 
-  require_namespaces(c("sf", "patchwork", "ggtext"))
+  mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
 
   resampling = assert_autoplot(resampling, fold_id, task)
 
@@ -547,7 +557,9 @@ autoplot_spatial = function(
       }
       # transform to selected crs
       sf_df = sf::st_transform(
-        sf::st_as_sf(dt, coords = c("x", "y"), crs = task$extra_args$crs),
+        sf::st_as_sf(dt,
+          coords = task$extra_args$coordinate_names,
+          crs = task$extra_args$crs),
         crs = crs)
 
       sf_df = reorder_levels(sf_df)
@@ -596,7 +608,9 @@ autoplot_spatial = function(
     }
     # transform to selected crs
     sf_df = sf::st_transform(
-      sf::st_as_sf(coords_resamp, coords = c("x", "y"), crs = task$extra_args$crs),
+      sf::st_as_sf(coords_resamp,
+        coords = task$extra_args$coordinate_names,
+        crs = task$extra_args$crs),
       crs = crs)
 
     # order fold ids
@@ -636,7 +650,7 @@ autoplot_spatiotemp = function(
   point_size = NULL,
   axis_label_fontsize = NULL) {
 
-  require_namespaces("plotly")
+  mlr3misc::require_namespaces("plotly")
   resampling = assert_autoplot(resampling, fold_id, task)
 
   # add the row_ids of the task to the coordinates
@@ -660,14 +674,16 @@ autoplot_spatiotemp = function(
 
   # set fallback crs if missing
   if (is.null(crs)) {
-    require_namespaces("sf")
+    mlr3misc::require_namespaces("sf")
     messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
     crs = 4326
   }
   # transform coordinates to selected crs
   coords = sf::st_coordinates(
     sf::st_transform(
-      sf::st_as_sf(task$coordinates(), coords = c("x", "y"), crs = task$extra_args$crs),
+      sf::st_as_sf(task$coordinates(),
+        coords = task$extra_args$coordinate_names,
+        crs = task$extra_args$crs),
       crs = crs)
   )
   task_resamp_ids$x = coords[, 1]
