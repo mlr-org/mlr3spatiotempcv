@@ -89,6 +89,12 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
 })
 
 test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer", {
+
+  # cran test failure (Error: no arguments in initialization list)
+  testthat::skip_on_os("solaris")
+  # same issue on macOS 3.6
+  testthat::skip_if(as.numeric(R.version$major) < 4)
+
   set.seed(42)
 
   task = test_make_blockCV_test_task()
