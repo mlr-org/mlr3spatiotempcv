@@ -51,6 +51,15 @@ Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G (2018).
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingRepeatedSpCVBlock}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{blocks}}{\verb{sf | list of sf objects}\cr
+Polygons (\code{sf} objects) as returned by \pkg{blockCV} which grouped
+observations into partitions.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{

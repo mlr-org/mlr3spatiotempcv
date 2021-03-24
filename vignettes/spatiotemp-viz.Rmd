@@ -39,7 +39,8 @@ task_st = tsk("cookfarm")
 resampling = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
 resampling$instantiate(task_st)
 
-pl = plot(resampling, task_st, c(1, 2, 3, 4),
+pl = autoplot(resampling, task_st, c(1, 2, 3, 4),
+  crs = 4326,
   point_size = 3, axis_label_fontsize = 10)
 
 # Warnings can be ignored
@@ -70,13 +71,13 @@ plotly::layout(pl_subplot,
 )
 ```
 
-```{r, eval=os&&!is_cran, echo=FALSE, results='asis'}
+```{r, eval=Sys.getenv("IN_PKGDOWN" == ""), echo=FALSE, results='asis'}
 cat("(The actual graphic here is only rendered on the pkgdown site: please visit https://mlr3spatiotempcv.mlr-org.com.)")
 ```
 
-```{r, eval=!os, results='asis', echo=FALSE}
+```{r, eval=Sys.getenv("IN_PKGDOWN" == ""), results='asis', echo=FALSE}
 cat("(The Cluto method does not work on macOS: please visit https://mlr3spatiotempcv.mlr-org.com to see the rendered plot.)")
 ```
 
 Subplot titles can unfortunately not created dynamically.
-However, there is also a manual workaround via [annotations](https://plotly.com/r/reference/#layout-annotations) show in this [RPubs post](https://rpubs.com/bcd/subplot-titles).
+However, there is a manual workaround via [annotations](https://plotly.com/r/reference/#layout-annotations) show in this [RPubs post](https://rpubs.com/bcd/subplot-titles).

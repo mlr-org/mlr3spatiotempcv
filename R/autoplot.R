@@ -2,7 +2,8 @@
 
 #' @title Visualization Functions for SpCV Block Methods.
 #'
-#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods.
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods to
+#'   visualize mlr3 spatiotemporal resampling objects.
 #'
 #' @import ggplot2
 #'
@@ -20,17 +21,20 @@
 #' @param repeats_id `[numeric]`\cr
 #'   Repetition ID to plot.
 #' @param plot_as_grid `[logical(1)]`\cr
-#' Should a gridded plot using via \CRANpkg{patchwork} be created? If `FALSE`
-#' only a list with all \CRANpkg{ggplot2} resamplings is returned. Only applies
-#' if a numeric vector is passed to argument `fold_id`.
+#'   Should a gridded plot using via \CRANpkg{patchwork} be created? If `FALSE`
+#'   a list with of \CRANpkg{ggplot2} objects is returned.
+#'   Only applies if a numeric vector is passed to argument `fold_id`.
 #' @param train_color `[character(1)]`\cr
 #'   The color to use for the training set observations.
 #' @param test_color `[character(1)]`\cr
 #'   The color to use for the test set observations.
 #' @param crs `[character]`\cr
 #'   EPSG code of the CRS for x and y axes.
-#' @param ... Not used.
-#'
+#' @param show_blocks `[logical(1)]`\cr
+#'   Whether to show an overlay of the spatial blocks polygons.
+#' @param show_labels `[logical(1)]`\cr
+#'   Whether to show an overlay of the spatial block IDs.
+#' @param ... Passed to `geom_sf()`. Helpful for adjusting point sizes and shapes.
 #' @details
 #' By default a plot is returned; if `fold_id` is set, a gridded plot is
 #' created. If `plot_as_grid = FALSE`, a list of plot objects is returned.
@@ -41,6 +45,14 @@
 #' If you want to change the colors, call `<plot> + <color-palette>()`.
 #' @return [ggplot()] or list of ggplot2 objects.
 #' @name autoplot.ResamplingSpCVBlock
+#' @seealso
+#'   - mlr3book chapter on on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions).
+#'   - [autoplot.ResamplingSpCVBuffer()]
+#'   - [autoplot.ResamplingSpCVCoords()]
+#'   - [autoplot.ResamplingSpCVEnv()]
+#'   - [autoplot.ResamplingCV()]
+#'   - [autoplot.ResamplingSptCVCstf()]
+#'   - [autoplot.ResamplingSptCVCluto()]
 #' @export
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
@@ -50,19 +62,23 @@
 #'   resampling = rsmp("spcv_block", range = 1000L)
 #'   resampling$instantiate(task)
 #'
+#'   ## list of ggplot2 resamplings
+#'   plot_list = autoplot(resampling, task,
+#'     crs = 4326,
+#'     fold_id = c(1, 2), plot_as_grid = FALSE)
+#'
 #'   ## Visualize all partitions
-#'   autoplot(resampling, task) +
+#'   autoplot(resampling, task, crs = 4326) +
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #'
 #'   ## Visualize the train/test split of a single fold
-#'   autoplot(resampling, task, fold_id = 1)
+#'   autoplot(resampling, task, fold_id = 1, crs = 4326)
 #'
 #'   ## Visualize train/test splits of multiple folds
-#'   autoplot(resampling, task, fold_id = c(1, 2))
-#'
-#'   # list of ggplot2 resamplings
-#'   plot_list = autoplot(resampling, task,
-#'     fold_id = c(1, 2), grid = FALSE)
+#'   autoplot(resampling, task,
+#'     fold_id = c(1, 2), crs = 4326,
+#'     show_blocks = TRUE, show_labels = TRUE) *
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
 autoplot.ResamplingSpCVBlock = function( # nolint
   object,
@@ -72,19 +88,21 @@ autoplot.ResamplingSpCVBlock = function( # nolint
   train_color = "#0072B5",
   test_color = "#E18727",
   crs = NULL,
+  show_blocks = FALSE,
+  show_labels = FALSE,
   ...) {
-
-  ellip = list(...)
 
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
-    repeats_id = ellip$repeats_id,
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    crs = crs
+    crs = crs,
+    show_blocks = show_blocks,
+    show_labels = show_labels,
+    ... = ...
   )
 }
 
@@ -94,11 +112,13 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
   object,
   task,
   fold_id = NULL,
-  repeats_id = NULL,
+  repeats_id = 1,
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
   crs = NULL,
+  show_blocks = FALSE,
+  show_labels = FALSE,
   ...) {
 
   autoplot.ResamplingSpCVBlock(
@@ -109,6 +129,9 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
     train_color = train_color,
     test_color = test_color,
     crs = crs,
+    show_blocks = show_blocks,
+    show_labels = show_labels,
+    ... = ...,
     # ellipsis
     repeats_id = repeats_id
   )
@@ -144,6 +167,14 @@ plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
 #'   mlr3 spatial resampling object of class [ResamplingSpCVEnv] or
 #'   [ResamplingRepeatedSpCVEnv].
 #' @export
+#' @seealso
+#'   - mlr3book chapter on on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions).
+#'   - [autoplot.ResamplingSpCVBlock()]
+#'   - [autoplot.ResamplingSpCVBuffer()]
+#'   - [autoplot.ResamplingSpCVCoords()]
+#'   - [autoplot.ResamplingCV()]
+#'   - [autoplot.ResamplingSptCVCstf()]
+#'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 #'   library(mlr3)
@@ -152,10 +183,11 @@ plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
 #'   resampling = rsmp("spcv_env", folds = 4, features = "dem")
 #'   resampling$instantiate(task)
 #'
-#'   autoplot(resampling, task) +
+#'   autoplot(resampling, task, crs = 4326) +
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-#'   autoplot(resampling, task, 1)
-#'   autoplot(resampling, task, c(1, 2))
+#'   autoplot(resampling, task, fold_id = 1, crs = 4326)
+#'   autoplot(resampling, task, fold_id = c(1, 2), crs = 4326) *
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
 autoplot.ResamplingSpCVEnv = function( # nolint
   object,
@@ -167,15 +199,13 @@ autoplot.ResamplingSpCVEnv = function( # nolint
   crs = NULL,
   ...) {
 
-  ellip = list(...)
-
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
-    repeats_id = ellip$repeats_id,
     plot_as_grid = plot_as_grid,
-    crs = crs
+    crs = crs,
+    ... = ...
   )
 }
 
@@ -185,7 +215,7 @@ autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
   object,
   task,
   fold_id = NULL,
-  repeats_id = NULL,
+  repeats_id = 1,
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
@@ -200,6 +230,7 @@ autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
     train_color = train_color,
     test_color = test_color,
     crs = crs,
+    ... = ...,
     # ellipsis
     repeats_id = repeats_id
   )
@@ -234,6 +265,14 @@ plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
 #'   mlr3 spatial resampling object of class [ResamplingSpCVCoords] or
 #'   [ResamplingRepeatedSpCVCoords].
 #' @export
+#' @seealso
+#'   - mlr3book chapter on on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions).
+#'   - [autoplot.ResamplingSpCVBlock()]
+#'   - [autoplot.ResamplingSpCVBuffer()]
+#'   - [autoplot.ResamplingSpCVEnv()]
+#'   - [autoplot.ResamplingCV()]
+#'   - [autoplot.ResamplingSptCVCstf()]
+#'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
 #'   library(mlr3)
@@ -244,8 +283,9 @@ plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
 #'
 #'   autoplot(resampling, task) +
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-#'   autoplot(resampling, task, 1)
-#'   autoplot(resampling, task, c(1, 2))
+#'   autoplot(resampling, task, fold_id = 1, crs = 4326)
+#'   autoplot(resampling, task, fold_id = c(1, 2), crs = 4326) *
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
 autoplot.ResamplingSpCVCoords = function( # nolint
   object,
@@ -257,15 +297,13 @@ autoplot.ResamplingSpCVCoords = function( # nolint
   crs = NULL,
   ...) {
 
-  ellip = list(...)
-
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
-    repeats_id = ellip$repeats_id,
     plot_as_grid = plot_as_grid,
-    crs = crs
+    crs = crs,
+    ... = ...
   )
 }
 
@@ -275,7 +313,7 @@ autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
   object,
   task,
   fold_id = NULL,
-  repeats_id = NULL,
+  repeats_id = 1,
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
@@ -290,6 +328,7 @@ autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
     train_color = train_color,
     test_color = test_color,
     crs = crs,
+    ... = ...,
     # ellipsis
     repeats_id = repeats_id
   )
@@ -312,7 +351,8 @@ plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
 
 #' @title Visualization Functions for SptCV Cluto Methods.
 #'
-#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods.
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods to
+#'   visualize mlr3 spatiotemporal resampling objects.
 #'
 #' @inheritParams autoplot.ResamplingSpCVBlock
 #' @param object `[Resampling]`\cr
@@ -333,6 +373,15 @@ plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
 #'   Font size of axis labels.
 #' @name autoplot.ResamplingSptCVCluto
 #' @export
+#' @seealso
+#'   - mlr3book chapter on on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions).
+#'   - Vignette [Spatiotemporal Visualization](https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html).
+#'   - [autoplot.ResamplingSpCVBlock()]
+#'   - [autoplot.ResamplingSpCVBuffer()]
+#'   - [autoplot.ResamplingSpCVCoords()]
+#'   - [autoplot.ResamplingSpCVEnv()]
+#'   - [autoplot.ResamplingCV()]
+#'   - [autoplot.ResamplingSptCVCstf()]
 #' @examples
 #' \dontrun{
 #' if (mlr3misc::require_namespaces(c("sf", "skmeans", "plotly"), quietly = TRUE)) {
@@ -344,8 +393,8 @@ plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
 #'
 #'   # plot
 #'   autoplot(resampling, task_st)
-#'   autoplot(resampling, task_st, 1)
-#'   autoplot(resampling, task_st, c(1, 2))
+#'   autoplot(resampling, task_st, fold_id = 1)
+#'   autoplot(resampling, task_st, fold_id = c(1, 2))
 #' }
 #' }
 autoplot.ResamplingSptCVCluto = function( # nolint
@@ -363,20 +412,18 @@ autoplot.ResamplingSptCVCluto = function( # nolint
   axis_label_fontsize = 11,
   ...) {
 
-  ellip = list(...)
-
   autoplot_spatiotemp(
     resampling = object,
     task = task,
     fold_id = fold_id,
-    repeats_id = ellip$repeats_id,
     plot_as_grid = plot_as_grid,
     tickformat_date = tickformat_date,
     crs = crs,
     nticks_y = nticks_y,
     nticks_x = nticks_y,
     point_size = point_size,
-    axis_label_fontsize = axis_label_fontsize
+    axis_label_fontsize = axis_label_fontsize,
+    ... = ...
   )
 }
 
@@ -386,7 +433,7 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
   object,
   task,
   fold_id = NULL,
-  repeats_id = NULL,
+  repeats_id = 1,
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
@@ -401,6 +448,7 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
     train_color = train_color,
     test_color = test_color,
     crs = crs,
+    ... = ...,
     # ellipsis
     repeats_id = repeats_id
   )
@@ -434,6 +482,14 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
 #'   [ResamplingRepeatedCV].
 #' @inheritParams autoplot.ResamplingSpCVBlock
 #' @export
+#' @seealso
+#'   - mlr3book chapter on on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions).
+#'   - [autoplot.ResamplingSpCVBlock()]
+#'   - [autoplot.ResamplingSpCVBuffer()]
+#'   - [autoplot.ResamplingSpCVCoords()]
+#'   - [autoplot.ResamplingSpCVEnv()]
+#'   - [autoplot.ResamplingSptCVCstf()]
+#'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"), quietly = TRUE)) {
 #'   library(mlr3)
@@ -444,8 +500,9 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
 #'
 #'   autoplot(resampling, task) +
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-#'   autoplot(resampling, task, 1)
-#'   autoplot(resampling, task, c(1, 2))
+#'   autoplot(resampling, task, fold_id = 1)
+#'   autoplot(resampling, task, fold_id = c(1, 2)) *
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
 autoplot.ResamplingCV = function( # nolint
   object,
@@ -457,15 +514,13 @@ autoplot.ResamplingCV = function( # nolint
   crs = NULL,
   ...) {
 
-  ellip = list(...)
-
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
     crs = crs,
-    repeats_id = ellip$repeats_id
+    ... = ...
   )
 }
 
@@ -475,7 +530,7 @@ autoplot.ResamplingRepeatedCV = function( # nolint
   object,
   task,
   fold_id = NULL,
-  repeats_id = NULL,
+  repeats_id = 1,
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
@@ -490,6 +545,7 @@ autoplot.ResamplingRepeatedCV = function( # nolint
     train_color = train_color,
     test_color = test_color,
     crs = crs,
+    ... = ...,
     # ellipsis
     repeats_id = repeats_id
   )
@@ -519,23 +575,29 @@ autoplot_spatial = function(
   train_color = NULL,
   test_color = NULL,
   crs = NULL,
+  show_blocks = FALSE,
+  show_labels = FALSE,
   ...) {
 
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
 
-  resampling = assert_autoplot(resampling, fold_id, task)
+  # we need to work with a clone, otherwise the object modifications
+  # will create issues in future calls usings the same object
+  rsmp_autopl = resampling$clone()
 
-  if (is.null(repeats_id)) {
-    repeats_id = 1
-  }
+  rsmp_autopl = assert_autoplot(rsmp_autopl, fold_id, task)
 
   # add the row_ids of the task to the coordinates
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
-  coords_resamp = merge(coords, resampling$instance, by = "row_id")
+  if (is.null(repeats_id)) {
+    repeats_id = 1
+  }
 
-  if (grepl("Repeated", class(resampling)[1])) {
+  coords_resamp = merge(coords, rsmp_autopl$instance, by = "row_id")
+
+  if (grepl("Repeated", class(rsmp_autopl)[1])) {
     coords_resamp = coords_resamp[rep == repeats_id, ]
   }
 
@@ -555,7 +617,7 @@ autoplot_spatial = function(
         crs = 4326
         messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
       }
-      # transform to selected crs
+
       sf_df = sf::st_transform(
         sf::st_as_sf(dt,
           coords = task$extra_args$coordinate_names,
@@ -564,22 +626,69 @@ autoplot_spatial = function(
 
       sf_df = reorder_levels(sf_df)
 
-      ggplot() +
-        geom_sf(data = sf_df, aes(color = indicator)) +
-        scale_color_manual(values = c(
-          "Train" = "#0072B5",
-          "Test" = "#E18727"
-        )) +
-        labs(color = "Set", title = sprintf("Fold %s, Repetition %s", .x, repeats_id)) +
-        theme(plot.title = ggtext::element_textbox(
-          size = 10,
-          color = "black", fill = "#ebebeb", box.color = "black",
-          height = unit(0.33, "inch"), width = unit(1, "npc"),
-          linetype = 1, r = unit(5, "pt"),
-          valign = 0.5, halign = 0.5,
-          padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3)
-        )
-        )
+      if (show_blocks) {
+
+        if (grepl("Repeated", class(rsmp_autopl)[1])) {
+          coords_resamp = coords_resamp[rep == repeats_id, ]
+          blocks = rsmp_autopl$blocks[[repeats_id]]
+        } else {
+          blocks = rsmp_autopl$blocks
+        }
+
+        p1 = ggplot() +
+          geom_sf(data = sf_df, aes(color = indicator), ...) +
+          geom_sf(
+            data = blocks, color = "black", alpha = 0,
+            size = 0.7) +
+          scale_color_manual(values = c(
+            "Train" = "#0072B5",
+            "Test" = "#E18727"
+          )) +
+          labs(color = "Set", title = sprintf(
+            "Fold %s, Repetition %s", .x,
+            repeats_id)) +
+          theme(plot.title = ggtext::element_textbox(
+            size = 10,
+            color = "black", fill = "#ebebeb", box.color = "black",
+            height = unit(0.33, "inch"), width = unit(1, "npc"),
+            linetype = 1, r = unit(5, "pt"),
+            valign = 0.5, halign = 0.5,
+            padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+          )
+
+        if (show_labels) {
+          p1 = p1 +
+            geom_sf_label(
+              data = blocks, color = "black",
+              label = blocks$fold,
+              size = 2, label.padding = unit(0.1, "lines"),
+              fun.geometry = function(x) {
+                # Warning: In st_point_on_surface.sfc(sf::st_zm(x)) :
+                # st_point_on_surface may not give correct results for
+                # longitude/latitude data
+                suppressWarnings(sf::st_point_on_surface(sf::st_zm(x)))
+              })
+        }
+        return(p1)
+      } else {
+        ggplot() +
+          geom_sf(data = sf_df, aes(color = indicator), ...) +
+          scale_color_manual(values = c(
+            "Train" = "#0072B5",
+            "Test" = "#E18727"
+          )) +
+          labs(color = "Set", title = sprintf(
+            "Fold %s, Repetition %s", .x,
+            repeats_id)) +
+          theme(plot.title = ggtext::element_textbox(
+            size = 10,
+            color = "black", fill = "#ebebeb", box.color = "black",
+            height = unit(0.33, "inch"), width = unit(1, "npc"),
+            linetype = 1, r = unit(5, "pt"),
+            valign = 0.5, halign = 0.5,
+            padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+          )
+      }
     })
 
     # Return a plot grid via patchwork? ----------------------------------------
@@ -607,6 +716,14 @@ autoplot_spatial = function(
       messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
     }
     # transform to selected crs
+    if (show_blocks) {
+
+      blocks = sf::st_as_sf(coords_resamp)
+    }
+    if (!is.null(coords_resamp$blocks)) {
+      coords_resamp$blocks = NULL
+    }
+
     sf_df = sf::st_transform(
       sf::st_as_sf(coords_resamp,
         coords = task$extra_args$coordinate_names,
@@ -622,9 +739,10 @@ autoplot_spatial = function(
     if (is.null(repeats_id)) {
       repeats_id = 1 # nocov
     }
+
     plot = ggplot() +
       geom_sf(
-        data = sf_df, show.legend = "point",
+        data = sf_df["fold"], show.legend = "point",
         aes(color = fold)
       ) +
       ggsci::scale_color_ucscgb() +
@@ -648,7 +766,8 @@ autoplot_spatiotemp = function(
   nticks_x = NULL,
   nticks_y = NULL,
   point_size = NULL,
-  axis_label_fontsize = NULL) {
+  axis_label_fontsize = NULL,
+  ...) {
 
   mlr3misc::require_namespaces("plotly")
   resampling = assert_autoplot(resampling, fold_id, task)
