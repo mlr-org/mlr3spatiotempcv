@@ -15,6 +15,8 @@
   train_color = "#0072B5",
   test_color = "#E18727",
   crs = NULL,
+  show_blocks = FALSE,
+  show_labels = FALSE,
   ...
 )
 
@@ -22,11 +24,13 @@
   object,
   task,
   fold_id = NULL,
-  repeats_id = NULL,
+  repeats_id = 1,
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
   crs = NULL,
+  show_blocks = FALSE,
+  show_labels = FALSE,
   ...
 )
 
@@ -47,8 +51,8 @@ Fold IDs to plot.}
 
 \item{plot_as_grid}{\verb{[logical(1)]}\cr
 Should a gridded plot using via \CRANpkg{patchwork} be created? If \code{FALSE}
-only a list with all \CRANpkg{ggplot2} resamplings is returned. Only applies
-if a numeric vector is passed to argument \code{fold_id}.}
+a list with of \CRANpkg{ggplot2} objects is returned.
+Only applies if a numeric vector is passed to argument \code{fold_id}.}
 
 \item{train_color}{\verb{[character(1)]}\cr
 The color to use for the training set observations.}
@@ -59,7 +63,13 @@ The color to use for the test set observations.}
 \item{crs}{\verb{[character]}\cr
 EPSG code of the CRS for x and y axes.}
 
-\item{...}{Not used.}
+\item{show_blocks}{\verb{[logical(1)]}\cr
+Whether to show an overlay of the spatial blocks polygons.}
+
+\item{show_labels}{\verb{[logical(1)]}\cr
+Whether to show an overlay of the spatial block IDs.}
+
+\item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and shapes.}
 
 \item{repeats_id}{\verb{[numeric]}\cr
 Repetition ID to plot.}
@@ -72,7 +82,8 @@ mlr3 spatial resampling object. One of class \link{ResamplingSpCVBuffer},
 \code{\link[=ggplot]{ggplot()}} or list of ggplot2 objects.
 }
 \description{
-Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods.
+Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods to
+visualize mlr3 spatiotemporal resampling objects.
 }
 \details{
 By default a plot is returned; if \code{fold_id} is set, a gridded plot is
@@ -91,18 +102,33 @@ if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   resampling = rsmp("spcv_block", range = 1000L)
   resampling$instantiate(task)
 
+  ## list of ggplot2 resamplings
+  plot_list = autoplot(resampling, task,
+    crs = 4326,
+    fold_id = c(1, 2), plot_as_grid = FALSE)
+
   ## Visualize all partitions
-  autoplot(resampling, task) +
+  autoplot(resampling, task, crs = 4326) +
     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 
   ## Visualize the train/test split of a single fold
-  autoplot(resampling, task, fold_id = 1)
+  autoplot(resampling, task, fold_id = 1, crs = 4326)
 
   ## Visualize train/test splits of multiple folds
-  autoplot(resampling, task, fold_id = c(1, 2))
-
-  # list of ggplot2 resamplings
-  plot_list = autoplot(resampling, task,
-    fold_id = c(1, 2), grid = FALSE)
+  autoplot(resampling, task,
+    fold_id = c(1, 2), crs = 4326,
+    show_blocks = TRUE, show_labels = TRUE) *
+    ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+}
+}
+\seealso{
+\itemize{
+\item mlr3book chapter on on \href{https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions}{"Spatiotemporal Visualization"}.
+\item \code{\link[=autoplot.ResamplingSpCVBuffer]{autoplot.ResamplingSpCVBuffer()}}
+\item \code{\link[=autoplot.ResamplingSpCVCoords]{autoplot.ResamplingSpCVCoords()}}
+\item \code{\link[=autoplot.ResamplingSpCVEnv]{autoplot.ResamplingSpCVEnv()}}
+\item \code{\link[=autoplot.ResamplingCV]{autoplot.ResamplingCV()}}
+\item \code{\link[=autoplot.ResamplingSptCVCstf]{autoplot.ResamplingSptCVCstf()}}
+\item \code{\link[=autoplot.ResamplingSptCVCluto]{autoplot.ResamplingSptCVCluto()}}
 }
 }

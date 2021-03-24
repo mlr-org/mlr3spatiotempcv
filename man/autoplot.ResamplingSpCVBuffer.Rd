@@ -30,8 +30,8 @@ Fold IDs to plot.}
 
 \item{plot_as_grid}{\verb{[logical(1)]}\cr
 Should a gridded plot using via \CRANpkg{patchwork} be created? If \code{FALSE}
-only a list with all \CRANpkg{ggplot2} resamplings is returned. Only applies
-if a numeric vector is passed to argument \code{fold_id}.}
+a list with of \CRANpkg{ggplot2} objects is returned.
+Only applies if a numeric vector is passed to argument \code{fold_id}.}
 
 \item{train_color}{\verb{[character(1)]}\cr
 The color to use for the training set observations.}
@@ -42,13 +42,14 @@ The color to use for the test set observations.}
 \item{crs}{\verb{[character]}\cr
 EPSG code of the CRS for x and y axes.}
 
-\item{...}{Not used.}
+\item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and shapes.}
 
 \item{x}{\verb{[Resampling]}\cr
 mlr3 spatial resampling object of class \link{ResamplingSpCVBuffer}.}
 }
 \description{
-Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods.
+Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods to
+visualize mlr3 spatiotemporal resampling objects.
 }
 \examples{
 \donttest{
@@ -56,12 +57,27 @@ if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   library(mlr3)
   library(mlr3spatiotempcv)
   task = tsk("ecuador")
-  resampling = rsmp("spcv_buffer", theRange = 10000)
+  resampling = rsmp("spcv_buffer", theRange = 1000)
   resampling$instantiate(task)
 
-  autoplot(resampling, task, 1) +
+  ## single fold
+  autoplot(resampling, task, fold_id = 1, crs = 4326) +
     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-  autoplot(resampling, task, c(1, 2))
+
+  ## multiple folds
+  autoplot(resampling, task, fold_id = c(1, 2), crs = 4326) *
+    ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 }
+}
+}
+\seealso{
+\itemize{
+\item mlr3book chapter on on \href{https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions}{"Spatiotemporal Visualization"}.
+\item \code{\link[=autoplot.ResamplingSpCVBlock]{autoplot.ResamplingSpCVBlock()}}
+\item \code{\link[=autoplot.ResamplingSpCVCoords]{autoplot.ResamplingSpCVCoords()}}
+\item \code{\link[=autoplot.ResamplingSpCVEnv]{autoplot.ResamplingSpCVEnv()}}
+\item \code{\link[=autoplot.ResamplingCV]{autoplot.ResamplingCV()}}
+\item \code{\link[=autoplot.ResamplingSptCVCstf]{autoplot.ResamplingSptCVCstf()}}
+\item \code{\link[=autoplot.ResamplingSptCVCluto]{autoplot.ResamplingSptCVCluto()}}
 }
 }

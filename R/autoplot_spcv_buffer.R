@@ -1,6 +1,7 @@
 #' @title Visualization Functions for SpCV Buffer Methods.
 #'
-#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods.
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods to
+#'   visualize mlr3 spatiotemporal resampling objects.
 #'
 #' @name autoplot.ResamplingSpCVBuffer
 #' @inheritParams autoplot.ResamplingSpCVBlock
@@ -9,18 +10,30 @@
 #' @param x `[Resampling]`\cr
 #'   mlr3 spatial resampling object of class [ResamplingSpCVBuffer].
 #' @export
+#' @seealso
+#'   - mlr3book chapter on on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions).
+#'   - [autoplot.ResamplingSpCVBlock()]
+#'   - [autoplot.ResamplingSpCVCoords()]
+#'   - [autoplot.ResamplingSpCVEnv()]
+#'   - [autoplot.ResamplingCV()]
+#'   - [autoplot.ResamplingSptCVCstf()]
+#'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' \donttest{
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
 #'   task = tsk("ecuador")
-#'   resampling = rsmp("spcv_buffer", theRange = 10000)
+#'   resampling = rsmp("spcv_buffer", theRange = 1000)
 #'   resampling$instantiate(task)
 #'
-#'   autoplot(resampling, task, 1) +
+#'   ## single fold
+#'   autoplot(resampling, task, fold_id = 1, crs = 4326) +
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-#'   autoplot(resampling, task, c(1, 2))
+#'
+#'   ## multiple folds
+#'   autoplot(resampling, task, fold_id = c(1, 2), crs = 4326) *
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
 #' }
 autoplot.ResamplingSpCVBuffer = function( # nolint
