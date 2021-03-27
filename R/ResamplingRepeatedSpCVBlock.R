@@ -34,6 +34,12 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
   inherit = mlr3::Resampling,
 
   public = list(
+
+    #' @field blocks `sf | list of sf objects`\cr
+    #'  Polygons (`sf` objects) as returned by \pkg{blockCV} which grouped
+    #'  observations into partitions.
+    blocks = NULL,
+
     #' @description
     #' Create an "coordinate-based" repeated resampling instance.
     #' @param id `character(1)`\cr
@@ -165,8 +171,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
 
   private = list(
     .sample = function(ids, coords, crs) {
+
       pv = self$param_set$values
-      folds = as.integer(pv$folds)
 
       create_blocks = function(coords, range) {
         points = sf::st_as_sf(coords,
@@ -184,16 +190,34 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
             selection = self$param_set$values$selection,
             showBlocks = FALSE,
             verbose = FALSE,
-            progress = FALSE)$foldID)))
+            progress = FALSE))))
         return(inds)
       }
 
-      map_dtr(seq_len(pv$repeats), function(i) {
-        data.table(
-          row_id = ids, rep = i,
-          fold = create_blocks(coords, self$param_set$values$range[i])
-        )
+      inds = mlr3misc::map(seq_len(pv$repeats), function(i) {
+        inds = create_blocks(coords, self$param_set$values$range[i])
+        blocks = sf::st_as_sf(inds$blocks, crs = crs)
+
+        return(list(resampling = data.table(
+          row_id = ids,
+          fold = inds$foldID,
+          rep = i
+        ), blocks = blocks))
       })
+
+      # extract blocks for each repetition
+      blocks = mlr3misc::map(inds, function(i) {
+        i$blocks
+      })
+
+      # assign blocks to field to be able to access them in autoplot()
+      self$blocks = blocks
+
+      # extract and row bind indices
+      map_dtr(inds, function(i) {
+        i$resampling
+      })
+
     },
 
     .get_train = function(i) {

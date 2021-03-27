@@ -11,10 +11,15 @@ Extends the mlr3 ML framework with spatio-temporal resampling
     (STAC) in predictor variables. STAC may cause highly biased
     performance estimates in cross-validation if ignored.
 }
-\section{Additional resources}{
+\section{Main resources}{
 
 \itemize{
 \item Book on mlr3: \url{https://mlr3book.mlr-org.com}
+\item mlr3book section about spatiotemporal data: \url{https://mlr3book.mlr-org.com/spatiotemporal.html}
+\item package vignettes: \url{https://mlr3spatiotempcv.mlr-org.com/dev/articles/}
+}
+\subsection{Miscellaneous \pkg{mlr3} content}{
+\itemize{
 \item Use cases and examples: \url{https://mlr3gallery.mlr-org.com}
 \item More classification and regression tasks: \CRANpkg{mlr3data}
 \item Connector to \href{https://www.openml.org}{OpenML}: \CRANpkg{mlr3oml}
@@ -29,9 +34,9 @@ Extends the mlr3 ML framework with spatio-temporal resampling
 \item Feature selection wrappers: \CRANpkg{mlr3fselect}
 \item Interface to real (out-of-memory) data bases: \CRANpkg{mlr3db}
 \item Performance measures as plain functions: \CRANpkg{mlr3measures}
-\item Spatiotemporal resampling methods: \CRANpkg{mlr3spatiotempcv}
 \item Parallelization framework: \CRANpkg{future}
 \item Progress bars: \CRANpkg{progressr}
+}
 }
 }
 
@@ -40,6 +45,21 @@ Schratz P, Muenchow J, Iturritxa E, Richter J, Brenning A (2019).
 \dQuote{Hyperparameter tuning and performance assessment of statistical and machine-learning algorithms using spatial data.}
 \emph{Ecological Modelling}, \bold{406}, 109--120.
 \doi{10.1016/j.ecolmodel.2019.06.002}.
+
+Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G (2018).
+\dQuote{blockCV: an R package for generating spatially or environmentally separated folds for k-fold cross-validation of species distribution models.}
+\emph{bioRxiv}.
+\doi{10.1101/357798}.
+
+Meyer H, Reudenbach C, Hengl T, Katurji M, Nauss T (2018).
+\dQuote{Improving performance of spatio-temporal machine learning models using forward feature selection and target-oriented validation.}
+\emph{Environmental Modelling & Software}, \bold{101}, 1--9.
+\doi{10.1016/j.envsoft.2017.12.001}.
+
+Zhao Y, Karypis G (2002).
+\dQuote{Evaluation of Hierarchical Clustering Algorithms for Document Datasets.}
+\emph{11th Conference of Information and Knowledge Management (CIKM)}, 51-524.
+\url{http://glaros.dtc.umn.edu/gkhome/node/167}.
 }
 \seealso{
 Useful links:

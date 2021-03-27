@@ -6,8 +6,12 @@
 #' @import paradox
 #' @import ggplot2
 #' @importFrom utils globalVariables
-#' @section Additional resources:
+#' @section Main resources:
 #' * Book on mlr3: \url{https://mlr3book.mlr-org.com}
+#' * mlr3book section about spatiotemporal data: \url{https://mlr3book.mlr-org.com/spatiotemporal.html}
+#' * package vignettes: \url{https://mlr3spatiotempcv.mlr-org.com/dev/articles/}
+#'
+#' ## Miscellaneous \pkg{mlr3} content
 #' * Use cases and examples: \url{https://mlr3gallery.mlr-org.com}
 #' * More classification and regression tasks: \CRANpkg{mlr3data}
 #' * Connector to [OpenML](https://www.openml.org): \CRANpkg{mlr3oml}
@@ -22,11 +26,16 @@
 #' * Feature selection wrappers: \CRANpkg{mlr3fselect}
 #' * Interface to real (out-of-memory) data bases: \CRANpkg{mlr3db}
 #' * Performance measures as plain functions: \CRANpkg{mlr3measures}
-#' * Spatiotemporal resampling methods: \CRANpkg{mlr3spatiotempcv}
 #' * Parallelization framework: \CRANpkg{future}
 #' * Progress bars: \CRANpkg{progressr}
 #' @references
 #' `r format_bib("schratz2019")`
+#'
+#' `r format_bib("valavi2018")`
+#'
+#' `r format_bib("meyer2018")`
+#'
+#' `r format_bib("zhao2002")`
 "_PACKAGE"
 
 register_mlr3 = function() { # nocov start

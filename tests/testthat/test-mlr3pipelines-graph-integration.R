@@ -1,6 +1,7 @@
 test_that("spcv methods work in a Graph Learner", {
 
-  # Info: spcv_buffer is missing due to runtime reasons
+  # - spcv_buffer is missing due to runtime reasons
+  # - spcv_block is missing due to runtime reasons
   rsmps = rsmps(c("spcv_coords", "spcv_env"), folds = 2)
   rsmps = append(rsmps, rsmp("spcv_block", folds = 2, rows = 2, cols = 2))
 

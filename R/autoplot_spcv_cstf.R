@@ -1,6 +1,7 @@
 #' @title Visualization Functions for SptCV Cstf Methods.
 #'
-#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods.
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods to
+#'   visualize mlr3 spatiotemporal resampling objects.
 #'
 #' @name autoplot.ResamplingSptCVCstf
 #' @inheritParams autoplot.ResamplingSpCVBlock
@@ -25,6 +26,15 @@
 #' @param axis_label_fontsize `[integer]`\cr
 #'   Font size of axis labels.
 #' @export
+#' @seealso
+#'   - mlr3book chapter on on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions).
+#'   - Vignette [Spatiotemporal Visualization](https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html).
+#'   - [autoplot.ResamplingSpCVBlock()]
+#'   - [autoplot.ResamplingSpCVBuffer()]
+#'   - [autoplot.ResamplingSpCVCoords()]
+#'   - [autoplot.ResamplingSpCVEnv()]
+#'   - [autoplot.ResamplingCV()]
+#'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' \donttest{
 #' if (mlr3misc::require_namespaces(c("sf", "skmeans", "plotly"), quietly = TRUE)) {
@@ -34,10 +44,9 @@
 #'   resampling = rsmp("sptcv_cstf", folds = 5, time_var = "Date")
 #'   resampling$instantiate(task_st)
 #'
-#'   # plot
 #'   autoplot(resampling, task_st)
-#'   autoplot(resampling, task_st, 1)
-#'   autoplot(resampling, task_st, c(1, 2))
+#'   # single fold
+#'   autoplot(resampling, task_st, fold_id = 1)
 #' }
 #' }
 autoplot.ResamplingSptCVCstf = function( # nolint
@@ -251,7 +260,7 @@ autoplot.ResamplingRepeatedSptCVCstf = function( # nolint
   object,
   task,
   fold_id = NULL,
-  repeats_id = NULL,
+  repeats_id = 1,
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
