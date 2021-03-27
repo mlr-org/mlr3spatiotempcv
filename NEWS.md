@@ -1,21 +1,14 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
-# mlr3spatiotempcv 0.2.2.9000
-
-- Internal changes only.
-
-
-# mlr3spatiotempcv 0.2.2
-
-- Internal changes only.
-
-
 # mlr3spatiotempcv 0.2.1.9001
 
+- add tests
+- `autoplot()`: allow adjusting point size via `...`
+- optimize spatiotemp-viz vignette
+- update autoplot examples and related documentation
+- Remove duplicate resources in Tasks "see also" fields
 - Skip a test on Solaris and macOS 3.6
 
-
-<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
 # mlr3spatiotempcv 0.2.1.9000
 
