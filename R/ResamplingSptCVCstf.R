@@ -1,4 +1,4 @@
-#' @title Create Spatiotemporal Folds Using Predefined Groups
+#' @title "Leave-location-and-time-out" resampling.
 #'
 #' @template rox_sptcv_cstf
 #'
