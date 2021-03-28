@@ -294,7 +294,7 @@ Cross-Validation}\label{non-spatial-cross-validation}}
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> resampling_nsp <- rsmp("repeated_cv", folds = 4, repeats = 2)
+R> resampling_nsp <- rsmp("repeated_cv", folds = 4, repeats = 2)$instantiate(task)
 R> rr_nsp <- resample(
 +   task = task, learner = learner,
 +   resampling = resampling_nsp
@@ -313,7 +313,7 @@ classif.auc
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> resampling_sp <- rsmp("repeated_spcv_coords", folds = 4, repeats = 2)
+R> resampling_sp <- rsmp("repeated_spcv_coords", folds = 4, repeats = 2)$instantiate(task)
 R> rr_sp <- resample(
 +   task = task, learner = learner,
 +   resampling = resampling_sp
@@ -385,7 +385,7 @@ plotted.
 
 \begin{CodeChunk}
 \begin{CodeInput}
-R> resampling_buffer <- rsmp("spcv_buffer", theRange = 1000)
+R> resampling_buffer <- rsmp("spcv_buffer", theRange = 1000)$instantiate(task)
 R> 
 R> autoplot(resampling_buffer, size = 0.7, task = task, fold_id = 1, crs = 4326) *
 +   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
@@ -400,49 +400,204 @@ R> autoplot(resampling_buffer, size = 0.7, task = task, fold_id = 1, crs = 4326)
 \hypertarget{spatial-blocking}{%
 \subsection{Spatial Blocking}\label{spatial-blocking}}
 
-``Spatial Blocking'' aims to create homogeneous blocks across the study
-area dividing observations into different zones of which each represents
-a partition. The way how these folds are created can be manifold:
+``Spatial Blocking'' (\pkg{blockCV} package) creates homogeneous blocks
+across the study area splitting observations into different zones
+\citep[\citet{wenger2012a}]{bahn2012a}. Then, a number of zones is
+combined randomly following desired the number of folds. For example, in
+a five-fold scenario, the method tries to combines zones to end up with
+partitions containing around 20\% of all observations.
+
+The way how the blocks are created can be manifold:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
   Supplying a numeric value in meters via argument \texttt{theRange}
-  will create a quadratic block pattern across the study area following
-  either a random (\texttt{selection\ =\ "random"}), systematic
+  (named just \texttt{range} in \{mlr3spatiotempcv\}) will create a
+  quadratic block pattern across the study area. The aggregation of
+  zones can either be random (default)
+  (\texttt{selection\ =\ "random"}), systematic
   (\texttt{selection\ =\ "systematic"}) or checkerboard structure
   (\texttt{selection\ =\ "checkerboard"}).
 \end{enumerate}
 
+\texttt{selection\ =\ "random"}
+
 \begin{CodeChunk}
 \begin{CodeInput}
-R> resampling_block_random <- rsmp("spcv_block", range = 500, folds = 5)
+R> resampling_block_random <- rsmp("spcv_block", range = 1000, folds = 5)
 R> 
-R> autoplot(resampling_block_random, size = 0.8, fold_id = 1,
-+          task = task, crs = 4326, show_blocks = TRUE) *
+R> autoplot(resampling_block_random,
++   size = 0.8, fold_id = 1, task = task, crs = 4326,
++   show_blocks = TRUE, show_labels = TRUE) *
 +   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
 +   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 \end{CodeInput}
-\begin{CodeOutput}
-Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not
-give correct results for longitude/latitude data
-\end{CodeOutput}
 
 
 \begin{center}\includegraphics{paper_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 \end{CodeChunk}
 
-\hypertarget{spatial-cv}{%
-\subsection{Spatial CV}\label{spatial-cv}}
+\texttt{selection\ =\ "systematic"}: Here, aggregation follows the
+linear count from \$1:n\_\{folds\} from top to bottom.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> resampling_block_systematic <- rsmp("spcv_block",
++   range = 1000, folds = 5,
++   selection = "systematic")
+R> 
+R> autoplot(resampling_block_systematic,
++   size = 0.8, fold_id = 1, task = task, crs = 4326,
++   show_blocks = TRUE, show_labels = TRUE) *
++   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
++   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{paper_files/figure-latex/unnamed-chunk-3-1} \end{center}
+
+\end{CodeChunk}
+
+\texttt{selection\ =\ "checkerboard"}: This option ignores paramter
+\texttt{range} and always creates two partitions following a ``1,2,1,2''
+pattern.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> resampling_block_checkerboard <- rsmp("spcv_block",
++   range = 1000, folds = 5,
++   selection = "checkerboard")
+R> 
+R> autoplot(resampling_block_checkerboard,
++   size = 0.8, fold_id = 1, task = task, crs = 4326,
++   show_blocks = TRUE, show_labels = TRUE) *
++   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
++   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{paper_files/figure-latex/unnamed-chunk-4-1} \end{center}
+
+\end{CodeChunk}
 
 \hypertarget{environmental-blocking}{%
 \subsection{Environmental Blocking}\label{environmental-blocking}}
 
+The last method from the \pkg{blockCV} package, ``environmental
+blocking'', makes use of \emph{k-means} clustering \citep{hartigan1979a}
+in a possibly multivariate space. The user can specify a variable via
+argument \texttt{feature} which levels will be used to create clusters.
+Hereby, k-means will use Euclidean distance for cluster creation. Hence,
+the selected input variables should be of type numeric. To avoid a
+potential bias introduced by features with high variance when selecting
+multiple features, all features are standardized by default.
+
+The following example clusters by feature ``distance to forest''.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> resampling_env <- rsmp("spcv_env",
++   features = "distdeforest", folds = 5)
+R> 
+R> autoplot(resampling_env,
++   size = 0.8, fold_id = 1, task = task, crs = 4326,
++   show_blocks = TRUE, show_labels = TRUE) *
++   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
++   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{paper_files/figure-latex/unnamed-chunk-5-1} \end{center}
+
+\end{CodeChunk}
+
+It is also possible to cluster by multiple features:
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> resampling_env_multi <- rsmp("spcv_env",
++   features = c("distdeforest", "slope"), folds = 5)
+R> 
+R> autoplot(resampling_env_multi,
++   size = 0.8, fold_id = 1, task = task, crs = 4326,
++   show_blocks = TRUE, show_labels = TRUE) *
++   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
++   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{paper_files/figure-latex/unnamed-chunk-6-1} \end{center}
+
+\end{CodeChunk}
+
+\hypertarget{spatial-cv}{%
+\subsection{Spatial CV}\label{spatial-cv}}
+
+The ``Spatial CV'' method after \citep{sperrorest} and implemented in
+package \pkg{sperrorest} is similar to method ``environmental blocking''
+in that it also uses \emph{k-means} clustering for fold creation.
+However, it does not make use of arbitrary features but uses the
+coordinates of all observations to create clusters in the spatial
+domain. This is what lead to the naming of \texttt{spcv\_coords} in
+\pkg{mlr3spatiotempcv}.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> resampling_coords <- rsmp("spcv_coords", folds = 5)$instantiate(task)
+R> 
+R> autoplot(resampling_coords,
++   size = 0.8, fold_id = 1, task = task, crs = 4326) *
++   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
++   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{paper_files/figure-latex/unnamed-chunk-7-1} \end{center}
+
+\end{CodeChunk}
+
 \hypertarget{leave-location-and-time-out-llot}{%
 \subsection{Leave-Location-and-Time-Out
 (LLOT)}\label{leave-location-and-time-out-llot}}
+
+Leave-Location-and-Time-Out from packge \pkg{CAST} is a spatiotemporal
+resampling method. It requires both a spatial and a temporal variable
+which are used to to separate observations in a multi-dimensional space.
+
+In this example the \texttt{cookfarm} dataset is used because it
+contains a temporal variable (``Date'') which is not present in dataset
+\texttt{ecuador}.
+
+The visualization is done in a dynamic way via \pkg{plotly} to visualize
+the both temporal and spatial dimensions.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> task_spt = tsk("cookfarm")
+R> resampling_cstf <- rsmp("sptcv_cstf",
++   folds = 5,
++   time_var = "Date", space_var = "SOURCEID")
+R> 
+R> autoplot(resampling_cstf,
++   fold_id = 2, task = task_spt, crs = 4326, static_image = TRUE,
++   file = "plot.pdf") *
++   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
++   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+\end{CodeInput}
+\begin{CodeOutput}
+NULL
+\end{CodeOutput}
+\end{CodeChunk}
+
+\begin{CodeChunk}
+
+
+\begin{center}\includegraphics{plot} \end{center}
+
+\end{CodeChunk}
 
 \hypertarget{spatiotemporal-clustering-cluto}{%
 \subsection{Spatiotemporal Clustering
