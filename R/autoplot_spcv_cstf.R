@@ -56,7 +56,7 @@
 #'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' \donttest{
-#' if (mlr3misc::require_namespaces(c("sf", "skmeans", "plotly"), quietly = TRUE)) {
+#' if (mlr3misc::require_namespaces(c("sf", "plotly"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
 #'   task_st = tsk("cookfarm")
@@ -65,9 +65,9 @@
 #'     space_var = "SOURCEID")
 #'   resampling$instantiate(task_st)
 #'
-#'   autoplot(resampling, task_st)
-#'   # single fold
-#'   autoplot(resampling, task_st, fold_id = 1)
+#'   # with both `space_var` and `time_var` (LLTO), the omitted observations per
+#'   # fold can be shown by setting `show_omitted = TRUE`
+#'   autoplot(resampling, task_st, fold_id = 1, show_omitted = TRUE)
 #' }
 #' }
 autoplot.ResamplingSptCVCstf = function( # nolint
@@ -120,12 +120,11 @@ autoplot.ResamplingSptCVCstf = function( # nolint
 
       row_id_test = resampling$instance$test[[fold_id]]
       row_id_train = resampling$instance$train[[fold_id]]
-      # data_coords[, indicator := ifelse(row_id == row_id_test, "Test", "Train")]
 
       data_coords[row_id %in% row_id_test, indicator := "Test"]
       data_coords[row_id %in% row_id_train, indicator := "Train"]
 
-      if (show_omitted) {
+      if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
         data_coords[indicator == "", indicator := "Omitted"]
 
         plot_single_plotly = plotly::plot_ly(data_coords,

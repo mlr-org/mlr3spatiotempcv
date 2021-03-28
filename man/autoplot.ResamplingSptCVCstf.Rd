@@ -122,7 +122,7 @@ make sense.
 }
 \examples{
 \donttest{
-if (mlr3misc::require_namespaces(c("sf", "skmeans", "plotly"), quietly = TRUE)) {
+if (mlr3misc::require_namespaces(c("sf", "plotly"), quietly = TRUE)) {
   library(mlr3)
   library(mlr3spatiotempcv)
   task_st = tsk("cookfarm")
@@ -131,9 +131,9 @@ if (mlr3misc::require_namespaces(c("sf", "skmeans", "plotly"), quietly = TRUE)) 
     space_var = "SOURCEID")
   resampling$instantiate(task_st)
 
-  autoplot(resampling, task_st)
-  # single fold
-  autoplot(resampling, task_st, fold_id = 1)
+  # with both `space_var` and `time_var` (LLTO), the omitted observations per
+  # fold can be shown by setting `show_omitted = TRUE`
+  autoplot(resampling, task_st, fold_id = 1, show_omitted = TRUE)
 }
 }
 }
