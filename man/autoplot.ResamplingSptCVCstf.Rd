@@ -20,6 +20,8 @@
   nticks_y = 3,
   point_size = 3,
   axis_label_fontsize = 11,
+  static_image = FALSE,
+  show_omitted = FALSE,
   ...
 )
 
@@ -85,7 +87,19 @@ Point size of markers.}
 \item{axis_label_fontsize}{\verb{[integer]}\cr
 Font size of axis labels.}
 
-\item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and shapes.}
+\item{static_image}{\verb{[logical]}\cr
+Whether to create a static image from the plotly plot via \code{plotly::orca()}.
+This requires the \code{orca} utility to be available.
+See \url{https://github.com/plotly/orca} for
+more information.
+When used, by default a file named \code{plot.png} is created in the current
+working directory.}
+
+\item{show_omitted}{\verb{[logical]}\cr
+Whether to show points not used in train or test set for the current fold.}
+
+\item{...}{Passed down to \code{plotly::orca()}. Only effective when
+\code{static_image = TRUE}.}
 
 \item{repeats_id}{\verb{[numeric]}\cr
 Repetition ID to plot.}
@@ -98,13 +112,23 @@ mlr3 spatial resampling object of class \link{ResamplingSptCVCstf} or
 Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods to
 visualize mlr3 spatiotemporal resampling objects.
 }
+\details{
+This method requires to set argument \code{fold_id} and no plot containing all
+partitions can be created. This is because the method does not make use of
+all observations but only a subset of them (many observations are left out).
+Hence, train and test sets of one fold are not re-used in other folds as in
+other methods and plotting these without a train/test indicator would not
+make sense.
+}
 \examples{
 \donttest{
 if (mlr3misc::require_namespaces(c("sf", "skmeans", "plotly"), quietly = TRUE)) {
   library(mlr3)
   library(mlr3spatiotempcv)
   task_st = tsk("cookfarm")
-  resampling = rsmp("sptcv_cstf", folds = 5, time_var = "Date")
+  resampling = rsmp("sptcv_cstf",
+    folds = 5, time_var = "Date",
+    space_var = "SOURCEID")
   resampling$instantiate(task_st)
 
   autoplot(resampling, task_st)
