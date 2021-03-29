@@ -3,7 +3,7 @@ prepare_autoplot_cstf = function(task, resampling) {
 
   data = task$data()
   data$row_id = task$row_ids
-  data$indicator = 0
+  data$indicator = ""
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
@@ -15,10 +15,13 @@ prepare_autoplot_cstf = function(task, resampling) {
 
   for (i in seq_len(n_iters)) {
 
-    row_id = resampling$instance$test[[i]]
+    row_id_test = resampling$instance$test[[i]]
+    row_id_train = resampling$instance$train[[i]]
 
-    data$indicator[data$row_id %in% row_id] = i
+    data$test[data$row_id %in% row_id_test] = i
+    data$train[data$row_id %in% row_id_train] = i
   }
+
   data$Date = as.Date(data$Date)
   # merge the coords for the 3D plot
   data_coords = merge(data, coords, by = "row_id")
