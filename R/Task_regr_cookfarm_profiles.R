@@ -1,7 +1,7 @@
 #' @title Cookfarm Profiles Regression Task
 #'
 #' @docType data
-#' @usage data(cookfarm)
+#' @usage data(cookfarm_sample)
 #' @name mlr_tasks_cookfarm
 #' @format [R6::R6Class] inheriting from [TaskRegr].
 #'
@@ -21,7 +21,8 @@
 #' The `Date` column was appended from the `readings` dataset.
 #' 500 random samples were drawn from the complete sample.
 #'
-#' See [GSIF::cookfarm] for more detailed information.
+#' The dataset was borrowed and adapted from \pkg{GSIF} which was on archived on
+#' CRAN in 2021-03.
 #'
 #' @references
 #' Gasch, C.K., Hengl, T., Gräler, B., Meyer, H., Magney, T., Brown, D.J., 2015.
@@ -38,10 +39,10 @@
 #' modeling the spatial and temporal variation of soil moisture in a dryland
 #' agricultural field. Submitted to Water Resources Research.
 #' @template seealso_task
-"cookfarm"
+"cookfarm_sample"
 
 load_task_cookfarm = function(id = "cookfarm") {
-  b = mlr3::as_data_backend(cookfarm)
+  b = mlr3::as_data_backend(cookfarm_sample)
   b$hash = "_mlr3_tasks_cookfarm_"
   task = TaskRegrST$new(
     id = "cookfarm", b, target = "PHIHOX",
