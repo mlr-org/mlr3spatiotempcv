@@ -49,7 +49,6 @@ Suggests:
     CAST,
     ggsci,
     ggtext,
-    GSIF,
     knitr,
     lgr,
     mlr3filters,

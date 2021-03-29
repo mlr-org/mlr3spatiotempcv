@@ -84,7 +84,7 @@ register_mlr3 = function() { # nocov start
   }
 
   utils::globalVariables(c(
-    "row_id", "cookfarm", "ecuador", "diplodia",
+    "row_id", "cookfarm_sample", "ecuador", "diplodia",
     "resampling", "task", "indicator", "fold"))
 
 }
