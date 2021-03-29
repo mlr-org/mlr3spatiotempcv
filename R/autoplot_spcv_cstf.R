@@ -3,6 +3,14 @@
 #' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods to
 #'   visualize mlr3 spatiotemporal resampling objects.
 #'
+#' @details
+#' This method requires to set argument `fold_id` and no plot containing all
+#' partitions can be created. This is because the method does not make use of
+#' all observations but only a subset of them (many observations are left out).
+#' Hence, train and test sets of one fold are not re-used in other folds as in
+#' other methods and plotting these without a train/test indicator would not
+#' make sense.
+#'
 #' @name autoplot.ResamplingSptCVCstf
 #' @inheritParams autoplot.ResamplingSpCVBlock
 #'
@@ -25,6 +33,17 @@
 #'   Point size of markers.
 #' @param axis_label_fontsize `[integer]`\cr
 #'   Font size of axis labels.
+#' @param static_image `[logical]`\cr
+#'   Whether to create a static image from the plotly plot via `plotly::orca()`.
+#'   This requires the `orca` utility to be available.
+#'   See [https://github.com/plotly/orca](https://github.com/plotly/orca) for
+#'   more information.
+#'   When used, by default a file named `plot.png` is created in the current
+#'   working directory.
+#' @param show_omitted `[logical]`\cr
+#'   Whether to show points not used in train or test set for the current fold.
+#' @param ... Passed down to `plotly::orca()`. Only effective when
+#' `static_image = TRUE`.
 #' @export
 #' @seealso
 #'   - mlr3book chapter on on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions).
@@ -37,16 +56,18 @@
 #'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' \donttest{
-#' if (mlr3misc::require_namespaces(c("sf", "skmeans", "plotly"), quietly = TRUE)) {
+#' if (mlr3misc::require_namespaces(c("sf", "plotly"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
 #'   task_st = tsk("cookfarm")
-#'   resampling = rsmp("sptcv_cstf", folds = 5, time_var = "Date")
+#'   resampling = rsmp("sptcv_cstf",
+#'     folds = 5, time_var = "Date",
+#'     space_var = "SOURCEID")
 #'   resampling$instantiate(task_st)
 #'
-#'   autoplot(resampling, task_st)
-#'   # single fold
-#'   autoplot(resampling, task_st, fold_id = 1)
+#'   # with both `space_var` and `time_var` (LLTO), the omitted observations per
+#'   # fold can be shown by setting `show_omitted = TRUE`
+#'   autoplot(resampling, task_st, fold_id = 1, show_omitted = TRUE)
 #' }
 #' }
 autoplot.ResamplingSptCVCstf = function( # nolint
@@ -62,6 +83,8 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   nticks_y = 3,
   point_size = 3,
   axis_label_fontsize = 11,
+  static_image = FALSE,
+  show_omitted = FALSE,
   ...) {
 
   dots = list(...)
@@ -89,29 +112,45 @@ autoplot.ResamplingSptCVCstf = function( # nolint
 
     if (length(fold_id) == 1) {
       ### only one fold
+
       data_coords = prepare_autoplot_cstf(task, resampling_sub)
 
       # suppress undefined global variables note
-      indicator = NULL
+      data_coords$indicator = ""
 
-      row_id = resampling$instance$test[[fold_id]]
-      data_coords[, indicator := ifelse(indicator == fold_id, "Test", "Train")]
+      row_id_test = resampling$instance$test[[fold_id]]
+      row_id_train = resampling$instance$train[[fold_id]]
 
-      # fold ID needs to a factor
-      data_coords$fold = as.factor(data_coords$fold)
+      data_coords[row_id %in% row_id_test, indicator := "Test"]
+      data_coords[row_id %in% row_id_train, indicator := "Train"]
 
-      plot_single_plotly = plotly::plot_ly(data_coords,
-        x = ~x, y = ~y, z = ~Date,
-        color = ~indicator, colors = c(
-          "#0072B5", "#E18727"
-        ),
-        sizes = c(20, 100)
-      )
+      if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
+        data_coords[indicator == "", indicator := "Omitted"]
+
+        plot_single_plotly = plotly::plot_ly(data_coords,
+          x = ~x, y = ~y, z = ~Date,
+          color = ~indicator, colors = c(
+            "grey", "#E18727", "#0072B5"
+          ),
+          sizes = c(20, 100)
+        )
+      } else {
+        data_coords = data_coords[indicator != ""]
+        plot_single_plotly = plotly::plot_ly(data_coords,
+          x = ~x, y = ~y, z = ~Date,
+          color = ~indicator, colors = c(
+            "#E18727", "#0072B5"
+          ),
+          sizes = c(20, 100)
+        )
+      }
 
       plot_single_plotly = plotly::add_markers(plot_single_plotly,
         marker = list(size = point_size))
       plot_single_plotly = plotly::layout(plot_single_plotly,
-        title = sprintf("Partition #, Rep %s", repeats_id),
+        title = sprintf(
+          "Fold %s, Repetition %s", fold_id,
+          repeats_id),
         autosize = TRUE,
         scene = list(
           xaxis = list(title = "Lat", nticks = nticks_x),
@@ -125,6 +164,11 @@ autoplot.ResamplingSptCVCstf = function( # nolint
           camera = list(eye = list(z = 1.50))
         )
       )
+
+      if (static_image) {
+        plotly::orca(plot_single_plotly, ...)
+      }
+
       print(plot_single_plotly)
       return(invisible(plot_single_plotly))
     } else {
@@ -133,29 +177,44 @@ autoplot.ResamplingSptCVCstf = function( # nolint
 
       plot = mlr3misc::map(fold_id, function(.x) {
 
-        coords_train = coords[row_id %in% resampling_sub$instance$train[[.x]]]
-        coords_test = coords[row_id %in% resampling_sub$instance$test[[.x]]]
+        data_coords = prepare_autoplot_cstf(task, resampling_sub)
 
-        coords_train$indicator = "Train"
-        coords_test$indicator = "Test"
+        # get test and train indices
+        row_id_test = resampling$instance$test[[.x]]
+        row_id_train = resampling$instance$train[[.x]]
 
-        table = rbind(coords_train, coords_test)
-        data = task$data()
-        data$row_id = task$row_ids
-        table_data = merge(data, table, by = "row_id")
+        # assign test or train to columns matching the respective row ids
+        data_coords[row_id %in% row_id_test, indicator := "Test"]
+        data_coords[row_id %in% row_id_train, indicator := "Train"]
 
-        table_data$Date = as.Date(table_data$Date)
+        data_coords$Date = as.Date(data_coords$Date)
 
-        # create plots for each fold
-        pl = plotly::plot_ly(table_data,
-          x = ~x, y = ~y, z = ~Date,
-          color = ~indicator, colors = c(
-            "#0072B5", "#E18727"
-          ),
-          # this is needed for later when doing 3D subplots
-          scene = paste0("scene", .x),
-          showlegend = ifelse(.x == 1, TRUE, FALSE)
-        )
+        if (show_omitted) {
+          data_coords[indicator == "", indicator := "Omitted"]
+
+          pl = plotly::plot_ly(data_coords,
+            x = ~x, y = ~y, z = ~Date,
+            color = ~indicator, colors = c(
+              "grey", "#E18727", "#0072B5"
+            ),
+            #   # this is needed for later when doing 3D subplots
+            scene = paste0("scene", .x),
+            showlegend = ifelse(.x == 1, TRUE, FALSE)
+          )
+        } else {
+          data_coords = data_coords[indicator != ""]
+          pl = plotly::plot_ly(data_coords,
+            x = ~x, y = ~y, z = ~Date,
+            color = ~indicator, colors = c(
+              "#E18727", "#0072B5"
+            ),
+            #   # this is needed for later when doing 3D subplots
+            scene = paste0("scene", .x),
+            showlegend = ifelse(.x == 1, TRUE, FALSE)
+            # sizes = c(20, 100)
+          )
+        }
+
         pl = plotly::add_markers(pl, marker = list(size = point_size))
         layout_args = list(pl,
           "title" = sprintf("Fold #%s", .x),
@@ -196,6 +255,9 @@ autoplot.ResamplingSptCVCstf = function( # nolint
 
     # is a grid requested?
     if (!plot_as_grid) {
+      if (static_image) {
+        plotly::orca(plot, ...)
+      }
       return(plot)
     } else {
       messagef("Unfortunately plotly does not support a dynamic
@@ -206,51 +268,14 @@ autoplot.ResamplingSptCVCstf = function( # nolint
        Use the objects in the returned list to arrange a custom grid.",
         wrap = TRUE)
 
+      if (static_image) {
+        plotly::orca(plot, ...)
+      }
+      return(plot)
       return(invisible(plot))
     }
   } else {
-
-    ### all test sets in one plot, each with a different colour
-    data_coords = prepare_autoplot_cstf(task, resampling_sub)
-
-    # fold ID needs to a factor
-    data_coords$indicator = as.factor(as.character(data_coords$indicator))
-
-    pl = plotly::plot_ly(data_coords,
-      x = ~x, y = ~y, z = ~Date,
-      color = ~indicator, colors = ggsci::pal_ucscgb("default")(26),
-      sizes = c(20, 100)
-    )
-    pl = plotly::add_markers(pl, marker = list(size = point_size))
-    plotly::layout(pl,
-      title = sprintf("Partition #, Rep %s", repeats_id),
-      margin = list(
-        l = 10,
-        r = 10,
-        t = 40,
-        b = 10
-      ),
-      scene = list(
-        xaxis = list(
-          title = "Lat",
-          nticks = nticks_x),
-        yaxis = list(
-          title = "Lon",
-          nticks = nticks_y),
-        zaxis = list(
-          title = "Time",
-          type = "date",
-          tickformat = tickformat_date,
-          tickfont = list(size = axis_label_fontsize)
-        ),
-        legend = list(
-          margin = list(
-            l = 5
-          )
-        ),
-        camera = list(eye = list(z = 1.50))
-      )
-    )
+    stop("This method requires to set argument 'fold_id'. See ?autoplot.ResamplingSptCVCstf for more information.") # nolint
   }
 }
 
@@ -285,8 +310,9 @@ autoplot.ResamplingRepeatedSptCVCstf = function( # nolint
     nticks_y = nticks_y,
     point_size = point_size,
     axis_label_fontsize = axis_label_fontsize,
+    ...
     # ellipsis
-    repeats_id = repeats_id
+    # repeats_id = repeats_id
   )
 }
 

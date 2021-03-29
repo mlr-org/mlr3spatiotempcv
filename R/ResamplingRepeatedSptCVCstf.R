@@ -1,6 +1,6 @@
-#' @title Repeated Spatiotemporal Cluster Resampling
+#' @title Repeated "Leave-location-and-time-out" resampling.
 #'
-#' @template rox_sptcv_cluto
+#' @template rox_sptcv_cstf
 #'
 #' @references
 #' `r format_bib("zhao2002")`

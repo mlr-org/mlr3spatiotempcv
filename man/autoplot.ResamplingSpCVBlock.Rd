@@ -112,12 +112,13 @@ if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 
   ## Visualize the train/test split of a single fold
-  autoplot(resampling, task, fold_id = 1, crs = 4326)
+  autoplot(resampling, task, fold_id = 1, crs = 4326) +
+    ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 
   ## Visualize train/test splits of multiple folds
   autoplot(resampling, task,
     fold_id = c(1, 2), crs = 4326,
-    show_blocks = TRUE, show_labels = TRUE) *
+    show_blocks = TRUE) *
     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 }
 }
