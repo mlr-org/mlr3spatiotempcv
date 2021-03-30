@@ -100,15 +100,15 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer
   task = test_make_blockCV_test_task()
   testSF = test_make_blockCV_test_df()
 
-  r <- raster::raster(raster::extent(testSF), crs = "EPSG:4326")
-  r[] <- 10
+  rl <- raster::raster(raster::extent(testSF), crs = sf::st_crs(testSF)$wkt)
+  vals <- 1:raster::ncell(rl)
+  rl = raster::setValues(rl, vals)
 
   rsmp <- rsmp("spcv_block",
     range = 50000L,
     selection = "checkerboard",
-    rasterLayer = r)
+    rasterLayer = rl)
   rsmp$instantiate(task)
-
 
   # blockCV
   capture.output(testBlock <- suppressMessages(
@@ -116,7 +116,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer
       speciesData = testSF,
       theRange = 50000L,
       selection = "checkerboard",
-      rasterLayer = r,
+      rasterLayer = rl,
       showBlocks = FALSE,
       verbose = FALSE,
       progress = FALSE)
