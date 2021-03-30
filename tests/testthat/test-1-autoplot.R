@@ -312,7 +312,7 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
 
 test_that("autoplot time + space", {
   # special data with five temporal levels
-  data = cookfarm
+  data = cookfarm_sample
   data$Date = rep(c(
     "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01",
     "2020-05-01"), times = 1, each = 100)
