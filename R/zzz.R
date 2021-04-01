@@ -1,6 +1,6 @@
 #' @rawNamespace import(data.table, except = transpose)
 #' @importFrom R6 R6Class
-#' @import mlr3
+#' @importFrom mlr3 TaskClassif TaskRegr Resampling as_data_backend assert_task rsmp tsk rsmps
 #' @import mlr3misc
 #' @import checkmate
 #' @import paradox
@@ -60,7 +60,7 @@ register_mlr3 = function() { # nocov start
 
     # tasks --------------------------------------------------------------------
 
-    x = utils::getFromNamespace("mlr_tasks", ns = "mlr3")
+    mlr_tasks = utils::getFromNamespace("mlr_tasks", ns = "mlr3")
 
     mlr_tasks$add("ecuador", load_task_ecuador)
     mlr_tasks$add("diplodia", load_task_diplodia)
@@ -68,7 +68,7 @@ register_mlr3 = function() { # nocov start
 
     # resampling methods ---------------------------------------------------------
 
-    x = utils::getFromNamespace("mlr_resamplings", ns = "mlr3")
+    mlr_resamplings = utils::getFromNamespace("mlr_resamplings", ns = "mlr3")
     mlr_resamplings$add("spcv_block", ResamplingSpCVBlock)
     mlr_resamplings$add("spcv_buffer", ResamplingSpCVBuffer)
     mlr_resamplings$add("sptcv_cstf", ResamplingSptCVCstf)
@@ -85,7 +85,7 @@ register_mlr3 = function() { # nocov start
 
   utils::globalVariables(c(
     "row_id", "cookfarm_sample", "ecuador", "diplodia",
-    "resampling", "task", "indicator", "fold"))
+    "resampling", "task", "indicator", "fold", "id", "type"))
 
 }
 
@@ -94,3 +94,12 @@ register_mlr3 = function() { # nocov start
   setHook(packageEvent("mlr3", "onLoad"), function(...) register_mlr3(),
     action = "append")
 } # nocov end
+
+.onUnload = function(libpath) { # nolint
+  event = packageEvent("mlr3", "onLoad")
+  hooks = getHook(event)
+  pkgname = vapply(hooks, function(x) environment(x)$pkgname, NA_character_)
+  setHook(event, hooks[pkgname != "mlr3spatiotempcv"], action = "replace")
+} # nocov end
+
+leanify_package()

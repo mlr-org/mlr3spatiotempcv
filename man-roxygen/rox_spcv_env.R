@@ -1,5 +1,3 @@
-#' @import mlr3
-#'
 #' @description Environmental Block Cross Validation. This strategy uses k-means
 #'   clustering to specify blocks of similar environmental conditions. Only
 #'   numeric features can be used. The `features` used for building blocks can

@@ -5,6 +5,8 @@
 #' @references
 #' `r format_bib("valavi2018")`
 #'
+#' @importFrom utils capture.output
+#'
 #' @export
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
@@ -48,7 +50,10 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
           "checkerboard"), default = "random"),
         ParamUty$new("rasterLayer",
           default = NULL,
-          custom_check = function(x) checkmate::check_class(x, "RasterLayer", null.ok = TRUE))
+          custom_check = function(x) {
+            checkmate::check_class(x, "RasterLayer",
+              null.ok = TRUE)
+          })
       ))
       ps$values = list(folds = 10L)
       super$initialize(
@@ -64,7 +69,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     #'  A task to instantiate.
     instantiate = function(task) {
 
-      assert_task(task)
+      mlr3::assert_task(task)
       checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
       pv = self$param_set$values
 
@@ -107,8 +112,10 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         stopf("Grouping is not supported for spatial resampling methods.")
       }
       instance = private$.sample(
-        task$row_ids, task$coordinates(),
-        task$extra_args$crs)
+        task$row_ids,
+        task$coordinates(),
+        task$extra_args$crs
+      )
 
       self$instance = instance
       self$task_hash = task$hash
@@ -160,14 +167,8 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         row_id = ids,
         fold = inds$foldID
       )
-      # list(
-      #   resampling = data.table(
-      #     row_id = ids,
-      #     fold = inds$foldID
-      #   ),
-      #   blocks = blocks_sf
-      # )
     },
+
     # private get funs for train and test which are used by
     # Resampling$.get_set()
     .get_train = function(i) {
