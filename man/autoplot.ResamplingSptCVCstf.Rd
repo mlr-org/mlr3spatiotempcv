@@ -22,6 +22,7 @@
   axis_label_fontsize = 11,
   static_image = FALSE,
   show_omitted = FALSE,
+  plot3D = NULL,
   ...
 )
 
@@ -39,6 +40,7 @@
   nticks_y = 3,
   point_size = 3,
   axis_label_fontsize = 11,
+  plot3D = NULL,
   ...
 )
 
@@ -98,6 +100,10 @@ working directory.}
 \item{show_omitted}{\verb{[logical]}\cr
 Whether to show points not used in train or test set for the current fold.}
 
+\item{plot3D}{\verb{[logical]}\cr
+Whether to create a 2D image via \pkg{ggplot2} or a 3D plot via
+\pkg{plotly}.}
+
 \item{...}{Passed down to \code{plotly::orca()}. Only effective when
 \code{static_image = TRUE}.}
 
@@ -120,6 +126,18 @@ Hence, train and test sets of one fold are not re-used in other folds as in
 other methods and plotting these without a train/test indicator would not
 make sense.
 }
+\section{2D vs 3D plotting}{
+
+This method has both a 2D and a 3D plotting method.
+The 2D method returns a \pkg{ggplot} with x and y axes representing the spatial
+coordinates.
+The 3D method uses \pkg{plotly} to create an interactive 3D plot.
+Set \code{plot3D = TRUE} to use the 3D method.
+
+Note that spatiotemporal datasets usually suffer from overplotting in 2D
+mode.
+}
+
 \examples{
 \donttest{
 if (mlr3misc::require_namespaces(c("sf", "plotly"), quietly = TRUE)) {
