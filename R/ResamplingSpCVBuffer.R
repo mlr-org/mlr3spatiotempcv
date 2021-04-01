@@ -51,7 +51,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
     #'  A task to instantiate.
     instantiate = function(task) {
 
-      assert_task(task)
+      mlr3::assert_task(task)
       checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
       groups = task$groups
 

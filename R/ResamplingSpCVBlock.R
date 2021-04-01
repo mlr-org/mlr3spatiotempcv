@@ -5,6 +5,8 @@
 #' @references
 #' `r format_bib("valavi2018")`
 #'
+#' @importFrom utils capture.output
+#'
 #' @export
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
@@ -67,7 +69,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     #'  A task to instantiate.
     instantiate = function(task) {
 
-      assert_task(task)
+      mlr3::assert_task(task)
       checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
       pv = self$param_set$values
 
