@@ -11,6 +11,16 @@
 #' other methods and plotting these without a train/test indicator would not
 #' make sense.
 #'
+#' @section 2D vs 3D plotting:
+#' This method has both a 2D and a 3D plotting method.
+#' The 2D method returns a \pkg{ggplot} with x and y axes representing the spatial
+#' coordinates.
+#' The 3D method uses \pkg{plotly} to create an interactive 3D plot.
+#' Set `plot3D = TRUE` to use the 3D method.
+#'
+#' Note that spatiotemporal datasets usually suffer from overplotting in 2D
+#' mode.
+#'
 #' @name autoplot.ResamplingSptCVCstf
 #' @inheritParams autoplot.ResamplingSpCVBlock
 #'
@@ -42,6 +52,9 @@
 #'   working directory.
 #' @param show_omitted `[logical]`\cr
 #'   Whether to show points not used in train or test set for the current fold.
+#' @param plot3D `[logical]`\cr
+#'   Whether to create a 2D image via \pkg{ggplot2} or a 3D plot via
+#'   \pkg{plotly}.
 #' @param ... Passed down to `plotly::orca()`. Only effective when
 #' `static_image = TRUE`.
 #' @export
@@ -85,6 +98,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   axis_label_fontsize = 11,
   static_image = FALSE,
   show_omitted = FALSE,
+  plot3D = NULL,
   ...) {
 
   dots = list(...)
@@ -108,149 +122,189 @@ autoplot.ResamplingSptCVCstf = function( # nolint
     resampling_sub$instance = resampling_sub$instance[[repeats_id]]
   }
 
-  if (!is.null(fold_id)) {
-
-    if (length(fold_id) == 1) {
-      ### only one fold
-
-      data_coords = prepare_autoplot_cstf(task, resampling_sub)
-
-      # suppress undefined global variables note
-      data_coords$indicator = ""
-
-      row_id_test = resampling$instance$test[[fold_id]]
-      row_id_train = resampling$instance$train[[fold_id]]
-
-      data_coords[row_id %in% row_id_test, indicator := "Test"]
-      data_coords[row_id %in% row_id_train, indicator := "Train"]
-
-      if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
-        data_coords[indicator == "", indicator := "Omitted"]
-
-        plot_single_plotly = plotly::plot_ly(data_coords,
-          x = ~x, y = ~y, z = ~Date,
-          color = ~indicator, colors = c(
-            "grey", "#E18727", "#0072B5"
-          ),
-          sizes = c(20, 100)
-        )
-      } else {
-        data_coords = data_coords[indicator != ""]
-        plot_single_plotly = plotly::plot_ly(data_coords,
-          x = ~x, y = ~y, z = ~Date,
-          color = ~indicator, colors = c(
-            "#E18727", "#0072B5"
-          ),
-          sizes = c(20, 100)
-        )
-      }
-
-      plot_single_plotly = plotly::add_markers(plot_single_plotly,
-        marker = list(size = point_size))
-      plot_single_plotly = plotly::layout(plot_single_plotly,
-        title = sprintf(
-          "Fold %s, Repetition %s", fold_id,
-          repeats_id),
-        autosize = TRUE,
-        scene = list(
-          xaxis = list(title = "Lat", nticks = nticks_x),
-          yaxis = list(title = "Lon", nticks = nticks_y),
-          zaxis = list(
-            title = "Time",
-            type = "date",
-            tickformat = tickformat_date,
-            tickfont = list(size = axis_label_fontsize)
-          ),
-          camera = list(eye = list(z = 1.50))
-        )
-      )
-
-      if (static_image) {
-        plotly::orca(plot_single_plotly, ...)
-      }
-
-      print(plot_single_plotly)
-      return(invisible(plot_single_plotly))
+  # check if we are in a 2D or 3D scenario
+  if (is.null(plot3D)) {
+    if (!is.null(resampling_sub$space_var) &&
+      !is.null(resampling_sub$time_var)) {
+      plot3D = TRUE
     } else {
+      plot3D = FALSE
+    }
+  }
 
-      ### Multiplot of multiple partitions with train and test set
+  # 2D -------------------------------------------------------------------------
 
-      plot = mlr3misc::map(fold_id, function(.x) {
+  if (!plot3D) {
+
+    # bring into correct format (complicated alternative to reshape::melt)
+    resampling_sub$instance = data.table::rbindlist(
+      lapply(resampling_sub$instance$test, as.data.table),
+      idcol = "fold")
+    setnames(resampling_sub$instance, c("fold", "row_id"))
+
+    plot = autoplot_spatial(
+      resampling = resampling_sub,
+      task = task,
+      fold_id = fold_id,
+      # repeats_id = repeats_id,
+      plot_as_grid = plot_as_grid,
+      train_color = train_color,
+      test_color = test_color,
+      crs = crs,
+      show_blocks = FALSE,
+      show_labels = FALSE,
+      ...)
+    return(invisible(plot))
+  }
+
+  # 3D -------------------------------------------------------------------------
+
+  if (plot3D) {
+
+    if (!is.null(fold_id)) {
+
+      if (length(fold_id) == 1) {
+        ### only one fold
 
         data_coords = prepare_autoplot_cstf(task, resampling_sub)
 
-        # get test and train indices
-        row_id_test = resampling$instance$test[[.x]]
-        row_id_train = resampling$instance$train[[.x]]
+        # suppress undefined global variables note
+        data_coords$indicator = ""
 
-        # assign test or train to columns matching the respective row ids
+        row_id_test = resampling_sub$instance$test[[fold_id]]
+        row_id_train = resampling_sub$instance$train[[fold_id]]
+
         data_coords[row_id %in% row_id_test, indicator := "Test"]
         data_coords[row_id %in% row_id_train, indicator := "Train"]
 
-        data_coords$Date = as.Date(data_coords$Date)
-
-        if (show_omitted) {
+        if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
           data_coords[indicator == "", indicator := "Omitted"]
 
-          pl = plotly::plot_ly(data_coords,
+          plot_single_plotly = plotly::plot_ly(data_coords,
             x = ~x, y = ~y, z = ~Date,
             color = ~indicator, colors = c(
               "grey", "#E18727", "#0072B5"
             ),
-            #   # this is needed for later when doing 3D subplots
-            scene = paste0("scene", .x),
-            showlegend = ifelse(.x == 1, TRUE, FALSE)
+            sizes = c(20, 100)
           )
         } else {
           data_coords = data_coords[indicator != ""]
-          pl = plotly::plot_ly(data_coords,
+          plot_single_plotly = plotly::plot_ly(data_coords,
             x = ~x, y = ~y, z = ~Date,
             color = ~indicator, colors = c(
               "#E18727", "#0072B5"
             ),
-            #   # this is needed for later when doing 3D subplots
-            scene = paste0("scene", .x),
-            showlegend = ifelse(.x == 1, TRUE, FALSE)
-            # sizes = c(20, 100)
+            sizes = c(20, 100)
           )
         }
 
-        pl = plotly::add_markers(pl, marker = list(size = point_size))
-        layout_args = list(pl,
-          "title" = sprintf("Fold #%s", .x),
-          list(
-            xaxis = list(
-              title = "Lat",
-              nticks = nticks_x,
-              tickfont = list(size = axis_label_fontsize)),
-            yaxis = list(
-              title = "Lon",
-              nticks = nticks_y,
-              tickfont = list(size = axis_label_fontsize)),
+        plot_single_plotly = plotly::add_markers(plot_single_plotly,
+          marker = list(size = point_size))
+        plot_single_plotly = plotly::layout(plot_single_plotly,
+          title = sprintf(
+            "Fold %s, Repetition %s", fold_id,
+            repeats_id),
+          autosize = TRUE,
+          scene = list(
+            xaxis = list(title = "Lat", nticks = nticks_x),
+            yaxis = list(title = "Lon", nticks = nticks_y),
             zaxis = list(
               title = "Time",
               type = "date",
               tickformat = tickformat_date,
               tickfont = list(size = axis_label_fontsize)
-              # sets size of axis titles
-              # titlefont = list(size = 5)
             ),
             camera = list(eye = list(z = 1.50))
           )
         )
-        # -`p` is the name of the plotly object.
-        # - title sets the title of the plot
-        # - the "scene" name is dynamically generated and refers to the scene
-        #   name in the `plot_ly()` call
-        names(layout_args) = c(
-          "p",
-          "title",
-          paste0("scene", .x)
-        )
 
-        pl = mlr3misc::invoke(plotly::layout, .args = layout_args)
+        if (static_image) {
+          plotly::orca(plot_single_plotly, ...)
+        }
 
-      })
+        print(plot_single_plotly)
+        return(invisible(plot_single_plotly))
+      } else {
+
+        ### Multiplot of multiple partitions with train and test set
+
+        plot = mlr3misc::map(fold_id, function(.x) {
+
+          data_coords = prepare_autoplot_cstf(task, resampling_sub)
+
+          # get test and train indices
+          row_id_test = resampling_sub$instance$test[[.x]]
+          row_id_train = resampling_sub$instance$train[[.x]]
+
+          # assign test or train to columns matching the respective row ids
+          data_coords[row_id %in% row_id_test, indicator := "Test"]
+          data_coords[row_id %in% row_id_train, indicator := "Train"]
+
+          data_coords$Date = as.Date(data_coords$Date)
+
+          if (show_omitted) {
+            data_coords[indicator == "", indicator := "Omitted"]
+
+            pl = plotly::plot_ly(data_coords,
+              x = ~x, y = ~y, z = ~Date,
+              color = ~indicator, colors = c(
+                "grey", "#E18727", "#0072B5"
+              ),
+              #   # this is needed for later when doing 3D subplots
+              scene = paste0("scene", .x),
+              showlegend = ifelse(.x == 1, TRUE, FALSE)
+            )
+          } else {
+            data_coords = data_coords[indicator != ""]
+            pl = plotly::plot_ly(data_coords,
+              x = ~x, y = ~y, z = ~Date,
+              color = ~indicator, colors = c(
+                "#E18727", "#0072B5"
+              ),
+              #   # this is needed for later when doing 3D subplots
+              scene = paste0("scene", .x),
+              showlegend = ifelse(.x == 1, TRUE, FALSE)
+              # sizes = c(20, 100)
+            )
+          }
+
+          pl = plotly::add_markers(pl, marker = list(size = point_size))
+          layout_args = list(pl,
+            "title" = sprintf("Fold #%s", .x),
+            list(
+              xaxis = list(
+                title = "Lat",
+                nticks = nticks_x,
+                tickfont = list(size = axis_label_fontsize)),
+              yaxis = list(
+                title = "Lon",
+                nticks = nticks_y,
+                tickfont = list(size = axis_label_fontsize)),
+              zaxis = list(
+                title = "Time",
+                type = "date",
+                tickformat = tickformat_date,
+                tickfont = list(size = axis_label_fontsize)
+                # sets size of axis titles
+                # titlefont = list(size = 5)
+              ),
+              camera = list(eye = list(z = 1.50))
+            )
+          )
+          # -`p` is the name of the plotly object.
+          # - title sets the title of the plot
+          # - the "scene" name is dynamically generated and refers to the scene
+          #   name in the `plot_ly()` call
+          names(layout_args) = c(
+            "p",
+            "title",
+            paste0("scene", .x)
+          )
+
+          pl = mlr3misc::invoke(plotly::layout, .args = layout_args)
+
+        })
+      }
     }
 
     # is a grid requested?
@@ -295,6 +349,7 @@ autoplot.ResamplingRepeatedSptCVCstf = function( # nolint
   nticks_y = 3,
   point_size = 3,
   axis_label_fontsize = 11,
+  plot3D = NULL,
   ...) {
 
   autoplot.ResamplingSptCVCstf(
@@ -310,9 +365,10 @@ autoplot.ResamplingRepeatedSptCVCstf = function( # nolint
     nticks_y = nticks_y,
     point_size = point_size,
     axis_label_fontsize = axis_label_fontsize,
-    ...
+    plot3D = plot3D,
+    ...,
     # ellipsis
-    # repeats_id = repeats_id
+    repeats_id = repeats_id
   )
 }
 
