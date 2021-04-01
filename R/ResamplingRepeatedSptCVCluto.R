@@ -135,7 +135,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
 
       mlr3misc::require_namespaces("skmeans", quietly = TRUE)
 
-      assert_task(task)
+      mlr3::assert_task(task)
       checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
       checkmate::assert_subset(self$time_var, choices = task$feature_names)
       groups = task$groups

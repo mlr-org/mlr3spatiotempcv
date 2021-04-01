@@ -1,5 +1,3 @@
-#' @import mlr3
-#'
 #' @description Spatial Buffer Cross validation implemented by the `blockCV`
 #' package.
 #'

@@ -1,7 +1,5 @@
 #' @title SpatioTemporal Regression Task
 #'
-#' @import mlr3
-#'
 #' @description
 #' This task specializes [Task] and [TaskSupervised] for spatiotemporal
 #' classification problems.
