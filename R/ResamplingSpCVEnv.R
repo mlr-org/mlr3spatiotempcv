@@ -5,6 +5,7 @@
 #' @references
 #' `r format_bib("valavi2018")`
 #'
+#' @importFrom stats kmeans
 #' @export
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
@@ -49,7 +50,7 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
     #'  A task to instantiate.
     instantiate = function(task) {
 
-      assert_task(task)
+      mlr3::assert_task(task)
       checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
       pv = self$param_set$values
 
@@ -101,7 +102,7 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
 
   private = list(
     .sample = function(ids, data) {
-      inds = kmeans(data, centers = self$param_set$values$folds)
+      inds = stats::kmeans(data, centers = self$param_set$values$folds)
 
       data.table(
         row_id = ids,
