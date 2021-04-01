@@ -307,6 +307,10 @@ autoplot.ResamplingSptCVCstf = function( # nolint
       }
     }
 
+    else {
+      stop("This method requires to set argument 'fold_id'. See ?autoplot.ResamplingSptCVCstf for more information.") # nolint
+    }
+
     # is a grid requested?
     if (!plot_as_grid) {
       if (static_image) {
@@ -328,9 +332,8 @@ autoplot.ResamplingSptCVCstf = function( # nolint
       return(plot)
       return(invisible(plot))
     }
-  } else {
-    stop("This method requires to set argument 'fold_id'. See ?autoplot.ResamplingSptCVCstf for more information.") # nolint
   }
+
 }
 
 #' @rdname autoplot.ResamplingSptCVCstf
