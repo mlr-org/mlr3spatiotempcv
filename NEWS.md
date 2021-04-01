@@ -1,5 +1,11 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 0.2.1.9003
+
+- Remove {GSIF} package due to CRAN archival and host the `cookfarm` dataset standalone
+- Add 2D plotting method for Cstf method (#106)
+
+
 # mlr3spatiotempcv 0.2.1.9002
 
 - Use Cstf method for spatiotemporal viz vignette
