@@ -1,7 +1,5 @@
 #' @title SpatioTemporal Classification Task
 #'
-#' @import mlr3
-#'
 #' @description This task specializes [Task] and [TaskSupervised] for
 #' spatiotemporal classification problems. The target column is assumed to be a
 #' factor. The `task_type` is set to `"classif"` and `"spatiotemporal"`.
