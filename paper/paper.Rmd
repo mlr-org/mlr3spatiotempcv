@@ -48,8 +48,20 @@ preamble: >
   \usepackage{longtable}
 tables: true
 bibliography: paper.bib
-output: rticles::jss_article
+# output: rticles::jss_article
+output:
+  bookdown::pdf_book:
+    base_format: rticles::jss_article
 ---
+
+```{r setup, echo=FALSE}
+# important for correct figure placement
+# see https://stackoverflow.com/a/49395389/4185785
+knitr::knit_hooks$set(plot = function(x, options) {
+  knitr::hook_plot_tex(x, options)
+})
+# knitr::opts_chunk$set(cache = FALSE)
+```
 
 # Introduction
 
@@ -118,87 +130,53 @@ This adds the ability for simplified benchmarking, visualization and further mod
 
 \pkg{mlr3spatiotempcv} complements this philosophy by aiming to apply the same standards for spatiotemporal resampling methods.
 
-# Comparing Spatial and Non-Spatial Resampling
+# Visualization of Spatiotemporal Partitions
 
-To introduce the effect of spatial autocorrelation in modeling, a spatial and non-spatial CV using \pkg{mlr3spatiotempcv} will be shown in the following.
-For simplicity, one of the most used methods (spatial k-means clustering after @sperrorest) will be used.
-Individual methods are discussed in FIXME.
+Every partitioning method in [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) comes with a generic `plot()` method to visualize the created groups.
+In a 2D space this happens via [ggplot2](https://ggplot2.tidyverse.org) [@ggplot2] while for spatiotemporal methods 3D visualizations are created via [plotly](https://github.com/ropensci/plotly) [@plotly].
 
-The performance of a simple classification tree (`"classif.ranger"`) is evaluated on a random repeated cross-validation (`"repeated_cv"`) with four folds and two repetitions.
-In reality, more fold (between five and ten) and a higher number of repetitions should be used.
-The chosen evaluation measure is the "Area Under the ROC Curve" (`"classif.auc"`) which is a common evaluation measure for binary responses.
-The CV will be executed twice with the only difference being the use of a spatial resampling object (initialized with `rsmp("repeated_spcv_coords"`) instead of a non-spatial one (`rsmp("repeated_cv"`).
+Unless specified by the user, the coordinate reference system (CRS) defaults to EPSG code 4326 (WGS84).
+This is because a lat/lon based CRS is better suited for plotting purposes than a Mercator (UTM) one.
+Note that setting the correct CRS for the given data *during construction* is very important.
+Even though EPSG 4326 is a good fallback and often used for visualization purposes, spatial offsets of up to multiple meters may occur if the wrong CRS was passed initially.
 
-## Data Preparation
+Note: The following example uses a built-in task via function `tsk()`.
+In practice however, one needs to create a spatiotemporal task first via `TaskClassifST()`/`TaskRegrST()`..
 
-The following code chunk first loads all necessary R packages and sets a low verbosity for this example.
-A seed is set for deterministic execution.
+The spatial grouping of the k-means based approach (`"spcv_coords"`) (Fig.\@ref(fig:vis-spcv)) contrasts visually very well to the NSpCV (random) partitioning (Fig.\@ref(fig:vis-nspcv)).
 
-Next the mlr3 task `"ecuador"`, which is included in \pkg{mlr3spatiotempcv}, is loaded via `tsk()`.
-This function is a convenience wrapper around the underlying R6 construction method for a spatiotemporal classification task (`mlr3spatiotempcv::TaskClassifST$new()`).
-
-Last, the random forest learner (`lrn("classif.ranger")`) is initialized with default hyperparameters and the prediction type set to `"probability"` due to the binary response variable.
-A set of commonly used learners is available in \pkg{mlr3learners} [@mlr3learners], including the random forest implementation after @ranger.
-
-By setting the logging threshold, which can be controlled via the \pkg{lgr} package [@lgr], to `"warn"`, verbosity is reduced to keep the example tidy.
-
-```{r setup, echo=FALSE}
-# important for correct figure placement
-# see https://stackoverflow.com/a/49395389/4185785
-knitr::knit_hooks$set(plot = function(x, options) {
-  knitr::hook_plot_tex(x, options)
-})
-knitr::opts_chunk$set(cache = FALSE)
-```
-
-```{r prepare, cache=FALSE}
-library("mlr3")
-library("mlr3spatiotempcv")
-library("mlr3learners")
-set.seed(42)
+```{r vis-spcv, fig.cap="Visualization of spatial partitioning", fig.pos="t!", fig.height=6, fig.width=8, cache=TRUE}
+library(mlr3)
+library(mlr3spatiotempcv)
 
 # be less verbose
 lgr::get_logger("bbotk")$set_threshold("warn")
 lgr::get_logger("mlr3")$set_threshold("warn")
 
-task <- tsk("ecuador")
+set.seed(42)
 
-learner <- lrn("classif.ranger", predict_type = "prob")
+task = tsk("ecuador")
+
+resampling_sp <- rsmp("repeated_spcv_coords", folds = 4, repeats = 2)
+resampling_sp$instantiate(task)
+
+autoplot(resampling_sp, task, fold_id = c(1:2), crs = 4326, size = 0.8) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-### Non-Spatial Cross-Validation
+```{r vis-nspcv, fig.cap="Visualization of random partitioning", fig.pos="t!", fig.height=6, fig.width=8, cache=T}
+resampling_nsp <- rsmp("repeated_cv", folds = 4, repeats = 2)
+resampling_nsp$instantiate(task)
 
-```{r rr-nspcv, cache=FALSE}
-resampling_nsp <- rsmp("repeated_cv", folds = 4, repeats = 2)$instantiate(task)
-rr_nsp <- resample(
-  task = task, learner = learner,
-  resampling = resampling_nsp
-)
-
-rr_nsp$aggregate(measures = msr("classif.auc"))
+autoplot(resampling_nsp, task, fold_id = c(1:2), crs = 4326, size = 0.8) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
-
-## Spatial Cross-Validation
-
-```{r rr-spcv, cache=FALSE}
-resampling_sp <- rsmp("repeated_spcv_coords", folds = 4, repeats = 2)$instantiate(task)
-rr_sp <- resample(
-  task = task, learner = learner,
-  resampling = resampling_sp
-)
-
-rr_sp$aggregate(measures = msr("classif.auc"))
-```
-
-Here, the estimated AUC using Non-Spatial Cross-Validation (NSpCV) is around 0.15 better compared to the Spatial Cross-Validation (SpCV).
-The better performance score results from over-optimism in the estimation with NSpCV.
-The actual predictive performance on new data is much more realistically reflected by the performance estimated via SpCV.
-The magnitude of this difference is variable as it depends on the dataset, the magnitude of STAC and the learner itself.
-Algorithms with a higher tendency of overfitting to the training set will have a large spread in such scenarios.
 
 # Spatiotemporal Partitioning Methods
 
-At the time of writing, the following spatiotemporal resampling methods (FIXME ref table) were available across different R packages.
+At the time of writing, the following spatiotemporal resampling methods (Table \@ref(tab:sptcv-methods)) were available across different R packages.
 This list might increase over time and it is recommended to consult the homepage of \pkg{mlr3spatiotempcv} for an up-to-date list.
 
 A low-level introduction is given for every method included at this point of this article.
@@ -221,12 +199,14 @@ When setting argument `spDataType = "PB"`, the method only considers the *presen
 Background data is used for training the model by default unless argument `addBG = FALSE` is set for which only *presence* values not falling within the buffer zone of the respective fold are used for model training.
 
 Due to its similarity to a LOO CV, this method will result in as many train/test evaluations as observations are present.
-In the example below, a buffer zone of 1000 m is used and the first fold shown is plotted.
+In the example below, a buffer zone of 1000 m is used and the first fold shown is plotted (Fig.\@ref(fig:buffer))).
 
-```{r}
-resampling_buffer <- rsmp("spcv_buffer", theRange = 1000)$instantiate(task)
+```{r buffer, fig.cap="Visualization of 'Spatial buffering' method.", out.width="50%", cache=T}
+resampling_buffer <- rsmp("spcv_buffer", theRange = 1000)
+resampling_buffer$instantiate(task)
 
-autoplot(resampling_buffer, size = 0.7, task = task, fold_id = 1, crs = 4326) *
+autoplot(resampling_buffer,
+  size = 0.8, task = task, fold_id = 1, crs = 4326) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
@@ -244,9 +224,9 @@ The way how the blocks are created can be manifold:
 1. Supplying a numeric value in meters via argument `theRange` (named just `range` in {mlr3spatiotempcv}) will create a quadratic block pattern across the study area.
   The aggregation of zones can either be random (default) (`selection = "random"`), systematic (`selection = "systematic"`) or checkerboard structure (`selection = "checkerboard"`).
   
-`selection = "random"`
+### Option: selection = "random"
 
-```{r}
+```{r block-random, cache = TRUE, fig.cap="Spatial blocking with option `selection = 'random'`.", out.width="50%", fig.pos="h"}
 resampling_block_random <- rsmp("spcv_block", range = 1000, folds = 5)
 
 autoplot(resampling_block_random,
@@ -256,12 +236,15 @@ autoplot(resampling_block_random,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-`selection = "systematic"`: Here, aggregation follows the linear count from $1:n_{folds} from top to bottom.
+### Option: selection = "systematic"
 
-```{r}
+Here, aggregation follows the linear count from $1:n_{folds}$ from top to bottom.
+
+```{r block-systematic, cache=TRUE, fig.cap="Spatial blocking with option `selection = 'systematic'`.", out.width="50%", fig.pos="h"}
 resampling_block_systematic <- rsmp("spcv_block",
   range = 1000, folds = 5,
-  selection = "systematic")
+  selection = "systematic"
+)
 
 autoplot(resampling_block_systematic,
   size = 0.8, fold_id = 1, task = task, crs = 4326,
@@ -270,9 +253,11 @@ autoplot(resampling_block_systematic,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-`selection = "checkerboard"`: This option ignores paramter `range` and always creates two partitions following a "1,2,1,2" pattern.
+### Option: selection = "checkerboard"
 
-```{r}
+This option ignores parameter `range` and always creates two partitions following a "1,2,1,2" pattern.
+
+```{r block-checkerboard, cache=TRUE, fig.cap="Spatial blocking with option `selection = 'checkerboard'`.", out.width="50%", fig.pos="h"}
 resampling_block_checkerboard <- rsmp("spcv_block",
   range = 1000, folds = 5,
   selection = "checkerboard")
@@ -294,7 +279,7 @@ To avoid a potential bias introduced by features with high variance when selecti
 
 The following example clusters by feature "distance to forest".
 
-```{r}
+```{r env-1, fig.cap="Environmental blocking using a single predictor.", cache=TRUE, out.width="50%", fig.pos="h"}
 resampling_env <- rsmp("spcv_env",
   features = "distdeforest", folds = 5)
 
@@ -307,7 +292,7 @@ autoplot(resampling_env,
 
 It is also possible to cluster by multiple features:
 
-```{r}
+```{r env-2, fig.cap="Environmental blocking using multiple predictors.", cache=TRUE, out.width="50%", fig.pos="h"}
 resampling_env_multi <- rsmp("spcv_env",
   features = c("distdeforest", "slope"), folds = 5)
 
@@ -324,7 +309,7 @@ The "Spatial CV" method after [@sperrorest] and implemented in package \pkg{sper
 However, it does not make use of arbitrary features but uses the coordinates of all observations to create clusters in the spatial domain.
 This is what lead to the naming of `spcv_coords` in \pkg{mlr3spatiotempcv}.
 
-```{r}
+```{r coords, fig.cap="Method 'Spatial CV' showing a k-means clustering approach based on coordinates.", cache=TRUE, out.width="50%", fig.pos="h"}
 resampling_coords <- rsmp("spcv_coords", folds = 5)$instantiate(task)
 
 autoplot(resampling_coords,
@@ -333,31 +318,89 @@ autoplot(resampling_coords,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-## Leave-Location-and-Time-Out (LLOT)
+## CreateSpacetimeFolds (Cstf)
 
-Leave-Location-and-Time-Out from packge \pkg{CAST} is a spatiotemporal resampling method.
+Leave-Location-and-Time-Out from packge \pkg{CAST} is a spatiotemporal resampling method [@meyer2018a].
 It requires both a spatial and a temporal variable which are used to to separate observations in a multi-dimensional space.
+It comes with satellite methods named "Leave-time-out" (LTO) and "Leave-location-out" (LLO) which only operatre in a two-dimensional space.
 
 In this example the `cookfarm` dataset is used because it contains a temporal variable ("Date") which is not present in dataset `ecuador`.
 
-The visualization is done in a dynamic way via \pkg{plotly} to visualize both temporal and spatial dimensions.
-Because a dynamic image cannot be included in this manuscript, a static version generated by setting `static_image = TRUE` was used.
+Two visualization types are supported: a two-dimensional and a three-dimensional method which can be selected via the logical argument `plot3d`.
+The 3D visualization has been implemented via \pkg{plotly}.
+Because a dynamic image cannot be included in this manuscript, a static version, which can be generated by setting `static_image = TRUE`, is shown. 
 
-```{r}
-task_spt = tsk("cookfarm")
-resampling_cstf <- rsmp("sptcv_cstf",
-  folds = 5,
-  time_var = "Date", space_var = "SOURCEID")
+In \pkg{mlr3spatiotempcv} the method is named `"sptcv_cstf"` because the underlying upstream implementation in package \pkg{CAST} is named `CreateSpacetimeFolds()`.
 
-autoplot(resampling_cstf,
-  fold_id = 1, task = task_spt, crs = 4326, static_image = TRUE,
-  file = "plot.pdf") *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+### Leave-Time-Out (LTO)
+
+To better showcase the partitioning of the "Leave-Time-Out" (LTO) method, the temporal variable `Date` was adjusted in this example.
+
+The following code uses the `cookfarm` dataset as the base, modifies to the `Date` variable to contain five unique levels and then creates a spatiotemporal regression task in \pkg{mlr3spatiotempcv} (Fig.\@ref(fig:lto)).
+
+```{r, results='hide', cache=TRUE}
+data = cookfarm_sample
+data$Date = rep(c(
+  "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01",
+  "2020-05-01"), times = 1, each = 100)
+b = mlr3::as_data_backend(data)
+b$hash = "_mlr3_tasks_cookfarm_"
+task_spt = TaskRegrST$new(
+  id = "cookfarm", b, target = "PHIHOX",
+  extra_args = list(
+    coordinate_names = c("x", "y"), coords_as_features = FALSE,
+    crs = 26911)
+)
+
+resampling_cstf_time = rsmp("sptcv_cstf", folds = 5, time_var = "Date")
+resampling_cstf_time$instantiate(task_spt)
+
+autoplot(resampling_cstf_time,
+  fold_id = 5, task = task_spt, crs = 4326, plot3D = TRUE
+)
 ```
 
-```{r, echo=FALSE}
-knitr::include_graphics("plot.pdf", dpi = 100)
+```{r lto, echo=FALSE, out.width="90%", fig.cap="Three-dimensional visualization of method `sptcv\\_cstf` and sub-method Leave-Time-Out (LTO). To support showcasing the temporal grouping, five folds and five temporal levels in variable `Date` were used in this example.", fig.pos="h"}
+knitr::include_graphics("lto.png")
+```
+
+### Leave-Location-Out (LLO)
+
+Method "Leave-Location-Out" (LLO) works similar to "Leave-Time-Out" (LTO) in that it operates in a two-dimensional space.
+Here, specific locations are left out for forming the partitions while the temporal information is ignored (Fig.\@ref(fig:llo)).
+
+```{r cache=TRUE, results='hide'}
+resampling_cstf_loc = rsmp("sptcv_cstf", folds = 5, space_var = "SOURCEID")
+resampling_cstf_loc$instantiate(task_spt)
+
+autoplot(resampling_cstf_loc,
+  fold_id = 5, task = task_spt, crs = 4326, plot3D = TRUE)
+```
+
+```{r llo, echo=FALSE, out.width="90%", fig.cap="Three-dimensional visualization of method 'sptcv\\_cstf' and sub-method 'Leave-Location-Out' (LLO). To support showcasing the spatial grouping, the viewing angle has been adjusted to a view from top. Points are stacked by temporal levels and only points from the same location are chosen to form a partition.", fig.pos="h"}
+knitr::include_graphics("llo.png")
+```
+
+### Leave-Location-and-Time-Out (LLTO)
+
+The "Leave-Location-and-Time-Out" (LLTO) method combines both "Leave-Time-Out" (LTO) and "Leave-Location-Out" (LLO).
+It creates partitions that operate on spatiotemporal clusters to reduce both spatial and temporal autocorrelations.
+To achieve this, observations are omitted and only a subset is used.
+In the special scenario with five temporal levels and five folds, the train/test split happens only at one temporal level (Fig.\@ref(fig:llto)).
+
+```{r cache=TRUE, results='hide'}
+resampling_cstf_time_loc = rsmp("sptcv_cstf",
+  folds = 5,
+  space_var = "SOURCEID", time_var = "Date")
+resampling_cstf_time_loc$instantiate(task_spt)
+
+autoplot(resampling_cstf_time_loc,
+  fold_id = 4, task = task_spt, crs = 4326, plot3D = TRUE,
+  show_omitted = TRUE)
+```
+
+```{r llto, echo=FALSE, out.width="90%", fig.cap="Three-dimensional visualization of method 'sptcv\\_cstf' and sub-method 'Leave-Location-And-Time-Out' (LLTO). The grey points show the points omitted by this method.", cache=TRUE, fig.pos="h"}
+knitr::include_graphics("llto.png")
 ```
 
 ## Spatiotemporal Clustering (Cluto)
@@ -381,35 +424,79 @@ knitr::include_graphics("plot.pdf", dpi = 100)
 	\endgroup\label{tab:sptcv-methods}
 \end{table}
 
-##
 
-# Visualization of Spatiotemporal Partitions
+# Comparing Spatial and Non-Spatial Resampling
 
-Every partitioning method in [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) comes with a generic `plot()` method to visualize the created groups.
-In a 2D space this happens via [ggplot2](https://ggplot2.tidyverse.org) [@ggplot2] while for spatiotemporal methods 3D visualizations via [plotly](https://github.com/ropensci/plotly) [@plotly] are created.
+To show the effect of spatial autocorrelation in modeling, a spatial and non-spatial CV using \pkg{mlr3spatiotempcv} will be shown in the following.
+For simplicity, one of the most used methods (spatial k-means clustering after @sperrorest) will be used.
+Individual methods are discussed in FIXME.
 
-```{r vis-spcv, fig.cap="Visualization of spatial partitioning", fig.pos="!b", fig.height=6, fig.width=8}
-autoplot(resampling_sp, task, fold_id = c(1:4)) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+The performance of a simple classification tree (`"classif.ranger"`) is evaluated on a random repeated cross-validation (`"repeated_cv"`) with four folds and two repetitions.
+In reality, more fold (between five and ten) and a higher number of repetitions should be used.
+The chosen evaluation measure is the "Area Under the ROC Curve" (`"classif.auc"`) which is a common evaluation measure for binary responses.
+The CV will be executed twice with the only difference being the use of a spatial resampling object (initialized with `rsmp("repeated_spcv_coords"`) instead of a non-spatial one (`rsmp("repeated_cv"`).
+
+## Data Preparation
+
+The following code chunk first loads all necessary R packages and sets a low verbosity for this example.
+A seed is set for deterministic execution.
+
+Next the mlr3 task `"ecuador"`, which is included in \pkg{mlr3spatiotempcv}, is loaded via `tsk()`.
+This function is a convenience wrapper around the underlying R6 construction method for a spatiotemporal classification task (`mlr3spatiotempcv::TaskClassifST$new()`).
+
+Next, the random forest learner (`lrn("classif.ranger")`) is initialized with default hyperparameters and the prediction type set to `"probability"` due to the binary response variable.
+A set of commonly used learners is available in \pkg{mlr3learners} [@mlr3learners], including the random forest implementation after @ranger.
+
+By setting the logging threshold, which can be controlled via the \pkg{lgr} package [@lgr], to `"warn"`, verbosity is reduced to keep the example tidy.
+
+```{r prepare, cache=TRUE}
+library("mlr3")
+library("mlr3spatiotempcv")
+library("mlr3learners")
+
+task <- tsk("ecuador")
+
+learner <- lrn("classif.ranger", predict_type = "prob")
 ```
-\
 
-Unless specified by the user, the coordinate reference system (CRS) defaults to EPSG code 4326 (WGS84).
-This is because a lat/lon based CRS is better suited for plotting purposes than a Mercator (UTM) one.
-Note that setting the correct CRS for the given data *during construction* is very important.
-Even though EPSG 4326 is a good fallback and often used for visualization purposes, spatial offsets of up to multiple meters may occur if the wrong CRS was passed initially.
+### Non-Spatial Cross-Validation
 
-This example used an already created task via the convenience function `tsk()`.
-In practice however, one needs to create a spatiotemporal task via `TaskClassifST()`/`TaskRegrST()` and set the `crs` argument.
+Here, a four-fold, two times repeated non-spatial resampling structure is constructed and instantianeted via method `$instantiate()`.
+Next, the created resampling object `resampling_nsp` is passed to function `resample()` together with the Task and Learner created earlier to execute the cross-validation.
 
-The spatial grouping of the k-means based approach above (Figure 1) contrasts visually very well compared to the NSpCV (random) partitioning (Figure 2):
+Last, the results from the CV are aggregated using the measure `"classif.auc"`, which is the technical notation for the Area Under the Receivers Operating Curve (AUROC).
 
-```{r vis-nspcv, fig.cap="Visualization of random partitioning", fig.pos="!b", fig.height=6, fig.width=8}
-autoplot(resampling_nsp, task, fold_id = c(1:4), crs = 4326) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+```{r rr-nspcv, cache=TRUE, cache.lazy = FALSE}
+resampling_nsp <- rsmp("repeated_cv", folds = 4, repeats = 2)
+resampling_nsp$instantiate(task)
+rr_nsp <- resample(
+  task = task, learner = learner,
+  resampling = resampling_nsp
+)
+
+rr_nsp$aggregate(measures = msr("classif.auc"))
 ```
+
+## Spatial Cross-Validation
+
+The same approach as for non-spatial resampling is used for spatial resampling, expect the method being `"repeated_spcv_coords"` instead of `"repeated_cv"`.
+
+```{r rr-spcv, cache=TRUE, cache.lazy = FALSE}
+resampling_sp <- rsmp("repeated_spcv_coords", folds = 4, repeats = 2)
+resampling_sp$instantiate(task)
+rr_sp <- resample(
+  task = task, learner = learner,
+  resampling = resampling_sp
+)
+
+rr_sp$aggregate(measures = msr("classif.auc"))
+```
+
+The resulting AUC using Non-Spatial Cross-Validation (NSpCV) is around 0.15 better compared to the Spatial Cross-Validation (SpCV).
+The better performance score results from over-optimism in the estimation with NSpCV.
+The actual predictive performance on new data is much more realistically reflected by the performance estimated via SpCV.
+The magnitude of this difference is variable as it depends on the dataset, the magnitude of STAC and the learner itself.
+Algorithms with a higher tendency of overfitting to the training set will have a large spread in such scenarios.
 
 # Choosing a Resampling Method
 
