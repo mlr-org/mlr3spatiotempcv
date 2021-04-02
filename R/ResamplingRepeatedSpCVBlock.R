@@ -94,7 +94,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     #'  A task to instantiate.
     instantiate = function(task) {
 
-      assert_task(task)
+      mlr3::assert_task(task)
       checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
       pv = self$param_set$values
       assert_numeric(pv$repeats, min.len = 1)

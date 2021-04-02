@@ -1,5 +1,19 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 0.2.1.9003
+
+- Remove {GSIF} package due to CRAN archival and host the `cookfarm` dataset standalone
+- Add 2D plotting method for Cstf method (#106)
+
+
+# mlr3spatiotempcv 0.2.1.9002
+
+- Use Cstf method for spatiotemporal viz vignette
+- Fix help page content of `ResamplingRepeatedSptCVCstf` (beforehand the Cluto method was referenced accidentally)
+- `autoplot.ResamplingSptCVCstf()`: add arguments `show_omitted` and `static_image`.
+- fix segfault in `autoplot.ResamplingSpcvBlock` example when rendering pkgdown site (unclear why this happens when `show_labels = TRUE`)
+
+
 # mlr3spatiotempcv 0.2.1.9001
 
 - add tests

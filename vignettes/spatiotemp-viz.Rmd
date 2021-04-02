@@ -12,12 +12,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-
-# don't run on mac
-os = ifelse(!Sys.info()[["sysname"]] == "Darwin", TRUE, FALSE)
-
-# - don't run on CRAN
-is_cran = ifelse(Sys.getenv("NOT_CRAN") != "", FALSE, TRUE)
 ```
 
 {mlr3spatiotempcv} makes use of {plotly} to create the 3D plots for visualizing spatiotemporal folds created via the CLUTO algorithm.
@@ -32,16 +26,17 @@ Hence, manual action is needed to create a properly aligned grid of 3D plots.
 Below is an example how to create a 2x2 grid showing four folds as 3D subplots.
 It makes use of the returned 3D plotly objects which are returned in a list by `autoplot()`:
 
-```{r, fig.align='center', eval=os&&!is_cran, fig.width=8, fig.height=9}
+```{r, fig.align='center', eval=FALSE}
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm")
-resampling = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
+resampling = rsmp("sptcv_cstf",
+  folds = 5, time_var = "Date",
+  space_var = "SOURCEID")
 resampling$instantiate(task_st)
 
 pl = autoplot(resampling, task_st, c(1, 2, 3, 4),
-  crs = 4326,
-  point_size = 3, axis_label_fontsize = 10)
+  crs = 4326, point_size = 3, axis_label_fontsize = 10)
 
 # Warnings can be ignored
 pl_subplot = plotly::subplot(pl)
@@ -71,13 +66,12 @@ plotly::layout(pl_subplot,
 )
 ```
 
-```{r, eval=Sys.getenv("IN_PKGDOWN" == ""), echo=FALSE, results='asis'}
-cat("(The actual graphic here is only rendered on the pkgdown site: please visit https://mlr3spatiotempcv.mlr-org.com.)")
+```{r, echo=FALSE, fig.align='center', fig.align='center'}
+# plotly::orca(foo, "man/figures/sptcv_cstf_multiplot.png", width = 1200, height = 1200)
+knitr::include_graphics("../man/figures/sptcv_cstf_multiplot.png")
 ```
 
-```{r, eval=Sys.getenv("IN_PKGDOWN" == ""), results='asis', echo=FALSE}
-cat("(The Cluto method does not work on macOS: please visit https://mlr3spatiotempcv.mlr-org.com to see the rendered plot.)")
-```
+Note: The image shown above is a static version created with `plotly::orca()`.
 
 Subplot titles can unfortunately not created dynamically.
 However, there is a manual workaround via [annotations](https://plotly.com/r/reference/#layout-annotations) show in this [RPubs post](https://rpubs.com/bcd/subplot-titles).
