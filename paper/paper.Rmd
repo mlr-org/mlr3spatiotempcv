@@ -384,7 +384,7 @@ knitr::include_graphics("llo.png")
 ### Leave-Location-and-Time-Out (LLTO)
 
 The "Leave-Location-and-Time-Out" (LLTO) method combines both "Leave-Time-Out" (LTO) and "Leave-Location-Out" (LLO).
-It creates partitions that operate on spatiotemporal clusters to reduce both spatial and temporal autocorrelations.
+It creates partitions that operate on spatiotemporal clusters to reduce both spatial and temporal autocorrelation.
 To achieve this, observations are omitted and only a subset is used.
 In the special scenario with five temporal levels and five folds, the train/test split happens only at one temporal level (Fig.\@ref(fig:llto)).
 
@@ -405,6 +405,26 @@ knitr::include_graphics("llto.png")
 
 ## Spatiotemporal Clustering (Cluto)
 
+The "CLUTO" clustering algorithm by George Karypis is said to be an application "for clustering of low- and high-dimensional datasets and for analyzing the characteristics of the various clusters" [@cluto].
+
+The method can generally be used in {mlr3spatiotempcv} if users cope with the copyright statement of the tool, which restricts usage to non-profit organizations and US government agencies only, and make the application binary available locally.
+
+These restrictions in combination with
+
+- the requirement of a local binary which needs to be downloaded externally and added to a user's system path
+- the absent of updates since the year 2007
+- a http-only website 
+- no response from the copyright holder after asking for the current status of the project
+
+led to the decision to not explain and showcase this method in greater detail in this manuscript.
+Users are encouraged to visit the help page of the package for this method (`?ResamplingSptCVCluto`) for more information.
+
+# List of spatiotemporal resampling methods
+
+Table \@ref(tab:sptcv-methods) lists all available spatiotemporal resampling methods available in \pkg{mlr3spatiotempcv}.
+Column `Package` denotes the upstream package from which the method was incorporated.
+The internal identifier for the respective method in \pkg{mlr3spatiotempcv} is shown in column `Notation`.
+
 \begin{table}[h]
 	\centering
 	\caption[t]{Spatiotemporal resampling methods, ordered alphabetically by class name (Notation column).}
@@ -423,7 +443,6 @@ knitr::include_graphics("llto.png")
 	\end{tabular}
 	\endgroup\label{tab:sptcv-methods}
 \end{table}
-
 
 # Comparing Spatial and Non-Spatial Resampling
 
@@ -498,19 +517,44 @@ The actual predictive performance on new data is much more realistically reflect
 The magnitude of this difference is variable as it depends on the dataset, the magnitude of STAC and the learner itself.
 Algorithms with a higher tendency of overfitting to the training set will have a large spread in such scenarios.
 
-# Choosing a Resampling Method
+# Discussion
 
-While the example used the `"spcv_coords"` method, this does not mean that this method is the best or only method suitable for this task.
-Even though this method is quite popular, it was mainly chosen because of the clear visual grouping differences compared to random partitioning.
+## Choosing a Resampling Method
+
+While in the example the `"spcv_coords"` method was used, this should not imply that this method is the best or only method suitable for this example task.
+Even though this method is frequently used, it was mainly chosen because of it's clear visual grouping differences when comparing spatial to random partitioning.
 
 In fact, most often multiple spatial partitioning methods can be used for a dataset.
-It is recommended (required) that users familiarize themselves with each implemented method and decide which method to choose based on the specific characteristics of the dataset.
-For almost all methods implemented in [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com), there is a scientific publication describing the strengths and weaknesses of the respective approach (either linked in the help file of [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) or its respective dependency packages).
+It is recommended (required) that users familiarize themselves with multiple methods and decide which method to choose based on the specific characteristics of the dataset at hand.
+There are various variables influencing the partitioning method choice for an environmental dataset:
+
+- Do natural groupings exists in the data?
+- How dense are the observations scattered both in space and time?
+- Are the predictor variables known to be highly affected by spatiotemporal autocorrelation by nature?
+
+Based on these criteria users must choose a matching partitioning method that is either more restrictive (by discarding observations for fold creation) or more liberal (by using all observations and eventually ignoring natural grouping patterns).
+For almost all methods implemented in \pkg{mlr3spatiotempcv}, there is a scientific publication describing the strengths and weaknesses of the respective approach (either linked in the help file of the package or its respective upstream packages).
 
 In the example above, a cross-validation without hyperparameter tuning was shown.
-If a nested CV is desired, it is recommended to use the same spatial partitioning method for the inner loop (= tuning level).
+In practice most often a nested CV is desired.
+In this case it is recommended to use the same spatial partitioning method for the inner loop (= tuning level).
 See @schratz2019 for more details and chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace2019].
 
-A list of all implemented methods in [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) can be found in the [Getting Started](https://mlr3spatiotempcv.mlr-org.com/articles/mlr3spatiotempcv.html) vignette of the package.
+## A critical evaluation of all methods
+
+Even though all methods have their pros and cons and no universal method exists, this chapter should provide a critial view on the limitations of each method.
+
+<!-- spcv coords: mention generic name -->
+
+<!-- sptcv LLTO: discards many observations -->
+<!-- sptcv LLO: requires additional variable to specify groupings -->
+<!-- sptcv LTO: ignores spatial autocor entirely -->
+
+<!-- spcv buffer: discards observations, LOO very expensive -->
+
+<!-- missing: non-LOO method with buffer support -->
+
+<!-- env block: hard to decide which variable to use for clustering -->
+<!-- env block: more than one variable may lead to unforeseeable results -->
 
 # References
