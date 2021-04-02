@@ -34,7 +34,8 @@
 #'   Whether to show an overlay of the spatial blocks polygons.
 #' @param show_labels `[logical(1)]`\cr
 #'   Whether to show an overlay of the spatial block IDs.
-#' @param ... Passed to `geom_sf()`. Helpful for adjusting point sizes and shapes.
+#' @param ... Passed to `geom_sf()`. Helpful for adjusting point sizes and
+#'   shapes.
 #' @details
 #' By default a plot is returned; if `fold_id` is set, a gridded plot is
 #' created. If `plot_as_grid = FALSE`, a list of plot objects is returned.
