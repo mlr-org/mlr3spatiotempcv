@@ -69,7 +69,8 @@ Whether to show an overlay of the spatial blocks polygons.}
 \item{show_labels}{\verb{[logical(1)]}\cr
 Whether to show an overlay of the spatial block IDs.}
 
-\item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and shapes.}
+\item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and
+shapes.}
 
 \item{repeats_id}{\verb{[numeric]}\cr
 Repetition ID to plot.}

@@ -89,7 +89,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
     sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
 
     ggplot() +
-      geom_sf(data = sf_df, aes(color = .data[["indicator"]])) +
+      geom_sf(data = sf_df, aes(color = .data[["indicator"]]), ...) +
       scale_color_manual(values = c(
         "Train" = train_color,
         "Test" = test_color
