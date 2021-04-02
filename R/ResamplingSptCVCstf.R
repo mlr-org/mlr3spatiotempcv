@@ -1,4 +1,4 @@
-#' @title Create Spatiotemporal Folds Using Predefined Groups
+#' @title "Leave-location-and-time-out" resampling.
 #'
 #' @template rox_sptcv_cstf
 #'
@@ -84,7 +84,7 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
     #'   Column name identifying a class unit (e.g. land cover).
     instantiate = function(task) {
 
-      assert_task(task)
+      mlr3::assert_task(task)
       checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
       checkmate::assert_subset(self$time_var,
         choices = task$feature_names,

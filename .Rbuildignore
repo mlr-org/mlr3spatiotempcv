@@ -31,3 +31,5 @@
 ^cran-comments\.md$
 ^CRAN-RELEASE$
 ^inst/debug\.R$
+^paper$
+^data-raw$
