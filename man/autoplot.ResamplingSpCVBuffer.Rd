@@ -42,7 +42,8 @@ The color to use for the test set observations.}
 \item{crs}{\verb{[character]}\cr
 EPSG code of the CRS for x and y axes.}
 
-\item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and shapes.}
+\item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and
+shapes.}
 
 \item{x}{\verb{[Resampling]}\cr
 mlr3 spatial resampling object of class \link{ResamplingSpCVBuffer}.}
