@@ -1,5 +1,6 @@
 # for graph learner tests
 loadNamespace("mlr3pipelines")
+loadNamespace("mlr3")
 
 # Create 6x6 point grid with 1m distance between points
 test_make_sp = function() {
