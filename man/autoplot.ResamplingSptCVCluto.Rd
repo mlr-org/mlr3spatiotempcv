@@ -79,7 +79,8 @@ Point size of markers.}
 \item{axis_label_fontsize}{\verb{[integer]}\cr
 Font size of axis labels.}
 
-\item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and shapes.}
+\item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and
+shapes.}
 
 \item{repeats_id}{\verb{[numeric]}\cr
 Repetition ID to plot.}

@@ -34,7 +34,8 @@
 #'   Whether to show an overlay of the spatial blocks polygons.
 #' @param show_labels `[logical(1)]`\cr
 #'   Whether to show an overlay of the spatial block IDs.
-#' @param ... Passed to `geom_sf()`. Helpful for adjusting point sizes and shapes.
+#' @param ... Passed to `geom_sf()`. Helpful for adjusting point sizes and
+#'   shapes.
 #' @details
 #' By default a plot is returned; if `fold_id` is set, a gridded plot is
 #' created. If `plot_as_grid = FALSE`, a list of plot objects is returned.
@@ -72,12 +73,13 @@
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #'
 #'   ## Visualize the train/test split of a single fold
-#'   autoplot(resampling, task, fold_id = 1, crs = 4326)
+#'   autoplot(resampling, task, fold_id = 1, crs = 4326) +
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #'
 #'   ## Visualize train/test splits of multiple folds
 #'   autoplot(resampling, task,
 #'     fold_id = c(1, 2), crs = 4326,
-#'     show_blocks = TRUE, show_labels = TRUE) *
+#'     show_blocks = TRUE) *
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
 autoplot.ResamplingSpCVBlock = function( # nolint
