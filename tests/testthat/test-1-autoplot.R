@@ -263,6 +263,11 @@ test_that("plot() works for 'repeated_spcv_env'", {
 # 2D -------------------------------------------------------------------------
 test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
   skip_if_not_installed("vdiffr")
+
+  # for some reason linux and windows svgs differ
+  skip_on_os("linux")
+  skip_on_os("windows")
+
   set.seed(42)
 
   task = tsk("cookfarm")
@@ -290,6 +295,11 @@ test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
 
 test_that("plot() works for 'sptcv_cstf' 2D - space_var", {
   skip_if_not_installed("vdiffr")
+
+  # for some reason linux and windows svgs differ
+  skip_on_os("linux")
+  skip_on_os("windows")
+
   set.seed(42)
 
   task = tsk("cookfarm")
