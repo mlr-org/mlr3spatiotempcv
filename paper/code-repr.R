@@ -1,0 +1,5 @@
+fs::dir_create("paper/figs")
+knitr::purl(input = "paper/paper.Rmd", output = "paper/code.R", quiet = TRUE)
+knitr::spin("paper/code.R")
+fs::file_delete(c("code.md", "paper/code.R", "code.html"))
+fs::dir_delete("paper/figs")
