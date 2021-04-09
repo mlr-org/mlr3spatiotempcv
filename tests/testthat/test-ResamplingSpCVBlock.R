@@ -100,7 +100,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer
   task = test_make_blockCV_test_task()
   testSF = test_make_blockCV_test_df()
 
-  rl <- raster::raster(raster::extent(testSF), crs = sf::st_crs(testSF)$input)
+  rl <- raster::raster(raster::extent(testSF), crs = raster::crs(testSF))
   vals <- seq_len(raster::ncell(rl))
   rl = raster::setValues(rl, vals)
 
