@@ -95,9 +95,6 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer
   # same issue on macOS 3.6
   testthat::skip_if(as.numeric(R.version$major) < 4)
 
-  # unclear why this tests only errors on GHA
-  testthat::skip_on_ci()
-
   set.seed(42)
 
   task = test_make_blockCV_test_task()
