@@ -46,9 +46,12 @@ preamble: >
   \usepackage{amsmath}
   \usepackage{booktabs}
   \usepackage{longtable}
+  \usepackage{adjustbox}
+  \usepackage{multirow}
+  \usepackage{tabularx}
+  \usepackage{placeins}
 tables: true
 bibliography: paper.bib
-# output: rticles::jss_article
 output:
   bookdown::pdf_book:
     base_format: rticles::jss_article
@@ -216,22 +219,27 @@ In Tab. \@ref(tab:sptcv-methods), the internal identifier for the respective met
 Some of the methods listed are able to produce different partitioning results by setting different options, hence the actual number of available methods is higher than the one shown in Tab. \@ref(tab:sptcv-methods).
 
 \begin{table}[h]
-	\centering
-	\caption[t]{Spatiotemporal resampling methods, ordered alphabetically by class name (Notation column).}
-	\begingroup
-	\begin{tabular}{llll}
-		\\
-		Literature                  & Package          & Reference          & Notation                    \\
-		\toprule
-    Spatial Buffering           & \pkg{blockCV}    & \citet{blockCV}    & \texttt{rsmp("spcv\_buffer")} \\
-    Spatial Blocking            & \pkg{blockCV}    & \citet{blockCV}    & \texttt{rsmp("spcv\_block")}  \\
-    Spatial CV                  & \pkg{sperrorest} & \citet{sperrorest} & \texttt{rsmp("spcv\_cv")}     \\
-    Environmental Blocking      & \pkg{blockCV}    & \citet{blockCV}    & \texttt{rsmp("spcv\_env")}    \\
-    \midrule
-    Leave-Location-and-Time-Out & \pkg{CAST}       & \citet{cast}       & \texttt{rsmp("spcv\_cstf")}   \\
-    Spatiotemporal Clustering   & \pkg{skmeans}    & \citet{cluto}      & \texttt{rsmp("spcv\_cluto")}
-	\end{tabular}
-	\endgroup\label{tab:sptcv-methods}
+  \centering
+  \caption[t]{Spatiotemporal resampling methods, ordered alphabetically by class name (Notation column). }
+  \begingroup
+  \begin{adjustbox}{angle=270}
+    \begin{tabular}{lllll}
+      \\
+      Type                            & Name                        & R Package(s)     & mlr3 Notation  & Literature \\
+      \toprule
+      \multirow{3}{*}{Spatial}        & Spatial Buffering           & \pkg{blockCV}, \pkg{sperrorest}    & "spcv\_buffer", "spcv\_disc()", "spcv\_loo()" & Lit1       \\
+                                      & Spatial Blocking            & \pkg{blockCV}, \pkg{sperrorest}  & "spcv\_block",
+                                      "spcv\_tiles()"  & Lit1       \\
+                                      & Spatial Clustering          & \pkg{sperrorest} & "spcv\_coords" & Lit1       \\
+       & Leave-Location-Out & \pkg{CAST}, \pkg{sperrorest}       & "sptcv\_cstf('space\_var')", "spcv\_factor"  & Lit1       \\
+      \midrule
+      \multirow{2}{*}{Spatiotemporal} & Leave-Location-and-Time-Out & \pkg{CAST}       & "sptcv\_cstf"  & Lit1       \\
+                                      & Spatiotemporal Clustering   & \pkg{skmeans}    & "sptcv\_cluto" & Lit1       \\
+      \midrule
+      Feature space                   & Environmental Blocking      & \pkg{blockCV}    & "spcv\_env"    & Lit1       \\
+    \end{tabular}
+  \end{adjustbox}
+  \endgroup\label{tab:sptcv-methods}
 \end{table}
 
 A low-level introduction including visualization is given for every method in the following.
