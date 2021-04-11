@@ -82,6 +82,7 @@ register_mlr3 = function() { # nocov start
   mlr_resamplings$add("repeated_spcv_coords", ResamplingRepeatedSpCVCoords)
   mlr_resamplings$add("repeated_spcv_env", ResamplingRepeatedSpCVEnv)
   mlr_resamplings$add("repeated_spcv_block", ResamplingRepeatedSpCVBlock)
+  mlr_resamplings$add("repeated_spcv_disc", ResamplingRepeatedSpCVDisc)
   mlr_resamplings$add("repeated_sptcv_cluto", ResamplingRepeatedSptCVCluto)
   mlr_resamplings$add("repeated_sptcv_cstf", ResamplingRepeatedSptCVCstf)
 }

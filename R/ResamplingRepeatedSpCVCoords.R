@@ -43,7 +43,7 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
       super$initialize(
         id = id,
         param_set = ps,
-        man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcvcoords"
+        man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcv_coords"
       )
 
     },

@@ -35,11 +35,10 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
           lower = 0L, tags = "required",
           special_vals = list(0L)),
         ParamInt$new("buffer",
-          lower = 1L, default = NULL,
+          lower = 0L, default = NULL,
           special_vals = list(NULL)),
-        ParamInt$new("prob",
-          lower = 1L, default = NULL,
-          special_vals = list(NULL)),
+        ParamUty$new("prob",
+          default = NULL),
         ParamLgl$new("replace", default = FALSE)
       ))
       ps$values = list(folds = 10L)
