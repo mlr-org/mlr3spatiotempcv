@@ -44,6 +44,9 @@ Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G (2018).
 \emph{bioRxiv}.
 \doi{10.1101/357798}.
 }
+\seealso{
+ResamplingSpCVDisc
+}
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingSpCVBuffer}
 }

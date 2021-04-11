@@ -27,7 +27,7 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
 
   public = list(
     #' @description
-    #' Create an "Environmental Block" resampling instance.
+    #' Create an "coordinate-based" repeated resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_coords") {
