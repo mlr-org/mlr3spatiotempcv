@@ -94,7 +94,7 @@ test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - replace", {
   # sperrorest
   set.seed(42)
   sperr_out = sperrorest::partition_disc(data_with_disc,
-    ndisc = 3, radius = 200, buffer = 0, replace = TRUE,
+    ndisc = 3, radius = 200, buffer = 200, replace = TRUE,
     repetition = 1:2)
 
   sperr_train = mlr3misc::map(sperr_out[[2]], function(x) x$train)
