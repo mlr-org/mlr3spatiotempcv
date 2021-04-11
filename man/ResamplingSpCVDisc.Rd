@@ -4,9 +4,18 @@
 \alias{ResamplingSpCVDisc}
 \title{Spatial "Disc" resampling with optional buffer zone}
 \description{
-Spatial "Disc" resampling with optional buffer zone
+\code{partition_disc} partitions the sample into training and tests
+set by selecting circular test areas (possibly surrounded by an exclusion
+buffer) and using the remaining samples as training samples
+(leave-one-disc-out cross-validation).
 
-Spatial "Disc" resampling with optional buffer zone
+This method is similar to \link{ResamplingSpCVBuffer}.
+}
+\note{
+Test area discs are centered at (random) samples, not at general random
+locations. Test area discs may (and likely will) overlap independently of
+the value of \code{replace}. \code{replace} only controls the replacement of the
+center point of discs when drawing center points from the samples.
 }
 \examples{
 library(mlr3)
@@ -30,6 +39,9 @@ Brenning A (2012).
 \dQuote{Spatial cross-validation and bootstrap for the assessment of prediction rules in remote sensing: The R package sperrorest.}
 In \emph{2012 IEEE International Geoscience and Remote Sensing Symposium}.
 \doi{10.1109/igarss.2012.6352393}.
+}
+\seealso{
+ResamplingSpCVBuffer
 }
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingSpCVDisc}
@@ -66,7 +78,7 @@ values stored in the \code{param_set}.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create an "Environmental Block" resampling instance.
+Create a "Spatial 'Disc' resampling" resampling instance.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVDisc$new(id = "spcv_disc")}\if{html}{\out{</div>}}
 }

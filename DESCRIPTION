@@ -61,6 +61,7 @@ Suggests:
     rpart,
     sf,
     skmeans,
+    sperrorest,
     testthat (>= 3.0.0),
     vdiffr,
     withr

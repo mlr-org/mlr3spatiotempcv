@@ -476,6 +476,8 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
 #' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods to
 #'   visualize mlr3 spatiotemporal resampling objects.
 #'
+#' @importFrom stats na.omit
+#'
 #' @details
 #' This method requires to set argument `fold_id` and no plot containing all
 #' partitions can be created. This is because the method does not make use of
@@ -497,39 +499,8 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
 #' @name autoplot.ResamplingSpCVDisc
 #' @inheritParams autoplot.ResamplingSpCVBlock
 #'
-#' @param object `[Resampling]`\cr
-#'   mlr3 spatial resampling object of class [ResamplingSptCVCstf] or
-#'   [ResamplingRepeatedSptCVCstf].
-#' @param x `[Resampling]`\cr
-#'   mlr3 spatial resampling object of class [ResamplingSptCVCstf] or
-#'   [ResamplingRepeatedSptCVCstf].
-#' @param tickformat_date `[character]`\cr
-#'   Date format for z-axis.
-#' @param crs `[character]`\cr
-#'   EPSG code of the CRS for x and y axes.
-#'   If not set, EPSG 4326 (WGS84) is used.
-#' @param nticks_y `[integer]`\cr
-#'   Number of y axis breaks.
-#' @param nticks_x `[integer]`\cr
-#'   Number of x axis breaks.
-#' @param point_size `[numeric]`\cr
-#'   Point size of markers.
-#' @param axis_label_fontsize `[integer]`\cr
-#'   Font size of axis labels.
-#' @param static_image `[logical]`\cr
-#'   Whether to create a static image from the plotly plot via `plotly::orca()`.
-#'   This requires the `orca` utility to be available.
-#'   See [https://github.com/plotly/orca](https://github.com/plotly/orca) for
-#'   more information.
-#'   When used, by default a file named `plot.png` is created in the current
-#'   working directory.
 #' @param show_omitted `[logical]`\cr
 #'   Whether to show points not used in train or test set for the current fold.
-#' @param plot3D `[logical]`\cr
-#'   Whether to create a 2D image via \pkg{ggplot2} or a 3D plot via
-#'   \pkg{plotly}.
-#' @param ... Passed down to `plotly::orca()`. Only effective when
-#' `static_image = TRUE`.
 #' @export
 #' @seealso
 #'   - mlr3book chapter on on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions).
@@ -542,18 +513,18 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
 #'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' \donttest{
-#' if (mlr3misc::require_namespaces(c("sf", "plotly"), quietly = TRUE)) {
+#' if (mlr3misc::require_namespaces("sf", quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
-#'   task_st = tsk("cookfarm")
-#'   resampling = rsmp("sptcv_cstf",
-#'     folds = 5, time_var = "Date",
-#'     space_var = "SOURCEID")
-#'   resampling$instantiate(task_st)
+#'   task = tsk("ecuador")
+#'   resampling = rsmp("spcv_disc",
+#'     folds = 5, radius = 200L, buffer = 200L)
+#'   resampling$instantiate(task)
 #'
-#'   # with both `space_var` and `time_var` (LLTO), the omitted observations per
-#'   # fold can be shown by setting `show_omitted = TRUE`
-#'   autoplot(resampling, task_st, fold_id = 1, show_omitted = TRUE)
+#'   autoplot(resampling, task,
+#'     fold_id = 1, crs = 4326,
+#'     show_omitted = TRUE, size = 0.7) *
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
 #' }
 autoplot.ResamplingSpCVDisc = function( # nolint
@@ -572,6 +543,13 @@ autoplot.ResamplingSpCVDisc = function( # nolint
   coords = task$coordinates()
   coords$row_id = task$row_ids
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
+
+  # set fallback crs if missing
+  if (is.null(crs)) {
+    # use 4326 (WGS84) as fallback
+    crs = 4326
+    messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
+  }
 
   resampling = assert_autoplot(resampling, fold_id, task)
 
@@ -784,7 +762,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
       crs = crs)
 
     # only keep test ids
-    sf_df = na.omit(sf_df, cols = "fold")
+    sf_df = stats::na.omit(sf_df, cols = "fold")
 
     # order fold ids
     sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]

@@ -1,5 +1,7 @@
 #' @title Spatial "Disc" resampling with optional buffer zone
 #'
+#' @template rox_spcv_disc
+#'
 #' @references
 #' `r format_bib("brenning2012")`
 #'
@@ -25,7 +27,7 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
 
   public = list(
     #' @description
-    #' Create an "Environmental Block" resampling instance.
+    #' Create a "Spatial 'Disc' resampling" resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_disc") {
@@ -118,11 +120,11 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
           if (is.null(self$param_set$values$buffer)) {
             train_sel = seq_len(nrow(coords))[-i] # nocov
           } else {
-            train_sel = which(di > posbuf)
+            train_sel = which(di > self$param_set$values$buffer)
           }
         }
         if (length(train_sel) == 0) {
-          cli::cli_alert_warning(
+          warningf(
             "Empty training set in 'partition_disc': 'buffer'
             and/or 'radius' too large?",
             wrap = TRUE

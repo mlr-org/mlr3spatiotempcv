@@ -25,8 +25,8 @@
 }
 \arguments{
 \item{object}{\verb{[Resampling]}\cr
-mlr3 spatial resampling object of class \link{ResamplingSptCVCstf} or
-\link{ResamplingRepeatedSptCVCstf}.}
+mlr3 spatial resampling object of class \link{ResamplingSpCVBlock} or
+\link{ResamplingRepeatedSpCVBlock}.}
 
 \item{task}{\verb{[TaskClassifST]/[TaskRegrST]}\cr
 mlr3 task object.}
@@ -46,8 +46,7 @@ The color to use for the training set observations.}
 The color to use for the test set observations.}
 
 \item{crs}{\verb{[character]}\cr
-EPSG code of the CRS for x and y axes.
-If not set, EPSG 4326 (WGS84) is used.}
+EPSG code of the CRS for x and y axes.}
 
 \item{repeats_id}{\verb{[numeric]}\cr
 Repetition ID to plot.}
@@ -55,39 +54,12 @@ Repetition ID to plot.}
 \item{show_omitted}{\verb{[logical]}\cr
 Whether to show points not used in train or test set for the current fold.}
 
-\item{...}{Passed down to \code{plotly::orca()}. Only effective when
-\code{static_image = TRUE}.}
+\item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and
+shapes.}
 
 \item{x}{\verb{[Resampling]}\cr
-mlr3 spatial resampling object of class \link{ResamplingSptCVCstf} or
-\link{ResamplingRepeatedSptCVCstf}.}
-
-\item{tickformat_date}{\verb{[character]}\cr
-Date format for z-axis.}
-
-\item{nticks_y}{\verb{[integer]}\cr
-Number of y axis breaks.}
-
-\item{nticks_x}{\verb{[integer]}\cr
-Number of x axis breaks.}
-
-\item{point_size}{\verb{[numeric]}\cr
-Point size of markers.}
-
-\item{axis_label_fontsize}{\verb{[integer]}\cr
-Font size of axis labels.}
-
-\item{static_image}{\verb{[logical]}\cr
-Whether to create a static image from the plotly plot via \code{plotly::orca()}.
-This requires the \code{orca} utility to be available.
-See \url{https://github.com/plotly/orca} for
-more information.
-When used, by default a file named \code{plot.png} is created in the current
-working directory.}
-
-\item{plot3D}{\verb{[logical]}\cr
-Whether to create a 2D image via \pkg{ggplot2} or a 3D plot via
-\pkg{plotly}.}
+mlr3 spatial resampling object. One of class \link{ResamplingSpCVBuffer},
+\link{ResamplingSpCVBlock}, \link{ResamplingSpCVCoords}, \link{ResamplingSpCVEnv}.}
 }
 \description{
 Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods to
@@ -115,18 +87,18 @@ mode.
 
 \examples{
 \donttest{
-if (mlr3misc::require_namespaces(c("sf", "plotly"), quietly = TRUE)) {
+if (mlr3misc::require_namespaces("sf", quietly = TRUE)) {
   library(mlr3)
   library(mlr3spatiotempcv)
-  task_st = tsk("cookfarm")
-  resampling = rsmp("sptcv_cstf",
-    folds = 5, time_var = "Date",
-    space_var = "SOURCEID")
-  resampling$instantiate(task_st)
+  task = tsk("ecuador")
+  resampling = rsmp("spcv_disc",
+    folds = 5, radius = 200L, buffer = 200L)
+  resampling$instantiate(task)
 
-  # with both `space_var` and `time_var` (LLTO), the omitted observations per
-  # fold can be shown by setting `show_omitted = TRUE`
-  autoplot(resampling, task_st, fold_id = 1, show_omitted = TRUE)
+  autoplot(resampling, task,
+    fold_id = 1, crs = 4326,
+    show_omitted = TRUE, size = 0.7) *
+    ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 }
 }
 }

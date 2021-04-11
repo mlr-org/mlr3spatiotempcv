@@ -31,7 +31,7 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
 
   public = list(
     #' @description
-    #' Create an "coordinate-based" repeated resampling instance.
+    #' Create a "Spatial 'Disc' resampling" resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_disc") {
@@ -151,11 +151,11 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
             if (is.null(self$param_set$values$buffer)) {
               train_sel = seq_len(nrow(coords))[-i] # nocov
             } else {
-              train_sel = which(di > posbuf)
+              train_sel = which(di > self$param_set$values$buffer)
             }
           }
           if (length(train_sel) == 0) {
-            cli::cli_alert_warning(
+            warningf(
               "Empty training set in 'partition_disc': 'buffer'
             and/or 'radius' too large?",
               wrap = TRUE

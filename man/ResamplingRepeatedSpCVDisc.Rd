@@ -74,7 +74,7 @@ values stored in the \code{param_set}.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create an "coordinate-based" repeated resampling instance.
+Create a "Spatial 'Disc' resampling" resampling instance.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSpCVDisc$new(id = "repeated_spcv_disc")}\if{html}{\out{</div>}}
 }
