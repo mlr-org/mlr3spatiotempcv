@@ -439,11 +439,11 @@ test_that("plot() works for 'spcv_disc'", {
   p5 = autoplot(rsp, task, crs = 4326, repeats_id = 2)
   p6 = autoplot(rsp, task, crs = 4326, fold_id = 1, repeats_id = 2)
 
-  vdiffr::expect_doppelganger("SptCVDisc all test sets", p1)
-  vdiffr::expect_doppelganger("SptCVDisc Fold 1", p2)
-  vdiffr::expect_doppelganger("SptCVDisc Fold 1-2", p3)
-  vdiffr::expect_doppelganger("SptCVDisc show_omitted", p4)
+  vdiffr::expect_doppelganger("SpCVDisc all test sets", p1)
+  vdiffr::expect_doppelganger("SpCVDisc Fold 1", p2)
+  vdiffr::expect_doppelganger("SpCVDisc Fold 1-2", p3)
+  vdiffr::expect_doppelganger("SpCVDisc show_omitted", p4)
 
-  vdiffr::expect_doppelganger("RepSptCVDisc 2D time_var - Fold 1-2, Rep 2", p5)
-  vdiffr::expect_doppelganger("RepSptCVDisc 2D time_var - Fold 1, Rep 2", p6)
+  vdiffr::expect_doppelganger("RepSpCVDisc - Fold 1-2, Rep 2", p5)
+  vdiffr::expect_doppelganger("RepSpCVDisc - Fold 1, Rep 2", p6)
 })
