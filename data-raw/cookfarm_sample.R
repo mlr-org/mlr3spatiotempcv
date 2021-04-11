@@ -20,7 +20,7 @@ cookfarm_mlr3_sf = cookfarm_profiles %>%
 
 cookfarm_sample = cookfarm_mlr3_sf %>%
   sf::st_set_geometry(NULL) %>%
-  na.omit() %>%
+  stats::na.omit() %>%
   dplyr::sample_n(500)
 
 # mapview::mapview(cookfarm_sample)

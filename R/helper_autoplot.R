@@ -54,12 +54,16 @@ reorder_levels = function(object) {
 
   # 'fold' needs to be a factor, otherwise `show.legend = "points" has no
   # effect
-
   object$indicator = as.factor(as.character(object$indicator))
 
-  # reorder factor levels so that "train" comes first
-  object$indicator = ordered(object$indicator, levels = c("Train", "Test"))
+  if ("Omitted" %in% levels(object$indicator)) {
+    # reorder factor levels so that "train" comes first
+    object$indicator = ordered(object$indicator,
+      levels = c("Train", "Test", "Omitted"))
+  } else {
 
+    # reorder factor levels so that "train" comes first
+    object$indicator = ordered(object$indicator, levels = c("Train", "Test"))
+  }
   return(object)
-
 }
