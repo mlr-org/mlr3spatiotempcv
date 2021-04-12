@@ -2,7 +2,7 @@
 % Please edit documentation in R/ResamplingSpCVCoords.R
 \name{ResamplingSpCVCoords}
 \alias{ResamplingSpCVCoords}
-\title{Spatial Cross Validation Resampling}
+\title{(sperrorest) Coordinate-based k-means clustering}
 \description{
 Spatial Cross validation following the "k-means" approach after
 Brenning 2012.

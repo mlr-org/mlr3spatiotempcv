@@ -1,4 +1,4 @@
-#' @title Repeated Spatial "Disc" resampling with optional buffer zone
+#' @title (sperrorest) Repeated spatial "disc" resampling
 #'
 #' @references
 #' `r format_bib("brenning2012")`
@@ -28,7 +28,6 @@
 #' rrcv$instance # table
 ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
   inherit = mlr3::Resampling,
-
   public = list(
     #' @description
     #' Create a "Spatial 'Disc' resampling" resampling instance.
@@ -54,7 +53,6 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
         param_set = ps,
         man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcv_disc"
       )
-
     },
 
     #' @description Translates iteration numbers to fold number.
@@ -97,9 +95,7 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }
-  ),
-
+    }),
   active = list(
 
     #' @field iters `integer(1)`\cr
@@ -108,9 +104,7 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
     iters = function() {
       pv = self$param_set$values
       as.integer(pv$repeats) * as.integer(pv$folds)
-    }
-  ),
-
+    }),
   private = list(
     .sample = function(ids, coords) {
       reps = self$param_set$values$repeats
@@ -120,7 +114,6 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
       # k = self$param_set$values$folds
 
       for (rep in seq_len(reps)) {
-
         index = sample.int(nrow(coords),
           size = self$param_set$values$folds,
           replace = self$param_set$values$replace,
@@ -134,7 +127,6 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
         mlr3_index = 1
 
         for (i in index) {
-
           if (!is.null(self$param_set$values$buffer) |
             self$param_set$values$radius >= 0) {
             di = sqrt((coords[[1]] - as.numeric(coords[i, 1]))^2 + # nolint
@@ -144,7 +136,7 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
           if (self$param_set$values$radius >= 0) {
             # leave-disc-out with buffer:
             test_sel = which(di <= self$param_set$values$radius)
-            train_sel <- which(di > (self$param_set$values$radius + self$param_set$values$buffer))
+            train_sel = which(di > (self$param_set$values$radius + self$param_set$values$buffer))
           } else {
             # leave-one-out with buffer:
             test_sel = i
@@ -171,13 +163,11 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
         invisible(self)
       }
     },
-
     .set_default_param_values = function(param) {
       if (is.null(self$param_set$values[[param]])) {
         self$param_set$values[[param]] = self$param_set$default[[param]]
       }
     },
-
     .get_train = function(i) {
       i = as.integer(i) - 1L
       folds = as.integer(self$param_set$values$folds)
@@ -185,13 +175,11 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
       fold = i %% folds + 1L
       self$instance[[rep]]$train[[fold]]
     },
-
     .get_test = function(i) {
       i = as.integer(i) - 1L
       folds = as.integer(self$param_set$values$folds)
       rep = i %/% folds + 1L
       fold = i %% folds + 1L
       self$instance[[rep]]$test[[fold]]
-    }
-  )
+    })
 )

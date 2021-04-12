@@ -2,7 +2,7 @@
 % Please edit documentation in R/ResamplingRepeatedSpCVBlock.R
 \name{ResamplingRepeatedSpCVBlock}
 \alias{ResamplingRepeatedSpCVBlock}
-\title{Repeated Spatial Cross Validation Resampling}
+\title{(blockCV) Repeated spatial block resampling}
 \description{
 Spatial Block Cross validation implemented by the \code{blockCV}
 package.

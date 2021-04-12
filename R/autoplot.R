@@ -200,7 +200,6 @@ autoplot.ResamplingSpCVEnv = function( # nolint
   test_color = "#E18727",
   crs = NULL,
   ...) {
-
   autoplot_spatial(
     resampling = object,
     task = task,
@@ -298,7 +297,6 @@ autoplot.ResamplingSpCVCoords = function( # nolint
   test_color = "#E18727",
   crs = NULL,
   ...) {
-
   autoplot_spatial(
     resampling = object,
     task = task,
@@ -568,7 +566,6 @@ autoplot.ResamplingSpCVDisc = function( # nolint
   }
 
   if (!is.null(fold_id)) {
-
     if (length(fold_id) == 1) {
       ### only one fold
 
@@ -604,15 +601,15 @@ autoplot.ResamplingSpCVDisc = function( # nolint
           labs(color = "Set", title = sprintf(
             "Fold %s, Repetition %s", fold_id,
             repeats_id)) +
-          theme(plot.title = ggtext::element_textbox(
-            size = 10,
-            color = "black", fill = "#ebebeb", box.color = "black",
-            height = unit(0.33, "inch"), width = unit(1, "npc"),
-            linetype = 1, r = unit(5, "pt"),
-            valign = 0.5, halign = 0.5,
-            padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+          theme(
+            plot.title = ggtext::element_textbox(
+              size = 10,
+              color = "black", fill = "#ebebeb", box.color = "black",
+              height = unit(0.33, "inch"), width = unit(1, "npc"),
+              linetype = 1, r = unit(5, "pt"),
+              valign = 0.5, halign = 0.5,
+              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
           )
-
       } else {
         data_coords = data_coords[indicator != ""]
 
@@ -632,13 +629,14 @@ autoplot.ResamplingSpCVDisc = function( # nolint
           labs(color = "Set", title = sprintf(
             "Fold %s, Repetition %s", fold_id,
             repeats_id)) +
-          theme(plot.title = ggtext::element_textbox(
-            size = 10,
-            color = "black", fill = "#ebebeb", box.color = "black",
-            height = unit(0.33, "inch"), width = unit(1, "npc"),
-            linetype = 1, r = unit(5, "pt"),
-            valign = 0.5, halign = 0.5,
-            padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+          theme(
+            plot.title = ggtext::element_textbox(
+              size = 10,
+              color = "black", fill = "#ebebeb", box.color = "black",
+              height = unit(0.33, "inch"), width = unit(1, "npc"),
+              linetype = 1, r = unit(5, "pt"),
+              valign = 0.5, halign = 0.5,
+              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
           )
       }
     }
@@ -680,15 +678,15 @@ autoplot.ResamplingSpCVDisc = function( # nolint
             labs(color = "Set", title = sprintf(
               "Fold %s, Repetition %s", .x,
               repeats_id)) +
-            theme(plot.title = ggtext::element_textbox(
-              size = 10,
-              color = "black", fill = "#ebebeb", box.color = "black",
-              height = unit(0.33, "inch"), width = unit(1, "npc"),
-              linetype = 1, r = unit(5, "pt"),
-              valign = 0.5, halign = 0.5,
-              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+            theme(
+              plot.title = ggtext::element_textbox(
+                size = 10,
+                color = "black", fill = "#ebebeb", box.color = "black",
+                height = unit(0.33, "inch"), width = unit(1, "npc"),
+                linetype = 1, r = unit(5, "pt"),
+                valign = 0.5, halign = 0.5,
+                padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
             )
-
         } else {
           data_coords = data_coords[indicator != ""]
 
@@ -708,13 +706,14 @@ autoplot.ResamplingSpCVDisc = function( # nolint
             labs(color = "Set", title = sprintf(
               "Fold %s, Repetition %s", .x,
               repeats_id)) +
-            theme(plot.title = ggtext::element_textbox(
-              size = 10,
-              color = "black", fill = "#ebebeb", box.color = "black",
-              height = unit(0.33, "inch"), width = unit(1, "npc"),
-              linetype = 1, r = unit(5, "pt"),
-              valign = 0.5, halign = 0.5,
-              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+            theme(
+              plot.title = ggtext::element_textbox(
+                size = 10,
+                color = "black", fill = "#ebebeb", box.color = "black",
+                height = unit(0.33, "inch"), width = unit(1, "npc"),
+                linetype = 1, r = unit(5, "pt"),
+                valign = 0.5, halign = 0.5,
+                padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
             )
         }
       })
@@ -785,7 +784,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
   }
 }
 
-#' @rdname autoplot.ResamplingSptCVCstf
+#' @rdname autoplot.ResamplingSpCVDisc
 #' @export
 autoplot.ResamplingRepeatedSpCVDisc = function( # nolint
   object,
@@ -873,7 +872,6 @@ autoplot.ResamplingCV = function( # nolint
   test_color = "#E18727",
   crs = NULL,
   ...) {
-
   autoplot_spatial(
     resampling = object,
     task = task,
@@ -987,7 +985,6 @@ autoplot_spatial = function(
       sf_df = reorder_levels(sf_df)
 
       if (show_blocks) {
-
         if (grepl("Repeated", class(rsmp_autopl)[1])) {
           coords_resamp = coords_resamp[rep == repeats_id, ]
           blocks = rsmp_autopl$blocks[[repeats_id]]
@@ -1007,13 +1004,14 @@ autoplot_spatial = function(
           labs(color = "Set", title = sprintf(
             "Fold %s, Repetition %s", .x,
             repeats_id)) +
-          theme(plot.title = ggtext::element_textbox(
-            size = 10,
-            color = "black", fill = "#ebebeb", box.color = "black",
-            height = unit(0.33, "inch"), width = unit(1, "npc"),
-            linetype = 1, r = unit(5, "pt"),
-            valign = 0.5, halign = 0.5,
-            padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+          theme(
+            plot.title = ggtext::element_textbox(
+              size = 10,
+              color = "black", fill = "#ebebeb", box.color = "black",
+              height = unit(0.33, "inch"), width = unit(1, "npc"),
+              linetype = 1, r = unit(5, "pt"),
+              valign = 0.5, halign = 0.5,
+              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
           )
 
         if (show_labels) {
@@ -1040,13 +1038,14 @@ autoplot_spatial = function(
           labs(color = "Set", title = sprintf(
             "Fold %s, Repetition %s", .x,
             repeats_id)) +
-          theme(plot.title = ggtext::element_textbox(
-            size = 10,
-            color = "black", fill = "#ebebeb", box.color = "black",
-            height = unit(0.33, "inch"), width = unit(1, "npc"),
-            linetype = 1, r = unit(5, "pt"),
-            valign = 0.5, halign = 0.5,
-            padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+          theme(
+            plot.title = ggtext::element_textbox(
+              size = 10,
+              color = "black", fill = "#ebebeb", box.color = "black",
+              height = unit(0.33, "inch"), width = unit(1, "npc"),
+              linetype = 1, r = unit(5, "pt"),
+              valign = 0.5, halign = 0.5,
+              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
           )
       }
     })
@@ -1077,7 +1076,6 @@ autoplot_spatial = function(
     }
     # transform to selected crs
     if (show_blocks) {
-
       blocks = sf::st_as_sf(coords_resamp)
     }
     if (!is.null(coords_resamp$blocks)) {
@@ -1286,7 +1284,6 @@ autoplot_spatiotemp = function(
         )
 
         pl = mlr3misc::invoke(plotly::layout, .args = layout_args)
-
       })
     }
 

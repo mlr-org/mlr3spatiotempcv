@@ -2,7 +2,7 @@
 % Please edit documentation in R/ResamplingSpCVDisc.R
 \name{ResamplingSpCVDisc}
 \alias{ResamplingSpCVDisc}
-\title{Spatial "Disc" resampling with optional buffer zone}
+\title{(sperrorest) Spatial "disc" resampling}
 \description{
 \code{partition_disc} partitions the sample into training and tests
 set by selecting circular test areas (possibly surrounded by an exclusion

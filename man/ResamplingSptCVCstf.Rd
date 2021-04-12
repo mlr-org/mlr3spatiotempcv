@@ -2,7 +2,7 @@
 % Please edit documentation in R/ResamplingSptCVCstf.R
 \name{ResamplingSptCVCstf}
 \alias{ResamplingSptCVCstf}
-\title{"Leave-location-and-time-out" resampling.}
+\title{(CAST) "Leave-location-and-time-out" resampling}
 \description{
 Implementation of \code{CAST::CreateSpaceTimeFolds()}.
 }

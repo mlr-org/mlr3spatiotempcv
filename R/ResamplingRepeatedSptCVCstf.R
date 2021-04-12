@@ -1,4 +1,4 @@
-#' @title Repeated "Leave-location-and-time-out" resampling.
+#' @title (CAST) Repeated "leave-location-and-time-out" resampling
 #'
 #' @template rox_sptcv_cstf
 #'
@@ -28,7 +28,6 @@
 #' rrcv$instance # table
 ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
   inherit = mlr3::Resampling,
-
   public = list(
 
     #' @field space_var `character(1)`\cr
@@ -116,9 +115,7 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }
-  ),
-
+    }),
   active = list(
 
     #' @field iters `integer(1)`\cr
@@ -127,12 +124,9 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
     iters = function() {
       pv = self$param_set$values
       as.integer(pv$repeats) * as.integer(pv$folds)
-    }
-  ),
-
+    }),
   private = list(
     .sample = function(task, space_var, time_var, class) {
-
       reps = self$param_set$values$repeats
       # declare empty list so the for-loop can write to its fields
       self$instance = vector("list", length = reps)
@@ -141,7 +135,6 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
       data = task$data()
 
       for (rep in seq_len(reps)) {
-
         sptfolds = sample_cstf(
           self = self, task, space_var, time_var,
           class, k, data)
@@ -170,7 +163,6 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
       }
       invisible(self)
     },
-
     .get_train = function(i) {
       i = as.integer(i) - 1L
       folds = as.integer(self$param_set$values$folds)
@@ -178,13 +170,11 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
       fold = i %% folds + 1L
       self$instance[[rep]]$train[[fold]]
     },
-
     .get_test = function(i) {
       i = as.integer(i) - 1L
       folds = as.integer(self$param_set$values$folds)
       rep = i %/% folds + 1L
       fold = i %% folds + 1L
       self$instance[[rep]]$test[[fold]]
-    }
-  )
+    })
 )

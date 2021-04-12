@@ -1,4 +1,4 @@
-#' @title Spatial Cross Validation Resampling
+#' @title (sperrorest) Coordinate-based k-means clustering
 #'
 #' @template rox_spcv_coords
 #'
@@ -24,7 +24,6 @@
 #' rcv$instance # table
 ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
   inherit = mlr3::Resampling,
-
   public = list(
     #' @description
     #' Create an "coordinate-based" repeated resampling instance.
@@ -62,18 +61,14 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }
-  ),
-
+    }),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       self$param_set$values$folds
-    }
-  ),
-
+    }),
   private = list(
     .sample = function(ids, coords) {
       inds = kmeans(coords, centers = self$param_set$values$folds)
@@ -90,9 +85,7 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
     .get_train = function(i) {
       self$instance[!list(i), "row_id", on = "fold"][[1L]]
     },
-
     .get_test = function(i) {
       self$instance[list(i), "row_id", on = "fold"][[1L]]
-    }
-  )
+    })
 )
