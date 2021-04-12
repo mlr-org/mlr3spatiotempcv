@@ -2,11 +2,11 @@
 % Please edit documentation in R/ResamplingRepeatedSpCVDisc.R
 \name{ResamplingRepeatedSpCVDisc}
 \alias{ResamplingRepeatedSpCVDisc}
-\title{Repeated Spatial "Disc" resampling with optional buffer zone}
+\title{(sperrorest) Repeated spatial "disc" resampling}
 \description{
-Repeated Spatial "Disc" resampling with optional buffer zone
+(sperrorest) Repeated spatial "disc" resampling
 
-Repeated Spatial "Disc" resampling with optional buffer zone
+(sperrorest) Repeated spatial "disc" resampling
 }
 \examples{
 library(mlr3)

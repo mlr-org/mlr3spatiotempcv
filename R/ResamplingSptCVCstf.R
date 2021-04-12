@@ -1,4 +1,4 @@
-#' @title "Leave-location-and-time-out" resampling.
+#' @title (CAST) "Leave-location-and-time-out" resampling
 #'
 #' @template rox_sptcv_cstf
 #'
@@ -26,7 +26,6 @@
 #' rcv$instance # table
 ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
   inherit = mlr3::Resampling,
-
   public = list(
 
     #' @field space_var `character(1)`\cr
@@ -103,18 +102,14 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }
-  ),
-
+    }),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       self$param_set$values$folds
-    }
-  ),
-
+    }),
   private = list(
     .sample = function(task, space_var, time_var, class) {
       k = self$param_set$values$folds
@@ -154,9 +149,7 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
     .get_train = function(i) {
       self$instance$train[[i]]
     },
-
     .get_test = function(i) {
       self$instance$test[[i]]
-    }
-  )
+    })
 )

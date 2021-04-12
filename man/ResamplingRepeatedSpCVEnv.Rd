@@ -2,7 +2,7 @@
 % Please edit documentation in R/ResamplingRepeatedSpCVEnv.R
 \name{ResamplingRepeatedSpCVEnv}
 \alias{ResamplingRepeatedSpCVEnv}
-\title{Repeated Environmental Block Cross Validation Resampling}
+\title{(blockCV) Repeated "environmental blocking" resampling}
 \description{
 Environmental Block Cross Validation. This strategy uses k-means
 clustering to specify blocks of similar environmental conditions. Only

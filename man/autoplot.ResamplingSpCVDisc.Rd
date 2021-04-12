@@ -2,6 +2,7 @@
 % Please edit documentation in R/autoplot.R
 \name{autoplot.ResamplingSpCVDisc}
 \alias{autoplot.ResamplingSpCVDisc}
+\alias{autoplot.ResamplingRepeatedSpCVDisc}
 \alias{plot.ResamplingSpCVDisc}
 \alias{plot.ResamplingRepeatedSpCVDisc}
 \title{Visualization Functions for SpCV Disc Method.}
@@ -15,6 +16,19 @@
   test_color = "#E18727",
   crs = NULL,
   repeats_id = NULL,
+  show_omitted = FALSE,
+  ...
+)
+
+\method{autoplot}{ResamplingRepeatedSpCVDisc}(
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = 1,
+  plot_as_grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  crs = NULL,
   show_omitted = FALSE,
   ...
 )

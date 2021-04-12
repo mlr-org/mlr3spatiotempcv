@@ -1,4 +1,4 @@
-#' @title Spatial "Disc" resampling with optional buffer zone
+#' @title (sperrorest) Spatial "disc" resampling
 #'
 #' @template rox_spcv_disc
 #'
@@ -24,7 +24,6 @@
 #' rcv$instance # table
 ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
   inherit = mlr3::Resampling,
-
   public = list(
     #' @description
     #' Create a "Spatial 'Disc' resampling" resampling instance.
@@ -75,18 +74,14 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }
-  ),
-
+    }),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       self$param_set$values$folds
-    }
-  ),
-
+    }),
   private = list(
     .sample = function(ids, coords) {
 
@@ -103,7 +98,6 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
       mlr3_index = 1
 
       for (i in index) {
-
         if (!is.null(self$param_set$values$buffer) |
           self$param_set$values$radius >= 0) {
           di = sqrt((coords[[1]] - as.numeric(coords[i, 1]))^2 + # nolint
@@ -113,7 +107,7 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
         if (self$param_set$values$radius >= 0) {
           # leave-disc-out with buffer:
           test_sel = which(di <= self$param_set$values$radius)
-          train_sel <- which(di > (self$param_set$values$radius + self$param_set$values$buffer))
+          train_sel = which(di > (self$param_set$values$radius + self$param_set$values$buffer))
         } else {
           # leave-one-out with buffer:
           test_sel = i
@@ -140,7 +134,6 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
 
       invisible(self)
     },
-
     .set_default_param_values = function(param) {
       if (is.null(self$param_set$values[[param]])) {
         self$param_set$values[[param]] = self$param_set$default[[param]]
@@ -152,9 +145,7 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
     .get_train = function(i) {
       self$instance$train[[i]]
     },
-
     .get_test = function(i) {
       self$instance$test[[i]]
-    }
-  )
+    })
 )

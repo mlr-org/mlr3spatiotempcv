@@ -2,7 +2,7 @@
 % Please edit documentation in R/ResamplingSpCVBuffer.R
 \name{ResamplingSpCVBuffer}
 \alias{ResamplingSpCVBuffer}
-\title{Spatial Buffer Cross Validation Resampling}
+\title{(blockCV) Spatial buffering resampling}
 \description{
 Spatial Buffer Cross validation implemented by the \code{blockCV}
 package.
