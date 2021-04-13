@@ -21,7 +21,7 @@
 #' The `Date` column was appended from the `readings` dataset.
 #' 500 random samples were drawn from the complete sample.
 #'
-#' The dataset was borrowed and adapted from \pkg{GSIF} which was on archived on
+#' The dataset was borrowed and adapted from package GSIF which was on archived on
 #' CRAN in 2021-03.
 #'
 #' @references
