@@ -1,4 +1,4 @@
-#' @title Repeated Spatial Cross Validation Resampling
+#' @title (blockCV) Repeated spatial block resampling
 #'
 #' @template rox_spcv_block
 #'
@@ -32,7 +32,6 @@
 #' }
 ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
   inherit = mlr3::Resampling,
-
   public = list(
 
     #' @field blocks `sf | list of sf objects`\cr
@@ -69,7 +68,6 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         param_set = ps,
         man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcv_block"
       )
-
     },
 
     #' @description Translates iteration numbers to fold number.
@@ -155,9 +153,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }
-  ),
-
+    }),
   active = list(
 
     #' @field iters `integer(1)`\cr
@@ -166,9 +162,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     iters = function() {
       pv = self$param_set$values
       as.integer(pv$repeats) * as.integer(pv$folds)
-    }
-  ),
-
+    }),
   private = list(
     .sample = function(ids, coords, crs) {
 
@@ -217,9 +211,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       map_dtr(inds, function(i) {
         i$resampling
       })
-
     },
-
     .get_train = function(i) {
       i = as.integer(i) - 1L
       folds = as.integer(self$param_set$values$folds)
@@ -228,7 +220,6 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       ii = data.table(rep = rep, fold = seq_len(folds)[-fold])
       self$instance[ii, "row_id", on = names(ii), nomatch = 0L][[1L]]
     },
-
     .get_test = function(i) {
       i = as.integer(i) - 1L
       folds = as.integer(self$param_set$values$folds)
@@ -236,6 +227,5 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       fold = i %% folds + 1L
       ii = data.table(rep = rep, fold = fold)
       self$instance[ii, "row_id", on = names(ii), nomatch = 0L][[1L]]
-    }
-  )
+    })
 )

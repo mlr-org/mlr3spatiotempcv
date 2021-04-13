@@ -1,4 +1,4 @@
-#' @title Repeated Spatial Cross Validation Resampling
+#' @title (sperrorest) Repeated coordinate-based k-means clustering
 #'
 #' @template rox_spcv_coords
 #'
@@ -28,7 +28,6 @@
 #' rrcv$instance # table
 ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
   inherit = mlr3::Resampling,
-
   public = list(
     #' @description
     #' Create an "coordinate-based" repeated resampling instance.
@@ -43,9 +42,8 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
       super$initialize(
         id = id,
         param_set = ps,
-        man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcvcoords"
+        man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcv_coords"
       )
-
     },
 
     #' @description Translates iteration numbers to fold number.
@@ -83,9 +81,7 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }
-  ),
-
+    }),
   active = list(
 
     #' @field iters `integer(1)`\cr
@@ -94,9 +90,7 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
     iters = function() {
       pv = self$param_set$values
       as.integer(pv$repeats) * as.integer(pv$folds)
-    }
-  ),
-
+    }),
   private = list(
     .sample = function(ids, coords) {
       pv = self$param_set$values
@@ -109,7 +103,6 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
         )
       })
     },
-
     .get_train = function(i) {
       i = as.integer(i) - 1L
       folds = as.integer(self$param_set$values$folds)
@@ -118,7 +111,6 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
       ii = data.table(rep = rep, fold = seq_len(folds)[-fold])
       self$instance[ii, "row_id", on = names(ii), nomatch = 0L][[1L]]
     },
-
     .get_test = function(i) {
       i = as.integer(i) - 1L
       folds = as.integer(self$param_set$values$folds)
@@ -126,6 +118,5 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
       fold = i %% folds + 1L
       ii = data.table(rep = rep, fold = fold)
       self$instance[ii, "row_id", on = names(ii), nomatch = 0L][[1L]]
-    }
-  )
+    })
 )

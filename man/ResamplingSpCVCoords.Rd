@@ -2,7 +2,7 @@
 % Please edit documentation in R/ResamplingSpCVCoords.R
 \name{ResamplingSpCVCoords}
 \alias{ResamplingSpCVCoords}
-\title{Spatial Cross Validation Resampling}
+\title{(sperrorest) Coordinate-based k-means clustering}
 \description{
 Spatial Cross validation following the "k-means" approach after
 Brenning 2012.
@@ -65,7 +65,7 @@ values stored in the \code{param_set}.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create an "Environmental Block" resampling instance.
+Create an "coordinate-based" repeated resampling instance.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVCoords$new(id = "spcv_coords")}\if{html}{\out{</div>}}
 }

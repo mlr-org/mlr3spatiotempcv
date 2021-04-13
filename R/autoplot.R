@@ -200,7 +200,6 @@ autoplot.ResamplingSpCVEnv = function( # nolint
   test_color = "#E18727",
   crs = NULL,
   ...) {
-
   autoplot_spatial(
     resampling = object,
     task = task,
@@ -298,7 +297,6 @@ autoplot.ResamplingSpCVCoords = function( # nolint
   test_color = "#E18727",
   crs = NULL,
   ...) {
-
   autoplot_spatial(
     resampling = object,
     task = task,
@@ -469,6 +467,365 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
   print(autoplot(x, ...)) # nocov
 }
 
+# SpCVDisc ---------------------------------------------------------------------
+
+#' @title Visualization Functions for SpCV Disc Method.
+#'
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods to
+#'   visualize mlr3 spatiotemporal resampling objects.
+#'
+#' @importFrom stats na.omit
+#'
+#' @details
+#' This method requires to set argument `fold_id` and no plot containing all
+#' partitions can be created. This is because the method does not make use of
+#' all observations but only a subset of them (many observations are left out).
+#' Hence, train and test sets of one fold are not re-used in other folds as in
+#' other methods and plotting these without a train/test indicator would not
+#' make sense.
+#'
+#' @section 2D vs 3D plotting:
+#' This method has both a 2D and a 3D plotting method.
+#' The 2D method returns a \pkg{ggplot} with x and y axes representing the spatial
+#' coordinates.
+#' The 3D method uses \pkg{plotly} to create an interactive 3D plot.
+#' Set `plot3D = TRUE` to use the 3D method.
+#'
+#' Note that spatiotemporal datasets usually suffer from overplotting in 2D
+#' mode.
+#'
+#' @name autoplot.ResamplingSpCVDisc
+#' @inheritParams autoplot.ResamplingSpCVBlock
+#'
+#' @param show_omitted `[logical]`\cr
+#'   Whether to show points not used in train or test set for the current fold.
+#' @export
+#' @seealso
+#'   - mlr3book chapter on on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions).
+#'   - Vignette [Spatiotemporal Visualization](https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html).
+#'   - [autoplot.ResamplingSpCVBlock()]
+#'   - [autoplot.ResamplingSpCVBuffer()]
+#'   - [autoplot.ResamplingSpCVCoords()]
+#'   - [autoplot.ResamplingSpCVEnv()]
+#'   - [autoplot.ResamplingCV()]
+#'   - [autoplot.ResamplingSptCVCluto()]
+#' @examples
+#' \donttest{
+#' if (mlr3misc::require_namespaces("sf", quietly = TRUE)) {
+#'   library(mlr3)
+#'   library(mlr3spatiotempcv)
+#'   task = tsk("ecuador")
+#'   resampling = rsmp("spcv_disc",
+#'     folds = 5, radius = 200L, buffer = 200L)
+#'   resampling$instantiate(task)
+#'
+#'   autoplot(resampling, task,
+#'     fold_id = 1, crs = 4326,
+#'     show_omitted = TRUE, size = 0.7) *
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+#' }
+#' }
+autoplot.ResamplingSpCVDisc = function( # nolint
+  object,
+  task,
+  fold_id = NULL,
+  plot_as_grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  crs = NULL,
+  repeats_id = NULL,
+  show_omitted = FALSE,
+  ...) {
+
+  resampling = object
+  coords = task$coordinates()
+  coords$row_id = task$row_ids
+  mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
+
+  # set fallback crs if missing
+  if (is.null(crs)) {
+    # use 4326 (WGS84) as fallback
+    crs = 4326
+    messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
+  }
+
+  resampling = assert_autoplot(resampling, fold_id, task)
+
+  if (is.null(repeats_id)) {
+    repeats_id = 1
+  } else {
+    repeats_id = repeats_id
+    # otherwise it gets passed to geom_sf() down below
+    # dots$repeats_id = NULL
+  }
+
+  resampling_sub = resampling$clone()
+
+  if (grepl("Repeated", class(resampling)[1])) {
+    resampling_sub$instance = resampling_sub$instance[[repeats_id]]
+  }
+
+  if (!is.null(fold_id)) {
+    if (length(fold_id) == 1) {
+      ### only one fold
+
+      data_coords = prepare_autoplot_cstf(task, resampling_sub)
+
+      # suppress undefined global variables note
+      data_coords$indicator = ""
+
+      row_id_test = resampling_sub$instance$test[[fold_id]]
+      row_id_train = resampling_sub$instance$train[[fold_id]]
+
+      data_coords[row_id %in% row_id_test, indicator := "Test"]
+      data_coords[row_id %in% row_id_train, indicator := "Train"]
+
+      # should omitted points be shown?
+      if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
+        data_coords[indicator == "", indicator := "Omitted"]
+
+        sf_df = sf::st_transform(
+          sf::st_as_sf(data_coords,
+            coords = task$extra_args$coordinate_names,
+            crs = task$extra_args$crs),
+          crs = crs)
+        sf_df = reorder_levels(sf_df)
+
+        ggplot() +
+          geom_sf(data = sf_df, aes(color = indicator), ...) +
+          scale_color_manual(values = c(
+            "Omitted" = "grey",
+            "Train" = "#0072B5",
+            "Test" = "#E18727"
+          )) +
+          labs(color = "Set", title = sprintf(
+            "Fold %s, Repetition %s", fold_id,
+            repeats_id)) +
+          theme(
+            plot.title = ggtext::element_textbox(
+              size = 10,
+              color = "black", fill = "#ebebeb", box.color = "black",
+              height = unit(0.33, "inch"), width = unit(1, "npc"),
+              linetype = 1, r = unit(5, "pt"),
+              valign = 0.5, halign = 0.5,
+              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+          )
+      } else {
+        data_coords = data_coords[indicator != ""]
+
+        sf_df = sf::st_transform(
+          sf::st_as_sf(data_coords,
+            coords = task$extra_args$coordinate_names,
+            crs = task$extra_args$crs),
+          crs = crs)
+        sf_df = reorder_levels(sf_df)
+
+        ggplot() +
+          geom_sf(data = sf_df, aes(color = indicator), ...) +
+          scale_color_manual(values = c(
+            "Train" = "#0072B5",
+            "Test" = "#E18727"
+          )) +
+          labs(color = "Set", title = sprintf(
+            "Fold %s, Repetition %s", fold_id,
+            repeats_id)) +
+          theme(
+            plot.title = ggtext::element_textbox(
+              size = 10,
+              color = "black", fill = "#ebebeb", box.color = "black",
+              height = unit(0.33, "inch"), width = unit(1, "npc"),
+              linetype = 1, r = unit(5, "pt"),
+              valign = 0.5, halign = 0.5,
+              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+          )
+      }
+    }
+    else {
+      ### Multiplot of multiple partitions with train and test set
+
+      # FIXME: redundant code - call function from single plots?
+      plot_list = mlr3misc::map(fold_id, function(.x) {
+
+        data_coords = prepare_autoplot_cstf(task, resampling_sub)
+
+        # suppress undefined global variables note
+        data_coords$indicator = ""
+
+        row_id_test = resampling_sub$instance$test[[.x]]
+        row_id_train = resampling_sub$instance$train[[.x]]
+
+        data_coords[row_id %in% row_id_test, indicator := "Test"]
+        data_coords[row_id %in% row_id_train, indicator := "Train"]
+
+        # should omitted points be shown?
+        if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
+          data_coords[indicator == "", indicator := "Omitted"]
+
+          sf_df = sf::st_transform(
+            sf::st_as_sf(data_coords,
+              coords = task$extra_args$coordinate_names,
+              crs = task$extra_args$crs),
+            crs = crs)
+          sf_df = reorder_levels(sf_df)
+
+          ggplot() +
+            geom_sf(data = sf_df, aes(color = indicator), ...) +
+            scale_color_manual(values = c(
+              "Omitted" = "grey",
+              "Train" = "#0072B5",
+              "Test" = "#E18727"
+            )) +
+            labs(color = "Set", title = sprintf(
+              "Fold %s, Repetition %s", .x,
+              repeats_id)) +
+            theme(
+              plot.title = ggtext::element_textbox(
+                size = 10,
+                color = "black", fill = "#ebebeb", box.color = "black",
+                height = unit(0.33, "inch"), width = unit(1, "npc"),
+                linetype = 1, r = unit(5, "pt"),
+                valign = 0.5, halign = 0.5,
+                padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+            )
+        } else {
+          data_coords = data_coords[indicator != ""]
+
+          sf_df = sf::st_transform(
+            sf::st_as_sf(data_coords,
+              coords = task$extra_args$coordinate_names,
+              crs = task$extra_args$crs),
+            crs = crs)
+          sf_df = reorder_levels(sf_df)
+
+          ggplot() +
+            geom_sf(data = sf_df, aes(color = indicator), ...) +
+            scale_color_manual(values = c(
+              "Train" = "#0072B5",
+              "Test" = "#E18727"
+            )) +
+            labs(color = "Set", title = sprintf(
+              "Fold %s, Repetition %s", .x,
+              repeats_id)) +
+            theme(
+              plot.title = ggtext::element_textbox(
+                size = 10,
+                color = "black", fill = "#ebebeb", box.color = "black",
+                height = unit(0.33, "inch"), width = unit(1, "npc"),
+                linetype = 1, r = unit(5, "pt"),
+                valign = 0.5, halign = 0.5,
+                padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+            )
+        }
+      })
+
+      # Return a plot grid via patchwork?
+
+      if (!plot_as_grid) {
+        return(invisible(plot_list))
+      } else {
+        # for repeated cv we also print out the rep number
+        if (is.null(repeats_id)) {
+          repeats_id = 1 # nocov
+        }
+
+        plot_list_pw = patchwork::wrap_plots(plot_list) +
+          patchwork::plot_layout(guides = "collect")
+        return(plot_list_pw)
+      }
+    }
+  } else {
+
+    ### Create one plot colored by all test folds
+
+    # set fallback crs if missing
+    if (is.null(crs)) {
+      # use 4326 (WGS84) as fallback
+      crs = 4326
+      messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
+    }
+
+    data_coords = prepare_autoplot_cstf(task, resampling_sub)
+
+    # extract test ids from lists
+    row_ids_test = data.table::rbindlist(
+      lapply(resampling_sub$instance$test, as.data.table),
+      idcol = "fold")
+    setnames(row_ids_test, c("fold", "row_id"))
+
+    test_folds = merge(data_coords, row_ids_test, by = "row_id", all = TRUE)
+
+    sf_df = sf::st_transform(
+      sf::st_as_sf(test_folds,
+        coords = task$extra_args$coordinate_names,
+        crs = task$extra_args$crs),
+      crs = crs)
+
+    # only keep test ids
+    sf_df = stats::na.omit(sf_df, cols = "fold")
+
+    # order fold ids
+    sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
+    sf_df$fold = as.factor(as.character(sf_df$fold))
+    sf_df$fold = factor(sf_df$fold, levels = unique(as.character(sf_df$fold)))
+
+    # for all non-repeated rsmp cases
+    if (is.null(repeats_id)) {
+      repeats_id = 1 # nocov
+    }
+
+    plot = ggplot() +
+      geom_sf(
+        data = sf_df["fold"], show.legend = "point",
+        aes(color = fold)
+      ) +
+      ggsci::scale_color_ucscgb() +
+      labs(color = sprintf("Partition #, Rep %s", repeats_id))
+    return(plot)
+  }
+}
+
+#' @rdname autoplot.ResamplingSpCVDisc
+#' @export
+autoplot.ResamplingRepeatedSpCVDisc = function( # nolint
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = 1,
+  plot_as_grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  crs = NULL,
+  show_omitted = FALSE,
+  ...) {
+
+  autoplot.ResamplingSpCVDisc(
+    object = object,
+    task = task,
+    fold_id = fold_id,
+    plot_as_grid = plot_as_grid,
+    train_color = train_color,
+    test_color = test_color,
+    crs = crs,
+    show_omitted = show_omitted,
+    ... = ...,
+    # ellipsis
+    repeats_id = repeats_id
+  )
+}
+
+#' @importFrom graphics plot
+#' @rdname autoplot.ResamplingSpCVDisc
+#' @export
+plot.ResamplingSpCVDisc = function(x, ...) {
+  print(autoplot(x, ...)) # nocov
+}
+
+#' @rdname autoplot.ResamplingSpCVDisc
+#' @export
+plot.ResamplingRepeatedSpCVDisc = function(x, ...) {
+  print(autoplot(x, ...)) # nocov
+}
+
 # CV ---------------------------------------------------------------------------
 
 #' @title Visualization Functions for Non-Spatial CV Methods.
@@ -515,7 +872,6 @@ autoplot.ResamplingCV = function( # nolint
   test_color = "#E18727",
   crs = NULL,
   ...) {
-
   autoplot_spatial(
     resampling = object,
     task = task,
@@ -629,7 +985,6 @@ autoplot_spatial = function(
       sf_df = reorder_levels(sf_df)
 
       if (show_blocks) {
-
         if (grepl("Repeated", class(rsmp_autopl)[1])) {
           coords_resamp = coords_resamp[rep == repeats_id, ]
           blocks = rsmp_autopl$blocks[[repeats_id]]
@@ -649,13 +1004,14 @@ autoplot_spatial = function(
           labs(color = "Set", title = sprintf(
             "Fold %s, Repetition %s", .x,
             repeats_id)) +
-          theme(plot.title = ggtext::element_textbox(
-            size = 10,
-            color = "black", fill = "#ebebeb", box.color = "black",
-            height = unit(0.33, "inch"), width = unit(1, "npc"),
-            linetype = 1, r = unit(5, "pt"),
-            valign = 0.5, halign = 0.5,
-            padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+          theme(
+            plot.title = ggtext::element_textbox(
+              size = 10,
+              color = "black", fill = "#ebebeb", box.color = "black",
+              height = unit(0.33, "inch"), width = unit(1, "npc"),
+              linetype = 1, r = unit(5, "pt"),
+              valign = 0.5, halign = 0.5,
+              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
           )
 
         if (show_labels) {
@@ -682,13 +1038,14 @@ autoplot_spatial = function(
           labs(color = "Set", title = sprintf(
             "Fold %s, Repetition %s", .x,
             repeats_id)) +
-          theme(plot.title = ggtext::element_textbox(
-            size = 10,
-            color = "black", fill = "#ebebeb", box.color = "black",
-            height = unit(0.33, "inch"), width = unit(1, "npc"),
-            linetype = 1, r = unit(5, "pt"),
-            valign = 0.5, halign = 0.5,
-            padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+          theme(
+            plot.title = ggtext::element_textbox(
+              size = 10,
+              color = "black", fill = "#ebebeb", box.color = "black",
+              height = unit(0.33, "inch"), width = unit(1, "npc"),
+              linetype = 1, r = unit(5, "pt"),
+              valign = 0.5, halign = 0.5,
+              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
           )
       }
     })
@@ -719,7 +1076,6 @@ autoplot_spatial = function(
     }
     # transform to selected crs
     if (show_blocks) {
-
       blocks = sf::st_as_sf(coords_resamp)
     }
     if (!is.null(coords_resamp$blocks)) {
@@ -928,7 +1284,6 @@ autoplot_spatiotemp = function(
         )
 
         pl = mlr3misc::invoke(plotly::layout, .args = layout_args)
-
       })
     }
 

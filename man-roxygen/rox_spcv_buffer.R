@@ -14,3 +14,5 @@
 #' the buffer to the corresponding test sets. For each test set, all
 #' observations outside the buffer around the test observation are included in
 #' the training set.
+#'
+#' @seealso ResamplingSpCVDisc

@@ -1,4 +1,4 @@
-#' @title Spatial Buffer Cross Validation Resampling
+#' @title (blockCV) Spatial buffering resampling
 #'
 #' @template rox_spcv_buffer
 #'
@@ -25,7 +25,6 @@
 #' }
 ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
   inherit = mlr3::Resampling,
-
   public = list(
     #' @description
     #' Create an "Environmental Block" resampling instance.
@@ -71,18 +70,14 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }
-  ),
-
+    }),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       as.integer(length(self$instance))
-    }
-  ),
-
+    }),
   private = list(
     .sample = function(ids, response, coords, positive, crs, properties) {
 
@@ -131,7 +126,6 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
           sprintf("train_fold_%s", seq_along(train_list)))
       }
     },
-
     .get_train = function(i) {
       if (!is.null(self$param_set$values$addBG)) {
         self$instance[[i]]$train # nocov
@@ -139,14 +133,11 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         self$instance[[i]]
       }
     },
-
     .get_test = function(i) {
       if (!is.null(self$param_set$values$addBG)) {
-
         self$instance[[i]]$test
       } else {
         i
       }
-    }
-  )
+    })
 )

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ResamplingSpCVBuffer.R
 \name{ResamplingSpCVBuffer}
 \alias{ResamplingSpCVBuffer}
-\title{Spatial Buffer Cross Validation Resampling}
+\title{(blockCV) Spatial buffering resampling}
 \description{
 Spatial Buffer Cross validation implemented by the \code{blockCV}
 package.
@@ -43,6 +43,9 @@ Valavi R, Elith J, Lahoz-Monfort JJ, Guillera-Arroita G (2018).
 \dQuote{blockCV: an R package for generating spatially or environmentally separated folds for k-fold cross-validation of species distribution models.}
 \emph{bioRxiv}.
 \doi{10.1101/357798}.
+}
+\seealso{
+ResamplingSpCVDisc
 }
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingSpCVBuffer}

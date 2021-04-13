@@ -263,6 +263,11 @@ test_that("plot() works for 'repeated_spcv_env'", {
 # 2D -------------------------------------------------------------------------
 test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
   skip_if_not_installed("vdiffr")
+
+  # for some reason linux and windows svgs differ
+  skip_on_os("linux")
+  skip_on_os("windows")
+
   set.seed(42)
 
   task = tsk("cookfarm")
@@ -290,6 +295,11 @@ test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
 
 test_that("plot() works for 'sptcv_cstf' 2D - space_var", {
   skip_if_not_installed("vdiffr")
+
+  # for some reason linux and windows svgs differ
+  skip_on_os("linux")
+  skip_on_os("windows")
+
   set.seed(42)
 
   task = tsk("cookfarm")
@@ -395,4 +405,45 @@ test_that("autoplot time + space", {
   p1 = autoplot(rsp, task, fold_id = 5, show_omitted = TRUE, plot3D = TRUE)
 
   vdiffr::expect_doppelganger("SptCVCstf - + omitted points, 3D", p1)
+})
+
+# spcv_disc --------------------------------------------------------------------
+
+test_that("plot() works for 'spcv_disc'", {
+  skip_if_not_installed("vdiffr")
+
+  # for some reason linux and windows svgs differ
+  skip_on_os("linux")
+  skip_on_os("windows")
+
+  set.seed(42)
+
+  task = tsk("ecuador")
+  rsp = rsmp("repeated_spcv_disc",
+    folds = 4, radius = 200, buffer = 200,
+    repeats = 2)
+  rsp$instantiate(task)
+
+  p1 = autoplot(rsp, task = task, crs = 4326)
+  p2 = autoplot(rsp, task, 1, crs = 4326)
+  # plot() would force image printing here
+  p3 = autoplot(rsp, task, c(1, 2), crs = 4326)
+
+  p4 = autoplot(rsp, task, 1, crs = 4326, show_omitted = TRUE)
+
+  expect_true(is.ggplot(p1))
+  expect_true(is.ggplot(p2))
+  expect_list(p3)
+  expect_true(is.ggplot(p4))
+
+  p5 = autoplot(rsp, task, crs = 4326, repeats_id = 2)
+  p6 = autoplot(rsp, task, crs = 4326, fold_id = 1, repeats_id = 2)
+
+  vdiffr::expect_doppelganger("SpCVDisc all test sets", p1)
+  vdiffr::expect_doppelganger("SpCVDisc Fold 1", p2)
+  vdiffr::expect_doppelganger("SpCVDisc Fold 1-2", p3)
+  vdiffr::expect_doppelganger("SpCVDisc show_omitted", p4)
+
+  vdiffr::expect_doppelganger("RepSpCVDisc - Fold 1-2, Rep 2", p5)
+  vdiffr::expect_doppelganger("RepSpCVDisc - Fold 1, Rep 2", p6)
 })
