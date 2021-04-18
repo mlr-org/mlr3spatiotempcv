@@ -27,7 +27,7 @@ for further information.
 The 'Description', 'Details' and 'Note' fields are inherited from the
 respective upstream function.
 
-For a list of available arguments, please see \link[CAST:CreateSpacetimeFold]{CAST::CreateSpacetimeFold}.
+For a list of available arguments, please see \link[CAST:CreateSpacetimeFolds]{CAST::CreateSpacetimeFolds}.
 }
 
 \examples{
