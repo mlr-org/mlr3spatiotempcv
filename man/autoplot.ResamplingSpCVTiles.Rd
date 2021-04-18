@@ -86,7 +86,6 @@ observations, hence \code{show_omitted} has an effect in some cases.
 \examples{
 \donttest{
 if (mlr3misc::require_namespaces("sf", quietly = TRUE)) {
-  a
   library(mlr3)
   library(mlr3spatiotempcv)
   task = tsk("ecuador")

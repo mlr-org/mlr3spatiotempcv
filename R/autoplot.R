@@ -858,7 +858,6 @@ plot.ResamplingRepeatedSpCVDisc = function(x, ...) {
 #' @examples
 #' \donttest{
 #' if (mlr3misc::require_namespaces("sf", quietly = TRUE)) {
-#'   a
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
 #'   task = tsk("ecuador")
