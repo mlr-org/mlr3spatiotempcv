@@ -26,9 +26,12 @@
 #' }
 ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
   inherit = mlr3::Resampling,
+
   public = list(
     #' @description
     #' Create an "Environmental Block" resampling instance.
+    #'
+    #' For a list of available arguments, please see [blockCV::envBlock].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_env") {
@@ -39,7 +42,8 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
       ps$values = list(folds = 10L)
       super$initialize(
         id = id,
-        param_set = ps
+        param_set = ps,
+        man = "mlr3spatiotempcv::mlr_resamplings_spcv_env"
       )
     },
 

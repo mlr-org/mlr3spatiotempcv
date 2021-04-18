@@ -60,20 +60,6 @@ Zhao Y, Karypis G (2002).
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingRepeatedSptCVCstf}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{space_var}}{\code{character(1)}\cr
-Column name identifying the spatial units.}
-
-\item{\code{time_var}}{\code{character(1)}\cr
-Column name identifying the temporal units.}
-
-\item{\code{class}}{\code{character(1)}\cr
-Column name identifying a class unit (e.g. land cover).}
-}
-\if{html}{\out{</div>}}
-}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -109,13 +95,11 @@ values stored in the \code{param_set}.}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a "Spacetime Folds" resampling instance.
+
+For a list of available arguments, please see
+\link[CAST:CreateSpacetimeFolds]{CAST::CreateSpacetimeFolds}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCstf$new(
-  id = "repeated_sptcv_cstf",
-  space_var = NULL,
-  time_var = NULL,
-  class = NULL
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCstf$new(id = "repeated_sptcv_cstf")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -123,15 +107,6 @@ Create a "Spacetime Folds" resampling instance.
 \describe{
 \item{\code{id}}{\code{character(1)}\cr
 Identifier for the resampling strategy.}
-
-\item{\code{space_var}}{\code{character(1)}\cr
-Column name identifying the spatial units.}
-
-\item{\code{time_var}}{\code{character(1)}\cr
-Column name identifying the temporal units.}
-
-\item{\code{class}}{\code{character(1)}\cr
-Column name identifying a class unit (e.g. land cover).}
 }
 \if{html}{\out{</div>}}
 }
