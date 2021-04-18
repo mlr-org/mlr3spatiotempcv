@@ -86,6 +86,8 @@ values stored in the \code{param_set}.}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create an "coordinate-based" repeated resampling instance.
+
+For a list of available arguments, please see \link[sperrorest:partition_cv]{sperrorest::partition_cv}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSpCVCoords$new(id = "repeated_spcv_coords")}\if{html}{\out{</div>}}
 }

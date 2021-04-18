@@ -24,9 +24,13 @@
 #' rcv$instance # table
 ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
   inherit = mlr3::Resampling,
+
   public = list(
     #' @description
     #' Create a "Spatial 'Disc' resampling" resampling instance.
+    #'
+    #' For a list of available arguments, please see
+    #' [sperrorest::partition_disc].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_disc") {

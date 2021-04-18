@@ -25,6 +25,7 @@
 #' }
 ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
   inherit = mlr3::Resampling,
+
   public = list(
     #' @description
     #' Create an "Environmental Block" resampling instance.
@@ -39,7 +40,8 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
 
       super$initialize(
         id = id,
-        param_set = ps
+        param_set = ps,
+        man = "mlr3spatiotempcv::mlr_resamplings_spcv_buffer"
       )
       mlr3misc::require_namespaces(c("blockCV", "sf"))
     },

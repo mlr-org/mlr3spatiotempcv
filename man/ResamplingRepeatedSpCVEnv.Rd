@@ -97,6 +97,8 @@ values stored in the \code{param_set}.}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create an "Environmental Block" repeated resampling instance.
+
+For a list of available arguments, please see \link[blockCV:envBlock]{blockCV::envBlock}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSpCVEnv$new(id = "repeated_spcv_env")}\if{html}{\out{</div>}}
 }

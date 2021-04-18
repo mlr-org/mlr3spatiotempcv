@@ -27,6 +27,7 @@
 #' }
 ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
   inherit = mlr3::Resampling,
+
   public = list(
 
     #' @field blocks `sf | list of sf objects`\cr
@@ -57,7 +58,8 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       ps$values = list(folds = 10L)
       super$initialize(
         id = id,
-        param_set = ps
+        param_set = ps,
+        man = "mlr3spatiotempcv::mlr_resamplings_spcv_block"
       )
       mlr3misc::require_namespaces(c("blockCV", "sf"))
     },
