@@ -7,22 +7,23 @@
 #'
 #' @export
 #' @examples
-#' library(mlr3)
-#' task = tsk("ecuador")
+#' if (mlr3misc::require_namespaces("sperrorest", quietly = TRUE)) {
+#'   library(mlr3)
+#'   task = tsk("ecuador")
 #'
-#' # Instantiate Resampling
-#' # set.seed(42)
-#' # rcv = rsmp("spcv_tiles", folds = 3L, nsplit = c(4L, 3L), reassign = FALSE)
-#' # rcv$instantiate(task)
+#'   # Instantiate Resampling
+#'   rcv = rsmp("spcv_tiles", nsplit = c(4L, 3L), reassign = FALSE)
+#'   rcv$instantiate(task)
 #'
-#' # Individual sets:
-#' rcv$train_set(1)
-#' rcv$test_set(1)
-#' # check that no obs are in both sets
-#' intersect(rcv$train_set(1), rcv$test_set(1)) # good!
+#'   # Individual sets:
+#'   rcv$train_set(1)
+#'   rcv$test_set(1)
+#'   # check that no obs are in both sets
+#'   intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 #'
-#' # Internal storage:
-#' rcv$instance # table
+#'   # Internal storage:
+#'   rcv$instance # table
+#' }
 ResamplingSpCVTiles = R6Class("ResamplingSpCVTiles",
   inherit = mlr3::Resampling,
   public = list(
@@ -107,7 +108,7 @@ ResamplingSpCVTiles = R6Class("ResamplingSpCVTiles",
       if (pv$rotation == "none") {
         phi = rep(0, length(seq_len(pv$repeats)))
       } else if (pv$rotation == "random") {
-        phi = runif(-45, 45, n = length(seq_len(pv$repeats)))
+        phi = stats::runif(-45, 45, n = length(seq_len(pv$repeats)))
       } else if (pv$rotation == "user") {
         if (length(pv$user_rotation) == 1) {
           pv$user_rotation = rep(pv$user_rotation, length(seq_len(pv$repeats)))
@@ -123,8 +124,8 @@ ResamplingSpCVTiles = R6Class("ResamplingSpCVTiles",
       if (pv$offset == "none") {
         x_shift = y_shift = rep(0, length(seq_len(pv$repeats)))
       } else if (pv$offset == "random") {
-        x_shift = runif(0, 1, n = length(seq_len(pv$repeats)))
-        y_shift = runif(0, 1, n = length(seq_len(pv$repeats)))
+        x_shift = stats::runif(0, 1, n = length(seq_len(pv$repeats)))
+        y_shift = stats::runif(0, 1, n = length(seq_len(pv$repeats)))
       } else if (pv$offset == "user") {
         if (is.vector(pv$user_offset) && length(pv$user_offset) == 2) {
           pv$user_offset = list(pv$user_offset[1], pv$user_offset[2])
@@ -152,12 +153,12 @@ ResamplingSpCVTiles = R6Class("ResamplingSpCVTiles",
 
       if (!is.null(pv$nsplit)) {
         if (length(pv$nsplit) == 1) {
-          pv$nsplit = c(nsplit, nsplit)
+          pv$nsplit = c(pv$nsplit, pv$nsplit)
         }
       }
       if (!is.null(pv$dsplit)) {
         if (length(pv$dsplit) == 1) {
-          pv$dsplit = c(dsplit, dsplit)
+          pv$dsplit = c(pv$dsplit, pv$dsplit)
         }
       }
 
@@ -264,6 +265,9 @@ ResamplingSpCVTiles = R6Class("ResamplingSpCVTiles",
           } else {
             # Just eliminate small tiles:
             tile[tile %in% s_tiles] = NA
+            if (all(is.na(tile))) {
+              stopf("No observations left in folds - 'min_n' too high?")
+            }
             tile = factor(as.character(tile))
           }
         }
@@ -273,6 +277,10 @@ ResamplingSpCVTiles = R6Class("ResamplingSpCVTiles",
       class(tile) == "list"
       train_inds = lapply(tile, function(x) x$train)
       test_inds = lapply(tile, function(x) x$test)
+
+      names(train_inds) = 1:length(train_inds)
+      names(test_inds) = 1:length(test_inds)
+
       self$instance = list(train = train_inds, test = test_inds)
 
       return(invisible(self))

@@ -7,28 +7,29 @@
 #'
 #' @export
 #' @examples
-#' library(mlr3)
-#' task = tsk("ecuador")
+#' if (mlr3misc::require_namespaces("sperrorest", quietly = TRUE)) {
+#'   library(mlr3)
+#'   task = tsk("ecuador")
 #'
-#' # Instantiate Resampling
-#' # set.seed(42)
-#' # rrcv = rsmp("repeated_spcv_tiles",
-#' #   repeats = 2,
-#' #   nsplit = c(4L, 3L), reassign = FALSE)
-#' # rrcv$instantiate(task)
+#'   # Instantiate Resampling
+#'   rrcv = rsmp("repeated_spcv_tiles",
+#'     repeats = 2,
+#'     nsplit = c(4L, 3L), reassign = FALSE)
+#'   rrcv$instantiate(task)
 #'
-#' # Individual sets:
-#' rrcv$iters
-#' rrcv$folds(1:6)
-#' rrcv$repeats(1:6)
+#'   # Individual sets:
+#'   rrcv$iters
+#'   rrcv$folds(10:12)
+#'   rrcv$repeats(10:12)
 #'
-#' # Individual sets:
-#' rrcv$train_set(1)
-#' rrcv$test_set(1)
-#' intersect(rrcv$train_set(1), rrcv$test_set(1))
+#'   # Individual sets:
+#'   rrcv$train_set(1)
+#'   rrcv$test_set(1)
+#'   intersect(rrcv$train_set(1), rrcv$test_set(1))
 #'
-#' # Internal storage:
-#' rrcv$instance # table
+#'   # Internal storage:
+#'   rrcv$instance # table
+#' }
 ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
   inherit = mlr3::Resampling,
   public = list(
@@ -68,7 +69,7 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
       if (all(iters <= n_folds)) {
         return(iters)
       } else {
-        # modify all entries which are > foo
+        # modify all entries which are > n_folds
         iters[which(iters > n_folds)] = iters[which(iters > n_folds)] - n_folds
         return(iters)
       }
@@ -79,7 +80,12 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
     #'   Iteration number.
     repeats = function(iters) {
       iters = assert_integerish(iters, any.missing = FALSE, coerce = TRUE)
-      ((iters - 1L) %/% as.integer(length(self$instance[[1]]$train))) + 1L
+      # hack for autoplot
+      if (!is.null(names(self$instance))) {
+        ((iters - 1L) %/% as.integer(length(self$instance$train))) + 1L
+      } else {
+        ((iters - 1L) %/% as.integer(length(self$instance[[1]]$train))) + 1L
+      }
     },
 
     #' @description
@@ -128,7 +134,12 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
     #'   values stored in the `param_set`.
     iters = function() {
       pv = self$param_set$values
-      as.integer(pv$repeats) * as.integer(length(self$instance[[1]]$train))
+      # hack for autoplot
+      if (!is.null(names(self$instance))) {
+        as.integer(pv$repeats) * as.integer(length(self$instance$train))
+      } else {
+        as.integer(pv$repeats) * as.integer(length(self$instance[[1]]$train))
+      }
     }),
   private = list(
     .sample = function(ids, coords) {
@@ -142,7 +153,7 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
       if (pv$rotation == "none") {
         phi = rep(0, length(seq_len(pv$repeats)))
       } else if (pv$rotation == "random") {
-        phi = runif(-45, 45, n = length(seq_len(pv$repeats)))
+        phi = stats::runif(-45, 45, n = length(seq_len(pv$repeats)))
       } else if (pv$rotation == "user") {
         if (length(pv$user_rotation) == 1) {
           pv$user_rotation = rep(pv$user_rotation, length(seq_len(pv$repeats)))
@@ -158,8 +169,8 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
       if (pv$offset == "none") {
         x_shift = y_shift = rep(0, length(seq_len(pv$repeats)))
       } else if (pv$offset == "random") {
-        x_shift = runif(0, 1, n = length(seq_len(pv$repeats)))
-        y_shift = runif(0, 1, n = length(seq_len(pv$repeats)))
+        x_shift = stats::runif(0, 1, n = length(seq_len(pv$repeats)))
+        y_shift = stats::runif(0, 1, n = length(seq_len(pv$repeats)))
       } else if (pv$offset == "user") {
         if (is.vector(pv$user_offset) && length(pv$user_offset) == 2) {
           pv$user_offset = list(pv$user_offset[1], pv$user_offset[2])
@@ -186,12 +197,12 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
 
       if (!is.null(pv$nsplit)) {
         if (length(pv$nsplit) == 1) {
-          pv$nsplit = c(nsplit, nsplit)
+          pv$nsplit = c(pv$nsplit, pv$nsplit)
         }
       }
       if (!is.null(pv$dsplit)) {
         if (length(pv$dsplit) == 1) {
-          pv$dsplit = c(dsplit, dsplit)
+          pv$dsplit = c(pv$dsplit, pv$dsplit)
         }
       }
 
@@ -307,6 +318,10 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
         class(tile) == "list"
         train_inds = lapply(tile, function(x) x$train)
         test_inds = lapply(tile, function(x) x$test)
+
+        names(train_inds) = 1:length(train_inds)
+        names(test_inds) = 1:length(test_inds)
+
         self$instance[[cnt]] = list(train = train_inds, test = test_inds)
       }
 
@@ -319,14 +334,14 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
     },
     .get_train = function(i) {
       i = as.integer(i) - 1L
-      folds = as.integer(self$param_set$values$folds)
+      folds = as.integer(length(self$instance[[1]]$train))
       rep = i %/% folds + 1L
       fold = i %% folds + 1L
       self$instance[[rep]]$train[[fold]]
     },
     .get_test = function(i) {
       i = as.integer(i) - 1L
-      folds = as.integer(self$param_set$values$folds)
+      folds = as.integer(length(self$instance[[1]]$train))
       rep = i %/% folds + 1L
       fold = i %% folds + 1L
       self$instance[[rep]]$test[[fold]]

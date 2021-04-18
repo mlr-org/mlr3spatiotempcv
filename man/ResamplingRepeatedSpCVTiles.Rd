@@ -19,28 +19,29 @@ into the study region. \code{reassign=TRUE} with suitable thresholds is
 therefore recommended for non-zero (including random) offsets.
 }
 \examples{
-library(mlr3)
-task = tsk("ecuador")
+if (mlr3misc::require_namespaces("sperrorest", quietly = TRUE)) {
+  library(mlr3)
+  task = tsk("ecuador")
 
-# Instantiate Resampling
-# set.seed(42)
-# rrcv = rsmp("repeated_spcv_tiles",
-#   repeats = 2,
-#   nsplit = c(4L, 3L), reassign = FALSE)
-# rrcv$instantiate(task)
+  # Instantiate Resampling
+  rrcv = rsmp("repeated_spcv_tiles",
+    repeats = 2,
+    nsplit = c(4L, 3L), reassign = FALSE)
+  rrcv$instantiate(task)
 
-# Individual sets:
-rrcv$iters
-rrcv$folds(1:6)
-rrcv$repeats(1:6)
+  # Individual sets:
+  rrcv$iters
+  rrcv$folds(10:12)
+  rrcv$repeats(10:12)
 
-# Individual sets:
-rrcv$train_set(1)
-rrcv$test_set(1)
-intersect(rrcv$train_set(1), rrcv$test_set(1))
+  # Individual sets:
+  rrcv$train_set(1)
+  rrcv$test_set(1)
+  intersect(rrcv$train_set(1), rrcv$test_set(1))
 
-# Internal storage:
-rrcv$instance # table
+  # Internal storage:
+  rrcv$instance # table
+}
 }
 \references{
 Brenning A (2012).
