@@ -4,12 +4,8 @@
 \alias{ResamplingSpCVDisc}
 \title{(sperrorest) Spatial "disc" resampling}
 \description{
-\code{partition_disc} partitions the sample into training and tests
-set by selecting circular test areas (possibly surrounded by an exclusion
-buffer) and using the remaining samples as training samples
-(leave-one-disc-out cross-validation).
-
-This method is similar to \link{ResamplingSpCVBuffer}.
+partition_disc\verb{partitions the sample into training and tests set by selecting circular test areas (possibly surrounded by an exclusion buffer) and using the remaining samples as training samples (leave-one-disc-out cross-validation).}partition_loo` creates training and
+test sets for leave-one-out cross-validation with (optional) buffer.
 }
 \note{
 Test area discs are centered at (random) samples, not at general random
@@ -17,6 +13,17 @@ locations. Test area discs may (and likely will) overlap independently of
 the value of \code{replace}. \code{replace} only controls the replacement of the
 center point of discs when drawing center points from the samples.
 }
+\section{{mlr3spatiotempcv} notes}{
+
+
+The 'Description' and 'Note' fields are inherited from the respective
+upstream function.
+
+For a list of available arguments, please see \link[sperrorest:partition_disc]{sperrorest::partition_disc}.
+
+This method is similar to \link{ResamplingSpCVBuffer}.
+}
+
 \examples{
 library(mlr3)
 task = tsk("ecuador")
