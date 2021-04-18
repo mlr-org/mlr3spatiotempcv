@@ -146,7 +146,7 @@ test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - user offset", {
   set.seed(42)
   rsp = rsmp("spcv_tiles",
     nsplit = c(4L, 3L),
-    offset = "user", user_offset = c(0.5, 1))
+    offset = "user", user_offset = c(0.5, 0.9))
   rsp$instantiate(task)
 
   data = task$data()
@@ -156,7 +156,7 @@ test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - user offset", {
   set.seed(42)
   sperr_out = sperrorest::partition_tiles(data_with_tiles,
     nsplit = c(4L, 3L),
-    offset = "user", user_offset = c(0.5, 1),
+    offset = "user", user_offset = c(0.5, 0.9),
     repetition = 1:2)
 
   sperr_train = mlr3misc::map(sperr_out[[1]], function(x) x$train)
