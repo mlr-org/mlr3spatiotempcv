@@ -12,4 +12,4 @@
 #' The 'Description', 'Details' and 'Note' fields are inherited from the
 #' respective upstream function.
 #'
-#' For a list of available arguments, please see [CAST::CreateSpacetimeFold].
+#' For a list of available arguments, please see [CAST::CreateSpacetimeFolds].
