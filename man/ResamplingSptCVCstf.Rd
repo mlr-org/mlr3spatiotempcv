@@ -4,7 +4,7 @@
 \alias{ResamplingSptCVCstf}
 \title{(CAST) "Leave-location-and-time-out" resampling}
 \description{
-Implementation of \code{CAST::CreateSpaceTimeFolds()}.
+Create spatial, temporal or spatio-temporal Folds for cross validation
 }
 \details{
 Using "class" is helpful in the case that data are clustered in space
@@ -13,6 +13,23 @@ training data come as training polygons. In this case the data should be split i
 that entire polygons are held back (spacevar="polygonID") but at the same time the distribution of classes
 should be similar in each fold (class="LUC").
 }
+\note{
+Standard k-fold cross-validation can lead to considerable
+misinterpretation in spatial-temporal modelling tasks. This function can be
+used to prepare a Leave-Location-Out, Leave-Time-Out or
+Leave-Location-and-Time-Out cross-validation as target-oriented validation
+strategies for spatial-temporal prediction tasks. See Meyer et al. (2018)
+for further information.
+}
+\section{{mlr3spatiotempcv} notes}{
+
+
+The 'Description', 'Details' and 'Note' fields are inherited from the
+respective upstream function.
+
+For a list of available arguments, please see \link[CAST:CreateSpacetimeFold]{CAST::CreateSpacetimeFold}.
+}
+
 \examples{
 library(mlr3)
 task = tsk("cookfarm")

@@ -4,11 +4,37 @@
 \alias{ResamplingRepeatedSpCVEnv}
 \title{(blockCV) Repeated "environmental blocking" resampling}
 \description{
-Environmental Block Cross Validation. This strategy uses k-means
-clustering to specify blocks of similar environmental conditions. Only
-numeric features can be used. The \code{features} used for building blocks can
-be specified in the \code{param_set}. By default, all numeric features are used.
+Environmental blocking for cross-validation. This function uses clustering methods to specify sets of similar environmental
+conditions based on the input covariates. Species data corresponding to any of these groups or clusters are assigned to a
+fold. This function does the clustering in raster space and species data. Clustering is done using \code{\link[stats]{kmeans}}
+for both approaches. This function works on single or
+multiple raster files; multiple rasters need to be in a raster brick or stack format.
 }
+\details{
+As k-means algorithms use Euclidean distance to estimate clusters, the input covariates should be quantitative variables. Since
+variables with wider ranges of values might dominate the clusters and bias the environmental clustering (Hastie et al., 2009),
+all the input rasters are first standardized within the function. This is done either by normalizing based on subtracting the
+mean and dividing by the standard deviation of each raster (the default) or optionally by standardizing using linear scaling
+to constrain all raster values between 0 and 1.
+
+By default, the clustering is done in the raster space. In this approach the clusters will be consistent throughout the region
+and across species (in the same region). However, this may result in a cluster(s) that covers none of the species records (the spatial location of response samples),
+espcially when species data is not dispersed throughout the region or the number of clusters (k or folds) is high. In this
+case, the number of folds is less than specified \code{k}. If \code{rasterBlock = FALSE}, the clustering will be done in
+species points and the number of the folds will be the same as \code{k}.
+
+Note that the input raster layer should cover all the species points, otherwise an error will rise. The records with no raster
+value should be deleted prior to the analysis or another raster layer would be provided.
+}
+\section{{mlr3spatiotempcv} notes}{
+
+
+The 'Description' and 'Details' fields are inherited from the respective
+upstream function.
+
+For a list of available arguments, please see \link[blockCV:envBlock]{blockCV::envBlock}.
+}
+
 \examples{
 if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   library(mlr3)
@@ -70,7 +96,7 @@ values stored in the \code{param_set}.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create an "coordinate-based" repeated resampling instance.
+Create an "Environmental Block" repeated resampling instance.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSpCVEnv$new(id = "repeated_spcv_env")}\if{html}{\out{</div>}}
 }
