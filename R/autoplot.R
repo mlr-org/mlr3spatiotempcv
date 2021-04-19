@@ -1100,7 +1100,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
     data_coords = prepare_autoplot_cstf(task, resampling_sub)
 
-    names(resampling_sub$instance$test) = seq_len(resampling_sub$instance$test)
+    names(resampling_sub$instance$test) = seq_len(length(resampling_sub$instance$test))
 
     # extract test ids from lists
     row_ids_test = data.table::rbindlist(
