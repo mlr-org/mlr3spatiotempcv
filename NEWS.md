@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 0.3.0.9002
+
+- Add example 2D spatial plots to spatiotemp-viz vignette
+- "Cstf" methods: remove arguments in favor of param set to align with other methods (#122)
+- Add missing `man` IDs (#122)
+- Inherit documentation from upstream functions (#117)
+- Vignette: Update and categorize table listing all implemented methods
+
+
 # mlr3spatiotempcv 0.3.0.9001
 
 - Add `ResamplingSpCVDisc` (#115)

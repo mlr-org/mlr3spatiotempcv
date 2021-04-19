@@ -4,9 +4,23 @@
 \alias{ResamplingSpCVCoords}
 \title{(sperrorest) Coordinate-based k-means clustering}
 \description{
-Spatial Cross validation following the "k-means" approach after
-Brenning 2012.
+\code{partition_cv} creates a \link[sperrorest]{represampling} object for
+\code{length(repetition)}-repeated \code{nfold}-fold cross-validation.
 }
+\details{
+This function does not actually perform a cross-validation or
+partition the data set itself; it simply creates a data structure
+containing the indices of training and test samples.
+}
+\section{{mlr3spatiotempcv} notes}{
+
+
+The 'Description' and 'Details' fields are inherited from the respective
+upstream function.
+
+For a list of available arguments, please see \link[sperrorest:partition_cv]{sperrorest::partition_cv}.
+}
+
 \examples{
 library(mlr3)
 task = tsk("ecuador")
@@ -66,6 +80,8 @@ values stored in the \code{param_set}.}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create an "coordinate-based" repeated resampling instance.
+
+For a list of available arguments, please see \link[sperrorest:partition_cv]{sperrorest::partition_cv}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVCoords$new(id = "spcv_coords")}\if{html}{\out{</div>}}
 }

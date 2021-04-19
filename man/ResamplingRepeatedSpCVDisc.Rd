@@ -75,6 +75,9 @@ values stored in the \code{param_set}.}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a "Spatial 'Disc' resampling" resampling instance.
+
+For a list of available arguments, please see
+\link[sperrorest:partition_disc]{sperrorest::partition_disc}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSpCVDisc$new(id = "repeated_spcv_disc")}\if{html}{\out{</div>}}
 }

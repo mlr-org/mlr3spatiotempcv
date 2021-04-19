@@ -31,6 +31,9 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
   public = list(
     #' @description
     #' Create a "Spatial 'Disc' resampling" resampling instance.
+    #'
+    #' For a list of available arguments, please see
+    #' [sperrorest::partition_disc].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_disc") {
