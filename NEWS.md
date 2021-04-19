@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 0.3.0.9003
+
+- Add `spcv_tiles` and `repeated_spcv_tiles` (#121)
+
+
 # mlr3spatiotempcv 0.3.0.9002
 
 - Add example 2D spatial plots to spatiotemp-viz vignette
