@@ -1,5 +1,13 @@
+#' @inherit sperrorest::partition_tiles description note
 #'
-#' @inherit sperrorest::partition_tiles description title
+#' @section {mlr3spatiotempcv} notes:
+#'
+#' The 'Description' and 'Note' fields are inherited from the respective
+#' upstream function.
+#'
+#' For a list of available arguments, please see [sperrorest::partition_tiles].
+#'
+#' This method is similar to [ResamplingSpCVBlock].
 #'
 #' @note Default parameter settings may change in future releases. This
 #'   function, especially the rotation and shifting part of it and the algorithm

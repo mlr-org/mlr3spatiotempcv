@@ -107,6 +107,7 @@ if (mlr3misc::require_namespaces("sf", quietly = TRUE)) {
 \item \code{\link[=autoplot.ResamplingSpCVBlock]{autoplot.ResamplingSpCVBlock()}}
 \item \code{\link[=autoplot.ResamplingSpCVBuffer]{autoplot.ResamplingSpCVBuffer()}}
 \item \code{\link[=autoplot.ResamplingSpCVCoords]{autoplot.ResamplingSpCVCoords()}}
+\item \code{\link[=autoplot.ResamplingSpCVDisc]{autoplot.ResamplingSpCVDisc()}}
 \item \code{\link[=autoplot.ResamplingSpCVEnv]{autoplot.ResamplingSpCVEnv()}}
 \item \code{\link[=autoplot.ResamplingCV]{autoplot.ResamplingCV()}}
 \item \code{\link[=autoplot.ResamplingSptCVCluto]{autoplot.ResamplingSptCVCluto()}}

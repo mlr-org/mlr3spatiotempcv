@@ -31,6 +31,8 @@ ResamplingSpCVTiles = R6Class("ResamplingSpCVTiles",
     #' Create a "Spatial 'Tiles' resampling" resampling instance.
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
+    #' For a list of available arguments, please see
+    #' [sperrorest::partition_tiles].
     initialize = function(id = "spcv_Tiles") {
       ps = ParamSet$new(params = list(
         ParamUty$new("dsplit", custom_check = function(x) checkmate::assert_integer(x, len = 2)),

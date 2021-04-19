@@ -18,6 +18,17 @@ be greater than \code{nsplit[1]*nsplit[2]} because of fractional tiles lurking
 into the study region. \code{reassign=TRUE} with suitable thresholds is
 therefore recommended for non-zero (including random) offsets.
 }
+\section{{mlr3spatiotempcv} notes}{
+
+
+The 'Description' and 'Note' fields are inherited from the respective
+upstream function.
+
+For a list of available arguments, please see \link[sperrorest:partition_tiles]{sperrorest::partition_tiles}.
+
+This method is similar to \link{ResamplingSpCVBlock}.
+}
+
 \examples{
 if (mlr3misc::require_namespaces("sperrorest", quietly = TRUE)) {
   library(mlr3)
@@ -90,6 +101,9 @@ values stored in the \code{param_set}.}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a "Spatial 'Tiles' resampling" resampling instance.
+
+For a list of available arguments, please see
+\link[sperrorest:partition_tiles]{sperrorest::partition_tiles}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSpCVTiles$new(id = "repeated_spcv_tiles")}\if{html}{\out{</div>}}
 }
