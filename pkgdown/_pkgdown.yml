@@ -48,6 +48,8 @@ reference:
     contents:
       - ResamplingSpCVBlock
       - ResamplingRepeatedSpCVBlock
+      - ResamplingSpCVTiles
+      - ResamplingRepeatedSpCVTiles
   - title: Spatiotemporal Buffering Methods
     desc: These methods support using buffering zones which eventually remove observations between train and test sets.
     contents:
