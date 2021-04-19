@@ -4,10 +4,36 @@
 \alias{ResamplingSpCVBlock}
 \title{(blockCV) Spatial block resampling}
 \description{
-Spatial Block Cross validation implemented by the \code{blockCV}
-package.
+This function creates spatially separated folds based on a pre-specified distance. It assigns blocks to the training and
+testing folds  \strong{randomly},  \strong{systematically} or in a  \strong{checkerboard pattern}. The distance (\code{theRange})
+should be in \strong{metres}, regardless of the unit of the reference system of
+the input data (for more information see the details section). By default,
+the function creates blocks according to the extent and shape of the study area, assuming that the user has considered the
+landscape for the given species and case study. Alternatively, blocks can solely be created based on species spatial data.
+Blocks can also be offset so the origin is not at the outer
+corner of the rasters. Instead of providing a distance, the blocks can also be created by specifying a number of rows and/or
+columns and divide the study area into vertical or horizontal bins, as presented in Wenger & Olden (2012) and Bahn & McGill (2012).
+Finally, the blocks can be specified by a user-defined spatial polygon layer.
 }
 \details{
+To keep the consistency, all the functions use \strong{metres} as their unit. In this function, when the input map
+has geographic coordinate system (decimal degrees), the block size is calculated based on deviding \code{theRange} by
+111325 (the standard distance of a degree in metres, on the Equator) to change the unit to degree. This value is optional
+and can be changed by user via \code{degMetre} argument.
+
+The \code{xOffset} and \code{yOffset} can be used to change the spatial position of the blocks. It can also be used to
+assess the sensitivity of analysis results to shifting in the blocking arrangements. These options are available when \code{theRange}
+is defined. By default the region is located in the middle of the blocks and by setting the offsets, the blocks will shift.
+
+Roberts et. al. (2017) suggest that blocks should be substantially bigger than the range of spatial
+autocorrelation (in model residual) to obtain realistic error estimates, while a buffer with the size of
+the spatial autocorrelation range would result in a good estimation of error. This is because of the so-called
+edge effect (O'Sullivan & Unwin, 2014), whereby points located on the edges of the blocks of opposite sets are
+not separated spatially. Blocking with a buffering strategy overcomes this issue (see \code{\link[blockCV]{buffering}}).
+}
+\section{{mlr3spatiotempcv} notes}{
+
+
 By default \code{\link[blockCV:spatialBlock]{blockCV::spatialBlock()}} does not allow the creation of multiple
 repetitions. \code{mlr3spatiotempcv} adds support for this when using the \code{range}
 argument for fold creation. When supplying a vector of \code{length(repeats)} for
@@ -16,7 +42,13 @@ differ among the repetitions.
 
 Multiple repetitions are not possible when using the "row & cols" approach
 because the created folds will always be the same.
+
+The 'Description' and 'Details' fields are inherited from the respective
+upstream function.
+
+For a list of available arguments, please see \link[blockCV:spatialBlock]{blockCV::spatialBlock}.
 }
+
 \examples{
 if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   library(mlr3)
@@ -85,7 +117,7 @@ values stored in the \code{param_set}.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create an "Environmental Block" resampling instance.
+Create an "spatial block" resampling instance.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVBlock$new(id = "spcv_block")}\if{html}{\out{</div>}}
 }

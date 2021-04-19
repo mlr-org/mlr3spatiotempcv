@@ -24,9 +24,12 @@
 #' rcv$instance # table
 ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
   inherit = mlr3::Resampling,
+
   public = list(
     #' @description
     #' Create an "coordinate-based" repeated resampling instance.
+    #'
+    #' For a list of available arguments, please see [sperrorest::partition_cv].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_coords") {
@@ -36,7 +39,8 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
       ps$values = list(folds = 10L)
       super$initialize(
         id = id,
-        param_set = ps
+        param_set = ps,
+        man = "mlr3spatiotempcv::mlr_resamplings_spcv_coords"
       )
     },
 

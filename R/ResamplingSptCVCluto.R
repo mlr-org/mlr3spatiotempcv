@@ -87,7 +87,8 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
 
       super$initialize(
         id = id,
-        param_set = ps
+        param_set = ps,
+        man = "mlr3spatiotempcv::mlr_resamplings_sptcv_cluto"
       )
     },
 
