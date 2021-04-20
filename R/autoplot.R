@@ -1186,6 +1186,78 @@ plot.ResamplingRepeatedSpCVTiles = function(x, ...) {
   print(autoplot(x, ...)) # nocov
 }
 
+# CV Factor ------------------------------------------------------------------
+
+#' @title Visualization Functions for SpCV Factor Method.
+#'
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods.
+#'
+#' @inheritParams autoplot.ResamplingSpCVBlock
+#' @name autoplot.ResamplingCVFactor
+#'
+#' @param object `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingCVFactor].
+#' @param x `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingCVFactor]..
+#' @export
+#' @seealso
+#'   - mlr3book chapter on on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions).
+#'   - [autoplot.ResamplingSpCVBlock()]
+#'   - [autoplot.ResamplingSpCVBuffer()]
+#'   - [autoplot.ResamplingSpCVEnv()]
+#'   - [autoplot.ResamplingSpCVDisc()]
+#'   - [autoplot.ResamplingSpCVTiles()]
+#'   - [autoplot.ResamplingCV()]
+#'   - [autoplot.ResamplingSptCVCstf()]
+#'   - [autoplot.ResamplingSptCVCluto()]
+#' @examples
+#' if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
+#'   library(mlr3)
+#'   library(mlr3spatiotempcv)
+#'   data(ecuador)
+#'   ecuador$class = as.character(sort(sample(1:4,
+#'     nrow(ecuador), replace = TRUE)))
+#'   b = mlr3::as_data_backend(ecuador)
+#'   b$hash = "_mlr3_tasks_ecuador_"
+#'   task = TaskClassifST$new(
+#'     id = "ecuador", b, target = "slides", positive = "TRUE",
+#'     extra_args = list(
+#'       coordinate_names = c("x", "y"), coords_as_features = FALSE,
+#'       crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs"))
+#'   resampling = rsmp("cv_factor", factor = "class")
+#'   resampling$instantiate(task)
+#'
+#'   autoplot(resampling, task) +
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+#'   autoplot(resampling, task, fold_id = 1, crs = 4326)
+#'   autoplot(resampling, task, fold_id = c(1, 2), crs = 4326) *
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+#' }
+autoplot.ResamplingCVFactor = function( # nolint
+  object,
+  task,
+  fold_id = NULL,
+  plot_as_grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  crs = NULL,
+  ...) {
+  autoplot_spatial(
+    resampling = object,
+    task = task,
+    fold_id = fold_id,
+    plot_as_grid = plot_as_grid,
+    crs = crs,
+    ... = ...
+  )
+}
+
+#' @importFrom graphics plot
+#' @rdname autoplot.ResamplingCVFactor
+#' @export
+plot.ResamplingCVFactor = function(x, ...) {
+  print(autoplot(x, ...))
+}
 
 # CV ---------------------------------------------------------------------------
 
