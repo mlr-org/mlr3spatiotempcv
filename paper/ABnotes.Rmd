@@ -1,0 +1,42 @@
+---
+title: "Alex's Notes and Text Fragments for the JOSS Manuscript"
+author: "Alexander Brenning"
+date: "21 Apr 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Proposed New Introduction
+
+*This is just a quick write-up, to be revised with more careful attention to referencing.*
+
+Spatial and spatio-temporal prediction tasks are common in applications ranging from environmental sciences to archaeology and epidemiology. While sophisticated mathematical frameworks have long been developed in spatial statistics to characterize predictive uncertainties under well-defined mathematical assumptions such as intrinsic stationarity [e.g., cressie], computational estimation procedures have only been proposed more recently to assess predictive performances of spatial and spatio-temporal prediction models [cite brenning.2005; brenning.2012 and others].
+
+Although alternatives such as the bootstrap exist and have some advantages [ref maybe Efron and Gong, or David Hand], cross-validation is a particularly well-established, easy-to-implement algorithm for the estimation of predictive performances of supervised regression and classification models [ref Efron and Gong and next section]. In its basic form, it is based on resampling the data without paying attention to any possible dependence structure, which may arise from, e.g., cluster sampling [ref], grouped data [brenning.lausen.2008; pena.brenning.20xx], or underlying environmental processes inducing some sort of spatial coherence or mixing [ref]. In treating dependent observations as independent, or ignoring autocorrelation, cross-validation test samples may in fact be heavily correlated with, or even pseudo-replicates of, the data used for training the model, which introduces a potentially severe bias, especially for flexible machine-learning models.
+
+This cross-validation bias is well-known in spatial as well as non-spatial prediction [brenning.lausen.2008; ref]. It is most easily understood from a predictive modelling perspective by focusing on the question where (and when) the model should be used for prediction. In crop classification from remotely-sensed data, for instance, learning samples routinely contain multiple grid cells from a sample of fields with known crop type, e.g. 2000 grid cells from 100 fields scattered across a large study region. The purpose of training a model on this sample is to make predictions on other, new *fields* -- not *within* the same field, which obviously presents only one crop type. It would therefore be foolish to train a model on a simple random subsample of grid cells, and test it on the remaining data, i.e. using other grid cells from the same fields, as if we wanted to predict within a field; the results from this performance assessment would be over-optimitic, and perhaps badly so. To mimic the predictive situation for which the model is trained, we'd rather have to resample at the level of fields, not grid cells [pena.brenning.20xx]. If the model was to be applied to adjacent agricultural districts, it would even seem necessary to resample at a higher level of spatial aggregation, i.e. at the level of agricultural districts within the learning sample, in order to realistically mimic the actual prediction task. The cross-validation resampling needed therefore depends as much on the prediction task as on the data structure or dependency at hand.
+
+While it is not the purpose of this paper to recommend specific resampling schemes for specific use cases, this example may suffice to motivate the use of spatial and spatio-temporal cross-validation techniques, and the need for a unified framework and computational toolbox that accommodate a variety of prediction tasks. `mlr3spatiotemporal` is such a toolbox.
+
+This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings. The earliest and most general of these implementations is the `sperrorest` package [brenning2012], which has, however, not been integrated into established machine-learning frameworks such as `mlr` or `caret`, and lacks support of temporal prediction tasks. Other more recent implementations include `blockCV` for (what for?) [ref Valavi; Rest et al., 2014?] and `CAST` for spatio-temporal prediction tasks in a `caret` framework (correct?) [ref Meyer]. And `skmeans`. Reference to Table 1. 
+
+Thus, `mlr3spatiotemporal` implements for the first time a comprehensive state-of-the-art compilation of spatial and spatio-temporal partitioning schemes that is well-integrated into a major machine-learning framework in R, the `mlr3` ecosystem (Lang et al., 2019). This package is furthermore equipped with a variety of two- and three-dimensional diagram types. Our hope is that implementation will facilitate reproducible geospatial modelling and code-sharing across a broad range of application domains.
+
+
+
+## Proposed section 2: Spatial and Spatio-temporal Cross-validation
+
+the formal stuff, next on my list...
+
+
+
+## General Comments
+
+- Avoid the concept of SAC, TAC and STAC because it lacks a clear definition (in this paper, and a definition is not at all straightforward), and the link between STAC and a specific type of CV is far from obvious. Instead, refer to spatial, temporal, and spatio-temporal prediction tasks.
+
+- I.e. the question is not "what's the structure of my data", but "what's the structure of the prediction problem". Perhaps this recommendation can be included in the Discussion.
+
+
