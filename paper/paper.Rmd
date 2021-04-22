@@ -6,9 +6,8 @@ author:
     # affiliaton2: 'Ludwig-Maximilians-University Munich'
     # use this syntax to add text on several lines
     address: |
-      | Faculty of Chemistry and Earth Sciences
       | Department of Geography
-      | GIScience group
+      | Geographic Information Science group
     email: \email{patrick.schratz@uni-jena.de}
   - name: Marc Becker
     affiliation: 'Ludwig-Maximilians-University Munich'
@@ -20,6 +19,12 @@ author:
     affiliation: TU Dortmund University
     address: |
       | Faculty of Statistics
+  - name: Alexander Brenning
+    affiliation: 'Friedrich Schiller University Jena'
+    address: |
+      | Department of Geography
+      | Geographic Information Science group
+    email: \email{alexander.brenning@uni-jena.de}
 title:
   formatted: "\\pkg{mlr3spatiotempcv}: Spatiotemporal resampling methods for \\pkg{mlr3}"
   # If you use tex in the formatted title, also supply version without
