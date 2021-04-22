@@ -3,6 +3,7 @@ title: "Alex's Notes and Text Fragments for the JOSS Manuscript"
 author: "Alexander Brenning"
 date: "21 Apr 2021"
 output: html_document
+bibliography: paper.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -10,8 +11,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Proposed New Introduction
-
-*This is just a quick write-up, to be revised with more careful attention to referencing.*
 
 Spatial and spatio-temporal prediction tasks are common in applications ranging from environmental sciences to archaeology and epidemiology. While sophisticated mathematical frameworks have long been developed in spatial statistics to characterize predictive uncertainties under well-defined mathematical assumptions such as intrinsic stationarity [e.g., cressie], computational estimation procedures have only been proposed more recently to assess predictive performances of spatial and spatio-temporal prediction models [@brenning.2005.nhess; @sperrorest; @pohjankukka2017; @roberts2017].
 
@@ -44,4 +43,6 @@ A variant of cross-validation is leave-one-out (LOO) cross-validation , which ha
 
 - I.e. the question is not "what's the structure of my data", but "what's the structure of the prediction problem". Perhaps this recommendation can be included in the Discussion.
 
+
+## References
 
