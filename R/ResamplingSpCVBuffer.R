@@ -29,6 +29,9 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
   public = list(
     #' @description
     #' Create an "Environmental Block" resampling instance.
+    #'
+    #' For a list of available arguments, please see
+    #' [blockCV::buffering()].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_buffer") {

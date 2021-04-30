@@ -37,6 +37,9 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
 
     #' @description
     #' Create an "spatial block" resampling instance.
+    #'
+    #' For a list of available arguments, please see
+    #' [blockCV::spatialBlock()].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_block") {

@@ -94,6 +94,9 @@ values stored in the \code{param_set}.}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create an "Environmental Block" resampling instance.
+
+For a list of available arguments, please see
+\code{\link[blockCV:buffering]{blockCV::buffering()}}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVBuffer$new(id = "spcv_buffer")}\if{html}{\out{</div>}}
 }
