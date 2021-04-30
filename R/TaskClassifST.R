@@ -1,4 +1,4 @@
-#' @title SpatioTemporal Classification Task
+#' @title Crate a Spatiotemporal Classification Task
 #'
 #' @description This task specializes [Task] and [TaskSupervised] for
 #' spatiotemporal classification problems. The target column is assumed to be a
@@ -81,7 +81,7 @@ TaskClassifST = R6::R6Class("TaskClassifST",
         positive = positive, extra_args = extra_args)
 
       self$extra_args$coordinate_names = extra_args$coordinate_names
-      self$extra_args$crs = checkmate::assert_character(extra_args$crs, null.ok = TRUE)
+      # not asserting 'crs' as it can be either chr or int
 
       info = self$col_info[id == target]
       levels = info$levels[[1L]]

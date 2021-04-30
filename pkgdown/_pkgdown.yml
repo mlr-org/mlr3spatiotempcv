@@ -81,7 +81,9 @@ reference:
     desc: Classification and regression tasks.
     contents:
       - TaskRegrST
+      - as_task_regr_st
       - TaskClassifST
+      - as_task_classif_st
   - title: Spatiotempral Example Datasets
     desc: Tasks appended to the `mlr_tasks` dictionary.
     contents:
