@@ -29,7 +29,7 @@ test_that("as_task_classif_st.sf works", {
 
 # regr -------------------------------------------------------------------------
 
-test_that("as_task_regr_st.TaskClassifST works", {
+test_that("as_task_regr_st.TaskRegrST works", {
   task = tsk("cookfarm")
   new_task = as_task_regr_st(task)
 
@@ -56,3 +56,20 @@ test_that("as_task_regr_st.sf works", {
   expect_equal(new_task$extra_args$crs, "EPSG:26911")
   expect_equal(new_task$extra_args$coordinate_names, c("X", "Y"))
 })
+
+# conversion to non-ST task ----------------------------------------------------
+
+test_that("as_task_classif.TaskClassifST works", {
+  task = tsk("ecuador")
+  new_task = as_task_classif(task)
+
+  expect_class(new_task, "TaskClassif")
+})
+
+test_that("as_task_regr.TaskRegrST works", {
+  task = tsk("cookfarm")
+  new_task = as_task_regr(task)
+
+  expect_class(new_task, "TaskRegr")
+})
+

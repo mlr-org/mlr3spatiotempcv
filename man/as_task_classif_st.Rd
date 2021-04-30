@@ -77,7 +77,7 @@ The variables names of the coordinates in the data.}
 \link{TaskClassifST}.
 }
 \description{
-Convertan object to a \link{TaskClassifST}.
+Convert an object to a \link{TaskClassifST}.
 This is a S3 generic for the following objects:
 \enumerate{
 \item \link{TaskClassifST}: ensure the identity
