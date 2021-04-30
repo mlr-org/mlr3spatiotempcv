@@ -4,7 +4,10 @@
 \alias{ResamplingSpCVDisc}
 \title{(sperrorest) Spatial "disc" resampling}
 \description{
-partition_disc\verb{partitions the sample into training and tests set by selecting circular test areas (possibly surrounded by an exclusion buffer) and using the remaining samples as training samples (leave-one-disc-out cross-validation).}partition_loo` creates training and
+\code{partition_disc} partitions the sample into training and tests
+set by selecting circular test areas (possibly surrounded by an exclusion
+buffer) and using the remaining samples as training samples
+(leave-one-disc-out cross-validation). \code{partition_loo} creates training and
 test sets for leave-one-out cross-validation with (optional) buffer.
 }
 \note{
