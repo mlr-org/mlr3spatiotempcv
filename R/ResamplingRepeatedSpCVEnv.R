@@ -27,7 +27,9 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
   inherit = mlr3::Resampling,
   public = list(
     #' @description
-    #' Create an "coordinate-based" repeated resampling instance.
+    #' Create an "Environmental Block" repeated resampling instance.
+    #'
+    #' For a list of available arguments, please see [blockCV::envBlock].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_env") {

@@ -31,6 +31,8 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
   public = list(
     #' @description
     #' Create an "coordinate-based" repeated resampling instance.
+    #'
+    #' For a list of available arguments, please see [sperrorest::partition_cv].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_coords") {
