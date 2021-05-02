@@ -43,25 +43,49 @@ reference:
   - title: mlr3spatiotempcv
     contents:
       - mlr3spatiotempcv
-  - title: Spatial Resampling Methods
-    desc: Resampling methods to reduce the influence of spatial autocorrelation.
+  - title: Spatiotemporal Blocking Methods
+    desc: These methods use square/rectangular blocks for partitioning.
     contents:
-      - starts_with("ResamplingSpCV")
-      - starts_with("ResamplingRepeatedSpCV")
-  - title: Spatiotemporal Resampling Methods
-    desc: Resampling methods to reduce the influence of spatiotemporal autocorrelation.
+      - ResamplingSpCVBlock
+      - ResamplingRepeatedSpCVBlock
+      - ResamplingSpCVTiles
+      - ResamplingRepeatedSpCVTiles
+  - title: Spatiotemporal Buffering Methods
+    desc: These methods support using buffering zones which eventually remove observations between train and test sets.
     contents:
-      - starts_with("ResamplingSptCV")
-      - starts_with("ResamplingRepeatedSptCV")
-  - title: Tasks
-    desc: Spatiotemporal Task Classes for mlr3.
+      - ResamplingSpCVBuffer
+      - ResamplingSpCVDisc
+      - ResamplingRepeatedSpCVDisc
+      - ResamplingSptCVCstf
+      - ResamplingRepeatedSptCVCstf
+  - title: Spatiotemporal Clustering Methods
+    desc: These methods make use of clustering methods (e.g. `k-means`) to create (equally-sized) partitions.
+    contents:
+      - ResamplingSpCVCoords
+      - ResamplingRepeatedSpCVCoords
+      - ResamplingSpCVDisc
+      - ResamplingRepeatedSpCVDisc
+      - ResamplingSptCVCluto
+      - ResamplingRepeatedSptCVCluto
+  - title: Feature Space Clustering Methods
+    desc: These methods cluster in the feature space and not (necessarily) in space or time.
+    contents:
+      - ResamplingSpCVEnv
+      - ResamplingRepeatedSpCVEnv
+  - title: Factor/Predefined Groups Partitioning Methods
+    desc: These methods use (multiple) factor-variables / predefined groups to create partitions
+    contents:
+      - ResamplingSptCVCstf
+      - ResamplingRepeatedSptCVCstf
+  - title: Spatiotempral Tasks
+    desc: Classification and regression tasks.
     contents:
       - TaskRegrST
       - TaskClassifST
-  - title: Datasets
-    desc: Spatiotemporal example tasks included in {mlr3spatiotempcv}.
+  - title: Spatiotempral Example Datasets
+    desc: Tasks appended to the `mlr_tasks` dictionary.
     contents:
       - contains("tasks")
-  - title: Visualization
+  - title: Visualization of spatiotemporal partitions
     contents:
       - contains("autoplot")

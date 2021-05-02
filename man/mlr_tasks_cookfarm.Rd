@@ -21,7 +21,7 @@ Here, only the "Profiles" dataset is used from the collection.
 The \code{Date} column was appended from the \code{readings} dataset.
 500 random samples were drawn from the complete sample.
 
-The dataset was borrowed and adapted from \pkg{GSIF} which was on archived on
+The dataset was borrowed and adapted from package GSIF which was on archived on
 CRAN in 2021-03.
 }
 \section{Usage}{

@@ -1,4 +1,4 @@
-#' @title Spatial Block Cross Validation Resampling
+#' @title (blockCV) Spatial block resampling
 #'
 #' @template rox_spcv_block
 #'
@@ -36,7 +36,10 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     blocks = NULL,
 
     #' @description
-    #' Create an "Environmental Block" resampling instance.
+    #' Create an "spatial block" resampling instance.
+    #'
+    #' For a list of available arguments, please see
+    #' [blockCV::spatialBlock()].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_block") {
@@ -58,7 +61,8 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       ps$values = list(folds = 10L)
       super$initialize(
         id = id,
-        param_set = ps
+        param_set = ps,
+        man = "mlr3spatiotempcv::mlr_resamplings_spcv_block"
       )
       mlr3misc::require_namespaces(c("blockCV", "sf"))
     },
@@ -121,18 +125,14 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }
-  ),
-
+    }),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       as.integer(self$param_set$values$folds)
-    }
-  ),
-
+    }),
   private = list(
     .sample = function(ids, coords, crs) {
 
@@ -174,9 +174,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     .get_train = function(i) {
       self$instance[!list(i), "row_id", on = "fold"][[1L]]
     },
-
     .get_test = function(i) {
       self$instance[list(i), "row_id", on = "fold"][[1L]]
-    }
-  )
+    })
 )
