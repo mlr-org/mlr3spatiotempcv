@@ -88,7 +88,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
     # reorder factor levels so that "train" comes first
     sf_df$indicator = ordered(sf_df$indicator, levels = c("Train", "Test"))
 
-    ggplot() +
+    plot = ggplot() +
       geom_sf(data = sf_df, aes(color = .data[["indicator"]]), ...) +
       scale_color_manual(values = c(
         "Train" = train_color,
@@ -102,8 +102,8 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
         linetype = 1, r = unit(5, "pt"),
         valign = 0.5, halign = 0.5,
         padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3)
-      )
-      )
+      ))
+    return(invisible(plot))
 
   })
 
