@@ -55,6 +55,8 @@ preamble: >
   \usepackage{multirow}
   \usepackage{tabularx}
   \usepackage{placeins}
+  \newcommand{\specialcell}[2][l]{%
+    \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
 tables: true
 bibliography: paper.bib
 output:
@@ -68,13 +70,12 @@ output:
 knitr::knit_hooks$set(plot = function(x, options) {
   knitr::hook_plot_tex(x, options)
 })
-# knitr::opts_chunk$set(cache = FALSE)
 ```
 
 ```{r setup-2, echo=FALSE, purl=T}
 # for knitr spint later
 knitr::opts_chunk$set(fig.path = "./paper/figs/",
-  cache = F,
+  cache = T,
   cache.lazy = TRUE)
 ```
 
@@ -231,25 +232,27 @@ Some of the methods listed are able to produce different partitioning results by
 
 \begin{table}[h]
   \centering
+  \footnotesize
   \caption[t]{Spatiotemporal resampling methods, ordered alphabetically by class name (Notation column). }
   \begingroup
-  <!-- \begin{adjustbox}{angle=270} -->
     \begin{tabular}{lllll}
       \\
       Type                            & Name                        & R Package(s)     & mlr3 Notation  & Literature \\
       \toprule
-      \multirow{3}{*}{Spatial}        & Spatial Buffering           & \pkg{blockCV}, \pkg{sperrorest}    & "spcv\_buffer", "spcv\_disc()", "spcv\_loo()" & Lit1       \\
-                                      & Spatial Blocking            & \pkg{blockCV}, \pkg{sperrorest}  & "spcv\_block",
-                                      "spcv\_tiles()"  & Lit1       \\
-                                      & Spatial Clustering          & \pkg{sperrorest} & "spcv\_coords" & Lit1       \\
-       & Leave-Location-Out & \pkg{CAST}, \pkg{sperrorest}       & "sptcv\_cstf('space\_var')", "spcv\_factor"  & Lit1       \\
+      \multirow{6}{*}{Spatial}        & Spatial Buffering           & \specialcell{\pkg{blockCV} \\ \pkg{sperrorest}}    & \specialcell{ \texttt{"spcv\_buffer"} \\  \texttt{"spcv\_disc"}}  & Lit1       \\
+      \cmidrule{2-5}
+                                      & Spatial Blocking            & \specialcell{\pkg{blockCV} \\ \pkg{sperrorest}}  & \specialcell{  \texttt{"spcv\_block"} \\  \texttt{"spcv\_tiles"}}
+                                        & Lit1       \\
+  \cmidrule{2-5}
+                                      & Spatial Clustering          & \pkg{sperrorest} & \texttt{"spcv\_coords"} & Lit1       \\
+                                      \cmidrule{2-5}
+       & Leave-Location-Out & \specialcell{\pkg{CAST} \\ \pkg{mlr3}}       & \specialcell{ \texttt{"sptcv\_cstf('space\_var')"} \\ \texttt{"FIXME"}},  & Lit1       \\
       \midrule
-      \multirow{2}{*}{Spatiotemporal} & Leave-Location-and-Time-Out & \pkg{CAST}       & "sptcv\_cstf"  & Lit1       \\
-                                      & Spatiotemporal Clustering   & \pkg{skmeans}    & "sptcv\_cluto" & Lit1       \\
+      \multirow{2}{*}{Spatiotemporal} & Leave-Location-and-Time-Out & \pkg{CAST}       &  \texttt{"sptcv\_cstf"}  & Lit1       \\
+                                      & Spatiotemporal Clustering   & \pkg{skmeans}    &  \texttt{"sptcv\_cluto"} & Lit1       \\
       \midrule
-      Feature space                   & Environmental Blocking      & \pkg{blockCV}    & "spcv\_env"    & Lit1       \\
+      Feature space                   & Environmental Blocking      & \pkg{blockCV}    &  \texttt{"spcv\_env"}    & Lit1       \\
     \end{tabular}
-  <!-- \end{adjustbox} -->
   \endgroup\label{tab:sptcv-methods}
 \end{table}
 
