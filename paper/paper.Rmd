@@ -175,7 +175,7 @@ Besides the required arguments of the \pkg{mlr3} superclass `Task`, `TaskClassif
   By default coordinates are not used as predictors.
 - `crs`: The coordinate reference system of the data. Valid inputs are PROJ4 strings or EPSG codes in the format `ESPG: <code>`.
 
-```{r create task, cache=TRUE}
+```{r create task, cache=F}
 library(mlr3)
 library(mlr3spatiotempcv)
 
@@ -218,6 +218,10 @@ autoplot(resampling_nsp, task, fold_id = c(1:2), crs = 32717, size = 0.8) *
 
 # Spatiotemporal partitioning methods
 
+## Spatial
+
+### Buffering
+
 At the time of writing, the following spatiotemporal resampling methods (Tab. \@ref(tab:sptcv-methods)) were available across different R packages.
 This list might increase over time and it is recommended to check the homepage of \pkg{mlr3spatiotempcv} for an up-to-date list.
 In Tab. \@ref(tab:sptcv-methods), the internal identifier for the respective method in \pkg{mlr3spatiotempcv} is shown in column "Notation".
@@ -227,7 +231,7 @@ Some of the methods listed are able to produce different partitioning results by
   \centering
   \caption[t]{Spatiotemporal resampling methods, ordered alphabetically by class name (Notation column). }
   \begingroup
-  \begin{adjustbox}{angle=270}
+  <!-- \begin{adjustbox}{angle=270} -->
     \begin{tabular}{lllll}
       \\
       Type                            & Name                        & R Package(s)     & mlr3 Notation  & Literature \\
@@ -243,14 +247,14 @@ Some of the methods listed are able to produce different partitioning results by
       \midrule
       Feature space                   & Environmental Blocking      & \pkg{blockCV}    & "spcv\_env"    & Lit1       \\
     \end{tabular}
-  \end{adjustbox}
+  <!-- \end{adjustbox} -->
   \endgroup\label{tab:sptcv-methods}
 \end{table}
 
 A low-level introduction including visualization is given for every method in the following.
 See section \@ref(sec:disc) for a discussion of the methods.
 
-## Spatial buffering
+#### Spatial buffering (blockCV)
 
 The "buffering" method from the \pkg{blockCV} package is conceptually similar to a leave-one-out (LOO) cross-validation approach [@rest2014, @blockCV].
 To reduce the similarity between train and test, a circular buffer around the observations representing the test set is drawn.
@@ -281,7 +285,11 @@ plot(resampling_buffer,
 
 <!-- TODO: Discuss issues setting a sensible range value -->
 
-## Spatial blocking
+#### Spatial disc (sperrorest)
+
+### Blocking
+
+#### Spatial blocking (blockCV)
 
 "Spatial Blocking" (\pkg{blockCV} package) creates homogeneous blocks across the study area splitting observations into different zones [@bahn2012a, @wenger2012a].
 Then, a number of zones is combined randomly following desired the number of folds.
@@ -290,7 +298,7 @@ For example, in a five-fold scenario, the method tries to combines zones to end 
 The way how the blocks are created can be manifold: Supplying a numeric value in meters via argument `theRange` (named just `range` in {mlr3spatiotempcv}) will create a quadratic block pattern across the study area.
 The aggregation of zones can either be random (default) (`selection = "random"`), systematic (`selection = "systematic"`) or checkerboard structure (`selection = "checkerboard"`).
 
-### Option: selection = "random"
+##### Option: selection = "random"
 
 ```{r block-random, cache = TRUE, fig.cap="Spatial blocking with option `selection = 'random'`.", out.width="50%", fig.pos="ht"}
 resampling_block_random = rsmp("spcv_block", range = 1000, folds = 5)
@@ -302,7 +310,7 @@ plot(resampling_block_random,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-### Option: selection = "systematic"
+##### Option: selection = "systematic"
 
 Here, aggregation follows the linear count from $1:n_{folds}$ from top to bottom.
 
@@ -319,7 +327,7 @@ plot(resampling_block_systematic,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-### Option: selection = "checkerboard"
+##### Option: selection = "checkerboard"
 
 This option ignores parameter `range` and always creates two partitions following a "1,2,1,2" pattern.
 
@@ -337,7 +345,7 @@ plot(resampling_block_checkerboard,
 
 \newpage
 
-### Rectangular blocks
+##### Rectangular blocks
 
 Alternatively, arguments `rows` and `cols` can be specified instead of `theRange`.
 This allows to create rectangular blocks which honor the supplied `rows` and `cols` settings.
@@ -356,41 +364,14 @@ plot(resampling_block_rows_cols,
 
 \newpage
 
-## Environmental Blocking
 
-The last method from the \pkg{blockCV} package, "environmental blocking", makes use of *k-means* clustering [@hartigan1979a] in a possibly multivariate space.
-The user can specify a variable via argument `feature` which levels will be used to create clusters.
-Hereby, k-means will use Euclidean distance for cluster creation.
-Hence, the selected input variables should be of type numeric.
-To avoid a potential bias introduced by features with high variance when selecting multiple features, all features are standardized by default.
 
-The following example clusters by feature "distance to forest".
 
-```{r env-1, fig.cap="Environmental blocking using a single predictor.", cache=TRUE, out.width="50%", fig.pos="ht"}
-resampling_env = rsmp("spcv_env",
-  features = "distdeforest", folds = 5)
+#### Spatial tiling (sperrorest)
 
-plot(resampling_env,
-  size = 0.8, fold_id = 1, task = task, crs = 32717,
-  show_blocks = TRUE, show_labels = TRUE) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
-```
+### Spatial Clustering (sperrorest)
 
-It is also possible to cluster by multiple features:
-
-```{r env-2, fig.cap="Environmental blocking using multiple predictors.", cache=TRUE, out.width="50%", fig.pos="ht"}
-resampling_env_multi = rsmp("spcv_env",
-  features = c("distdeforest", "slope"), folds = 5)
-
-plot(resampling_env_multi,
-  size = 0.8, fold_id = 1, task = task, crs = 32717,
-  show_blocks = TRUE, show_labels = TRUE) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
-```
-
-## Spatial CV
+#### Coordinate-based clustering
 
 The "Spatial CV" method after [@sperrorest] and implemented in package \pkg{sperrorest} is similar to method "environmental blocking" in that it also uses *k-means* clustering for fold creation.
 However, it does not make use of arbitrary features but uses the coordinates of all observations to create clusters in the spatial domain.
@@ -405,11 +386,53 @@ plot(resampling_coords,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-## CreateSpacetimeFolds (Cstf)
+### Feature space clustering (blockCV)
 
-Leave-Location-and-Time-Out from packge \pkg{CAST} is a spatiotemporal resampling method [@meyer2018a].
+The last method from the \pkg{blockCV} package, "environmental blocking", makes use of *k-means* clustering [@hartigan1979a] in a possibly multivariate space.
+The user can specify a variable via argument `feature` which levels will be used to create clusters.
+Hereby, k-means will use Euclidean distance for cluster creation.
+Hence, the selected input variables should be of type numeric.
+To avoid a potential bias introduced by features with high variance when selecting multiple features, all features are standardized by default.
+
+The following example clusters by feature "distance to forest".
+
+```{r env-1, fig.cap="Environmental blocking using a single predictor.", cache=F, out.width="50%", fig.pos="ht"}
+resampling_env = rsmp("spcv_env",
+  features = "distdeforest", folds = 5)
+
+plot(resampling_env,
+  size = 0.8, fold_id = 1, task = task, crs = 32717,
+  show_blocks = TRUE, show_labels = TRUE) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+```
+
+It is also possible to cluster by multiple features:
+
+```{r env-2, fig.cap="Environmental blocking using multiple predictors.", cache=T, out.width="50%", fig.pos="ht"}
+resampling_env_multi = rsmp("spcv_env",
+  features = c("distdeforest", "slope"), folds = 5)
+
+plot(resampling_env_multi,
+  size = 0.8, fold_id = 1, task = task, crs = 32717,
+  show_blocks = TRUE, show_labels = TRUE) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+```
+
+## Spatiotemporal
+
+### Factor-based grouping 
+
+#### Predefined grouping
+
+FIXME
+
+#### Leave-Location-And-Time-Out (CAST)
+
+Leave-Location-and-Time-Out (LLTO) from packge \pkg{CAST} is a spatiotemporal resampling method [@meyer2018a].
 It requires both a spatial and a temporal variable which are used to to separate observations in a multi-dimensional space.
-It comes with satellite methods named "Leave-time-out" (LTO) and "Leave-location-out" (LLO) which only operatre in a two-dimensional space.
+It comes with satellite methods named "Leave-time-out" (LTO) and "Leave-location-out" (LLO) which only operate in a two-dimensional space.
 
 In this example the `cookfarm` dataset is used because it contains a temporal variable ("Date") which is not present in dataset `ecuador`.
 
@@ -419,7 +442,7 @@ Because a dynamic image cannot be included in this manuscript, a static version,
 
 In \pkg{mlr3spatiotempcv} the method is named `"sptcv_cstf"` because the underlying upstream implementation in package \pkg{CAST} is named `CreateSpacetimeFolds()`.
 
-### Leave-Time-Out (LTO)
+##### Leave-Time-Out (LTO)
 
 To better showcase the partitioning of the "Leave-Time-Out" (LTO) method, the temporal variable `Date` was adjusted in this example.
 
@@ -451,7 +474,7 @@ plot(resampling_cstf_time,
 knitr::include_graphics("lto.png")
 ```
 
-### Leave-Location-Out (LLO)
+##### Leave-Location-Out (LLO)
 
 Method "Leave-Location-Out" (LLO) works similar to "Leave-Time-Out" (LTO) in that it operates in a two-dimensional space.
 Here, specific locations are left out for forming the partitions while the temporal information is ignored (Fig.\@ref(fig:llo)).
@@ -468,7 +491,7 @@ plot(resampling_cstf_loc,
 knitr::include_graphics("llo.png")
 ```
 
-### Leave-Location-and-Time-Out (LLTO)
+##### Leave-Location-and-Time-Out (LLTO)
 
 The "Leave-Location-and-Time-Out" (LLTO) method combines both "Leave-Time-Out" (LTO) and "Leave-Location-Out" (LLO).
 It creates partitions that operate on spatiotemporal clusters to reduce both spatial and temporal autocorrelation.
@@ -490,7 +513,7 @@ plot(resampling_cstf_time_loc,
 knitr::include_graphics("llto.png")
 ```
 
-## Spatiotemporal Clustering (Cluto)
+### Spatiotemporal Clustering (skmeans)
 
 The "CLUTO" clustering algorithm by George Karypis is said to be an application "for clustering of low- and high-dimensional datasets and for analyzing the characteristics of the various clusters" [@cluto].
 
@@ -657,4 +680,3 @@ sessionInfo()
 ```
 
 # References
-
