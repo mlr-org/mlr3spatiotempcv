@@ -289,6 +289,22 @@ autoplot(resampling_buffer,
 
 #### Spatial disc (sperrorest)
 
+Another buffering oriented resampling method is "Spatial Disc" from package \pkg{sperrorest}.
+The name spins from "Leave-one-disc-out" which again originates from the generic "Leave-one-out" method.
+More specifically, the 'disc' which is being left our here refers to the radial area of test sets created from this method.
+
+Around the radial test set a buffer zone / neutral area can be defined in which observations are excluded from the training set, increasing the spatial distance between train and test sets.
+
+```{r disc, fig.cap="Visualization of 'Spatial Disc' method.", out.width="50%"}
+resampling_disc = rsmp("spcv_disc", folds = 5, radius = 200L, buffer = 300L)
+resampling_disc$instantiate(task)
+
+autoplot(resampling_disc,
+  size = 0.8, task = task, fold_id = 1, crs = 32717) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+```
+
 ### Blocking
 
 #### Spatial blocking (blockCV)
