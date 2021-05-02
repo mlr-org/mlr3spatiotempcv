@@ -94,6 +94,8 @@ if (mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"), quietly = TRUE)
 \item \code{\link[=autoplot.ResamplingSpCVBuffer]{autoplot.ResamplingSpCVBuffer()}}
 \item \code{\link[=autoplot.ResamplingSpCVCoords]{autoplot.ResamplingSpCVCoords()}}
 \item \code{\link[=autoplot.ResamplingSpCVEnv]{autoplot.ResamplingSpCVEnv()}}
+\item \code{\link[=autoplot.ResamplingSpCVDisc]{autoplot.ResamplingSpCVDisc()}}
+\item \code{\link[=autoplot.ResamplingSpCVTiles]{autoplot.ResamplingSpCVTiles()}}
 \item \code{\link[=autoplot.ResamplingSptCVCstf]{autoplot.ResamplingSptCVCstf()}}
 \item \code{\link[=autoplot.ResamplingSptCVCluto]{autoplot.ResamplingSptCVCluto()}}
 }

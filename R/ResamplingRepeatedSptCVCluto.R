@@ -1,4 +1,4 @@
-#' @title Repeated Spatiotemporal Cluster Resampling
+#' @title (skmeans) Repeated spatiotemporal clustering resampling
 #'
 #' @template rox_sptcv_cluto
 #'
@@ -33,7 +33,6 @@
 #' }
 ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
   inherit = mlr3::Resampling,
-
   public = list(
 
     #' @field time_var [character]\cr
@@ -94,7 +93,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
       super$initialize(
         id = id,
         param_set = ps,
-        man = "mlr3spatiotempcv::mlr_resamplings_repeated_SptCVCluto"
+        man = "mlr3spatiotempcv::mlr_resamplings_repeated_sptcv_cluto"
       )
     },
 
@@ -160,9 +159,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }
-  ),
-
+    }),
   active = list(
 
     #' @field iters `integer(1)`\cr
@@ -171,9 +168,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
     iters = function() {
       pv = self$param_set$values
       as.integer(pv$repeats) * as.integer(pv$folds)
-    }
-  ),
-
+    }),
   private = list(
     .sample = function(ids, data_matrix, clmethod, cluto_parameters, verbose) {
       vcluster_loc = check_cluto_path()
@@ -202,7 +197,6 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
         )
       })
     },
-
     .get_train = function(i) {
       i = as.integer(i) - 1L
       folds = as.integer(self$param_set$values$folds)
@@ -211,7 +205,6 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
       ii = data.table(rep = rep, fold = seq_len(folds)[-fold])
       self$instance[ii, "row_id", on = names(ii), nomatch = 0L][[1L]]
     },
-
     .get_test = function(i) {
       i = as.integer(i) - 1L
       folds = as.integer(self$param_set$values$folds)
@@ -219,6 +212,5 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
       fold = i %% folds + 1L
       ii = data.table(rep = rep, fold = fold)
       self$instance[ii, "row_id", on = names(ii), nomatch = 0L][[1L]]
-    }
-  )
+    })
 )

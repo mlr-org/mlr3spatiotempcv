@@ -2,9 +2,9 @@
 % Please edit documentation in R/ResamplingRepeatedSptCVCstf.R
 \name{ResamplingRepeatedSptCVCstf}
 \alias{ResamplingRepeatedSptCVCstf}
-\title{Repeated "Leave-location-and-time-out" resampling.}
+\title{(CAST) Repeated "leave-location-and-time-out" resampling}
 \description{
-Implementation of \code{CAST::CreateSpaceTimeFolds()}.
+Create spatial, temporal or spatio-temporal Folds for cross validation
 }
 \details{
 Using "class" is helpful in the case that data are clustered in space
@@ -13,6 +13,23 @@ training data come as training polygons. In this case the data should be split i
 that entire polygons are held back (spacevar="polygonID") but at the same time the distribution of classes
 should be similar in each fold (class="LUC").
 }
+\note{
+Standard k-fold cross-validation can lead to considerable
+misinterpretation in spatial-temporal modelling tasks. This function can be
+used to prepare a Leave-Location-Out, Leave-Time-Out or
+Leave-Location-and-Time-Out cross-validation as target-oriented validation
+strategies for spatial-temporal prediction tasks. See Meyer et al. (2018)
+for further information.
+}
+\section{{mlr3spatiotempcv} notes}{
+
+
+The 'Description', 'Details' and 'Note' fields are inherited from the
+respective upstream function.
+
+For a list of available arguments, please see \link[CAST:CreateSpacetimeFolds]{CAST::CreateSpacetimeFolds}.
+}
+
 \examples{
 library(mlr3)
 library(mlr3spatiotempcv)
@@ -42,20 +59,6 @@ Zhao Y, Karypis G (2002).
 }
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingRepeatedSptCVCstf}
-}
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{space_var}}{\code{character(1)}\cr
-Column name identifying the spatial units.}
-
-\item{\code{time_var}}{\code{character(1)}\cr
-Column name identifying the temporal units.}
-
-\item{\code{class}}{\code{character(1)}\cr
-Column name identifying a class unit (e.g. land cover).}
-}
-\if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -92,13 +95,11 @@ values stored in the \code{param_set}.}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a "Spacetime Folds" resampling instance.
+
+For a list of available arguments, please see
+\link[CAST:CreateSpacetimeFolds]{CAST::CreateSpacetimeFolds}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCstf$new(
-  id = "repeated_sptcv_cstf",
-  space_var = NULL,
-  time_var = NULL,
-  class = NULL
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCstf$new(id = "repeated_sptcv_cstf")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -106,15 +107,6 @@ Create a "Spacetime Folds" resampling instance.
 \describe{
 \item{\code{id}}{\code{character(1)}\cr
 Identifier for the resampling strategy.}
-
-\item{\code{space_var}}{\code{character(1)}\cr
-Column name identifying the spatial units.}
-
-\item{\code{time_var}}{\code{character(1)}\cr
-Column name identifying the temporal units.}
-
-\item{\code{class}}{\code{character(1)}\cr
-Column name identifying a class unit (e.g. land cover).}
 }
 \if{html}{\out{</div>}}
 }
