@@ -161,6 +161,15 @@ It should be noted that $k$-fold cross-validation with a large value of $k$, and
 'Pure' LOO-CV is therefore not recommended for machine-learning model assessment [ref??].
 
 
+# mlr3spatiotempcv within the mlr3 ecosystem
+
+With the increased awareness of the importance of spatial and spatio-temporal resampling strategies and the growing popularity of R in environmental modelling and geocomputation, it is important to equip machine-learning frameworks such as \pkg{mlr} with suitable algorithms. 
+In this context, \pkg{mlr3} stands out as a unified, object-oriented and extendable framework designed to accommodate numerous machine-learning tasks with a variety of learners, feature and model selection tools, and model assessment capabilities [@mlr3; mlr3book]. 
+All of these are supported by advanced visualization tools, which are particularly important in a spatial and spatio-temporal setting.
+
+With its integrative approach and its aim to provide long-term support, \pkg{mlr3} overcomes the challenges of combining multiple specialized packages with poorly standardized interfaces.
+Issues that practitioners often face include varying argument lists of learners, different return values of `predict` methods, and support for only specific feature types. 
+These challenges result in substantial overhead and possible reproducibility issues, which are exacerbated by asynchronous development timelines of different components of the machine-learning pipelines.
 
 
 # Visualization of spatiotemporal partitions
