@@ -34,7 +34,7 @@ title:
 abstract: >
   The R package [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is an extension package of the machine learning framework [mlr3](https://mlr3.mlr-org.com) [@mlr3].
   It adds support for spatiotemporal resampling methods and respective visualization methods.
-  Spatiotemporal resampling methods are needed to account for the existence of different autocorrelation types (spatial autocorrelation (SAC), temporal autocorrelation (TAC) or spatio-temporal autocorrelation (STAC)) in datasets.
+  Spatiotemporal resampling methods are needed to account for the existence of different autocorrelation types (spatial autocorrelation (SAC), temporal autocorrelation (TAC) or spatiotemporal autocorrelation (STAC)) in datasets.
   These autocorrelation types cause biased performance estimates of varying magnitude in cross-validation when ignored.
   At the time of writing, various R packages implementing different spatiotemporal partitioning strategies exist: CAST [@cast], blockCV [@blockCV] or sperrorest [@sperrorest].
   There are some resampling methods used in scientific studies for which the source code is either not available or a different programming language has been used [@roberts2017; @pohjankukka2017]
@@ -82,8 +82,8 @@ knitr::opts_chunk$set(fig.path = "./paper/figs/",
 
 # Introduction
 
-Spatial and spatio-temporal prediction tasks are common in applications ranging from environmental sciences to archaeology and epidemiology. 
-While sophisticated mathematical frameworks have long been developed in spatial statistics to characterize predictive uncertainties under well-defined mathematical assumptions such as intrinsic stationarity [e.g., cressie2015], computational estimation procedures have only been proposed more recently to assess predictive performances of spatial and spatio-temporal prediction models [@brenning2005; @sperrorest; @pohjankukka2017; @roberts2017].
+Spatial and spatiotemporal prediction tasks are common in applications ranging from environmental sciences to archaeology and epidemiology. 
+While sophisticated mathematical frameworks have long been developed in spatial statistics to characterize predictive uncertainties under well-defined mathematical assumptions such as intrinsic stationarity [e.g., cressie2015], computational estimation procedures have only been proposed more recently to assess predictive performances of spatial and spatiotemporal prediction models [@brenning2005; @sperrorest; @pohjankukka2017; @roberts2017].
 
 Although alternatives such as the bootstrap exist and have some advantages [@efron1983; @hand1996], cross-validation is a particularly well-established, easy-to-implement algorithm for *model assessment* of supervised machine-learning models [@efron1983 and next section] and *model selection* [@arlot2010]. 
 In its basic form, it is based on resampling the data without paying attention to any possible dependence structure, which may arise from, e.g., cluster sampling [ref], grouped data [@brenning2008; @pena2015], or underlying environmental processes inducing some sort of spatial coherence at the landscape scale [@brenning2005]. 
@@ -98,19 +98,19 @@ To mimic the predictive situation for which the model is trained, we'd rather ha
 If the model was to be applied to adjacent agricultural districts, i.e. outside the learning sample's spatial domain [*extra-domain* prediction; @brenning2005], it would even seem necessary to resample at a higher level of spatial aggregation, i.e. at the level of agricultural districts within the learning sample, in order to realistically mimic the actual prediction task. 
 The cross-validation resampling needed therefore depends as much on the prediction task as on the data structure or dependency at hand.
 
-While it is not the purpose of this paper to recommend specific resampling schemes for specific use cases, this example may suffice to motivate the use of spatial and spatio-temporal cross-validation techniques, and the need for a unified framework and computational toolbox that accommodate a variety of prediction tasks that may be applicable to a broad range of prediction tasks.
+While it is not the purpose of this paper to recommend specific resampling schemes for specific use cases, this example may suffice to motivate the use of spatial and spatiotemporal cross-validation techniques, and the need for a unified framework and computational toolbox that accommodate a variety of prediction tasks that may be applicable to a broad range of prediction tasks.
 \pkg{mlr3spatiotempcv} is such a toolbox.
 
 This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (see Table \@ref(tab:sptcv-methods)). 
 The earliest of these implementations is the \pkg{sperrorest} package [@sperrorest], which has, however, not been integrated into established machine-learning frameworks such as \pkg{mlr} or \pkg{caret}, and lacks support of temporal prediction tasks. 
-Other more recent implementations include \pkg{blockCV} for (what for?) [ref @blockCV; @rest2014] and \pkg{CAST} for spatio-temporal prediction tasks in a \pkg{caret} framework [@cast; @meyer2018a]. 
+Other more recent implementations include \pkg{blockCV} for (what for?) [ref @blockCV; @rest2014] and \pkg{CAST} for spatiotemporal prediction tasks in a \pkg{caret} framework [@cast; @meyer2018a]. 
 
-Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state-of-the-art compilation of spatial and spatio-temporal partitioning schemes that is well-integrated into a major machine-learning framework in R, the \pkg{mlr3} ecosystem [@mlr3]. 
+Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state-of-the-art compilation of spatial and spatiotemporal partitioning schemes that is well-integrated into a major machine-learning framework in R, the \pkg{mlr3} ecosystem [@mlr3]. 
 This package is furthermore equipped with a variety of two- and three-dimensional diagram types. Our hope is that implementation will facilitate reproducible geospatial modelling and code-sharing across a broad range of application domains.
 
 
 
-# Spatial and Spatio-temporal Cross-validation
+# Spatial and Spatiotemporal Cross-validation
 
 In cross-validation for predictive model assessment, we consider the following formal setting. 
 We are interested in predicting a numerical or categorical response $y$ of an object or instance using a feature vector $\mathbf{x} = (x^{(1)}, \ldots, x^{(p)}\in\mathbb{R}$ and a model $\hat{f}_L$ that has been trained on a learning sample $L = \{(y_i, \mathbf{x}_i),\ i = 1, ..., n\}$. Our goal is to estimate the expected value of the performance of $\hat{f}_L$,
@@ -166,9 +166,9 @@ It should be noted that $k$-fold cross-validation with a large value of $k$, and
 
 # mlr3spatiotempcv within the mlr3 ecosystem
 
-With the increased awareness of the importance of spatial and spatio-temporal resampling strategies and the growing popularity of R in environmental modelling and geocomputation, it is important to equip machine-learning frameworks such as \pkg{mlr} with suitable algorithms. 
+With the increased awareness of the importance of spatial and spatiotemporal resampling strategies and the growing popularity of R in environmental modelling and geocomputation, it is important to equip machine-learning frameworks such as \pkg{mlr} with suitable algorithms. 
 In this context, \pkg{mlr3} stands out as a unified, object-oriented and extendable framework designed to accommodate numerous machine-learning tasks with a variety of learners, feature and model selection tools, and model assessment capabilities [@mlr3; mlr3book]. 
-All of these are supported by advanced visualization tools, which are particularly important in a spatial and spatio-temporal setting.
+All of these are supported by advanced visualization tools, which are particularly important in a spatial and spatiotemporal setting.
 
 With its integrative approach and its aim to provide long-term support, \pkg{mlr3} overcomes the challenges of combining multiple specialized packages with poorly standardized interfaces.
 Issues that practitioners often face include varying argument lists of learners, different return values of `predict` methods, and support for only specific feature types. 
@@ -696,7 +696,7 @@ In practice most often a nested CV is desired.
 In this case it is recommended to use the same spatial partitioning method for the inner loop (= tuning level).
 See @schratz2019 for more details and chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace2019].
 
-## Comparing spatio-temporal resampling methods
+## Comparing spatiotemporal resampling methods
 
 <!-- high autocor on the border of test sets -->
 <!-- sptcv LLTO: discards many observations -->
@@ -733,7 +733,7 @@ However, the influence of a single variable is hard to estimate and the same app
 # Summary and outlook
 
 <!-- missing: Guidelines how to choose a resampling method -->
-While various spatio-temporal resampling methods exists nowadays to account for spatio-temporal autocorrelation in modeling, there is still lots of uncertainties which method should be used for which dataset.
+While various spatiotemporal resampling methods exists nowadays to account for spatiotemporal autocorrelation in modeling, there is still lots of uncertainties which method should be used for which dataset.
 The answer to this questions is not trivial and needs more research.
 One option could be to propose a checklist of dataset characteristics which would make a dataset more suitable for specific methods that could help users making an appropriate and objective decision.
 
@@ -742,9 +742,9 @@ Also no methods yet exists that makes use of a buffer zone with blocking or clus
 
 We believe that making resampling methods available to widely used modeling frameworks is more benefitial than implementing such methods standalone in an R package.
 The latter often require special structured objects as inputs and cannot directly be re-used in susequent modeling steps of user workflows.
-This is not an issue specific to spatio-temporal resampling methods but a general philosophy of the authors.
+This is not an issue specific to spatiotemporal resampling methods but a general philosophy of the authors.
 
-Spatio-temporal cross-validation is still not yet a paradigm that is completely established in scientfic workflows even though it is discussed intensively for more than a decade now.
+Spatiotemporal cross-validation is still not yet a paradigm that is completely established in scientfic workflows even though it is discussed intensively for more than a decade now.
 Making most available methods easily accessible to users is an important step to foster the acceptance of such in the community and lead to less biased cross-validation results in environmental and ecological studies.
 
 ```{r echo=FALSE}
