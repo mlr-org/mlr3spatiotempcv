@@ -254,14 +254,10 @@ autoplot(resampling_nsp, task, fold_id = c(1:2), crs = 32717, size = 0.8) *
 
 # Spatiotemporal partitioning methods
 
-## Spatial
+At the time of writing, \pkg{mlr3spatiotempcv} implements the partitioning methods identified in Table \@ref(tab:sptcv-methods) with their \pkg{mlr3} class name. 
+Several of the implemented algorithms are themselves versatile toolboxes with multiple options. Comprehensive and up-to-date information can be found in the package's online documentation. The following sections give an overview of most existing partitioning strategies and their visualization. The available methods are futher discussed in section \@ref(sec:disc).
 
-### Buffering
 
-At the time of writing, the following spatiotemporal resampling methods (Tab. \@ref(tab:sptcv-methods)) were available across different R packages.
-This list might increase over time and it is recommended to check the homepage of \pkg{mlr3spatiotempcv} for an up-to-date list.
-In Tab. \@ref(tab:sptcv-methods), the internal identifier for the respective method in \pkg{mlr3spatiotempcv} is shown in column "Notation".
-Some of the methods listed are able to produce different partitioning results by setting different options, hence the actual number of available methods is higher than the one shown in Tab. \@ref(tab:sptcv-methods).
 
 \begin{table}[h]
   \centering
@@ -289,8 +285,15 @@ Some of the methods listed are able to produce different partitioning results by
   \endgroup\label{tab:sptcv-methods}
 \end{table}
 
-A low-level introduction including visualization is given for every method in the following.
-See section \@ref(sec:disc) for a discussion of the methods.
+
+
+
+
+## Spatial
+
+### Buffering
+
+
 
 #### Spatial buffering (blockCV)
 
