@@ -174,30 +174,20 @@ With its integrative approach and its aim to provide long-term support, \pkg{mlr
 Issues that practitioners often face include varying argument lists of learners, different return values of `predict` methods, and support for only specific feature types. 
 These challenges result in substantial overhead and possible reproducibility issues, which are exacerbated by asynchronous development timelines of different components of the machine-learning pipelines.
 
-- *add one/two paragraphs outlining mlr3's object model and mlr3psatiotempcv's place within. someting along the lines of:*
-
 Within \pkg{mlr}, partitioning strategies are represented by resampling objects (correct?) of class xyz, which are generated within mlr3 itself (for regular random CV, correct??) or within specialized extensions such as mlr3spatiotempcv.
 In the ML pipeline, these objects are used for model assessment by ... objects/tasks/whatever and for model selection by ... objects/tasks/..., providing a consistent framework for both tasks that is necessary to optimize learners for a given prediction problem [@schratz2019].
 
-Resampling objects in mlr3spatiotmpcv inherit from and can be created from established object classes for geospatial data in R, including simple features (add a general reference, maybe Lovelace), which facilitates its integration into domain-specific workflows in the geospatial sciences. This includes support for geographic coordinate reference systems and their respective distance measures in projected planar space or on the unprojected ellipsoid (corrrect?). Of course, non-spatial data tables with coordinates as variables are also supported.
+Resampling objects in \pkg{mlr3spatiotmpcv} inherit from and can be created from established object classes for geospatial data in R, including simple features (add a general reference, maybe Lovelace), which facilitates its integration into domain-specific workflows in the geospatial sciences. This includes support for geographic coordinate reference systems (CRS) and their respective distance measures in projected planar space or using great circle distances on the unprojected ellipsoid (corrrect???). Non-spatial data tables with coordinates as variables are also supported. If no projection is specified, World Geodetic System 1984 (WGS84, EPSG: 4326) will be assumed.
+
+Partitioning objects in \pkg{mlr3spatiotempcv} are equipped with generic `plot()` and `autoplot()` methods that visualize the created groups. `autoplot()` is \pkg{ggplot2}-based and uses [ggplot2](https://ggplot2.tidyverse.org) [@ggplot2] in two-dimensional geographic space and [plotly](https://github.com/ropensci/plotly) [@plotly] in three dimensions, i.e. geographic space plus time.
 
 
+# Application in a Case Study
 
-# Visualization of spatiotemporal partitions
+We will use a well-known case study to demonstrate the application of spatial resampling techniques. 
+This binary classification task on landslide susceptibility in Ecuador [@muenchow2012] is available as a built-in task via `tsk("ecuador")`.
 
-Every partitioning method in [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) comes with generic `plot()` and `autoplot()` (\pkg{ggplot2} equivalent) method to visualize the created groups.
-In a 2D space this happens via package [ggplot2](https://ggplot2.tidyverse.org) [@ggplot2] while for spatiotemporal methods 3D visualizations are created via package [plotly](https://github.com/ropensci/plotly) [@plotly].
-
-Visualization of partitioning methods is a vital part of \pkg{mlr3spatiotempcv} as most upstream packages lack support for such.
-Hence, plotting semantics are presented first because plotting will be used extensively when presenting the integrated methods.
-
-Unless specified by the user, the coordinate reference system (CRS) defaults to EPSG code 4326 (WGS84).
-This is because a lat/lon based CRS is better suited for plotting purposes than a Mercator (UTM) one due tho a more descriptive axes labeling.
-Setting an appropriate CRS for the given data *during task construction* is very important.
-Even though EPSG 4326 is a good fallback and often used for visualization purposes, spatial offsets of up to multiple meters may occur if the wrong CRS was passed initially.
-
-The following example creates a spatiotemporal task from scratch.
-This task is also available as a built-in task via `tsk("ecuador")`.
+...
 
 Because the spatial grouping of the k-means based approach (`"spcv_coords"`) (Fig. \@ref(fig:vis-spcv)) contrasts visually very well to NSpCV (random) partitioning (Fig. \@ref(fig:vis-nspcv)), this method was chosen to showcase the 2D plotting capabilities of \pkg{mlr3spatiotempcv}.
 
@@ -210,6 +200,8 @@ Besides the required arguments of the \pkg{mlr3} superclass `Task`, `TaskClassif
 - `coords_as_features`: Whether the coordinates should be used as features during modeling.
   By default coordinates are not used as predictors.
 - `crs`: The coordinate reference system of the data. Valid inputs are PROJ4 strings or EPSG codes in the format `ESPG: <code>`.
+
+
 
 ```{r create task}
 library(mlr3)
@@ -255,7 +247,7 @@ autoplot(resampling_nsp, task, fold_id = c(1:2), crs = 32717, size = 0.8) *
 # Spatiotemporal partitioning methods
 
 At the time of writing, \pkg{mlr3spatiotempcv} implements the partitioning methods identified in Table \@ref(tab:sptcv-methods) with their \pkg{mlr3} class name. 
-Several of the implemented algorithms are themselves versatile toolboxes with multiple options. Comprehensive and up-to-date information can be found in the package's online documentation. The following sections give an overview of most existing partitioning strategies and their visualization. The available methods are futher discussed in section \@ref(sec:disc).
+Several of the implemented algorithms are themselves versatile toolboxes with multiple options. Comprehensive and up-to-date information can be found in the package's online documentation (<https://mlr3spatiotempcv.mlr-org.com>). The following sections give an overview of most existing partitioning strategies and their visualization. The available methods are futher discussed in section \@ref(sec:disc).
 
 
 
