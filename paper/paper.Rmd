@@ -36,7 +36,7 @@ abstract: >
   It adds support for spatiotemporal resampling methods and respective visualization methods.
   Spatiotemporal resampling methods are needed to account for the existence of different autocorrelation types (spatial autocorrelation (SAC), temporal autocorrelation (TAC) or spatiotemporal autocorrelation (STAC)) in datasets.
   These autocorrelation types cause biased performance estimates of varying magnitude in cross-validation when ignored.
-  At the time of writing, various R packages implementing different spatiotemporal partitioning strategies exist: CAST [@cast], blockCV [@blockCV] or sperrorest [@sperrorest].
+  At the time of writing, various R packages implementing different spatiotemporal partitioning strategies exist: CAST [@cast], blockCV [@blockCV] or sperrorest [@brenning2012].
   There are some resampling methods used in scientific studies for which the source code is either not available or a different programming language has been used [@roberts2017; @pohjankukka2017]
 
   The goal of [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is to gather the available spatiotemporal resampling methods in R and make them available to users through a simplified and generic interface.
@@ -83,7 +83,7 @@ knitr::opts_chunk$set(fig.path = "./paper/figs/",
 # Introduction
 
 Spatial and spatiotemporal prediction tasks are common in applications ranging from environmental sciences to archaeology and epidemiology. 
-While sophisticated mathematical frameworks have long been developed in spatial statistics to characterize predictive uncertainties under well-defined mathematical assumptions such as intrinsic stationarity [e.g., cressie2015], computational estimation procedures have only been proposed more recently to assess predictive performances of spatial and spatiotemporal prediction models [@brenning2005; @sperrorest; @pohjankukka2017; @roberts2017].
+While sophisticated mathematical frameworks have long been developed in spatial statistics to characterize predictive uncertainties under well-defined mathematical assumptions such as intrinsic stationarity [e.g., [@cressie1993], computational estimation procedures have only been proposed more recently to assess predictive performances of spatial and spatiotemporal prediction models [@brenning2005, @brenning2012; @pohjankukka2017; @roberts2017].
 
 Although alternatives such as the bootstrap exist and have some advantages [@efron1983; @hand1996], cross-validation is a particularly well-established, easy-to-implement algorithm for *model assessment* of supervised machine-learning models [@efron1983 and next section] and *model selection* [@arlot2010]. 
 In its basic form, it is based on resampling the data without paying attention to any possible dependence structure, which may arise from, e.g., cluster sampling [ref], grouped data [@brenning2008; @pena2015], or underlying environmental processes inducing some sort of spatial coherence at the landscape scale [@brenning2005]. 
@@ -102,7 +102,7 @@ While it is not the purpose of this paper to recommend specific resampling schem
 \pkg{mlr3spatiotempcv} is such a toolbox.
 
 This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (see Table \@ref(tab:sptcv-methods)). 
-The earliest of these implementations is the \pkg{sperrorest} package [@sperrorest], which has, however, not been integrated into established machine-learning frameworks such as \pkg{mlr} or \pkg{caret}, and lacks support of temporal prediction tasks. 
+The earliest of these implementations is the \pkg{sperrorest} package [@brenning2012], which has, however, not been integrated into established machine-learning frameworks such as \pkg{mlr} or \pkg{caret}, and lacks support of temporal prediction tasks. 
 Other more recent implementations include \pkg{blockCV} for (what for?) [ref @blockCV; @rest2014] and \pkg{CAST} for spatiotemporal prediction tasks in a \pkg{caret} framework [@cast; @meyer2018a]. 
 
 Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state-of-the-art compilation of spatial and spatiotemporal partitioning schemes that is well-integrated into a major machine-learning framework in R, the \pkg{mlr3} ecosystem [@mlr3]. 
@@ -118,7 +118,7 @@ We are interested in predicting a numerical or categorical response $y$ of an ob
 \mathit{perf(\hat{f}_L)} := E(l(Y,\hat{f}_L(X))),
 \]
 where $l$ is a real-valued loss function, and the expected value is with respect the probability distribution of $X$, the features of an instance $(Y,X)$ drawn randomly from the underlying population. 
-This is referred to as the *actual* or *conditional* performance measure as it is conditional on $L$ [@hand1996]. 
+This is referred to as the *actual* or *conditional* performance measure as it is conditional on $L$ [@milligan2000]. 
 The loss function can take a variety of forms such as the misclassification error $I(Y\neq\hat{f}_L(X))$ in classification, or the squared error $(Y-\hat{f}_L(X))^2$ in regression, among many other possible measures. 
 The choice of the performance measure is equally critical as the choice of the estimation procedure, but it is beyond the scope of this contribution to discuss performance metrics for regression and classification [see e.g., @hand1996 for classification, and ref?? for regression tasks].
 
@@ -150,7 +150,7 @@ Several approaches have therefore been proposed in the literature and implemente
 
 - add a paragraph with more information on spCV using spatial partitionings
 
-A variant of cross-validation is leave-one-out (LOO) cross-validation , which has long been established in geostatistics [@cressie2015], sometimes with a focus on the spatial distribution of LOO error [@willmott2006]. 
+A variant of cross-validation is leave-one-out (LOO) cross-validation , which has long been established in geostatistics [@cressie1993], sometimes with a focus on the spatial distribution of LOO error [@willmott2006]. 
 Since this is just a special case of non-spatial CV with $k=n$, it is sometimes also referred to as spatial CV [@willmott2006]. 
 Nevertheless, spatial variants have been proposed that apply an exclusion buffer to the test locations to separate them from the training data [@brenning2005]. 
 One plausible approach for this is to use the range of autocorrelation of model residuals to determine the buffer distance as this ensures independence conditional on the predictors [@brenning2005]. 
@@ -166,8 +166,8 @@ It should be noted that $k$-fold cross-validation with a large value of $k$, and
 
 # mlr3spatiotempcv within the mlr3 ecosystem
 
-With the increased awareness of the importance of spatial and spatiotemporal resampling strategies and the growing popularity of R in environmental modelling and geocomputation, it is important to equip machine-learning frameworks such as \pkg{mlr} with suitable algorithms. 
-In this context, \pkg{mlr3} stands out as a unified, object-oriented and extendable framework designed to accommodate numerous machine-learning tasks with a variety of learners, feature and model selection tools, and model assessment capabilities [@mlr3; mlr3book]. 
+With the increased awareness of the importance of spatial and spatiotemporal resampling strategies and the growing popularity of R in environmental modeling and geocomputation, it is important to equip machine-learning frameworks such as \pkg{mlr3} with suitable algorithms. 
+In this context, the \pkg{mlr3} ecosystem stands out as a unified, object-oriented and extendable framework designed to accommodate numerous machine-learning tasks with a variety of learners, feature and model selection tools, and model assessment capabilities [@mlr3; @mlr3book]. 
 All of these are supported by advanced visualization tools, which are particularly important in a spatial and spatiotemporal setting.
 
 With its integrative approach and its aim to provide long-term support, \pkg{mlr3} overcomes the challenges of combining multiple specialized packages with poorly standardized interfaces.
@@ -441,7 +441,7 @@ autoplot(resampling_tiles,
 
 #### Coordinate-based clustering
 
-The "Spatial CV" method after [@sperrorest] and implemented in package \pkg{sperrorest} is similar to method "environmental blocking" in that it also uses *k-means* clustering for fold creation.
+The "Spatial CV" method after [@brenning2012] and implemented in package \pkg{sperrorest} is similar to method "environmental blocking" in that it also uses *k-means* clustering for fold creation.
 However, it does not make use of arbitrary features but uses the coordinates of all observations to create clusters in the spatial domain.
 This is what lead to the naming of `spcv_coords` in \pkg{mlr3spatiotempcv}.
 
@@ -464,7 +464,7 @@ FIXME
 
 #### Leave-Location-And-Time-Out (CAST)
 
-Leave-Location-and-Time-Out (LLTO) from packge \pkg{CAST} is a spatiotemporal resampling method [@meyer2018a].
+Leave-Location-and-Time-Out (LLTO) from packge \pkg{CAST} is a spatiotemporal resampling method [@meyer2018].
 It requires both a spatial and a temporal variable which are used to to separate observations in a multi-dimensional space.
 It comes with satellite methods named "Leave-time-out" (LTO) and "Leave-location-out" (LLO) which only operate in a two-dimensional space.
 
@@ -714,7 +714,7 @@ Method `"spcv_buffer"` makes use of the removal of observations to reduce the in
 This might be pretty effective in reducing autocorrelation but also requires to discard many variables and comes with the downsides of LOO-CV: many model fits which can be computationally very demanding and a high variance due to the high similarity of training datasets [@blockCV].
 
 <!-- spcv coords: mention generic name -->
-In @sperrorest, which is commonly used as the main reference for this k-means based spatial clustering approach, the method was not assigned a unique name.
+In @brenning2012, which is commonly used as the main reference for this k-means based spatial clustering approach, the method was not assigned a unique name.
 This brings potential confusion for users and the community as the term "spatial CV" is used a generic one for the idea of accounting for spatial autocorrelation for spatial datasets.
 Hence, in \pkg{mlr3spatiotempcv} this method was named `"spcv_coords"`, making use of the fact that the spatial coordinates are used for a cluster-based partition creation.
 
