@@ -81,7 +81,6 @@ TaskClassifST = R6::R6Class("TaskClassifST",
         positive = positive, extra_args = extra_args)
 
       self$extra_args$coordinate_names = extra_args$coordinate_names
-      self$extra_args$crs = checkmate::assert_character(extra_args$crs, null.ok = TRUE)
 
       info = self$col_info[id == target]
       levels = info$levels[[1L]]
