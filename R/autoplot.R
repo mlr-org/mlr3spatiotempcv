@@ -976,7 +976,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
           crs = crs)
         sf_df = reorder_levels(sf_df)
 
-        ggplot() +
+        plot = ggplot() +
           geom_sf(data = sf_df, aes(color = indicator), ...) +
           scale_color_manual(values = c(
             "Train" = "#0072B5",
@@ -994,6 +994,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
               valign = 0.5, halign = 0.5,
               padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
           )
+        return(invisible(plot))
       }
     }
     else {
@@ -1303,7 +1304,7 @@ autoplot_spatial = function(
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
 
   # we need to work with a clone, otherwise the object modifications
-  # will create issues in future calls usings the same object
+  # will create issues in future calls using the same object
   rsmp_autopl = resampling$clone()
 
   rsmp_autopl = assert_autoplot(rsmp_autopl, fold_id, task)
@@ -1388,7 +1389,8 @@ autoplot_spatial = function(
                 # st_point_on_surface may not give correct results for
                 # longitude/latitude data
                 suppressWarnings(sf::st_point_on_surface(sf::st_zm(x)))
-              })
+              }
+            )
         }
         return(p1)
       } else {
@@ -1468,7 +1470,7 @@ autoplot_spatial = function(
       ) +
       ggsci::scale_color_ucscgb() +
       labs(color = sprintf("Partition #, Rep %s", repeats_id))
-    return(plot)
+    return(invisible(plot))
   }
 }
 

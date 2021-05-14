@@ -118,6 +118,9 @@ values stored in the \code{param_set}.}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create an "spatial block" resampling instance.
+
+For a list of available arguments, please see
+\code{\link[blockCV:spatialBlock]{blockCV::spatialBlock()}}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVBlock$new(id = "spcv_block")}\if{html}{\out{</div>}}
 }
