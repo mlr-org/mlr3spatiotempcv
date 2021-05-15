@@ -2,7 +2,7 @@
 % Please edit documentation in R/TaskRegrST.R
 \name{TaskRegrST}
 \alias{TaskRegrST}
-\title{SpatioTemporal Regression Task}
+\title{Create a Spatiotemporal Regression Task}
 \description{
 This task specializes \link{Task} and \link{TaskSupervised} for spatiotemporal
 classification problems.
