@@ -2,7 +2,7 @@
 % Please edit documentation in R/TaskClassifST.R
 \name{TaskClassifST}
 \alias{TaskClassifST}
-\title{SpatioTemporal Classification Task}
+\title{Crate a Spatiotemporal Classification Task}
 \description{
 This task specializes \link{Task} and \link{TaskSupervised} for
 spatiotemporal classification problems. The target column is assumed to be a
