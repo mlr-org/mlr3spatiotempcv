@@ -102,7 +102,7 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
     #'   Iteration number.
     folds = function(iters) {
       iters = assert_integerish(iters, any.missing = FALSE, coerce = TRUE)
-      ((iters - 1L) %% as.integer(self$param_set$values$repeats)) + 1L
+      ((iters - 1L) %% as.integer(self$param_set$values$folds)) + 1L
     },
 
     #' @description Translates iteration numbers to repetition number.
@@ -159,7 +159,8 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }),
+    }
+  ),
   active = list(
 
     #' @field iters `integer(1)`\cr
@@ -168,7 +169,8 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
     iters = function() {
       pv = self$param_set$values
       as.integer(pv$repeats) * as.integer(pv$folds)
-    }),
+    }
+  ),
   private = list(
     .sample = function(ids, data_matrix, clmethod, cluto_parameters, verbose) {
       vcluster_loc = check_cluto_path()
@@ -212,5 +214,6 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
       fold = i %% folds + 1L
       ii = data.table(rep = rep, fold = fold)
       self$instance[ii, "row_id", on = names(ii), nomatch = 0L][[1L]]
-    })
+    }
+  )
 )
