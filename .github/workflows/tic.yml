@@ -90,6 +90,7 @@ jobs:
       - name: "[Custom block] [macOS] Install spatial libraries"
         if: runner.os == 'macOS'
         run: |
+          rm '/usr/local/bin/gfortran'
           brew install ccache gdal geos proj udunits
           brew install xquartz
 
