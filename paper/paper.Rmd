@@ -56,6 +56,8 @@ preamble: >
   \usepackage{multirow}
   \usepackage{tabularx}
   \usepackage{placeins}
+  \usepackage{scrextend}
+  \usepackage{tablefootnote}
   \newcommand{\specialcell}[2][l]{%
     \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
 tables: true
@@ -264,19 +266,20 @@ Several of the implemented algorithms are themselves versatile toolboxes with mu
       \\
       Type                            & Name                        & R Package(s)     & mlr3 Notation  & Literature \\
       \toprule
-      \multirow{6}{*}{Spatial}        & Spatial Buffering           & \specialcell{\pkg{blockCV} \\ \pkg{sperrorest}}    & \specialcell{ \texttt{"spcv\_buffer"} \\  \texttt{"spcv\_disc"}}  & Lit1       \\
+      \multirow{6}{*}{Spatial}        & Spatial Buffering           & \specialcell{\pkg{blockCV} \\ \pkg{sperrorest}}    & \specialcell{ \texttt{"spcv\_buffer"} \\  \texttt{"spcv\_disc"} \tablefootnote{\label{endicott2017}\cite{endicott2017}} }  & \tablefootnote{\label{ploton2020}\cite{ploton2020}}  \tablefootnote{\label{diesing2020}\cite{diesing2020}}      \\
       \cmidrule{2-5}
-                                      & Spatial Blocking            & \specialcell{\pkg{blockCV} \\ \pkg{sperrorest}}  & \specialcell{  \texttt{"spcv\_block"} \\  \texttt{"spcv\_tiles"}}
-                                        & Lit1       \\
+                                      & Spatial Blocking            & \specialcell{\pkg{blockCV} \\ \pkg{sperrorest}}  & \specialcell{  \texttt{"spcv\_block"} \\  \texttt{"spcv\_tiles"} \tablefootnote{\label{bebber2017}\cite{bebber2017}} \tablefootnote{\label{brenning2015}\cite{brenning2015}} \tablefootnote{\label{zurell2020}\cite{zurell2020}} }
+                                        & \tablefootnote{\label{jensen2021}\cite{jensen2021}} \tablefootnote{\label{escobar2021}\cite{escobar2021}} \tablefootnote{\label{stewart2021}\cite{stewart2021}} \tablefootnote{\label{cerasoli2021}\cite{cerasoli2021}}        \\
   \cmidrule{2-5}
-                                      & Spatial Clustering          & \pkg{sperrorest} & \texttt{"spcv\_coords"} & Lit1       \\
+                                      & Spatial Clustering          & \pkg{sperrorest} & \texttt{"spcv\_coords"} & \tablefootnote{\label{note1}\cite{brenning2012}} \tablefootnote{\label{morera2021}\cite{morera2021}} \tablefootnote{\label{geiss2017}\cite{geiss2017}} \tablefootnote{\label{wu2020}\cite{wu2020}}      \\
                                       \cmidrule{2-5}
-       & Leave-Location-Out & \specialcell{\pkg{CAST} \\ \pkg{mlr3}}       & \specialcell{ \texttt{"sptcv\_cstf('space\_var')"} \\ \texttt{"FIXME"}},  & Lit1       \\
+       & Leave-Location-Out & \specialcell{\pkg{CAST} \\ \pkg{mlr3}}       & \specialcell{ \texttt{"sptcv\_cstf('space\_var')"} \\ \texttt{"FIXME"}},  & \footref{note1}       \\
       \midrule
-      \multirow{2}{*}{Spatiotemporal} & Leave-Location-and-Time-Out & \pkg{CAST}       &  \texttt{"sptcv\_cstf"}  & Lit1       \\
-                                      & Spatiotemporal Clustering   & \pkg{skmeans}    &  \texttt{"sptcv\_cluto"} & Lit1       \\
+      \multirow{2}{*}{Spatiotemporal} & Leave-Location-and-Time-Out & \pkg{CAST}       &  \texttt{"sptcv\_cstf"}  & \\
+                                      & Spatiotemporal Clustering   & \pkg{skmeans}    &  \texttt{"sptcv\_cluto"} &        \\
       \midrule
-      Feature space                   & Environmental Blocking      & \pkg{blockCV}    &  \texttt{"spcv\_env"}    & Lit1       \\
+      Feature space                   & Environmental Blocking      & \pkg{blockCV}    &  \texttt{"spcv\_env"}    & \footref{morera2021}     \\
+
     \end{tabular}
   \endgroup\label{tab:sptcv-methods}
 \end{table}
