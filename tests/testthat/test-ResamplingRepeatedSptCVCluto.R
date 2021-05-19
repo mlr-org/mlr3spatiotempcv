@@ -16,7 +16,7 @@ test_that("reps and folds can be printed", {
   rsp$instantiate(task)
 
   expect_equal(rsp$repeats(4:8), c(2, 2, 2, 3, 3))
-  expect_equal(rsp$folds(10), 5)
+  expect_equal(rsp$folds(10), 1)
 })
 
 test_that("resampling iterations equals folds * repeats", {
