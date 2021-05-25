@@ -95,7 +95,8 @@ This cross-validation bias is well-known in spatial as well as non-spatial predi
 It is most easily understood from a predictive modelling perspective by focusing on the question where (and when) the model should be used for prediction.
 In crop classification from remotely-sensed data, for instance, learning samples routinely contain multiple grid cells from a sample of fields with known crop type, for instance 2000 grid cells from 100 fields scattered across a large study region.
 The purpose of training a model on this sample is to make predictions on other, new *fields* within the same geographic domain (*intra-domain* prediction; @brenning2005) --- not *within* the same field, which obviously presents only one crop type.
-In this stituation it would therefore seem rather foolish to train a model on a simple random subsample of grid cells, and test it on the remaining data, i.e. using other grid cells from the same fields, as if we wanted to predict within a field. The results from this performance assessment would be over-optimitic, and perhaps badly so.
+In this stituation it would therefore seem rather foolish to train a model on a simple random subsample of grid cells, and test it on the remaining data, i.e. using other grid cells from the same fields, as if we wanted to predict within a field.
+The results from this performance assessment would be over-optimitic, and perhaps badly so.
 To mimic the predictive situation for which the model is trained, we'd rather have to resample at the level of fields, not grid cells [@pena2015].
 If the model was to be applied to adjacent agricultural districts, i.e. outside the learning sample's spatial domain (*extra-domain* prediction; @brenning2005), it would even seem necessary to resample at a higher level of spatial aggregation, i.e. at the level of agricultural districts within the learning sample, in order to realistically mimic the actual prediction task.
 The cross-validation resampling needed therefore depends as much on the prediction task as on the data structure or dependency at hand.
@@ -110,6 +111,9 @@ Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state
 This package is furthermore equipped with a variety of two- and three-dimensional diagram types. Our hope is that this implementation will facilitate reproducible geospatial modelling and code-sharing across a broad range of application domains.
 
 
+Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state-of-the-art compilation of spatial and spatiotemporal partitioning schemes that is well-integrated into a major machine learning framework in R, the \pkg{mlr3} ecosystem [@mlr3].
+This package is furthermore equipped with a variety of two- and three-dimensional diagram types.
+Our hope is that implementation will facilitate reproducible geospatial modelling and code-sharing across a broad range of application domains.
 
 # Spatial and Spatiotemporal Cross-validation
 
@@ -142,9 +146,9 @@ The $k$-fold CV estimator can therefore be written as
 \widehat{\mathit{perf}}_{\mathcal{L}, CV}(f) := \frac{1}{k}\sum_{i=1}^k\widehat{\mathit{perf}}_{\mathcal{L}_i}(\hat{f}_{\mathcal{L}_{(i)}}),
 \]
 where $f$ is a machine-learning algorithm, i.e. a mapping that trains a model $\hat{f}_\mathcal{S}$ using any suitable training sample $\mathcal{S}$.
-The use of $k=5$ or $k=10$ folds is most commonly seen in practice, and these preferences are also supported by theory [ref??].
+The use of $k=5$ or $k=10$ folds is most commonly seen in practice, and these preferences are also supported by theory [@bengio2004, @cawley2010].
 The $k$-fold CV estimator of model performance is a nearly unbiased estimator of the conditional performance measure when the observations were drawn independently [@efron1983].
-Since $\widehat{\mathit{perf}}_{\mathcal{L}, CV}(f)$ still depends on the particular partitioning chosen for $L$, it is sometimes recommended to repeat the estimation using different random partitionings ($r$-repeated $k$-fold cross-validation, e.g. $k=100$; ref??).
+Since $\widehat{\mathit{perf}}_{\mathcal{L}, CV}(f)$ still depends on the particular partitioning chosen for $L$, it is sometimes recommended to repeat the estimation using different random partitionings ($r$-repeated $k$-fold cross-validation) to reduce the influence of randomness when creating partitions [@vanwinckelen2012].
 
 In traditional cross-validation, the partitioning is based on uniform random sampling, which ignores spatial or temporal autocorrelation or any existing grouping structure as well as the structure of the prediction task, as outlined in the Introduction, and may result in over-optimistic performance estimates.
 Several approaches have therefore been proposed in the literature and implemented in software to accommodate a variety of predictive situations (Table \@ref(tab:sptcv-methods)).
@@ -280,7 +284,7 @@ Several of the implemented algorithms are themselves versatile toolboxes with mu
   \cmidrule{2-5}
                                       & Spatial Clustering          & \pkg{sperrorest} & \texttt{"spcv\_coords"} \tablefootnote{\label{morera2021}\cite{morera2021}} \tablefootnote{\label{geiss2017}\cite{geiss2017}} \tablefootnote{\label{wu2020}\cite{wu2020}} &  21 \\
                                       \cmidrule{2-5}
-       & Predefined grouping & \specialcell{\pkg{CAST} \\ \pkg{mlr3}}       & \specialcell{ \texttt{"sptcv\_cstf"} \tablefootnote{\label{blothe2021}\cite{blothe2021}} \tablefootnote{\label{dolan2021}\cite{dolan2021}} \tablefootnote{\label{dumke2019}\cite{dumke2019}}  \\ \texttt{"FIXME"}}  & \specialcell{12 \\ -}       \\
+       & Predefined grouping & \specialcell{\pkg{CAST} \\ \pkg{mlr3}}       & \specialcell{ \texttt{"sptcv\_cstf"} (LLO) \tablefootnote{\label{blothe2021}\cite{blothe2021}} \tablefootnote{\label{dolan2021}\cite{dolan2021}} \tablefootnote{\label{dumke2019}\cite{dumke2019}}  \\ \texttt{"FIXME"}}  & \specialcell{12 \\ -}       \\
       \midrule
       \multirow{2}{*}{Spatiotemporal} & Leave-Location-and-Time-Out & \pkg{CAST}       &  \texttt{"sptcv\_cstf"} \tablefootnote{\label{egli2020}\cite{egli2020}} \tablefootnote{\label{gao2019}\cite{gao2019}} \tablefootnote{\label{reitz2021}\cite{reitz2021}} & 6 \\
                                       & Spatiotemporal Clustering   & \pkg{skmeans}    &  \texttt{"sptcv\_cluto"} &  -  \\
@@ -303,8 +307,8 @@ Several of the implemented algorithms are themselves versatile toolboxes with mu
 
 #### Spatial buffering (blockCV)
 
-The "buffering" method from the \pkg{blockCV} package is conceptually similar to a leave-one-out (LOO) cross-validation approach [@rest2014, @blockCV].
-To reduce the similarity between train and test, a circular buffer around the observations representing the test set is drawn.
+The "buffering" method from the \pkg{blockCV} package is conceptually similar to a leave-one-out (LOO) cross-validation approach [@stone1974].
+To reduce the similarity between train and test, a circular buffer around the observations representing the test set is drawn [@rest2014, @blockCV].
 Within this buffer zone, all observations are removed from the training set, thereby reducing the similarity between train and test set and subsequently the influence of SAC.
 
 By default, the method considers all points for train/test creation.
@@ -354,9 +358,9 @@ autoplot(resampling_disc,
 
 #### Spatial blocking (blockCV)
 
-"Spatial Blocking" (\pkg{blockCV} package) creates homogeneous blocks across the study area splitting observations into different zones [@bahn2012a, @wenger2012a].
-Then, a number of zones is combined randomly following desired the number of folds.
-For example, in a five-fold scenario, the method tries to combines zones to end up with partitions containing around 20\% of all observations.
+"Spatial Blocking" (\pkg{blockCV} package [@blockCV]) creates homogeneous blocks across the study area splitting observations into different zones [@bahn2012, @wenger2012].
+Multiple "blocks" are then combined into a partition, following the number of folds specified by the user.
+For example, in a five-fold scenario, the method would combine one fifth of all blocks into a partition (with five partitions in total).
 
 The way how the blocks are created can be manifold: Supplying a numeric value in meters via argument `theRange` (named just `range` in {mlr3spatiotempcv}) will create a quadratic block pattern across the study area.
 The aggregation of zones can either be random (default) (`selection = "random"`), systematic (`selection = "systematic"`) or checkerboard structure (`selection = "checkerboard"`).
