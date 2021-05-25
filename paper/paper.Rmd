@@ -91,7 +91,7 @@ Although alternatives such as the bootstrap exist and have some advantages [@efr
 In its basic form, it is based on resampling the data without paying attention to any possible dependence structure, which may arise from, e.g., grouped or structured data [@brenning2008; @pena2015], or underlying environmental processes inducing some sort of spatial coherence at the landscape scale [@brenning2005].
 In treating dependent observations as independent, or ignoring autocorrelation, cross-validation test samples may in fact be heavily correlated with, or even pseudo-replicates of, the data used for training the model, which introduces a potentially severe bias, especially for flexible machine-learning models [@brenning2005].
 
-This cross-validation bias is well-known in spatial as well as non-spatial prediction [@brenning2005; @brenning2008; @arlot2010; @roberts2017] and in forecasting (ref FIXME: <https://doi.org/10.1016/j.csda.2017.11.003>).
+This cross-validation bias is well-known in spatial as well as non-spatial prediction [@brenning2005; @brenning2008; @arlot2010; @roberts2017] and in forecasting [@bergmeir2018].
 It is most easily understood from a predictive modelling perspective by focusing on the question where (and when) the model should be used for prediction.
 In crop classification from remotely-sensed data, for instance, learning samples routinely contain multiple grid cells from a sample of fields with known crop type, for instance 2000 grid cells from 100 fields scattered across a large study region.
 The purpose of training a model on this sample is to make predictions on other, new *fields* within the same geographic domain (*intra-domain* prediction; @brenning2005) --- not *within* the same field, which obviously presents only one crop type.
@@ -121,7 +121,7 @@ We are interested in predicting a numerical or categorical response $y$ of an ob
 where $l$ is a real-valued loss function, and the expected value is with respect the probability distribution of $X$, the features of an instance $(Y,X)$ drawn randomly from the underlying population.
 This is referred to as the *actual* or *conditional* performance measure as it is conditional on $L$ [@milligan2000].
 The loss function can take a variety of forms such as the misclassification error $I(Y\neq\hat{f}_\mathcal{L}(X))$ in classification, or the squared error $(Y-\hat{f}_\mathcal{L}(X))^2$ in regression, among many other possible measures.
-The choice of the performance measure is equally critical as the choice of the estimation procedure, but it is beyond the scope of this contribution to discuss performance metrics for regression and classification (see e.g., @hand1997 for classification, and ref FIXME perhaps <https://doi.org/10.1016/j.ijforecast.2006.03.001> for regression and forecasting tasks).
+The choice of the performance measure is equally critical as the choice of the estimation procedure, but it is beyond the scope of this contribution to discuss performance metrics for regression and classification (see e.g., @hand1997 for classification, and @hyndman2006 for regression and forecasting tasks).
 
 Since we only have a sample $\mathcal{T}$ of test data drawn from the population, we can only *estimate* the conditional performance of $\hat{f}_\mathcal{L}$:
 \[
@@ -150,23 +150,27 @@ In traditional cross-validation, the partitioning is based on uniform random sam
 Several approaches have therefore been proposed in the literature and implemented in software to accommodate a variety of predictive situations (Table \@ref(tab:sptcv-methods)).
 
 Approaches based on spatial blocking or grouping require either the construction of spatial zones, or the use of pre-existing spatial structures in the data. Let's refer to these spatial units or zones as $\mathcal{Z_i}$, $1\le i\le n_z$. 
-These zones are often constructed to serve as the $k=n_z$ spatial partitions, for example by performing $k$-means clustering of the sample coordinates (ref??) or generating the desired number of rectangular blocks. 
-However, when $n_z$ is much larger than the desired number of folds, $k$, then a partitioning can be applied to the zones, i.e. the indices $1, \ldots, n_z$ are grouped into $k$ equally sized subsets $\mathcal{I}_1, \ldots, \mathcal{I}_k$.
-This approach has been applied, for example, in spatial CV at the agricultural field level (Pena??) or at the transect level (Kasurak??).
-In the following we will conceptually distinguish between CV *at the group (or block) level*, referring to the latter scenario, from spatial *block (or group)* CV, where the blocks or groups themselves define the CV partitions.
+These zones are often constructed to serve as the $k=n_z$ spatial partitions, for example by performing $k$-means clustering of the sample coordinates [@russ2010] or generating the desired number of rectangular blocks. Similarly, the data can be partitioned in feature space instead of geographic space, which has been referred to as environmental blocking [@roberts2017].
 
-A variant of cross-validation is leave-one-out (LOO) cross-validation , which has long been established in geostatistics [@cressie1993], sometimes with a focus on the spatial distribution of LOO error [@willmott2006].
-Since this is just a special case of non-spatial CV with $k=n$, it is sometimes also referred to as spatial CV [@willmott2006].
+When $n_z$ is much larger than the desired number of folds, $k$, then a partitioning can be applied to the zones themselves. In this case, the zone indices $1, \ldots, n_z$ are grouped into $k$ equally sized subsets $\mathcal{I}_1, \ldots, \mathcal{I}_k$.
+This approach has been applied, for example, in spatial CV at the agricultural field level [@pena2015].
+In the following we will conceptually distinguish between CV *at the group (or block) level*, referring to the latter scenario, from spatial *block (or grouped)* CV, where the blocks or groups themselves define the CV partitions.
+
+A variant of cross-validation is leave-one-out (LOO) cross-validation, which has long been established in geostatistics [@cressie1993], sometimes with a focus on the spatial distribution of LOO error [@willmott2006].
+Although this is just a special case of non-spatial CV with $k=n$, it is sometimes also referred to as spatial CV [@willmott2006].
 Nevertheless, spatial variants have been proposed that apply an exclusion buffer to the test locations to separate them from the training data [@brenning2005].
 One plausible approach for this is to use the range of autocorrelation of model residuals to determine the buffer distance as this ensures independence conditional on the predictors [@brenning2005].
-When data is grouped, e.g., due to multi-level sampling designs or the study of spatial objects, LOO at has been proposed at the site level [@martin2008; @kasurak2011] or, in animal movement studies, at the animal level [@anderson2005].
-Similarly, in the temporal domain, it has been proposed to leave out temporal observational units, as in leave-one-year-out CV [@anderson2005; @brenning2005].
+When data is grouped, e.g., due to multi-level sampling designs or the study of spatial objects, it has been proposed to apply LOO at the site level [@martin2008; @kasurak2011] or, in animal movement studies, at the animal level [@anderson2005]; we will refer to this as leave-location-out (LLO) CV.
 
-It should be noted that $k$-fold cross-validation with a large value of $k$, and LOO-CV in particular ($k=n$), are not only very time-consuming since the model has to be trained $k$ times; these models will also be nearly identical since only a tiny fraction of the data is withheld, and therefore estimation bias increases.
-'Pure' LOO-CV is therefore not recommended for machine-learning model assessment [ref??].
+It should be noted that $k$-fold cross-validation with a large value of $k$, and LOO-CV in particular ($k=n$), is not only very time-consuming since the model has to be trained $k$ times; these models will also be nearly identical since only a tiny fraction of the data is withheld, and therefore estimation bias increases.
+'Pure' LOO-CV is therefore not recommended for machine-learning model assessment.
 
+In the purely temporal domain, a special case is to leave out temporal observational units (or time slices; leave-time-out or LTO CV), as in leave-one-year-out CV [@anderson2005; @brenning2005]. 
+Cross-validation and hold-out validation strategies for time series have been discussed more extensively in the forecasting literature, considering also the effects of serial autocorrelation [@bergmeir2018].
 
-- add a paragraph on spatiotemporal partitioning
+Turning to prediction tasks with spatiotemporal data, various spatial, temporal, or spatiotemporal partitioning strategies are being used, depending on the specific study objectives. 
+While the former two ignore the spatial and temporal dimension of the data, respectively, it has also been proposed to leave out spatiotemporal blocks [@meyer2018] or clusters [@cluto].
+
 
 
 # mlr3spatiotempcv within the mlr3 ecosystem
