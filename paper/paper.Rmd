@@ -85,44 +85,43 @@ knitr::opts_chunk$set(fig.path = "./paper/figs/",
 # Introduction
 
 Spatial and spatiotemporal prediction tasks are common in applications ranging from environmental sciences to archaeology and epidemiology.
-While sophisticated mathematical frameworks have long been developed in spatial statistics to characterize predictive uncertainties under well-defined mathematical assumptions such as intrinsic stationarity [e.g., [@cressie1993], computational estimation procedures have only been proposed more recently to assess predictive performances of spatial and spatiotemporal prediction models [@brenning2005, @brenning2012; @pohjankukka2017; @roberts2017].
+While sophisticated mathematical frameworks have long been developed in spatial statistics to characterize predictive uncertainties under well-defined mathematical assumptions such as intrinsic stationarity (e.g., @cressie1993), computational estimation procedures have only been proposed more recently to assess predictive performances of spatial and spatiotemporal prediction models [@brenning2005; @brenning2012; @pohjankukka2017; @roberts2017].
 
-Although alternatives such as the bootstrap exist and have some advantages [@efron1983; @milligan2000], cross-validation is a particularly well-established, easy-to-implement algorithm for *model assessment* of supervised machine-learning models [@efron1983 and next section] and *model selection* [@arlot2010].
-In its basic form, it is based on resampling the data without paying attention to any possible dependence structure, which may arise from, e.g., cluster sampling [ref], grouped data [@brenning2008; @pena2015], or underlying environmental processes inducing some sort of spatial coherence at the landscape scale [@brenning2005].
+Although alternatives such as the bootstrap exist and have some advantages [@efron1983; @milligan2000], cross-validation is a particularly well-established, easy-to-implement algorithm for *model assessment* of supervised machine-learning models (@efron1983 and next section) and *model selection* [@arlot2010].
+In its basic form, it is based on resampling the data without paying attention to any possible dependence structure, which may arise from, e.g., grouped or structured data [@brenning2008; @pena2015], or underlying environmental processes inducing some sort of spatial coherence at the landscape scale [@brenning2005].
 In treating dependent observations as independent, or ignoring autocorrelation, cross-validation test samples may in fact be heavily correlated with, or even pseudo-replicates of, the data used for training the model, which introduces a potentially severe bias, especially for flexible machine-learning models [@brenning2005].
 
-This cross-validation bias is well-known in spatial as well as non-spatial prediction [@brenning2005; @brenning2008; @arlot2010].
+This cross-validation bias is well-known in spatial as well as non-spatial prediction [@brenning2005; @brenning2008; @arlot2010; @roberts2017].
 It is most easily understood from a predictive modelling perspective by focusing on the question where (and when) the model should be used for prediction.
-In crop classification from remotely-sensed data, for instance, learning samples routinely contain multiple grid cells from a sample of fields with known crop type, e.g. 2000 grid cells from 100 fields scattered across a large study region.
-The purpose of training a model on this sample is to make predictions on other, new *fields* within the same geographic domain [*intra-domain* prediction; @brenning2005] &emdash; not *within* the same field, which obviously presents only one crop type.
-It would therefore be foolish to train a model on a simple random subsample of grid cells, and test it on the remaining data, i.e. using other grid cells from the same fields, as if we wanted to predict within a field; the results from this performance assessment would be over-optimitic, and perhaps badly so.
+In crop classification from remotely-sensed data, for instance, learning samples routinely contain multiple grid cells from a sample of fields with known crop type, for instance 2000 grid cells from 100 fields scattered across a large study region.
+The purpose of training a model on this sample is to make predictions on other, new *fields* within the same geographic domain (*intra-domain* prediction; @brenning2005) --- not *within* the same field, which obviously presents only one crop type.
+In this stituation it would therefore seem rather foolish to train a model on a simple random subsample of grid cells, and test it on the remaining data, i.e. using other grid cells from the same fields, as if we wanted to predict within a field. The results from this performance assessment would be over-optimitic, and perhaps badly so.
 To mimic the predictive situation for which the model is trained, we'd rather have to resample at the level of fields, not grid cells [@pena2015].
-If the model was to be applied to adjacent agricultural districts, i.e. outside the learning sample's spatial domain [*extra-domain* prediction; @brenning2005], it would even seem necessary to resample at a higher level of spatial aggregation, i.e. at the level of agricultural districts within the learning sample, in order to realistically mimic the actual prediction task.
+If the model was to be applied to adjacent agricultural districts, i.e. outside the learning sample's spatial domain (*extra-domain* prediction; @brenning2005), it would even seem necessary to resample at a higher level of spatial aggregation, i.e. at the level of agricultural districts within the learning sample, in order to realistically mimic the actual prediction task.
 The cross-validation resampling needed therefore depends as much on the prediction task as on the data structure or dependency at hand.
 
-While it is not the purpose of this paper to recommend specific resampling schemes for specific use cases, this example may suffice to motivate the use of spatial and spatiotemporal cross-validation techniques, and the need for a unified framework and computational toolbox that accommodate a variety of prediction tasks that may be applicable to a broad range of prediction tasks.
+While it is not the purpose of this paper to recommend specific resampling schemes for specific use cases, this example may suffice to motivate the use of spatial and spatiotemporal cross-validation techniques, and the need for a unified framework and computational toolbox that accommodate a variety of prediction tasks that may be applicable to a broad range of application scenarios.
 \pkg{mlr3spatiotempcv} is such a toolbox.
 
 This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (see Table \@ref(tab:sptcv-methods)).
-The earliest of these implementations is the \pkg{sperrorest} package [@brenning2012], which has, however, not been integrated into established machine-learning frameworks such as \pkg{mlr} or \pkg{caret}, and lacks support of temporal prediction tasks.
-Other more recent implementations include \pkg{blockCV} for (what for?) [ref @blockCV; @rest2014] and \pkg{CAST} for spatiotemporal prediction tasks in a \pkg{caret} framework [@cast; @meyer2018a].
+The earliest and most comprehensive of these implementations is the \pkg{sperrorest} package [@brenning2012], which provides an extendible framework and includes predefined resampling strategies based on, for example, blocking, grouping and buffering. In contrast, \pkg{blockCV} was developed for block and buffer resampling with a focus on species distribution modelling [@blockCV; @rest2014]. Neither of these have been integrated into established machine-learning frameworks such as \pkg{mlr} or \pkg{caret}, and both lack support of temporal prediction tasks. The \pkg{CAST} package, in contrast, focuses on spatiotemporal prediction tasks in a \pkg{caret} framework [@cast; @meyer2018a]. One limitation of these packages is also that they focus on model assessment, while the proposed implementation within the \pkg{mlr} framework offers a seamless integration into model selection.
 
-Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state-of-the-art compilation of spatial and spatiotemporal partitioning schemes that is well-integrated into a major machine-learning framework in R, the \pkg{mlr3} ecosystem [@mlr3].
-This package is furthermore equipped with a variety of two- and three-dimensional diagram types. Our hope is that implementation will facilitate reproducible geospatial modelling and code-sharing across a broad range of application domains.
+Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state-of-the-art compilation of spatial and spatiotemporal partitioning schemes that is well-integrated into a comprehensive machine-learning framework in R, the \pkg{mlr3} ecosystem [@mlr3].
+This package is furthermore equipped with a variety of two- and three-dimensional diagram types. Our hope is that this implementation will facilitate reproducible geospatial modelling and code-sharing across a broad range of application domains.
 
 
 
 # Spatial and Spatiotemporal Cross-validation
 
 In cross-validation for predictive model assessment, we consider the following formal setting.
-We are interested in predicting a numerical or categorical response $y$ of an object or instance using a feature vector $\mathbf{x} = (x^{(1)}, \ldots, x^{(p)}\in\mathbb{R}$ and a model $\hat{f}_L$ that has been trained on a learning sample $L = \{(y_i, \mathbf{x}_i),\ i = 1, ..., n\}$. Our goal is to estimate the expected value of the performance of $\hat{f}_L$,
+We are interested in predicting a numerical or categorical response $y$ of an object or instance using a feature vector $\mathbf{x} = (x^{(1)}, \ldots, x^{(p)})\in\mathbb{R}^p$ and a model $\hat{f}_L$ that has been trained on a learning sample $L = \{(y_i, \mathbf{x}_i),\ i = 1, ..., n\}$. Our goal is to estimate the expected value of the performance of $\hat{f}_L$,
 \[
 \mathit{perf(\hat{f}_L)} := E(l(Y,\hat{f}_L(X))),
 \]
 where $l$ is a real-valued loss function, and the expected value is with respect the probability distribution of $X$, the features of an instance $(Y,X)$ drawn randomly from the underlying population.
 This is referred to as the *actual* or *conditional* performance measure as it is conditional on $L$ [@milligan2000].
 The loss function can take a variety of forms such as the misclassification error $I(Y\neq\hat{f}_L(X))$ in classification, or the squared error $(Y-\hat{f}_L(X))^2$ in regression, among many other possible measures.
-The choice of the performance measure is equally critical as the choice of the estimation procedure, but it is beyond the scope of this contribution to discuss performance metrics for regression and classification [see e.g., @milligan2000 for classification, and ref?? for regression tasks].
+The choice of the performance measure is equally critical as the choice of the estimation procedure, but it is beyond the scope of this contribution to discuss performance metrics for regression and classification (see e.g., @hand1997 for classification, and ref?? for regression tasks).
 
 Nevertheless, since we only have a sample $T$ of test data drawn from the population, we can realistically only *estimate* the conditional performance of $\hat{f}_L$:
 \[
