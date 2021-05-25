@@ -143,6 +143,22 @@
   language = {en}
 }
 
+@article{bergmeir2018,
+  title = {A Note on the Validity of Cross-Validation for Evaluating Autoregressive Time Series Prediction},
+  author = {Bergmeir, Christoph and Hyndman, Rob J. and Koo, Bonsoo},
+  year = {2018},
+  month = apr,
+  volume = {120},
+  pages = {70--83},
+  issn = {0167-9473},
+  doi = {10.1016/j.csda.2017.11.003},
+  abstract = {One of the most widely used standard procedures for model evaluation in classification and regression is K-fold cross-validation (CV). However, when it comes to time series forecasting, because of the inherent serial correlation and potential non-stationarity of the data, its application is not straightforward and often replaced by practitioners in favour of an out-of-sample (OOS) evaluation. It is shown that for purely autoregressive models, the use of standard K-fold CV is possible provided the models considered have uncorrelated errors. Such a setup occurs, for example, when the models nest a more appropriate model. This is very common when Machine Learning methods are used for prediction, and where CV can control for overfitting the data. Theoretical insights supporting these arguments are presented, along with a simulation study and a real-world example. It is shown empirically that K-fold CV performs favourably compared to both OOS evaluation and other time-series-specific techniques such as non-dependent cross-validation.},
+  file = {/Users/pjs/Zotero/storage/SJ9RLRDV/Bergmeir et al. - 2018 - A note on the validity of cross-validation for eva.pdf;/Users/pjs/Zotero/storage/XIIU2MAG/S0167947317302384.html},
+  journal = {Computational Statistics \& Data Analysis},
+  keywords = {Autoregression,cross-validation,Cross-validation,time series,Time series},
+  language = {en}
+}
+
 @article{blockCV,
   title = {{{blockCV}}: {{An R}} Package for Generating Spatially or Environmentally Separated Folds for k-Fold Cross-Validation of Species Distribution Models},
   author = {Valavi, Roozbeh and Elith, Jane and {Lahoz-Monfort}, Jos{\'e} J. and {Guillera-Arroita}, Gurutzeta and Valavi, Roozbeh and Elith, Jane and {Lahoz-Monfort}, Jos{\'e} J. and {Guillera-Arroita}, Gurutzeta},
@@ -290,6 +306,20 @@
   journal = {Geomatics, Natural Hazards and Risk},
   keywords = {DEM,Landslide,machine learning,model,susceptibility},
   number = {1}
+}
+
+@article{burman1994,
+  title = {A Cross-Validatory Method for Dependent Data},
+  author = {Burman, P. and Chow, E. and Nolan, D.},
+  year = {1994},
+  volume = {81},
+  pages = {351--358},
+  doi = {10.1093/biomet/81.2.351},
+  abstract = {SUMMARY: In this paper we extend the technique of cross-validation to the case where observations form a general stationary sequence. We call it h-block cross-validation, because the idea is to reduce the training set by removing the h observations preceding and following the observation in the test set. We propose taking h to be a fixed fraction of the sample size, and we add a term to our h-block cross-validated estimate to compensate for the underuse of the sample. The advantages of the proposed modification over the cross-validation technique are demonstrated via simulation. \textcopyright{} 1994 Biometrika Trust.},
+  file = {/Users/pjs/Zotero/storage/IY8F382V/display.html},
+  journal = {Biometrika},
+  keywords = {cross-validation,Cross-validation,Dependence,Integrated square error,Prediction error,stationary process},
+  number = {2}
 }
 
 @manual{CAST,
@@ -711,6 +741,16 @@
   language = {en}
 }
 
+@book{hand1997,
+  title = {Construction and {{Assessment}} of {{Classification Rules}}},
+  author = {Hand, D.J.},
+  year = {1997},
+  publisher = {{Wiley}},
+  address = {{New York}},
+  file = {/Users/pjs/Zotero/storage/AB4YQMVA/Milligan - 2000 - Construction and Assessment of Classification Rule.pdf},
+  language = {en}
+}
+
 @article{hao2020,
   title = {Testing Whether Ensemble Modelling Is Advantageous for Maximising Predictive Performance of Species Distribution Models},
   author = {Hao, Tianxiao and Elith, Jane and Lahoz-Monfort, Jos{\'e} J. and Guillera-Arroita, Gurutzeta},
@@ -788,6 +828,20 @@
   journal = {WIREs Computational Statistics},
   keywords = {collaborative software development,knowledge domain,R,R package repositories,R sources and binaries,software quality,statistical computing},
   language = {en},
+  number = {4}
+}
+
+@article{hyndman2006,
+  title = {Another Look at Measures of Forecast Accuracy - {{ScienceDirect}}},
+  author = {Hyndman, R. J. and Koehler, A. B.},
+  year = {2006},
+  volume = {22},
+  pages = {679--688},
+  doi = {10.1016/j.ijforecast.2006.03.001},
+  abstract = {We discuss and compare measures of accuracy of univariate time series forecasts. The methods used in the M-competition as well as the M3-competition, and many of the measures recommended by previous authors on this topic, are found to be degenerate in commonly occurring situations. Instead, we propose that the mean absolute scaled error become the standard measure for comparing forecast accuracy across multiple time series.},
+  file = {/Users/pjs/Zotero/storage/V3EYLGZT/S0169207006000239.html},
+  journal = {International Journal of Forecasting},
+  keywords = {forecast accuracy,forecast error,forecast evaluation},
   number = {4}
 }
 
@@ -1141,21 +1195,6 @@
   file = {/Users/pjs/Zotero/storage/KFYXXKKF/Milà Carles et al. - Land-Use Change and Cardiometabolic Risk Factors i.pdf;/Users/pjs/Zotero/storage/66X7HERD/EHP5445.html},
   journal = {Environmental Health Perspectives},
   number = {4}
-}
-
-@article{milligan2000,
-  title = {Construction and {{Assessment}} of {{Classification Rules}}, by {{D}}.{{J}}. {{Hand}}},
-  author = {Milligan, G.W.},
-  year = {2000},
-  month = jul,
-  volume = {17},
-  pages = {355--356},
-  issn = {1432-1343},
-  doi = {10.1007/s003570000025},
-  file = {/Users/pjs/Zotero/storage/AB4YQMVA/Milligan - 2000 - Construction and Assessment of Classification Rule.pdf},
-  journal = {Journal of Classification},
-  language = {en},
-  number = {2}
 }
 
 @article{mlr3,
@@ -1514,6 +1553,25 @@
   keywords = {air temperature,interpolation,machine learning,MODIS},
   language = {en},
   number = {9}
+}
+
+@inproceedings{russ2010,
+  title = {Data {{Mining}} in {{Precision Agriculture}}: {{Management}} of {{Spatial Information}}},
+  shorttitle = {Data {{Mining}} in {{Precision Agriculture}}},
+  booktitle = {Computational {{Intelligence}} for {{Knowledge}}-{{Based Systems Design}}},
+  author = {Ru{\ss}, Georg and Brenning, Alexander},
+  editor = {H{\"u}llermeier, Eyke and Kruse, Rudolf and Hoffmann, Frank},
+  year = {2010},
+  pages = {350--359},
+  publisher = {{Springer}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-14049-5_36},
+  abstract = {Precision Agriculture is the application of state-of-the-art GPS technology in connection with site-specific, sensor-based treatment of the crop. It can also be described as a data-driven approach to agriculture, which is strongly connected with a number of data mining problems. One of those is also an inherently important task in agriculture: yield prediction. The question is: can a field's yield be predicted in-season using available geo-coded data sets?In the past, a number of approaches have been proposed towards this problem. Often, a broad variety of regression models for non-spatial data have been used, like regression trees, neural networks and support vector machines. But in a cross-validation learning approach, issues with the assumption of the data records' statistical independence keep emerging. Hence, the geographical location of data records should clearly be considered while establishing a regression model and assessing its predictive performance. This paper gives a short overview of the available data, points out in detail the main issue with the classical learning approaches and presents a novel spatial cross-validation technique to overcome the problems with the classical approach towards the aforementioned yield prediction task.},
+  file = {/Users/pjs/Zotero/storage/TMEC3JG7/Ruß und Brenning - 2010 - Data Mining in Precision Agriculture Management o.pdf},
+  isbn = {978-3-642-14049-5},
+  keywords = {Precision Agriculture,Regression,Spatial Cross-Validation,Spatial Data Mining},
+  language = {en},
+  series = {Lecture {{Notes}} in {{Computer Science}}}
 }
 
 @article{safaei2021,
