@@ -106,8 +106,8 @@ While it is not the purpose of this paper to recommend specific resampling schem
 
 This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (see Table \@ref(tab:sptcv-methods)).
 The earliest and most comprehensive of these implementations is the \pkg{sperrorest} package [@brenning2012], which provides an extendible framework and includes predefined resampling strategies based on, for example, blocking, grouping and buffering. 
-In contrast, \pkg{blockCV} was developed for block and buffer resampling with a focus on species distribution modelling [@blockCV; @rest2014]. 
-Neither of these have been integrated into established machine-learning frameworks such as \pkg{mlr} or \pkg{caret}, and both lack support of temporal prediction tasks. 
+In contrast, \pkg{blockCV} and \pkg{ENMeval} were developed for block and buffer resampling with a focus on species distribution modelling [@blockCV; @rest2014; @muscarella2014]. 
+Neither of these have been integrated into established machine-learning frameworks such as \pkg{mlr} or \pkg{caret}, and all of them lack support of temporal prediction tasks. 
 The \pkg{CAST} package, in contrast, focuses on spatiotemporal prediction tasks in a \pkg{caret} framework [@cast; @meyer2018a]. 
 One limitation of these packages is also that they focus on model assessment, while the proposed implementation within the \pkg{mlr} framework offers a seamless integration into model selection.
 It is worth noting that a spatial cross-validation library \pkg{spacv} has also recently been developed for Python 3, which can be used with the \pkg{scikit-learn} machine-learning framework [@pedregosa2011].
