@@ -116,6 +116,10 @@ Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state
 This package is furthermore equipped with a variety of two- and three-dimensional diagram types. 
 Our hope is that this implementation will facilitate reproducible geospatial modelling and code-sharing across a broad range of application domains.
 
+The purpose of this paper is to give an overview of the methods implemented in the R package \pkg{mlr3spatiotempcv}.
+After presenting the conceptual background in the following section, we will outline the overall structure of the \pkg{mlr3spatiotempcv} package.
+We will then compare and contrast the various spatial and spatiotemporal partitioning techniques, before we demonstrate their application in a machine-learning model assessment in the following section.
+We finally discuss implications and provide an outlook.
 
 
 # Spatial and Spatiotemporal Cross-validation
