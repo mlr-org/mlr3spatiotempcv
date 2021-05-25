@@ -123,14 +123,14 @@ This is referred to as the *actual* or *conditional* performance measure as it i
 The loss function can take a variety of forms such as the misclassification error $I(Y\neq\hat{f}_\mathcal{L}(X))$ in classification, or the squared error $(Y-\hat{f}_\mathcal{L}(X))^2$ in regression, among many other possible measures.
 The choice of the performance measure is equally critical as the choice of the estimation procedure, but it is beyond the scope of this contribution to discuss performance metrics for regression and classification (see e.g., @hand1997 for classification, and ref FIXME perhaps <https://doi.org/10.1016/j.ijforecast.2006.03.001> for regression and forecasting tasks).
 
-Nevertheless, since we only have a sample $\mathcal{T}$ of test data drawn from the population, we can realistically only *estimate* the conditional performance of $\hat{f}_\mathcal{L}$:
+Since we only have a sample $\mathcal{T}$ of test data drawn from the population, we can only *estimate* the conditional performance of $\hat{f}_\mathcal{L}$:
 \[
 \widehat{\mathit{perf}}_T(\hat{f}_\mathcal{L}) = \frac{1}{|\mathcal{T}|}\sum_{i=1}^{|\mathcal{T}|}l(Y,\hat{f}_\mathcal{L}(X)).
 \]
-This representation as a point estimator for $\mathit{perf(\hat{f}_\mathcal{L})}$ underlines the importance of using a random sample for performance estimation to avoid estimation bias. Other estimators than the simple mean may be required when $\mathcal{T}$ is not a simple random sample, for instance a stratified random sample [e.g., @thompson2012].
+This representation as a point estimator of $\mathit{perf(\hat{f}_\mathcal{L})}$ underlines the importance of using a random sample for model assessment to avoid estimation bias. Other estimators than the simple mean may be required when $\mathcal{T}$ is not a simple random sample, for instance a stratified random sample [e.g., @thompson2012].
 As always, judgment sampling may lead to uncontrollable bias.
 
-Since the re-use of the learning sample $\mathcal{L}$ for testing, $\mathcal{T}=\mathcal{L}$, would result in the over-optimistic *resubstitution* or *apparent* model performance, cross-validation partitions the sample $\mathcal{L}$ into disjoint training and test sets.
+Since re-using the learning sample $\mathcal{L}$ for testing, i.e. $\mathcal{T}=\mathcal{L}$, would result in the over-optimistic *resubstitution* or *apparent* performance, cross-validation partitions the sample $\mathcal{L}$ into disjoint training and test sets.
 Specifically, $\mathcal{L}$ is split into $k$ partitions,
 \[
 \mathcal{L} = \mathcal{L}_1 \cup \ldots \cup \mathcal{L}_k,\qquad \mathcal{L}_i\cap \mathcal{L}_j = \emptyset\quad \textrm{for all}\ i\neq j,
