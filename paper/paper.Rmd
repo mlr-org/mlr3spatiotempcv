@@ -149,7 +149,11 @@ Since $\widehat{\mathit{perf}}_{\mathcal{L}, CV}(f)$ still depends on the partic
 In traditional cross-validation, the partitioning is based on uniform random sampling, which ignores spatial or temporal autocorrelation or any existing grouping structure as well as the structure of the prediction task, as outlined in the Introduction, and may result in over-optimistic performance estimates.
 Several approaches have therefore been proposed in the literature and implemented in software to accommodate a variety of predictive situations (Table \@ref(tab:sptcv-methods)).
 
-- add a paragraph with more information on spCV using spatial partitionings
+Approaches based on spatial blocking or grouping require either the construction of spatial zones, or the use of pre-existing spatial structures in the data. Let's refer to these spatial units or zones as $\mathcal{Z_i}$, $1\le i\le n_z$. 
+These zones are often constructed to serve as the $k=n_z$ spatial partitions, for example by performing $k$-means clustering of the sample coordinates (ref??) or generating the desired number of rectangular blocks. 
+However, when $n_z$ is much larger than the desired number of folds, $k$, then a partitioning can be applied to the zones, i.e. the indices $1, \ldots, n_z$ are grouped into $k$ equally sized subsets $\mathcal{I}_1, \ldots, \mathcal{I}_k$.
+This approach has been applied, for example, in spatial CV at the agricultural field level (Pena??) or at the transect level (Kasurak??).
+In the following we will conceptually distinguish between CV *at the group (or block) level*, referring to the latter scenario, from spatial *block (or group)* CV, where the blocks or groups themselves define the CV partitions.
 
 A variant of cross-validation is leave-one-out (LOO) cross-validation , which has long been established in geostatistics [@cressie1993], sometimes with a focus on the spatial distribution of LOO error [@willmott2006].
 Since this is just a special case of non-spatial CV with $k=n$, it is sometimes also referred to as spatial CV [@willmott2006].
