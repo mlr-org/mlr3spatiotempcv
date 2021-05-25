@@ -91,7 +91,7 @@ Although alternatives such as the bootstrap exist and have some advantages [@efr
 In its basic form, it is based on resampling the data without paying attention to any possible dependence structure, which may arise from, e.g., grouped or structured data [@brenning2008; @pena2015], or underlying environmental processes inducing some sort of spatial coherence at the landscape scale [@brenning2005].
 In treating dependent observations as independent, or ignoring autocorrelation, cross-validation test samples may in fact be heavily correlated with, or even pseudo-replicates of, the data used for training the model, which introduces a potentially severe bias, especially for flexible machine-learning models [@brenning2005].
 
-This cross-validation bias is well-known in spatial as well as non-spatial prediction [@brenning2005; @brenning2008; @arlot2010; @roberts2017].
+This cross-validation bias is well-known in spatial as well as non-spatial prediction [@brenning2005; @brenning2008; @arlot2010; @roberts2017] and in forecasting (ref FIXME: <https://doi.org/10.1016/j.csda.2017.11.003>).
 It is most easily understood from a predictive modelling perspective by focusing on the question where (and when) the model should be used for prediction.
 In crop classification from remotely-sensed data, for instance, learning samples routinely contain multiple grid cells from a sample of fields with known crop type, for instance 2000 grid cells from 100 fields scattered across a large study region.
 The purpose of training a model on this sample is to make predictions on other, new *fields* within the same geographic domain (*intra-domain* prediction; @brenning2005) --- not *within* the same field, which obviously presents only one crop type.
@@ -121,7 +121,7 @@ We are interested in predicting a numerical or categorical response $y$ of an ob
 where $l$ is a real-valued loss function, and the expected value is with respect the probability distribution of $X$, the features of an instance $(Y,X)$ drawn randomly from the underlying population.
 This is referred to as the *actual* or *conditional* performance measure as it is conditional on $L$ [@milligan2000].
 The loss function can take a variety of forms such as the misclassification error $I(Y\neq\hat{f}_\mathcal{L}(X))$ in classification, or the squared error $(Y-\hat{f}_\mathcal{L}(X))^2$ in regression, among many other possible measures.
-The choice of the performance measure is equally critical as the choice of the estimation procedure, but it is beyond the scope of this contribution to discuss performance metrics for regression and classification (see e.g., @hand1997 for classification, and ref?? for regression tasks).
+The choice of the performance measure is equally critical as the choice of the estimation procedure, but it is beyond the scope of this contribution to discuss performance metrics for regression and classification (see e.g., @hand1997 for classification, and ref FIXME perhaps <https://doi.org/10.1016/j.ijforecast.2006.03.001> for regression and forecasting tasks).
 
 Nevertheless, since we only have a sample $\mathcal{T}$ of test data drawn from the population, we can realistically only *estimate* the conditional performance of $\hat{f}_\mathcal{L}$:
 \[
