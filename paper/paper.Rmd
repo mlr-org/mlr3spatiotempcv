@@ -190,14 +190,14 @@ With its integrative approach and its aim to provide long-term support, \pkg{mlr
 Issues that practitioners often face include varying argument lists of learners, different return values of `predict` methods, and support for only specific feature types.
 These challenges result in substantial overhead and possible reproducibility issues, which are exacerbated by asynchronous development timelines of different components of the machine-learning pipelines.
 
-Within the \pkg{mlr3} ecosystem, partitioning strategies are represented by their own objects of class \texttt{Resampling}, of which most are available within \pkg{mlr3} itself (e.g. regular random CV) and other specialized ones (e.g. \texttt{TaskClassifST} or \texttt{TaskRegrST}) are defined in extension packages such as \pkg{mlr3spatiotempcv}.
-In the ML pipeline, these objects define the data splits used for model evaluation and selection (hyperparameter tuning) by ML algorithms.
-They play an important role for an unbiased application of ML algorithms [@schratz2019].
+Within the \pkg{mlr3} ecosystem, partitioning strategies are represented by their own objects of class \texttt{Resampling}, most of which are available within \pkg{mlr3} itself (e.g., regular random CV); other specialized strategies (e.g., \texttt{TaskClassifST} or \texttt{TaskRegrST}) are defined in extension packages such as \pkg{mlr3spatiotempcv}.
+In the machine-learning pipeline, these objects define the data splits used for model evaluation and selection (hyperparameter tuning) by machine-learning algorithms.
+<!--- They play an important role for an unbiased application of ML algorithms [@schratz2019]. [FIXME: Point gas been made before, it is unrelated to this section's topic.] -->
 
-Resampling objects in \pkg{mlr3spatiotmpcv} inherit from class \texttt{mlr3::Resampling} and can be created from established object classes for geospatial data in R, including simple features [@pebesma2018], which facilitates its integration into domain-specific workflows in the geospatial sciences.
+Resampling objects in \pkg{mlr3spatiotmpcv} inherit from class \texttt{mlr3::Resampling} and can be created from established object classes for geospatial data in R, including simple features [@pebesma2018], which facilitates their integration into domain-specific workflows in the geospatial sciences.
 This includes support for geographic coordinate reference systems (CRS) and their respective distance measures in projected planar space or using great circle distances on the unprojected ellipsoid.
 Non-spatial data tables with coordinates as variables are also supported.
-If no projection is specified, World Geodetic System 1984 (WGS84, EPSG: 4326) will be assumed.
+If no projection is specified, World Geodetic System 1984 (WGS84, EPSG: 4326) is assumed. <!--- FIXME: Is this correct even for distance metrics? Wouldn't it be more natural to simply use Euclidean distance when no projection is specified? In many cases coordinates will be UTM, not lat/lon... Just wondering. -->
 
 Partitioning objects in \pkg{mlr3spatiotempcv} are equipped with generic `plot()` and `autoplot()` methods that visualize the created groups.
 `autoplot()` is \pkg{ggplot2}-based and uses [ggplot2](https://ggplot2.tidyverse.org) [@ggplot2] in two-dimensional geographic space and [plotly](https://github.com/ropensci/plotly) [@plotly] in three dimensions, i.e. geographic space plus time.
@@ -266,8 +266,8 @@ autoplot(resampling_nsp, task, fold_id = c(1:2), crs = 32717, size = 0.8) *
 
 # Spatiotemporal partitioning methods
 
-At the time of writing, \pkg{mlr3spatiotempcv} implements the partitioning methods identified in Table \@ref(tab:sptcv-methods) with their \pkg{mlr3} class name.
-Several of the implemented algorithms are themselves versatile toolboxes with multiple options. Comprehensive and up-to-date information can be found in the package's online documentation (<https://mlr3spatiotempcv.mlr-org.com>). The following sections give an overview of most existing partitioning strategies and their visualization. The available methods are futher discussed in section \@ref(sec:disc).
+\pkg{mlr3spatiotempcv} currently implements the partitioning methods identified in Table \@ref(tab:sptcv-methods) with their \pkg{mlr3} class name.
+Several of the implemented algorithms are themselves versatile toolboxes with multiple options. Comprehensive and up-to-date information can be found in the package's online documentation (<https://mlr3spatiotempcv.mlr-org.com>). The following sections give an overview of most existing partitioning strategies and their visualization. The available methods are further discussed in section \@ref(sec:disc).
 
 
 
@@ -310,16 +310,21 @@ Several of the implemented algorithms are themselves versatile toolboxes with mu
 
 #### Spatial buffering (blockCV)
 
-The "buffering" method from the \pkg{blockCV} package is conceptually similar to a leave-one-out (LOO) cross-validation approach [@stone1974].
-To reduce the similarity between train and test, a circular buffer around the observations representing the test set is drawn [@rest2014, @blockCV].
-Within this buffer zone, all observations are removed from the training set, thereby reducing the similarity between train and test set and subsequently the influence of SAC.
+(Subsection needs to be rewritten, see invisible comments. If this particular implementation is designed for binary classification problems, then a generic LOO with buffer is also needed, which should be introduced before this application-specific special case.)
 
-By default, the method considers all points for train/test creation.
+<!--- FIXME: Why refer to the blockCV package? This is a general method, as described (or at least outlined) above. If code from blockCV was used, when this should be acknowledged, but otherwise I don't undertstand why this method is "from" the blockCV package. -->
+
+The "buffering" method from the \pkg{blockCV} package is conceptually similar to a leave-one-out (LOO) cross-validation approach [@stone1974].
+To reduce the similarity between training and test sets, a circular buffer around the observations representing the test set is drawn [@rest2014, @blockCV].
+Within this buffer zone, all observations are removed from the training set, thereby reducing the similarity between training and test set.
+
+By default, the method considers all points for training/test set creation.
 In an ecological context, this equals to the assumption of having *presence/absence* data for binary response variables.
 This means all non-presence values in the response variable are assumed to be confirmed absence values.
+<!--- FIXME: Why is this worth mentioning? What else could it be doing? LOO CV with buffer is a generic resampling method that can be applied to classification and regression problems. If this particular implementation only supports binary classification, then this should be mentioned explicitly. But mlr3 is not limited to binary classification problems, so why??? -->
 
 The implementation also comes with support for *presence/background* data for binary responses.
-In this scenario, only the presence values are considered validated.
+In this scenario, only the presence values are considered validated. <!--- What is validated, in this context? Again, why overfit the code to such a very specific setting? -->
 All other response observations are assumed to be absent without a proof for this assumption.
 When setting argument `spDataType = "PB"`, the method only considers the *presence* observations in a CV scenario.
 Background data is used for training the model by default unless argument `addBG = FALSE` is set for which only *presence* values not falling within the buffer zone of the respective fold are used for model training.
@@ -341,11 +346,13 @@ autoplot(resampling_buffer,
 
 #### Spatial disc (sperrorest)
 
+<!--- again, why mention package name in title? -->
+
 Another buffering oriented resampling method is "Spatial Disc" from package \pkg{sperrorest}.
 The name spins from "Leave-one-disc-out" which again originates from the generic "Leave-one-out" method.
 More specifically, the 'disc' which is being left our here refers to the radial area of test sets created from this method.
 
-Around the radial test set a buffer zone / neutral area can be defined in which observations are excluded from the training set, increasing the spatial distance between train and test sets.
+Around the radial test set a buffer zone / neutral area can be defined in which observations are excluded from the training set, increasing the spatial distance between training and test sets.
 
 ```{r disc, fig.cap="Visualization of 'Spatial Disc' method.", out.width="50%"}
 resampling_disc = rsmp("spcv_disc", folds = 5, radius = 200L, buffer = 300L)
