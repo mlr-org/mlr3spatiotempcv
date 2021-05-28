@@ -198,13 +198,13 @@ Issues that practitioners often face include varying argument lists of learners,
 These challenges result in substantial overhead and possible reproducibility issues, which are exacerbated by asynchronous development timelines of different components of the machine-learning pipelines.
 
 Within the \pkg{mlr3} ecosystem, partitioning strategies are represented by their own objects of class \texttt{Resampling}, most of which are available within \pkg{mlr3} itself (e.g., regular random CV); other specialized strategies (e.g., \texttt{TaskClassifST} or \texttt{TaskRegrST}) are defined in extension packages such as \pkg{mlr3spatiotempcv}.
-In the machine-learning pipeline, these objects define the data splits used for model evaluation and selection (hyperparameter tuning) by machine-learning algorithms.
-<!--- They play an important role for an unbiased application of ML algorithms [@schratz2019]. [FIXME: Point gas been made before, it is unrelated to this section's topic.] -->
+In the machine-learning pipeline, these objects define the data splits used for model evaluation and selection (hyperparameter tuning) by machine-learning algorithms. 
+Spatial and spatiotemporal partitioning techniques in \pkg{mlr3spatiotempcv} are currently mostly imported and interfaced from other packages, in particular \pkg{sperrorest}, \pkg{blockCV}, \pkg{CAST} [@blockCV; @brenning2012; @CAST], in order to expose them to \pkg{mlr3} functionality.
 
 Resampling objects in \pkg{mlr3spatiotmpcv} inherit from class \texttt{mlr3::Resampling} and can be created from established object classes for geospatial data in R, including simple features [@pebesma2018], which facilitates their integration into domain-specific workflows in the geospatial sciences.
-This includes support for geographic coordinate reference systems (CRS) and their respective distance measures in projected planar space or using great circle distances on the unprojected ellipsoid.
+Support for projected (planar) and unprojected (geographic) coordinate reference systems (CRS) currently varies depending on the partitioning techniques used, since these inherit their behaviour from the underlying R package.
+It is planned to provide a more consistent interface that supports all CRS and allows the use of distance measures in projected planar space or using great circle distances on the unprojected ellipsoid, in the case of unprojected CRS.
 Non-spatial data tables with coordinates as variables are also supported.
-If no projection is specified, World Geodetic System 1984 (WGS84, EPSG: 4326) is assumed. <!--- FIXME: Is this correct even for distance metrics? Wouldn't it be more natural to simply use Euclidean distance when no projection is specified? In many cases coordinates will be UTM, not lat/lon... Just wondering. -->
 
 Partitioning objects in \pkg{mlr3spatiotempcv} are equipped with generic `plot()` and `autoplot()` methods that visualize the created groups.
 `autoplot()` is \pkg{ggplot2}-based and uses [ggplot2](https://ggplot2.tidyverse.org) [@ggplot2] in two-dimensional geographic space and [plotly](https://github.com/ropensci/plotly) [@plotly] in three dimensions, i.e. geographic space plus time.
