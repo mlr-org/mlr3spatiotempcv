@@ -578,21 +578,6 @@ autoplot(resampling_cstf_time_loc,
 knitr::include_graphics("llto.png")
 ```
 
-### Spatiotemporal Clustering (skmeans)
-
-The "CLUTO" clustering algorithm by George Karypis is said to be an application "for clustering of low- and high-dimensional datasets and for analyzing the characteristics of the various clusters" [@cluto].
-
-The method can generally be used in {mlr3spatiotempcv} if users cope with the copyright statement of the tool, which restricts usage to non-profit organizations and US government agencies only, and make the application binary available locally.
-
-These restrictions in combination with
-
-- the requirement of a local binary which needs to be downloaded externally and added to a user's system path
-- the absent of updates since the year 2007
-- a http-only website
-- no response from the copyright holder after asking for the current status of the project
-
-led to the decision to not explain and showcase this method in greater detail in this manuscript.
-Users are encouraged to visit the help page of the package for this method (`?ResamplingSptCVCluto`) for more information.
 
 ## Feature space clustering
 
@@ -627,6 +612,19 @@ autoplot(resampling_env_multi,
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
+
+
+
+
+### Additional partitioning techniques
+
+Considering the wealth and continuing development of spatial and spatiotemporal partitioning techniques for specific applications, we will refrain from providing a complete account of these algorithms. 
+At present, \pkg{mlr3spatiotempcv} also supports spatiotemporal partitioning using the versatile CLUTO clustering algorithm [@cluto]. 
+CLUTO is available in R through the \pkg{skmeans} package, which provides an interface to a downloadable compiled library with a restriction to non-commercial uses (see `?ResamplingSptCVCluto` in \pkg{mlr3spatiotempcv} for more information).
+
+<!--- FIXME: It sounds like CLUTO can potentially be applied to spatial coordinates, space-time coordinates, or a combinations of coordinates and features. Does mlr3spatiotempcv support this, or is it limited to coordinates? If yes, perhaps this would be worth mentioning: "CLUTO can be used to partition data based on spatial coordinates, space--time coordinates, features, or a combination of these." -->
+
+
 
 # Case study: Comparing spatial and non-spatial resampling {#sec:case-study}
 
