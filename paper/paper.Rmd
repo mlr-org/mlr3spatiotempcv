@@ -369,6 +369,10 @@ autoplot(resampling_buffer,
 
 <!--- again, why mention package name in title? -->
 
+<!--- P: Because this is one method within the "buffering" category and so far my approach was to label these as "<method name> (<pkg>)".
+Apparently this is suboptimal from your point of view - how can we do better?
+Also the visual appearance of level 4 headings in the PDF is suboptimal - maybe we should do this someway different. -->
+
 Another buffering oriented resampling method is "Spatial Disc" from package \pkg{sperrorest}.
 The name spins from "Leave-one-disc-out" which again originates from the generic "Leave-one-out" method.
 More specifically, the 'disc' which is being left our here refers to the radial area of test sets created from this method.
