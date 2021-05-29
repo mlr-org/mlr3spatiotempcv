@@ -10,13 +10,13 @@ author:
       | Geographic Information Science group
     email: \email{patrick.schratz@uni-jena.de}
   - name: Alexander Brenning
-    affiliation: 'Friedrich Schiller University Jena'
+    affiliation: 'Friedrich Schiller University Jena \AND'
     address: |
       | Department of Geography
       | Geographic Information Science group
     email: \email{alexander.brenning@uni-jena.de}
   - name: Marc Becker
-    affiliation: 'Ludwig-Maximilians-University Munich \AND'
+    affiliation: 'Ludwig-Maximilians-University Munich'
     address: |
       Department of Statistics
       Statistical Learning and Data Science group
