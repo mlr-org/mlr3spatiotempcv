@@ -78,14 +78,16 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }),
+    }
+  ),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       self$param_set$values$folds
-    }),
+    }
+  ),
   private = list(
     .sample = function(task) {
       pv = self$param_set$values
@@ -103,7 +105,7 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
             sptfolds$data[[pv$time_var]] %in% sptfolds$timefolds[[i]])
           self$instance$train[[i]] = which(!sptfolds$data[[sptfolds$space_var]] %in%
             sptfolds$spacefolds[[i]] &
-            sptfolds$data[[pv$time_var]] %in% sptfolds$timefolds[[i]])
+            !sptfolds$data[[pv$time_var]] %in% sptfolds$timefolds[[i]])
         } else if (is.null(pv$time_var) & !is.null(sptfolds$space_var)) {
           self$instance$test[[i]] = which(sptfolds$data[[sptfolds$space_var]] %in%
             sptfolds$spacefolds[[i]])
@@ -126,5 +128,6 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
     },
     .get_test = function(i) {
       self$instance$test[[i]]
-    })
+    }
+  )
 )
