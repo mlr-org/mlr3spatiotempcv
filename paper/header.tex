@@ -1,0 +1,12 @@
+\makeatletter
+% this fixes the treatment of lever 4 headers as proper headers instead of inline paragraphs
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+        {-2.5ex\@plus -1ex \@minus -.25ex}%
+        {1.25ex \@plus .25ex}%
+        {\normalfont\normalsize\bfseries}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+        {-2.5ex\@plus -1ex \@minus -.25ex}%
+        {1.25ex \@plus .25ex}%
+        {\normalfont\normalsize\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{4} % how many sectioning levels to assign numbers to
