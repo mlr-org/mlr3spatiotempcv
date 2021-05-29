@@ -5,7 +5,7 @@ test_that("folds can be printed", {
     buffer = 200L)
   rsp$instantiate(task)
 
-  expect_equal(rsp$folds(4:8), c(4, 5, 1, 2, 3))
+  expect_equal(rsp$folds(4:8), c(1, 2, 3, 1, 2))
 })
 
 test_that("reps can be printed", {

@@ -1,3 +1,5 @@
+# spatiotemporal ---------------------------------------------------------------
+
 test_that("resampling iterations equals folds", {
   skip_on_cran()
   skip_on_os("mac")
@@ -46,3 +48,17 @@ test_that("check_cluto_path() works", {
     expect_error(rsp$instantiate(task), "vcluster.exe not found")
   })
 })
+
+# spatial only -----------------------------------------------------------------
+
+test_that("clustering on coords only works", {
+  skip_on_cran()
+  skip_on_os("mac")
+
+  task = tsk("cookfarm")
+  rsp = rsmp("sptcv_cluto", folds = 2)
+  rsp$instantiate(task)
+
+  expect_equal(rsp$iters, 2)
+})
+

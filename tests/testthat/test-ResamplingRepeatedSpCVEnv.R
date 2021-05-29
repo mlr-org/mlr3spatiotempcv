@@ -4,7 +4,7 @@ test_that("folds can be printed", {
   rsp$param_set$values = list(folds = 3, repeats = 5, features = "p_1")
   rsp$instantiate(task)
 
-  expect_equal(rsp$folds(4:8), c(4, 5, 1, 2, 3))
+  expect_equal(rsp$folds(4:8), c(1, 2, 3, 1, 2))
 })
 
 test_that("reps can be printed", {

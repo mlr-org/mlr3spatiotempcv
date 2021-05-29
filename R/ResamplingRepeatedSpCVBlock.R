@@ -61,7 +61,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
           custom_check = function(x) {
             checkmate::check_class(x, "RasterLayer",
               null.ok = TRUE)
-          })
+          }
+        )
       ))
 
       ps$values = list(folds = 10L, repeats = 1L)
@@ -77,7 +78,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     #'   Iteration number.
     folds = function(iters) {
       iters = assert_integerish(iters, any.missing = FALSE, coerce = TRUE)
-      ((iters - 1L) %% as.integer(self$param_set$values$repeats)) + 1L
+      ((iters - 1L) %% as.integer(self$param_set$values$folds)) + 1L
     },
 
     #' @description Translates iteration numbers to repetition number.
@@ -155,7 +156,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }),
+    }
+  ),
   active = list(
 
     #' @field iters `integer(1)`\cr
@@ -164,7 +166,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     iters = function() {
       pv = self$param_set$values
       as.integer(pv$repeats) * as.integer(pv$folds)
-    }),
+    }
+  ),
   private = list(
     .sample = function(ids, coords, crs) {
 
@@ -229,5 +232,6 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       fold = i %% folds + 1L
       ii = data.table(rep = rep, fold = fold)
       self$instance[ii, "row_id", on = names(ii), nomatch = 0L][[1L]]
-    })
+    }
+  )
 )

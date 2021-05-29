@@ -109,12 +109,19 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
         stopf("Grouping is not supported for spatial resampling methods") # nocov # nolint
       }
 
-      time = as.POSIXct(task$data()[[self$time_var]])
-      # time in seconds since 1/1/1970
-      time_num = as.numeric(time)
+      if (!is.null(self$time_var)) {
 
-      data_matrix = data.matrix(data.frame(task$coordinates(), time_num))
+        time = as.POSIXct(task$data()[[self$time_var]])
+        # time in seconds since 1/1/1970
+        time_num = as.numeric(time)
+
+        data_matrix = data.matrix(data.frame(task$coordinates(), time_num))
       colnames(data_matrix) = c("x", "y", "z")
+      } else {
+        data_matrix = data.matrix(data.frame(task$coordinates()))
+
+      colnames(data_matrix) = c("x", "y")
+      }
 
       instance = private$.sample(
         task$row_ids, data_matrix, self$clmethod,

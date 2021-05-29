@@ -3,7 +3,7 @@ test_that("folds can be printed", {
   rsp = rsmp("repeated_spcv_block", folds = 3, repeats = 2, range = c(2L, 4L))
   rsp$instantiate(task)
 
-  expect_equal(rsp$folds(1:6), c(1, 2, 1, 2, 1, 2))
+  expect_equal(rsp$folds(1:6), c(1, 2, 3, 1, 2, 3))
 })
 
 test_that("reps can be printed", {
@@ -55,7 +55,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
   task = test_make_blockCV_test_task()
 
   set.seed(42)
-  rsmp <- rsmp("repeated_spcv_block",
+  rsmp = rsmp("repeated_spcv_block",
     repeats = 2,
     folds = 5,
     rows = 3,

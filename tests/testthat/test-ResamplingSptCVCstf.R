@@ -9,6 +9,7 @@ test_that("mlr3spatiotempcv implementation is equal to CAST: time + space", {
   indices = CAST::CreateSpacetimeFolds(task$data(), "SOURCEID", "Date")
   indices$indexOut[[1]]
 
+  expect_equal(rsp$instance$train, indices$index)
   expect_equal(rsp$instance$test, indices$indexOut)
 })
 
@@ -23,6 +24,7 @@ test_that("mlr3spatiotempcv implementation is equal to CAST: time ", {
   indices = CAST::CreateSpacetimeFolds(task$data(), timevar = "Date")
   indices$indexOut[[1]]
 
+  expect_equal(rsp$instance$train, indices$index)
   expect_equal(rsp$instance$test, indices$indexOut)
 })
 
@@ -37,6 +39,7 @@ test_that("mlr3spatiotempcv implementation is equal to CAST: space", {
   indices = CAST::CreateSpacetimeFolds(task$data(), spacevar = "SOURCEID")
   indices$indexOut[[1]]
 
+  expect_equal(rsp$instance$train, indices$index)
   expect_equal(rsp$instance$test, indices$indexOut)
 })
 
@@ -53,5 +56,6 @@ test_that("mlr3spatiotempcv implementation is equal to CAST: space", {
     seed = 42, class = "TAXSUSDA")
   indices$indexOut[[1]]
 
+  expect_equal(rsp$instance$train, indices$index)
   expect_equal(rsp$instance$test, indices$indexOut)
 })

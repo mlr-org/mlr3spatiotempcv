@@ -1,4 +1,4 @@
-#' @title SpatioTemporal Regression Task
+#' @title Create a Spatiotemporal Regression Task
 #'
 #' @description
 #' This task specializes [Task] and [TaskSupervised] for spatiotemporal
