@@ -1,5 +1,11 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 0.3.0.9005
+
+- Fixed train set issues for `sptcv_cstf()` with space and time var (#135)
+- Fixed `$folds()` active binding returning wrong fold number (#120)
+
+
 # mlr3spatiotempcv 0.3.0.9004
 
 - Add `as_task_*` S3 generics: `as_task_classif_st.data.frame()`, `as_task_classif_st.DataBackend()`, `as_task_classif_st.sf()`, `as_task_regr_st.data.frame()`, `as_task_regr_st.DataBackend()`, `as_task_regr_st.sf()`, `as_task_classif.TaskClassifST()`, `as_task_regr.TaskRegrST()` (#99)
