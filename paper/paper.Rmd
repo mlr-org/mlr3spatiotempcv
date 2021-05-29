@@ -317,9 +317,16 @@ Several of the implemented algorithms are themselves versatile toolboxes with mu
 
 #### Spatial buffering (blockCV)
 
-(Subsection needs to be rewritten, see invisible comments. If this particular implementation is designed for binary classification problems, then a generic LOO with buffer is also needed, which should be introduced before this application-specific special case.)
+<!--- (Subsection needs to be rewritten, see invisible comments. If this particular implementation is designed for binary classification problems, then a generic LOO with buffer is also needed, which should be introduced before this application-specific special case.) -->
+
+<!--- P: By default the buffering implementation of blockCV behaves like a normal LOOCV.
+It has additional features specific for SDM (presence-background data) but these are not active by default.
+That is why I did not add `sperrorest::partition_loo()` because `blockCV::buffering()` does the same + has support for SDM. -->
 
 <!--- FIXME: Why refer to the blockCV package? This is a general method, as described (or at least outlined) above. If code from blockCV was used, when this should be acknowledged, but otherwise I don't undertstand why this method is "from" the blockCV package. -->
+
+<!--- P: This addresses specifically the "buffering" function in the blockCV package which falls into the "buffering" category, the same applies to "spatial disc" from {sperrorest}.
+Is this a potential misunderstanding with the overarching level 3 header "Buffering"? -->
 
 The "buffering" method from the \pkg{blockCV} package is conceptually similar to a leave-one-out (LOO) cross-validation approach [@stone1974].
 To reduce the similarity between training and test sets, a circular buffer around the observations representing the test set is drawn [@rest2014, @blockCV].
@@ -330,8 +337,15 @@ In an ecological context, this equals to the assumption of having *presence/abse
 This means all non-presence values in the response variable are assumed to be confirmed absence values.
 <!--- FIXME: Why is this worth mentioning? What else could it be doing? LOO CV with buffer is a generic resampling method that can be applied to classification and regression problems. If this particular implementation only supports binary classification, then this should be mentioned explicitly. But mlr3 is not limited to binary classification problems, so why??? -->
 
+<!--- P: See my comment above, it might be that this is a misunderstanding. If not (or anyhow), we might want to clarify this more than to prevent such misunderstandings. -->
+
 The implementation also comes with support for *presence/background* data for binary responses.
 In this scenario, only the presence values are considered validated. <!--- What is validated, in this context? Again, why overfit the code to such a very specific setting? -->
+
+<!--- P: Validated here means: the existence of the presence observations is validated, the background observations are artifical. This is a common procedure in SDM.
+The blockCV buffering integration comes with support for presence/background handling which is important for SDM.
+I think this should be explaind shortly then - which is what this section is about. -->
+
 All other response observations are assumed to be absent without a proof for this assumption.
 When setting argument `spDataType = "PB"`, the method only considers the *presence* observations in a CV scenario.
 Background data is used for training the model by default unless argument `addBG = FALSE` is set for which only *presence* values not falling within the buffer zone of the respective fold are used for model training.
