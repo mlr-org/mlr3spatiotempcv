@@ -3,7 +3,7 @@ test_that("folds can be printed", {
   rsp = rsmp("repeated_sptcv_cstf", folds = 3, repeats = 5)
   rsp$instantiate(task)
 
-  expect_equal(rsp$folds(4:8), c(4, 5, 1, 2, 3))
+  expect_equal(rsp$folds(4:8), c(1, 2, 3, 1, 2))
 })
 
 test_that("reps can be printed", {
@@ -14,7 +14,7 @@ test_that("reps can be printed", {
   rsp$instantiate(task)
 
   expect_equal(rsp$repeats(4:8), c(2, 2, 2, 3, 3))
-  expect_equal(rsp$folds(10), 5)
+  expect_equal(rsp$folds(10), 1)
 })
 
 test_that("resampling iterations equals folds * repeats", {
