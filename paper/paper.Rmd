@@ -320,7 +320,7 @@ By introducing more distance between observations, the influence of STAC should 
 Buffering mostly happens in the coordinate space due to the scattered appearance of observations in this space.
 \pkg{mlr3spatiotempcv} supports two "buffering" implementations: (1) "Spatial buffering" from package \pkg{blockCV} and (2) "Leave-one-disc-out cross-validation" from \pkg{sperrorest}.
 
-#### Spatial buffering --- \pkg{blockCV}
+#### Spatial buffering --- blockCV
 
 <!--- (Subsection needs to be rewritten, see invisible comments. If this particular implementation is designed for binary classification problems, then a generic LOO with buffer is also needed, which should be introduced before this application-specific special case.) -->
 
