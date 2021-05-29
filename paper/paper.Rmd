@@ -65,6 +65,8 @@ bibliography: paper.bib
 output:
   bookdown::pdf_book:
     base_format: rticles::jss_article
+    includes:
+      in_header: header.tex
 ---
 
 ```{r setup, echo=FALSE, purl=FALSE}
@@ -315,6 +317,8 @@ Several of the implemented algorithms are themselves versatile toolboxes with mu
 
 
 
+
+
 #### Spatial buffering (blockCV)
 
 <!--- (Subsection needs to be rewritten, see invisible comments. If this particular implementation is designed for binary classification problems, then a generic LOO with buffer is also needed, which should be introduced before this application-specific special case.) -->
@@ -371,7 +375,9 @@ autoplot(resampling_buffer,
 
 <!--- P: Because this is one method within the "buffering" category and so far my approach was to label these as "<method name> (<pkg>)".
 Apparently this is suboptimal from your point of view - how can we do better?
-Also the visual appearance of level 4 headings in the PDF is suboptimal - maybe we should do this someway different. -->
+Also the visual appearance of level 4 headings in the PDF is suboptimal - maybe we should do this someway different.
+I've fixed the leavel 4 headers, they appaer as proper formatted headers.
+I also opened an issue on GH to add some introductory information to each method category. -->
 
 Another buffering oriented resampling method is "Spatial Disc" from package \pkg{sperrorest}.
 The name spins from "Leave-one-disc-out" which again originates from the generic "Leave-one-out" method.
