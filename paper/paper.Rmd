@@ -315,11 +315,12 @@ Several of the implemented algorithms are themselves versatile toolboxes with mu
 
 ### Buffering
 
+"Buffering" refers to the idea of removing observations between test and training set by drawing a cirular buffer around one or more observations [@rest2014, @brenning2012, @blockCV].
+By introducing more distance between observations, the influence of STAC should be reduced.
+Buffering mostly happens in the coordinate space due to the scattered appearance of observations in this space.
+\pkg{mlr3spatiotempcv} supports two "buffering" implementations: (1) "Spatial buffering" from package \pkg{blockCV} and (2) "Leave-one-disc-out cross-validation" from \pkg{sperrorest}.
 
-
-
-
-#### Spatial buffering (blockCV)
+#### Spatial buffering --- \pkg{blockCV}
 
 <!--- (Subsection needs to be rewritten, see invisible comments. If this particular implementation is designed for binary classification problems, then a generic LOO with buffer is also needed, which should be introduced before this application-specific special case.) -->
 
@@ -369,7 +370,7 @@ autoplot(resampling_buffer,
 
 <!-- TODO: Discuss issues setting a sensible range value -->
 
-#### Spatial disc (sperrorest)
+#### Leave-one-disc-out
 
 <!--- again, why mention package name in title? -->
 
@@ -379,13 +380,13 @@ Also the visual appearance of level 4 headings in the PDF is suboptimal - maybe 
 I've fixed the leavel 4 headers, they appaer as proper formatted headers.
 I also opened an issue on GH to add some introductory information to each method category. -->
 
-Another buffering oriented resampling method is "Spatial Disc" from package \pkg{sperrorest}.
-The name spins from "Leave-one-disc-out" which again originates from the generic "Leave-one-out" method.
+Another buffering oriented resampling method is "Leave-one-disc-out" from package \pkg{sperrorest}.
+The name originates from the generic "Leave-one-out" method.
 More specifically, the 'disc' which is being left our here refers to the radial area of test sets created from this method.
 
 Around the radial test set a buffer zone / neutral area can be defined in which observations are excluded from the training set, increasing the spatial distance between training and test sets.
 
-```{r disc, fig.cap="Visualization of 'Spatial Disc' method.", out.width="50%"}
+```{r disc, fig.cap="Visualization of 'Leave-one-disc-out' method.", out.width="50%"}
 resampling_disc = rsmp("spcv_disc", folds = 5, radius = 200L, buffer = 300L)
 resampling_disc$instantiate(task)
 
