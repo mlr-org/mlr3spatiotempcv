@@ -337,9 +337,11 @@ The "buffering" method from the \pkg{blockCV} package is conceptually similar to
 To reduce the similarity between training and test sets, a circular buffer around the observations representing the test set is drawn [@rest2014, @blockCV].
 Within this buffer zone, all observations are removed from the training set, thereby reducing the similarity between training and test set.
 
-By default, the method considers all points for training/test set creation.
-In an ecological context, this equals to the assumption of having *presence/absence* data for binary response variables.
-This means all non-presence values in the response variable are assumed to be confirmed absence values.
+The implementation in the \pkg{blockCV} package comes with optional support for presence/absence data handling, as often used in the field of species distribution modeling (SDM) [@hijmans2013].
+However, by default, the method considers all points for training/test set creation and does not apply any specific SDM adjustments to the data.
+
+In an ecological/species distribution modeling context, the default assumption of a binary response variable is to have *presence/absence* data.
+This means all presence and absence values in the response variable are confirmed in their respective status.
 <!--- FIXME: Why is this worth mentioning? What else could it be doing? LOO CV with buffer is a generic resampling method that can be applied to classification and regression problems. If this particular implementation only supports binary classification, then this should be mentioned explicitly. But mlr3 is not limited to binary classification problems, so why??? -->
 
 <!--- P: See my comment above, it might be that this is a misunderstanding. If not (or anyhow), we might want to clarify this more than to prevent such misunderstandings. -->
@@ -356,9 +358,9 @@ When setting argument `spDataType = "PB"`, the method only considers the *presen
 Background data is used for training the model by default unless argument `addBG = FALSE` is set for which only *presence* values not falling within the buffer zone of the respective fold are used for model training.
 
 Due to its similarity to a LOO CV, this method will result in as many train/test evaluations as observations are present.
-In the example below, a buffer zone of 1000 m is used and the first fold shown is plotted (Fig.\@ref(fig:buffer))).
+In the visualization of the first fold in Fig. \@ref(fig:buffer) a buffer zone of 1000 m was used without any custom presence/absence treament of the data.
 
-```{r buffer, fig.cap="Visualization of 'Spatial buffering' method.", out.width="50%"}
+```{r buffer, fig.cap="Visualization of the 'Spatial buffering' method from package `blockCV`.", out.width="50%", fig.pos="ht"}
 resampling_buffer = rsmp("spcv_buffer", theRange = 1000)
 resampling_buffer$instantiate(task)
 
