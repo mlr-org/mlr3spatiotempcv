@@ -372,7 +372,7 @@ autoplot(resampling_buffer,
 
 <!-- TODO: Discuss issues setting a sensible range value -->
 
-#### Leave-one-disc-out
+#### Leave-one-disc-out --- sperrorest
 
 <!--- again, why mention package name in title? -->
 
@@ -384,12 +384,16 @@ I also opened an issue on GH to add some introductory information to each method
 
 Another buffering oriented resampling method is "Leave-one-disc-out" from package \pkg{sperrorest}.
 The name originates from the generic "Leave-one-out" method.
-More specifically, the 'disc' which is being left our here refers to the radial area of test sets created from this method.
+The 'disc' part in the name here refers to the radial area/buffer zone around the test set which is (optionally) being left out within each fold.
 
-Around the radial test set a buffer zone / neutral area can be defined in which observations are excluded from the training set, increasing the spatial distance between training and test sets.
+In addition, one can specify to sample with replacement by setting `replace = TRUE`.
+
+The method starts from a randomly selected observation and adds all points within the buffer zone area set via variable `radius` by the user.
+
+Around the radial test set a buffer zone / neutral area can be defined via variable `buffer` in which observations are excluded from the training set, increasing the spatial distance between training and test sets.
 
 ```{r disc, fig.cap="Visualization of 'Leave-one-disc-out' method.", out.width="50%"}
-resampling_disc = rsmp("spcv_disc", folds = 5, radius = 200L, buffer = 300L)
+resampling_disc = rsmp("spcv_disc", folds = 5, radius = 300L, buffer = 400L)
 resampling_disc$instantiate(task)
 
 autoplot(resampling_disc,
