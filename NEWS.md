@@ -2,44 +2,26 @@
 
 # mlr3spatiotempcv 0.4.0
 
-- add caret to suggests
-- support clustering coords only for 'sptcv_cluto'
+## Features
 
+- Support clustering coords only for `"sptcv_cluto"`
+- Add `as_task_*` S3 generics: `as_task_classif_st.data.frame()`, `as_task_classif_st.DataBackend()`, `as_task_classif_st.sf()`, `as_task_regr_st.data.frame()`, `as_task_regr_st.DataBackend()`, `as_task_regr_st.sf()`, `as_task_classif.TaskClassifST()`, `as_task_regr.TaskRegrST()` (#99)
+- Add `"spcv_tiles"` and `"repeated_spcv_tiles"` (#121)
+- Add `"spcv_disc"` (#115)
 
-# mlr3spatiotempcv 0.3.0.9005
+## Bug Fixes
 
 - Fixed train set issues for `sptcv_cstf()` with space and time var (#135)
 - Fixed `$folds()` active binding returning wrong fold number (#120)
+- Add missing `man` IDs (#122)
 
-
-# mlr3spatiotempcv 0.3.0.9004
-
-- Add `as_task_*` S3 generics: `as_task_classif_st.data.frame()`, `as_task_classif_st.DataBackend()`, `as_task_classif_st.sf()`, `as_task_regr_st.data.frame()`, `as_task_regr_st.DataBackend()`, `as_task_regr_st.sf()`, `as_task_classif.TaskClassifST()`, `as_task_regr.TaskRegrST()` (#99)
-
-
-# mlr3spatiotempcv 0.3.0.9003
-
-- Add `spcv_tiles` and `repeated_spcv_tiles` (#121)
-
-
-# mlr3spatiotempcv 0.3.0.9002
+## Misc
 
 - Add example 2D spatial plots to spatiotemp-viz vignette
+- Add {caret} to Suggests
 - "Cstf" methods: remove arguments in favor of param set to align with other methods (#122)
-- Add missing `man` IDs (#122)
 - Inherit documentation from upstream functions (#117)
 - Vignette: Update and categorize table listing all implemented methods
-
-
-# mlr3spatiotempcv 0.3.0.9001
-
-- Add `ResamplingSpCVDisc` (#115)
-
-
-# mlr3spatiotempcv 0.3.0.9000
-
-- Same as previous version.
-
 
 # mlr3spatiotempcv 0.3.0
 
