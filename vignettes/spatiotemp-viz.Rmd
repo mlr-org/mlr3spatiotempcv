@@ -80,7 +80,7 @@ However, there is a manual workaround via [annotations](https://plotly.com/r/ref
 
 ## Examples of spatial partitioning (2D)
 
-The following plots are based on a three fold partitioning of the [ecuador]() example task (expect method `p_buffer` which is LOO-CV).
+The following plots are based on a three fold partitioning of the [ecuador](https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_ecuador.html) example task (expect method `p_buffer` which is LOO-CV).
 They do not claim to make sense or make use of useful settings - they only have a showcase purpose.
 The code which produced the plots can be found [here](https://github.com/mlr-org/mlr3spatiotempcv/blob/main/vignettes/spatiotemp-viz.Rmd).
 
