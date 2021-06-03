@@ -46,6 +46,7 @@ Imports:
 Suggests:
     bbotk,
     blockCV (>= 2.1.1),
+    caret,
     CAST,
     ggsci,
     ggtext,

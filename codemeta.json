@@ -15,13 +15,13 @@
   ],
   "issueTracker": "https://github.com/mlr-org/mlr3spatiotempcv/issues",
   "license": "https://spdx.org/licenses/LGPL-3.0",
-  "version": "0.3.0.9000",
+  "version": "0.3.0.9005",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.5 Patched (2021-03-31 r80136)",
+  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
   "author": [
     {
       "@type": "Person",
@@ -90,6 +90,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=blockCV"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "caret",
+      "name": "caret",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=caret"
     },
     {
       "@type": "SoftwareApplication",
@@ -422,7 +434,7 @@
   ],
   "releaseNotes": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/NEWS.md",
   "readme": "https://github.com/mlr-org/mlr3spatiotempcv/blob/main/README.md",
-  "fileSize": "25107.39KB",
+  "fileSize": "8684.666KB",
   "contIntegration": "https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=main",
   "developmentStatus": "https://lifecycle.r-lib.org/articles/stages.html",
   "keywords": [
