@@ -1,5 +1,11 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 0.4.0.9000
+
+- add caret to suggests
+- support clustering coords only for 'sptcv_cluto'
+
+
 # mlr3spatiotempcv 0.4.0
 
 - add caret to suggests
