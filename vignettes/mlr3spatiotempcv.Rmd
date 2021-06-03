@@ -2,7 +2,6 @@
 title: "Getting Started"
 output: rmarkdown::html_vignette
 bibliography: ../inst/references.bib
-link-citations: yes
 vignette: >
   %\VignetteIndexEntry{Getting Started}
   %\VignetteEngine{knitr::rmarkdown}
