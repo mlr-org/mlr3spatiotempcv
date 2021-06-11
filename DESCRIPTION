@@ -1,7 +1,7 @@
 Package: mlr3spatiotempcv
 Title: Spatiotemporal Resampling Methods for 'mlr3'
-Version: 0.3.0.9005
-Date: 2021-05-29
+Version: 0.4.0.9000
+Date: 2021-06-03
 Authors@R:
     c(person(given = "Patrick",
              family = "Schratz",
@@ -46,6 +46,7 @@ Imports:
 Suggests:
     bbotk,
     blockCV (>= 2.1.1),
+    caret,
     CAST,
     ggsci,
     ggtext,
