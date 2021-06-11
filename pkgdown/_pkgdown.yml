@@ -72,12 +72,12 @@ reference:
     contents:
       - ResamplingSpCVEnv
       - ResamplingRepeatedSpCVEnv
-  - title: Factor/Predefined Groups Partitioning Methods
-    desc: These methods use (multiple) factor-variables / predefined groups to create partitions
+  - title: Group-level Partitioning Methods
+    desc: These methods use (multiple) factor-variables / inherited grouping to create partitions.
     contents:
       - ResamplingSptCVCstf
       - ResamplingRepeatedSptCVCstf
-  - title: Spatiotempral Tasks
+  - title: Spatiotemporal Tasks
     desc: Classification and regression tasks.
     contents:
       - TaskRegrST
@@ -86,7 +86,7 @@ reference:
       - TaskClassifST
       - as_task_classif_st
       - as_task_classif
-  - title: Spatiotempral Example Datasets
+  - title: Spatiotemporal Example Datasets
     desc: Tasks appended to the `mlr_tasks` dictionary.
     contents:
       - contains("tasks")

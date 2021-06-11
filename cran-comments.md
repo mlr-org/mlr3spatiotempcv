@@ -1,16 +1,26 @@
-## Test environments
-* local R installation, R 4.0.3
-* GitHub Actions, R 4.0.3 and R-devel
-* win-builder (devel)
+mlr3spatiotempcv 0.4.0
+
+## Cran Repository Policy
+
+- [x] Reviewed CRP last edited 2021-04-25.
+
+See changes at https://github.com/eddelbuettel/crp/compare/master@%7B2020-10-29%7D...master@%7B2021-04-25%7D
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+- [x] Checked locally, R 4.1.0
+- [x] Checked on CI system, R 4.1.0
+- [x] Checked on win-builder, R devel
 
-* This is a new release.
+Check the boxes above after successful execution and remove this line. Then run `fledge::release()`.
 
-Changes to previous submission:
+## Current CRAN check results
 
-- Commented in some examples in `autoplot()`
-- Wrapped one example in `\dontrun{}` because it requires external software
-- Require testthat v3.0.0 and run tests in parallel
+- [x] Checked on 2021-06-03, problems found: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
+- [x] NOTE: r-release-macos-arm64
+- [x] NOTE: r-release-macos-arm64
+- [x] ERROR: r-release-macos-arm64
+- [x] WARN: r-release-macos-arm64
+- [x] ERROR: r-release-windows-ix86+x86_64
+
+Check results at: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
