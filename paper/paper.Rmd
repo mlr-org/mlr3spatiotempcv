@@ -404,14 +404,25 @@ autoplot(resampling_disc,
 
 ### Blocking
 
-#### Spatial blocking (blockCV)
+"Spatial Blocking" creates homogeneous blocks across the study area splitting observations into different zones [@bahn2012, @wenger2012, @blockCV].
+The creation of these zones can be diverse: one option is to supply rows and columns to subdivide the data into a grid.
+Others make use of landscape patterns such as crop zones [@russ2010] or species presence [@blockCV] to determine an initial partitioning.
 
-"Spatial Blocking" (\pkg{blockCV} package [@blockCV]) creates homogeneous blocks across the study area splitting observations into different zones [@bahn2012, @wenger2012].
-Multiple "blocks" are then combined into a partition, following the number of folds specified by the user.
-For example, in a five-fold scenario, the method would combine one fifth of all blocks into a partition (with five partitions in total).
+Implementations of blocking methods often provide additional options to fine tune these initial partitions, allowing for fine-grained partition creation.
 
-The way how the blocks are created can be manifold: Supplying a numeric value in meters via argument `theRange` (named just `range` in {mlr3spatiotempcv}) will create a quadratic block pattern across the study area.
-The aggregation of zones can either be random (default) (`selection = "random"`), systematic (`selection = "systematic"`) or checkerboard structure (`selection = "checkerboard"`).
+\pkg{mlr3spatiotempcv} supports two "blocking" implementations: (1) "Spatial blocking" from package \pkg{blockCV} and (2) "Spatial Tiles" from \pkg{sperrorest}.
+
+#### Spatial blocking --- blockCV
+
+The "Spatial blocking" from package \pkg{blockCV} comes with various options to customize the zone creation.
+Besides the choice of relying on an initial random  (default) (`selection = "random"`), systematic (`selection = "systematic"`) or checkerboard pattern (`selection = "checkerboard"`) for the final partition aggregation, support for SDM specific background data is built-in.
+Supplying a numeric value in meters via argument `theRange` (named just `range` in {mlr3spatiotempcv}) will create a quadratic block pattern across the study area.
+Ultimately, users can also supply a user-defined polygon which defines the zones.
+
+After the initial block creation, multiple "blocks" are combined to form a partition, honoring the number of folds requested by the user.
+For example, in a five-fold scenario with a grid of four columns and five rows, the method would combine one fifth of all blocks (= four blocks) into a single partition.
+
+The following subsections showcase some of the introduced options.
 
 ##### Option: selection = "random"
 
@@ -479,7 +490,7 @@ autoplot(resampling_block_rows_cols,
 
 \newpage
 
-#### Spatial tiling (sperrorest)
+#### Spatial Tiles --- sperrorest
 
 Method `partition_tiles()` from package \pkg{sperrorest} also uses rectangular blocks to partition the study area.
 In contrast to "Spatial Blocking" from \pkg{blockCV} these blocks can be rotated (via argument `rotation`) and a minimum number of observations per block can be set (argument `min_n`).
@@ -489,9 +500,7 @@ The number of tiles set by the user equals the number of folds and blocks cannot
 Also despite setting 12 blocks via `nsplit = c(3L, 4L)` in the following example, the final partition count is eleven because the bottom-left part of the study area does not contain observations.
 
 ```{r tile, fig.cap="Spatial tiling with arguments `rows` and `cols`.", out.width="40%", fig.pos="ht"}
-resampling_tiles = rsmp("spcv_tiles",
-  nsplit = c(3L, 4L)
-)
+resampling_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
 
 autoplot(resampling_tiles,
   size = 0.8, fold_id = 1, task = task, crs = 32717) *
