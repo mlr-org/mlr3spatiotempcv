@@ -527,15 +527,18 @@ autoplot(resampling_coords,
 
 ## Spatiotemporal
 
-### Factor-based grouping
+### Group-level CV
 
-#### Predefined grouping
+Group-level CV follows the principle of an inherit grouping structure of the observations, both in space and/or time, to determine (groups of) partitions.
+In contrast to blocking or clustering not the the spatial or temporal location is used but additional metadata such as the membership to a specific crop type [@brenning2006].
+The idea to follow a such an inherited grouping structure of the data is also referred to as "target-oriented validation" [@cast].
+Even though flexibility is limited due to the inherited grouping structure within the data, some implementations allow to specify the resulting number of folds by omitting parts of the dataset.
 
-FIXME
+\pkg{mlr3spatiotempcv} supports two "grouping" implementations: (1) The "Leave-location-and-time-out" family from package \pkg{CAST} and (2) "Custom Resampling" from \pkg{mlr3}.
 
-#### Leave-Location-And-Time-Out (CAST)
+#### Leave-Location-And-Time-Out --- CAST
 
-Leave-Location-and-Time-Out (LLTO) from packge \pkg{CAST} is a spatiotemporal resampling method [@meyer2018].
+Leave-Location-and-Time-Out (LLTO) from package \pkg{CAST} is a spatiotemporal resampling method [@meyer2018].
 It requires both a spatial and a temporal variable which are used to to separate observations in a multi-dimensional space.
 It comes with satellite methods named "Leave-time-out" (LTO) and "Leave-location-out" (LLO) which only operate in a two-dimensional space.
 
@@ -618,6 +621,7 @@ autoplot(resampling_cstf_time_loc,
 knitr::include_graphics("llto.png")
 ```
 
+### Custom Resampling --- mlr3
 
 ## Feature space clustering
 
