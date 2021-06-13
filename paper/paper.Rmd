@@ -527,7 +527,7 @@ autoplot(resampling_coords,
 
 ## Spatiotemporal
 
-### Group-level CV
+### Group-Level CV
 
 Group-level CV follows the principle of an inherit grouping structure of the observations, both in space and/or time, to determine (groups of) partitions.
 In contrast to blocking or clustering not the the spatial or temporal location is used but additional metadata such as the membership to a specific crop type [@brenning2006].
@@ -621,7 +621,23 @@ autoplot(resampling_cstf_time_loc,
 knitr::include_graphics("llto.png")
 ```
 
-### Custom Resampling --- mlr3
+### Custom (fixed) Resampling --- mlr3
+
+Support for user-defined partitioning strategies is built into \pkg{mlr3} directly since version FIXME.
+Labelled as "Custom CV", users are able to supply an external factor vector with the same length as number of observations.
+Alternatively to supplying an external factor vector, the name of a feature within the task can be used.
+
+The following example is taken from `sperrorest::partition_factor()`.
+
+FIXME: eval=TRUE when available upstream im mlr3
+
+```{r custom-cv,  fig.cap="Environmental blocking using a single predictor.", out.width="50%", fig.pos="ht", eval=FALSE}
+breaks <- quantile(task$data()$dem, seq(0, 1, length = 6))
+zclass <- cut(task$data()$dem, breaks, include.lowest = TRUE)
+
+resampling_custom = rsmp("custom_cv")
+resampling_custom$instantiate(task, split = zclass)
+```
 
 ## Feature space clustering
 
