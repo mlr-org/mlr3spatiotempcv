@@ -298,7 +298,7 @@ Several of the implemented algorithms are themselves versatile toolboxes with mu
   \cmidrule{2-5}
                                       & Spatial Clustering          & \pkg{sperrorest} & \texttt{"spcv\_coords"} \tablefootnote{\label{morera2021}\cite{morera2021}} \tablefootnote{\label{geiss2017}\cite{geiss2017}} \tablefootnote{\label{wu2020}\cite{wu2020}} &  21 \\
                                       \cmidrule{2-5}
-       & Predefined grouping & \specialcell{\pkg{CAST} \\ \pkg{mlr3}}       & \specialcell{ \texttt{"sptcv\_cstf"} (LLO) \tablefootnote{\label{blothe2021}\cite{blothe2021}} \tablefootnote{\label{dolan2021}\cite{dolan2021}} \tablefootnote{\label{dumke2019}\cite{dumke2019}}  \\ \texttt{"FIXME"}}  & \specialcell{12 \\ -}       \\
+       & Group-Level CV & \specialcell{\pkg{CAST} \\ \pkg{mlr3}}       & \specialcell{ \texttt{"sptcv\_cstf"} (LLO) \tablefootnote{\label{blothe2021}\cite{blothe2021}} \tablefootnote{\label{dolan2021}\cite{dolan2021}} \tablefootnote{\label{dumke2019}\cite{dumke2019}}  \\ \texttt{"custom\_cv"} \tablefootnote{\label{brenning2006}\cite{brenning2006}} \tablefootnote{\label{pena2015}\cite{pena2015}}} & \specialcell{12 \\ 2}       \\
       \midrule
       \multirow{2}{*}{Spatiotemporal} & Leave-Location-and-Time-Out & \pkg{CAST}       &  \texttt{"sptcv\_cstf"} \tablefootnote{\label{egli2020}\cite{egli2020}} \tablefootnote{\label{gao2019}\cite{gao2019}} \tablefootnote{\label{reitz2021}\cite{reitz2021}} & 6 \\
                                       & Spatiotemporal Clustering   & \pkg{skmeans}    &  \texttt{"sptcv\_cluto"} &  -  \\
@@ -623,7 +623,7 @@ autoplot(resampling_cstf_time_loc,
 knitr::include_graphics("llto.png")
 ```
 
-### Custom (fixed) Resampling --- mlr3
+#### Custom (fixed) Resampling --- mlr3
 
 Support for user-defined partitioning strategies is built into \pkg{mlr3} directly since version FIXME.
 Labelled as "Custom CV", users are able to supply an external factor vector with the same length as number of observations.
