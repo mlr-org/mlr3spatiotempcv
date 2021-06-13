@@ -50,7 +50,7 @@ This list does not claim to be comprehensive.
 | Name          | Language | Resources                                                                                                                                                                              |
 | ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | blockCV       | R        | [Paper](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13107), [CRAN](https://cran.r-project.org/web/packages/blockCV/index.html)                              |
-| CAST          | R        | [Paper]([https://10.1016/j.envsoft.2017.12.001](https://www.sciencedirect.com/science/article/pii/S1364815217310976)), [CRAN](https://cran.r-project.org/web/packages/CAST/index.html) |
+| CAST          | R        | [Paper](https://www.sciencedirect.com/science/article/pii/S1364815217310976), [CRAN](https://cran.r-project.org/web/packages/CAST/index.html) |
 | ENMeval       | R        | [Paper](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12261), [CRAN](https://cran.r-project.org/web/packages/ENMeval/index.html)                              |
 | spatialsample | R        | [CRAN](https://cran.r-project.org/web/packages/spatialsample/index.html)                                                                                                               |
 | sperrorest    | R        | [Paper](https://doi.org/10.1109%2Figarss.2012.6352393), [CRAN](https://cran.r-project.org/web/packages/sperrorest/index.html)                                                          |
