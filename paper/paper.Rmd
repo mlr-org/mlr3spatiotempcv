@@ -37,14 +37,13 @@ abstract: >
   Spatiotemporal resampling methods are needed to account for the existence of different autocorrelation types (spatial autocorrelation (SAC), temporal autocorrelation (TAC) or spatiotemporal autocorrelation (STAC)) in datasets.
   These autocorrelation types cause biased performance estimates of varying magnitude in cross-validation when ignored.
   At the time of writing, various R packages implementing different spatiotemporal partitioning strategies exist: CAST [@cast], blockCV [@blockCV] or sperrorest [@brenning2012].
-  There are some resampling methods used in scientific studies for which the source code is either not available or a different programming language has been used [@roberts2017; @pohjankukka2017]
+  There are some resampling methods used in scientific studies for which the source code is either not available or a different programming language has been used [@roberts2017; @pohjankukka2017].
 
   The goal of [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is to gather the available spatiotemporal resampling methods in R and make them available to users through a simplified and generic interface.
   The latter is made possible by integrating the package directly into the [mlr3](https://mlr3.mlr-org.com) machine learning framework.
   This simplifies the step of integrating package specific syntax into an overarching machine learning pipeline.
   The hope is that the availability of such a package encourages researchers to more often apply spatiotemporal resampling methods in scientific case studies.
 keywords:
-  # at least one keyword must be supplied
   formatted: [cross-validation, predictive performance, machine learning, autocorrelation, spatial, temporal, "\\proglang{R}"]
   plain:     [cross-validation, predictive performance, autocorrelation, spatial, temporal, R]
 preamble: >
@@ -78,7 +77,7 @@ knitr::knit_hooks$set(plot = function(x, options) {
 ```
 
 ```{r setup-2, echo=FALSE, purl=T}
-# for knitr spint later
+# for knitr spin later
 knitr::opts_chunk$set(fig.path = "./paper/figs/",
   cache = T,
   cache.lazy = TRUE)
@@ -97,8 +96,8 @@ This cross-validation bias is well-known in spatial as well as non-spatial predi
 It is most easily understood from a predictive modelling perspective by focusing on the question where (and when) the model should be used for prediction.
 In crop classification from remotely-sensed data, for instance, learning samples routinely contain multiple grid cells from a sample of fields with known crop type, for instance 2000 grid cells from 100 fields scattered across a large study region.
 The purpose of training a model on this sample is to make predictions on other, new *fields* within the same geographic domain (*intra-domain* prediction; @brenning2005) --- not *within* the same field, which obviously presents only one crop type.
-In this stituation it would therefore seem rather foolish to train a model on a simple random subsample of grid cells, and test it on the remaining data, i.e. using other grid cells from the same fields, as if we wanted to predict within a field.
-The results from this performance assessment would be over-optimitic, and perhaps badly so.
+In this situation it would therefore seem rather foolish to train a model on a simple random subsample of grid cells, and test it on the remaining data, i.e. using other grid cells from the same fields, as if we wanted to predict within a field.
+The results from this performance assessment would be over-optimistic, and perhaps badly so.
 To mimic the predictive situation for which the model is trained, we'd rather have to resample at the level of fields, not grid cells [@pena2015].
 If the model was to be applied to adjacent agricultural districts, i.e. outside the learning sample's spatial domain (*extra-domain* prediction; @brenning2005), it would even seem necessary to resample at a higher level of spatial aggregation, i.e. at the level of agricultural districts within the learning sample, in order to realistically mimic the actual prediction task.
 The cross-validation resampling needed therefore depends as much on the prediction task as on the data structure or dependency at hand.
@@ -107,7 +106,7 @@ While it is not the purpose of this paper to recommend specific resampling schem
 \pkg{mlr3spatiotempcv} is such a toolbox.
 
 This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (see Table \@ref(tab:sptcv-methods)).
-The earliest and most comprehensive of these implementations is the \pkg{sperrorest} package [@brenning2012], which provides an extendible framework and includes predefined resampling strategies based on, for example, blocking, grouping and buffering.
+The earliest and most comprehensive of these implementations is the \pkg{sperrorest} package [@brenning2012], which provides an extensible framework and includes predefined resampling strategies based on, for example, blocking, grouping and buffering.
 In contrast, \pkg{blockCV} and \pkg{ENMeval} were developed for block and buffer resampling with a focus on species distribution modelling [@blockCV; @rest2014; @muscarella2014].
 Neither of these have been integrated into established machine-learning frameworks such as \pkg{mlr} or \pkg{caret}, and all of them lack support of temporal prediction tasks.
 The \pkg{CAST} package, in contrast, focuses on spatiotemporal prediction tasks in a \pkg{caret} framework [@cast; @meyer2018].
@@ -202,7 +201,7 @@ These challenges result in substantial overhead and possible reproducibility iss
 Within the \pkg{mlr3} ecosystem, partitioning strategies are represented by their own objects of class \texttt{Resampling}, most of which are available within \pkg{mlr3} itself (e.g., regular random CV); other specialized strategies (e.g., \texttt{TaskClassifST} or \texttt{TaskRegrST}) are defined in extension packages such as \pkg{mlr3spatiotempcv}.
 In the machine-learning pipeline, these objects define the data splits used for model evaluation and selection (hyperparameter tuning) by machine-learning algorithms.
 Spatial and spatiotemporal partitioning techniques in \pkg{mlr3spatiotempcv} are currently mostly imported and interfaced from other packages, in particular \pkg{sperrorest}, \pkg{blockCV} and \pkg{CAST} [@blockCV; @brenning2012; @cast], in order to expose them to \pkg{mlr3} functionality.
-To reduce first-level dependencies, some methods were reimplemented instead of imported from upstream packages.
+To reduce first-level dependencies, some methods were re-implemented instead of imported from upstream packages.
 
 Resampling objects in \pkg{mlr3spatiotmpcv} inherit from class \texttt{mlr3::Resampling} and can be created from established object classes for geospatial data in R, including simple features [@pebesma2018], which facilitates their integration into domain-specific workflows in the geospatial sciences.
 Support for projected (planar) and unprojected (geographic) coordinate reference systems (CRS) currently varies depending on the partitioning techniques used, since these inherit their behavior from the underlying upstream R package.
@@ -318,7 +317,7 @@ Several of the implemented algorithms are themselves versatile toolboxes with mu
 
 ### Buffering
 
-"Buffering" refers to the idea of removing observations between test and training set by drawing a cirular buffer around one or more observations [@rest2014, @brenning2012, @blockCV].
+"Buffering" refers to the idea of removing observations between test and training set by drawing a circular buffer around one or more observations [@rest2014, @brenning2012, @blockCV].
 By introducing more distance between observations, the influence of STAC should be reduced.
 Buffering mostly happens in the coordinate space due to the scattered appearance of observations in this space.
 \pkg{mlr3spatiotempcv} supports two "buffering" implementations: (1) "Spatial buffering" from package \pkg{blockCV} and (2) "Leave-one-disc-out cross-validation" from \pkg{sperrorest}.
@@ -331,7 +330,7 @@ Buffering mostly happens in the coordinate space due to the scattered appearance
 It has additional features specific for SDM (presence-background data) but these are not active by default.
 That is why I did not add `sperrorest::partition_loo()` because `blockCV::buffering()` does the same + has support for SDM. -->
 
-<!--- FIXME: Why refer to the blockCV package? This is a general method, as described (or at least outlined) above. If code from blockCV was used, when this should be acknowledged, but otherwise I don't undertstand why this method is "from" the blockCV package. -->
+<!--- FIXME: Why refer to the blockCV package? This is a general method, as described (or at least outlined) above. If code from blockCV was used, when this should be acknowledged, but otherwise I don't understand why this method is "from" the blockCV package. -->
 
 <!--- P: This addresses specifically the "buffering" function in the blockCV package which falls into the "buffering" category, the same applies to "spatial disc" from {sperrorest}.
 Is this a potential misunderstanding with the overarching level 3 header "Buffering"? -->
@@ -352,16 +351,16 @@ This means all presence and absence values in the response variable are confirme
 The implementation also comes with support for *presence/background* data for binary responses.
 In this scenario, only the presence values are considered validated. <!--- What is validated, in this context? Again, why overfit the code to such a very specific setting? -->
 
-<!--- P: Validated here means: the existence of the presence observations is validated, the background observations are artifical. This is a common procedure in SDM.
+<!--- P: Validated here means: the existence of the presence observations is validated, the background observations are artificial. This is a common procedure in SDM.
 The blockCV buffering integration comes with support for presence/background handling which is important for SDM.
-I think this should be explaind shortly then - which is what this section is about. -->
+I think this should be explained shortly then - which is what this section is about. -->
 
 All other response observations are assumed to be absent without a proof for this assumption.
 When setting argument `spDataType = "PB"`, the method only considers the *presence* observations in a CV scenario.
 Background data is used for training the model by default unless argument `addBG = FALSE` is set for which only *presence* values not falling within the buffer zone of the respective fold are used for model training.
 
 Due to its similarity to a LOO CV, this method will result in as many train/test evaluations as observations are present.
-In the visualization of the first fold in Fig. \@ref(fig:buffer) a buffer zone of 1000 m was used without any custom presence/absence treament of the data.
+In the visualization of the first fold in Fig. \@ref(fig:buffer) a buffer zone of 1000 m was used without any custom presence/absence treatment of the data.
 
 ```{r buffer, fig.cap="Visualization of the 'Spatial buffering' method from package `blockCV`.", out.width="50%", fig.pos="ht"}
 resampling_buffer = rsmp("spcv_buffer", theRange = 1000)
@@ -380,9 +379,9 @@ autoplot(resampling_buffer,
 <!--- again, why mention package name in title? -->
 
 <!--- P: Because this is one method within the "buffering" category and so far my approach was to label these as "<method name> (<pkg>)".
-Apparently this is suboptimal from your point of view - how can we do better?
-Also the visual appearance of level 4 headings in the PDF is suboptimal - maybe we should do this someway different.
-I've fixed the leavel 4 headers, they appaer as proper formatted headers.
+Apparently this is sub-optimal from your point of view - how can we do better?
+Also the visual appearance of level 4 headings in the PDF is sub-optimal - maybe we should do this someway different.
+I've fixed the level 4 headers, they appear as proper formatted headers.
 I also opened an issue on GH to add some introductory information to each method category. -->
 
 Another buffering oriented resampling method is "Leave-one-disc-out" from package \pkg{sperrorest}.
@@ -632,7 +631,7 @@ Alternatively to supplying an external factor vector, the name of a feature with
 
 The following example is taken from `sperrorest::partition_factor()`.
 
-FIXME: eval=TRUE when available upstream im mlr3
+<!-- FIXME: eval=TRUE when available upstream im mlr3 -->
 
 ```{r custom-cv,  fig.cap="Environmental blocking using a single predictor.", out.width="50%", fig.pos="ht", eval=FALSE}
 breaks <- quantile(task$data()$dem, seq(0, 1, length = 6))
@@ -694,7 +693,7 @@ We choose the area Under the ROC curve (`"classif.auc"`) as the performance meas
 ## Data preparation
 
 At first all necessary R packages are loaded and a lower verbosity is set to keep the output tidy.
-Also a seed is set for deterministic executiona and the \pkg{mlr3spatiotempcv} built-in task `"ecuador"` is loaded via `tsk()`.
+Also a seed is set for deterministic execution and the \pkg{mlr3spatiotempcv} built-in task `"ecuador"` is loaded via `tsk()`.
 Next, the random forest learner (`lrn("classif.ranger")`) is initialized with default hyperparameters and the prediction type set to `"probability"` due to the binary response variable.
 A set of commonly used learners is available in \pkg{mlr3learners} [@mlr3learners], including the random forest implementation after @ranger.
 
@@ -743,7 +742,7 @@ rr_sp$aggregate(measures = msr("classif.auc"))
 
 ## Summary
 
-The resulting AUC valiue of 0.77 using Non-Spatial Cross-Validation (NSpCV) is around 0.15 better compared to the Spatial Cross-Validation (SpCV) value of 0.61.
+The resulting AUC value of 0.77 using Non-Spatial Cross-Validation (NSpCV) is around 0.15 better compared to the Spatial Cross-Validation (SpCV) value of 0.61.
 The better performance score results from over-optimism in the estimation with NSpCV.
 The actual predictive performance on new data is much more realistically reflected by the performance estimated via SpCV.
 The magnitude of this difference is variable as it depends on the dataset, the magnitude of STAC and the learner itself.
@@ -784,7 +783,7 @@ However, these then suffer from the fact of potentially not being able to proper
 
 <!-- sptcv LLO & LTO: requires additional variable to specify groupings -->
 Methods `"spcv_cstf"` (with only one of `space_var` or `time_var` set) require a variable in the dataset which should be used for grouping.
-The specification of such is not always easy because the selection of such a variable also implies that the selected groups inherit substantial autorcorrelation and differ substantially from other groups.
+The specification of such is not always easy because the selection of such a variable also implies that the selected groups inherit substantial autocorrelation and differ substantially from other groups.
 Also, if the variable contains too many groups, the difference within train/test splits may become undesirably high and tend towards a LOO CV.
 
 <!-- only some methods are suited for repeated execution -->
@@ -822,7 +821,7 @@ We believe that making resampling methods available to widely used modeling fram
 The latter often require special structured objects as inputs and cannot directly be re-used in susequent modeling steps of user workflows.
 This is not an issue specific to spatiotemporal resampling methods but a general philosophy of the authors.
 
-Spatiotemporal cross-validation is still not yet a paradigm that is completely established in scientfic workflows even though it is discussed intensively for more than a decade now.
+Spatiotemporal cross-validation is still not yet a paradigm that is completely established in scientific workflows even though it is discussed intensively for more than a decade now.
 Making most available methods easily accessible to users is an important step to foster the acceptance of such in the community and lead to less biased cross-validation results in environmental and ecological studies.
 
 ```{r echo=FALSE}
