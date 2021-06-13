@@ -691,10 +691,7 @@ We choose the area Under the ROC curve (`"classif.auc"`) as the performance meas
 ## Data preparation
 
 At first all necessary R packages are loaded and a lower verbosity is set to keep the output tidy.
-Also a seed is set for deterministic execution.
-
-Next the \pkg{mlr3spatiotempcv} built-in task `"ecuador"` is loaded via `tsk()`.
-
+Also a seed is set for deterministic executiona and the \pkg{mlr3spatiotempcv} built-in task `"ecuador"` is loaded via `tsk()`.
 Next, the random forest learner (`lrn("classif.ranger")`) is initialized with default hyperparameters and the prediction type set to `"probability"` due to the binary response variable.
 A set of commonly used learners is available in \pkg{mlr3learners} [@mlr3learners], including the random forest implementation after @ranger.
 
