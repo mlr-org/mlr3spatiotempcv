@@ -319,7 +319,7 @@ Several of the implemented algorithms are themselves versatile toolboxes with mu
 
 "Buffering" refers to the idea of removing observations between test and training set by drawing a circular buffer around one or more observations [@rest2014, @brenning2012, @blockCV].
 By introducing more distance between observations, the influence of STAC should be reduced.
-Buffering mostly happens in the coordinate space due to the scattered appearance of observations in this space.
+Buffering is mostly applied in the coordinate space due to the scattered appearance of observations in this space.
 \pkg{mlr3spatiotempcv} supports two "buffering" implementations: (1) "Spatial buffering" from package \pkg{blockCV} and (2) "Leave-one-disc-out cross-validation" from \pkg{sperrorest}.
 
 #### Spatial buffering --- blockCV
@@ -330,17 +330,16 @@ Buffering mostly happens in the coordinate space due to the scattered appearance
 It has additional features specific for SDM (presence-background data) but these are not active by default.
 That is why I did not add `sperrorest::partition_loo()` because `blockCV::buffering()` does the same + has support for SDM. -->
 
-<!--- FIXME: Why refer to the blockCV package? This is a general method, as described (or at least outlined) above. If code from blockCV was used, when this should be acknowledged, but otherwise I don't understand why this method is "from" the blockCV package. -->
 
-<!--- P: This addresses specifically the "buffering" function in the blockCV package which falls into the "buffering" category, the same applies to "spatial disc" from {sperrorest}.
-Is this a potential misunderstanding with the overarching level 3 header "Buffering"? -->
+<!-- A: This paragraph is a general description of the approach, not a description of unique characteristics of this implementation. General approach of buffering is (and should be) described in the introdoctory paragraph of the Buffering section.
 
 The "buffering" method from the \pkg{blockCV} package is conceptually similar to a leave-one-out (LOO) cross-validation approach [@stone1974].
 To reduce the similarity between training and test sets, a circular buffer around the observations representing the test set is drawn [@rest2014, @blockCV].
 Within this buffer zone, all observations are removed from the training set, thereby reducing the similarity between training and test set.
+-->
 
 The implementation in the \pkg{blockCV} package comes with optional support for presence/absence data handling, as often used in the field of species distribution modeling (SDM) [@hijmans2013].
-However, by default, the method considers all points for training/test set creation and does not apply any specific SDM adjustments to the data.
+However, by default, the method considers all points for sampling the training and test sets.
 
 In an ecological/species distribution modeling context, the default assumption of a binary response variable is to have *presence/absence* data.
 This means all presence and absence values in the response variable are confirmed in their respective status.
@@ -514,11 +513,14 @@ autoplot(resampling_tiles,
 
 #### Coordinate-based clustering
 
-The "Spatial CV" method after [@brenning2012] and implemented in package \pkg{sperrorest} is similar to method "environmental blocking" in that it also uses *k-means* clustering for fold creation.
-However, it does not make use of arbitrary features but uses the coordinates of all observations to create clusters in the spatial domain.
-This is what lead to the naming of `spcv_coords` in \pkg{mlr3spatiotempcv}.
+The "Spatial CV" method after [@russ2010; @brenning2012] and implemented in package \pkg{sperrorest} uses the coordinates of all observations to create clusters in the spatial domain.
+$k$-means clustering has been proposed as a clustering method.
+To avoid confusion with other spatial partitioning methods, we refer to this as coordinate-based clustering, or as `spcv_coords` in \pkg{mlr3spatiotempcv}.
 
-```{r coords, fig.cap="Method 'Spatial CV' showing a k-means clustering approach based on coordinates.", out.width="50%", fig.pos="ht"}
+This approach is very versatile as it adapts to irregularly-shaped study areas and ensures that exactly $k$ partitions are created.
+Nevertheless, despite the random selection of initial cluster centers, repeated partitionings may in some cases be nearly identical. Also, $k$-means clustering may be less suitable for data sets with existing clusters of points and/or with distant isolated sample locations.
+
+```{r coords, fig.cap="Method 'Spatial CV' showing k-means clustering based on coordinates.", out.width="50%", fig.pos="ht"}
 resampling_coords = rsmp("spcv_coords", folds = 5)$instantiate(task)
 
 autoplot(resampling_coords,
