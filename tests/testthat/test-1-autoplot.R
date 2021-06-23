@@ -196,7 +196,9 @@ test_that("autplot blockCV shows correct blocks for repeated_cv", {
   skip_if_not_installed("vdiffr")
   task = test_make_blockCV_test_task()
 
-  skip_on_os("mac")
+  # geom_sf() is causing troubles with vdiffr
+  # https://github.com/r-lib/vdiffr/issues/63
+  skip_on_ci()
 
   # otherwise some points get removed and trigger warnings
   sf::sf_use_s2(use_s2 = FALSE)
@@ -423,9 +425,9 @@ test_that("autoplot time + space", {
 test_that("plot() works for 'spcv_disc'", {
   skip_if_not_installed("vdiffr")
 
-  # for some reason linux and windows svgs differ
-  skip_on_os("mac")
-  skip_on_os("windows")
+  # geom_sf() is causing troubles with vdiffr
+  # https://github.com/r-lib/vdiffr/issues/63
+  skip_on_ci()
 
   set.seed(42)
 
@@ -464,9 +466,9 @@ test_that("plot() works for 'spcv_disc'", {
 test_that("plot() works for 'spcv_tiles'", {
   skip_if_not_installed("vdiffr")
 
-  # for some reason linux and windows svgs differ
-  skip_on_os("mac")
-  skip_on_os("windows")
+  # geom_sf() is causing troubles with vdiffr
+  # https://github.com/r-lib/vdiffr/issues/63
+  skip_on_ci()
 
   set.seed(42)
 
