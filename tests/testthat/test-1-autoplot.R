@@ -168,6 +168,9 @@ test_that("plot() works for 'repeated_spcv_block'", {
 
 test_that("autplot blockCV shows correct blocks", {
   skip_if_not_installed("vdiffr")
+  # file size of resulting svg is too large
+  skip_on_cran()
+
   task = test_make_blockCV_test_task()
 
   set.seed(42)

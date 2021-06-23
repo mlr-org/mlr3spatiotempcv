@@ -65,7 +65,7 @@ Suggests:
     skmeans,
     sperrorest,
     testthat (>= 3.0.0),
-    vdiffr,
+    vdiffr (>= 1.0.0),
     withr
 VignetteBuilder:
     knitr
