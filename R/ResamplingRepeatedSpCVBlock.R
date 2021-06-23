@@ -171,6 +171,9 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
   private = list(
     .sample = function(ids, coords, crs) {
 
+      # since blockCV >= 2.1.4 and sf >= 1.0
+      requireNamespace("rgdal", quietly = TRUE)
+
       pv = self$param_set$values
 
       create_blocks = function(coords, range) {
