@@ -171,6 +171,9 @@ test_that("autplot blockCV shows correct blocks", {
   # file size of resulting svg is too large
   skip_on_cran()
 
+  # otherwise some points get removed and trigger warnings
+  sf::sf_use_s2(use_s2 = FALSE)
+
   task = test_make_blockCV_test_task()
 
   set.seed(42)
@@ -192,6 +195,9 @@ test_that("autplot blockCV shows correct blocks", {
 test_that("autplot blockCV shows correct blocks for repeated_cv", {
   skip_if_not_installed("vdiffr")
   task = test_make_blockCV_test_task()
+
+  # otherwise some points get removed and trigger warnings
+  sf::sf_use_s2(use_s2 = FALSE)
 
   set.seed(42)
   rsmp = rsmp("repeated_spcv_block",
