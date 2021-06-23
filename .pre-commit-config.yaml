@@ -41,7 +41,7 @@ repos:
     rev: v3.4.0
     hooks:
     -   id: check-added-large-files
-        args: ['--maxkb=200']
+        args: ['--maxkb=1000']
     -   id: end-of-file-fixer
         exclude: '\.Rd'
 -   repo: local
