@@ -116,11 +116,11 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
         time_num = as.numeric(time)
 
         data_matrix = data.matrix(data.frame(task$coordinates(), time_num))
-      colnames(data_matrix) = c("x", "y", "z")
+        colnames(data_matrix) = c("x", "y", "z")
       } else {
         data_matrix = data.matrix(data.frame(task$coordinates()))
 
-      colnames(data_matrix) = c("x", "y")
+        colnames(data_matrix) = c("x", "y")
       }
 
       instance = private$.sample(
@@ -131,14 +131,16 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }),
+    }
+  ),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       self$param_set$values$folds
-    }),
+    }
+  ),
   private = list(
     .sample = function(ids, data_matrix, clmethod, cluto_parameters, verbose) {
       vcluster_loc = check_cluto_path()
@@ -172,5 +174,6 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
     },
     .get_test = function(i) {
       self$instance[list(i), "row_id", on = "fold"][[1L]]
-    })
+    }
+  )
 )

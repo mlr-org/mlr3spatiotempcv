@@ -43,7 +43,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: selection =
 
   task = test_make_blockCV_test_task()
 
-  rsmp <- rsmp("spcv_block",
+  rsmp = rsmp("spcv_block",
     range = 50000L,
     selection = "checkerboard")
   rsmp$instantiate(task)
@@ -55,8 +55,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: selection =
       speciesData = testSF,
       theRange = 50000L,
       selection = "checkerboard",
-      showBlocks = FALSE)
-  )))
+      showBlocks = FALSE))))
 
   expect_equal(rsmp$instance$fold, testBlock$foldID)
 })
@@ -65,7 +64,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
   task = test_make_blockCV_test_task()
 
   set.seed(42)
-  rsmp <- rsmp("spcv_block",
+  rsmp = rsmp("spcv_block",
     folds = 5,
     rows = 3,
     cols = 4)
@@ -100,11 +99,11 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer
   task = test_make_blockCV_test_task()
   testSF = test_make_blockCV_test_df()
 
-  rl <- raster::raster(raster::extent(testSF), crs = raster::crs(testSF))
-  vals <- seq_len(raster::ncell(rl))
+  rl = raster::raster(raster::extent(testSF), crs = raster::crs(testSF))
+  vals = seq_len(raster::ncell(rl))
   rl = raster::setValues(rl, vals)
 
-  rsmp1 <- rsmp("spcv_block",
+  rsmp1 = rsmp("spcv_block",
     range = 50000L,
     selection = "checkerboard",
     rasterLayer = rl)
