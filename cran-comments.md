@@ -1,26 +1,32 @@
-mlr3spatiotempcv 0.4.0
+mlr3spatiotempcv 0.4.1
 
 ## Cran Repository Policy
 
 - [x] Reviewed CRP last edited 2021-04-25.
 
-See changes at https://github.com/eddelbuettel/crp/compare/master@%7B2020-10-29%7D...master@%7B2021-04-25%7D
-
 ## R CMD check results
 
 - [x] Checked locally, R 4.1.0
-- [x] Checked on CI system, R 4.1.0
-- [x] Checked on win-builder, R devel
+- [ ] Checked on CI system, R 4.1.0
+- [ ] Checked on win-builder, R devel
 
 Check the boxes above after successful execution and remove this line. Then run `fledge::release()`.
 
 ## Current CRAN check results
 
-- [x] Checked on 2021-06-03, problems found: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
-- [x] NOTE: r-release-macos-arm64
-- [x] NOTE: r-release-macos-arm64
-- [x] ERROR: r-release-macos-arm64
-- [x] WARN: r-release-macos-arm64
-- [x] ERROR: r-release-windows-ix86+x86_64
+- [x] Checked on 2021-06-23, problems found: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
+- [ ] ERROR: r-devel-linux-x86_64-debian-clang, r-devel-linux-x86_64-debian-gcc, r-patched-linux-x86_64, r-release-linux-x86_64
+- [ ] ERROR: r-devel-linux-x86_64-debian-clang
+- [ ] WARN: r-devel-linux-x86_64-debian-clang, r-devel-linux-x86_64-debian-gcc, r-patched-linux-x86_64, r-release-linux-x86_64
+- [ ] ERROR: r-devel-linux-x86_64-debian-gcc
+- [ ] ERROR: r-devel-linux-x86_64-fedora-clang, r-devel-windows-x86_64, r-release-windows-ix86+x86_64
+- [ ] ERROR: r-devel-linux-x86_64-fedora-clang
+- [ ] WARN: r-devel-linux-x86_64-fedora-clang, r-devel-windows-x86_64, r-release-windows-ix86+x86_64
+- [ ] ERROR: r-devel-windows-x86_64
+- [ ] NOTE: r-devel-windows-x86_64-gcc10-UCRT
+- [ ] ERROR: r-devel-windows-x86_64-gcc10-UCRT
+- [ ] ERROR: r-patched-linux-x86_64
+- [ ] ERROR: r-release-linux-x86_64
+- [ ] ERROR: r-release-windows-ix86+x86_64
 
 Check results at: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
