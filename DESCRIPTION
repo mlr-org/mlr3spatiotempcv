@@ -58,6 +58,7 @@ Suggests:
     patchwork,
     plotly,
     raster,
+    rgdal,
     rmarkdown,
     rpart,
     sf,
