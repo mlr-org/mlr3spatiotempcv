@@ -13,6 +13,7 @@ citeproc
 classif
 clipPath
 cloneable
+Cluto
 CLUTO
 CMD
 codecov
@@ -52,14 +53,17 @@ cran
 cre
 cron
 CRON
+CRP
 crs
 css
+Cstf
 ctb
 cx
 cy
 DataBackend
 DataBackendDataTable
 de
+debian
 defs
 desc
 dev
@@ -69,6 +73,7 @@ ecuador
 ENMeval
 env
 EPSG
+errored
 evenodd
 fDAuMDB
 fDcwOS
@@ -89,6 +94,7 @@ fDY
 FFCC
 FFFFFF
 fribidi
+gcc
 gdal
 geos
 getRversion
@@ -99,6 +105,7 @@ ggtext
 ghactions
 github
 gmail
+GSIF
 harfbuzz
 href
 http
@@ -123,6 +130,7 @@ libudunits
 Lifecycle
 linecap
 linejoin
+linux
 LjA
 LjAw
 Ljc
@@ -249,6 +257,7 @@ OTcuMDR
 OTQuMzh
 OTYuNDJ
 pandoc
+param
 params
 patrick
 pkgdown
@@ -312,6 +321,7 @@ spacingAndGlyphs
 spacv
 spatialsample
 spatio
+spatiotemp
 spatiotempcv
 spatiotemporal
 Spatiotemporal
@@ -337,6 +347,7 @@ tidymodels
 tinytex
 tooltip
 ubuntu
+UCRT
 udunits
 usr
 vdiffr
