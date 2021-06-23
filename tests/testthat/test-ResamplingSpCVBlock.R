@@ -63,6 +63,8 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: selection =
 test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and rows", {
   task = test_make_blockCV_test_task()
 
+  sf::sf_use_s2(use_s2 = FALSE)
+
   set.seed(42)
   rsmp = rsmp("spcv_block",
     folds = 5,
