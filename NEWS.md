@@ -8,11 +8,8 @@
 
 # mlr3spatiotempcv 0.4.1
 
-- upgrade tests to {vdiffr} 1.0.0
-- add {rgdal} to suggests and required it in `"spcv_block"` since it is required in {blockCV} >= 2.1.4 and {sf} >= 1.0
-
-
-# mlr3spatiotempcv 0.4.0.9000
+- Upgrade tests to {vdiffr} 1.0.0
+- Add {rgdal} to suggests and required it in `"spcv_block"` since it is required in {blockCV} >= 2.1.4 and {sf} >= 1.0
 
 
 # mlr3spatiotempcv 0.4.0
@@ -82,4 +79,3 @@
 # mlr3spatiotempcv 0.1.0
 
 - Initial CRAN release
-
