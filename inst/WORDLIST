@@ -1,7 +1,9 @@
+aut
 autoplot
 bbotk
 blockCV
 bootswatch
+BugReports
 classif
 CMD
 codecov
@@ -20,6 +22,20 @@ doi
 familyName
 fileSize
 funder
+cloneable
+CodeFactor
+Config
+coords
+cre
+crs
+ctb
+DataBackend
+DataBackendDataTable
+de
+desc
+dev
+ENMeval
+EPSG
 ggplot
 ggsci
 ggtext
@@ -43,6 +59,14 @@ macos
 marcbecker
 mattermost
 md
+LazyData
+lgr
+Lifecycle
+lmmisld
+lmu
+marcbecker
+mattermost
+>>>>>>> main
 michellang
 mlr
 muenchow
@@ -50,6 +74,8 @@ Muenchow
 mwn
 navbar
 orcid
+NeedsCompilation
+ORCID
 params
 patrick
 pkgdowntemplate
@@ -58,6 +84,8 @@ posteo
 programmingLanguage
 readme
 README
+PROJ
+Pyspatialml
 regr
 relatedLink
 releaseNotes
@@ -81,6 +109,12 @@ rpart
 rss
 runtimePlatform
 sameAs
+rgdal
+rmarkdown
+Roxygen
+RoxygenNote
+rpart
+rss
 schratz
 Schratz
 skmeans
@@ -89,6 +123,8 @@ SoftwareApplication
 softwareRequirements
 SoftwareSourceCode
 softwareSuggestions
+spacv
+spatialsample
 spatio
 spatiotempcv
 spatiotemporal
@@ -103,4 +139,8 @@ TaskRegrST
 testthat
 tooltip
 vdiffr
+tidymodels
+tooltip
+vdiffr
+VignetteBuilder
 withr

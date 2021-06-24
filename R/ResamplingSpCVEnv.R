@@ -91,14 +91,16 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }),
+    }
+  ),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       as.integer(self$param_set$values$folds)
-    }),
+    }
+  ),
   private = list(
     .sample = function(ids, data) {
       inds = stats::kmeans(data, centers = self$param_set$values$folds)
@@ -116,5 +118,6 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
     },
     .get_test = function(i) {
       self$instance[list(i), "row_id", on = "fold"][[1L]]
-    })
+    }
+  )
 )

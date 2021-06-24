@@ -65,14 +65,16 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }),
+    }
+  ),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       self$param_set$values$folds
-    }),
+    }
+  ),
   private = list(
     .sample = function(ids, coords) {
       inds = kmeans(coords, centers = self$param_set$values$folds)
@@ -91,5 +93,6 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
     },
     .get_test = function(i) {
       self$instance[list(i), "row_id", on = "fold"][[1L]]
-    })
+    }
+  )
 )

@@ -72,4 +72,3 @@ test_that("as_task_regr.TaskRegrST works", {
 
   expect_class(new_task, "TaskRegr")
 })
-

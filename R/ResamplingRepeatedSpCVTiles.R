@@ -129,7 +129,8 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }),
+    }
+  ),
   active = list(
 
     #' @field iters `integer(1)`\cr
@@ -143,7 +144,8 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
       } else {
         as.integer(pv$repeats) * as.integer(length(self$instance[[1]]$train))
       }
-    }),
+    }
+  ),
   private = list(
     .sample = function(ids, coords) {
 
@@ -348,5 +350,6 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
       rep = i %/% folds + 1L
       fold = i %% folds + 1L
       self$instance[[rep]]$test[[fold]]
-    })
+    }
+  )
 )
