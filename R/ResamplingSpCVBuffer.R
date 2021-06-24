@@ -75,14 +75,16 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }),
+    }
+  ),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       as.integer(length(self$instance))
-    }),
+    }
+  ),
   private = list(
     .sample = function(ids, response, coords, positive, crs, properties) {
 
@@ -144,5 +146,6 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       } else {
         i
       }
-    })
+    }
+  )
 )

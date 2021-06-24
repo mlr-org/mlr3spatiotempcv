@@ -56,7 +56,8 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
           custom_check = function(x) {
             checkmate::check_class(x, "RasterLayer",
               null.ok = TRUE)
-          })
+          }
+        )
       ))
       ps$values = list(folds = 10L)
       super$initialize(
@@ -125,14 +126,16 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }),
+    }
+  ),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       as.integer(self$param_set$values$folds)
-    }),
+    }
+  ),
   private = list(
     .sample = function(ids, coords, crs) {
 
@@ -176,5 +179,6 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     },
     .get_test = function(i) {
       self$instance[list(i), "row_id", on = "fold"][[1L]]
-    })
+    }
+  )
 )

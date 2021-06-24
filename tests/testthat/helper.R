@@ -146,10 +146,10 @@ test_make_sf_twoclass_df = function(group = FALSE,
 test_make_blockCV_test_df = function() {
 
   set.seed(123)
-  x <- runif(5000, -80.5, -75)
-  y <- runif(5000, 39.7, 42)
+  x = runif(5000, -80.4, -74)
+  y = runif(5000, 39.6, 41)
 
-  data <- data.frame(
+  data = data.frame(
     spp = "test",
     label = factor(round(runif(length(x), 0, 1))),
     x = x,
@@ -167,7 +167,7 @@ test_make_blockCV_test_df = function() {
 test_make_blockCV_test_task = function() {
   data = test_make_blockCV_test_df()
 
-  task <- TaskClassifST$new(
+  task = TaskClassifST$new(
     id = "test",
     backend = data,
     target = "label",
@@ -203,13 +203,13 @@ test_graph_learner = function(task, resampling, learner = "classif.featureless",
   lgr::get_logger("mlr3")$set_threshold("warn")
   lgr::get_logger("bbotk")$set_threshold("warn")
 
-  lrn <- lrn(
+  lrn = lrn(
     learner
   )
-  po_lrn <- mlr3pipelines::po("learner", lrn)
+  po_lrn = mlr3pipelines::po("learner", lrn)
 
   # Create feature filter based on variable importance
-  po_filter <- mlr3pipelines::po("filter",
+  po_filter = mlr3pipelines::po("filter",
     filter = mlr3filters::flt("importance", learner = lrn))
 
   # Create process (new learner) for filtering the task
@@ -217,13 +217,13 @@ test_graph_learner = function(task, resampling, learner = "classif.featureless",
   glrn = mlr3pipelines::GraphLearner$new(grph)
 
   # Create filter parameters
-  param_set <- paradox::ParamSet$new(
+  param_set = paradox::ParamSet$new(
     params = list(paradox::ParamDbl$new("importance.filter.frac",
       lower = 0.1, upper = 1))
   )
 
   # Create filtering instance
-  instance <- mlr3tuning::TuningInstanceSingleCrit$new(
+  instance = mlr3tuning::TuningInstanceSingleCrit$new(
     task = task,
     learner = glrn,
     resampling = resampling,
@@ -233,7 +233,7 @@ test_graph_learner = function(task, resampling, learner = "classif.featureless",
   )
 
   # Create tuner
-  tuner <- mlr3tuning::tnr("grid_search", resolution = 2)
+  tuner = mlr3tuning::tnr("grid_search", resolution = 2)
   tuner$optimize(instance)
 
   return(TRUE)
