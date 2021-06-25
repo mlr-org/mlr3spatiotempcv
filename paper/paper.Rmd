@@ -516,7 +516,7 @@ autoplot(resampling_coords,
 
 Some methods have the ability to operate in multiple spaces, i.e. spatial, temporal or spatiotemporal (2D + time).
 To avoid redundancy and putting too much weight on certain methods, only the spatiotemporal examples of these methods will be shown in the following sections.
-However, these can be adapted for the respective other cases (spatial only, temporal only).
+For the respective other spaces, usually only one of the space or time variable inputs needs to be omitted.
 
 ### Group-Level CV
 
