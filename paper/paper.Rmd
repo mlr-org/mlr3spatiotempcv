@@ -280,10 +280,8 @@ autoplot(resampling_nsp, task, fold_id = c(1:2), crs = 32717, size = 0.8) *
 \pkg{mlr3spatiotempcv} currently implements the partitioning methods identified in Table \@ref(tab:sptcv-methods) with their \pkg{mlr3} class name.
 Several of the implemented algorithms are themselves versatile toolboxes with multiple options.
 Comprehensive and up-to-date information can be found in the package's online documentation (<https://mlr3spatiotempcv.mlr-org.com>).
-The following sections, which follow the naming scheme `<method name> --- <R package>`, give an overview of most existing partitioning strategies and their visualization.
+The following sections, which follow the naming scheme `<method name> --- <R package>`, give an overview of most existing partitioning strategies and their visualization options.
 The available methods are further discussed in section \@ref(sec:disc).
-
-
 
 \begin{table}[h]
   \centering
@@ -614,13 +612,14 @@ knitr::include_graphics("llto.png")
 
 ### Custom (fixed) Resampling --- mlr3
 
-Support for user-defined partitioning strategies is built into \pkg{mlr3} directly since version FIXME.
+Support for user-defined partitioning strategies is built into \pkg{mlr3} directly since version 0.12.0 FIXME.
 Labelled as "Custom CV", users are able to supply an external factor vector with the same length as number of observations.
 Alternatively to supplying an external factor vector, the name of a feature within the task can be used.
 
-The following example is taken from `sperrorest::partition_factor()`.
+The following example was taken from `sperrorest::partition_factor()`.
 
 <!-- FIXME: eval=TRUE when available upstream im mlr3 -->
+<!-- FIXME: add visualization when method is available -->
 
 ```{r custom-cv,  fig.cap="Environmental blocking using a single predictor.", out.width="50%", fig.pos="ht", eval=FALSE}
 breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
@@ -633,7 +632,7 @@ resampling_custom$instantiate(task, split = zclass)
 ## Feature space clustering
 
 The last method from the \pkg{blockCV} package, "environmental blocking", makes use of *k-means* clustering [@hartigan1979a] in a possibly multivariate space.
-The user can specify a variable via argument `feature` which levels will be used to create clusters.
+The user can select a variable via argument `feature` specifying which levels will be used to create clusters.
 Hereby, k-means will use Euclidean distance for cluster creation.
 Hence, the selected input variables should be of type numeric.
 To avoid a potential bias introduced by features with high variance when selecting multiple features, all features are standardized by default.
@@ -675,16 +674,15 @@ Feature clustering is not supported.
 # Case study: Comparing spatial and non-spatial resampling {#sec:case-study}
 
 To show the effect of spatial autocorrelation on performance estimates in cross-validation, we will apply spatial and non-spatial cross-validation to the prediction of landslides using the random forest technique (`"classif.ranger"`).
-Specifically, we use spatial partitioning based on $k$-means clustering of the coordinates (method `rsmp("repeated_spcv_coords")`) and compare its results to a non-spatial (random) cross-validation (`rsmp("repeated_cv")`), both with (only) four folds and two repetitions for demonstration.
-We choose the area Under the ROC curve (`"classif.auc"`) as the performance measure for this 'soft' classification task.
-
+Specifically, we use spatial partitioning based on $k$-means clustering of the coordinates (method `"repeated_spcv_coords"`) and compare its results to a non-spatial (random) cross-validation (`"repeated_cv"`), both with (only) four folds and two repetitions for demonstration.
+We choose the area Under the ROC curve (`"classif.auc"`) as the performance measure for this classification task.
 
 ## Data preparation
 
 At first all necessary R packages are loaded and a lower verbosity is set to keep the output tidy.
 Also a seed is set for deterministic execution and the \pkg{mlr3spatiotempcv} built-in task `"ecuador"` is loaded via `tsk()`.
 Next, the random forest learner (`lrn("classif.ranger")`) is initialized with default hyperparameters and the prediction type set to `"probability"` due to the binary response variable.
-A set of commonly used learners is available in \pkg{mlr3learners} [@mlr3learners], including the random forest implementation after @ranger.
+A set of commonly used learners is available in package \pkg{mlr3learners} [@mlr3learners], including the random forest implementation after @ranger.
 
 ```{r prepare}
 library("mlr3")
@@ -701,7 +699,7 @@ learner = lrn("classif.ranger", predict_type = "prob")
 A four-fold, two times repeated non-spatial resampling object is constructed and instantiated via method `$instantiate()`.
 Next, the created resampling object `resampling_nsp` is passed to function `resample()` together with the Task and Learner created earlier to execute the cross-validation.
 
-The results from the CV are then aggregated using the measure `"classif.auc"`, which is the package notation for the Area Under the Receivers Operating Curve (AUROC) measure.
+The results from the CV are then aggregated using the measure `"classif.auc"`, which is the \pkg{mlr3} package notation for the Area Under the Receivers Operating Curve (AUROC) measure.
 
 ```{r rr-nspcv, cache.lazy = FALSE}
 resampling_nsp = rsmp("repeated_cv", folds = 4, repeats = 2)
@@ -735,7 +733,7 @@ The resulting AUC value of 0.77 using Non-Spatial Cross-Validation (NSpCV) is ar
 The better performance score results from over-optimism in the estimation with NSpCV.
 The actual predictive performance on new data is much more realistically reflected by the performance estimated via SpCV.
 The magnitude of this difference is variable as it depends on the dataset, the magnitude of STAC and the learner itself.
-Algorithms with a higher tendency of overfitting to the training set will have a large spread in such scenarios.
+Algorithms with a higher tendency of overfitting to the training set will have a larger spread in such scenarios.
 
 The respective folds of the resamplings used in this example are shown in Fig. \@ref(fig:vis-spcv) and Fig. \@ref(fig:vis-nspcv).
 
@@ -805,7 +803,8 @@ One option could be a checklist of dataset characteristics showing which charact
 This could then help users to make an appropriate and objective decision which resampling method might be a good fit for their dataset.
 
 <!--mention missing spatiotemporal buffering method -->
-As of writing this paper, there is no buffering methods which operates in the spatiotemporal domain.
+At the time of writing this article, there is no buffering methods which operates in the spatiotemporal domain.
+Though we encourage users generally to check out the supported methods in the \pkg{mlr3spatiotempcv} package directly to potentially discover new methods which might have been added to the package in the meantime.
 
 <!-- mention pros and cons of implementing methods in a standalone pkg vs a framework -->
 There are pros and cons on whether a new method should be integrated into an existing ecosystem such as \pkg{mlr3} directly first or distributed via a standalone package.
