@@ -800,8 +800,9 @@ However, the influence of a single variable is hard to estimate and the same app
 
 <!-- missing: Guidelines how to choose a resampling method -->
 While various spatiotemporal resampling methods exists nowadays to account for spatiotemporal autocorrelation in modeling, there is still lots of uncertainties which method should be used for which dataset.
-The answer to this questions is not trivial and needs more research.
-One option could be to propose a checklist of dataset characteristics which would make a dataset more suitable for specific methods that could help users making an appropriate and objective decision.
+The answer to this question is not trivial and while there will most likely never be an easy answer to this, this topic needs to be discussed in more detail so that users feel more certain about their actions.
+One option could be a checklist of dataset characteristics showing which characteristics make a certain dataset more suitable for specific methods.
+This could then help users to make an appropriate and objective decision which resampling method might be a good fit for their dataset.
 
 <!--mention missing spatiotemporal buffering method -->
 As of writing this paper, there is no buffering methods which operates in the spatiotemporal domain.
