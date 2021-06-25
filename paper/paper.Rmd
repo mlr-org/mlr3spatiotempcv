@@ -2,7 +2,7 @@
 documentclass: jss
 author:
   - name: Patrick Schratz
-    affiliation: 'Friedrich-Schiller-University Jena'
+    affiliation: 'Friedrich Schiller University Jena'
     # affiliaton2: 'Ludwig-Maximilians-University Munich'
     # use this syntax to add text on several lines
     address: |
