@@ -803,16 +803,19 @@ While various spatiotemporal resampling methods exists nowadays to account for s
 The answer to this questions is not trivial and needs more research.
 One option could be to propose a checklist of dataset characteristics which would make a dataset more suitable for specific methods that could help users making an appropriate and objective decision.
 
-<!-- FIXME: mention missing spatiotemporal buffering method -->
+<!--mention missing spatiotemporal buffering method -->
+As of writing this paper, there is no buffering methods which operates in the spatiotemporal domain.
 
-<!-- missing: non-LOO method with buffer support -->
-<!-- FIXME: this is wrong, leave-one-disc-out does this -->
-Also no methods yet exists that makes use of a buffer zone with blocking or clustering, bridging the gap between buffered LOO-CV and fold-based non-buffer methods (`"spcv_coords"` and `"spcv_block"`).
+<!-- mention pros and cons of implementing methods in a standalone pkg vs a framework -->
+There are pros and cons on whether a new method should be integrated into an existing ecosystem such as \pkg{mlr3} directly first or distributed via a standalone package.
+On the upside, developers can benefit from existing package structures and orient themselves how previous methods were implemented.
+Also, the new method will be directly usable by all people using this ecosystem following an existing and familiar syntax.
+Contributors do not have to commit maintaining the package in the future, possibly risking its removal in case of major issues.
+In addition, they most likely get a thorough review from other community members during the implementation, possibly enhancing the code side of the implementation.
+On the contrary, people are forced to use the ecosystem and cannot easily use the method outside of it, whether its a different ecosystem or some other way.
+They might also be forced to follow certain guidelines of the ecosystem and potentially feel constrained in their way of doing things.
 
-We believe that making resampling methods available to widely used modeling frameworks is more beneficial than implementing such methods standalone in an R package.
-The latter often require special structured objects as inputs and cannot directly be re-used in subsequent modeling steps of user workflows.
-This is not an issue specific to spatiotemporal resampling methods but a general philosophy of the authors.
-
+<!-- signoff -->
 Spatiotemporal cross-validation is still not yet a paradigm that is completely established in scientific workflows even though it is discussed intensively for more than a decade now.
 Making most available methods easily accessible to users is an important step to foster the acceptance of such in the community and lead to less biased cross-validation results in environmental and ecological studies.
 
