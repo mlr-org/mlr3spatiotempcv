@@ -608,7 +608,7 @@ autoplot(resampling_cstf_time_loc,
   show_omitted = TRUE)
 ```
 
-```{r llto, echo=FALSE, out.width="90%", fig.cap="Three-dimensional visualization of method 'sptcv\\_cstf' and sub-method 'Leave-Location-And-Time-Out' (LLTO). The grey points show the points omitted by this method.", fig.pos="ht"}
+```{r llto, echo=FALSE, out.width="90%", fig.cap="Three-dimensional visualization of method 'sptcv\\_cstf' and sub-method 'Leave-Location-And-Time-Out' (LLTO). The grey points show the points omitted by this method, i.e. the points which are not used in the training or test set in this fold.", fig.pos="ht"}
 knitr::include_graphics("llto.png")
 ```
 
