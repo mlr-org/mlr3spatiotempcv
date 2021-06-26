@@ -95,10 +95,10 @@ In treating dependent observations as independent, or ignoring autocorrelation, 
 This cross-validation bias is well-known in spatial as well as non-spatial prediction [@brenning2005; @brenning2008; @arlot2010; @roberts2017] and in forecasting [@bergmeir2018].
 It is most easily understood from a predictive modelling perspective by focusing on the question where (and when) the model should be used for prediction.
 In crop classification from remotely-sensed data, for instance, learning samples routinely contain multiple grid cells from a sample of fields with known crop type, for instance 2000 grid cells from 100 fields scattered across a large study region.
-The purpose of training a model on this sample is to make predictions on other, new *fields* within the same geographic domain (*intra-domain* prediction; @brenning2005) --- not *within* the same field, which obviously presents only one crop type.
-In this situation it would therefore seem rather foolish to train a model on a simple random subsample of grid cells, and test it on the remaining data, i.e. using other grid cells from the same fields, as if we wanted to predict within a field.
+The purpose of training a model on this sample is to make predictions on other, new fields within the same geographic domain (*intra-domain* prediction; @brenning2005) --- not *within* the same field, which obviously presents only one crop type.
+In this situation it would therefore seem rather unwise to train a model on a simple random subsample of grid cells, and test it on the remaining data, i.e. using other grid cells from the same fields, as if we wanted to predict within a field.
 The results from this performance assessment would be over-optimistic, and perhaps badly so.
-To mimic the predictive situation for which the model is trained, we'd rather have to resample at the level of fields, not grid cells [@pena2015].
+To mimic the predictive situation for which the model is trained, one would rather have to resample at the level of fields, not grid cells [@pena2015].
 If the model was to be applied to adjacent agricultural districts, i.e. outside the learning sample's spatial domain (*extra-domain* prediction; @brenning2005), it would even seem necessary to resample at a higher level of spatial aggregation, i.e. at the level of agricultural districts within the learning sample, in order to realistically mimic the actual prediction task.
 The cross-validation resampling needed therefore depends as much on the prediction task as on the data structure or dependency at hand.
 
@@ -106,24 +106,23 @@ While it is not the purpose of this article to recommend specific resampling sch
 \pkg{mlr3spatiotempcv} is such a toolbox.
 
 This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (see Table \@ref(tab:sptcv-methods)).
-The earliest and most comprehensive of these implementations is the \pkg{sperrorest} package [@brenning2012], which provides an extensible framework and includes predefined resampling strategies based on, for example, blocking, grouping and buffering.
+The earliest and most comprehensive of these implementations is the \pkg{sperrorest} R package [@brenning2012], which provides an extensible framework and includes predefined resampling strategies based on, for example, blocking, grouping and buffering.
 In contrast, \pkg{blockCV} and \pkg{ENMeval} were developed for block and buffer resampling with a focus on species distribution modelling [@blockCV; @rest2014; @muscarella2014].
-Neither of these have been integrated into established machine learning frameworks such as \pkg{mlr} or \pkg{caret}, and all of them lack support of temporal prediction tasks.
-The \pkg{CAST} package, in contrast, focuses on spatiotemporal prediction tasks in a \pkg{caret} framework [@cast; @meyer2018].
-One limitation of these packages is also that they focus on model assessment, while the proposed implementation within the \pkg{mlr} framework offers a seamless integration into model selection.
-It is worth noting that a spatial cross-validation library \pkg{spacv} has also recently been developed for Python 3, which can be used with the \pkg{scikit-learn} machine learning framework [@pedregosa2011].
+Neither of these however have been integrated into established machine learning frameworks such as \pkg{mlr}/\pkg{mlr3} or \pkg{caret}/\pkg{tidymodels}, and all of them lack support of temporal prediction tasks.
+The \pkg{CAST} package, in contrast, focuses on spatiotemporal prediction tasks and makes use of some functions of the \pkg{caret} framework [@cast; @meyer2018].
+One limitation of these packages is the sole focus on model assessment, while the proposed implementation within the \pkg{mlr3} framework offers a seamless integration into model selection.
+It is worth noting that a spatial cross-validation library named \pkg{spacv} has also recently been developed for Python3, which can be used with the \pkg{scikit-learn} machine learning framework [@pedregosa2011].
 
 Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state-of-the-art compilation of spatial and spatiotemporal partitioning schemes that is well-integrated into a comprehensive machine learning framework in R, the \pkg{mlr3} ecosystem [@mlr3].
-This package is furthermore equipped with a variety of two- and three-dimensional diagram types.
-Our hope is that this implementation will facilitate reproducible geospatial modelling and code-sharing across a broad range of application domains.
+This package is furthermore equipped with a variety of two- and three-dimensional visualization capabilities.
+Our hope is that this implementation will facilitate reproducible geospatial modeling and code-sharing across a broad range of application domains.
 
 The purpose of this paper is to give an overview of the methods implemented in the R package \pkg{mlr3spatiotempcv}.
-After presenting the conceptual background in the following section, we will outline the overall structure of the \pkg{mlr3spatiotempcv} package.
-We will then compare and contrast the various spatial and spatiotemporal partitioning techniques, before we demonstrate their application in a machine learning model assessment in the following section.
-We finally discuss implications and provide an outlook.
+After presenting the conceptual background in the following section, the overall structure of the \pkg{mlr3spatiotempcv} package is outlined.
+Next, various spatial and spatiotemporal partitioning techniques are contrasted and compared, before their application is demonstrated in a machine learning model assessment in the following section.
+Finally, limitations of existing methods are discussed and an outlook is given.
 
-
-# Spatial and Spatiotemporal Cross-validation
+# Spatial and spatiotemporal cross-validation
 
 In cross-validation for predictive model assessment, we consider the following formal setting.
 We are interested in predicting a numerical or categorical response $y$ of an object or instance using a feature vector $\mathbf{x} = (x^{(1)}, \ldots, x^{(p)})\in\mathbb{R}^p$ and a model $\hat{f}_\mathcal{L}$ that has been trained on a learning sample $\mathcal{L} = \{(y_i, \mathbf{x}_i),\ i = 1, ..., n\}$.
