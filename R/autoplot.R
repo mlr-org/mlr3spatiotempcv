@@ -100,7 +100,6 @@ autoplot.ResamplingSpCVBlock = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    ,
     show_blocks = show_blocks,
     show_labels = show_labels,
     ... = ...
@@ -128,7 +127,6 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    ,
     show_blocks = show_blocks,
     show_labels = show_labels,
     ... = ...,
@@ -204,7 +202,6 @@ autoplot.ResamplingSpCVEnv = function( # nolint
     task = task,
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
-    ,
     ... = ...
   )
 }
@@ -228,7 +225,6 @@ autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    ,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -301,7 +297,6 @@ autoplot.ResamplingSpCVCoords = function( # nolint
     task = task,
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
-    ,
     ... = ...
   )
 }
@@ -325,7 +320,6 @@ autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    ,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -417,7 +411,6 @@ autoplot.ResamplingSptCVCluto = function( # nolint
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
     tickformat_date = tickformat_date,
-    ,
     nticks_y = nticks_y,
     nticks_x = nticks_y,
     point_size = point_size,
@@ -445,7 +438,6 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    ,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -778,7 +770,6 @@ autoplot.ResamplingRepeatedSpCVDisc = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    ,
     show_omitted = show_omitted,
     ... = ...,
     # ellipsis
@@ -1104,7 +1095,6 @@ autoplot.ResamplingRepeatedSpCVTiles = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    ,
     show_omitted = show_omitted,
     ... = ...,
     # ellipsis
@@ -1178,7 +1168,6 @@ autoplot.ResamplingCV = function( # nolint
     task = task,
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
-    ,
     ... = ...
   )
 }
@@ -1202,7 +1191,6 @@ autoplot.ResamplingRepeatedCV = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    ,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id

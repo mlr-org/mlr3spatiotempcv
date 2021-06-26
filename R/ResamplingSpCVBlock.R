@@ -141,6 +141,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
 
       points = sf::st_as_sf(coords,
         coords = colnames(coords),
+        crs = crs
       )
       # Suppress print message, warning crs and package load
       # Note: Do not replace the assignment operator here.

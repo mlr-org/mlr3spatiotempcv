@@ -32,9 +32,6 @@
 #'   [ResamplingRepeatedSptCVCstf].
 #' @param tickformat_date `[character]`\cr
 #'   Date format for z-axis.
-#' @param crs `[character]`\cr
-#'   EPSG code of the CRS for x and y axes.
-#'   If not set, EPSG 4326 (WGS84) is used.
 #' @param nticks_y `[integer]`\cr
 #'   Number of y axis breaks.
 #' @param nticks_x `[integer]`\cr
@@ -145,11 +142,9 @@ autoplot.ResamplingSptCVCstf = function( # nolint
       resampling = resampling_sub,
       task = task,
       fold_id = fold_id,
-      # repeats_id = repeats_id,
       plot_as_grid = plot_as_grid,
       train_color = train_color,
       test_color = test_color,
-      ,
       show_blocks = FALSE,
       show_labels = FALSE,
       ...)
@@ -361,7 +356,6 @@ autoplot.ResamplingRepeatedSptCVCstf = function( # nolint
     train_color = train_color,
     test_color = test_color,
     tickformat_date = tickformat_date,
-    ,
     nticks_x = nticks_x,
     nticks_y = nticks_y,
     point_size = point_size,

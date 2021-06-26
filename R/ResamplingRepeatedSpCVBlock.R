@@ -178,8 +178,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
 
       create_blocks = function(coords, range) {
         points = sf::st_as_sf(coords,
-          coords = colnames(coords),
-        )
+          coords = colnames(coords))
 
         # Suppress print message, warning crs and package load
         capture.output(inds <- suppressMessages(suppressWarnings(
