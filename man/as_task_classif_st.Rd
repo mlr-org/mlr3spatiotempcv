@@ -97,7 +97,7 @@ as_task_classif_st(ecuador, target = "slides", positive = "TRUE",
   coordinate_names = c("x", "y"))
 
 # sf
-ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 4326)
+ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"))
 as_task_classif_st(ecuador_sf, target = "slides", positive = "TRUE")
 
 # TaskClassifST

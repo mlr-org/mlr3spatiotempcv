@@ -7,8 +7,8 @@ test_that("plot() works for 'spcv_buffer'", {
   plots = prepare_autoplot("spcv_buffer", theRange = 2)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
-  expect_error(autoplot(plots$rsp, plots$task, crs = 4326))
-  p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
+  expect_error(autoplot(plots$rsp, plots$task))
+  p2 = autoplot(plots$rsp, plots$task, 1)
   p3 = autoplot(plots$rsp, plots$task, c(1, 2))
   p4 = autoplot(plots$rsp, plots$task, c(1, 2),
     crs = 4326, plot_as_grid = FALSE)

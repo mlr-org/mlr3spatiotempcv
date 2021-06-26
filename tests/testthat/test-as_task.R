@@ -19,7 +19,7 @@ test_that("as_task_classif_st.data.rame works", {
 
 test_that("as_task_classif_st.sf works", {
   data("ecuador", package = "mlr3spatiotempcv")
-  ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 4326)
+  ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"))
   new_task = as_task_classif_st(ecuador_sf, target = "slides", positive = "TRUE")
 
   expect_class(new_task, "TaskClassifST")

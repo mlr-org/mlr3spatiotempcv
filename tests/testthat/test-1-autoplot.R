@@ -8,9 +8,9 @@ test_that("errors are thrown for non-valid argument settings", {
 
   # these error checks apply to all resampling methods.
   expect_message(autoplot(rsp, task))
-  expect_error(plot(rsp, task, 30, crs = 4326))
-  expect_error(plot(rsp, task, c(1, 30), crs = 4326))
-  expect_list(autoplot(rsp, task, c(1, 2), plot_as_grid = FALSE, crs = 4326))
+  expect_error(plot(rsp, task, 30))
+  expect_error(plot(rsp, task, c(1, 30)))
+  expect_list(autoplot(rsp, task, c(1, 2), plot_as_grid = FALSE))
 })
 
 # cv ---------------------------------------------------------------------------
@@ -22,9 +22,9 @@ test_that("plot() works for 'cv'", {
   plots = prepare_autoplot("cv", folds = 4)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
-  p1 = autoplot(plots$rsp, plots$task, crs = 4326)
-  p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
+  p1 = autoplot(plots$rsp, plots$task)
+  p2 = autoplot(plots$rsp, plots$task, 1)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
@@ -43,16 +43,16 @@ test_that("plot() works for 'repeated-cv'", {
     folds = 4, repeats = 2)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
-  p1 = autoplot(plots$rsp, plots$task, crs = 4326)
-  p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
+  p1 = autoplot(plots$rsp, plots$task)
+  p2 = autoplot(plots$rsp, plots$task, 1)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
 
-  p4 = autoplot(plots$rsp, plots$task, crs = 4326, repeats_id = 2)
-  p5 = autoplot(plots$rsp, plots$task, crs = 4326, fold_id = 1, repeats_id = 2)
+  p4 = autoplot(plots$rsp, plots$task, repeats_id = 2)
+  p5 = autoplot(plots$rsp, plots$task, fold_id = 1, repeats_id = 2)
 
   expect_true(is.ggplot(p4))
   expect_true(is.ggplot(p5))
@@ -73,9 +73,9 @@ test_that("plot() works for 'spcv_coords'", {
   plots = prepare_autoplot("spcv_coords", folds = 4)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
-  p1 = autoplot(plots$rsp, plots$task, crs = 4326)
-  p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
+  p1 = autoplot(plots$rsp, plots$task)
+  p2 = autoplot(plots$rsp, plots$task, 1)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
@@ -94,16 +94,16 @@ test_that("plot() works for 'repeated_spcv_coords'", {
     folds = 4, repeats = 2)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
-  p1 = autoplot(plots$rsp, plots$task, crs = 4326)
-  p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
+  p1 = autoplot(plots$rsp, plots$task)
+  p2 = autoplot(plots$rsp, plots$task, 1)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
 
-  p4 = autoplot(plots$rsp, plots$task, crs = 4326, repeats_id = 2)
-  p5 = autoplot(plots$rsp, plots$task, crs = 4326, fold_id = 1, repeats_id = 2)
+  p4 = autoplot(plots$rsp, plots$task, repeats_id = 2)
+  p5 = autoplot(plots$rsp, plots$task, fold_id = 1, repeats_id = 2)
 
   expect_true(is.ggplot(p4))
   expect_true(is.ggplot(p5))
@@ -124,9 +124,9 @@ test_that("plot() works for 'spcv_block'", {
   plots = prepare_autoplot("spcv_block", cols = 2, rows = 2, folds = 4)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
-  p1 = autoplot(plots$rsp, plots$task, crs = 4326)
-  p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
+  p1 = autoplot(plots$rsp, plots$task)
+  p2 = autoplot(plots$rsp, plots$task, 1)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
@@ -145,16 +145,16 @@ test_that("plot() works for 'repeated_spcv_block'", {
     folds = 4, range = c(2L, 4L), repeats = 2)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
-  p1 = autoplot(plots$rsp, plots$task, crs = 4326)
-  p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
+  p1 = autoplot(plots$rsp, plots$task)
+  p2 = autoplot(plots$rsp, plots$task, 1)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
 
-  p4 = autoplot(plots$rsp, plots$task, crs = 4326, repeats_id = 2)
-  p5 = autoplot(plots$rsp, plots$task, crs = 4326, fold_id = 1, repeats_id = 2)
+  p4 = autoplot(plots$rsp, plots$task, repeats_id = 2)
+  p5 = autoplot(plots$rsp, plots$task, fold_id = 1, repeats_id = 2)
 
   expect_true(is.ggplot(p4))
   expect_true(is.ggplot(p5))
@@ -185,7 +185,7 @@ test_that("autplot blockCV shows correct blocks", {
 
   p1 = autoplot(rsmp, task,
     fold_id = 1, size = 0.7,
-    show_blocks = TRUE, crs = 4326)
+    show_blocks = TRUE)
 
   vdiffr::expect_doppelganger(
     "autoplot show_blocks = TRUE show_labels = TRUE",
@@ -213,7 +213,7 @@ test_that("autplot blockCV shows correct blocks for repeated_cv", {
 
   p1 = autoplot(rsmp, task,
     fold_id = 1, size = 0.7, repeats_id = 2,
-    show_blocks = TRUE, crs = 4326, show_labels = TRUE)
+    show_blocks = TRUE, show_labels = TRUE)
 
   vdiffr::expect_doppelganger(
     "autoplot repeated show_blocks = TRUE show_labels = TRUE",
@@ -229,9 +229,9 @@ test_that("plot() works for 'spcv_env'", {
   plots = prepare_autoplot("spcv_env", folds = 4)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
-  p1 = autoplot(plots$rsp, plots$task, crs = 4326)
-  p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
+  p1 = autoplot(plots$rsp, plots$task)
+  p2 = autoplot(plots$rsp, plots$task, 1)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
@@ -250,16 +250,16 @@ test_that("plot() works for 'repeated_spcv_env'", {
     folds = 4, repeats = 2)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
-  p1 = autoplot(plots$rsp, plots$task, crs = 4326)
-  p2 = autoplot(plots$rsp, plots$task, 1, crs = 4326)
-  p3 = autoplot(plots$rsp, plots$task, c(1, 2), crs = 4326)
+  p1 = autoplot(plots$rsp, plots$task)
+  p2 = autoplot(plots$rsp, plots$task, 1)
+  p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
 
-  p4 = autoplot(plots$rsp, plots$task, crs = 4326, repeats_id = 2)
-  p5 = autoplot(plots$rsp, plots$task, crs = 4326, fold_id = 1, repeats_id = 2)
+  p4 = autoplot(plots$rsp, plots$task, repeats_id = 2)
+  p5 = autoplot(plots$rsp, plots$task, fold_id = 1, repeats_id = 2)
 
   expect_true(is.ggplot(p4))
   expect_true(is.ggplot(p5))
@@ -287,17 +287,17 @@ test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
   rsp = rsmp("sptcv_cstf", folds = 4, time_var = "Date")
   rsp$instantiate(task)
 
-  p1 = autoplot(rsp, task = task, crs = 4326)
-  p2 = autoplot(rsp, task, 1, crs = 4326, plot3D = FALSE)
+  p1 = autoplot(rsp, task = task)
+  p2 = autoplot(rsp, task, 1, plot3D = FALSE)
   # plot() would force image printing here
-  p3 = autoplot(rsp, task, c(1, 2), crs = 4326)
+  p3 = autoplot(rsp, task, c(1, 2))
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_list(p3)
 
-  p4 = autoplot(rsp, task, crs = 4326, repeats_id = 2)
-  p5 = autoplot(rsp, task, crs = 4326, fold_id = 1, repeats_id = 2)
+  p4 = autoplot(rsp, task, repeats_id = 2)
+  p5 = autoplot(rsp, task, fold_id = 1, repeats_id = 2)
 
   vdiffr::expect_doppelganger("SptCVCstf 2D time_var all test sets", p1)
   vdiffr::expect_doppelganger("SptCVCstf 2D time_var - Fold 1", p2)
@@ -319,17 +319,17 @@ test_that("plot() works for 'sptcv_cstf' 2D - space_var", {
   rsp = rsmp("sptcv_cstf", folds = 4, space_var = "SOURCEID")
   rsp$instantiate(task)
 
-  p1 = autoplot(rsp, task = task, crs = 4326)
-  p2 = autoplot(rsp, task, 1, crs = 4326, plot3D = FALSE)
+  p1 = autoplot(rsp, task = task)
+  p2 = autoplot(rsp, task, 1, plot3D = FALSE)
   # plot() would force image printing here
-  p3 = autoplot(rsp, task, c(1, 2), crs = 4326)
+  p3 = autoplot(rsp, task, c(1, 2))
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_list(p3)
 
-  p4 = autoplot(rsp, task, crs = 4326, repeats_id = 2)
-  p5 = autoplot(rsp, task, crs = 4326, fold_id = 1, repeats_id = 2)
+  p4 = autoplot(rsp, task, repeats_id = 2)
+  p5 = autoplot(rsp, task, fold_id = 1, repeats_id = 2)
 
 
   vdiffr::expect_doppelganger("SptCVCstf 2D space_var all test sets", p1)
@@ -349,10 +349,10 @@ test_that("plot() works for 'sptcv_cstf'", {
   rsp = rsmp("sptcv_cstf", folds = 4, time_var = "Date")
   rsp$instantiate(task)
 
-  expect_error(autoplot(rsp, task = task, crs = 4326, plot3D = TRUE))
-  p2 = autoplot(rsp, task, 1, crs = 4326, plot3D = TRUE)
+  expect_error(autoplot(rsp, task = task, plot3D = TRUE))
+  p2 = autoplot(rsp, task, 1, plot3D = TRUE)
   # plot() would force image printing here
-  p3 = suppressMessages(autoplot(rsp, task, c(1, 2), crs = 4326, plot3D = TRUE))
+  p3 = suppressMessages(autoplot(rsp, task, c(1, 2), plot3D = TRUE))
 
   expect_s3_class(p2, "plotly")
   expect_list(p3)
@@ -370,11 +370,11 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
   rsp = rsmp("repeated_sptcv_cstf", folds = 4, repeats = 2, time_var = "Date")
   rsp$instantiate(task)
 
-  expect_error(autoplot(rsp, task = task, crs = 4326, plot3D = TRUE))
+  expect_error(autoplot(rsp, task = task, plot3D = TRUE))
   p2 = autoplot(rsp, task, 1,
     show_omitted = TRUE, plot3D = TRUE,
     repeats_id = 2) # missing on purpose for codecov reasons
-  p3 = suppressMessages(autoplot(rsp, task, c(1, 2), crs = 4326, plot3D = TRUE))
+  p3 = suppressMessages(autoplot(rsp, task, c(1, 2), plot3D = TRUE))
   p4 = autoplot(rsp, task, c(1, 2),
     crs = 4326, plot_as_grid = FALSE,
     repeats_id = 2,
@@ -384,7 +384,7 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
   expect_list(p3)
 
   p5 = autoplot(rsp, task,
-    fold_id = 1, repeats_id = 2, crs = 4326,
+    fold_id = 1, repeats_id = 2,
     plot3D = TRUE)
 
   expect_s3_class(p5, "plotly")
@@ -437,20 +437,20 @@ test_that("plot() works for 'spcv_disc'", {
     repeats = 2)
   rsp$instantiate(task)
 
-  p1 = autoplot(rsp, task = task, crs = 4326)
-  p2 = autoplot(rsp, task, 1, crs = 4326)
+  p1 = autoplot(rsp, task = task)
+  p2 = autoplot(rsp, task, 1)
   # plot() would force image printing here
-  p3 = autoplot(rsp, task, c(1, 2), crs = 4326)
+  p3 = autoplot(rsp, task, c(1, 2))
 
-  p4 = autoplot(rsp, task, 1, crs = 4326, show_omitted = TRUE)
+  p4 = autoplot(rsp, task, 1, show_omitted = TRUE)
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_list(p3)
   expect_true(is.ggplot(p4))
 
-  p5 = autoplot(rsp, task, crs = 4326, repeats_id = 2)
-  p6 = autoplot(rsp, task, crs = 4326, fold_id = 1, repeats_id = 2)
+  p5 = autoplot(rsp, task, repeats_id = 2)
+  p6 = autoplot(rsp, task, fold_id = 1, repeats_id = 2)
 
   vdiffr::expect_doppelganger("SpCVDisc all test sets", p1)
   vdiffr::expect_doppelganger("SpCVDisc Fold 1", p2)
@@ -478,20 +478,20 @@ test_that("plot() works for 'spcv_tiles'", {
     repeats = 2)
   rsp$instantiate(task)
 
-  p1 = autoplot(rsp, task = task, crs = 4326)
-  p2 = autoplot(rsp, task, 1, crs = 4326)
+  p1 = autoplot(rsp, task = task)
+  p2 = autoplot(rsp, task, 1)
   # plot() would force image printing here
-  p3 = autoplot(rsp, task, c(1, 2), crs = 4326)
+  p3 = autoplot(rsp, task, c(1, 2))
 
-  p4 = autoplot(rsp, task, 1, crs = 4326, show_omitted = TRUE)
+  p4 = autoplot(rsp, task, 1, show_omitted = TRUE)
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_list(p3)
   expect_true(is.ggplot(p4))
 
-  p5 = autoplot(rsp, task, crs = 4326, c(1, 2), repeats_id = 2)
-  p6 = autoplot(rsp, task, crs = 4326, fold_id = 1, repeats_id = 2)
+  p5 = autoplot(rsp, task, c(1, 2), repeats_id = 2)
+  p6 = autoplot(rsp, task, fold_id = 1, repeats_id = 2)
 
   vdiffr::expect_doppelganger("SpCVTiles all test sets", p1)
   vdiffr::expect_doppelganger("SpCVTiles Fold 1", p2)

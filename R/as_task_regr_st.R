@@ -52,8 +52,7 @@ as_task_regr_st.TaskRegrST = function(x, clone = FALSE, ...) { # nolint
 as_task_regr_st.data.frame = function(x, target = NULL, id = deparse(substitute(x)),
   crs = NA, coords_as_features = FALSE, coordinate_names = NA, ...) {
   TaskRegrST$new(id = id, backend = x, target = target,
-    extra_args = list(coordinate_names = coordinate_names, coords_as_features = coords_as_features,
-      crs = crs))
+    extra_args = list(coordinate_names = coordinate_names, coords_as_features = coords_as_features))
 }
 
 #' @rdname as_task_regr_st
@@ -61,8 +60,7 @@ as_task_regr_st.data.frame = function(x, target = NULL, id = deparse(substitute(
 as_task_regr_st.DataBackend = function(x, target = NULL, id = deparse(substitute(x)),
   crs = NA, coords_as_features = FALSE, coordinate_names = c("x", "y"), ...) {
   TaskRegrST$new(id = id, backend = x, target = target,
-    extra_args = list(coordinate_names = coordinate_names, coords_as_features = coords_as_features,
-      crs = crs))
+    extra_args = list(coordinate_names = coordinate_names, coords_as_features = coords_as_features))
 }
 
 #' @rdname as_task_regr_st

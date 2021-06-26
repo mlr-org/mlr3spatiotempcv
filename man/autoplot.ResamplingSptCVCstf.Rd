@@ -15,7 +15,6 @@
   train_color = "#0072B5",
   test_color = "#E18727",
   tickformat_date = "\%Y-\%m",
-  crs = NULL,
   nticks_x = 3,
   nticks_y = 3,
   point_size = 3,
@@ -35,7 +34,6 @@
   train_color = "#0072B5",
   test_color = "#E18727",
   tickformat_date = "\%Y-\%m",
-  crs = NULL,
   nticks_x = 3,
   nticks_y = 3,
   point_size = 3,
@@ -73,10 +71,6 @@ The color to use for the test set observations.}
 \item{tickformat_date}{\verb{[character]}\cr
 Date format for z-axis.}
 
-\item{crs}{\verb{[character]}\cr
-EPSG code of the CRS for x and y axes.
-If not set, EPSG 4326 (WGS84) is used.}
-
 \item{nticks_x}{\verb{[integer]}\cr
 Number of x axis breaks.}
 
@@ -113,6 +107,10 @@ Repetition ID to plot.}
 \item{x}{\verb{[Resampling]}\cr
 mlr3 spatial resampling object of class \link{ResamplingSptCVCstf} or
 \link{ResamplingRepeatedSptCVCstf}.}
+
+\item{crs}{\verb{[character]}\cr
+EPSG code of the CRS for x and y axes.
+If not set, EPSG 4326 (WGS84) is used.}
 }
 \description{
 Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods to
