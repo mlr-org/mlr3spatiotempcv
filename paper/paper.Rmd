@@ -345,7 +345,7 @@ Background data is used for training the model by default unless argument `addBG
 Due to its similarity to a LOO CV, this method will result in as many train/test evaluations as observations are present.
 In the visualization of the first fold in Fig. \@ref(fig:buffer) a buffer zone of 1000 m was used without any custom presence/absence treatment of the data.
 
-```{r buffer, fig.cap="Visualization of the 'Spatial buffering' method from package `blockCV`.", out.width="50%", fig.pos="ht"}
+```{r buffer, fig.cap="Visualization of the 'Spatial buffering' method from package `blockCV`.", out.width="40%", fig.pos="ht"}
 resampling_buffer = rsmp("spcv_buffer", theRange = 1000)
 resampling_buffer$instantiate(task)
 
@@ -369,7 +369,7 @@ The method starts from a randomly selected observation and adds all points withi
 
 Around the radial test set a buffer zone / neutral area can be defined via variable `buffer` in which observations are excluded from the training set, increasing the spatial distance between training and test sets.
 
-```{r disc, fig.cap="Visualization of 'Leave-one-disc-out' method.", out.width="50%"}
+```{r disc, fig.cap="Visualization of 'Leave-one-disc-out' method.", out.width="40%"}
 resampling_disc = rsmp("spcv_disc", folds = 5, radius = 300L, buffer = 400L)
 resampling_disc$instantiate(task)
 
@@ -403,7 +403,7 @@ The following subsections showcase some of the introduced options.
 
 ##### Option: selection = "random"
 
-```{r block-random, fig.cap="Spatial blocking with option `selection = 'random'`.", out.width="50%", fig.pos="ht"}
+```{r block-random, fig.cap="Spatial blocking with option `selection = 'random'`.", out.width="40%", fig.pos="ht"}
 resampling_block_random = rsmp("spcv_block", range = 1000, folds = 5)
 
 autoplot(resampling_block_random,
@@ -417,7 +417,7 @@ autoplot(resampling_block_random,
 
 Here, aggregation follows the linear count from $1:n_{folds}$ from top to bottom.
 
-```{r block-systematic, fig.cap="Spatial blocking with option `selection = 'systematic'`.", out.width="50%", fig.pos="ht"}
+```{r block-systematic, fig.cap="Spatial blocking with option `selection = 'systematic'`.", out.width="40%", fig.pos="ht"}
 resampling_block_systematic = rsmp("spcv_block",
   range = 1000, folds = 5,
   selection = "systematic"
@@ -501,7 +501,7 @@ This approach is very versatile as it adapts to irregularly-shaped study areas a
 Nevertheless, despite the random selection of initial cluster centers, repeated partitionings may in some cases be nearly identical.
 Also, $k$-means clustering may be less suitable for data sets with existing clusters of points and/or with distant isolated sample locations.
 
-```{r coords, fig.cap="Method 'Spatial CV' showing k-means clustering based on coordinates.", out.width="50%", fig.pos="ht"}
+```{r coords, fig.cap="Method 'Spatial CV' showing k-means clustering based on coordinates.", out.width="40%", fig.pos="ht"}
 resampling_coords = rsmp("spcv_coords", folds = 5)$instantiate(task)
 
 autoplot(resampling_coords,
@@ -567,7 +567,7 @@ autoplot(resampling_cstf_time,
 )
 ```
 
-```{r lto, echo=FALSE, out.width="90%", fig.cap="Three-dimensional visualization of method `sptcv\\_cstf` and sub-method Leave-Time-Out (LTO). To support showcasing the temporal grouping, five folds and five temporal levels in variable `Date` were used in this example.", fig.pos="ht"}
+```{r lto, echo=FALSE, out.width="70%", fig.cap="Three-dimensional visualization of method `sptcv\\_cstf` and sub-method Leave-Time-Out (LTO). To support showcasing the temporal grouping, five folds and five temporal levels in variable `Date` were used in this example.", fig.pos="ht"}
 knitr::include_graphics("lto.png")
 ```
 
@@ -584,7 +584,7 @@ autoplot(resampling_cstf_loc,
   fold_id = 5, task = task_spt, crs = 32717, plot3D = TRUE)
 ```
 
-```{r llo, echo=FALSE, out.width="90%", fig.cap="Three-dimensional visualization of method 'sptcv\\_cstf' and sub-method 'Leave-Location-Out' (LLO). To support showcasing the spatial grouping, the viewing angle has been adjusted to a view from top. Points are stacked by temporal levels and only points from the same location are chosen to form a partition.", fig.pos="ht"}
+```{r llo, echo=FALSE, out.width="70%", fig.cap="Three-dimensional visualization of method 'sptcv\\_cstf' and sub-method 'Leave-Location-Out' (LLO). To support showcasing the spatial grouping, the viewing angle has been adjusted to a view from top. Points are stacked by temporal levels and only points from the same location are chosen to form a partition.", fig.pos="ht"}
 knitr::include_graphics("llo.png")
 ```
 
@@ -606,7 +606,7 @@ autoplot(resampling_cstf_time_loc,
   show_omitted = TRUE)
 ```
 
-```{r llto, echo=FALSE, out.width="90%", fig.cap="Three-dimensional visualization of method 'sptcv\\_cstf' and sub-method 'Leave-Location-And-Time-Out' (LLTO). The grey points show the points omitted by this method, i.e. the points which are not used in the training or test set in this fold.", fig.pos="ht"}
+```{r llto, echo=FALSE, out.width="70%", fig.cap="Three-dimensional visualization of method 'sptcv\\_cstf' and sub-method 'Leave-Location-And-Time-Out' (LLTO). The grey points show the points omitted by this method, i.e. the points which are not used in the training or test set in this fold.", fig.pos="ht"}
 knitr::include_graphics("llto.png")
 ```
 
@@ -621,7 +621,7 @@ The following example was taken from `sperrorest::partition_factor()`.
 <!-- FIXME: eval=TRUE when available upstream im mlr3 -->
 <!-- FIXME: add visualization when method is available -->
 
-```{r custom-cv,  fig.cap="Environmental blocking using a single predictor.", out.width="50%", fig.pos="ht", eval=FALSE}
+```{r custom-cv,  fig.cap="Environmental blocking using a single predictor.", out.width="40%", fig.pos="ht", eval=FALSE}
 breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
 zclass = cut(task$data()$dem, breaks, include.lowest = TRUE)
 
@@ -639,7 +639,7 @@ To avoid a potential bias introduced by features with high variance when selecti
 
 The following example clusters by feature "distance to forest".
 
-```{r env-1, fig.cap="Environmental blocking using a single predictor.", out.width="50%", fig.pos="ht"}
+```{r env-1, fig.cap="Environmental blocking using a single predictor.", out.width="40%", fig.pos="ht"}
 resampling_env = rsmp("spcv_env",
   features = "distdeforest", folds = 5)
 
@@ -652,7 +652,7 @@ autoplot(resampling_env,
 
 It is also possible to cluster by multiple features:
 
-```{r env-2, fig.cap="Environmental blocking using multiple predictors.", out.width="50%", fig.pos="ht"}
+```{r env-2, fig.cap="Environmental blocking using multiple predictors.", out.width="40%", fig.pos="ht"}
 resampling_env_multi = rsmp("spcv_env",
   features = c("distdeforest", "slope"), folds = 5)
 
