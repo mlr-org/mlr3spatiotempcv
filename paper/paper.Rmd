@@ -554,8 +554,8 @@ Alternatively to supplying an external factor vector, the name of a feature with
 
 The following example was taken from `sperrorest::partition_factor()`.
 
-<!-- FIXME: eval=TRUE when available upstream im mlr3 -->
-<!-- FIXME: add visualization when method is available -->
+FIXME: eval=TRUE when available upstream im mlr3
+FIXME: add visualization when method is available
 
 ```{r custom-cv,  fig.cap="Environmental blocking using a single predictor.", out.width="40%", fig.pos="ht", eval=FALSE}
 breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
