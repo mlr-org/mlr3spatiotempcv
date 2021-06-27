@@ -761,6 +761,11 @@ All methods which make use of all variables in the dataset suffer from the probl
 Only methods that omit some observations (`"spcv_buffer"`, `"spcv_tiles"`, `"sptcv_cstf"` with both `space_var` and `time_var` set) are able to reduce the impact of this issue.
 The downside is the removal of observations from the dataset which possibly reduces the generalization power of the trained model and by this, depending on the specific observations that were removed, adds substantial bias to the CV results.
 
+<!-- spcv_block: how to set argument `theRange` -->
+Method `"spcv_block"` requires the user to supply a value for argument `theRange` which denotes the block size used to create the blocking scheme across the study area.
+This specification is non-trivial and therefore package \pkg{blockCV} provides some helper functions (`spatialAutoRange()` and `rangeExplorer()`) to conduct a data-driven estimation of the distance at which the spatial autocorrelation in the data levels off [@blockCV].
+According to the package authors, this estimate should then be used for argument `theRange` to have a sensible value for the block sizes created in method `"spcv_block"`.
+
 <!-- sptcv LLO & LTO: requires additional variable to specify groupings -->
 The `"spcv_cstf"` methods (with only one of `space_var` or `time_var` set) require a variable in the dataset which should be used for grouping.
 The specification of such is not always easy because the grouping should ensure that the selected groups inherit substantial autocorrelation within themselves and simultaneously differ substantially from other groups.
