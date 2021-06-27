@@ -98,7 +98,7 @@ set.seed(42)
 # block
 resampling_block = rsmp("spcv_block", range = 1000L, folds = 3)
 resampling_block$instantiate(task)
-p_block = autoplot(resampling_block, task, fold_id = 1, crs = 4326,
+p_block = autoplot(resampling_block, task, fold_id = 1,
   show_blocks = TRUE, size = 0.6) +
   scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) +
   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02)) +
@@ -107,7 +107,7 @@ p_block = autoplot(resampling_block, task, fold_id = 1, crs = 4326,
 # buffer
 resampling_buffer = rsmp("spcv_buffer", theRange = 1000L)
 resampling_buffer$instantiate(task)
-p_buffer = autoplot(resampling_buffer, task, fold_id = 1, crs = 4326, size = 0.6) +
+p_buffer = autoplot(resampling_buffer, task, fold_id = 1, size = 0.6) +
   scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) +
   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02)) +
   theme(legend.position = "none")
@@ -115,7 +115,7 @@ p_buffer = autoplot(resampling_buffer, task, fold_id = 1, crs = 4326, size = 0.6
 # coords
 resampling_coords = rsmp("spcv_coords", folds = 3)
 resampling_coords$instantiate(task)
-p_coords = autoplot(resampling_coords, task, fold_id = 1, crs = 4326, size = 0.6) +
+p_coords = autoplot(resampling_coords, task, fold_id = 1, size = 0.6) +
   scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) +
   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02)) +
   theme(legend.position = "none")
@@ -123,7 +123,7 @@ p_coords = autoplot(resampling_coords, task, fold_id = 1, crs = 4326, size = 0.6
 # env
 resampling_env = rsmp("spcv_env", folds = 3, features = "distroad")
 resampling_env$instantiate(task)
-p_env = autoplot(resampling_env, task, fold_id = 1, crs = 4326, size = 0.6) +
+p_env = autoplot(resampling_env, task, fold_id = 1, size = 0.6) +
   scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) +
   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02)) +
   theme(legend.position = "none")
@@ -131,7 +131,7 @@ p_env = autoplot(resampling_env, task, fold_id = 1, crs = 4326, size = 0.6) +
 # disc
 resampling_disc = rsmp("spcv_disc", folds = 3L, radius = 200L, buffer = 200L)
 resampling_disc$instantiate(task)
-p_disc = autoplot(resampling_disc, task, fold_id = 1, crs = 4326, size = 0.6) +
+p_disc = autoplot(resampling_disc, task, fold_id = 1, size = 0.6) +
   scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) +
   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02)) +
   theme(legend.position = "none")
@@ -139,7 +139,7 @@ p_disc = autoplot(resampling_disc, task, fold_id = 1, crs = 4326, size = 0.6) +
 # disc
 resampling_tiles = rsmp("spcv_tiles", nsplit = c(4L, 3L), reassign = FALSE)
 resampling_tiles$instantiate(task)
-p_tiles = autoplot(resampling_tiles, task, fold_id = 1, crs = 4326, size = 0.6) +
+p_tiles = autoplot(resampling_tiles, task, fold_id = 1, size = 0.6) +
   scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) +
   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02)) +
   theme(legend.position = "none")
@@ -147,14 +147,14 @@ p_tiles = autoplot(resampling_tiles, task, fold_id = 1, crs = 4326, size = 0.6) 
 # cstf space
 # resampling_cstf_space = rsmp("sptcv_cstf", folds = 3L, space_var = "SOURCEID")
 # resampling_cstf_space$instantiate(task)
-# p_cstf_space = autoplot(resampling_cstf_space, task, fold_id = 1, crs = 4326) +
+# p_cstf_space = autoplot(resampling_cstf_space, task, fold_id = 1) +
 #   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02))  +
 #   theme(legend.position = "none")
 #
 # # cstf time
 # resampling_cstf_space = rsmp("sptcv_cstf", folds = 3L, time_var = "Date")
 # resampling_cstf_space$instantiate(task)
-# p_cstf_time = autoplot(resampling_cstf_space, task, fold_id = 1, crs = 4326) +
+# p_cstf_time = autoplot(resampling_cstf_space, task, fold_id = 1) +
 #   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02))
 
 # plot

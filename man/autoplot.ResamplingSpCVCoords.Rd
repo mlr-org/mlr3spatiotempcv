@@ -14,7 +14,6 @@
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   ...
 )
 
@@ -26,7 +25,6 @@
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   ...
 )
 
@@ -56,9 +54,6 @@ The color to use for the training set observations.}
 \item{test_color}{\verb{[character(1)]}\cr
 The color to use for the test set observations.}
 
-\item{crs}{\verb{[character]}\cr
-EPSG code of the CRS for x and y axes.}
-
 \item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and
 shapes.}
 
@@ -82,8 +77,8 @@ if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
 
   autoplot(resampling, task) +
     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-  autoplot(resampling, task, fold_id = 1, crs = 4326)
-  autoplot(resampling, task, fold_id = c(1, 2), crs = 4326) *
+  autoplot(resampling, task, fold_id = 1)
+  autoplot(resampling, task, fold_id = c(1, 2)) *
     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 }
 }
