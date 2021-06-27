@@ -1269,6 +1269,7 @@ autoplot_spatial = function(
         } else {
           blocks = rsmp_autopl$blocks
         }
+        blocks = sf::st_set_crs(blocks, sf::st_crs(sf_df))
 
         p1 = ggplot() +
           geom_sf(data = sf_df, aes(color = indicator), ...) +
@@ -1308,6 +1309,7 @@ autoplot_spatial = function(
         }
         return(p1)
       } else {
+
         ggplot() +
           geom_sf(data = sf_df, aes(color = indicator), ...) +
           scale_color_manual(values = c(

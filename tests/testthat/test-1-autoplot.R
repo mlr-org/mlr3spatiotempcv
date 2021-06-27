@@ -7,7 +7,6 @@ test_that("errors are thrown for non-valid argument settings", {
   rsp$instantiate(task)
 
   # these error checks apply to all resampling methods.
-  expect_message(autoplot(rsp, task))
   expect_error(plot(rsp, task, 30))
   expect_error(plot(rsp, task, c(1, 30)))
   expect_list(autoplot(rsp, task, c(1, 2), plot_as_grid = FALSE))
