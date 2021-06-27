@@ -14,7 +14,6 @@
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   repeats_id = NULL,
   show_omitted = FALSE,
   ...
@@ -28,7 +27,6 @@
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   show_omitted = FALSE,
   ...
 )
@@ -58,9 +56,6 @@ The color to use for the training set observations.}
 
 \item{test_color}{\verb{[character(1)]}\cr
 The color to use for the test set observations.}
-
-\item{crs}{\verb{[character]}\cr
-EPSG code of the CRS for x and y axes.}
 
 \item{repeats_id}{\verb{[numeric]}\cr
 Repetition ID to plot.}
@@ -94,7 +89,7 @@ if (mlr3misc::require_namespaces("sf", quietly = TRUE)) {
   resampling$instantiate(task)
 
   autoplot(resampling, task,
-    fold_id = 1, crs = 4326,
+    fold_id = 1,
     show_omitted = TRUE, size = 0.7) *
     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 }

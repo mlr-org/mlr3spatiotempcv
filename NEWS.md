@@ -1,9 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
-# mlr3spatiotempcv 0.4.1.9000
+# mlr3spatiotempcv 0.4.1.9001
 
-- upgrade tests to {vdiffr} 1.0.0
-- add {rgdal} to suggests and required it in `"spcv_block"` since it is required in {blockCV} >= 2.1.4 and {sf} >= 1.0
+## Breaking
+
+- `autoplot()`: remove argument `crs`. The CRS is now inferred from the supplied Task. Setting a different CRS than the task might lead to spurious issues and the initial idea of changing the CRS for plotting to have proper axes labeling does not apply (anymore) (#144)
 
 
 # mlr3spatiotempcv 0.4.1
