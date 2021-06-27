@@ -16,6 +16,8 @@ CLUTO
 CMD
 cmidrule
 codecov
+Cluto
+CLUTO
 CodeFactor
 codemeta
 codeRepository
@@ -30,6 +32,7 @@ cre
 CRP
 crs
 cstf
+Cstf
 ctb
 cv
 DataBackend
@@ -48,6 +51,9 @@ endgroup
 endicott
 ENMeval
 env
+ecuador
+ENMeval
+Env
 EPSG
 escobar
 familyName
@@ -69,12 +75,14 @@ ggtext
 github
 givenName
 gmail
+gridded
 href
 http
 https
 intra
 io
 issueTracker
+inds
 jannes
 Jannes
 jena
@@ -144,6 +152,7 @@ reitz
 relatedLink
 releaseNotes
 reproducibility
+ResamplingRepeatedCV
 ResamplingRepeatedSpCVBlock
 ResamplingRepeatedSpCVCoords
 ResamplingRepeatedSpCVDisc
@@ -166,6 +175,7 @@ Roxygen
 RoxygenNote
 rpart
 rsmp
+RPubs
 rss
 runtimePlatform
 sameAs
@@ -183,6 +193,7 @@ softwareSuggestions
 spacv
 spatialsample
 spatio
+spatiotemp
 spatiotempcv
 spatiotemporal
 Spatiotemporal
@@ -198,6 +209,14 @@ STAC
 stackoverflow
 stewart
 tablefootnote
+SpCV
+sperrorest
+SptCV
+SptCVCluto
+srv
+STAC
+stackoverflow
+TaskClassif
 TaskClassifST
 TaskRegrST
 testthat
@@ -211,6 +230,7 @@ unprojected
 vdiffr
 VignetteBuilder
 widehat
+WGS
 withr
 wu
 zurell

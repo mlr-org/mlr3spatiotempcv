@@ -178,8 +178,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
 
       create_blocks = function(coords, range) {
         points = sf::st_as_sf(coords,
-          coords = colnames(coords),
-          crs = crs)
+          coords = colnames(coords))
 
         # Suppress print message, warning crs and package load
         capture.output(inds <- suppressMessages(suppressWarnings(
@@ -198,7 +197,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
 
       inds = mlr3misc::map(seq_len(pv$repeats), function(i) {
         inds = create_blocks(coords, self$param_set$values$range[i])
-        blocks = sf::st_as_sf(inds$blocks, crs = crs)
+        blocks = sf::st_as_sf(inds$blocks)
 
         return(list(resampling = data.table(
           row_id = ids,
