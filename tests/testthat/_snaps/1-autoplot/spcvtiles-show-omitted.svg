@@ -867,14 +867,14 @@
 <rect x='585.79' y='254.32' width='64.53' height='78.13' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <text x='591.26' y='268.51' style='font-size: 11.00px; font-family: sans;' textLength='16.51px' lengthAdjust='spacingAndGlyphs'>Set</text>
 <rect x='591.26' y='275.13' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
-<circle cx='599.90' cy='283.77' r='1.95' style='stroke-width: 0.71; stroke: #0072B5; fill: #0072B5;' />
+<circle cx='599.90' cy='283.77' r='1.95' style='stroke-width: 0.71; stroke: #BEBEBE; fill: #BEBEBE;' />
 <rect x='591.26' y='292.41' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
-<circle cx='599.90' cy='301.05' r='1.95' style='stroke-width: 0.71; stroke: #E18727; fill: #E18727;' />
+<circle cx='599.90' cy='301.05' r='1.95' style='stroke-width: 0.71; stroke: #0072B5; fill: #0072B5;' />
 <rect x='591.26' y='309.69' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
-<circle cx='599.90' cy='318.33' r='1.95' style='stroke-width: 0.71; stroke: #BEBEBE; fill: #BEBEBE;' />
-<text x='614.02' y='286.80' style='font-size: 8.80px; font-family: sans;' textLength='20.05px' lengthAdjust='spacingAndGlyphs'>Train</text>
-<text x='614.02' y='304.08' style='font-size: 8.80px; font-family: sans;' textLength='17.12px' lengthAdjust='spacingAndGlyphs'>Test</text>
-<text x='614.02' y='321.36' style='font-size: 8.80px; font-family: sans;' textLength='30.81px' lengthAdjust='spacingAndGlyphs'>Omitted</text>
+<circle cx='599.90' cy='318.33' r='1.95' style='stroke-width: 0.71; stroke: #E18727; fill: #E18727;' />
+<text x='614.02' y='286.80' style='font-size: 8.80px; font-family: sans;' textLength='30.81px' lengthAdjust='spacingAndGlyphs'>Omitted</text>
+<text x='614.02' y='304.08' style='font-size: 8.80px; font-family: sans;' textLength='20.05px' lengthAdjust='spacingAndGlyphs'>Train</text>
+<text x='614.02' y='321.36' style='font-size: 8.80px; font-family: sans;' textLength='17.12px' lengthAdjust='spacingAndGlyphs'>Test</text>
 <polygon points='113.79,26.25 566.86,26.25 566.66,26.25 567.46,26.21 568.24,26.05 568.99,25.77 569.69,25.37 570.31,24.86 570.84,24.26 571.27,23.58 571.58,22.85 571.77,22.07 571.84,21.27 571.84,21.27 571.84,13.45 571.84,13.45 571.77,12.65 571.58,11.87 571.27,11.13 570.84,10.46 570.31,9.86 569.69,9.35 568.99,8.95 568.24,8.66 567.46,8.50 566.86,8.47 113.79,8.47 114.39,8.50 113.59,8.47 112.79,8.57 112.02,8.79 111.30,9.14 110.64,9.59 110.06,10.15 109.58,10.79 109.21,11.50 108.95,12.26 108.82,13.05 108.81,13.45 108.81,21.27 108.82,20.87 108.82,21.67 108.95,22.46 109.21,23.22 109.58,23.93 110.06,24.57 110.64,25.13 111.30,25.58 112.02,25.93 112.79,26.15 113.59,26.25 ' style='stroke-width: 1.07; fill: #EBEBEB;' />
 <text x='296.96' y='19.76' style='font-size: 10.00px; font-family: sans;' textLength='19.45px' lengthAdjust='spacingAndGlyphs'>Fold</text>
 <text x='319.19' y='19.76' style='font-size: 10.00px; font-family: sans;' textLength='8.34px' lengthAdjust='spacingAndGlyphs'>1,</text>

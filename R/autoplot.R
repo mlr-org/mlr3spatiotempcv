@@ -1421,9 +1421,9 @@ autoplot_spatiotemp = function(
     task_resamp_ids = task_resamp_ids[rep == repeats_id, ]
   }
 
-  coords = sf::st_as_sf(task$coordinates(),
+  coords = sf::st_coordinates(sf::st_as_sf(task$coordinates(),
     coords = task$extra_args$coordinate_names,
-    crs = task$extra_args$crs)
+    crs = task$extra_args$crs))
   task_resamp_ids$x = coords[, 1]
   task_resamp_ids$y = coords[, 2]
 
