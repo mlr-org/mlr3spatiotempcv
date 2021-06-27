@@ -759,7 +759,7 @@ See @schratz2019 for more details as well as chapter 11 of [Geocomputation with 
 <!-- sptcv LLTO: discards many observations -->
 All methods which make use of all variables in the dataset suffer from the problem that on the border between train and test sets, both in the spatial and temporal domain, autocorrelation is relatively high (unless the dataset inherits natural gaps between train and test sets).
 Only methods that omit some observations (`"spcv_buffer"`, `"spcv_tiles"`, `"sptcv_cstf"` with both `space_var` and `time_var` set) are able to reduce the impact of this issue.
-However, these then suffer from the fact of potentially not being able to properly represent the dataset because only a subset of observations is used.
+The downside is the removal of observations from the dataset which possibly reduces the generalization power of the trained model and by this, depending on the specific observations that were removed, adds substantial bias to the CV results.
 
 <!-- sptcv LLO & LTO: requires additional variable to specify groupings -->
 The `"spcv_cstf"` methods (with only one of `space_var` or `time_var` set) require a variable in the dataset which should be used for grouping.
