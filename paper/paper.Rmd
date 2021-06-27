@@ -452,7 +452,7 @@ Some methods have the ability to operate in multiple spaces, i.e. spatial, tempo
 To avoid redundancy and putting too much weight on certain methods, only the spatiotemporal examples of these methods will be shown in the following sections.
 For the respective other spaces, usually only one of the space or time variable inputs needs to be omitted.
 
-### Group-Level CV
+### Group-level resampling
 
 Group-level CV follows the principle of an inherit grouping structure of the observations, both in space and/or time, to determine (groups of) partitions.
 In contrast to blocking or clustering not the the spatial or temporal location is used but additional metadata such as the membership to a specific crop type [@brenning2006].
@@ -775,6 +775,14 @@ In general, only methods making use of a random component (e.g. `"spcv_coords"` 
 <!-- spcv buffer: discards observations, LOO very expensive -->
 Method `"spcv_buffer"` makes use of the removal of observations to reduce the influence of spatial autocorrelation between train and test set.
 This can be a pretty effective way to reduce autocorrelation but also requires to discard many observations and comes with the downsides of a LOO-CV: many model fits which can be computationally very demanding and the results inheriting a high variance due to the high differences in the test sets (also commonly known as the "bias-variance tradeoff" [@wahba1998; @blockCV].
+
+<!-- group level CV vs custom CV -->
+\pkg{mlr3spatiotempcv} supports two factor-based partitioning schemes: "group-level resampling" and "custom resampling".
+Both are similar in that they require external user input for partition creation, i.e. a factor variable which assigns all observations into a distinct group.
+While this the entire idea of "custom resampling" and each group becomes a test set in the CV, "group-level resampling" methods apply additional aggregation on top of these initial groups: for example, users can supply an integer value to an argument named `fold` in the LLO method (e.g. `5L`) which combines the initial groups (e.g. $n = 20$) into their final fold-level partitions, which would result in four groups per partition [@meyer2018].
+The important point is that observations from within one group will either be assigned to the train or test set and never be split up.
+"Group-level resampling" can be, in contrast to "custom resampling", repeated multiple times because multiple different aggregations are possible in theory.
+However, it also requires the amount of initial groups to be substantially higher than the amount of folds so that a sensible aggregation is possible in the first place.
 
 <!-- spcv coords: mention generic name -->
 In @brenning2012, which is the reference commonly used for the k-means based spatial partitioning approach, the method was not introduced with a unique name.
