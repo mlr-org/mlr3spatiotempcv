@@ -31,7 +31,7 @@
 #'   coordinate_names = c("x", "y"))
 #'
 #' # sf
-#' ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"))
+#' ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 32717)
 #' as_task_classif_st(ecuador_sf, target = "slides", positive = "TRUE")
 #'
 #' # TaskClassifST
@@ -52,7 +52,8 @@ as_task_classif_st.TaskClassifST = function(x, clone = FALSE, ...) { # nolint
 as_task_classif_st.data.frame = function(x, target = NULL, id = deparse(substitute(x)),
   positive = NULL, crs = NA, coords_as_features = FALSE, coordinate_names = NA, ...) {
   TaskClassifST$new(id = id, backend = x, target = target, positive = positive,
-    extra_args = list(coordinate_names = coordinate_names, coords_as_features = coords_as_features, crs = crs))
+    extra_args = list(coordinate_names = coordinate_names, coords_as_features = coords_as_features,
+      crs = crs))
 }
 
 #' @rdname as_task_classif_st
@@ -60,7 +61,8 @@ as_task_classif_st.data.frame = function(x, target = NULL, id = deparse(substitu
 as_task_classif_st.DataBackend = function(x, target = NULL, id = deparse(substitute(x)),
   positive = NULL, crs = NA, coords_as_features = FALSE, coordinate_names = c("x", "y"), ...) {
   TaskClassifST$new(id = id, backend = x, target = target, positive = positive,
-    extra_args = list(coordinate_names = coordinate_names, coords_as_features = coords_as_features, crs = crs))
+    extra_args = list(coordinate_names = coordinate_names, coords_as_features = coords_as_features,
+      crs = crs))
 }
 
 #' @rdname as_task_classif_st

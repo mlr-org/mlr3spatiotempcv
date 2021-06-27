@@ -10,8 +10,7 @@ test_that("plot() works for 'spcv_buffer'", {
   expect_error(autoplot(plots$rsp, plots$task))
   p2 = autoplot(plots$rsp, plots$task, 1)
   p3 = autoplot(plots$rsp, plots$task, c(1, 2))
-  p4 = autoplot(plots$rsp, plots$task, c(1, 2),
-    crs = 4326, plot_as_grid = FALSE)
+  p4 = autoplot(plots$rsp, plots$task, c(1, 2), plot_as_grid = FALSE)
 
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
