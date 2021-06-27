@@ -28,11 +28,11 @@
 #'   resampling$instantiate(task)
 #'
 #'   ## single fold
-#'   autoplot(resampling, task, fold_id = 1, crs = 4326) +
+#'   autoplot(resampling, task, fold_id = 1) +
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #'
 #'   ## multiple folds
-#'   autoplot(resampling, task, fold_id = c(1, 2), crs = 4326) *
+#'   autoplot(resampling, task, fold_id = c(1, 2)) *
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
 #' }
@@ -43,7 +43,6 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   ...) {
 
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
@@ -70,18 +69,9 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
 
     table = rbind(coords_train, coords_test)
 
-    # set fallback crs if missing
-    if (is.null(crs)) {
-      # use 4326 (WGS84) as fallback
-      crs = 4326
-      messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
-    }
-    # transform to selected crs
-    sf_df = sf::st_transform(
-      sf::st_as_sf(table,
-        coords = task$extra_args$coordinate_names,
-        crs = task$extra_args$crs),
-      crs = crs)
+    sf_df = sf::st_as_sf(table,
+      coords = task$extra_args$coordinate_names,
+      crs = task$extra_args$crs)
 
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
 

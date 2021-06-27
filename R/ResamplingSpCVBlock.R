@@ -141,7 +141,8 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
 
       points = sf::st_as_sf(coords,
         coords = colnames(coords),
-        crs = crs)
+        crs = crs
+      )
       # Suppress print message, warning crs and package load
       # Note: Do not replace the assignment operator here.
       capture.output(inds <- suppressMessages((
@@ -160,7 +161,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       # Warning: In st_point_on_surface.sfc(sf::st_zm(x)) :
       # st_point_on_surface may not give correct results for
       # longitude/latitude data
-      blocks_sf = suppressWarnings(sf::st_as_sf(inds$blocks, crs = crs))
+      blocks_sf = suppressWarnings(sf::st_as_sf(inds$blocks))
 
       self$blocks = blocks_sf
 

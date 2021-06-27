@@ -11,9 +11,9 @@ test_that("plot() works for 'sptcv_cluto'", {
   rsp$instantiate(task)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
-  p1 = autoplot(rsp, task, crs = 4326)
-  p2 = autoplot(rsp, task, 1, crs = 4326)
-  p3 = autoplot(rsp, task, c(1, 2), crs = 4326)
+  p1 = autoplot(rsp, task)
+  p2 = autoplot(rsp, task, 1)
+  p3 = autoplot(rsp, task, c(1, 2))
   p4 = autoplot(rsp, task, c(1, 2), plot_as_grid = FALSE)
 
   expect_s3_class(p1, "plotly")
@@ -37,16 +37,16 @@ test_that("plot() works for 'repeated_sptcv_cluto'", {
   rsp$instantiate(task)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
-  p1 = autoplot(rsp, task, crs = 4326)
-  p2 = autoplot(rsp, task, 1, crs = 4326)
-  p3 = autoplot(rsp, task, c(1, 2), crs = 4326)
+  p1 = autoplot(rsp, task)
+  p2 = autoplot(rsp, task, 1)
+  p3 = autoplot(rsp, task, c(1, 2))
 
   expect_s3_class(p1, "plotly")
   expect_s3_class(p2, "plotly")
   expect_list(p3)
 
-  p4 = autoplot(rsp, task, crs = 4326, repeats_id = 2)
-  p5 = autoplot(rsp, task, crs = 4326, fold_id = 1, repeats_id = 2)
+  p4 = autoplot(rsp, task, repeats_id = 2)
+  p5 = autoplot(rsp, task, fold_id = 1, repeats_id = 2)
 
   expect_s3_class(p4, "plotly")
   expect_s3_class(p5, "plotly")
