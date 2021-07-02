@@ -282,6 +282,7 @@ Due to its similarity to a LOO CV, this method will result in as many train/test
 In the visualization of the first fold in Fig. \@ref(fig:buffer) a buffer zone of 1000 m was used without any custom presence/absence treatment of the data.
 
 ```{r buffer, fig.cap="Visualization of the 'Spatial buffering' method from package `blockCV`.", out.width="40%", fig.pos="ht"}
+task = tsk("ecuador")
 resampling_buffer = rsmp("spcv_buffer", theRange = 1000)
 resampling_buffer$instantiate(task)
 
@@ -557,12 +558,17 @@ The following example was taken from `sperrorest::partition_factor()`.
 FIXME: eval=TRUE when available upstream im mlr3
 FIXME: add visualization when method is available
 
-```{r custom-cv,  fig.cap="Environmental blocking using a single predictor.", out.width="40%", fig.pos="ht", eval=FALSE}
+```{r custom-cv,  fig.cap="Custom resampling using an external factor vector.", out.width="40%", fig.pos="ht", eval=FALSE}
 breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
 zclass = cut(task$data()$dem, breaks, include.lowest = TRUE)
 
 resampling_custom = rsmp("custom_cv")
-resampling_custom$instantiate(task, split = zclass)
+resampling_custom$instantiate(task, f = zclass)
+
+autoplot(resampling_custom,
+  size = 0.8, fold_id = 1, task = task) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
 ## Feature space clustering
