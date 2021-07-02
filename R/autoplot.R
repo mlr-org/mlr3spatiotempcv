@@ -1221,13 +1221,15 @@ autoplot.ResamplingRepeatedCV = function( # nolint
 #'   - [autoplot.ResamplingSptCVCstf()]
 #'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
-#' if (mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"), quietly = TRUE)) {
+#' if (mlr3misc::require_namespaces(c("sf", "patchwork"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
 #'   task = tsk("ecuador")
-#'   split_f = factor(c(rep(letters[1:3], each = 250), NA))
+#'   breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
+#'   zclass = cut(task$data()$dem, breaks, include.lowest = TRUE)
+#'
 #'   resampling = rsmp("custom_cv")
-#'   resampling$instantiate(task, split = split_f)
+#'   resampling$instantiate(task, f = zclass)
 #'
 #'   autoplot(resampling, task) +
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
@@ -1242,14 +1244,12 @@ autoplot.ResamplingCustomCV = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   ...) {
   autoplot_custom_cv(
     resampling = object,
     task = task,
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
-    crs = crs,
     ... = ...
   )
 }
@@ -1675,7 +1675,6 @@ autoplot_custom_cv = function(
   plot_as_grid = NULL,
   train_color = NULL,
   test_color = NULL,
-  crs = NULL,
   ...) {
 
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
@@ -1710,18 +1709,9 @@ autoplot_custom_cv = function(
       dt$indicator = rep("foo", nrow(dt))
       dt[, indicator := ifelse(fold == .x, "Test", "Train")]
 
-      # set fallback crs if missing
-      if (is.null(crs)) {
-        # use 4326 (WGS84) as fallback
-        crs = 4326
-        messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
-      }
-
-      sf_df = sf::st_transform(
-        sf::st_as_sf(dt,
+      sf_df = sf::st_as_sf(dt,
           coords = task$extra_args$coordinate_names,
-          crs = task$extra_args$crs),
-        crs = crs)
+          crs = task$extra_args$crs)
 
       sf_df = reorder_levels(sf_df)
 
@@ -1758,24 +1748,14 @@ autoplot_custom_cv = function(
 
     # Create one plot colored by all test folds --------------------------------
 
-    # set fallback crs if missing
-    if (is.null(crs)) {
-      # use 4326 (WGS84) as fallback
-      crs = 4326
-      messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
-    }
-
-    sf_df = sf::st_transform(
-      sf::st_as_sf(coords_resamp,
+    sf_df = sf::st_as_sf(coords_resamp,
         coords = task$extra_args$coordinate_names,
-        crs = task$extra_args$crs),
-      crs = crs)
+        crs = task$extra_args$crs)
 
     # order fold ids
     sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
     sf_df$fold = as.factor(as.character(sf_df$fold))
     sf_df$fold = factor(sf_df$fold, levels = unique(as.character(sf_df$fold)))
-
 
     plot = ggplot() +
       geom_sf(
