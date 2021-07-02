@@ -56,7 +56,8 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
           custom_check = function(x) {
             checkmate::check_class(x, "RasterLayer",
               null.ok = TRUE)
-          })
+          }
+        )
       ))
       ps$values = list(folds = 10L)
       super$initialize(
@@ -125,20 +126,23 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }),
+    }
+  ),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       as.integer(self$param_set$values$folds)
-    }),
+    }
+  ),
   private = list(
     .sample = function(ids, coords, crs) {
 
       points = sf::st_as_sf(coords,
         coords = colnames(coords),
-        crs = crs)
+        crs = crs
+      )
       # Suppress print message, warning crs and package load
       # Note: Do not replace the assignment operator here.
       capture.output(inds <- suppressMessages((
@@ -157,7 +161,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       # Warning: In st_point_on_surface.sfc(sf::st_zm(x)) :
       # st_point_on_surface may not give correct results for
       # longitude/latitude data
-      blocks_sf = suppressWarnings(sf::st_as_sf(inds$blocks, crs = crs))
+      blocks_sf = suppressWarnings(sf::st_as_sf(inds$blocks))
 
       self$blocks = blocks_sf
 
@@ -176,5 +180,6 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     },
     .get_test = function(i) {
       self$instance[list(i), "row_id", on = "fold"][[1L]]
-    })
+    }
+  )
 )

@@ -31,7 +31,7 @@
 #'   coordinate_names = c("x", "y"))
 #'
 #' # sf
-#' ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 4326)
+#' ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 32717)
 #' as_task_classif_st(ecuador_sf, target = "slides", positive = "TRUE")
 #'
 #' # TaskClassifST

@@ -78,14 +78,16 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }),
+    }
+  ),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       self$param_set$values$folds
-    }),
+    }
+  ),
   private = list(
     .sample = function(ids, coords) {
 
@@ -151,5 +153,6 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
     },
     .get_test = function(i) {
       self$instance$test[[i]]
-    })
+    }
+  )
 )

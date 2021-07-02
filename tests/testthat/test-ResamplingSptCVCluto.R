@@ -61,4 +61,3 @@ test_that("clustering on coords only works", {
 
   expect_equal(rsp$iters, 2)
 })
-
