@@ -12,7 +12,6 @@
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   ...
 )
 
@@ -49,13 +48,15 @@ mlr3 spatial resampling object of class \link{ResamplingCustomCV}.}
 Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods.
 }
 \examples{
-if (mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"), quietly = TRUE)) {
+if (mlr3misc::require_namespaces(c("sf", "patchwork"), quietly = TRUE)) {
   library(mlr3)
   library(mlr3spatiotempcv)
   task = tsk("ecuador")
-  split_f = factor(c(rep(letters[1:3], each = 250), NA))
+  breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
+  zclass = cut(task$data()$dem, breaks, include.lowest = TRUE)
+
   resampling = rsmp("custom_cv")
-  resampling$instantiate(task, split = split_f)
+  resampling$instantiate(task, f = zclass)
 
   autoplot(resampling, task) +
     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
