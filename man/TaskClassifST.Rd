@@ -26,7 +26,7 @@ if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   )
 
   # passing objects of class 'sf' is also supported
-  data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 4326)
+  data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"))
   task = TaskClassifST$new("ecuador_sf",
     backend = data_sf, target = "slides", positive = "TRUE"
   )

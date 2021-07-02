@@ -28,8 +28,6 @@
 #'   The color to use for the training set observations.
 #' @param test_color `[character(1)]`\cr
 #'   The color to use for the test set observations.
-#' @param crs `[character]`\cr
-#'   EPSG code of the CRS for x and y axes.
 #' @param show_blocks `[logical(1)]`\cr
 #'   Whether to show an overlay of the spatial blocks polygons.
 #' @param show_labels `[logical(1)]`\cr
@@ -71,16 +69,16 @@
 #'     fold_id = c(1, 2), plot_as_grid = FALSE)
 #'
 #'   ## Visualize all partitions
-#'   autoplot(resampling, task, crs = 4326) +
+#'   autoplot(resampling, task) +
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #'
 #'   ## Visualize the train/test split of a single fold
-#'   autoplot(resampling, task, fold_id = 1, crs = 4326) +
+#'   autoplot(resampling, task, fold_id = 1) +
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #'
 #'   ## Visualize train/test splits of multiple folds
 #'   autoplot(resampling, task,
-#'     fold_id = c(1, 2), crs = 4326,
+#'     fold_id = c(1, 2),
 #'     show_blocks = TRUE) *
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
@@ -91,7 +89,6 @@ autoplot.ResamplingSpCVBlock = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   show_blocks = FALSE,
   show_labels = FALSE,
   ...) {
@@ -103,7 +100,6 @@ autoplot.ResamplingSpCVBlock = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    crs = crs,
     show_blocks = show_blocks,
     show_labels = show_labels,
     ... = ...
@@ -120,7 +116,6 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   show_blocks = FALSE,
   show_labels = FALSE,
   ...) {
@@ -132,7 +127,6 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    crs = crs,
     show_blocks = show_blocks,
     show_labels = show_labels,
     ... = ...,
@@ -189,10 +183,10 @@ plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
 #'   resampling = rsmp("spcv_env", folds = 4, features = "dem")
 #'   resampling$instantiate(task)
 #'
-#'   autoplot(resampling, task, crs = 4326) +
+#'   autoplot(resampling, task) +
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-#'   autoplot(resampling, task, fold_id = 1, crs = 4326)
-#'   autoplot(resampling, task, fold_id = c(1, 2), crs = 4326) *
+#'   autoplot(resampling, task, fold_id = 1)
+#'   autoplot(resampling, task, fold_id = c(1, 2)) *
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
 autoplot.ResamplingSpCVEnv = function( # nolint
@@ -202,14 +196,12 @@ autoplot.ResamplingSpCVEnv = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   ...) {
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
-    crs = crs,
     ... = ...
   )
 }
@@ -224,7 +216,6 @@ autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   ...) {
 
   autoplot.ResamplingSpCVEnv(
@@ -234,7 +225,6 @@ autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    crs = crs,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -290,8 +280,8 @@ plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
 #'
 #'   autoplot(resampling, task) +
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
-#'   autoplot(resampling, task, fold_id = 1, crs = 4326)
-#'   autoplot(resampling, task, fold_id = c(1, 2), crs = 4326) *
+#'   autoplot(resampling, task, fold_id = 1)
+#'   autoplot(resampling, task, fold_id = c(1, 2)) *
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
 autoplot.ResamplingSpCVCoords = function( # nolint
@@ -301,14 +291,12 @@ autoplot.ResamplingSpCVCoords = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   ...) {
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
-    crs = crs,
     ... = ...
   )
 }
@@ -323,7 +311,6 @@ autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   ...) {
 
   autoplot.ResamplingSpCVCoords(
@@ -333,7 +320,6 @@ autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    crs = crs,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -413,7 +399,6 @@ autoplot.ResamplingSptCVCluto = function( # nolint
   train_color = "#0072B5",
   test_color = "#E18727",
   tickformat_date = "%Y-%m",
-  crs = NULL,
   nticks_x = 3,
   nticks_y = 3,
   point_size = 3,
@@ -426,7 +411,6 @@ autoplot.ResamplingSptCVCluto = function( # nolint
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
     tickformat_date = tickformat_date,
-    crs = crs,
     nticks_y = nticks_y,
     nticks_x = nticks_y,
     point_size = point_size,
@@ -445,7 +429,6 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   ...) {
 
   autoplot.ResamplingSptCVCluto(
@@ -455,7 +438,6 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    crs = crs,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -529,7 +511,7 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
 #'   resampling$instantiate(task)
 #'
 #'   autoplot(resampling, task,
-#'     fold_id = 1, crs = 4326,
+#'     fold_id = 1,
 #'     show_omitted = TRUE, size = 0.7) *
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
@@ -541,7 +523,6 @@ autoplot.ResamplingSpCVDisc = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   repeats_id = NULL,
   show_omitted = FALSE,
   ...) {
@@ -550,13 +531,6 @@ autoplot.ResamplingSpCVDisc = function( # nolint
   coords = task$coordinates()
   coords$row_id = task$row_ids
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
-
-  # set fallback crs if missing
-  if (is.null(crs)) {
-    # use 4326 (WGS84) as fallback
-    crs = 4326
-    messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
-  }
 
   resampling = assert_autoplot(resampling, fold_id, task)
 
@@ -593,11 +567,9 @@ autoplot.ResamplingSpCVDisc = function( # nolint
       if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
         data_coords[indicator == "", indicator := "Omitted"]
 
-        sf_df = sf::st_transform(
-          sf::st_as_sf(data_coords,
-            coords = task$extra_args$coordinate_names,
-            crs = task$extra_args$crs),
-          crs = crs)
+        sf_df = sf::st_as_sf(data_coords,
+          coords = task$extra_args$coordinate_names,
+          crs = task$extra_args$crs)
         sf_df = reorder_levels(sf_df)
 
         ggplot() +
@@ -622,11 +594,9 @@ autoplot.ResamplingSpCVDisc = function( # nolint
       } else {
         data_coords = data_coords[indicator != ""]
 
-        sf_df = sf::st_transform(
-          sf::st_as_sf(data_coords,
-            coords = task$extra_args$coordinate_names,
-            crs = task$extra_args$crs),
-          crs = crs)
+        sf_df = sf::st_as_sf(data_coords,
+          coords = task$extra_args$coordinate_names,
+          crs = task$extra_args$crs)
         sf_df = reorder_levels(sf_df)
 
         ggplot() +
@@ -670,11 +640,9 @@ autoplot.ResamplingSpCVDisc = function( # nolint
         if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
           data_coords[indicator == "", indicator := "Omitted"]
 
-          sf_df = sf::st_transform(
-            sf::st_as_sf(data_coords,
-              coords = task$extra_args$coordinate_names,
-              crs = task$extra_args$crs),
-            crs = crs)
+          sf_df = sf::st_as_sf(data_coords,
+            coords = task$extra_args$coordinate_names,
+            crs = task$extra_args$crs)
           sf_df = reorder_levels(sf_df)
 
           ggplot() +
@@ -699,11 +667,9 @@ autoplot.ResamplingSpCVDisc = function( # nolint
         } else {
           data_coords = data_coords[indicator != ""]
 
-          sf_df = sf::st_transform(
-            sf::st_as_sf(data_coords,
-              coords = task$extra_args$coordinate_names,
-              crs = task$extra_args$crs),
-            crs = crs)
+          sf_df = sf::st_as_sf(data_coords,
+            coords = task$extra_args$coordinate_names,
+            crs = task$extra_args$crs)
           sf_df = reorder_levels(sf_df)
 
           ggplot() +
@@ -746,13 +712,6 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
     ### Create one plot colored by all test folds
 
-    # set fallback crs if missing
-    if (is.null(crs)) {
-      # use 4326 (WGS84) as fallback
-      crs = 4326
-      messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
-    }
-
     data_coords = prepare_autoplot_cstf(task, resampling_sub)
 
     # extract test ids from lists
@@ -763,11 +722,9 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
     test_folds = merge(data_coords, row_ids_test, by = "row_id", all = TRUE)
 
-    sf_df = sf::st_transform(
-      sf::st_as_sf(test_folds,
-        coords = task$extra_args$coordinate_names,
-        crs = task$extra_args$crs),
-      crs = crs)
+    sf_df = sf::st_as_sf(test_folds,
+      coords = task$extra_args$coordinate_names,
+      crs = task$extra_args$crs)
 
     # only keep test ids
     sf_df = stats::na.omit(sf_df, cols = "fold")
@@ -803,7 +760,6 @@ autoplot.ResamplingRepeatedSpCVDisc = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   show_omitted = FALSE,
   ...) {
 
@@ -814,7 +770,6 @@ autoplot.ResamplingRepeatedSpCVDisc = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    crs = crs,
     show_omitted = show_omitted,
     ... = ...,
     # ellipsis
@@ -876,7 +831,7 @@ plot.ResamplingRepeatedSpCVDisc = function(x, ...) {
 #'   resampling$instantiate(task)
 #'
 #'   autoplot(resampling, task,
-#'     fold_id = 1, crs = 4326,
+#'     fold_id = 1,
 #'     show_omitted = TRUE, size = 0.7) *
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
@@ -888,7 +843,6 @@ autoplot.ResamplingSpCVTiles = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   repeats_id = NULL,
   show_omitted = FALSE,
   ...) {
@@ -897,13 +851,6 @@ autoplot.ResamplingSpCVTiles = function( # nolint
   coords = task$coordinates()
   coords$row_id = task$row_ids
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
-
-  # set fallback crs if missing
-  if (is.null(crs)) {
-    # use 4326 (WGS84) as fallback
-    crs = 4326
-    messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
-  }
 
   resampling = assert_autoplot(resampling, fold_id, task)
 
@@ -940,11 +887,9 @@ autoplot.ResamplingSpCVTiles = function( # nolint
       if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
         data_coords[indicator == "", indicator := "Omitted"]
 
-        sf_df = sf::st_transform(
-          sf::st_as_sf(data_coords,
-            coords = task$extra_args$coordinate_names,
-            crs = task$extra_args$crs),
-          crs = crs)
+        sf_df = sf::st_as_sf(data_coords,
+          coords = task$extra_args$coordinate_names,
+          crs = task$extra_args$crs)
         sf_df = reorder_levels(sf_df)
 
         ggplot() +
@@ -969,11 +914,9 @@ autoplot.ResamplingSpCVTiles = function( # nolint
       } else {
         data_coords = data_coords[indicator != ""]
 
-        sf_df = sf::st_transform(
-          sf::st_as_sf(data_coords,
-            coords = task$extra_args$coordinate_names,
-            crs = task$extra_args$crs),
-          crs = crs)
+        sf_df = sf::st_as_sf(data_coords,
+          coords = task$extra_args$coordinate_names,
+          crs = task$extra_args$crs)
         sf_df = reorder_levels(sf_df)
 
         ggplot() +
@@ -1017,11 +960,9 @@ autoplot.ResamplingSpCVTiles = function( # nolint
         if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
           data_coords[indicator == "", indicator := "Omitted"]
 
-          sf_df = sf::st_transform(
-            sf::st_as_sf(data_coords,
-              coords = task$extra_args$coordinate_names,
-              crs = task$extra_args$crs),
-            crs = crs)
+          sf_df = sf::st_as_sf(data_coords,
+            coords = task$extra_args$coordinate_names,
+            crs = task$extra_args$crs)
           sf_df = reorder_levels(sf_df)
 
           ggplot() +
@@ -1046,11 +987,9 @@ autoplot.ResamplingSpCVTiles = function( # nolint
         } else {
           data_coords = data_coords[indicator != ""]
 
-          sf_df = sf::st_transform(
-            sf::st_as_sf(data_coords,
-              coords = task$extra_args$coordinate_names,
-              crs = task$extra_args$crs),
-            crs = crs)
+          sf_df = sf::st_as_sf(data_coords,
+            coords = task$extra_args$coordinate_names,
+            crs = task$extra_args$crs)
           sf_df = reorder_levels(sf_df)
 
           ggplot() +
@@ -1093,13 +1032,6 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
     ### Create one plot colored by all test folds
 
-    # set fallback crs if missing
-    if (is.null(crs)) {
-      # use 4326 (WGS84) as fallback
-      crs = 4326
-      messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
-    }
-
     data_coords = prepare_autoplot_cstf(task, resampling_sub)
 
     names(resampling_sub$instance$test) = seq_len(length(resampling_sub$instance$test))
@@ -1114,11 +1046,9 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
     test_folds$fold = as.integer(test_folds$fold)
 
-    sf_df = sf::st_transform(
-      sf::st_as_sf(test_folds,
-        coords = task$extra_args$coordinate_names,
-        crs = task$extra_args$crs),
-      crs = crs)
+    sf_df = sf::st_as_sf(test_folds,
+      coords = task$extra_args$coordinate_names,
+      crs = task$extra_args$crs)
 
     # only keep test ids
     sf_df = stats::na.omit(sf_df, cols = "fold")
@@ -1154,7 +1084,6 @@ autoplot.ResamplingRepeatedSpCVTiles = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   show_omitted = FALSE,
   ...) {
 
@@ -1165,7 +1094,6 @@ autoplot.ResamplingRepeatedSpCVTiles = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    crs = crs,
     show_omitted = show_omitted,
     ... = ...,
     # ellipsis
@@ -1233,14 +1161,12 @@ autoplot.ResamplingCV = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   ...) {
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
-    crs = crs,
     ... = ...
   )
 }
@@ -1255,7 +1181,6 @@ autoplot.ResamplingRepeatedCV = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  crs = NULL,
   ...) {
 
   autoplot.ResamplingCV(
@@ -1265,7 +1190,6 @@ autoplot.ResamplingRepeatedCV = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
-    crs = crs,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -1359,7 +1283,6 @@ autoplot_spatial = function(
   plot_as_grid = NULL,
   train_color = NULL,
   test_color = NULL,
-  crs = NULL,
   show_blocks = FALSE,
   show_labels = FALSE,
   ...) {
@@ -1396,18 +1319,9 @@ autoplot_spatial = function(
       dt$indicator = rep("foo", nrow(dt))
       dt[, indicator := ifelse(fold == .x, "Test", "Train")]
 
-      # set fallback crs if missing
-      if (is.null(crs)) {
-        # use 4326 (WGS84) as fallback
-        crs = 4326
-        messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
-      }
-
-      sf_df = sf::st_transform(
-        sf::st_as_sf(dt,
-          coords = task$extra_args$coordinate_names,
-          crs = task$extra_args$crs),
-        crs = crs)
+      sf_df = sf::st_as_sf(dt,
+        coords = task$extra_args$coordinate_names,
+        crs = task$extra_args$crs)
 
       sf_df = reorder_levels(sf_df)
 
@@ -1418,6 +1332,7 @@ autoplot_spatial = function(
         } else {
           blocks = rsmp_autopl$blocks
         }
+        blocks = sf::st_set_crs(blocks, sf::st_crs(sf_df))
 
         p1 = ggplot() +
           geom_sf(data = sf_df, aes(color = indicator), ...) +
@@ -1457,6 +1372,7 @@ autoplot_spatial = function(
         }
         return(p1)
       } else {
+
         ggplot() +
           geom_sf(data = sf_df, aes(color = indicator), ...) +
           scale_color_manual(values = c(
@@ -1496,13 +1412,6 @@ autoplot_spatial = function(
 
     # Create one plot colored by all test folds --------------------------------
 
-    # set fallback crs if missing
-    if (is.null(crs)) {
-      # use 4326 (WGS84) as fallback
-      crs = 4326
-      messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
-    }
-    # transform to selected crs
     if (show_blocks) {
       blocks = sf::st_as_sf(coords_resamp)
     }
@@ -1510,11 +1419,10 @@ autoplot_spatial = function(
       coords_resamp$blocks = NULL
     }
 
-    sf_df = sf::st_transform(
+    sf_df =
       sf::st_as_sf(coords_resamp,
         coords = task$extra_args$coordinate_names,
-        crs = task$extra_args$crs),
-      crs = crs)
+        crs = task$extra_args$crs)
 
     # order fold ids
     sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
@@ -1548,7 +1456,6 @@ autoplot_spatiotemp = function(
   train_color = NULL,
   test_color = NULL,
   tickformat_date = NULL,
-  crs = NULL,
   nticks_x = NULL,
   nticks_y = NULL,
   point_size = NULL,
@@ -1577,20 +1484,9 @@ autoplot_spatiotemp = function(
     task_resamp_ids = task_resamp_ids[rep == repeats_id, ]
   }
 
-  # set fallback crs if missing
-  if (is.null(crs)) {
-    mlr3misc::require_namespaces("sf")
-    messagef("CRS not set, transforming to WGS84 (EPSG: 4326).")
-    crs = 4326
-  }
-  # transform coordinates to selected crs
-  coords = sf::st_coordinates(
-    sf::st_transform(
-      sf::st_as_sf(task$coordinates(),
-        coords = task$extra_args$coordinate_names,
-        crs = task$extra_args$crs),
-      crs = crs)
-  )
+  coords = sf::st_coordinates(sf::st_as_sf(task$coordinates(),
+    coords = task$extra_args$coordinate_names,
+    crs = task$extra_args$crs))
   task_resamp_ids$x = coords[, 1]
   task_resamp_ids$y = coords[, 2]
 

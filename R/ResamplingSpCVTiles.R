@@ -90,14 +90,16 @@ ResamplingSpCVTiles = R6Class("ResamplingSpCVTiles",
       self$task_hash = task$hash
       self$task_nrow = task$nrow
       invisible(self)
-    }),
+    }
+  ),
   active = list(
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
     iters = function() {
       length(self$instance$train)
-    }),
+    }
+  ),
   private = list(
     .sample = function(ids, coords) {
 
@@ -300,5 +302,6 @@ ResamplingSpCVTiles = R6Class("ResamplingSpCVTiles",
     },
     .get_test = function(i) {
       self$instance$test[[i]]
-    })
+    }
+  )
 )
