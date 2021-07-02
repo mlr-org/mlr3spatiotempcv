@@ -16,6 +16,9 @@ CLUTO
 CMD
 cmidrule
 codecov
+coords
+crs
+CRS
 Cluto
 CLUTO
 CodeFactor
@@ -39,6 +42,9 @@ DataBackend
 DataBackendDataTable
 de
 desc
+EPSG
+ggplot
+github
 dev
 developmentStatus
 diesing
@@ -135,6 +141,9 @@ patrick
 pena
 perf
 pkgdowntemplate
+PROJ
+regr
+ResamplingCustomCV
 plotly
 ploton
 png
