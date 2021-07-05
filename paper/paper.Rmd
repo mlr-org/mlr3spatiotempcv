@@ -200,7 +200,7 @@ These challenges result in substantial overhead and possible reproducibility iss
 Within the \pkg{mlr3} ecosystem, partitioning strategies are represented by their own objects of class \texttt{Resampling}, most of which are available within \pkg{mlr3} itself (e.g., regular random CV); other specialized strategies (e.g., \texttt{TaskClassifST} or \texttt{TaskRegrST}) are defined in extension packages such as \pkg{mlr3spatiotempcv}.
 In the machine learning pipeline, these objects define the data splits used for model evaluation and selection (hyperparameter tuning) by machine learning algorithms.
 Spatial and spatiotemporal partitioning techniques in \pkg{mlr3spatiotempcv} are currently mostly imported and interfaced from other packages, in particular \pkg{sperrorest}, \pkg{blockCV} and \pkg{CAST} [@blockCV; @brenning2012; @cast], in order to expose them to \pkg{mlr3} functionality.
-To reduce first-level dependencies, some methods were re-implemented instead of imported from upstream packages.
+To reduce first-level dependencies, some methods were re-implemented instead of importing them from upstream packages.
 
 Resampling objects in \pkg{mlr3spatiotmpcv} inherit from class \texttt{mlr3::Resampling} and can be created from established object classes for geospatial data in R, including simple features [@pebesma2018], which facilitates their integration into domain-specific workflows in the geospatial sciences.
 Support for projected (planar) and unprojected (geographic) coordinate reference systems (CRS) currently varies depending on the partitioning techniques used, since these inherit their behavior from the underlying upstream R package.
