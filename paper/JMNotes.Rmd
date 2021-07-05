@@ -9,6 +9,12 @@ Delete it or rewrite in a more compelling way.
 And though the crop classification indroduces non-standard spatial resampling strategies, it does not make reference to the more common spatial resampling procedure (k-means clustering) where only the coordinates are considered.
 However, 
 
+>>It is planned to provide a more consistent interface that supports all CRS and allows the use of distance measures in projected planar space or using great circle distances on the unprojected ellipsoid, in the case of unprojected CRS.
+
+- In case, you didn't know: from 1.0.0 onwards, sf uses s2 by default, i.e. spherical geometries.
+Hence, I am not sure if there is really much more work to do (see https://r-spatial.github.io/sf/articles/sf7.html).
+
+
 - Valid inputs are PROJ4 strings
 Just for your information: PROJ strings are from now on discouraged if a CRS is available.
 Instead one should use CRS codes or WKT2 (see most recent comments at https://github.com/r-spatial/discuss/issues/43).
