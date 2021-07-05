@@ -1,0 +1,16 @@
+# remarks JM
+
+- abstract: it is at least uncommon to cite other works in the abstract.
+If not explicitly required by the journal, I would refrain from it since you most likely cite all these works in the paper itself.
+- The last sentence of the abstract does not add much.
+Delete it or rewrite in a more compelling way.
+
+- I like the crop classification example, however, it is not entirely clear to me what agricultural districs are. 
+And though the crop classification indroduces non-standard spatial resampling strategies, it does not make reference to the more common spatial resampling procedure (k-means clustering) where only the coordinates are considered.
+However, 
+
+- Valid inputs are PROJ4 strings
+Just for your information: PROJ strings are from now on discouraged if a CRS is available.
+Instead one should use CRS codes or WKT2 (see most recent comments at https://github.com/r-spatial/discuss/issues/43).
+In any case, please us the more generic PROJ notation without any version number instead of PROJ4. 
+For example, on my laptop I now use PROJ8.
