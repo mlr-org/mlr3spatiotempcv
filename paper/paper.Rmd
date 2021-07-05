@@ -282,6 +282,8 @@ Due to its similarity to a LOO CV, this method will result in as many train/test
 In the visualization of the first fold in Fig. \@ref(fig:buffer) a buffer zone of 1000 m was used without any custom presence/absence treatment of the data.
 
 ```{r buffer, fig.cap="Visualization of the 'Spatial buffering' method from package `blockCV`.", out.width="40%", fig.pos="ht"}
+library("mlr3")
+library("mlr3spatiotempcv")
 task = tsk("ecuador")
 resampling_buffer = rsmp("spcv_buffer", theRange = 1000)
 resampling_buffer$instantiate(task)
