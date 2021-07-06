@@ -8,7 +8,7 @@ Delete it or rewrite in a more compelling way.
 - I like the crop classification example, however, it is not entirely clear to me what agricultural districts are. 
 And though the crop classification introduces non-standard spatial resampling strategies, it does not make reference to the more common spatial resampling procedure (k-means clustering) where clustered coordinates are considered, which might be a more gentle introduction to spatial CV for readers who are not already familiar with the concepts.
 But I might be wrong.
-Looking at Table 1, the spatial blocking/tiles approach seems to be even more popular than the kmean clustering approach.
+Looking at Table 1, the spatial blocking/tiles approach seems to be even more popular than the kmeans clustering approach.
 
 - Table 1: Wow, not too many papers have so far used spatial CV.
 Is this a comprehensive list?
@@ -20,11 +20,16 @@ Please clarify.
 
 - I really do like the visualizations, great job! And they help the reader a lot to better grasp the differences between the resampling strategies.
 
->>It is planned to provide a more consistent interface that supports all CRS and allows the use of distance measures in projected planar space or using great circle distances on the unprojected ellipsoid, in the case of unprojected CRS.
-
 - In case, you didn't know: from 1.0.0 onwards, sf uses s2 by default, i.e. spherical geometries.
 Hence, I am not sure if there is really much more work to do (see https://r-spatial.github.io/sf/articles/sf7.html).
+I am referring to this sentence in the paper:
 
+>It is planned to provide a more consistent interface that supports all CRS and allows the use of distance measures in projected planar space or using great circle distances on the unprojected ellipsoid, in the case of unprojected CRS.
+
+- The leave-one-disc-out method seems to be quite promising since the direct neighbors between the training and test sets are removed thus removing spatial autocorrelation which might still be present when using the kmeans clustering approach.
+In the back of my mind, I knew that this was possible but I didn't know that this was already implemented in **sperrorest**.
+I wonder why AB has often preferred the kmeans clustering approach over the leave-one-disc-out approach.
+Maybe something which can be discussed.
 
 - Valid inputs are PROJ4 strings
 Just for your information: PROJ strings are from now on discouraged if a CRS is available.
