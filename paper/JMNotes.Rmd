@@ -5,9 +5,18 @@ If not explicitly required by the journal, I would refrain from it since you mos
 - The last sentence of the abstract does not add much.
 Delete it or rewrite in a more compelling way.
 
-- I like the crop classification example, however, it is not entirely clear to me what agricultural districs are. 
-And though the crop classification indroduces non-standard spatial resampling strategies, it does not make reference to the more common spatial resampling procedure (k-means clustering) where only the coordinates are considered.
-However, 
+- I like the crop classification example, however, it is not entirely clear to me what agricultural districts are. 
+And though the crop classification introduces non-standard spatial resampling strategies, it does not make reference to the more common spatial resampling procedure (k-means clustering) where clustered coordinates are considered, which might be a more gentle introduction to spatial CV for readers who are not already familiar with the concepts.
+But I might be wrong.
+Looking at Table 1, the spatial blocking/tiles approach seems to be even more popular than the kmean clustering approach.
+
+- Table 1: Wow, not too many papers have so far used spatial CV.
+Is this a comprehensive list?
+Have you somewhere listed the references by chosen strategy?
+If so, put it in the Appendix and reference the Appendix in the caption.
+Not entirely clear, what the footnotes refer to.
+These seem to be studies which have used the corresponding spatial CV approach but it is not all of them (e.g., spcv_block has been used by 28 papers but only 3 are referenced). 
+Please clarify.
 
 >>It is planned to provide a more consistent interface that supports all CRS and allows the use of distance measures in projected planar space or using great circle distances on the unprojected ellipsoid, in the case of unprojected CRS.
 
