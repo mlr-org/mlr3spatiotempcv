@@ -483,7 +483,7 @@ In \pkg{mlr3spatiotempcv} the method is named `"sptcv_cstf"` which is an acronym
 
 To better showcase the partitioning of the "Leave-Time-Out" (LTO) method, the temporal variable `Date` was adjusted in this example.
 
-The following code uses the `cookfarm` dataset as the base, modifies to the `Date` variable to contain five unique levels and then creates a spatiotemporal regression task in \pkg{mlr3spatiotempcv} (Fig. \@ref(fig:lto)).
+The following code uses the `cookfarm` dataset as the base, modifies the `Date` variable in such a way that it contains five unique levels and then creates a spatiotemporal regression task in \pkg{mlr3spatiotempcv} (Fig. \@ref(fig:lto)).
 
 ```{r, results='hide'}
 data = cookfarm_sample
@@ -546,7 +546,7 @@ autoplot(resampling_cstf_time_loc,
   show_omitted = TRUE)
 ```
 
-```{r llto, echo=FALSE, out.width="70%", fig.cap="Three-dimensional visualization of method 'sptcv\\_cstf' and sub-method 'Leave-Location-And-Time-Out' (LLTO). The grey points show the points omitted by this method, i.e. the points which are not used in the training or test set in this fold.", fig.pos="ht"}
+```{r llto, echo=FALSE, out.width="70%", fig.cap="Three-dimensional visualization of method 'sptcv\\_cstf' and sub-method 'Leave-Location-And-Time-Out' (LLTO). The grey points show the points omitted by this method, i.e. the points which are neither used in the training nor test set in this fold.", fig.pos="ht"}
 knitr::include_graphics("llto.png")
 ```
 
