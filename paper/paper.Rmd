@@ -434,8 +434,7 @@ Different cluster algorithms such as hierarchical, density-based, grid-based or 
 
 #### Coordinate-based clustering --- sperrorest
 
-The so-called "Spatial CV" method after [@russ2010; @brenning2012] and implemented in package \pkg{sperrorest} uses the coordinates of all observations to create clusters in the spatial domain.
-$k$-means clustering, which belongs to the centroid-based clustering family, has been proposed as a clustering method.
+The so-called "Spatial CV" method after [@russ2010; @brenning2012] and implemented in package \pkg{sperrorest} uses the coordinates of all observations to create clusters in the spatial domain with the help of the $k$-means clustering algorithm.^[$k$-means clustering belongs to the centroid-based clustering family.]
 To avoid confusion with other spatial partitioning methods, we refer to this as coordinate-based clustering, or as `spcv_coords` in \pkg{mlr3spatiotempcv}, instead of using the generic "Spatial CV" term.
 
 This approach is very versatile as it adapts to irregularly-shaped study areas and ensures that exactly $k$ partitions are created.
