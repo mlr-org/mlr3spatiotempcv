@@ -611,6 +611,7 @@ Considering the wealth and continuing development of spatial and spatiotemporal 
 At present, \pkg{mlr3spatiotempcv} also supports spatiotemporal partitioning using the versatile CLUTO clustering algorithm [@cluto].
 CLUTO is available in R through the \pkg{skmeans} package, which provides an interface to a downloadable compiled library with a restriction to non-commercial uses (see `?ResamplingSptCVCluto` in \pkg{mlr3spatiotempcv} for more information).
 With respect to functionality, \pkg{mlr3spatiotempcv} supports two-dimensional clustering based on coordinates and three-dimensional clustering on coordinates and time.
+<!--JM: not clear why feature clustering is not available when you already have presented the enviromental blocking based on specific features-->
 Feature clustering is not supported.
 
 # Case study: Comparing spatial and non-spatial resampling {#sec:case-study}
