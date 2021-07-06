@@ -334,7 +334,7 @@ Implementations of blocking methods often provide additional options to fine tun
 
 The "Spatial blocking" from package \pkg{blockCV} comes with various blocking options such as random (default) (`selection = "random"`), systematic (`selection = "systematic"`) or checkerboard pattern (`selection = "checkerboard"`).
 Additionally, the user might supply a numeric value in meters via argument `theRange` (named just `range` in {mlr3spatiotempcv}) which will ensure a quadratic block pattern across the study area.
-<!--JM: to stay consistent please add the argument which lets the user indicate a user-defined polygon-->
+<!--JM: to stay consistent please add the argument which lets the user indicate a user-defined polygon or are you referring to the rectangular block design specified with rows and cols? If so, say so. If not, clarify and additionally mention the rectangular block design here-->
 This kind of blocking might be of special interest for SDM studies as well as the possibility to supply a user-defined polygon with predefined blocking zones.
 
 After the initial block creation, multiple "blocks" are combined to form a partition in correspondence with the number of folds requested by the user.
