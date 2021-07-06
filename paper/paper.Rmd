@@ -264,7 +264,7 @@ Within this buffer zone, all observations are removed from the training set, the
 Buffering is most often applied in coordinate space due to the scattered appearance of observations in this space.
 However, this method could be easily extended to a 2D + time setting.
 <!-- JM: I guess you mean that you could have placed buffering also into spatiotemporal partition. I would advise to say so instead of letting the reader guess.-->
-Since \pkg{mlr3spatiotempcv} supports two spatial-only "buffering" implementations, (1) "Spatial buffering" from package \pkg{blockCV} and (2) "Leave-one-disc-out cross-validation" from \pkg{sperrorest}, buffering was attributed to the category of spatial partitioning methods. 
+Since \pkg{mlr3spatiotempcv} supports two spatial-only "buffering" implementations, (1) "Spatial buffering" from package \pkg{blockCV} and (2) "Leave-one-disc-out cross-validation" from \pkg{sperrorest}, buffering was attributed to the category of spatial partitioning methods (see Table \@ref(tab:sptcv-methods)). 
 
 #### Spatial buffering --- blockCV
 
