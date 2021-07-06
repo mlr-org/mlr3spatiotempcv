@@ -468,7 +468,7 @@ Even though flexibility with respect to fold creation is limited due to the inhe
 #### Leave-Location-And-Time-Out --- CAST
 
 Leave-Location-and-Time-Out (LLTO) from package \pkg{CAST} is a spatiotemporal resampling method [@meyer2018].
-It requires both a spatial and a temporal variable which are used to to separate observations in a multi-dimensional space.
+It requires both a spatial and a temporal variable which are used to separate observations in a multi-dimensional space.
 It comes with satellite methods named "Leave-time-out" (LTO) and "Leave-location-out" (LLO) which only operate in a two-dimensional space.
 
 In this example the `cookfarm` dataset is used because it contains the variable ("Date") which serves as the temporal component in the dataset.
