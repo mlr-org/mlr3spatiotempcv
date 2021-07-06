@@ -459,7 +459,7 @@ For the respective other spaces, usually only one of the space or time variable 
 ### Group-level resampling
 
 Group-level CV follows the principle of an inherit grouping structure of the observations, both in space and/or time, to determine (groups of) partitions.
-In contrast to blocking or clustering not the the spatial or temporal location is used but additional metadata such as the membership to a specific crop type [@brenning2006].
+In contrast to blocking or clustering not the spatial or temporal location is used but additional metadata such as the membership to a specific crop type [@brenning2006].
 The idea to follow an inherited grouping structure of the data is also referred to as "target-oriented validation" [@cast].
 Even though flexibility with respect to fold creation is limited due to the inherited grouping structure within the data, some implementations allow to specify the resulting number of folds by omitting parts of the dataset.
 
