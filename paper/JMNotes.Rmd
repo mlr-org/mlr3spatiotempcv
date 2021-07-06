@@ -33,6 +33,10 @@ Maybe something which can be discussed.
 
 - Figure 7: spatial tiling. 
 It would be great if one could see the used rectangular blocks.
+- Figure 9: in fact, one only sees 4 time levels, not 5 as stated in the caption
+- LLTO: maybe you could expand a little bit on why observations need to be omitted.
+For readers new to the LLTO concept, the reasoning for this might not be entirely clear.
+
 
 - Valid inputs are PROJ4 strings
 Just for your information: PROJ strings are from now on discouraged if a CRS is available.
