@@ -428,7 +428,7 @@ autoplot(resampling_tiles,
 
 ### Clustering
 
-The idea of cluster analysis, which originated in the 1930s in the anthropology field [@driver1932, @zubin1938], is to group objects with similar characteristics.
+The idea of cluster analysis, which originated in the 1930s in the field of anthropology [@driver1932, @zubin1938], is to group objects with similar characteristics.
 In the spatial context, the similarity of spatial coordinates is used to form such groups.
 Different cluster algorithms such as hierarchical, density-based, grid-based or centroid-based clustering exist [@gower1967].
 
