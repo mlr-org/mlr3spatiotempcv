@@ -31,6 +31,9 @@ In the back of my mind, I knew that this was possible but I didn't know that thi
 I wonder why AB has often preferred the kmeans clustering approach over the leave-one-disc-out approach.
 Maybe something which can be discussed.
 
+- Figure 7: spatial tiling. 
+It would be great if one could see the used rectangular blocks.
+
 - Valid inputs are PROJ4 strings
 Just for your information: PROJ strings are from now on discouraged if a CRS is available.
 Instead one should use CRS codes or WKT2 (see most recent comments at https://github.com/r-spatial/discuss/issues/43).
