@@ -252,8 +252,8 @@ The available methods are further discussed in section \@ref(sec:disc).
 Spatial partitioning methods operate in a two-dimensional space and split observations into training and test set by their spatial location.
 Methods such as grid-based partitioning or clustering are used to create groups of observations which may then be aggregated further to form the final partition sets.
 
-Judging by their common characteristics and the available implementations, spatial partitioning methods can be coarsely categorized into (1) buffering, (2) blocking and (3) clustering methods.
-If a method had the potential to belong to multiple categories, a deliberate category assignment was made for one specific group which matched the main characteristic of the respective method best.
+Spatial partitioning methods can be roughly divided into three groups: (1) buffering, (2) blocking and (3) clustering methods (Table \@ref(tab:sptcv-methods)).
+If a method could have been placed into multiple categories, we deliberately assigned the group which matched best the main characteristic of the respective method.
 
 ### Buffering
 
