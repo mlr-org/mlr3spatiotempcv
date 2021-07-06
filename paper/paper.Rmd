@@ -260,7 +260,8 @@ If a method could have been placed into multiple categories, we deliberately ass
 "Buffering" refers to the idea of removing observations between test and training set by drawing a circular buffer around one or more observations [@rest2014, @brenning2012, @blockCV].
 Within this buffer zone, all observations are removed from the training set, thereby reducing the similarity between training and test set.
 
-Buffering is mostly applied in the coordinate space due to the scattered appearance of observations in this space.
+<!--JM: not entirely sure what scattered appearance refers to-->
+Buffering is most often applied in coordinate space due to the scattered appearance of observations in this space.
 However, there is no practical limitation that would prevent this method to be applied in a 2D + time setting.
 Because \pkg{mlr3spatiotempcv} supports two spatial-only "buffering" implementations, (1) "Spatial buffering" from package \pkg{blockCV} and (2) "Leave-one-disc-out cross-validation" from \pkg{sperrorest}, buffering was attributed to the category of spatial partitioning methods. 
 
