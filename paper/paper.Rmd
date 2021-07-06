@@ -552,6 +552,7 @@ knitr::include_graphics("llto.png")
 
 ### Custom (fixed) Resampling --- mlr3
 
+<!--JM: you might want to delete the FIXME-->
 Support for user-defined partitioning strategies is built into \pkg{mlr3} directly since version 0.12.0 FIXME.
 Labelled as "Custom CV", users are able to supply an external factor vector with the same length as number of observations.
 Each level of the factor vector will result in one partition.
