@@ -39,10 +39,9 @@ abstract: >
   At the time of writing, various R packages implementing different spatiotemporal partitioning strategies exist: CAST, blockCV or sperrorest.
   There are some resampling methods used in scientific studies for which the source code is either not available or a different programming language has been used.
 
-  The goal of [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is to gather the available spatiotemporal resampling methods in R and make them available to users through a simplified and generic interface.
-  The latter is made possible by integrating the package directly into the [mlr3](https://mlr3.mlr-org.com) machine learning framework.
-  This simplifies the step of integrating package specific syntax into an overarching machine learning pipeline.
-  The hope is that the availability of such a package encourages researchers to more often apply spatiotemporal resampling methods in scientific case studies.
+  The goal of [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is to gather the available spatiotemporal resampling methods in R and make them available to users through a simple and generic interface.
+  The latter is made possible by integrating the package directly into the [mlr3](https://mlr3.mlr-org.com) machine learning framework which already has support for generic non-spatiotemporal resampling methods such as random partitioning.
+  This simplifies the step of integrating package specific syntax into an overarching machine learning pipeline, making it easier for users to apply a variety of different spatiotemporal resampling methods.
 keywords:
   formatted: [cross-validation, predictive performance, machine learning, autocorrelation, spatial, temporal, "\\proglang{R}"]
   plain:     [cross-validation, predictive performance, autocorrelation, spatial, temporal, R]
