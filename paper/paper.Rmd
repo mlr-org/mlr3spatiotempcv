@@ -571,7 +571,7 @@ autoplot(resampling_custom, size = 0.8, task = task) *
 ## Feature space clustering
 
 The last method from the \pkg{blockCV} package, "environmental blocking", makes use of *k-means* clustering [@hartigan1979a] in a possibly multivariate space.
-The user can select a variable via argument `feature` specifying which levels will be used to create clusters.
+The user can select a variable via argument `feature` which denotes the variable that will be used to create clusters.
 Hereby, k-means will use Euclidean distance for cluster creation.
 Hence, the selected input variables should be of type numeric.
 To avoid a potential bias introduced by features with high variance when selecting multiple features, all features are standardized by default.
