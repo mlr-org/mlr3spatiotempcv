@@ -412,7 +412,7 @@ Small tiles can be merged with adjacent blocks via argument `reassign` or option
 The number of tiles set by the user equals the number of folds and blocks cannot be grouped into folds as in "Spatial Blocking".
 Also despite setting 12 blocks via `nsplit = c(3L, 4L)` in the following example, the final partition count is eleven because the bottom-left part of the study area does not contain observations.
 
-```{r tile, fig.cap="Spatial tiling with arguments `rows` and `cols`.", out.width="40%", fig.pos="ht"}
+```{r tile, fig.cap="Spatial tiling", out.width="40%", fig.pos="ht"}
 resampling_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
 
 autoplot(resampling_tiles,
