@@ -528,8 +528,9 @@ knitr::include_graphics("llo.png")
 
 The "Leave-Location-and-Time-Out" (LLTO) method combines both "Leave-Time-Out" (LTO) and "Leave-Location-Out" (LLO).
 It creates partitions that operate on spatiotemporal clusters to reduce both spatial and temporal autocorrelation.
-To achieve this, observations are omitted and only a subset is used.
-In the special scenario with five temporal levels and five folds, the train/test split happens only at one temporal level (Fig. \@ref(fig:llto)).
+To achieve this, observations need to be omitted as the split in test and train sets only provides one dimension to separate observations whereas two (space and time) are needed.
+In other words, accounting for one dimension as in Fig. \@ref(fig:lto) or Fig. \@ref(fig:llo), by only having one time step or location in either test or training set, would have no effect on the respective other.
+To achieve an effect for both, observations need to be omitted as shown in Fig. \@ref(fig:llto).
 
 ```{r results='hide'}
 resampling_cstf_time_loc = rsmp("sptcv_cstf",
@@ -620,7 +621,7 @@ Besides the required arguments of the \pkg{mlr3} superclass `Task`, the `TaskCla
   This is automatically inferred when a `sf` object is passed.
 - `coords_as_features`: Whether the coordinates should be used as features during modeling.
   By default coordinates are not used as predictors.
-- `crs`: The coordinate reference system of the data. Valid inputs are PROJ4 strings or EPSG codes in the format `ESPG:<code>`.
+- `crs`: The coordinate reference system of the data. Valid inputs are PROJ strings or EPSG codes in the format `ESPG:<code>`.
 
 At first all necessary R packages are loaded and a lower verbosity is set to keep the output tidy.
 Also a seed is set for deterministic execution and the \pkg{mlr3spatiotempcv} built-in task `"ecuador"` is loaded via `tsk()`.
