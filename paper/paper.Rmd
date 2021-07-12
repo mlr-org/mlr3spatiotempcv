@@ -32,12 +32,12 @@ title:
   # For running headers, if needed
   # short:     "\\pkg{foo}: A Capitalized Title"
 abstract: >
-  The R package [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is an extension package of the machine learning framework [mlr3](https://mlr3.mlr-org.com) [@mlr3].
+  The R package [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is an extension package of the machine learning framework [mlr3](https://mlr3.mlr-org.com).
   It adds support for spatiotemporal resampling methods and respective visualization methods.
   Spatiotemporal resampling methods are needed to account for the existence of different autocorrelation types (spatial autocorrelation (SAC), temporal autocorrelation (TAC) or spatiotemporal autocorrelation (STAC)) in datasets.
   These autocorrelation types cause biased performance estimates of varying magnitude in cross-validation when ignored.
-  At the time of writing, various R packages implementing different spatiotemporal partitioning strategies exist: CAST [@cast], blockCV [@blockCV] or sperrorest [@brenning2012].
-  There are some resampling methods used in scientific studies for which the source code is either not available or a different programming language has been used [@roberts2017; @pohjankukka2017].
+  At the time of writing, various R packages implementing different spatiotemporal partitioning strategies exist: CAST, blockCV or sperrorest.
+  There are some resampling methods used in scientific studies for which the source code is either not available or a different programming language has been used.
 
   The goal of [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is to gather the available spatiotemporal resampling methods in R and make them available to users through a simplified and generic interface.
   The latter is made possible by integrating the package directly into the [mlr3](https://mlr3.mlr-org.com) machine learning framework.
@@ -262,7 +262,7 @@ Within this buffer zone, all observations are removed from the training set, the
 
 Buffering is mostly applied in the coordinate space due to the scattered appearance of observations in this space.
 However, there is no practical limitation that would prevent this method to be applied in a 2D + time setting.
-Because \pkg{mlr3spatiotempcv} supports two spatial-only "buffering" implementations, (1) "Spatial buffering" from package \pkg{blockCV} and (2) "Leave-one-disc-out cross-validation" from \pkg{sperrorest}, buffering was attributed to the category of spatial partitioning methods. 
+Because \pkg{mlr3spatiotempcv} supports two spatial-only "buffering" implementations, (1) "Spatial buffering" from package \pkg{blockCV} and (2) "Leave-one-disc-out cross-validation" from \pkg{sperrorest}, buffering was attributed to the category of spatial partitioning methods.
 
 #### Spatial buffering --- blockCV
 
