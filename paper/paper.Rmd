@@ -331,7 +331,7 @@ Implementations of blocking methods often provide additional options to fine tun
 The "Spatial blocking" from package \pkg{blockCV} comes with various options to customize the zone creation.
 Besides the choice of relying on an initial random  (default) (`selection = "random"`), systematic (`selection = "systematic"`) or checkerboard pattern (`selection = "checkerboard"`) for the final partition aggregation, support for SDM specific background data is built-in.
 Supplying a numeric value in meters via argument `theRange` (named just `range` in {mlr3spatiotempcv}) will create a quadratic block pattern across the study area.
-Ultimately, users can also supply a user-defined polygon which defines the zones.
+Ultimately, users can also supply a user-defined polygon via argument `rasterLayer` to define the zones.
 
 After the initial block creation, multiple "blocks" are combined to form a partition, honoring the number of folds requested by the user.
 For example, in a five-fold scenario with a grid of four columns and five rows, the method would combine one fifth of all blocks (= four blocks) into a single partition.
