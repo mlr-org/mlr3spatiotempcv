@@ -504,7 +504,7 @@ autoplot(resampling_cstf_time,
 )
 ```
 
-```{r lto, echo=FALSE, out.width="70%", fig.cap="Three-dimensional visualization of method `sptcv\\_cstf` and sub-method Leave-Time-Out (LTO). To support showcasing the temporal grouping, five folds and five temporal levels in variable `Date` were used in this example.", fig.pos="ht"}
+```{r lto, echo=FALSE, out.width="70%", fig.cap="Three-dimensional visualization of method `sptcv\\_cstf` and sub-method Leave-Time-Out (LTO). To support showcasing the temporal grouping, five folds and five temporal levels in variable `Date` were used in this example. Due to the tilt angle of the static 3D plot the last two levels are hard to distinguish visually but they are separated in the same way as the the first two levels on the top of the plot.", fig.pos="ht"}
 knitr::include_graphics("lto.png")
 ```
 
