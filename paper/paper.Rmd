@@ -221,7 +221,9 @@ The available methods are further discussed in section \@ref(sec:disc).
 \begin{table}[h]
   \centering
   \footnotesize
-  \caption[t]{Spatiotemporal resampling methods, ordered alphabetically by class name (column 'mlr3 Notation'). Column count refers to the number of studies which were found to have used this resampling technique until 2021-05.}
+  \caption[t]{Spatiotemporal resampling methods, ordered alphabetically by class name (column 'mlr3 Notation').
+    Column count refers to the number of studies which were found to have used this resampling technique until 2021-05.
+    For each method, up to three randomly chosen references were added to the table as footnotes.}
   \begingroup
     \begin{tabular}{lllll}
       \\
