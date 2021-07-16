@@ -529,9 +529,10 @@ knitr::include_graphics("llo.png")
 
 The "Leave-Location-and-Time-Out" (LLTO) method combines both "Leave-Time-Out" (LTO) and "Leave-Location-Out" (LLO).
 It creates partitions that operate on spatiotemporal clusters to reduce both spatial and temporal autocorrelation.
-To achieve this, observations need to be omitted as the split in test and train sets only provides one dimension to separate observations whereas two (space and time) are needed.
+If there are multiple observations over time per location, and the modeling purpose is to reduce the bias in the predictions as potentially introduced by spatial as well as temporal autocorrelation, LLTO might be an appropriate choice.
+To reduce autocorrelation in both dimensions, the methods omits observations as the splitting in test and train sets only provides separation in one dimension whereas two (space and time) are needed to account for both types, spatial and temporal autocorrelation.
 In other words, accounting for one dimension as in Fig. \@ref(fig:lto) or Fig. \@ref(fig:llo), by only having one time step or location in either test or training set, would have no effect on the respective other.
-To achieve an effect for both, observations need to be omitted as shown in Fig. \@ref(fig:llto).
+Thus, the removal of observation can be seen as a proxied buffering in multiple dimensions as shown in Fig. \@ref(fig:llto).
 
 ```{r results='hide'}
 resampling_cstf_time_loc = rsmp("sptcv_cstf",
