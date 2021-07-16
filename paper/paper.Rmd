@@ -203,7 +203,6 @@ To reduce first-level dependencies, some methods were re-implemented instead of 
 
 Resampling objects in \pkg{mlr3spatiotmpcv} inherit from class \texttt{mlr3::Resampling} and can be created from established object classes for geospatial data in R, including simple features [@pebesma2018], which facilitates their integration into domain-specific workflows in the geospatial sciences.
 Support for projected (planar) and unprojected (geographic) coordinate reference systems (CRS) currently varies depending on the partitioning techniques used, since these inherit their behavior from the underlying upstream R package.
-It is planned to provide a more consistent interface that supports all CRS and allows the use of distance measures in projected planar space or using great circle distances on the unprojected ellipsoid, in the case of unprojected CRS.
 
 Partitioning objects in \pkg{mlr3spatiotempcv} are equipped with generic `plot()` and `autoplot()` methods that visualize the created groups.
 `autoplot()` is \pkg{ggplot2}-based and uses [ggplot2](https://ggplot2.tidyverse.org) [@ggplot2] in two-dimensional geographic space and [plotly](https://github.com/ropensci/plotly) [@plotly] in three dimensions, i.e. geographic space plus time.
