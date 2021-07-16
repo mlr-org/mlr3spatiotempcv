@@ -780,9 +780,12 @@ This applies even more to `"spcv_block"` with options `selection = "systematic"`
 In general, only methods making use of a random component (e.g. `"spcv_coords"` or `"spcv_block"` with option `selction = "random"`) may be suited for using multiple repetitions.
 On the upside, `"spcv_coords"` works well with irregularly shaped study areas due to the ability to create partitions which adjust well to the given study area shape.
 
-<!-- spcv buffer: discards observations, LOO very expensive -->
-Method `"spcv_buffer"` makes use of the removal of observations to reduce the influence of spatial autocorrelation between train and test set.
-This can be a pretty effective way to reduce autocorrelation but also requires to discard many observations and comes with the downsides of a LOO-CV: many model fits which can be computationally very demanding and the results inheriting a high variance due to the high differences in the test sets (also commonly known as the "bias-variance tradeoff" [@wahba1998; @blockCV].
+<!-- spcv buffer and spcv disc: discards observations, LOO very expensive -->
+Methods `"spcv_buffer"` and `"spcv_disc"` (optionally) make use of the removal of observations to reduce the influence of spatial autocorrelation between train and test set.
+This can be a pretty effective way to reduce autocorrelation but also requires to discard many observations.
+In addition it comes with the downsides of a LOO-CV: many model fits which can be computationally very demanding and the results inheriting a high variance due to the high differences in the test sets (also commonly known as the "bias-variance tradeoff" [@wahba1998; @blockCV].
+If a large buffer size is chosen relatively to the overall study area size, a large portion of it will not be sampled.
+Choosing an appropriate buffer size is not easy and it should be taken care not to select a value based on subjective interpretation of the study area characteristics.
 
 <!-- group level CV vs custom CV -->
 \pkg{mlr3spatiotempcv} supports two factor-based partitioning schemes: "group-level resampling" and "custom resampling".
