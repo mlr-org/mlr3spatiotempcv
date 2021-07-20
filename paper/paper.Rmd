@@ -454,7 +454,7 @@ Some methods have the ability to operate in multiple spaces, i.e. spatial, tempo
 To avoid redundancy and putting too much weight on certain methods, only the spatiotemporal examples of these methods will be shown in the following sections.
 For the respective other spaces, usually only one of the space or time variable inputs needs to be omitted.
 
-### Group-level resampling
+### Group-level resampling {#sec:group-level}
 
 Group-level CV follows the principle of an inherit grouping structure of the observations, both in space and/or time, to determine (groups of) partitions.
 In contrast to blocking or clustering not the spatial or temporal location is used but additional metadata such as the membership to a specific crop type [@brenning2006].
@@ -550,11 +550,12 @@ autoplot(resampling_cstf_time_loc,
 knitr::include_graphics("llto.png")
 ```
 
-### Custom (fixed) Resampling --- mlr3
+### Custom and grouped resampling --- mlr3
 
 <!--JM: you might want to delete the FIXME-->
 Support for user-defined partitioning strategies is built into \pkg{mlr3} directly since version 0.12.0 FIXME.
 Labelled as "Custom CV", users are able to supply an external factor vector with the same length as number of observations.
+This partitioning concept is also ften referred to as "grouped resampling" and should not be mistaken with "group-level resampling" (section \@ref(sec:group-level)), which inherits additional aggregation of groups at the partition level.
 Each level of the factor vector will result in one partition.
 Alternatively to supplying an external factor vector, the name of a feature (type `character`) present within the task can be supplied via argument `col`.
 
