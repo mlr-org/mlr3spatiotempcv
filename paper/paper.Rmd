@@ -752,9 +752,10 @@ For example, ...
 
 There are various variables influencing the partitioning method choice for an environmental dataset:
 
-- Do natural groupings exists in the data?
+- Do natural groupings exists in the data? <!--Example-->
 - How dense are the observations scattered both in space and time?
-- Are existing predictor variables known to be highly affected by spatiotemporal autocorrelation by nature?
+The closer observations are in space and/or time, the more similar they are, and hence the greater is the effect of spatio-temporal autocorrelation.
+- Are some of the predictor variables under consideration known to be highly affected by spatiotemporal autocorrelation such as ... <!-- pls add an example -->?
 
 Based on these criteria users should choose a matching partitioning method that is either more restrictive (by discarding observations for fold creation) or more liberal (by using all observations and eventually ignoring natural grouping patterns).
 For almost all methods implemented in \pkg{mlr3spatiotempcv}, there is a scientific publication describing the application areas of the respective approach (either linked in the help file of the package or its respective upstream packages), hence we are refraining from repeating them again in this study.
