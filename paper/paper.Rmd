@@ -745,7 +745,11 @@ Another advantage is its ability to adapt to the irregularly shaped study area o
 Last, there are no obvious spatial groupings to our knowledge which need to be accounted for, also with respect to prediction purposes of the fitted model.
 
 Most often multiple spatial partitioning methods can be used for a dataset.
-It is recommended (required) that one familiarizes themselves with multiple methods and decide which method to choose based on the specific characteristics of the dataset at hand and the prediction purpose of the fitted model, i.e. for which areas/zones a model should make predictions for.
+It is recommended (required) to make oneself familiar with the available methods and to decide on one based on the specific characteristics of the dataset at hand and the prediction purpose of the fitted model.
+The prediction purpose is the model's ability for which areas or zones it actually can make predictions.
+For example, ...
+<!--JM: maybe refer back to the crop example of the intro to make the point better comprehensible than just giving the mere theory-->
+
 There are various variables influencing the partitioning method choice for an environmental dataset:
 
 - Do natural groupings exists in the data?
