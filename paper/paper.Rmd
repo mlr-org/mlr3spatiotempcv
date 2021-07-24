@@ -758,6 +758,7 @@ The closer observations are in space and/or time, the more similar they are, and
 - Are some of the predictor variables under consideration known to be highly affected by spatiotemporal autocorrelation such as ... <!-- pls add an example -->?
 
 Based on these criteria users should choose a matching partitioning method that is either more restrictive (by discarding observations for fold creation) or more liberal (by using all observations and eventually ignoring natural grouping patterns).
+<!--JM: what do you mean by "using all observations"?-->
 For almost all methods implemented in \pkg{mlr3spatiotempcv}, there is a scientific publication describing the application areas of the respective approach (either linked in the help file of the package or its respective upstream packages), hence we are refraining from repeating them again in this study.
 
 Last, a note on best practices for the example shown in \@ref(sec:case-study):
@@ -785,26 +786,28 @@ Rectangular partitioning can be problematic for irregularly shaped study areas a
 <!-- sptcv LLO & LTO: requires additional variable to specify groupings -->
 The `"spcv_cstf"` methods (with only one of `space_var` or `time_var` set) require a variable in the dataset which should be used for grouping.
 The specification of such is not always easy because the grouping should ensure that the selected groups inherit substantial autocorrelation within themselves and simultaneously differ substantially from other groups.
-Also, if the variable selected contains too many groups, the difference within train/test splits may become undesirably high and tend towards a LOO CV [@meyer2018].
+Also, if the selected variable contains too many groups, the difference within train/test splits may become undesirably high and tend towards a LOO CV [@meyer2018].
 
 <!-- only some methods are suited for repeated execution -->
 <!-- spcv_coords: limited variance due to limited k-means possibilities -->
 For repeated executions of method `spcv_coords`, the variance between repetitions can become quite small due to the limited possibilities of differing `k-means`-based clusters on the same dataset [@brenning2012].
 This applies even more to `"spcv_block"` with options `selection = "systematic"` and `selection = "checkerboard"` as the fold assignments are the same in each repetition.
 In general, only methods making use of a random component (e.g. `"spcv_coords"` or `"spcv_block"` with option `selction = "random"`) may be suited for using multiple repetitions.
-On the upside, `"spcv_coords"` works well with irregularly shaped study areas due to the ability to create partitions which adjust well to the given study area shape.
+On the upside, `"spcv_coords"` works well with irregularly shaped study areas due to its ability to create partitions which adjust well to the shape of the study area.
 
 <!-- spcv buffer and spcv disc: discards observations, LOO very expensive -->
 Methods `"spcv_buffer"` and `"spcv_disc"` (optionally) make use of the removal of observations to reduce the influence of spatial autocorrelation between train and test set.
 This can be a pretty effective way to reduce autocorrelation but also requires to discard many observations.
 In addition it comes with the downsides of a LOO-CV: many model fits which can be computationally very demanding and the results inheriting a high variance due to the high differences in the test sets (also commonly known as the "bias-variance tradeoff" [@wahba1998; @blockCV].
-If a large buffer size is chosen relatively to the overall study area size, a large portion of it will not be sampled.
-Choosing an appropriate buffer size is not easy and it should be taken care not to select a value based on subjective interpretation of the study area characteristics.
+If a large buffer size is chosen relative to the size of the study area, a large portion of it will remain unsampled.
+Choosing an appropriate buffer size is a difficult task.
+In any case, one should refrain oneself from selecting a value based on subjective notions with regard to study area characteristics.
 
 <!-- group level CV vs custom CV -->
 \pkg{mlr3spatiotempcv} supports two factor-based partitioning schemes: "group-level resampling" and "custom resampling".
 Both are similar in that they require external user input for partition creation, i.e. a factor variable which assigns all observations into a distinct group.
-While this the entire idea of "custom resampling" and each group becomes a test set in the CV, "group-level resampling" methods apply additional aggregation on top of these initial groups: for example, users can supply an integer value to an argument named `fold` in the LLO method (e.g. `5L`) which combines the initial groups (e.g. $n = 20$) into their final fold-level partitions, which would result in four groups per partition [@meyer2018].
+The idea of "custom resampling" is that each group becomes a test set in the CV.
+By contrast, "group-level resampling" methods apply additional aggregation on top of these initial groups: for example, users can supply an integer value to an argument named `fold` in the LLO method (e.g. `5L`) which combines the initial groups (e.g. $n = 20$) into their final fold-level partitions, which would result in four groups per partition [@meyer2018].
 The important point is that observations from within one group will either be assigned to the train or test set and never be split up.
 "Group-level resampling" can be, in contrast to "custom resampling", repeated multiple times because multiple different aggregations are possible in theory.
 However, it also requires the amount of initial groups to be substantially higher than the amount of folds so that a sensible aggregation is possible in the first place.
@@ -812,7 +815,7 @@ However, it also requires the amount of initial groups to be substantially highe
 <!-- spcv coords: mention generic name -->
 In @brenning2012, which is the reference commonly used for the k-means based spatial partitioning approach, the method was not introduced with a unique name.
 Over time, studies which have used this method mainly referenced it using the generic "spatial CV" terminology.
-However, using this notation potentially introduces confusion as the term "spatial CV" is a generic one referring to the idea of accounting for spatial autocorrelation in spatial datasets and does not necessarily refer to a specific partitioning method in the first place.
+However, using this notation potentially introduces confusion as the term "spatial CV" is of a generic nature which refers to the idea of accounting for spatial autocorrelation in spatial datasets and does not necessarily refer to a specific partitioning method in the first place.
 Hence, in package \pkg{mlr3spatiotempcv} this method was named `"spcv_coords"`, making use of the fact that the spatial coordinates are used for a cluster-based partition creation.
 
 <!-- env block: hard to decide which variable to use for clustering -->
@@ -825,7 +828,7 @@ However, it is not possible to estimate how much a single variable accounts for 
 
 <!-- mention pros and cons of implementing methods in a standalone pkg vs a framework -->
 There are pros and cons on whether a new method should be integrated into an existing ecosystem such as \pkg{mlr3} directly first or distributed via a standalone package.
-On the upside, developers can benefit from existing package structures and orient themselves how previous methods were implemented.
+On the upside, developers can benefit from existing package structures and orient themselves on how previous methods were implemented.
 Also, the new method will be directly usable by all people using this ecosystem following an existing and familiar syntax.
 Contributors do not have to commit maintaining the package in the future, possibly risking its removal in case of major issues.
 In addition, they most likely get a thorough review from other community members during the implementation, possibly enhancing the code side of the implementation.
