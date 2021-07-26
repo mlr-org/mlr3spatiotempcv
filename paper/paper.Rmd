@@ -757,8 +757,7 @@ There are various variables influencing the partitioning method choice for an en
   The closer observations are in space and/or time, the more similar they are, and hence the greater is the effect of spatio-temporal autocorrelation.
 - Are some of the predictor variables under consideration known to be highly affected by spatiotemporal autocorrelation such as temperature or precipitation?
 
-Based on these criteria users should choose a matching partitioning method that is either more restrictive (by discarding observations for fold creation) or more liberal (by using all observations and eventually ignoring natural grouping patterns).
-<!--JM: what do you mean by "using all observations"?-->
+Based on these criteria users should choose a matching partitioning method that is either more restrictive (by discarding observations for fold creation) or more liberal (by not removing observations and eventually ignoring natural grouping patterns).
 For almost all methods implemented in \pkg{mlr3spatiotempcv}, there is a scientific publication describing the application areas of the respective approach (either linked in the help file of the package or its respective upstream packages), hence we are refraining from repeating them again in this study.
 
 Last, a note on best practices for the example shown in \@ref(sec:case-study):
@@ -792,7 +791,7 @@ Also, if the selected variable contains too many groups, the difference within t
 <!-- spcv_coords: limited variance due to limited k-means possibilities -->
 For repeated executions of method `spcv_coords`, the variance between repetitions can become quite small due to the limited possibilities of differing `k-means`-based clusters on the same dataset [@brenning2012].
 This applies even more to `"spcv_block"` with options `selection = "systematic"` and `selection = "checkerboard"` as the fold assignments are the same in each repetition.
-In general, only methods making use of a random component (e.g. `"spcv_coords"` or `"spcv_block"` with option `selction = "random"`) may be suited for using multiple repetitions.
+In general, only methods making use of a random component (e.g. `"spcv_coords"` or `"spcv_block"` with option `selection = "random"`) may be suited for using multiple repetitions.
 On the upside, `"spcv_coords"` works well with irregularly shaped study areas due to its ability to create partitions which adjust well to the shape of the study area.
 
 <!-- spcv buffer and spcv disc: discards observations, LOO very expensive -->
@@ -800,8 +799,7 @@ Methods `"spcv_buffer"` and `"spcv_disc"` (optionally) make use of the removal o
 This can be a pretty effective way to reduce autocorrelation but also requires to discard many observations.
 In addition it comes with the downsides of a LOO-CV: many model fits which can be computationally very demanding and the results inheriting a high variance due to the high differences in the test sets (also commonly known as the "bias-variance tradeoff" [@wahba1998; @blockCV].
 If a large buffer size is chosen relative to the size of the study area, a large portion of it will remain unsampled.
-Choosing an appropriate buffer size is a difficult task.
-In any case, one should refrain oneself from selecting a value based on subjective notions with regard to study area characteristics.
+One should try to refrain from selecting a value based on subjective notions with respect to study area characteristics.
 
 <!-- group level CV vs custom CV -->
 \pkg{mlr3spatiotempcv} supports two factor-based partitioning schemes: "group-level resampling" and "custom resampling".
@@ -828,7 +826,7 @@ However, it is not possible to estimate how much a single variable accounts for 
 
 <!-- mention pros and cons of implementing methods in a standalone pkg vs a framework -->
 There are pros and cons on whether a new method should be integrated into an existing ecosystem such as \pkg{mlr3} directly first or distributed via a standalone package.
-On the upside, developers can benefit from existing package structures and orient themselves on how previous methods were implemented.
+On the upside, developers can benefit from existing package structures and orient themselves towards how previous methods were implemented.
 Also, the new method will be directly usable by all people using this ecosystem following an existing and familiar syntax.
 Contributors do not have to commit maintaining the package in the future, possibly risking its removal in case of major issues.
 In addition, they most likely get a thorough review from other community members during the implementation, possibly enhancing the code side of the implementation.
