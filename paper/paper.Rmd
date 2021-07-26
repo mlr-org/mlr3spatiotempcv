@@ -83,7 +83,7 @@ knitr::opts_chunk$set(fig.path = "./paper/figs/",
   cache.lazy = TRUE)
 ```
 
-# Introduction
+# Introduction {#sec:intro}
 
 Spatial and spatiotemporal prediction tasks are common in applications ranging from environmental sciences to archaeology and epidemiology.
 While sophisticated mathematical frameworks have long been developed in spatial statistics to characterize predictive uncertainties under well-defined mathematical assumptions such as intrinsic stationarity (e.g., @cressie1993), computational estimation procedures have only been proposed more recently to assess predictive performances of spatial and spatiotemporal prediction models [@brenning2005; @brenning2012; @pohjankukka2017; @roberts2017].
@@ -747,15 +747,15 @@ Last, there are no obvious spatial groupings to our knowledge which need to be a
 Most often multiple spatial partitioning methods can be used for a dataset.
 It is recommended (required) to make oneself familiar with the available methods and to decide on one based on the specific characteristics of the dataset at hand and the prediction purpose of the fitted model.
 The prediction purpose is the model's ability for which areas or zones it actually can make predictions.
-For example, ...
-<!--JM: maybe refer back to the crop example of the intro to make the point better comprehensible than just giving the mere theory-->
+In the crop example given in section \@ref(sec:intro) this would be to distinguish and predict different crop types. 
+Hence, the CV partitioning is done on the crop level to receive a honest estimate of the model's performance.
 
 There are various variables influencing the partitioning method choice for an environmental dataset:
 
-- Do natural groupings exists in the data? <!--Example-->
+- Do natural groupings exists in the data? Examples include agricultural fields, forest stands, lithology types, etc.
 - How dense are the observations scattered both in space and time?
-The closer observations are in space and/or time, the more similar they are, and hence the greater is the effect of spatio-temporal autocorrelation.
-- Are some of the predictor variables under consideration known to be highly affected by spatiotemporal autocorrelation such as ... <!-- pls add an example -->?
+  The closer observations are in space and/or time, the more similar they are, and hence the greater is the effect of spatio-temporal autocorrelation.
+- Are some of the predictor variables under consideration known to be highly affected by spatiotemporal autocorrelation such as temperature or precipitation?
 
 Based on these criteria users should choose a matching partitioning method that is either more restrictive (by discarding observations for fold creation) or more liberal (by using all observations and eventually ignoring natural grouping patterns).
 <!--JM: what do you mean by "using all observations"?-->
