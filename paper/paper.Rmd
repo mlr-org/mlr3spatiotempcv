@@ -822,16 +822,20 @@ Method `"spcv_env"` is complicated to use in that it requires the user to limit 
 This implies that only this/these variable(s) suffer from autocorrelation and others are ignored.
 However, it is not possible to estimate how much a single variable accounts for the autocorrelation in the data and the same applies for estimating the influence of the non-accounted variables which might add substantial bias to the CV.
 
-## Should new methods be added to existing ML ecosystems or made available in a new package?
+## Contributing new resampling methods
 
-<!-- mention pros and cons of implementing methods in a standalone pkg vs a framework -->
-There are pros and cons on whether a new method should be integrated into an existing ecosystem such as \pkg{mlr3} directly first or distributed via a standalone package.
-On the upside, developers can benefit from existing package structures and orient themselves towards how previous methods were implemented.
+<!-- discuss pros and cons of implementing methods in a standalone pkg vs a framework -->
+There are pros and cons on whether a new method should be integrated into an existing ecosystem such as \pkg{mlr3} directly or distributed in its own package.
+When contributing a method to an existing ecosystem, developers can benefit from existing structures and orient themselves towards how previous methods were implemented.
+They do not need to worry about complying to various R package related best practices (such as CRAN policies) and can solely focus on the method implementation.
 Also, the new method will be directly usable by all people using this ecosystem following an existing and familiar syntax.
-Contributors do not have to commit maintaining the package in the future, possibly risking its removal in case of major issues.
-In addition, they most likely get a thorough review from other community members during the implementation, possibly enhancing the code side of the implementation.
+Contributions to (ML) ecosystems such as \pkg{mlr3} enables users to easily make use of a large variety of additional functionality, from preprocessing over hyperparameter tuning and feature selection to result visualization [@mlr3], which can be used in conjunction with the new resampling method.
+In addition, contributions most likely undergo a thorough review from other community members during the implementation, most often enhancing the code quality of the implementation.
+A direct contribution also reduces the maintenance load for the ecosystem developers as they do not need to wrap a new method into their system and watch for possible future changes.
+
 On the contrary, people are forced to use the ecosystem and cannot easily use the method outside of it, whether its a different ecosystem or some other way.
-They might also be forced to follow certain guidelines of the ecosystem and potentially feel constrained in their way of doing things.
+They might also be forced to follow certain (coding) guidelines of the ecosystem and potentially feel constrained in their personal way of doing things.
+Often, such ecosystems store their results in specialized classes, which make it hard for users to reuse them outside of the ecosystem.
 
 # Summary and outlook
 
