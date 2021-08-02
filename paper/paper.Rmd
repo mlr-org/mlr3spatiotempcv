@@ -33,16 +33,14 @@ title:
   # short:     "\\pkg{foo}: A Capitalized Title"
 abstract: >
   The R package [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is an extension package of the machine-learning framework [mlr3](https://mlr3.mlr-org.com).
-  It adds support for spatiotemporal resampling methods and respective visualization methods.
-  Spatiotemporal resampling methods are needed to account for the existence of different autocorrelation types (spatial autocorrelation, temporal autocorrelation or spatiotemporal autocorrelation in datasets.
-  These autocorrelation types cause biased performance estimates of varying magnitude in cross-validation when ignored.
-  At the time of writing, various R packages implementing different spatiotemporal partitioning strategies exist: CAST, blockCV and sperrorest.
-
-  The goal of [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is to gather the available spatiotemporal resampling methods in R and make them available to users through a simple and generic interface.
-  The latter is made possible by integrating the package directly into the [mlr3](https://mlr3.mlr-org.com) machine-learning framework which already has support for generic non-spatiotemporal resampling methods such as random partitioning.
-  This simplifies the step of integrating package specific syntax into an overarching machine-learning pipeline, making it easier for users to choose from a variety of different spatiotemporal resampling methods.
-  The [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) package refrains from making suggestions which resampling methods users should apply as this decision mainly depends on the prediction purpose of the fitted model.
-  No best method exists; only valid methods for the modeling purpose at hand.
+  It adds support for spatiotemporal resampling methods and their visualization.
+  Spatiotemporal resampling methods are needed to assess model performance in a variety of predictive situations in which spatial, temporal, or spatiotemporal autocorrelation is present.
+  Cross-validation performance estimates may be biased when this is ignored.
+  Currently various R packages implementing different spatiotemporal partitioning strategies exist: sperrorest, blockCV, CAST.
+  The goal of [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is to gather the available spatiotemporal resampling methods in R and make them available to users through a simple and common interface.
+  This is made possible by integrating the package directly into the [mlr3](https://mlr3.mlr-org.com) machine-learning framework, which already has support for generic non-spatiotemporal resampling methods such as random partitioning.
+  This simplifies the step of integrating package-specific syntax into an overarching machine-learning pipeline, making it easier for users to choose from a variety of different spatiotemporal resampling methods.
+  The users' decision to use a specfic resampling method should depend on the predictive task at hand, the autocorrelation within the data, and the structure of the sampling design used to collect the data.
 keywords:
   formatted: [cross-validation, predictive performance, machine learning, autocorrelation, spatial, temporal, "\\proglang{R}"]
   plain:     [cross-validation, predictive performance, autocorrelation, spatial, temporal, R]
