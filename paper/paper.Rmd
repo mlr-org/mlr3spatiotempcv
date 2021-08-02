@@ -26,9 +26,9 @@ author:
     address: |
       | Faculty of Statistics
 title:
-  formatted: "\\pkg{mlr3spatiotempcv}: Spatiotemporal resampling methods for \\pkg{mlr3}"
+  formatted: "\\pkg{mlr3spatiotempcv}: Spatiotemporal resampling methods for machine learning in R with \\pkg{mlr3}"
   # If you use tex in the formatted title, also supply version without
-  plain:     "mlr3spatiotempcv: spatiotemporal resampling methods for mlr3"
+  plain:     "mlr3spatiotempcv: spatiotemporal resampling methods for machine learning in R with mlr3"
   # For running headers, if needed
   # short:     "\\pkg{foo}: A Capitalized Title"
 abstract: >
