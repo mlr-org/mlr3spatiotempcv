@@ -849,22 +849,21 @@ On the contrary, people are forced to use the ecosystem and cannot easily use th
 They might also be forced to follow certain (coding) guidelines of the ecosystem and potentially feel constrained in their personal way of doing things.
 Often, such ecosystems store their results in specialized classes, which make it hard for users to reuse them outside of the ecosystem.
 
-# Summary and outlook
+# Conclusion and outlook
 
 <!-- missing: Guidelines how to choose a resampling method -->
+<!-- AB: I don't think we can present such guidelines in this paper, I think we discussed this recently and agreed that we will not propose such guidelines, we should rather focus on the methods and their implementation --> 
 The \pkg{mlr3spatiotempcv} package is the first package to bundle and categorize spatiotemporal resampling methods implemented in multiple other packages in R.
-While various spatiotemporal resampling methods exists nowadays to account for spatiotemporal autocorrelation in modeling, there is still lots of uncertainty which method should be used for which dataset.
-The answer to this question is not trivial and while there will most likely never be an easy answer to this, users are advised to first think about the prediction purpose of the model and then about reducing autocorrelation between training and test sets to reduce the impact of spatiotemporal autocorrelation.
-One option could be the proposal of a dataset characteristic checklist showing which characteristics make a certain dataset more suitable for specific methods.
-This could then help users to make an appropriate and objective decision which resampling method might be a good fit for their dataset and prospective prediction task.
+The available resampling techniques allow the users to vary the scale or granularity of the resampled spatial units as well as their shape and possible buffer distance between training and test samples.
+These settings may account for the specific characteristics of spatiotemporal prediction tasks, but modelers now have to make the important decision of choosing a method that is adequate for their situation.
+They are advised to focus on the spatial or spatiotemporal structure of the learning sample at hand and of the model's prediction task.
 
-<!--mention missing spatiotemporal buffering method -->
-At the time of writing this article, there is no buffering method which operates in the spatiotemporal domain.
-We encourage readers of this article to check out the supported methods in the latest released version of the \pkg{mlr3spatiotempcv} package directly to potentially discover new methods which might have been added to the package in the meantime.
+The compilation of resampling techniques in \pkg{mlr3spatiotempcv} is by no means complete.
+Additional methods or parameters may therefore be added in the future as they become available in upstream package or are contributed directly to this package.
 
 <!-- signoff -->
-Spatiotemporal cross-validation is still not yet a paradigm that is completely established in scientific workflows even though it is discussed intensively for more than a decade now.
-Making most available methods easily accessible to users is an important step to foster the acceptance of such in the community and to lead to less biased cross-validation results in environmental and ecological studies.
+Spatiotemporal cross-validation a paradigm that is not yet fully established in scientific workflows although it has been discussed intensively for more than a decade now.
+We anticipate that making the existing methods easily accessible to users is an important step to foster the acceptance of spatiotemporal cross-validation in the community and to allow modelers to produce less biased cross-validation results in environmental and ecological studies.
 
 ```{r echo=FALSE, cache=FALSE}
 sessionInfo()
