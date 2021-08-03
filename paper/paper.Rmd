@@ -856,7 +856,7 @@ Often, such ecosystems store their results in specialized classes, which make it
 The \pkg{mlr3spatiotempcv} package is the first package to bundle and categorize spatiotemporal resampling methods implemented in multiple other packages in R.
 The available resampling techniques allow the users to vary the scale or granularity of the resampled spatial units as well as their shape and possible buffer distance between training and test samples.
 These settings may account for the specific characteristics of spatiotemporal prediction tasks, but modelers now have to make the important decision of choosing a method that is adequate for their situation.
-They are advised to focus on the spatial or spatiotemporal structure of the learning sample at hand and of the model's prediction task.
+They are advised to focus on the spatial or spatiotemporal structure of the model's prediction task, consider the structure of the learning sample at hand, and think about how the autocorrelation between training and test samples might affect their model assessment and selection.
 
 The compilation of resampling techniques in \pkg{mlr3spatiotempcv} is by no means complete.
 Additional methods or parameters may therefore be added in the future as they become available in upstream package or are contributed directly to this package.
