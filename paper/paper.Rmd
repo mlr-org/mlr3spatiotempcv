@@ -726,12 +726,16 @@ autoplot(resampling_nsp, task, fold_id = c(1:2), size = 0.8) *
 ## Summary
 
 The non-spatial CV estimate of AUC (0.77) is around 0.15 better compared to the spatial CV estimate of 0.61.
-The better performance score results from over-optimism in the estimation with NSpCV.
-The actual predictive performance on new data is much more realistically reflected by the performance estimated via SpCV.
-The magnitude of this difference is variable as it depends on the dataset, the magnitude of STAC and the learner itself.
-Algorithms with a higher tendency of overfitting to the training set will have a larger spread in such scenarios.
+The better performance results from over-optimism in the estimation with non-spatial CV.
+Spatial CV, in contrast, provides a better measure of a model's ability to generalize from the training sample --- in the Ecuador case study, from the hillslopes and historical landslides in the training sample.
+It is also expected that spatial CV results better reflect the performance of a model on new, spatially separate data.
+The magnitude of this difference may depend on the dataset, the strength on spatial or spatiotemporal autocorrelation, and the learner itself.
+Algorithms with a higher tendency to overfit to the training set will tend to have a larger spread in such scenarios.
 
-The respective folds of the resamplings used in this example are shown in Figures&nbsp;\@ref(fig:vis-spcv) and&nbsp;\@ref(fig:vis-nspcv).
+<!-- AB: TODO: Check if the following paragraphs overlaps with the Discussion section; perhaps merge into Discussion. -->
+Since spatial CV can also be used for hyperparameter tuning in the \pkg{mlr3} framework, the model can be optimized to show an improved performance in a specific predictive setting [@schratz2019].
+This may, for example, involve a reduced maximum tree depth in the Ecuador case study, since this leads to stronger generalization and reduced overfitting.
+
 
 # Discussion {#sec:disc}
 
