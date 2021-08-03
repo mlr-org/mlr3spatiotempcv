@@ -332,7 +332,7 @@ Implementations of blocking methods often provide additional options to fine tun
 #### Spatial blocking --- blockCV
 
 The "Spatial blocking" from package \pkg{blockCV} comes with various blocking options such as random (default) (`selection = "random"`), systematic (`selection = "systematic"`) or checkerboard pattern (`selection = "checkerboard"`).
-Additionally, the user might supply a numeric value in meters via argument `theRange` (named just `range` in {mlr3spatiotempcv}) which will ensure a quadratic block pattern across the study area.
+Additionally, the user might supply a numeric value in meters via argument `range` which will ensure a quadratic block pattern across the study area.
 This kind of blocking might be of special interest for species distribution modeling as well as the possibility to supply a user-defined polygon via argument `rasterLayer` with predefined blocking zones.
 
 The following subsections demonstrate the use of some of the introduced options.
@@ -386,7 +386,7 @@ autoplot(resampling_block_checkerboard,
 
 ##### Rectangular blocks
 
-Alternatively, arguments `rows` and `cols` can be specified instead of `theRange`.
+Alternatively, arguments `rows` and `cols` can be specified instead of `range`.
 This allows to create rectangular blocks which honor the supplied `rows` and `cols` settings.
 
 ```{r block-rows-and-cols, fig.cap="Spatial blocking with arguments `rows` and `cols`.", out.width="40%", fig.pos="ht"}
@@ -778,9 +778,10 @@ Methods that omit some observations (`"spcv_buffer"`, `"spcv_tiles"`, `"sptcv_cs
 The downside is the removal of observations from the dataset which possibly reduces the generalization power of the trained model and by this, depending on the specific observations that were removed, adds substantial bias to the CV results.
 
 <!-- spcv_block: how to set argument `theRange` -->
-Method `"spcv_block"` requires the user to supply a value for argument `theRange` which denotes the block size used to create the blocking scheme across the study area.
+<!-- AB: argument is actually called range, not theRange -->
+Method `"spcv_block"` requires the user to supply a value for argument `range` which denotes the block size used to create the blocking scheme across the study area.
 This specification is non-trivial and therefore package \pkg{blockCV} provides some helper functions (`spatialAutoRange()` and `rangeExplorer()`) to conduct a data-driven estimation of the distance at which the spatial autocorrelation in the data levels off [@blockCV].
-According to the package authors, this estimate should then be used for argument `theRange` to have a sensible value for the block sizes created in method `"spcv_block"`.
+According to the package authors, this estimate should then be used for argument `range` to have a sensible value for the block sizes created in method `"spcv_block"`.
 Rectangular partitioning can be problematic in irregularly shaped study areas where some of the resulting partitions may contain substantially fewer observations than others.
 
 <!-- sptcv LLO & LTO: requires additional variable to specify groupings -->
