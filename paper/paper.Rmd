@@ -613,7 +613,7 @@ At present, \pkg{mlr3spatiotempcv} also supports spatiotemporal partitioning usi
 CLUTO is available in R through the \pkg{skmeans} package, which provides an interface to a downloadable compiled library with a restriction to non-commercial uses (see `help("ResamplingSptCVCluto", package = "mlr3spatiotempcv")` for more information).
 With respect to functionality, \pkg{mlr3spatiotempcv} supports two-dimensional clustering based on coordinates, time or features and three-dimensional clustering on coordinates and time.
 
-# Case study: Comparing spatial and non-spatial resampling {#sec:case-study}
+# Step-by-step example: Comparing spatial and non-spatial CV {#sec:case-study}
 
 We will use a well-known case study to demonstrate the application of spatial resampling techniques.
 This binary classification task on landslide susceptibility in Ecuador [@muenchow2012] is available as a built-in task via `tsk("ecuador")`.
@@ -631,7 +631,7 @@ Besides the required arguments of the \pkg{mlr3} superclass `Task`, the `TaskCla
 At first all necessary R packages are loaded and a lower verbosity is set to keep the output tidy.
 Also a seed is set for deterministic execution and the \pkg{mlr3spatiotempcv} built-in task `"ecuador"` is loaded via `tsk()`.
 
-```{r create-task}
+```{r load-pkgs}
 library("mlr3")
 library("mlr3spatiotempcv")
 
