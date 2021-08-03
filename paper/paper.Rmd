@@ -640,8 +640,12 @@ lgr::get_logger("bbotk")$set_threshold("warn")
 lgr::get_logger("mlr3")$set_threshold("warn")
 
 set.seed(42)
+```
 
-# equal to `tsk("ecuador")`
+To set up the task `"ecuador"` manually, we would have to proceed as follows:
+
+```{r create-task}
+# equivalent to 'tsk("ecuador")':
 b = mlr3::as_data_backend(ecuador)
 b$hash = "_mlr3_tasks_ecuador_" # optional
 task = TaskClassifST$new(
@@ -651,6 +655,8 @@ task = TaskClassifST$new(
     crs = "EPSG:32717")
 )
 ```
+
+
 
 To show the effect of spatial autocorrelation on performance estimates in cross-validation, we will apply spatial and non-spatial cross-validation to the prediction of landslides using the random forest technique (`"classif.ranger"`).
 Specifically, we use spatial partitioning based on $k$-means clustering of the coordinates (method `"repeated_spcv_coords"`) and compare its results to a non-spatial (random) cross-validation (`"repeated_cv"`), both with (only) four folds and two repetitions for demonstration.
