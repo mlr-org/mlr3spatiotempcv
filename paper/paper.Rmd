@@ -619,21 +619,30 @@ With respect to functionality, \pkg{mlr3spatiotempcv} supports two-dimensional c
 
 # Step-by-step example: Comparing spatial and non-spatial CV {#sec:case-study}
 
-We will use a well-known case study to demonstrate the application of spatial resampling techniques.
-This binary classification task on landslide susceptibility in Ecuador [@muenchow2012] is available as a built-in task via `tsk("ecuador")`.
+We use a well-known case study to demonstrate the application of spatial and non-spatial resampling techniques for model assessment in \pkg{mlr3spatiotempcv}.
+The objective of landslide susceptibility modeling is to predict how prone to landslide initiation a location is.
+Models are fitted to historical landslide occurrences, but they need to learn generalizable relationships between predisposing variables and the response as opposed to perfectly reproducing or memorizing the historical distribution. 
+This binary classification task on landslides in Ecuador [@muenchow2012] is available as a built-in task via `tsk("ecuador")`, but we generate it from the learning sample.
+Random forest is used as a classifier, and the area under the ROC curve (AUROC) as the performance measure.
 
-Because the spatial grouping of the $k$-means-based approach (`"spcv_coords"`) (Figure&nbsp;\@ref(fig:vis-spcv)) contrasts visually very well with non-spatial (random) partitioning (Figure&nbsp;\@ref(fig:vis-nspcv)), this method was chosen to showcase the 2D plotting capabilities of \pkg{mlr3spatiotempcv}.
+Spatial CV is implemented in the form of leave-one-block-out CV using coordinate-based $k$-means clustering to generate  irregularly shaped blocks of roughly equal size. 
+This approach is better suited for the shape of the present study area than a rectangular partitioning.
+Figures&nbsp;\@ref(fig:vis-spcv)) and&nbsp;\@ref(fig:vis-nspcv)) show the contrasting distributions of training and test samples.
+For demonstration purposes we use only four CV folds and two repetitions.
 
-Besides the required arguments of the \pkg{mlr3} superclass `Task`, the `TaskClassifST` / `TaskRegrST` classes from package \pkg{mlr3spatiotempcv}  also require the following arguments during construction which must be passed via a named list `extra_args`:
+
+## Task preparation
+
+In \pkg{mlr3}, machine-learning tasks with their respective dataset and response variable are represented by objects of the class `Task`. \pkg{mlr3spatiotempcv}'s spatial and spatiotemporal machine-learning tasks are derived from this superclass. 
+Specifically, the `TaskClassifST` and `TaskRegrST` classes for classification and regression tasks require several additional arguments that must be passed as a named list using the `extra_args` argument:
 
 - `coordinate_names`: Names of the features that represent the spatial coordinates.
   This is automatically inferred when a `sf` object is passed.
-- `coords_as_features`: Whether the coordinates should be used as features during modeling.
-  By default coordinates are not used as predictors.
-- `crs`: The coordinate reference system of the data. Valid inputs are PROJ strings or EPSG codes in the format `ESPG:<code>`.
+- `coords_as_features`: Whether the coordinates should be used as features; by default they are not.
+- `crs`: The coordinate reference system of the data as a PROJ string or EPSG code in the format `ESPG:<code>`.
 
 At first all necessary R packages are loaded and a lower verbosity is set to keep the output tidy.
-Also a seed is set for deterministic execution and the \pkg{mlr3spatiotempcv} built-in task `"ecuador"` is loaded via `tsk()`.
+A random-number seed is set for reproducibility.
 
 ```{r load-pkgs}
 library("mlr3")
@@ -646,10 +655,11 @@ lgr::get_logger("mlr3")$set_threshold("warn")
 set.seed(42)
 ```
 
-To set up the task `"ecuador"` manually, we would have to proceed as follows:
+The task `"ecuador"` is available in \pkg{mlr3spatiotempcv} through `tsk("ecuador")`.
+To set it up manually, we proceed as follows:
 
+<!-- AB: TODO: The comment says that b$hash is optional, but the reader will not know what it is good for. A more verbose comment would be helpful, maybe 'optional task identifier' or whatever the hash name may be good for. -->
 ```{r create-task}
-# equivalent to 'tsk("ecuador")':
 b = mlr3::as_data_backend(ecuador)
 b$hash = "_mlr3_tasks_ecuador_" # optional
 task = TaskClassifST$new(
@@ -662,13 +672,9 @@ task = TaskClassifST$new(
 
 
 
-To show the effect of spatial autocorrelation on performance estimates in cross-validation, we will apply spatial and non-spatial cross-validation to the prediction of landslides using the random forest technique (`"classif.ranger"`).
-Specifically, we use spatial partitioning based on $k$-means clustering of the coordinates (method `"repeated_spcv_coords"`) and compare its results to a non-spatial (random) cross-validation (`"repeated_cv"`), both with (only) four folds and two repetitions for demonstration.
-We choose the area under the ROC curve (`"classif.auc"`) as the performance measure for this classification task.
-
 ## Model preparation
 
-Next, the random forest learner (`lrn("classif.ranger")`) is initialized with default hyperparameters and the prediction type is set to `"probability"` due to the binary response variable.
+Next, the random forest learner (`"classif.ranger"`) is initialized with default hyperparameters and the prediction type is set to `"probability"` because the model is used for soft classification.
 A set of commonly used learners is available in package \pkg{mlr3learners} [@mlr3learners], including the random forest implementation of @ranger.
 
 ```{r prepare}
@@ -679,10 +685,13 @@ learner = lrn("classif.ranger", predict_type = "prob")
 
 ## Non-spatial cross-validation
 
-A four-fold, two times repeated non-spatial resampling object is constructed and instantiated via method `$instantiate()`.
-Next, the created resampling object `resampling_nsp` is passed to function `resample()` together with the task and learner objects created earlier to execute the model assessment.
+A resampling is generated in \pkg{mlr3} with the `rsmp()` function, which is used to generate a resampling object for four-fold non-spatial CV with two repetitions.
+The object is constructed and instantiated with its `$instantiate()` method.
 
-The results from the CV are then aggregated using the measure `"classif.auc"`, which is the \pkg{mlr3} package notation for the AUROC measure.
+Next, the created resampling object `resampling_nsp` is passed to function `resample()` together with the task and learner objects created earlier to execute the model assessment.
+This is the actual, potentially time-consuming CV estimation. With the present settings, eight random forest classifiers are fitted and evaluated in this step.
+
+Model performances are calculated from the CV predictions using the AUROC (`"classif.auc"` in \pkg{mlr3} notation).
 
 ```{r rr-nspcv, cache.lazy = FALSE}
 resampling_nsp = rsmp("repeated_cv", folds = 4, repeats = 2)
@@ -697,7 +706,7 @@ rr_nsp$aggregate(measures = msr("classif.auc"))
 
 ## Spatial cross-validation via coordinate-based clustering
 
-The same approach as for non-spatial resampling is used for spatial resampling, expect replacing method `"repeated_cv"` with `"repeated_spcv_coords"`.
+The model assessment is now repeated using spatial CV resampling, for which we only need to replace `"repeated_cv"` with `"repeated_spcv_coords"`.
 
 ```{r rr-spcv, cache.lazy = FALSE}
 resampling_sp = rsmp("repeated_spcv_coords", folds = 4, repeats = 2)
@@ -716,18 +725,12 @@ Finally, we visualize the partitions that were used during performance estimatio
 
 
 ```{r vis-spcv, fig.cap="Spatial leave-one-block-out partitioning using coordinate-based clustering to create roughly equally sized polygonal blocks. Due to space limitations only the first two folds of the first repetition are shown.", fig.pos="ht", fig.height=6, fig.width=8}
-resampling_sp = rsmp("repeated_spcv_coords", folds = 4, repeats = 2)
-resampling_sp$instantiate(task)
-
 autoplot(resampling_sp, task, fold_id = c(1:2), size = 0.8) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
 ```{r vis-nspcv, fig.cap="Random (non-spatial) four-fold CV partitioning. Only the first two folds of the first repetition are shown.", fig.pos="ht", fig.height=6, fig.width=8}
-resampling_nsp = rsmp("repeated_cv", folds = 4, repeats = 2)
-resampling_nsp$instantiate(task)
-
 autoplot(resampling_nsp, task, fold_id = c(1:2), size = 0.8) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
@@ -735,11 +738,11 @@ autoplot(resampling_nsp, task, fold_id = c(1:2), size = 0.8) *
 
 ## Summary
 
-The non-spatial CV estimate of AUC (0.77) is around 0.15 better compared to the spatial CV estimate of 0.61.
+The non-spatial CV estimate of AUC (0.76) is around 0.13 better compared to the spatial CV estimate of 0.64.
 The better performance results from over-optimism in the estimation with non-spatial CV.
-Spatial CV, in contrast, provides a better measure of a model's ability to generalize from the training sample --- in the Ecuador case study, from the hillslopes and historical landslides in the training sample.
+Spatial CV, in contrast, provides a better measure of a model's ability to generalize from the training sample --- in this case study, from the specific hillslopes and historical landslides in the training sample.
 It is also expected that spatial CV results better reflect the performance of a model on new, spatially separate data.
-The magnitude of this difference may depend on the dataset, the strength on spatial or spatiotemporal autocorrelation, and the learner itself.
+The magnitude of the difference between spatial and non-spatial CV estimates may depend on the dataset, the strength on spatial or spatiotemporal autocorrelation, and the learner itself.
 Algorithms with a higher tendency to overfit to the training set will tend to have a larger spread in such scenarios.
 
 <!-- AB: TODO: Check if the following paragraphs overlaps with the Discussion section; perhaps merge into Discussion. -->
