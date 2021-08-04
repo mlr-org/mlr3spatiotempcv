@@ -405,14 +405,13 @@ autoplot(resampling_block_rows_cols,
 
 \newpage
 
-#### Spatial Tiles --- sperrorest
+#### Leave-one-tile-out resampling --- sperrorest
 
-Method `partition_tiles()` from package \pkg{sperrorest} also uses rectangular blocks to partition the study area.
-In contrast to "Spatial Blocking" from \pkg{blockCV} these blocks can be rotated (via argument `rotation`) and a minimum number of observations per block can be set (argument `min_n`).
-A predefined row/column grid is specified via one of the arguments `dsplit` or `nsplit` and no square blocks are supported.
-Small tiles can be merged with adjacent blocks via argument `reassign` or optionally be ignored (`reassign = FALSE`).
-The number of tiles set by the user equals the number of folds and blocks cannot be grouped into folds as in "Spatial Blocking".
-Also despite setting 12 blocks via `nsplit = c(3L, 4L)` in the following example, the final partition count is eleven because the bottom-left part of the study area does not contain observations.
+Leave-one-tile-out resampling is implemented in the `"spcv_tiles"` method imported from package \pkg{sperrorest}. 
+It uses rectangular blocks that can be rotated (argument `rotation`), and a minimum number or fraction of observations per block can optionally be achieved by iteratively merging small blocks into adjacent blocks  (argument `reassign` in conjunction with `min_n` or `min_frac`).
+Block size or number is specified via the argument `dsplit` or `nsplit`, respectively, and square blocks can be obtained with a single (or two identical) `dsplit` value.
+
+Note that the actual number of folds obtained may be smaller than `nsplit[1]*nsplit[2]` (or smaller than what would be expected base don `dsplit`) since some blocks may be empty or (optionally) merged into adjacent folds. In the example, there are only eleven folds instead of twelve because the southwestern part of the study area's bounding box does not contain observations  (Figure&nbsp;\@ref(fig:tile)).
 
 ```{r tile, fig.cap='Leave-one-block-out resampling from package sperrorest (method "spcv\\_tiles" in package mlr3spatiotempcv with argument nsplit = c(3,4) indicating the number of rows and columns).', out.width="40%", fig.pos="ht"}
 resampling_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
