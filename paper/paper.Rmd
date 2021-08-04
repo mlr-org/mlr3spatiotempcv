@@ -270,18 +270,20 @@ Since \pkg{mlr3spatiotempcv} supports two spatial-only "buffering" implementatio
 
 #### Leave-one-disc-out --- sperrorest
 
-Another buffering-oriented resampling method is leave-one-disc-out from package \pkg{sperrorest}.
-Here, 'disc' refers to the buffer zone around the test set which is (optionally) being removed from the training data.
+Leave-one-disc-out resampling from package \pkg{sperrorest} randomly selects a circular test set and optionally excludes a buffer zone from the remaining training data.
+It thus ensures that a minimum separation distance between training and test data is maintained.
+Discs are centered at sample locations, their number being specified by the `folds` argument. It is therefore possible to sample up to $n$ discs without replacement (default) or any number when sampling with replacement (`replace = TRUE`). The number of discs is specified via the `folds` argument.
 
-Around the radial test set a buffer zone / neutral area can be defined via variable `buffer` in which observations are excluded from the training set, increasing the spatial distance between training and test sets.
-In addition, one can specify to sample with replacement by setting `replace = TRUE`.
+This resampling method is, strictly speaking, not a partitioning method since the discs are not a disjoint. Nevertheless, it is a logical extension of spatial LOO CV. Depending on the size of the discs, potentially a large number of discs (`folds` argument) is needed to effectively use the entire dataset.
 
+Leave-one-disc-out resampling becomes spatial LOO CV for a radius of 0 m and when each observation is at a unique location.
 
+<!-- AB: TODO: folds = 5 makes very little sense in the case of LODO-CV, since this would only sample 5 discs, which cover only a small fraction of the study area. Let's use folds = 100, this will at least make readers think about their choice of #folds. -->
 ```{r disc, fig.cap='Visualization of one training set / test set combination generated with the leave-one-disc-out method from package sperrorest (method "spcv\\_disc" in mlr3spatiotempcv). The disc has a radius of 300 m and is surrounded by a 400-m buffer.', out.width="40%"}
 library("mlr3")
 library("mlr3spatiotempcv")
 task = tsk("ecuador")
-resampling_disc = rsmp("spcv_disc", folds = 5, radius = 300L, buffer = 400L)
+resampling_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
 resampling_disc$instantiate(task)
 
 autoplot(resampling_disc,
