@@ -161,7 +161,7 @@ Several approaches have therefore been proposed in the literature and implemente
 
 Approaches based on *spatial blocking* or *grouping* require either the construction of spatial zones, or the use of pre-existing spatial structures in the data.
 Let's refer to these spatial units or zones as $\mathcal{Z}_i$, $1\le i\le n_z$.
-These zones are often constructed to serve as the $k=n_z$ spatial partitions, for example by performing $k$-means clustering of the sample coordinates [@russ2010], which we refer to as *coordinate-based clustering*, or generating the desired number of rectangular blocks. 
+These zones are often constructed to serve as the $k=n_z$ spatial partitions, for example by performing $k$-means clustering of the sample coordinates [@russ2010], which we refer to as *coordinate-based clustering*, or generating the desired number of rectangular blocks.
 The zones may also be defined by a modeler based on an arbitrary (e.g., polygonal) partitioning of the study region, which we refer to as *custom resampling*.
 Similarly, the data can be partitioned in feature space instead of geographic space, which has been referred to as *environmental blocking* [@roberts2017].
 
@@ -175,7 +175,7 @@ Although this is just a special case of non-spatial CV with $k=n$, it is sometim
 Spatial variants have been proposed that apply an exclusion buffer to the test locations to separate them from the training data [@brenning2005].
 We refer to this resampling scheme as *spatial buffering*.
 One approach that has been proposed for defining a separation distance is to use the range of autocorrelation of model residuals to determine the buffer distance as this ensures independence conditional on the predictors [@brenning2005; @roberts2017].
-When data is grouped, e.g., due to multi-level sampling designs or the study of spatial objects, it has been proposed to apply LOO at the site level [@martin2008; @kasurak2011] or, in animal movement studies, at the animal level [@anderson2005]. 
+When data is grouped, e.g., due to multi-level sampling designs or the study of spatial objects, it has been proposed to apply LOO at the site level [@martin2008; @kasurak2011] or, in animal movement studies, at the animal level [@anderson2005].
 We will broadly refer to such groups of observations as 'blocks' in a generic sense, and therefore refer to this type of LOO-CV as *leave-one-block-out CV*.
 
 It should be noted that $k$-fold cross-validation with a large value of $k$, and LOO-CV in particular ($k=n$), is not only very time-consuming since the model has to be trained $k$ times; these models will also be nearly identical since only a tiny fraction of the data is withheld, and therefore estimation bias increases.
@@ -272,9 +272,13 @@ Since \pkg{mlr3spatiotempcv} supports two spatial-only "buffering" implementatio
 
 Leave-one-disc-out resampling from package \pkg{sperrorest} randomly selects a circular test set and optionally excludes a buffer zone from the remaining training data.
 It thus ensures that a minimum separation distance between training and test data is maintained.
-Discs are centered at sample locations, their number being specified by the `folds` argument. It is therefore possible to sample up to $n$ discs without replacement (default) or any number when sampling with replacement (`replace = TRUE`). The number of discs is specified via the `folds` argument.
+Discs are centered at sample locations, their number being specified by the `folds` argument.
+It is therefore possible to sample up to $n$ discs without replacement (default) or any number when sampling with replacement (`replace = TRUE`).
+The number of discs is specified via the `folds` argument.
 
-This resampling method is, strictly speaking, not a partitioning method since the discs are not a disjoint. Nevertheless, it is a logical extension of spatial LOO CV. Depending on the size of the discs, potentially a large number of discs (`folds` argument) is needed to effectively use the entire dataset.
+This resampling method is, strictly speaking, not a partitioning method since the discs are not a disjoint.
+Nevertheless, it is a logical extension of spatial LOO CV.
+Depending on the size of the discs, potentially a large number of discs (`folds` argument) is needed to effectively use the entire dataset.
 
 Leave-one-disc-out resampling becomes spatial LOO CV for a radius of 0 m and when each observation is at a unique location.
 
@@ -407,11 +411,12 @@ autoplot(resampling_block_rows_cols,
 
 #### Leave-one-tile-out resampling --- sperrorest
 
-Leave-one-tile-out resampling is implemented in the `"spcv_tiles"` method imported from package \pkg{sperrorest}. 
+Leave-one-tile-out resampling is implemented in the `"spcv_tiles"` method imported from package \pkg{sperrorest}.
 It uses rectangular blocks that can be rotated (argument `rotation`), and a minimum number or fraction of observations per block can optionally be achieved by iteratively merging small blocks into adjacent blocks  (argument `reassign` in conjunction with `min_n` or `min_frac`).
 Block size or number is specified via the argument `dsplit` or `nsplit`, respectively, and square blocks can be obtained with a single (or two identical) `dsplit` value.
 
-Note that the actual number of folds obtained may be smaller than `nsplit[1]*nsplit[2]` (or smaller than what would be expected base don `dsplit`) since some blocks may be empty or (optionally) merged into adjacent folds. In the example, there are only eleven folds instead of twelve because the southwestern part of the study area's bounding box does not contain observations  (Figure&nbsp;\@ref(fig:tile)).
+Note that the actual number of folds obtained may be smaller than `nsplit[1]*nsplit[2]` (or smaller than what would be expected based on `dsplit`) since some blocks may be empty or (optionally) merged into adjacent folds.
+In the example, there are only eleven folds instead of twelve because the southwestern part of the study area's bounding box does not contain observations  (Figure&nbsp;\@ref(fig:tile)).
 
 ```{r tile, fig.cap='Leave-one-block-out resampling from package sperrorest (method "spcv\\_tiles" in package mlr3spatiotempcv with argument nsplit = c(3,4) indicating the number of rows and columns).', out.width="40%", fig.pos="ht"}
 resampling_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
@@ -431,7 +436,7 @@ In spatial model assessment, the focus has been on coordinate-based clustering, 
 #### Leave-one-block-out resampling using coordinate-based clustering --- sperrorest
 
 Coordinate-based clustering for spatial CV [@russ2010; @brenning2012] as implemented in package \pkg{sperrorest} uses the coordinates of all observations to create clusters in the spatial domain with the help of the $k$-means clustering algorithm.
-This can be regarded as a leave-one-block-out resampling method, or as a $k$-fold CV in which each test set is a spatial cluster. 
+This can be regarded as a leave-one-block-out resampling method, or as a $k$-fold CV in which each test set is a spatial cluster.
 This method is referred to as `spcv_coords` in \pkg{mlr3spatiotempcv}.
 
 Coordinate-based clustering approach is very versatile as it adapts to irregularly-shaped study areas and ensures that exactly $k$ partitions are created, which are usually or very similar size when the sample locations are spread out evenly.
@@ -624,11 +629,11 @@ With respect to functionality, \pkg{mlr3spatiotempcv} supports two-dimensional c
 
 We use a well-known case study to demonstrate the application of spatial and non-spatial resampling techniques for model assessment in \pkg{mlr3spatiotempcv}.
 The objective of landslide susceptibility modeling is to predict how prone to landslide initiation a location is.
-Models are fitted to historical landslide occurrences, but they need to learn generalizable relationships between predisposing variables and the response as opposed to perfectly reproducing or memorizing the historical distribution. 
+Models are fitted to historical landslide occurrences, but they need to learn generalizable relationships between predisposing variables and the response as opposed to perfectly reproducing or memorizing the historical distribution.
 This binary classification task on landslides in Ecuador [@muenchow2012] is available as a built-in task via `tsk("ecuador")`, but we generate it from the learning sample.
 Random forest is used as a classifier, and the area under the ROC curve (AUROC) as the performance measure.
 
-Spatial CV is implemented in the form of leave-one-block-out CV using coordinate-based $k$-means clustering to generate  irregularly shaped blocks of roughly equal size. 
+Spatial CV is implemented in the form of leave-one-block-out CV using coordinate-based $k$-means clustering to generate  irregularly shaped blocks of roughly equal size.
 This approach is better suited for the shape of the present study area than a rectangular partitioning.
 Figures&nbsp;\@ref(fig:vis-spcv)) and&nbsp;\@ref(fig:vis-nspcv)) show the contrasting distributions of training and test samples.
 For demonstration purposes we use only four CV folds and two repetitions.
@@ -636,7 +641,7 @@ For demonstration purposes we use only four CV folds and two repetitions.
 
 ## Task preparation
 
-In \pkg{mlr3}, machine-learning tasks with their respective dataset and response variable are represented by objects of the class `Task`. \pkg{mlr3spatiotempcv}'s spatial and spatiotemporal machine-learning tasks are derived from this superclass. 
+In \pkg{mlr3}, machine-learning tasks with their respective dataset and response variable are represented by objects of the class `Task`. \pkg{mlr3spatiotempcv}'s spatial and spatiotemporal machine-learning tasks are derived from this superclass.
 Specifically, the `TaskClassifST` and `TaskRegrST` classes for classification and regression tasks require several additional arguments that must be passed as a named list using the `extra_args` argument:
 
 - `coordinate_names`: Names of the features that represent the spatial coordinates.
@@ -768,7 +773,7 @@ Last, there are no obvious spatial groupings to our knowledge which need to be a
 Most often multiple spatial partitioning methods can be used for a dataset.
 It is recommended (required) to make oneself familiar with the available methods and to decide on one based on the specific characteristics of the dataset at hand and the prediction purpose of the fitted model.
 The prediction purpose is the model's ability for which areas or zones it actually can make predictions.
-In the crop example given in section \@ref(sec:intro) this would be to distinguish and predict the crop type of 'new', unseen fields within an agricultural region. 
+In the crop example given in section \@ref(sec:intro) this would be to distinguish and predict the crop type of 'new', unseen fields within an agricultural region.
 Hence, the CV partitioning is done at the field level to receive a honest estimate of the model's performance in a relevant predictive situation.
 
 There are various variables influencing the partitioning method choice for an environmental dataset:
@@ -862,7 +867,7 @@ Often, such ecosystems store their results in specialized classes, which make it
 # Conclusion and outlook
 
 <!-- missing: Guidelines how to choose a resampling method -->
-<!-- AB: I don't think we can present such guidelines in this paper, I think we discussed this recently and agreed that we will not propose such guidelines, we should rather focus on the methods and their implementation --> 
+<!-- AB: I don't think we can present such guidelines in this paper, I think we discussed this recently and agreed that we will not propose such guidelines, we should rather focus on the methods and their implementation -->
 The \pkg{mlr3spatiotempcv} package is the first package to bundle and categorize spatiotemporal resampling methods implemented in multiple other packages in R.
 The available resampling techniques allow the users to vary the scale or granularity of the resampled spatial units as well as their shape and possible buffer distance between training and test samples.
 These settings may account for the specific characteristics of spatiotemporal prediction tasks, but modelers now have to make the important decision of choosing a method that is adequate for their situation.
