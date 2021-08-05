@@ -1,0 +1,6 @@
+{
+  "filters": {},
+  "rules": {
+    "one-sentence-per-line": true
+  }
+}
