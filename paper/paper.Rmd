@@ -791,12 +791,12 @@ The prediction purpose is the model's ability for which areas or zones it actual
 In the crop example given in section \@ref(sec:intro) this would be to distinguish and predict the crop type of 'new', unseen fields within an agricultural region. 
 Hence, the CV partitioning is done at the field level to receive a honest estimate of the model's performance in a relevant predictive situation.
 
-There are various variables influencing the partitioning method choice for an environmental dataset:
+There are various factors that might influence the choice of a partitioning method:
 
-- Do natural groupings exists in the data? Examples include agricultural fields, forest stands, lithology types, etc.
+- Do natural groupings exists in the data? Examples include multi-level sampling designs, land management units, or other characteristics of the study area or sampling design that may induce random effects.
 - How dense are the observations scattered both in space and time?
-  The closer observations are in space and/or time, the more similar they are, and hence the greater is the effect of spatio-temporal autocorrelation.
-- Are some of the predictor variables under consideration known to be strongly autocorrelated such as air temperature or precipitation?
+  The closer observations are in space and/or time, the more similar they are, and hence the greater is the effect of spatio-temporal autocorrelation on performance estimates.
+- Are some of the predictor variables under consideration known to be strongly autocorrelated such as air temperature or precipitation at the regional level?
 
 Based on these criteria users should choose a matching partitioning method that is either more restrictive (by discarding observations for fold creation) or more liberal (by not removing observations and eventually ignoring natural grouping patterns).
 For almost all methods implemented in \pkg{mlr3spatiotempcv}, there is a scientific publication describing the application areas of the respective approach (either linked in the help file of the package or its respective upstream packages), hence we are refraining from repeating them again in this study.
@@ -846,7 +846,7 @@ One should try to refrain from selecting a value based on subjective notions wit
 <!-- group level CV vs custom CV -->
 \pkg{mlr3spatiotempcv} supports two factor-based partitioning schemes: "group-level resampling" and "custom resampling".
 Both are similar in that they require external user input for partition creation, i.e. a factor variable which assigns all observations into a distinct group.
-The idea of "custom resampling" is that each group becomes a test set in the CV.
+The idea of "custom resampling" is that each group becomes a test set in the CV (leave-one-group-out CV).
 By contrast, "group-level resampling" methods resample these initial groups: for example, users can supply an integer value to an argument named `fold` in the LLO method (e.g. `5L`) which combines the initial groups (e.g. $n = 20$) into their final fold-level partitions, which would result in four groups per partition [@meyer2018].
 The important point is that observations from within one group will either be assigned to the train or test set and never be split up.
 "Group-level resampling" can be, in contrast to "custom resampling", repeated multiple times because multiple different aggregations are possible in theory.
@@ -858,11 +858,6 @@ Over time, studies which have used this method mainly referenced it using the ge
 However, using this notation potentially introduces confusion as the term "spatial CV" is of a generic nature which refers to the idea of accounting for spatial autocorrelation in spatial datasets and does not necessarily refer to a specific partitioning method in the first place.
 Hence, in package \pkg{mlr3spatiotempcv} this method was named `"spcv_coords"`, making use of the fact that the spatial coordinates are used for a cluster-based partition creation.
 
-<!-- env block: hard to decide which variable to use for clustering -->
-<!-- env block: more than one variable may lead to unforeseeable results -->
-Method `"spcv_env"` is complicated to use in that it requires the user to limit the clustering to one or more variables [@blockCV].
-This implies that only this/these variable(s) suffer from autocorrelation and others are ignored.
-However, it is not possible to estimate how much a single variable accounts for the autocorrelation in the data and the same applies for estimating the influence of the non-accounted variables which might add substantial bias to the CV.
 
 ## Contributing new resampling methods
 
