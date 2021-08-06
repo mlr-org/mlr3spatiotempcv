@@ -515,7 +515,6 @@ data$Date = rep(c(
   "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01",
   "2020-05-01"), times = 1, each = 100)
 b = mlr3::as_data_backend(data)
-b$hash = "_mlr3_tasks_cookfarm_"
 task_spt = TaskRegrST$new(
   id = "cookfarm", b, target = "PHIHOX",
   extra_args = list(
@@ -578,9 +577,8 @@ knitr::include_graphics("llto.png")
 
 ### Custom and grouped resampling --- mlr3 {#sec:custom-cv}
 
-<!--JM: you might want to delete the FIXME-->
-Support for user-defined partitioning strategies is built into \pkg{mlr3} directly since version 0.12.0 FIXME.
-Labelled as "Custom CV", users are able to supply an external factor vector with the same length as number of observations.
+Support for user-defined partitioning strategies is built into \pkg{mlr3} directly.
+In this so-called "Custom CV", users are able to supply an external factor vector with the same length as number of observations.
 This partitioning concept is also often referred to as "grouped resampling" and should not be mistaken with "group-level resampling" (section \@ref(sec:group-level)), which inherits additional aggregation of groups at the partition level.
 Each level of the factor vector will result in one partition.
 Alternatively to supplying an external factor vector, the name of a feature (type `character`) present within the task can be supplied via argument `col`.
@@ -595,9 +593,9 @@ zclass = cut(task$data()$dem, breaks, include.lowest = TRUE)
 resampling_custom = rsmp("custom_cv")
 resampling_custom$instantiate(task, f = zclass)
 
-# autoplot(resampling_custom, size = 0.8, task = task) *
-#   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-#   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+autoplot(resampling_custom, size = 0.8, task = task) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 
 ```
 
