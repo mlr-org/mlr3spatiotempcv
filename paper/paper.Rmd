@@ -334,13 +334,13 @@ In addition, irregularly shaped blocks are available (3) through coordinate-base
 
 #### Square and rectangular blocks --- blockCV
 
-The "Spatial blocking" from package \pkg{blockCV} comes with various blocking options such as random (default) (`selection = "random"`), systematic (`selection = "systematic"`) or checkerboard pattern (`selection = "checkerboard"`).
-Additionally, the user might supply a numeric value in meters via argument `range` which will ensure a quadratic block pattern across the study area.
-This kind of blocking might be of special interest for species distribution modeling as well as the possibility to supply a user-defined polygon via argument `rasterLayer` with predefined blocking zones.
+Block-level resampling from package \pkg{blockCV} supports both random and systematic resampling of square blocks (`method = "spcv_block"` with argument `selection = "random"` and `"systematic"`, respectively; Figure&nbpsp;~\@ref(fig:block-random) and \@ref(fig:block-systematic)).
+The implementation in \pkg{blockCV} has specific options that are designed for modeling presence-only data, which is a typical situation in species distribution modeling.
+Users can also supply a user-defined polygon via argument `rasterLayer` with predefined blocking zones.
 
-This procedure supports both random and systematic resampling of square blocks (argument `selection = "random"` and `"systematic"`, respectively).
-Block sizes in meters) are determined by the `range` argument.
+Block sizes (in meters) are determined by the `range` argument.
 Alternatively, rectangular blocks can be created by specifying the number of desired rows and columns (arguments `rows` and `cols`).
+
 
 ```{r block-random, fig.cap='Random resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "random" in mlr3spatiotempcv). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht"}
 resampling_block_random = rsmp("spcv_block", range = 1000, folds = 5)
