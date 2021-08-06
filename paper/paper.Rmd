@@ -321,25 +321,26 @@ autoplot(resampling_buffer,
 
 <!-- TODO: Discuss issues setting a sensible range value -->
 
-### Blocking
+### Spatial blocking
 
-"Spatial Blocking" creates homogeneous blocks across the study area splitting observations into different zones [russ2010; @bahn2012; @wenger2012; @blockCV].
-The creation of these zones can be diverse: one option is to supply rows and columns to subdivide the data based on a rectangular grid.
-Others make use of landscape patterns such as crop zones [@russ2010] or species presence [@blockCV] to determine an initial partitioning.
+Spatial blocking divides the study area into different zones [russ2010; @bahn2012; @wenger2012; @blockCV].
+Several methods have been implemented to create rectangular as well as irregularly shaped blocks. 
+These blocks can be used for leave-one-block-out resampling, or they can themselves be grouped into $k$ partitions for a $k$-fold CV at the block level.
 
-Implementations of blocking methods often provide additional options to fine tune these initial partitioning algorithms.
+\pkg{mlr3spatiotempcv} supports multiple resampling methods that are based on blocks: 
+(1) "Spatial blocking" from package \pkg{blockCV} implements $k$-fold CV resampling at the level of square or rectangular blocks, while (2) "Spatial tiles" from \pkg{sperrorest} offers leave-one-block-out resampling with square or rectangular, possibly rotated blocks.
+In addition, irregularly shaped blocks are available (3) through coordinate-based clustering as a leave-one-block-out technique from \pkg{sperrorest} (method `"spcv_coords"`, Section&nbsp;\@ref(sec:cluster-cv)), and (4) as a CV at the block level where blocks are defined by a factor variable that defines zones or groups (method `"custom_cv"` in \pkg{mlr3}, Section&nbsp;\@ref(sec:custom-cv)).
 
-\pkg{mlr3spatiotempcv} supports two "blocking" implementations: (1) "Spatial blocking" from package \pkg{blockCV} and (2) "Spatial Tiles" from \pkg{sperrorest}.
 
-#### Spatial blocking --- blockCV
+#### Square and rectangular blocks --- blockCV
 
 The "Spatial blocking" from package \pkg{blockCV} comes with various blocking options such as random (default) (`selection = "random"`), systematic (`selection = "systematic"`) or checkerboard pattern (`selection = "checkerboard"`).
 Additionally, the user might supply a numeric value in meters via argument `range` which will ensure a quadratic block pattern across the study area.
 This kind of blocking might be of special interest for species distribution modeling as well as the possibility to supply a user-defined polygon via argument `rasterLayer` with predefined blocking zones.
 
-The following subsections demonstrate the use of some of the introduced options.
-
-##### Option: selection = "random"
+This procedure supports both random and systematic resampling of square blocks (argument `selection = "random"` and `"systematic"`, respectively).
+Block sizes in meters) are determined by the `range` argument.
+Alternatively, rectangular blocks can be created by specifying the number of desired rows and columns (arguments `rows` and `cols`).
 
 ```{r block-random, fig.cap='Random resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "random" in mlr3spatiotempcv). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht"}
 resampling_block_random = rsmp("spcv_block", range = 1000, folds = 5)
@@ -351,9 +352,10 @@ autoplot(resampling_block_random,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-##### Option: selection = "systematic"
 
-Here, aggregation follows the linear count from $1:n_{folds}$ from top to bottom.
+In systematic resampling, the blocks are numbered row by row, and blocks $i+j\cdot\texttt{folds}$ are assigned to fold $i$.
+This may create undesired patterns when the number of columns is equal to or a multiple of the number of folds.
+
 
 ```{r block-systematic, fig.cap='Sytematic resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "systematic" in mlr3spatiotempcv). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht"}
 resampling_block_systematic = rsmp("spcv_block",
@@ -368,13 +370,28 @@ autoplot(resampling_block_systematic,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
+<!--
+
 ##### Option: selection = "checkerboard"
 
-This option ignores parameter `range` and always creates two partitions following a checkerboard pattern. The arguments `range` and `folds` are ignored in this case.
+-->
+
+The *checkerboard* partitioning is a special case of a systematic block partitioning (`selection = "checkerboard"`).
+It inherently supports only two folds, making it less appealing than the more commonly used five- or ten-fold resampling, which achieve larger training set sizes.
+ 
+
+<!--
+AB:
+The text previously stated that the range argument is ignored. This can't be true, there must be some argument that controls the size of checkerboard fields.
+-->
+
+
+<!--
+AB: Checkerboard pattern is just a special case of a systematic pattern and likely not of great practical relevance because there are only two folds -> omit figure.
 
 ```{r block-checkerboard, fig.cap='Checkerboard resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "checkerboard" in mlr3spatiotempcv). The size of the squares is 1000 m, and eleven out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht!"}
 resampling_block_checkerboard = rsmp("spcv_block",
-  range = 1000, folds = 5,
+  range = 1000, folds = 2,
   selection = "checkerboard")
 
 autoplot(resampling_block_checkerboard,
@@ -384,12 +401,14 @@ autoplot(resampling_block_checkerboard,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-\newpage
+-->
 
-##### Rectangular blocks
 
-Alternatively, arguments `rows` and `cols` can be specified instead of `range`.
-This allows to create rectangular blocks which honor the supplied `rows` and `cols` settings.
+
+
+<!--
+AB: This figure and subsubsubsection takes up a lot of space for very little additional information.
+
 
 ```{r block-rows-and-cols, fig.cap='Random resampling of a specifid number of rectangular blocks as implemented in package blockCV (method "spcv\\_block" in mlr3spatiotempcv with arguments rows = 6 and cols = 3).', out.width="40%", fig.pos="ht"}
 resampling_block_rows_cols = rsmp("spcv_block",
@@ -405,13 +424,16 @@ autoplot(resampling_block_rows_cols,
 
 \newpage
 
+-->
+
 #### Leave-one-tile-out resampling --- sperrorest
 
 Leave-one-tile-out resampling is implemented in the `"spcv_tiles"` method imported from package \pkg{sperrorest}. 
 It uses rectangular blocks that can be rotated (argument `rotation`), and a minimum number or fraction of observations per block can optionally be achieved by iteratively merging small blocks into adjacent blocks  (argument `reassign` in conjunction with `min_n` or `min_frac`).
 Block size or number is specified via the argument `dsplit` or `nsplit`, respectively, and square blocks can be obtained with a single (or two identical) `dsplit` value.
 
-Note that the actual number of folds obtained may be smaller than `nsplit[1]*nsplit[2]` (or smaller than what would be expected base don `dsplit`) since some blocks may be empty or (optionally) merged into adjacent folds. In the example, there are only eleven folds instead of twelve because the southwestern part of the study area's bounding box does not contain observations  (Figure&nbsp;\@ref(fig:tile)).
+Note that the actual number of folds obtained may be smaller than `nsplit[1]*nsplit[2]` (or smaller than what would be expected base don `dsplit`) since some blocks may be empty or (optionally) merged into adjacent folds. 
+In the example, there are only eleven folds instead of twelve because the southwestern part of the study area's bounding box does not contain observations  (Figure&nbsp;\@ref(fig:tile)).
 
 ```{r tile, fig.cap='Leave-one-block-out resampling from package sperrorest (method "spcv\\_tiles" in package mlr3spatiotempcv with argument nsplit = c(3,4) indicating the number of rows and columns).', out.width="40%", fig.pos="ht"}
 resampling_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
@@ -422,7 +444,7 @@ autoplot(resampling_tiles,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-### Clustering-based resampling
+### Clustering-based resampling {#sec:cluster-cv}
 
 Cluster analysis provides a flexible approach to creating irregularly shaped spatial blocks for spatial resampling.
 Numerous techniques are available that can potentially be applied to the spatial coordinates of observations, to the features, or to a combination of both.
@@ -573,9 +595,9 @@ zclass = cut(task$data()$dem, breaks, include.lowest = TRUE)
 resampling_custom = rsmp("custom_cv")
 resampling_custom$instantiate(task, f = zclass)
 
-autoplot(resampling_custom, size = 0.8, task = task) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+# autoplot(resampling_custom, size = 0.8, task = task) *
+#   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
+#   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 
 ```
 
