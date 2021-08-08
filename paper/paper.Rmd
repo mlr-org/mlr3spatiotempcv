@@ -325,25 +325,26 @@ autoplot(resampling_buffer,
 
 <!-- TODO: Discuss issues setting a sensible range value -->
 
-### Blocking
+### Spatial blocking
 
-"Spatial Blocking" creates homogeneous blocks across the study area splitting observations into different zones [russ2010; @bahn2012; @wenger2012; @blockCV].
-The creation of these zones can be diverse: one option is to supply rows and columns to subdivide the data based on a rectangular grid.
-Others make use of landscape patterns such as crop zones [@russ2010] or species presence [@blockCV] to determine an initial partitioning.
+Spatial blocking divides the study area into different zones [russ2010; @bahn2012; @wenger2012; @blockCV].
+Several methods have been implemented to create rectangular as well as irregularly shaped blocks. 
+These blocks can be used for leave-one-block-out resampling, or they can themselves be grouped into $k$ partitions for a $k$-fold CV at the block level.
 
-Implementations of blocking methods often provide additional options to fine tune these initial partitioning algorithms.
+\pkg{mlr3spatiotempcv} supports multiple resampling methods that are based on blocks: 
+(1) "Spatial blocking" from package \pkg{blockCV} implements $k$-fold CV resampling at the level of square or rectangular blocks, while (2) "Spatial tiles" from \pkg{sperrorest} offers leave-one-block-out resampling with square or rectangular, possibly rotated blocks.
+In addition, irregularly shaped blocks are available (3) through coordinate-based clustering as a leave-one-block-out technique from \pkg{sperrorest} (method `"spcv_coords"`, Section&nbsp;\@ref(sec:cluster-cv)), and (4) as a CV at the block level where blocks are defined by a factor variable that defines zones or groups (method `"custom_cv"` in \pkg{mlr3}, Section&nbsp;\@ref(sec:custom-cv)).
 
-\pkg{mlr3spatiotempcv} supports two "blocking" implementations: (1) "Spatial blocking" from package \pkg{blockCV} and (2) "Spatial Tiles" from \pkg{sperrorest}.
 
-#### Spatial blocking --- blockCV
+#### Square and rectangular blocks --- blockCV
 
-The "Spatial blocking" from package \pkg{blockCV} comes with various blocking options such as random (default) (`selection = "random"`), systematic (`selection = "systematic"`) or checkerboard pattern (`selection = "checkerboard"`).
-Additionally, the user might supply a numeric value in meters via argument `range` which will ensure a quadratic block pattern across the study area.
-This kind of blocking might be of special interest for species distribution modeling as well as the possibility to supply a user-defined polygon via argument `rasterLayer` with predefined blocking zones.
+Block-level resampling from package \pkg{blockCV} supports both random and systematic resampling of square blocks (`method = "spcv_block"` with argument `selection = "random"` and `"systematic"`, respectively; Figure&nbpsp;~\@ref(fig:block-random) and \@ref(fig:block-systematic)).
+The implementation in \pkg{blockCV} has specific options that are designed for modeling presence-only data, which is a typical situation in species distribution modeling.
+Users can also supply a user-defined polygon via argument `rasterLayer` with predefined blocking zones.
 
-The following subsections demonstrate the use of some of the introduced options.
+Block sizes (in meters) are determined by the `range` argument.
+Alternatively, rectangular blocks can be created by specifying the number of desired rows and columns (arguments `rows` and `cols`).
 
-##### Option: selection = "random"
 
 ```{r block-random, fig.cap='Random resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "random" in mlr3spatiotempcv). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht"}
 resampling_block_random = rsmp("spcv_block", range = 1000, folds = 5)
@@ -355,9 +356,10 @@ autoplot(resampling_block_random,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-##### Option: selection = "systematic"
 
-Here, aggregation follows the linear count from $1:n_{folds}$ from top to bottom.
+In systematic resampling, the blocks are numbered row by row, and blocks $i+j\cdot\texttt{folds}$ are assigned to fold $i$.
+This may create undesired patterns when the number of columns is equal to or a multiple of the number of folds.
+
 
 ```{r block-systematic, fig.cap='Sytematic resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "systematic" in mlr3spatiotempcv). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht"}
 resampling_block_systematic = rsmp("spcv_block",
@@ -372,13 +374,28 @@ autoplot(resampling_block_systematic,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
+<!--
+
 ##### Option: selection = "checkerboard"
 
-This option ignores parameter `range` and always creates two partitions following a checkerboard pattern. The arguments `range` and `folds` are ignored in this case.
+-->
+
+The *checkerboard* partitioning is a special case of a systematic block partitioning (`selection = "checkerboard"`).
+It inherently supports only two folds, making it less appealing than the more commonly used five- or ten-fold resampling, which achieve larger training set sizes.
+ 
+
+<!--
+AB:
+The text previously stated that the range argument is ignored. This can't be true, there must be some argument that controls the size of checkerboard fields.
+-->
+
+
+<!--
+AB: Checkerboard pattern is just a special case of a systematic pattern and likely not of great practical relevance because there are only two folds -> omit figure.
 
 ```{r block-checkerboard, fig.cap='Checkerboard resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "checkerboard" in mlr3spatiotempcv). The size of the squares is 1000 m, and eleven out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht!"}
 resampling_block_checkerboard = rsmp("spcv_block",
-  range = 1000, folds = 5,
+  range = 1000, folds = 2,
   selection = "checkerboard")
 
 autoplot(resampling_block_checkerboard,
@@ -388,12 +405,14 @@ autoplot(resampling_block_checkerboard,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-\newpage
+-->
 
-##### Rectangular blocks
 
-Alternatively, arguments `rows` and `cols` can be specified instead of `range`.
-This allows to create rectangular blocks which honor the supplied `rows` and `cols` settings.
+
+
+<!--
+AB: This figure and subsubsubsection takes up a lot of space for very little additional information.
+
 
 ```{r block-rows-and-cols, fig.cap='Random resampling of a specifid number of rectangular blocks as implemented in package blockCV (method "spcv\\_block" in mlr3spatiotempcv with arguments rows = 6 and cols = 3).', out.width="40%", fig.pos="ht"}
 resampling_block_rows_cols = rsmp("spcv_block",
@@ -408,6 +427,8 @@ autoplot(resampling_block_rows_cols,
 ```
 
 \newpage
+
+-->
 
 #### Leave-one-tile-out resampling --- sperrorest
 
@@ -427,7 +448,7 @@ autoplot(resampling_tiles,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-### Clustering-based resampling
+### Clustering-based resampling {#sec:cluster-cv}
 
 Cluster analysis provides a flexible approach to creating irregularly shaped spatial blocks for spatial resampling.
 Numerous techniques are available that can potentially be applied to the spatial coordinates of observations, to the features, or to a combination of both.
@@ -498,7 +519,6 @@ data$Date = rep(c(
   "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01",
   "2020-05-01"), times = 1, each = 100)
 b = mlr3::as_data_backend(data)
-b$hash = "_mlr3_tasks_cookfarm_"
 task_spt = TaskRegrST$new(
   id = "cookfarm", b, target = "PHIHOX",
   extra_args = list(
@@ -561,9 +581,8 @@ knitr::include_graphics("llto.png")
 
 ### Custom and grouped resampling --- mlr3 {#sec:custom-cv}
 
-<!--JM: you might want to delete the FIXME-->
-Support for user-defined partitioning strategies is built into \pkg{mlr3} directly since version 0.12.0 FIXME.
-Labelled as "Custom CV", users are able to supply an external factor vector with the same length as number of observations.
+Support for user-defined partitioning strategies is built into \pkg{mlr3} directly.
+In this so-called "Custom CV", users are able to supply an external factor vector with the same length as number of observations.
 This partitioning concept is also often referred to as "grouped resampling" and should not be mistaken with "group-level resampling" (section \@ref(sec:group-level)), which inherits additional aggregation of groups at the partition level.
 Each level of the factor vector will result in one partition.
 Alternatively to supplying an external factor vector, the name of a feature (type `character`) present within the task can be supplied via argument `col`.
@@ -776,12 +795,12 @@ The prediction purpose is the model's ability for which areas or zones it actual
 In the crop example given in section \@ref(sec:intro) this would be to distinguish and predict the crop type of 'new', unseen fields within an agricultural region.
 Hence, the CV partitioning is done at the field level to receive a honest estimate of the model's performance in a relevant predictive situation.
 
-There are various variables influencing the partitioning method choice for an environmental dataset:
+There are various factors that might influence the choice of a partitioning method:
 
-- Do natural groupings exists in the data? Examples include agricultural fields, forest stands, lithology types, etc.
+- Do natural groupings exists in the data? Examples include multi-level sampling designs, land management units, or other characteristics of the study area or sampling design that may induce random effects.
 - How dense are the observations scattered both in space and time?
-  The closer observations are in space and/or time, the more similar they are, and hence the greater is the effect of spatio-temporal autocorrelation.
-- Are some of the predictor variables under consideration known to be strongly autocorrelated such as air temperature or precipitation?
+  The closer observations are in space and/or time, the more similar they are, and hence the greater is the effect of spatio-temporal autocorrelation on performance estimates.
+- Are some of the predictor variables under consideration known to be strongly autocorrelated such as air temperature or precipitation at the regional level?
 
 Based on these criteria users should choose a matching partitioning method that is either more restrictive (by discarding observations for fold creation) or more liberal (by not removing observations and eventually ignoring natural grouping patterns).
 For almost all methods implemented in \pkg{mlr3spatiotempcv}, there is a scientific publication describing the application areas of the respective approach (either linked in the help file of the package or its respective upstream packages), hence we are refraining from repeating them again in this study.
@@ -831,7 +850,7 @@ One should try to refrain from selecting a value based on subjective notions wit
 <!-- group level CV vs custom CV -->
 \pkg{mlr3spatiotempcv} supports two factor-based partitioning schemes: "group-level resampling" and "custom resampling".
 Both are similar in that they require external user input for partition creation, i.e. a factor variable which assigns all observations into a distinct group.
-The idea of "custom resampling" is that each group becomes a test set in the CV.
+The idea of "custom resampling" is that each group becomes a test set in the CV (leave-one-group-out CV).
 By contrast, "group-level resampling" methods resample these initial groups: for example, users can supply an integer value to an argument named `fold` in the LLO method (e.g. `5L`) which combines the initial groups (e.g. $n = 20$) into their final fold-level partitions, which would result in four groups per partition [@meyer2018].
 The important point is that observations from within one group will either be assigned to the train or test set and never be split up.
 "Group-level resampling" can be, in contrast to "custom resampling", repeated multiple times because multiple different aggregations are possible in theory.
@@ -843,11 +862,6 @@ Over time, studies which have used this method mainly referenced it using the ge
 However, using this notation potentially introduces confusion as the term "spatial CV" is of a generic nature which refers to the idea of accounting for spatial autocorrelation in spatial datasets and does not necessarily refer to a specific partitioning method in the first place.
 Hence, in package \pkg{mlr3spatiotempcv} this method was named `"spcv_coords"`, making use of the fact that the spatial coordinates are used for a cluster-based partition creation.
 
-<!-- env block: hard to decide which variable to use for clustering -->
-<!-- env block: more than one variable may lead to unforeseeable results -->
-Method `"spcv_env"` is complicated to use in that it requires the user to limit the clustering to one or more variables [@blockCV].
-This implies that only this/these variable(s) suffer from autocorrelation and others are ignored.
-However, it is not possible to estimate how much a single variable accounts for the autocorrelation in the data and the same applies for estimating the influence of the non-accounted variables which might add substantial bias to the CV.
 
 ## Contributing new resampling methods
 
