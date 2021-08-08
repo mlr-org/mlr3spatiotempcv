@@ -45,7 +45,8 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: selection =
 
   rsmp = rsmp("spcv_block",
     range = 50000L,
-    selection = "checkerboard")
+    selection = "checkerboard",
+    folds = 2)
   rsmp$instantiate(task)
 
   testSF = test_make_blockCV_test_df()
@@ -107,6 +108,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer
 
   rsmp1 = rsmp("spcv_block",
     range = 50000L,
+    folds = 2,
     selection = "checkerboard",
     rasterLayer = rl)
   rsmp1$instantiate(task)
