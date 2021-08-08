@@ -126,19 +126,27 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       if (is.null(pv$cols) & is.null(pv$range)) {
         self$param_set$values$cols = self$param_set$default[["cols"]] # nocov
       }
-      if (is.null(self$param_set$selection)) {
+      if (is.null(pv$selection)) {
         self$param_set$values$selection = self$param_set$default[["selection"]]
       }
 
       # Check for valid combinations of rows, cols and folds
-      if (!is.null(self$param_set$values$row) &&
-        !is.null(self$param_set$values$cols)) {
+      if (!is.null(pv$row) &&
+        !is.null(pv$cols)) {
         # nocov start
-        if ((self$param_set$values$rows * self$param_set$values$cols) <
-          self$param_set$values$folds) {
+        if ((pv$rows * pv$cols) <
+          pv$folds) {
           stopf("'nrow' * 'ncol' needs to be larger than 'folds'.")
         }
         # nocov end
+      }
+
+      # checkerboard option only allows for two folds
+      if (self$param_set$values$selection == "checkerboard" &&
+        pv$folds > 2) {
+        mlr3misc::stopf("'selection = checkerboard' only allows for two folds.
+          Setting argument 'folds' to a value larger than would result in an empty test set.",
+          wrap = TRUE)
       }
 
       groups = task$groups
