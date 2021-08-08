@@ -82,8 +82,8 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
   expect_equal(rsmp$instance$fold[1:5000], testBlock$foldID)
 })
 
-test_that("Warning when selection = checkboard and folds > 2", {
+test_that("Error when selection = checkboard and folds > 2", {
   task = test_make_blockCV_test_task()
-  expect_warning(rsmp("repeated_spcv_block", range = 10000L,
+  expect_error(rsmp("repeated_spcv_block", range = 10000L,
     selection = "checkerboard", folds = 5)$instantiate(task))
 })

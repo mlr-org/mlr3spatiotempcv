@@ -144,8 +144,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       # checkerboard option only allows for two folds
       if (pv$selection == "checkerboard" &&
         pv$folds > 2) {
-        mlr3misc::warningf("'selection = checkerboard' only allows for two folds.
-          Setting argument 'folds' to a value larger than two has no effect.",
+        mlr3misc::stopf("'selection = checkerboard' only allows for two folds.
+          Setting argument 'folds' to a value larger than would result in an empty test set.",
           wrap = TRUE)
       }
 
