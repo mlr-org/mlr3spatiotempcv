@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 0.4.1.9002
+
+- `"spcv_block"`: Assert error if folds > 2 when `selection = "checkerboard"` (#150)
+
+
 # mlr3spatiotempcv 0.4.1.9001
 
 ## Breaking
