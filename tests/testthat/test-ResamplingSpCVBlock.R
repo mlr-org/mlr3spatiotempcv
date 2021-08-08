@@ -45,7 +45,8 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: selection =
 
   rsmp = rsmp("spcv_block",
     range = 50000L,
-    selection = "checkerboard")
+    selection = "checkerboard",
+    folds = 2)
   rsmp$instantiate(task)
 
   testSF = test_make_blockCV_test_df()
@@ -107,6 +108,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer
 
   rsmp1 = rsmp("spcv_block",
     range = 50000L,
+    folds = 2,
     selection = "checkerboard",
     rasterLayer = rl)
   rsmp1$instantiate(task)
@@ -124,4 +126,10 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer
   ))
 
   expect_equal(rsmp1$instance$fold, testBlock$foldID)
+})
+
+test_that("Error when selection = checkboard and folds > 2", {
+  task = test_make_blockCV_test_task()
+  expect_error(rsmp("spcv_block", range = 10000L,
+    selection = "checkerboard", folds = 5)$instantiate(task))
 })
