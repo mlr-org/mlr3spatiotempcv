@@ -110,6 +110,13 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
           stopf("'nrow' * 'ncol' needs to be larger than 'folds'.") # nocov
         }
       }
+      # checkerboard option only allows for two folds
+      if (self$param_set$values$selection == "checkerboard" &&
+        self$param_set$values$folds > 2) {
+        mlr3misc::warningf("'selection = checkerboard' only allows for two folds.
+          Setting argument 'folds' to a value larger than two has no effect.",
+          wrap = TRUE)
+      }
 
       groups = task$groups
 
