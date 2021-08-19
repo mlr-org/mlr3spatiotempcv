@@ -32,6 +32,7 @@ ecuador
 ENMeval
 Env
 EPSG
+errored
 familyName
 fileSize
 ggplot
@@ -41,6 +42,7 @@ github
 givenName
 gmail
 gridded
+GSIF
 href
 https
 inds
@@ -55,6 +57,7 @@ Lifecycle
 lmmisld
 lmu
 macos
+macOS
 marcbecker
 mattermost
 michellang
@@ -66,8 +69,10 @@ navbar
 NeedsCompilation
 orcid
 ORCID
+param
 params
 patrick
+pkgdown
 pkgdowntemplate
 plotly
 posteo
