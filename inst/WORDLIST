@@ -8,6 +8,7 @@ classif
 cloneable
 Cluto
 CLUTO
+CMD
 CodeFactor
 codemeta
 codeRepository
@@ -16,6 +17,7 @@ Config
 coords
 cran
 cre
+CRP
 crs
 CRS
 Cstf
@@ -52,6 +54,7 @@ lgr
 Lifecycle
 lmmisld
 lmu
+macos
 marcbecker
 mattermost
 michellang
