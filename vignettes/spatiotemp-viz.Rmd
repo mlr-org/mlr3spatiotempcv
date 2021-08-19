@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+on_mac = Sys.info()[["sysname"]] == "Darwin"
 ```
 
 ## 3D Visualization (spatiotemporal)
@@ -86,7 +87,7 @@ The following plots are based on a three fold partitioning of the [ecuador](http
 They do not claim to make sense or make use of useful settings - they only have a showcase purpose.
 The code which produced the plots can be found [here](https://github.com/mlr-org/mlr3spatiotempcv/blob/main/vignettes/spatiotemp-viz.Rmd).
 
-```{r, echo=FALSE, cache=TRUE, fig.width=10, fig.height=8}
+```{r, echo=FALSE, cache=TRUE, fig.width=10, fig.height=8, eval=!on_mac}
 library(patchwork)
 library(ggplot2)
 library(mlr3)
