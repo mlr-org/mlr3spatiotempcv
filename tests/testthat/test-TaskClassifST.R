@@ -39,3 +39,20 @@ test_that("sf objects can be used for task creation", {
   expect_data_table(task$coordinates())
   expect_output(print(task$truth()))
 })
+
+# https://github.com/mlr-org/mlr3spatiotempcv/issues/151
+test_that("tasks created from sf objects do not duplicate rows", {
+  data = test_make_sf_twoclass_df()
+
+  task = TaskClassifST$new(
+    id = "sp_regression",
+    backend = data,
+    target = "response",
+    extra_args = list(
+      coordinate_names = c("x", "y"),
+      crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
+      coords_as_features = FALSE)
+  )
+
+  expect_equal(nrow(task$data()), nrow(data))
+})
