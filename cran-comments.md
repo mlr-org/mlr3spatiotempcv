@@ -15,6 +15,6 @@ Check the boxes above after successful execution and remove this line. Then run 
 ## Current CRAN check results
 
 - [x] Checked on 2021-08-19, problems found: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
-- [ ] WARN: r-release-macos-arm64
+- [x] WARN: r-release-macos-arm64
 
 Check results at: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
