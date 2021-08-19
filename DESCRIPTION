@@ -45,7 +45,7 @@ Imports:
     utils
 Suggests:
     bbotk,
-    blockCV (>= 2.1.1),
+    blockCV (>= 2.1.4),
     caret,
     CAST,
     ggsci,
