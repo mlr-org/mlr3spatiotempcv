@@ -1,5 +1,17 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 1.0.0.9000
+
+- Add `autoplot()` support for `ResamplingCustomCV` (#140)
+* add autoplot() support for ResamplingCustomCV
+* require mlr3 and mlr3misc dev versions
+* update examples, remove `crs` argument
+* add tests
+* fix tests
+* doc
+- Fix row duplication when creating `TaskRegrST` tasks from `sf` objects (#152)
+
+
 # mlr3spatiotempcv 1.0.0
 
 - Add `autoplot()` support for `ResamplingCustomCV` (#140)
