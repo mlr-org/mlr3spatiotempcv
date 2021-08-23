@@ -2,6 +2,8 @@
 
 S3method(as_task_classif,TaskClassifST)
 S3method(as_task_classif_st,DataBackend)
+S3method(as_task_classif_st,DataBackendSf)
+S3method(as_task_classif_st,DataBackendSpatRaster)
 S3method(as_task_classif_st,TaskClassifST)
 S3method(as_task_classif_st,data.frame)
 S3method(as_task_classif_st,sf)

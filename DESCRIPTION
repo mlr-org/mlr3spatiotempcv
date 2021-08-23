@@ -54,6 +54,7 @@ Suggests:
     lgr,
     mlr3filters,
     mlr3pipelines,
+    mlr3spatial (>= 0.0.0.9000),
     mlr3tuning,
     patchwork,
     plotly,
@@ -64,11 +65,14 @@ Suggests:
     sf,
     skmeans,
     sperrorest,
+    terra,
     testthat (>= 3.0.0),
     vdiffr (>= 1.0.0),
     withr
 VignetteBuilder:
     knitr
+Remotes: 
+    mlr-org/mlr3spatial
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Encoding: UTF-8

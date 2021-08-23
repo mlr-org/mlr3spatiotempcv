@@ -134,6 +134,7 @@ SystemRequirements
 TaskClassif
 TaskClassifST
 TaskRegrST
+terra
 testthat
 tidymodels
 tooltip

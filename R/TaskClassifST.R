@@ -65,17 +65,6 @@ TaskClassifST = R6::R6Class("TaskClassifST",
 
       assert_string(target)
 
-      # support for 'sf' tasks
-      if (inherits(backend, "sf")) {
-        extra_args$crs = sf::st_crs(backend)$input
-        coordinates = sf::st_coordinates(backend)
-        # ensure a point feature has been passed
-        checkmate::assert_character(as.character(sf::st_geometry_type(backend, by_geometry = FALSE)), fixed = "POINT") # nolint
-        backend = sf::st_set_geometry(backend, NULL)
-        backend = cbind(backend, coordinates)
-        extra_args$coordinate_names = colnames(coordinates)
-      }
-
       super$initialize(
         id = id, backend = backend, target = target,
         positive = positive, extra_args = extra_args)
@@ -120,7 +109,15 @@ TaskClassifST = R6::R6Class("TaskClassifST",
         # Return coords in task$data order
         rows = self$row_ids
       }
-      self$backend$data(rows = rows, cols = self$extra_args$coordinate_names)
+      # DataBackendSf does not include the coordinates as columns whereas a TaskClassifST from an {sf} object does :/
+      if (inherits(self$backend, "DataBackendSf")) {
+        return(sf::st_coordinates(self$backend$coordinates)[rows, ])
+      }
+      if (!is.null(self$extra_args$coordinate_names)) {
+        self$backend$data(rows = rows, cols = self$extra_args$coordinate_names)
+      } else {
+        stopf("'extra_args$coordinate_names' is not set in the Task. Unable to retrieve coordinates.")
+      }
     },
 
     #' @description
