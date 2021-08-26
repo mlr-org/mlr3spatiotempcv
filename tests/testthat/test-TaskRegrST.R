@@ -11,3 +11,22 @@ test_that("printing works", {
   expect_data_table(task$coordinates())
   expect_output(print(task$truth()))
 })
+
+# https://github.com/mlr-org/mlr3spatiotempcv/issues/151
+test_that("tasks created from sf objects do not duplicate rows", {
+  data = test_make_sp()
+  data$p_1 = c(rep("A", 18), rep("B", 18))
+  data$response = rnorm(36)
+
+  task = TaskRegrST$new(
+    id = "sp_regression",
+    backend = data,
+    target = "response",
+    extra_args = list(
+      coordinate_names = c("x", "y"),
+      crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
+      coords_as_features = FALSE)
+  )
+
+  expect_equal(nrow(task$data()), nrow(data))
+})

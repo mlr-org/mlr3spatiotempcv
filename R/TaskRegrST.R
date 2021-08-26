@@ -42,7 +42,7 @@ TaskRegrST = R6::R6Class("TaskRegrST",
         # ensure a point feature has been passed
         checkmate::assert_character(as.character(sf::st_geometry_type(backend, by_geometry = FALSE)), fixed = "POINT") # nolint
         backend = sf::st_set_geometry(backend, NULL)
-        backend = merge(backend, coordinates)
+        backend = cbind(backend, coordinates)
         extra_args$coordinate_names = colnames(coordinates)
       }
 

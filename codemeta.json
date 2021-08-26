@@ -1,27 +1,26 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "mlr3spatiotempcv",
   "description": "Extends the mlr3 ML framework with spatio-temporal resampling\n    methods to account for the presence of spatiotemporal autocorrelation\n    (STAC) in predictor variables. STAC may cause highly biased\n    performance estimates in cross-validation if ignored.",
   "name": "mlr3spatiotempcv: Spatiotemporal Resampling Methods for 'mlr3'",
   "codeRepository": "https://github.com/mlr-org/mlr3spatiotempcv",
-  "relatedLink": [
-    "https://mlr3spatiotempcv.mlr-org.com/",
-    "https://mlr3book.mlr-org.com",
-    "https://CRAN.R-project.org/package=mlr3spatiotempcv"
-  ],
+  "relatedLink": ["https://mlr3spatiotempcv.mlr-org.com/", "https://mlr3book.mlr-org.com"],
   "issueTracker": "https://github.com/mlr-org/mlr3spatiotempcv/issues",
   "license": "https://spdx.org/licenses/LGPL-3.0",
-  "version": "0.4.0.9000",
+  "version": "1.0.0.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.0 Patched (2021-06-03 r80456)",
+  "runtimePlatform": "R version 4.1.1 (2021-08-10)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
   "author": [
     {
       "@type": "Person",
@@ -54,8 +53,6 @@
       "@id": "https://orcid.org/0000-0001-9754-0393"
     }
   ],
-  "copyrightHolder": {},
-  "funder": {},
   "maintainer": [
     {
       "@type": "Person",
@@ -82,7 +79,7 @@
       "@type": "SoftwareApplication",
       "identifier": "blockCV",
       "name": "blockCV",
-      "version": ">= 2.1.1",
+      "version": ">= 2.1.4",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -237,6 +234,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "rgdal",
+      "name": "rgdal",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rgdal"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "rmarkdown",
       "name": "rmarkdown",
       "provider": {
@@ -312,6 +321,7 @@
       "@type": "SoftwareApplication",
       "identifier": "vdiffr",
       "name": "vdiffr",
+      "version": ">= 1.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -333,14 +343,14 @@
       "sameAs": "https://CRAN.R-project.org/package=withr"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
       "version": ">= 3.5.0"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "checkmate",
       "name": "checkmate",
@@ -352,7 +362,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=checkmate"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "data.table",
       "name": "data.table",
@@ -364,7 +374,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=data.table"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
@@ -376,33 +386,33 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ggplot2"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "mlr3",
       "name": "mlr3",
-      "version": ">= 0.7.0",
+      "version": ">= 0.12.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=mlr3"
+      "sameAs": "https://github.com/mlr-org/mlr3"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "mlr3misc",
       "name": "mlr3misc",
-      "version": ">= 0.7.0",
+      "version": ">= 0.9.2",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=mlr3misc"
+      "sameAs": "https://github.com/mlr-org/mlr3misc"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "paradox",
       "name": "paradox",
@@ -414,7 +424,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=paradox"
     },
-    {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "R6",
       "name": "R6",
@@ -426,30 +436,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
     },
-    {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
-    }
-  ],
-  "releaseNotes": "https://github.com/mlr-org/mlr3spatiotempcv/blob/master/NEWS.md",
-  "readme": "https://github.com/mlr-org/mlr3spatiotempcv/blob/main/README.md",
-  "fileSize": "13837.861KB",
-  "contIntegration": "https://codecov.io/github/mlr-org/mlr3spatiotempcv?branch=main",
-  "developmentStatus": "https://lifecycle.r-lib.org/articles/stages.html",
-  "keywords": [
-    "mlr3",
-    "resampling",
-    "spatial",
-    "cross-validation",
-    "temporal",
-    "resampling-methods",
-    "r"
-  ],
-  "provider": {
-    "@id": "https://cran.r-project.org",
-    "@type": "Organization",
-    "name": "Comprehensive R Archive Network (CRAN)",
-    "url": "https://cran.r-project.org"
-  }
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "29760.973KB"
 }
