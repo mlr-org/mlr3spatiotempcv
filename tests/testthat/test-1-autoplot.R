@@ -85,9 +85,9 @@ test_that("plot() works for 'custom_cv'", {
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p3))
 
-  vdiffr::expect_doppelganger("CV all test sets", p1)
-  vdiffr::expect_doppelganger("CV - Fold 1", p2)
-  vdiffr::expect_doppelganger("CV - Fold 1-2", p3)
+  vdiffr::expect_doppelganger("Custom-CV all test sets", p1)
+  vdiffr::expect_doppelganger("Custom-CV - Fold 1", p2)
+  vdiffr::expect_doppelganger("Custom-CV - Fold 1-2", p3)
 })
 
 # spcv_coords ------------------------------------------------------------------

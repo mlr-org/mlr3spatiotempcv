@@ -1,18 +1,35 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
-# mlr3spatiotempcv 0.4.1.9002
+# mlr3spatiotempcv 1.0.0.9000
 
-- `"spcv_block"`: Assert error if folds > 2 when `selection = "checkerboard"` (#150)
+- Add `autoplot()` support for `ResamplingCustomCV` (#140)
+* add autoplot() support for ResamplingCustomCV
+* require mlr3 and mlr3misc dev versions
+* update examples, remove `crs` argument
+* add tests
+* fix tests
+* doc
+- Fix row duplication when creating `TaskRegrST` tasks from `sf` objects (#152)
 
 
-# mlr3spatiotempcv 0.4.1.9001
+# mlr3spatiotempcv 1.0.0
 
 ## Breaking
 
-- `autoplot()`: remove argument `crs`. The CRS is now inferred from the supplied Task. Setting a different CRS than the task might lead to spurious issues and the initial idea of changing the CRS for plotting to have proper axes labeling does not apply (anymore) (#144)
+- `autoplot()`: removed argument `crs`. 
+  The CRS is now inferred from the supplied Task. 
+  Setting a different CRS than the task might lead to spurious issues and the initial idea of changing the CRS for plotting to have proper axes labeling does not apply (anymore) (#144)
 
+## Features
 
-# mlr3spatiotempcv 0.4.1
+- Added `autoplot()` support for `ResamplingCustomCV` (#140)
+
+## Bug fixes
+
+- `"spcv_block"`: Assert error if folds > 2 when `selection = "checkerboard"` (#150)
+- Fixed row duplication when creating `TaskRegrST` tasks from `sf` objects (#152)
+
+## Miscellaneous
 
 - Upgrade tests to {vdiffr} 1.0.0
 - Add {rgdal} to suggests and required it in `"spcv_block"` since it is required in {blockCV} >= 2.1.4 and {sf} >= 1.0

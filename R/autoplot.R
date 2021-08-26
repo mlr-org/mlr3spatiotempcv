@@ -1710,8 +1710,8 @@ autoplot_custom_cv = function(
       dt[, indicator := ifelse(fold == .x, "Test", "Train")]
 
       sf_df = sf::st_as_sf(dt,
-        coords = task$extra_args$coordinate_names,
-        crs = task$extra_args$crs)
+          coords = task$extra_args$coordinate_names,
+          crs = task$extra_args$crs)
 
       sf_df = reorder_levels(sf_df)
 
@@ -1749,8 +1749,8 @@ autoplot_custom_cv = function(
     # Create one plot colored by all test folds --------------------------------
 
     sf_df = sf::st_as_sf(coords_resamp,
-      coords = task$extra_args$coordinate_names,
-      crs = task$extra_args$crs)
+        coords = task$extra_args$coordinate_names,
+        crs = task$extra_args$crs)
 
     # order fold ids
     sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
