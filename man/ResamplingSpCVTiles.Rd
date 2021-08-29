@@ -94,7 +94,7 @@ values stored in the \code{param_set}.}
 \subsection{Method \code{new()}}{
 Create a "Spatial 'Tiles' resampling" resampling instance.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVTiles$new(id = "spcv_Tiles")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVTiles$new(id = "spcv_tiles")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
