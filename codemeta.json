@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.1 (2021-08-10)",
+  "runtimePlatform": "R version 4.1.1 Patched (2021-08-27 r80829)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -443,5 +443,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "28805.41KB"
+  "fileSize": "28804.024KB"
 }

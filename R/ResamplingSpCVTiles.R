@@ -33,7 +33,7 @@ ResamplingSpCVTiles = R6Class("ResamplingSpCVTiles",
     #'   Identifier for the resampling strategy.
     #' For a list of available arguments, please see
     #' [sperrorest::partition_tiles].
-    initialize = function(id = "spcv_Tiles") {
+    initialize = function(id = "spcv_tiles") {
       ps = ParamSet$new(params = list(
         ParamUty$new("dsplit", custom_check = function(x) checkmate::assert_integer(x, len = 2)),
         ParamUty$new("nsplit", custom_check = function(x) checkmate::assert_integer(x, len = 2)),
