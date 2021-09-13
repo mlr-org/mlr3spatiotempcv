@@ -63,6 +63,30 @@ test_that("plot() works for 'repeated-cv'", {
   vdiffr::expect_doppelganger("RepCV - Fold 1, Rep 2", p5)
 })
 
+test_that("plot() works for 'cv' with 'groups' col role", {
+  skip_if_not_installed("vdiffr")
+  set.seed(42)
+
+  # create dataset with blocking from example dataset
+  task = tsk("ecuador")
+  data_raw = task$backend$data(1:task$nrow, task$feature_names)
+  group = as.factor(sample(c("class1", "class2", "class3", "class4", "class5",
+    "class6", "class7", "class8"),
+  task$nrow, replace = TRUE))
+  task$cbind(data.table::data.table("group" = group))
+  task$set_col_roles("group", roles = "group")
+
+  cv = rsmp("cv", folds = 4)$instantiate(task)
+
+  p1 = autoplot(cv, task)
+  p2 = autoplot(cv, task, fold_id = 1)
+  p3 = autoplot(cv, task, fold_id = c(1, 2))
+
+  vdiffr::expect_doppelganger("CV - All test sets - groups col role", p1)
+  vdiffr::expect_doppelganger("CV - Fold 1 - groups col role", p2)
+  vdiffr::expect_doppelganger("CV - Fold 1,2 - groups col role", p3)
+})
+
 # custom cv --------------------------------------------------------------------
 
 test_that("plot() works for 'custom_cv'", {
