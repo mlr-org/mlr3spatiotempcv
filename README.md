@@ -56,3 +56,37 @@ This list does not claim to be comprehensive.
 | sperrorest    | R        | [Paper](https://doi.org/10.1109%2Figarss.2012.6352393), [CRAN](https://cran.r-project.org/package=sperrorest)                                                          |
 | Pyspatialml   | Python   | [GitHub](https://github.com/stevenpawley/Pyspatialml)                                                                                                                                  |
 | spacv         | Python   | [GitHub](https://github.com/SamComber/spacv)                                                                                                                                           |
+
+# FAQ
+
+<details>
+  <summary>Which resampling method should I use?</summary>
+  <br>
+    There is no single-best resampling method. It depends on your dataset characteristics and what your model should is about to predict on.
+    The resampling scheme should reflect the final purpose of the model - this concept is called "target-oriented" resampling.
+    For example, if the model was trained on multiple forest plots and its purpose is to predict something on unknown forest stands, the resampling structure should reflect this.
+</details>
+
+<details>
+  <summary>Are there more resampling methods than the one {mlr3spatiotempcv} offers?</summary>
+  <br>
+    {mlr3spatiotempcv} aims to offer all resampling methods that exist in R.
+    Though this does not mean that it covers all resampling methods.
+    If there are some that you are missing, feel free to open an issue.
+</details>
+
+<details>
+  <summary>How can I use the "blocking" concept of the old {mlr}?</summary>
+  <br>
+    This concept is now supported via the "column roles" concept available in {mlr3} [Task](https://mlr3.mlr-org.com/reference/Task.html) objects.
+    See [this documentation](https://mlr3.mlr-org.com/reference/Resampling.html#grouping-blocking) for more information.
+</details>
+
+<details>
+  <summary>For the methods that offer buffering, how can an appropriate value be chosen?</summary>
+  <br>
+  There is no easy answer to this question. Buffering train and test sets reduces the similarity between both.
+  The degree of this reduction depends on the dataset itself and there is no general approach how to choosen an appropriate buffer size.
+  Some studies used the distance at which the autocorrelation levels off.
+  This buffer distance often removes quite a lot of observations and needs to be calculated first.
+</details>
