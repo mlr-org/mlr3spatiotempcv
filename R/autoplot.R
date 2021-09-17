@@ -1303,7 +1303,18 @@ autoplot_spatial = function(
     repeats_id = 1
   }
 
-  coords_resamp = merge(coords, rsmp_autopl$instance, by = "row_id")
+  if (!is.null(task$groups)) {
+    coords_resamp = merge(coords, task$groups, by = "row_id")
+    rsmp_autopl$instance$row_id = as.character(rsmp_autopl$instance$row_id)
+    rsmp_autopl$instance$group = rsmp_autopl$instance$row_id
+    rsmp_autopl$instance$row_id = NULL
+    coords_resamp$group = as.character(coords_resamp$group)
+    coords_resamp = merge(coords_resamp, rsmp_autopl$instance, by = "group", all = TRUE)
+    setorder(coords_resamp, "row_id")
+    coords_resamp$group = NULL
+  } else {
+    coords_resamp = merge(coords, rsmp_autopl$instance, by = "row_id")
+  }
 
   if (grepl("Repeated", class(rsmp_autopl)[1])) {
     coords_resamp = coords_resamp[rep == repeats_id, ]
@@ -1710,8 +1721,8 @@ autoplot_custom_cv = function(
       dt[, indicator := ifelse(fold == .x, "Test", "Train")]
 
       sf_df = sf::st_as_sf(dt,
-          coords = task$extra_args$coordinate_names,
-          crs = task$extra_args$crs)
+        coords = task$extra_args$coordinate_names,
+        crs = task$extra_args$crs)
 
       sf_df = reorder_levels(sf_df)
 
@@ -1749,8 +1760,8 @@ autoplot_custom_cv = function(
     # Create one plot colored by all test folds --------------------------------
 
     sf_df = sf::st_as_sf(coords_resamp,
-        coords = task$extra_args$coordinate_names,
-        crs = task$extra_args$crs)
+      coords = task$extra_args$coordinate_names,
+      crs = task$extra_args$crs)
 
     # order fold ids
     sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]

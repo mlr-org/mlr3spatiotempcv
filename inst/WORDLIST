@@ -8,6 +8,7 @@ blockCV
 blothe
 bootswatch
 brenning
+Brenning
 BugReports
 classif
 cloneable
@@ -53,6 +54,7 @@ EPSG
 errored
 familyName
 fileSize
+Geoscience
 ggplot
 ggsci
 ggtext
@@ -87,14 +89,10 @@ LLO
 LLTO
 lmmisld
 lmu
-<<<<<<< HEAD
 lto
 LTO
 macos
-=======
-macos
 macOS
->>>>>>> main
 marcbecker
 mathbb
 mathbf
