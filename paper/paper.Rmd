@@ -269,7 +269,8 @@ A finer distinction can then be made by looking at how these groups are formed b
 - Using an unsupervised clustering approach
 - Using a custom/external input, i.e. specifying the groups via an external grouping variable
 
-The terminology "block" used in this categorization and in the manuscript in general refers to any kind of regular and irregularly shaped grouping of observations and not necessarily only to a rectangular partitioning as used in some methods.
+The terminology "block" used in this categorization and in the manuscript in general refers to any kind of regular and irregularly shaped grouping of observations which divides the study area into different zones [russ2010; @bahn2012; @wenger2012].
+This is different to the meaning of rectangular-only partitioning within some specific resampling methods [@blockCV].
 
 <!-- explain and introduce buffering -->
 The use of a buffer is not a direct grouping characteristic of a partitioning method in our view but only an optional add-on which could potentially be used by any method.
