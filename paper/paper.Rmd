@@ -302,11 +302,24 @@ Background data is used for training the model by default unless argument `addBG
 Due to its similarity to a LOO CV, this method will result in as many train/test evaluations as observations are present.
 In the visualization of the first fold in Figure&nbsp;\@ref(fig:buffer) a buffer zone of 1000 m was used without any custom presence/absence treatment of the data.
 
-```{r buffer, fig.cap='Visualization of the spatial buffering method from package blockCV (method "spcv\\_buffer" in  mlr3spatiotempcv). The buffer distance is 1000 m.', out.width="40%", fig.pos="ht"}
-resampling_buffer = rsmp("spcv_buffer", theRange = 1000)
-resampling_buffer$instantiate(task)
+```{r buffer-non-eval, eval=FALSE}
+library("mlr3")
+library("mlr3spatiotempcv")
+task = tsk("ecuador")
+rsmp_buffer = rsmp("spcv_buffer", theRange = 1000)
+rsmp_buffer$instantiate(task)
 
-autoplot(resampling_buffer,
+autoplot(rsmp_buffer, size = 0.8, task = task, fold_id = 1)
+```
+
+```{r buffer-eval, fig.cap='Visualization of the spatial buffering method from package blockCV (method "spcv\\_buffer" in  mlr3spatiotempcv). The buffer distance is 1000 m.', out.width="40%", fig.pos="ht",echo=FALSE}
+library("mlr3")
+library("mlr3spatiotempcv")
+task = tsk("ecuador")
+rsmp_buffer = rsmp("spcv_buffer", theRange = 1000)
+rsmp_buffer$instantiate(task)
+
+autoplot(rsmp_buffer,
   size = 0.8, task = task, fold_id = 1) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
@@ -330,14 +343,23 @@ In contrast, "geometric" methods do not take into account single observation loc
 Leave-one-disc-out resampling becomes spatial LOO CV for a radius of 0 m and when each observation is at a unique location.
 
 <!-- AB: TODO: folds = 5 makes very little sense in the case of LODO-CV, since this would only sample 5 discs, which cover only a small fraction of the study area. Let's use folds = 100, this will at least make readers think about their choice of #folds. -->
-```{r disc, fig.cap='Visualization of one training set / test set combination generated with the leave-one-disc-out method from package sperrorest (method "spcv\\_disc" in mlr3spatiotempcv). The disc has a radius of 300 m and is surrounded by a 400-m buffer.', out.width="40%"}
+
+```{r disc-non-eval, eval=FALSE}
+rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
+rsmp_disc$instantiate(task)
+
+autoplot(rsmp_disc,
+  size = 0.8, task = task, fold_id = 1)
+```
+
+```{r disc-eval, fig.cap='Visualization of one training set / test set combination generated with the leave-one-disc-out method from package sperrorest (method "spcv\\_disc" in mlr3spatiotempcv). The disc has a radius of 300 m and is surrounded by a 400-m buffer.', out.width="40%", echo=FALSE,fig.pos="hb"}
 library("mlr3")
 library("mlr3spatiotempcv")
 task = tsk("ecuador")
-resampling_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
-resampling_disc$instantiate(task)
+rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
+rsmp_disc$instantiate(task)
 
-autoplot(resampling_disc,
+autoplot(rsmp_disc,
   size = 0.8, task = task, fold_id = 1) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
@@ -362,10 +384,16 @@ Nevertheless, despite the random selection of initial cluster centers, repeated 
 Also, $k$-means clustering may be less suitable for data sets with pre-existing clusters of points and/or with distant isolated sample locations.
 When distinct clusters of points are present, as in multi-level sampling, it may be better to define clusters using a factor variable (see method `"custom_cv"` in section \@ref(sec:custom-cv)).
 
-```{r coords, fig.cap='Leave-one-block-out CV based on $k$-means clustering of the coordinates as implemented in package sperrorest (method "spcv\\_coords" in mlr3spatiotempcv).', out.width="40%", fig.pos="ht"}
-resampling_coords = rsmp("spcv_coords", folds = 5)$instantiate(task)
+```{r coords-non-eval, eval=FALSE}
+rsmp_coords = rsmp("spcv_coords", folds = 5)$instantiate(task)
 
-autoplot(resampling_coords,
+autoplot(rsmp_coords, size = 0.8, fold_id = 1, task = task)
+```
+
+```{r coords-eval, fig.cap='Leave-one-block-out CV based on $k$-means clustering of the coordinates as implemented in package sperrorest (method "spcv\\_coords" in mlr3spatiotempcv).', out.width="40%", fig.pos="ht", echo=FALSE}
+rsmp_coords = rsmp("spcv_coords", folds = 5)$instantiate(task)
+
+autoplot(rsmp_coords,
   size = 0.8, fold_id = 1, task = task) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
@@ -380,10 +408,16 @@ Block size or number is specified via the argument `dsplit` or `nsplit`, respect
 Note that the actual number of folds obtained may be smaller than `nsplit[1]*nsplit[2]` (or smaller than what would be expected based on `dsplit`) since some blocks may be empty or (optionally) merged into adjacent folds.
 In the example, there are only eleven folds instead of twelve because the southwestern part of the study area's bounding box does not contain observations  (Figure&nbsp;\@ref(fig:tile)).
 
-```{r tile, fig.cap='Leave-one-block-out resampling from package sperrorest (method "spcv\\_tiles" in package mlr3spatiotempcv with argument nsplit = c(3,4) indicating the number of rows and columns).', out.width="40%", fig.pos="ht"}
-resampling_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
+```{r tile-non-eval, eval=FALSE}
+rsmp_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
 
-autoplot(resampling_tiles,
+autoplot(rsmp_tiles, size = 0.8, fold_id = 1, task = task)
+```
+
+```{r tile, fig.cap='Leave-one-block-out resampling from package sperrorest (method "spcv\\_tiles" in package mlr3spatiotempcv with argument nsplit = c(3,4) indicating the number of rows and columns).', out.width="40%", fig.pos="ht", echo=FALSE}
+rsmp_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
+
+autoplot(rsmp_tiles,
   size = 0.8, fold_id = 1, task = task) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
@@ -400,14 +434,24 @@ Alternatively to supplying an external factor vector, the name of a feature (typ
 The following example was taken from `sperrorest::partition_factor()` because the resulting partitions separate nicely from each other in a visual way.
 
 <!-- TODO: AB: This diagram is inconsistent with the other diagrams - should display training and test samples. -->
-```{r custom-cv, fig.cap='Leave-one-level-out (custom) resampling from package mlr3 (method "custom\\_cv"). A factor variable is used to define the partitions. Each color represents one partition.', out.width="40%", fig.pos="ht"}
+```{r custom-cv-non-eval, eval=FALSE}
 breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
 zclass = cut(task$data()$dem, breaks, include.lowest = TRUE)
 
-resampling_custom = rsmp("custom_cv")
-resampling_custom$instantiate(task, f = zclass)
+rsmp_custom = rsmp("custom_cv")
+rsmp_custom$instantiate(task, f = zclass)
 
-autoplot(resampling_custom, size = 0.8, task = task) *
+autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1)
+```
+
+```{r custom-cv, fig.cap='Leave-one-level-out (custom) resampling from package mlr3 (method "custom\\_cv"). A factor variable is used to define the partitions. Each color represents one partition.', out.width="40%", fig.pos="ht", echo=FALSE}
+breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
+zclass = cut(task$data()$dem, breaks, include.lowest = TRUE)
+
+rsmp_custom = rsmp("custom_cv")
+rsmp_custom$instantiate(task, f = zclass)
+
+autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
@@ -426,10 +470,17 @@ Users can also supply a user-defined polygon via argument `rasterLayer` with pre
 Block sizes (in meters) are determined by the `range` argument.
 Alternatively, rectangular blocks can be created by specifying the number of desired rows and columns (arguments `rows` and `cols`).
 
-```{r block-random, fig.cap='Random resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "random" in mlr3spatiotempcv). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht"}
-resampling_block_random = rsmp("spcv_block", range = 1000, folds = 5)
+```{r block-random-non-eval, eval=FALSE}
+rsmp_block_random = rsmp("spcv_block", range = 1000, folds = 5)
 
-autoplot(resampling_block_random,
+autoplot(rsmp_block_random, size = 0.8, fold_id = 1, task = task,
+  show_blocks = TRUE, show_labels = TRUE)
+```
+
+```{r block-random, fig.cap='Random resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "random" in mlr3spatiotempcv). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht", echo=FALSE}
+rsmp_block_random = rsmp("spcv_block", range = 1000, folds = 5)
+
+autoplot(rsmp_block_random,
   size = 0.8, fold_id = 1, task = task,
   show_blocks = TRUE, show_labels = TRUE) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
@@ -439,13 +490,23 @@ autoplot(resampling_block_random,
 In systematic resampling, the blocks are numbered row by row, and blocks $i+j\cdot\texttt{folds}$ are assigned to fold $i$.
 This may create undesired patterns when the number of columns is equal to or a multiple of the number of folds.
 
-```{r block-systematic, fig.cap='Sytematic resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "systematic" in mlr3spatiotempcv). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht"}
-resampling_block_systematic = rsmp("spcv_block",
+```{r block-systematic-non-eval, eval=FALSE}
+rsmp_block_systematic = rsmp("spcv_block",
   range = 1000, folds = 5,
   selection = "systematic"
 )
 
-autoplot(resampling_block_systematic,
+autoplot(rsmp_block_systematic, size = 0.8, fold_id = 1, task = task,
+  show_blocks = TRUE, show_labels = TRUE)
+```
+
+```{r block-systematic, fig.cap='Sytematic resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "systematic" in mlr3spatiotempcv). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht", echo=FALSE}
+rsmp_block_systematic = rsmp("spcv_block",
+  range = 1000, folds = 5,
+  selection = "systematic"
+)
+
+autoplot(rsmp_block_systematic,
   size = 0.8, fold_id = 1, task = task,
   show_blocks = TRUE, show_labels = TRUE) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
@@ -472,11 +533,11 @@ The text previously stated that the range argument is ignored. This can't be tru
 AB: Checkerboard pattern is just a special case of a systematic pattern and likely not of great practical relevance because there are only two folds -> omit figure.
 
 ```{r block-checkerboard, fig.cap='Checkerboard resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "checkerboard" in mlr3spatiotempcv). The size of the squares is 1000 m, and eleven out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht!"}
-resampling_block_checkerboard = rsmp("spcv_block",
+rsmp_block_checkerboard = rsmp("spcv_block",
   range = 1000, folds = 2,
   selection = "checkerboard")
 
-autoplot(resampling_block_checkerboard,
+autoplot(rsmp_block_checkerboard,
   size = 0.8, fold_id = 1, task = task,
   show_blocks = TRUE, show_labels = TRUE) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
@@ -493,11 +554,11 @@ AB: This figure and subsubsubsection takes up a lot of space for very little add
 
 
 ```{r block-rows-and-cols, fig.cap='Random resampling of a specifid number of rectangular blocks as implemented in package blockCV (method "spcv\\_block" in mlr3spatiotempcv with arguments rows = 6 and cols = 3).', out.width="40%", fig.pos="ht"}
-resampling_block_rows_cols = rsmp("spcv_block",
+rsmp_block_rows_cols = rsmp("spcv_block",
   rows = 6, cols = 3, folds = 5
 )
 
-autoplot(resampling_block_rows_cols,
+autoplot(rsmp_block_rows_cols,
   size = 0.8, fold_id = 1, task = task,
   show_blocks = TRUE, show_labels = TRUE) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
@@ -531,27 +592,41 @@ To avoid a potential bias introduced by features with high variance when selecti
 
 The following example clusters by feature "distance to forest".
 
-```{r env-1, fig.cap='Environmental leave-one-block-out CV from package blockCV using a single predictor to define blocks in feature space (method "spcv\\_env" in mlr3spatiotempcv with argument features = "distdeforest").', out.width="40%", fig.pos="ht"}
-resampling_env = rsmp("spcv_env",
-  features = "distdeforest", folds = 5)
+```{r env-1-non-eval, eval=FALSE}
+rsmp_env = rsmp("spcv_env", features = "distdeforest", folds = 5)
 
-autoplot(resampling_env,
-  size = 0.8, fold_id = 1, task = task) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+rsmp_env_multi = rsmp("spcv_env", features = c("distdeforest", "slope"), folds = 5)
+
+plot_env_single = autoplot(rsmp_env, size = 0.8, fold_id = 1, task = task)
+
+plot_env_multi = autoplot(rsmp_env_multi, size = 0.8, fold_id = 1, task = task)
+
+library("patchwork")
+plot_env_single + plot_env_multi
 ```
 
 It is also possible to cluster based on multiple features:
 
 <!-- TODO: AB: should be combined with the previous figure into a two-panel figure. Differences are much easier to recognize if plotted next to each other. -->
-```{r env-2, fig.cap='Environmental leave-one-block-out CV from package blockCV using two predictors to define blocks in feature space (method "spcv\\_env" in mlr3spatiotempcv with argument features = c("distdeforest", "slope")).', out.width="40%", fig.pos="ht"}
-resampling_env_multi = rsmp("spcv_env",
+```{r env-1-eval, fig.cap='Environmental leave-one-block-out CV from package blockCV using one (left, "distdeforest") and two (right, "distdeforest" and "slope") predictors to define blocks in the feature space.', out.width="100%", fig.pos="ht", echo=FALSE}
+rsmp_env = rsmp("spcv_env",
+  features = "distdeforest", folds = 5)
+
+rsmp_env_multi = rsmp("spcv_env",
   features = c("distdeforest", "slope"), folds = 5)
 
-autoplot(resampling_env_multi,
-  size = 0.8, fold_id = 1, task = task) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+plot_env_single = autoplot(rsmp_env,
+  size = 0.6, fold_id = 1, task = task) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02))
+
+plot_env_multi = autoplot(rsmp_env_multi,
+  size = 0.6, fold_id = 1, task = task) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02))
+
+library("patchwork")
+plot_env_single + plot_env_multi + plot_layout(guides = 'collect')
 ```
 <!-- AB: TODO: In general, the code would look much simpler if we could get rid of the scale_x/y_continuous() calls. Improve default settings of autoplot()? -->
 
@@ -597,10 +672,10 @@ task_spt = TaskRegrST$new(
     crs = 26911)
 )
 
-resampling_cstf_time = rsmp("sptcv_cstf", folds = 5, time_var = "Date")
-resampling_cstf_time$instantiate(task_spt)
+rsmp_cstf_time = rsmp("sptcv_cstf", folds = 5, time_var = "Date")
+rsmp_cstf_time$instantiate(task_spt)
 
-autoplot(resampling_cstf_time,
+autoplot(rsmp_cstf_time,
   fold_id = 5, task = task_spt, plot3D = TRUE
 )
 ```
@@ -615,10 +690,10 @@ Method "Leave-Location-Out" (LLO) works similar to "Leave-Time-Out" (LTO) in tha
 Here, specific locations are left out individually for forming test partitions while the temporal information is ignored (Figure&nbsp;\@ref(fig:llo)).
 
 ```{r results='hide'}
-resampling_cstf_loc = rsmp("sptcv_cstf", folds = 5, space_var = "SOURCEID")
-resampling_cstf_loc$instantiate(task_spt)
+rsmp_cstf_loc = rsmp("sptcv_cstf", folds = 5, space_var = "SOURCEID")
+rsmp_cstf_loc$instantiate(task_spt)
 
-autoplot(resampling_cstf_loc,
+autoplot(rsmp_cstf_loc,
   fold_id = 5, task = task_spt, plot3D = TRUE)
 ```
 
@@ -636,12 +711,12 @@ In other words, accounting for one dimension as in Figure&nbsp;\@ref(fig:lto) or
 Thus, the removal of observation can be seen as a proxied buffering in multiple dimensions as shown in Figure&nbsp;\@ref(fig:llto).
 
 ```{r results='hide'}
-resampling_cstf_time_loc = rsmp("sptcv_cstf",
+rsmp_cstf_time_loc = rsmp("sptcv_cstf",
   folds = 5,
   space_var = "SOURCEID", time_var = "Date")
-resampling_cstf_time_loc$instantiate(task_spt)
+rsmp_cstf_time_loc$instantiate(task_spt)
 
-autoplot(resampling_cstf_time_loc,
+autoplot(rsmp_cstf_time_loc,
   fold_id = 4, task = task_spt, plot3D = TRUE,
   show_omitted = TRUE)
 ```
@@ -725,8 +800,6 @@ task = TaskClassifST$new(
 )
 ```
 
-
-
 ## Model preparation
 
 Next, the random forest learner (`"classif.ranger"`) is initialized with default hyperparameters and the prediction type is set to `"probability"` because the model is used for soft classification.
@@ -743,19 +816,21 @@ learner = lrn("classif.ranger", predict_type = "prob")
 A resampling is generated in \pkg{mlr3} with the `rsmp()` function, which is used to generate a resampling object for four-fold non-spatial CV with two repetitions.
 The object is constructed and instantiated with its `$instantiate()` method.
 
-Next, the created resampling object `resampling_nsp` is passed to function `resample()` together with the task and learner objects created earlier to execute the model assessment.
+Next, the created resampling object `rsmp_nsp` is passed to function `resample()` together with the task and learner objects created earlier to execute the model assessment.
 This is the actual, potentially time-consuming CV estimation. With the present settings, eight random forest classifiers are fitted and evaluated in this step.
 
 Model performances are calculated from the CV predictions using the AUROC (`"classif.auc"` in \pkg{mlr3} notation).
 
-```{r rr-nspcv, cache.lazy = FALSE}
-resampling_nsp = rsmp("repeated_cv", folds = 4, repeats = 2)
-resampling_nsp$instantiate(task)
+```{r rr-nspcv-1, cache.lazy = FALSE, results='hide'}
+rsmp_nsp = rsmp("repeated_cv", folds = 4, repeats = 2)
+rsmp_nsp$instantiate(task)
 rr_nsp = resample(
   task = task, learner = learner,
-  resampling = resampling_nsp
+  resampling = rsmp_nsp
 )
+```
 
+```{r rr-nspcv-2, cache.lazy = FALSE}
 rr_nsp$aggregate(measures = msr("classif.auc"))
 ```
 
@@ -763,14 +838,16 @@ rr_nsp$aggregate(measures = msr("classif.auc"))
 
 The model assessment is now repeated using spatial CV resampling, for which we only need to replace `"repeated_cv"` with `"repeated_spcv_coords"`.
 
-```{r rr-spcv, cache.lazy = FALSE}
-resampling_sp = rsmp("repeated_spcv_coords", folds = 4, repeats = 2)
-resampling_sp$instantiate(task)
+```{r rr-spcv-1, cache.lazy = FALSE, results='hide'}
+rsmp_sp = rsmp("repeated_spcv_coords", folds = 4, repeats = 2)
+rsmp_sp$instantiate(task)
 rr_sp = resample(
   task = task, learner = learner,
-  resampling = resampling_sp
+  resampling = rsmp_sp
 )
+```
 
+```{r rr-spcv-2, cache.lazy = FALSE}
 rr_sp$aggregate(measures = msr("classif.auc"))
 ```
 
@@ -778,15 +855,22 @@ rr_sp$aggregate(measures = msr("classif.auc"))
 
 Finally, we visualize the partitions that were used during performance estimation making use of the generic `autoplot()` function in package \pkg{mlr3spatiotempcv} (Figure&nbsp;\@ref(fig:vis-spcv)).
 
+```{r vis-spcv-non-eval, eval=FALSE}
+autoplot(rsmp_sp, task, fold_id = c(1:2), size = 0.8)
+```
 
-```{r vis-spcv, fig.cap="Spatial leave-one-block-out partitioning using coordinate-based clustering to create roughly equally sized polygonal blocks. Due to space limitations only the first two folds of the first repetition are shown.", fig.pos="ht", fig.height=6, fig.width=8}
-autoplot(resampling_sp, task, fold_id = c(1:2), size = 0.8) *
+```{r vis-spcv-eval, fig.cap="Spatial leave-one-block-out partitioning using coordinate-based clustering to create roughly equally sized polygonal blocks. Due to space limitations only the first two folds of the first repetition are shown.", fig.pos="ht", fig.height=6, fig.width=8, echo=FALSE}
+autoplot(rsmp_sp, task, fold_id = c(1:2), size = 0.8) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-```{r vis-nspcv, fig.cap="Random (non-spatial) four-fold CV partitioning. Only the first two folds of the first repetition are shown.", fig.pos="ht", fig.height=6, fig.width=8}
-autoplot(resampling_nsp, task, fold_id = c(1:2), size = 0.8) *
+```{r vis-nspcv-non-eval, eval=FALSE}
+autoplot(rsmp_nsp, task, fold_id = c(1:2), size = 0.8)
+```
+
+```{r vis-nspcv-eval, fig.cap="Random (non-spatial) four-fold CV partitioning. Only the first two folds of the first repetition are shown.", fig.pos="ht", fig.height=6, fig.width=8, echo=FALSE}
+autoplot(rsmp_nsp, task, fold_id = c(1:2), size = 0.8) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
