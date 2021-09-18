@@ -343,8 +343,6 @@ In contrast, "geometric" methods do not take into account single observation loc
 
 Leave-one-disc-out resampling becomes spatial LOO CV for a radius of 0 m and when each observation is at a unique location.
 
-<!-- AB: TODO: folds = 5 makes very little sense in the case of LODO-CV, since this would only sample 5 discs, which cover only a small fraction of the study area. Let's use folds = 100, this will at least make readers think about their choice of #folds. -->
-
 ```{r disc-non-eval, eval=FALSE}
 rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
 rsmp_disc$instantiate(task)
@@ -434,7 +432,6 @@ Alternatively to supplying an external factor vector, the name of a feature (typ
 
 The following example was taken from `sperrorest::partition_factor()` because the resulting partitions separate nicely from each other in a visual way.
 
-<!-- TODO: AB: This diagram is inconsistent with the other diagrams - should display training and test samples. -->
 ```{r custom-cv-non-eval, eval=FALSE}
 breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
 zclass = cut(task$data()$dem, breaks, include.lowest = TRUE)
@@ -734,10 +731,8 @@ set.seed(42)
 The task `"ecuador"` is available in \pkg{mlr3spatiotempcv} through `tsk("ecuador")`.
 To set it up manually, we proceed as follows:
 
-<!-- AB: TODO: The comment says that b$hash is optional, but the reader will not know what it is good for. A more verbose comment would be helpful, maybe 'optional task identifier' or whatever the hash name may be good for. -->
 ```{r create-task}
 b = mlr3::as_data_backend(ecuador)
-b$hash = "_mlr3_tasks_ecuador_" # optional
 task = TaskClassifST$new(
   id = "ecuador", b, target = "slides", positive = "TRUE",
   extra_args = list(
