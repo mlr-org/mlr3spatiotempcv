@@ -280,7 +280,9 @@ Buffering is mostly applied in the coordinate space.
 However, there is no practical limitation that would prevent this method to be applied in a 2D + time setting.
 Since \pkg{mlr3spatiotempcv} supports two spatial-only "buffering" implementations, (1) `"spcv\_buffer"` from package \pkg{blockCV} and (2) `"spcv\_disc"` from \pkg{sperrorest}, buffering was attributed to the category of spatial partitioning methods (Table&nbsp;\@ref(tab:sptcv-methods)).
 
-<!-- FIXME: graphic here -->
+```{r rsmp-schema, echo=FALSE, fig.cap="Conceptual overview of various spatial partitioning schemas. Starting from unpartioned spatial observations (top left) either a spatial block partitioning or a 'spatial leave-one-out resampling' is applied in the first step. A spatial block partitioning can further be turned into a 'leave-one-block-out resampling' or a 'k-fold CV resampling at the block level'. The use of a buffer is theoretically possible in any scenario but in practice only offered by specific method implementations.", out.width="100%",fig.pos="ht"}
+knitr::include_graphics("pdf/rsmp-schema.pdf")
+```
 
 ## Spatial Leave-one-out
 
@@ -301,7 +303,7 @@ When setting argument `spDataType = "PB"`, the method only considers the *presen
 Background data is used for training the model by default unless argument `addBG = FALSE` is set for which only *presence* values not falling within the buffer zone of the respective fold are used for model training.
 
 Due to its similarity to a LOO CV, this method will result in as many train/test evaluations as observations are present.
-In the visualization of the first fold in Figure&nbsp;\@ref(fig:buffer) a buffer zone of 1000 m was used without any custom presence/absence treatment of the data.
+In the visualization of the first fold in Figure&nbsp;\@ref(fig:buffer-eval) a buffer zone of 1000 m was used without any custom presence/absence treatment of the data.
 
 ```{r buffer-non-eval, eval=FALSE}
 library("mlr3")
@@ -422,7 +424,7 @@ autoplot(rsmp_tiles,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-### Custom: `"custom_cv"` in mlr3
+### Custom: `"custom_cv"` in mlr3 {#sec:custom-cv}
 
 Support for user-defined partitioning strategies is built into \pkg{mlr3} directly.
 In this so-called "Custom CV", users are able to supply an external factor vector with the same length as number of observations.
@@ -624,7 +626,7 @@ autoplot(rsmp_cstf_time,
 ```
 
 ```{r lto, echo=FALSE, out.width="70%", fig.cap='Perspective plot of leave-time-out CV from package CAST (method "sptcv\\_cstf" and argument time\\_var = "Date"). Only five folds and five time points were used in this example. Note that the blue dots correspond to five discrete time levels, which appear as a point cloud due to the viewing angle.', fig.pos="ht"}
-knitr::include_graphics("lto.png")
+knitr::include_graphics("png/lto.png")
 ```
 
 #### Leave-Location-Out (LLO)
@@ -641,7 +643,7 @@ autoplot(rsmp_cstf_loc,
 ```
 
 ```{r llo, echo=FALSE, out.width="70%", fig.cap='Perspective plot of leave-location-out CV from package CAST (method "sptcv\\_cstf" and argument space\\_var = "SOURCEID"). The data is viewed from the future towards the past.', fig.pos="ht"}
-knitr::include_graphics("llo.png")
+knitr::include_graphics("png/llo.png")
 ```
 
 #### Leave-Location-and-Time-Out (LLTO)
@@ -665,7 +667,7 @@ autoplot(rsmp_cstf_time_loc,
 ```
 
 ```{r llto, echo=FALSE, out.width="70%", fig.cap='Perspective plot of leave-location-and-time-out CV from package CAST (method "sptcv\\_cstf" and arguments time\\_var = "Date" and space\\_var = "SOURCEID"). The grey points are excluded from both the training and the test set in this fold.', fig.pos="ht"}
-knitr::include_graphics("llto.png")
+knitr::include_graphics("png/llto.png")
 ```
 
 ### Clustering: using CLUTO --- `"sptcv_cluto"`
@@ -684,12 +686,6 @@ With respect to functionality, \pkg{mlr3spatiotempcv} supports two-dimensional c
 <!-- (1) "Spatial blocking" from package \pkg{blockCV} implements $k$-fold CV resampling at the level of square or rectangular blocks, while (2) "Spatial tiles" from \pkg{sperrorest} offers leave-one-block-out resampling with square or rectangular, possibly rotated blocks. -->
 <!-- In addition, irregularly shaped blocks are available (3) through coordinate-based clustering as a leave-one-block-out technique from \pkg{sperrorest} (method `"spcv_coords"`, Section&nbsp;\@ref(sec:cluster-cv)), and (4) as a CV at the block level where blocks are defined by a factor variable that defines zones or groups (method `"custom_cv"` in \pkg{mlr3}, Section&nbsp;\@ref(sec:custom-cv)). -->
 
-
-
-### Clustering-based resampling {#sec:cluster-cv}
-
-
-
 # Step-by-step example: Comparing spatial and non-spatial CV {#sec:case-study}
 
 We use a well-known case study to demonstrate the application of spatial and non-spatial resampling techniques for model assessment in \pkg{mlr3spatiotempcv}.
@@ -700,7 +696,7 @@ Random forest is used as a classifier, and the area under the ROC curve (AUROC) 
 
 Spatial CV is implemented in the form of leave-one-block-out CV using coordinate-based $k$-means clustering to generate  irregularly shaped blocks of roughly equal size.
 This approach is better suited for the shape of the present study area than a rectangular partitioning.
-Figures&nbsp;\@ref(fig:vis-spcv)) and&nbsp;\@ref(fig:vis-nspcv)) show the contrasting distributions of training and test samples.
+Figures&nbsp;\@ref(fig:vis-spcv-eval)) and&nbsp;\@ref(fig:vis-nspcv-eval)) show the contrasting distributions of training and test samples.
 For demonstration purposes we use only four CV folds and two repetitions.
 
 
@@ -794,7 +790,7 @@ rr_sp$aggregate(measures = msr("classif.auc"))
 
 ## Visualization of CV partitions
 
-Finally, we visualize the partitions that were used during performance estimation making use of the generic `autoplot()` function in package \pkg{mlr3spatiotempcv} (Figure&nbsp;\@ref(fig:vis-spcv)).
+Finally, we visualize the partitions that were used during performance estimation making use of the generic `autoplot()` function in package \pkg{mlr3spatiotempcv} (Figure&nbsp;\@ref(fig:vis-spcv-eval)).
 
 ```{r vis-spcv-non-eval, eval=FALSE}
 autoplot(rsmp_sp, task, fold_id = c(1:2), size = 0.8)
