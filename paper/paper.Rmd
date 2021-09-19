@@ -310,7 +310,6 @@ library("mlr3")
 library("mlr3spatiotempcv")
 task = tsk("ecuador")
 rsmp_buffer = rsmp("spcv_buffer", theRange = 1000)
-rsmp_buffer$instantiate(task)
 
 autoplot(rsmp_buffer, size = 0.8, task = task, fold_id = 1)
 ```
@@ -320,7 +319,7 @@ library("mlr3")
 library("mlr3spatiotempcv")
 task = tsk("ecuador")
 rsmp_buffer = rsmp("spcv_buffer", theRange = 1000)
-rsmp_buffer$instantiate(task)
+rsmp_buffer
 
 autoplot(rsmp_buffer,
   size = 0.8, task = task, fold_id = 1) *
@@ -347,18 +346,17 @@ Leave-one-disc-out resampling becomes spatial LOO CV for a radius of 0 m and whe
 
 ```{r disc-non-eval, eval=FALSE}
 rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
-rsmp_disc$instantiate(task)
+rsmp_disc
 
-autoplot(rsmp_disc,
-  size = 0.8, task = task, fold_id = 1)
+autoplot(rsmp_disc, size = 0.8, task = task, fold_id = 1)
 ```
 
-```{r disc-eval, fig.cap='Visualization of one training set / test set combination generated with the leave-one-disc-out method from package sperrorest (method "spcv\\_disc" in mlr3spatiotempcv). The disc has a radius of 300 m and is surrounded by a 400-m buffer.', out.width="40%", echo=FALSE,fig.pos="hb"}
+```{r disc-eval, fig.cap='Visualization of one training set / test set combination generated with the leave-one-disc-out method from package sperrorest (method "spcv\\_disc" in mlr3spatiotempcv). The disc has a radius of 300 m and is surrounded by a 400-m buffer.', out.width="40%", echo=FALSE,fig.pos="ht"}
 library("mlr3")
 library("mlr3spatiotempcv")
 task = tsk("ecuador")
 rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
-rsmp_disc$instantiate(task)
+rsmp_disc
 
 autoplot(rsmp_disc,
   size = 0.8, task = task, fold_id = 1) *
@@ -386,13 +384,13 @@ Also, $k$-means clustering may be less suitable for data sets with pre-existing 
 When distinct clusters of points are present, as in multi-level sampling, it may be better to define clusters using a factor variable (see method `"custom_cv"` in section \@ref(sec:custom-cv)).
 
 ```{r coords-non-eval, eval=FALSE}
-rsmp_coords = rsmp("spcv_coords", folds = 5)$instantiate(task)
+rsmp_coords = rsmp("spcv_coords", folds = 5)
 
 autoplot(rsmp_coords, size = 0.8, fold_id = 1, task = task)
 ```
 
 ```{r coords-eval, fig.cap='Leave-one-block-out CV based on $k$-means clustering of the coordinates as implemented in package sperrorest (method "spcv\\_coords" in mlr3spatiotempcv).', out.width="40%", fig.pos="ht", echo=FALSE}
-rsmp_coords = rsmp("spcv_coords", folds = 5)$instantiate(task)
+rsmp_coords = rsmp("spcv_coords", folds = 5)
 
 autoplot(rsmp_coords,
   size = 0.8, fold_id = 1, task = task) *
@@ -444,7 +442,7 @@ rsmp_custom$instantiate(task, f = zclass)
 autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1)
 ```
 
-```{r custom-cv, fig.cap='Leave-one-level-out (custom) resampling from package mlr3 (method "custom\\_cv"). A factor variable is used to define the partitions. Each color represents one partition.', out.width="40%", fig.pos="ht", echo=FALSE}
+```{r custom-cv, fig.cap='Leave-one-level-out (custom) resampling from package mlr3 (method "custom\\_cv"). A factor variable is used to define all partitions.', out.width="40%", fig.pos="ht", echo=FALSE}
 breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
 zclass = cut(task$data()$dem, breaks, include.lowest = TRUE)
 
@@ -492,8 +490,7 @@ This may create undesired patterns when the number of columns is equal to or a m
 
 ```{r block-systematic-non-eval, eval=FALSE}
 rsmp_block_systematic = rsmp("spcv_block",
-  range = 1000, folds = 5,
-  selection = "systematic"
+  range = 1000, folds = 5, selection = "systematic"
 )
 
 autoplot(rsmp_block_systematic, size = 0.8, fold_id = 1, task = task,
@@ -513,22 +510,56 @@ autoplot(rsmp_block_systematic,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-
 The *checkerboard* partitioning is a special case of a systematic block partitioning (`selection = "checkerboard"`).
 It inherently supports only two folds, making it less appealing than the more commonly used five- or ten-fold resampling, which achieve larger training set sizes.
  
 ### Custom: `"cv"` in mlr3 {#sec:group-level}
 
-Group-level CV is based on the idea that an inherent grouping structure is present the observations or the sampling design in space and/or in time, which can be used to determine partitions.
-In contrast to blocking or clustering, the spatial or temporal location is not used explicitly, but additional metadata is exploited such as the membership in a specific agricultural management unit [@brenning2006], or in a site in hierarchical sampling [@kasurak2011].
-<!--
-This has also been referred to as "target-oriented validation" [@cast].
-FIXME:
-AB: I don't think I agree with this. My interpretation of the Meyer paper was that in the Meyer paper, locations or time points are the targets. Fields consist of many grid cells, at multiple location.
--->
-Even though flexibility with respect to fold creation is limited due to the inherited grouping structure within the data, some implementations allow to specify the resulting number of folds by omitting parts of the dataset.
+The `"cv"` resampling strategy performs random, non-spatial partitioning.
+To use it in a spatiotemporal context, one can set the "group" column role in a mlr3 Task object for specific variable(s).
+This tells the resampling strategy to honor these grouping(s) during partitioning.
+In the final folds, these groups of observations will either belong to the test or training set and by this create possibly spatiotemporal resampling folds.
 
-\pkg{mlr3spatiotempcv} supports two "grouping" implementations: (1) The "leave-location-and-time-out" family from package \pkg{CAST} and (2) "custom resampling" from the \pkg{mlr3} package.
+The idea is to make use of inherent grouping structure in the observations or the sampling design in space and/or in time to determine partitions.
+In contrast to geometric blocking or clustering, the spatial or temporal location is not used explicitly, but additional metadata is exploited such as the membership in a specific agricultural management unit [@brenning2006], or in a site in hierarchical sampling [@kasurak2011].
+In \pkg{mlr} this concept was called "blocking".
+
+In the following example we create a custom grouping of eight classes using a kmeans clustering.
+Note that in practice usually the group creation would not be done in an unsupervised way but by making use of an inherent grouping information from the dataset.
+To showcase the honoring of the groups a uneven amount of folds (with respect to the number of groups) is requested.
+The test set in the first and second fold is composed out of three groups while the third fold is only made up from two groups.
+
+```{r cv-non-eval-1, eval=FALSE}
+task_cv = tsk("ecuador")
+group = as.factor(kmeans(task$coordinates(), 8)$cluster)
+task_cv$cbind(data.frame("group" = group))
+task_cv$set_col_roles("group", roles = "group")
+
+rsmp_cv_group = rsmp("cv", folds = 3)$instantiate(task_cv)
+
+print(rsmp_cv_group$instance)
+```
+
+```{r cv-non-eval-2, fig.cap='Cross-Validation at the block level including predefined groups from package mlr3 (method "cv"). A factor variable is used to define the grouping. Each class is either assigned to the test or training set.', out.width="40%", fig.pos="ht", eval=FALSE}
+autoplot(rsmp_cv_group, size = 0.8, task = task_cv, fold_id = 1)
+```
+
+```{r cv-eval-1, echo=FALSE}
+task_cv = tsk("ecuador")
+group = as.factor(kmeans(task$coordinates(), 8)$cluster)
+task_cv$cbind(data.frame("group" = group))
+task_cv$set_col_roles("group", roles = "group")
+
+rsmp_cv_group = rsmp("cv", folds = 3)$instantiate(task_cv)
+
+print(rsmp_cv_group$instance)
+```
+
+```{r cv-eval-2, fig.cap='Cross-Validation at the block level including predefined groups from package mlr3 (method "cv"). A factor variable is used to define the grouping. Each class is either assigned to the test or training set.', out.width="40%", fig.pos="ht", echo=FALSE}
+autoplot(rsmp_cv_group, size = 0.8, task = task_cv, fold_id = 1) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+```
 
 ### Clustering: using feature-based clustering --- `"spcv_env"`
 
@@ -545,9 +576,9 @@ rsmp_env = rsmp("spcv_env", features = "distdeforest", folds = 5)
 
 rsmp_env_multi = rsmp("spcv_env", features = c("distdeforest", "slope"), folds = 5)
 
-plot_env_single = autoplot(rsmp_env, size = 0.8, fold_id = 1, task = task)
+plot_env_single = autoplot(rsmp_env, size = 0.5, fold_id = 1, task = task)
 
-plot_env_multi = autoplot(rsmp_env_multi, size = 0.8, fold_id = 1, task = task)
+plot_env_multi = autoplot(rsmp_env_multi, size = 0.5, fold_id = 1, task = task)
 
 library("patchwork")
 plot_env_single + plot_env_multi
@@ -555,7 +586,7 @@ plot_env_single + plot_env_multi
 
 It is also possible to cluster based on multiple features:
 
-```{r env-1-eval, fig.cap='Environmental leave-one-block-out CV from package blockCV using one (left, "distdeforest") and two (right, "distdeforest" and "slope") predictors to define blocks in the feature space.', out.width="100%", fig.pos="ht", echo=FALSE}
+```{r env-1-eval, fig.cap='Environmental leave-one-block-out CV from package blockCV using one (left, "distdeforest") and two (right, "distdeforest" and "slope") predictors to define blocks in the feature space. Due to feature space clustering observations are not (necessarily) grouped in the spatial domain.', out.width="100%", fig.pos="ht", echo=FALSE}
 rsmp_env = rsmp("spcv_env",
   features = "distdeforest", folds = 5)
 
@@ -563,17 +594,17 @@ rsmp_env_multi = rsmp("spcv_env",
   features = c("distdeforest", "slope"), folds = 5)
 
 plot_env_single = autoplot(rsmp_env,
-  size = 0.6, fold_id = 1, task = task) *
+  size = 0.5, fold_id = 1, task = task) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02))
 
 plot_env_multi = autoplot(rsmp_env_multi,
-  size = 0.6, fold_id = 1, task = task) *
+  size = 0.5, fold_id = 1, task = task) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02))
 
 library("patchwork")
-plot_env_single + plot_env_multi + plot_layout(guides = 'collect')
+plot_env_single + plot_env_multi + plot_layout(guides = "collect")
 ```
 
 ## Cross-Validation for spatiotemporal data
@@ -666,7 +697,7 @@ autoplot(rsmp_cstf_time_loc,
   show_omitted = TRUE)
 ```
 
-```{r llto, echo=FALSE, out.width="70%", fig.cap='Perspective plot of leave-location-and-time-out CV from package CAST (method "sptcv\\_cstf" and arguments time\\_var = "Date" and space\\_var = "SOURCEID"). The grey points are excluded from both the training and the test set in this fold.', fig.pos="ht"}
+```{r llto, echo=FALSE, out.width="70%", fig.cap='Perspective plot of leave-location-and-time-out CV from package CAST (method "sptcv\\_cstf" and arguments time\\_var = "Date" and space\\_var = "SOURCEID"). The grey points are excluded from both the training and the test set in this fold.', fig.pos="h"}
 knitr::include_graphics("png/llto.png")
 ```
 
@@ -728,9 +759,9 @@ The task `"ecuador"` is available in \pkg{mlr3spatiotempcv} through `tsk("ecuado
 To set it up manually, we proceed as follows:
 
 ```{r create-task}
-b = mlr3::as_data_backend(ecuador)
+backend = mlr3::as_data_backend(ecuador)
 task = TaskClassifST$new(
-  id = "ecuador", b, target = "slides", positive = "TRUE",
+  id = "ecuador", backend = backend, target = "slides", positive = "TRUE",
   extra_args = list(
     coordinate_names = c("x", "y"), coords_as_features = FALSE,
     crs = "EPSG:32717")
@@ -760,7 +791,7 @@ Model performances are calculated from the CV predictions using the AUROC (`"cla
 
 ```{r rr-nspcv-1, cache.lazy = FALSE, results='hide'}
 rsmp_nsp = rsmp("repeated_cv", folds = 4, repeats = 2)
-rsmp_nsp$instantiate(task)
+rsmp_nsp
 rr_nsp = resample(
   task = task, learner = learner,
   resampling = rsmp_nsp
@@ -777,7 +808,7 @@ The model assessment is now repeated using spatial CV resampling, for which we o
 
 ```{r rr-spcv-1, cache.lazy = FALSE, results='hide'}
 rsmp_sp = rsmp("repeated_spcv_coords", folds = 4, repeats = 2)
-rsmp_sp$instantiate(task)
+rsmp_sp
 rr_sp = resample(
   task = task, learner = learner,
   resampling = rsmp_sp
