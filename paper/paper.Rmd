@@ -843,19 +843,18 @@ autoplot(rsmp_nsp, task, fold_id = c(1:2), size = 0.8) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-## Summary
+## Interpretation
 
-The non-spatial CV estimate of AUC (0.76) is around 0.13 better compared to the spatial CV estimate of 0.64.
-The better performance results from over-optimism in the estimation with non-spatial CV.
-Spatial CV, in contrast, provides a better measure of a model's ability to generalize from the training sample --- in this case study, from the specific hillslopes and historical landslides in the training sample.
-It is also expected that spatial CV results better reflect the performance of a model on new, spatially separate data.
+The non-spatial CV estimate of AUC (0.76) is around 0.13 higher compared to the spatial CV estimate of 0.64.
+The higher non-spatial CV value results from over-optimism in the estimation with non-spatial CV and does imply better performance.
+Spatial CV, in contrast, provides a better/more accurate measure of a model's ability to generalize from the training sample --- in this case study, from the specific hillslopes and historical landslides in the training sample.
+It is also expected that spatial CV results reflect a more honest performance of a model on new, spatially separate data.
 The magnitude of the difference between spatial and non-spatial CV estimates may depend on the dataset, the strength on spatial or spatiotemporal autocorrelation, and the learner itself.
 Algorithms with a higher tendency to overfit to the training set will tend to have a larger spread in such scenarios.
 
 <!-- AB: TODO: Check if the following paragraphs overlaps with the Discussion section; perhaps merge into Discussion. -->
 Since spatial CV can also be used for hyperparameter tuning in the \pkg{mlr3} framework, the model can be optimized to show an improved performance in a specific predictive setting [@schratz2019].
-This may, for example, involve a reduced maximum tree depth in the Ecuador case study, since this leads to stronger generalization and reduced overfitting.
-
+This may, for example, involve a reduced maximum tree depth in the Ecuador case study, since this parameter leads to stronger generalization and reduced overfitting.
 
 # Discussion {#sec:disc}
 
