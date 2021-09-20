@@ -861,16 +861,17 @@ This may, for example, involve a reduced maximum tree depth in the Ecuador case 
 ## Choosing a resampling method
 
 The question which resampling method should be chosen for a prediction task and dataset at hand comes up regularly in practice.
-Even though there is no definitive and easy answer, we would like to give some guidance in this section to help find an appropriate method.
+Even though there is and will be no definitive answer to this, we would like to give some guidance in this section to help finding an appropriate method.
 
-Although the case study example in section \@ref(sec:case-study) used the `"spcv_coords"` method, this should not imply that this method is the best or only method suitable for this example task.
+Although the case study example in section \@ref(sec:case-study) used the `"spcv_coords"` method, this should not give the impression that this method is the best or only method suitable for this example task.
 Even though this method is frequently used, it was mainly chosen because of its clear visual grouping differences when comparing spatial to random partitioning.
 Another advantage is its ability to adapt to the irregularly shaped study area of this example.
 Last, there are no obvious spatial groupings to our knowledge which need to be accounted for, also with respect to prediction purposes of the fitted model.
+Hence, this method is a valid choice for the given dataset.
 
 Most often multiple spatial partitioning methods can be used for a dataset.
 It is recommended (required) to make oneself familiar with the available methods and to decide on one based on the specific characteristics of the dataset at hand and the prediction purpose of the fitted model.
-The prediction purpose is the model's ability for which areas or zones it actually can make predictions.
+The prediction purpose is the model's ability for which areas or zones it actually can make predictions for.
 In the crop example given in section \@ref(sec:intro) this would be to distinguish and predict the crop type of 'new', unseen fields within an agricultural region.
 Hence, the CV partitioning is done at the field level to receive a honest estimate of the model's performance in a relevant predictive situation.
 
@@ -892,13 +893,13 @@ See @schratz2019 for more details as well as chapter 11 of [Geocomputation with 
 
 ## Comparing and discussing spatiotemporal resampling methods
 
-Even though the prediction purpose should be the first decision criteria for choosing an appropriate spatiotemporal resampling method, we would like to discuss the individual methods in more detail in the following section.
+Even though the prediction purpose should be the main decision criteria for choosing an appropriate spatiotemporal resampling method, we would like to discuss the individual methods in more detail in the following section.
 
 <!-- high autocor on the border of test sets -->
 <!-- sptcv LLTO: discards many observations -->
 All methods which make use of all variables in the dataset suffer from the problem that on the border between train and test sets, both in the spatial and temporal domain, autocorrelation is relatively high (unless the dataset inherits natural groupings or gaps between train and test sets).
 Methods that omit some observations (`"spcv_buffer"`, `"spcv_tiles"`, `"sptcv_cstf"` with both `space_var` and `time_var` set) are able to reduce the impact of autocorrelation in scenarios without a clear grouping or sufficient distance between train and test set observations.
-The downside is the removal of observations from the dataset which possibly reduces the generalization power of the trained model and by this, depending on the specific observations that were removed, adds substantial bias to the CV results.
+The downside is the removal of observations from the dataset which possibly reduces the power of the trained model and by this, depending on the specific observations that were removed, adds substantial bias to the CV results.
 
 <!-- spcv_block: how to set argument `range`` -->
 Method `"spcv_block"` requires the user to supply a value for argument `range` which denotes the block size used to create the blocking scheme across the study area.
@@ -913,7 +914,7 @@ Also, if the selected variable contains too many groups, the difference within t
 
 <!-- only some methods are suited for repeated execution -->
 <!-- spcv_coords: limited variance due to limited k-means possibilities -->
-For repeated executions of method `spcv_coords`, the variance between repetitions can become quite small due to the limited possibilities of differing $k$-means-based clusters on the same dataset [@brenning2012].
+For repeated executions of method `"spcv_coords"`, the variance between repetitions can become quite small due to the limited possibilities of differing $k$-means-based clusters on the same dataset [@brenning2012].
 This applies even more to `"spcv_block"` with options `selection = "systematic"` and `selection = "checkerboard"` as the fold assignments are the same in each repetition.
 In general, only methods making use of a random component (e.g. `"spcv_coords"` or `"spcv_block"` with option `selection = "random"`) may be suited for using multiple repetitions.
 On the upside, `"spcv_coords"` works well with irregularly shaped study areas due to its ability to create partitions which adjust well to the shape of the study area.
@@ -925,14 +926,14 @@ In addition it comes with the downsides of a LOO-CV: many model fits which can b
 If a large buffer size is chosen relative to the size of the study area, a large portion of it will remain unsampled.
 One should try to refrain from selecting a value based on subjective notions with respect to study area characteristics.
 
-<!-- group level CV vs custom CV -->
-\pkg{mlr3spatiotempcv} supports two factor-based partitioning schemes: "group-level resampling" and "custom resampling".
-Both are similar in that they require external user input for partition creation, i.e. a factor variable which assigns all observations into a distinct group.
-The idea of "custom resampling" is that each group becomes a test set in the CV (leave-one-group-out CV).
-By contrast, "group-level resampling" methods resample these initial groups: for example, users can supply an integer value to an argument named `fold` in the LLO method (e.g. `5L`) which combines the initial groups (e.g. $n = 20$) into their final fold-level partitions, which would result in four groups per partition [@meyer2018].
-The important point is that observations from within one group will either be assigned to the train or test set and never be split up.
-"Group-level resampling" can be, in contrast to "custom resampling", repeated multiple times because multiple different aggregations are possible in theory.
-However, it also requires the number of initial groups to be substantially higher than the number of folds so that a sensible aggregation is possible in the first place.
+<!-- cv vs custom_cv -->
+\pkg{mlr3spatiotempcv} supports two factor-based partitioning schemes: `"cv"` (with column role `"groups"` set) and `"custom_cv"`.
+Both are similar in that they require external user input for partition creation, i.e. a factor variable which assigns all observations into distinct groups.
+The idea of `"custom_cv"` is that each group becomes a test set in the CV (leave-one-group-out CV).
+By contrast, method `"cv"` (with column role `"groups"` set) resamples the initial groups and performs CV at the block level.
+The important point for method "cv" is that observations from a specific group will either be assigned to the train or test set and never be split up.
+In contrast to method `"custom_cv"`, this approach can be repeated multiple times because multiple different fold combinations are possible.
+However, it also requires the number of initial groups to be (substantially) higher than the number of folds so that a sensible combination is possible in the first place.
 
 <!-- spcv coords: mention generic name -->
 In @brenning2012, which is the reference commonly used for the $k$-means-based spatial partitioning approach, the method was not introduced with a unique name.
