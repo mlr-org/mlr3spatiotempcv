@@ -941,7 +941,6 @@ Over time, studies which have used this method mainly referenced it using the ge
 However, using this notation potentially introduces confusion as the term "spatial CV" is of a generic nature which refers to the idea of accounting for spatial autocorrelation in spatial datasets and does not necessarily refer to a specific partitioning method in the first place.
 Hence, in package \pkg{mlr3spatiotempcv} this method was named `"spcv_coords"`, making use of the fact that the spatial coordinates are used for a cluster-based partition creation.
 
-
 ## Contributing new resampling methods
 
 <!-- discuss pros and cons of implementing methods in a standalone pkg vs a framework -->
@@ -959,10 +958,8 @@ Often, such ecosystems store their results in specialized classes, which make it
 
 # Conclusion and outlook
 
-<!-- missing: Guidelines how to choose a resampling method -->
-<!-- AB: I don't think we can present such guidelines in this paper, I think we discussed this recently and agreed that we will not propose such guidelines, we should rather focus on the methods and their implementation -->
 The \pkg{mlr3spatiotempcv} package is the first package to bundle and categorize spatiotemporal resampling methods implemented in multiple other packages in R.
-The available resampling techniques allow the users to vary the scale or granularity of the resampled spatial units as well as their shape and possible buffer distance between training and test samples.
+The available resampling techniques allow the users to vary the scale or granularity of the resampled spatiotemporal units as well as their shape and possible buffer distance between training and test samples.
 These settings may account for the specific characteristics of spatiotemporal prediction tasks, but modelers now have to make the important decision of choosing a method that is adequate for their situation.
 They are advised to focus on the spatial or spatiotemporal structure of the model's prediction task, consider the structure of the learning sample at hand, and think about how the autocorrelation between training and test samples might affect their model assessment and selection.
 
