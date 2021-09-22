@@ -223,34 +223,34 @@ The available methods are further discussed in section \@ref(sec:disc).
   \centering
   \footnotesize
   \caption[t]{Spatiotemporal resampling methods available in the mlr3 ecosystem.
-    Column name shows the mlr3 method name as found in the `mlr3::mlr\_resamplings` dictionary.
-    Column "Count" refers to the number of studies which were found to have used this resampling technique until May 2021.
-    Literature appearances were only collected for methods with a "spcv" or "sptcv" prefix as methods which rely on custom grouping ("custom\_cv" and "cv") do not have a dedicated name or identifier to make them detectable in research papers.
+    The Name column shows the mlr3 method name as found in the `mlr3::mlr\_resamplings` dictionary.
+    \# pub. indicates the number of studies that were found to have used this resampling technique until May 2021.
+    <!--- Literature appearances were only collected for methods with a "spcv" or "sptcv" prefix as methods which rely on custom grouping ("custom\_cv" and "cv") do not have a dedicated name or identifier to make them detectable in research papers. --->
     For each method, up to three randomly chosen references were added to the table as footnotes.}
   \begingroup
     \begin{tabular}{lllll}
       \\
-      Type                            & Name                        & R Package     & Sub-Type  & Count\\
+      Type                            & Sub-type & Name                        & R Package     & \# pub. \\
       \toprule
-      \multirow{2}{*}{Spatial Leave-one-out}        &  \texttt{"spcv\_buffer"} \tablefootnote{\label{ploton2020}\cite{ploton2020}} \tablefootnote{\label{diesing2020}\cite{diesing2020}} & \pkg{blockCV}  & buffer, LOO & 2   \\
+      \multirow{2}{*}{Spatial leave-one-out}        & single point, with buffer &  \texttt{"spcv\_buffer"} \tablefootnote{\label{ploton2020}\cite{ploton2020}} \tablefootnote{\label{diesing2020}\cite{diesing2020}} & \pkg{blockCV}  & 2   \\
       \cmidrule{2-5}
-       & \texttt{"spcv\_disc"} \tablefootnote{\label{endicott2017}\cite{endicott2017}} \tablefootnote{\label{karasiak2021}\cite{karasiak2021}} \tablefootnote{\label{moller2021}\cite{moller2021}} & \pkg{sperrorest}      & buffer, multiple observations  & 3   \\
+       & disc, with buffer  & \texttt{"spcv\_disc"} \tablefootnote{\label{endicott2017}\cite{endicott2017}} \tablefootnote{\label{karasiak2021}\cite{karasiak2021}} \tablefootnote{\label{moller2021}\cite{moller2021}} & \pkg{sperrorest}      & 3   \\
       \midrule
-      \multirow{4}{*}{Leave-one-block-out CV} & \texttt{"spcv\_coords"}  \tablefootnote{\label{morera2021}\cite{morera2021}} \tablefootnote{\label{geiss2017}\cite{geiss2017}} \tablefootnote{\label{wu2020}\cite{wu2020}} & \pkg{sperrorest}       &  clustering & 6 \\
+      \multirow{4}{*}{Leave-one-block-out CV} &  clustering of coordinates & \texttt{"spcv\_coords"}  \tablefootnote{\label{morera2021}\cite{morera2021}} \tablefootnote{\label{geiss2017}\cite{geiss2017}} \tablefootnote{\label{wu2020}\cite{wu2020}} & \pkg{sperrorest}       & 6 \\
             \cmidrule{2-5}
-                                      & \texttt{"spcv\_tiles"} \tablefootnote{\label{bebber2017}\cite{bebber2017}} \tablefootnote{\label{brenning2015}\cite{brenning2015}} \tablefootnote{\label{zurell2020}\cite{zurell2020}} & \pkg{sperrorest}    &  geometric &  4  \\
+                                      &  geometric: rectangular & \texttt{"spcv\_tiles"} \tablefootnote{\label{bebber2017}\cite{bebber2017}} \tablefootnote{\label{brenning2015}\cite{brenning2015}} \tablefootnote{\label{zurell2020}\cite{zurell2020}} & \pkg{sperrorest}    &  4  \\
                                                   \cmidrule{2-5}
-                                      &  \texttt{"custom\_cv"}           & \pkg{mlr3} & custom  & - \\
+                                      & custom  &  \texttt{"custom\_cv"}           & \pkg{mlr3} & - \\
       \midrule
-      \multirow{4}{*}{CV at the block level} & \texttt{"spcv\_block"}  \tablefootnote{\label{jensen2021}\cite{jensen2021}} \tablefootnote{\label{escobar2021}\cite{escobar2021}} \tablefootnote{\label{stewart2021}\cite{stewart2021}} & \pkg{blockCV}       &  geometric & 28 \\
+      \multirow{4}{*}{CV at the block level} &  geometric: rectangular & \texttt{"spcv\_block"}  \tablefootnote{\label{jensen2021}\cite{jensen2021}} \tablefootnote{\label{escobar2021}\cite{escobar2021}} \tablefootnote{\label{stewart2021}\cite{stewart2021}} & \pkg{blockCV}       & 28 \\
   \cmidrule{2-5}
-                                      & \texttt{"cv"}  & \pkg{mlr3}    &  custom, honors grouping &  -  \\
+                                      &  custom & \texttt{"cv"} with grouping  & \pkg{mlr3}    &  -  \\
   \cmidrule{2-5}
-                                      & \texttt{"spcv\_env"} \footref{morera2021}  & \pkg{blockCV}    &  clustering, feature space &  1  \\
+                                      &  clustering in feature space & \texttt{"spcv\_env"} \footref{morera2021}  & \pkg{blockCV}    &  1  \\
       \midrule
-      \multirow{3}{*}{CV for spatiotemporal data} & \texttt{"sptcv\_cstf"}  \tablefootnote{\label{egli2020}\cite{egli2020}} \tablefootnote{\label{gao2019}\cite{gao2019}} \tablefootnote{\label{reitz2021}\cite{reitz2021}} & \pkg{CAST}       &  custom & 6 \\
+      \multirow{3}{*}{CV for spatiotemporal data} &  custom & \texttt{"sptcv\_cstf"}  \tablefootnote{\label{egli2020}\cite{egli2020}} \tablefootnote{\label{gao2019}\cite{gao2019}} \tablefootnote{\label{reitz2021}\cite{reitz2021}} & \pkg{CAST}       & 6 \\
                                                   \cmidrule{2-5}
-                                      & \texttt{"sptcv\_cluto"}  & \pkg{skmeans}    &  clustering & - \\
+                                      &  clustering: space--time coord. & \texttt{"sptcv\_cluto"}  & \pkg{skmeans}    & - \\
                                       \bottomrule
     \end{tabular}
   \endgroup\label{tab:sptcv-methods}
