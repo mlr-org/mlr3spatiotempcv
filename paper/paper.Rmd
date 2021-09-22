@@ -211,12 +211,35 @@ Partitioning objects in \pkg{mlr3spatiotempcv} are equipped with generic `plot()
 
 While \pkg{mlr3spatiotempcv} solely focuses on spatiotemporal resampling methods and their visualization, other packages such as \pkg{mlr3spatial} or \pkg{mlr3temporal} are planned in the mlr3 ecosystem to provide dedicated spatiotemporal learner and prediction methods.
 
-# Spatiotemporal partitioning methods
+# Spatiotemporal partitioning methods and their implementation
+
+At the most general level, resampling methods are categorized according to the level at which the data is partitioned and resampled (see Figure&nbsp;\@ref(fig:rsmp-schema)):
+
+- **Spatial leave-one-out resampling**: Each individual observation forms a test set;
+- **Leave-one-block-out CV**: Individual blocks are left out as test data, i.e. the number of folds equals the number of blocks;
+- **CV at the block level**: Blocks are grouped into $k$ partitions, each of which is used as a test fold.
+
+In this context, a block can refer to an arbitrarily shaped spatial (or spatiotemporal) group of observations, not necessarily a rectangular region.
+A finer distinction can then be made by looking at how the blocks are derived:
+
+- Using a geometry-based approach (rectangular or circular);
+- Using an unsupervised clustering approach;
+- Using a custom input, i.e. specifying the blocks with an external grouping variable.
+
+In some resampling schemes, separation buffers or guard zones can be imposed to separate the training and test data.
+
+
+
+```{r rsmp-schema, echo=FALSE, fig.cap="Conceptual overview of various spatial partitioning schemas. Starting from unpartioned spatial observations (top left) either a spatial block partitioning or a 'spatial leave-one-out resampling' is applied in the first step. A spatial block partitioning can further be turned into a 'leave-one-block-out resampling' or a 'k-fold CV resampling at the block level'. The use of a buffer is theoretically possible in any scenario but in practice only offered by specific method implementations.", out.width="100%",fig.pos="ht"}
+knitr::include_graphics("pdf/rsmp-schema.pdf")
+```
+
+
 
 \pkg{mlr3spatiotempcv} currently implements the partitioning methods identified in Table&nbsp;\@ref(tab:sptcv-methods) with their \pkg{mlr3} class name.
 Several of the implemented algorithms are themselves versatile toolboxes with multiple options.
 Comprehensive and up-to-date information can be found in the package's online documentation (<https://mlr3spatiotempcv.mlr-org.com>).
-The following sections give an overview of most existing partitioning strategies and their visualization options.
+The following sections give an overview of most implemented partitioning strategies and their visualization options.
 The available methods are further discussed in section \@ref(sec:disc).
 
 \begin{table}[h]
@@ -257,38 +280,12 @@ The available methods are further discussed in section \@ref(sec:disc).
 \end{table}
 
 
-On the most upper level, resampling methods are categorized through the way the fold partitioning is done:
 
-- Leaving out single pixels (Spatial Leave-one-out) per fold with an optional buffer
-- Leaving out single blocks (Leave-one-block-out CV) per fold with an optional buffer
-- Leaving out multiple blocks (CV at the block level) per fold
+## Spatial leave-one-out
 
-A finer distinction can then be made by looking at how these groups are formed by the respective individual method:
+Spatial leave-one-out methods start from a single observation in space and create radial (buffer) zones around which define the partitions.
 
-- Using a geometric-based approach (rectangular or circular)
-- Using an unsupervised clustering approach
-- Using a custom/external input, i.e. specifying the groups via an external grouping variable
-
-The terminology "block" used in this categorization and in the manuscript in general refers to any kind of regular and irregularly shaped grouping of observations which divides the study area into different zones [russ2010; @bahn2012; @wenger2012].
-This is different to the meaning of rectangular-only partitioning within some specific resampling methods [@blockCV].
-
-<!-- explain and introduce buffering -->
-The use of a buffer is not a direct grouping characteristic of a partitioning method in our view but only an optional add-on which could potentially be used by any method.
-"Buffering" refers to the idea of removing observations located between test and training sets by drawing a circular buffer around one or more observations [@brenning2012; @rest2014; @blockCV].
-Within this buffer zone, all observations are removed from the training set, thereby reducing the similarity between training and test set.
-Buffering is mostly applied in the coordinate space.
-However, there is no practical limitation that would prevent this method to be applied in a 2D + time setting.
-Since \pkg{mlr3spatiotempcv} supports two spatial-only "buffering" implementations, (1) `"spcv\_buffer"` from package \pkg{blockCV} and (2) `"spcv\_disc"` from \pkg{sperrorest}, buffering was attributed to the category of spatial partitioning methods (Table&nbsp;\@ref(tab:sptcv-methods)).
-
-```{r rsmp-schema, echo=FALSE, fig.cap="Conceptual overview of various spatial partitioning schemas. Starting from unpartioned spatial observations (top left) either a spatial block partitioning or a 'spatial leave-one-out resampling' is applied in the first step. A spatial block partitioning can further be turned into a 'leave-one-block-out resampling' or a 'k-fold CV resampling at the block level'. The use of a buffer is theoretically possible in any scenario but in practice only offered by specific method implementations.", out.width="100%",fig.pos="ht"}
-knitr::include_graphics("pdf/rsmp-schema.pdf")
-```
-
-## Spatial Leave-one-out
-
-Spatial Leave-one-out methods start from a single observation in space and create radial (buffer) zones around which define the partitions.
-
-### Spatial Leave-one-out with buffer --- `"spcv_buffer"`
+### Spatial leave-one-out with buffer --- `"spcv_buffer"`
 
 The "buffering" method from the \pkg{blockCV} package is conceptually related to spatial leave-one-out cross-validation.
 It comes with optional support for presence/absence data handling, as often used in the field of species distribution modeling [@hijmans2013].
