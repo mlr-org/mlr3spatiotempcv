@@ -426,12 +426,13 @@ autoplot(rsmp_tiles,
 ### Custom: `"custom_cv"` in mlr3 {#sec:custom-cv}
 
 Support for user-defined partitioning strategies is built into \pkg{mlr3} directly.
-In this so-called "Custom CV", users are able to supply an external factor vector with the same length as number of observations.
+In this so-called "Custom CV", users supply a factor variable, each level of which defines a partition.
+<!-- AB: I think we can omit this sentence, otherwise we would have to repeat it for the other LOBO methods as well. Here we're in the leave-ONE-something-out section. -->
+<!--
 This partitioning concept should not be mistaken with "group-level resampling" (section \@ref(sec:group-level)), which conducts additional combination of data splits and performs CV at the block level.
-Each level of the factor vector will result in one partition.
-Alternatively to supplying an external factor vector, the name of a feature (type `character`) present within the task can be supplied via argument `col`.
-
-The following example was taken from `sperrorest::partition_factor()` because the resulting partitions separate nicely from each other in a visual way.
+-->
+The factor variable can either be specified through a factor vector of the same length as number of observations, or by passing the name of a feature of type `character` within the task (argument `col`).
+The following simple example from `sperrorest::partition_factor()` creates altitudinal zones that define the spatial partitions.
 
 ```{r custom-cv-non-eval, eval=FALSE}
 breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
