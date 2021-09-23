@@ -283,24 +283,16 @@ The available methods are further discussed in section \@ref(sec:disc).
 
 ## Spatial leave-one-out
 
-Spatial leave-one-out methods start from a single observation in space and create radial (buffer) zones around which define the partitions.
+Spatial leave-one-out methods use individual observations in space as test partitions and apply circular buffer or guard zones around around these test points to enforce a minimum prediction distance. 
+Leave-one-disc-out resampling modifies this approach to leave out circular regions centered at observation points. 
+Note that this straightforward extension of the LOO method does technically not establish a partitioning as used for CV resampling in the traditional sense.
 
 ### Spatial leave-one-out with buffer --- `"spcv_buffer"`
 
-The "buffering" method from the \pkg{blockCV} package is conceptually related to spatial leave-one-out cross-validation.
-It comes with optional support for presence/absence data handling, as often used in the field of species distribution modeling [@hijmans2013].
-However, by default, the method considers all points for sampling the training and test sets.
-
-In an ecological/species distribution modeling context, the default assumption of a binary response variable is to have *presence/absence* data.
-This means all presence and absence values in the response variable are confirmed in their respective status.
-The \pkg{blockCV} package implementation also comes with support for *presence/background* data for binary responses.
-
-All other response observations are assumed to be absent without a proof for this assumption.
-When setting argument `spDataType = "PB"`, the method only considers the *presence* observations in a CV scenario.
-Background data is used for training the model by default unless argument `addBG = FALSE` is set for which only *presence* values not falling within the buffer zone of the respective fold are used for model training.
-
-Due to its similarity to a LOO CV, this method will result in as many train/test evaluations as observations are present.
-In the visualization of the first fold in Figure&nbsp;\@ref(fig:buffer-eval) a buffer zone of 1000 m was used without any custom presence/absence treatment of the data.
+Leave-one-out CV with buffer and several adaptations for species distribution modeling [@hijmans2013] are implemented in the \pkg{blockCV} package as the so-called "buffering" method and integrated into \pkg{mlr3spatiotempcv} under the label `"spcv_buffer"`.
+In species distribution modeling, the response variable can either be recorded as presence/absence data or as presence/background information; both options are supported by this implementation. 
+By default, the dataset contains confirmed presence and confirmed absence observations, i.e. locations where a species was observed and not observed, respectively, and therefore spatial LOO CV in its usual sense can be carried out.
+Figure&nbsp;\@ref(fig:buffer-eval) shows the first test fold generated with this method for presence/absence data with a buffer distance of 1000 m.
 
 ```{r buffer-non-eval, eval=FALSE}
 library("mlr3")
@@ -323,6 +315,16 @@ autoplot(rsmp_buffer,
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
+
+
+In the presence/background (or presence-only) situation, in contrast, only presence observations are recorded, and all other locations within the study area are referred to as the background and considered as pseudo-absences.
+Presence/background modeling can be enabled with the argument `spDataType = "PB"`.
+In this situation, the method constructs test folds that are centered at the recorded presence locations, offering two different modes of operation.
+With `addBG = TRUE` (the default), all background points with a distance of `theRange` around a test (presence) point are included in the test fold as absence data.
+The `addBG = FALSE` setting, in contrast, no background data is added to the test fold, which then contains only one (presence) observation, and only the data at a distance of `theRange` or greater are included in the training sample, including background data from these areas.
+
+The application of LOO methods can be computationally expensive since the method cycles through the entire dataset and fits one model for each test fold.
+
 
 ### Leave-one-disc-out with optional buffer --- `"spcv_disc"`
 
