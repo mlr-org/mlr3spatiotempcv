@@ -285,7 +285,7 @@ The available methods are further discussed in section \@ref(sec:disc).
 
 Spatial leave-one-out methods use individual observations in space as test partitions and apply circular buffer or guard zones around around these test points to enforce a minimum prediction distance. 
 Leave-one-disc-out resampling modifies this approach to leave out circular regions centered at observation points. 
-Note that this straightforward extension of the LOO method does technically not establish a partitioning as used for CV resampling in the traditional sense.
+
 
 ### Spatial leave-one-out with buffer --- `"spcv_buffer"`
 
@@ -328,20 +328,22 @@ The application of LOO methods can be computationally expensive since the method
 
 ### Leave-one-disc-out with optional buffer --- `"spcv_disc"`
 
-Leave-one-disc-out resampling from package \pkg{sperrorest} randomly selects a circular test set starting from a single observations and optionally excludes a buffer zone from the remaining training data.
+Leave-one-disc-out resampling from package \pkg{sperrorest} defines circular test sets that are centered at sample locations, and optionally excludes a buffer zone from the remaining training data.
 It thus ensures that a minimum separation distance between training and test data is maintained.
-Discs are centered at sample locations, their number being specified by the `folds` argument.
-It is therefore possible to sample up to $n$ discs without replacement (default) or any number when sampling with replacement (`replace = TRUE`).
-The number of discs is specified via the `folds` argument.
+The number of discs is specified by the `folds` argument, which defaults to the sample size $n$.
+Sample locations are selected randomly when `folds` is smaller than $n$; it is optionally possible to sample with replacement (`replace = TRUE`).
+Leave-one-disc-out resampling becomes spatial LOO CV for a radius of 0 m and when each observation is at a unique location.
 
-This resampling method is, strictly speaking, not a partitioning method since the discs are not resulting in disjoint partitions - partitions will potentially overlap in subsequent folds.
-Nevertheless, it is a logical extension of spatial LOO CV.
-Depending on the size of the discs, potentially a large number of discs (`folds` argument) is needed to effectively use the entire dataset.
+Note that the resampled discs will potentially overlap.
+Strictly speaking, this straightforward extension of spatial LOO does therefore not establish a disjoint partitioning as used for CV resampling in the traditional sense.
 
+<!-- AB: I don't think the following explanation is needed: -->
+<!--
 Even though the buffer creates a circular area which defines the test partition, it is not categorized as a "geometric" method as the origin of the circle is observation-based.
 In contrast, "geometric" methods do not take into account single observation locations but only focus on the study area extend and will include all observations which fall into their respective covered area.
+-->
 
-Leave-one-disc-out resampling becomes spatial LOO CV for a radius of 0 m and when each observation is at a unique location.
+
 
 ```{r disc-non-eval, eval=FALSE}
 rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
