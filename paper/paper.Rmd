@@ -365,11 +365,11 @@ autoplot(rsmp_disc,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-## Leave-one-block-out Cross-Validation
+## Leave-one-block-out cross-validation
 
-Leave-one-block-out CV methods partition the dataset in a way that each of the resulting partitions will be used as a fold in the CV.
+Leave-one-block-out resampling methods partition the dataset spatially in order to use each of the resulting partitions as a CV test fold.
 
-### Clustering-based: Using coordinate-based clustering - `"spcv_coords"`
+### Clustering-based: using coordinates - `"spcv_coords"`
 
 Cluster analysis provides a flexible approach to creating irregularly shaped spatial blocks for spatial resampling.
 Numerous techniques are available that can potentially be applied to the spatial coordinates of observations, to the features, or to a combination of both.
@@ -379,9 +379,9 @@ Coordinate-based clustering for spatial CV [@russ2010; @brenning2012] as impleme
 This can be regarded as a leave-one-block-out resampling method, or as a $k$-fold CV in which each test set is a spatial cluster.
 This method is referred to as `"spcv_coords"` in \pkg{mlr3spatiotempcv}.
 
-Coordinate-based clustering approach is very versatile as it adapts to irregularly-shaped study areas and ensures that exactly $k$ partitions are created, which are usually or very similar size when the sample locations are spread out evenly.
+The coordinate-based clustering approach is very versatile as it adapts to irregularly-shaped study areas and ensures that exactly $k$ partitions are created, which are usually of very similar size when the sample locations are spread out evenly.
 Nevertheless, despite the random selection of initial cluster centers, repeated partitionings may in some cases be nearly identical.
-Also, $k$-means clustering may be less suitable for data sets with pre-existing clusters of points and/or with distant isolated sample locations.
+Also, $k$-means clustering may be less suitable for data sets with pre-existing clusters of points and/or with isolated, distant sample locations.
 When distinct clusters of points are present, as in multi-level sampling, it may be better to define clusters using a factor variable (see method `"custom_cv"` in section \@ref(sec:custom-cv)).
 
 ```{r coords-non-eval, eval=FALSE}
