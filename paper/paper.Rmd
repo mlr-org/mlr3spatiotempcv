@@ -365,11 +365,11 @@ autoplot(rsmp_disc,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-## Leave-one-block-out cross-validation
+## Leave-one-block-out cross-validation {#sec:lobo-cv}
 
 Leave-one-block-out resampling methods partition the dataset spatially in order to use each of the resulting partitions as a CV test fold.
 
-### Clustering-based: using coordinates - `"spcv_coords"`
+### Clustering-based: using coordinates --- `"spcv_coords"`
 
 Cluster analysis provides a flexible approach to creating irregularly shaped spatial blocks for spatial resampling.
 Numerous techniques are available that can potentially be applied to the spatial coordinates of observations, to the features, or to a combination of both.
@@ -456,16 +456,17 @@ autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-## Cross-Validation at the block level
+## Cross-validation at the block level {#sec:block-cv}
 
-Methods which operate on the block level create dataset splits which are then combined to form the final partitions for the CV folds.
-In the special case of an equal amount of dataset splits and requested CV folds, these methods would perform a Leave-one-block-out CV.
+Methods which operate at the block level first group the observations into blocks and then combine these blocks into CV partitions.
+In $k$-fold CV resampling at the block level, there are therefore $k$ partitions, each consisting of $1/k$-th of the blocks.
+The special case in which $k$ equals the number of blocks, CV at the block level simply becomes leave-one-block-out CV, for which dedicated implementations exist (Section&nbsp;\@ref(sec:lobo-cv)).
 
 ### Geometric: using rectangular blocks --- `"spcv_block"`
 
 The `"spcv_block"` method from package \pkg{blockCV} supports both random and systematic resampling of square blocks (`rsmp("spcv_block")` with argument `selection = "random"` and `"systematic"`, respectively; Figure&nbpsp;~\@ref(fig:block-random) and \@ref(fig:block-systematic)).
-This implementation comes with specific options that are designed for modeling presence-only data, which is a typical situation in species distribution modeling.
-Users can also supply a user-defined polygon via argument `rasterLayer` with predefined blocking zones.
+There are additional options for modeling presence-only data, which is a typical situation in species distribution modeling.
+Users can also supply a user-defined polygon via an argument `rasterLayer` with predefined blocking zones.
 
 Block sizes (in meters) are determined by the `range` argument.
 Alternatively, rectangular blocks can be created by specifying the number of desired rows and columns (arguments `rows` and `cols`).
@@ -512,24 +513,28 @@ autoplot(rsmp_block_systematic,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-The *checkerboard* partitioning is a special case of a systematic block partitioning (`selection = "checkerboard"`).
+*Checkerboard* partitioning is a special case of a systematic block partitioning (`selection = "checkerboard"`).
 It inherently supports only two folds, making it less appealing than the more commonly used five- or ten-fold resampling, which achieve larger training set sizes.
  
-### Custom: `"cv"` in mlr3 {#sec:group-level}
+### Custom: `"cv"` with grouping in mlr3 {#sec:group-level}
 
-The `"cv"` resampling strategy performs random, non-spatial partitioning.
-To use it in a spatiotemporal context, one can set the "group" column role in a mlr3 Task object for specific variable(s).
-This tells the resampling strategy to honor these grouping(s) during partitioning.
-In the final folds, these groups of observations will either belong to the test or training set and by this create possibly spatiotemporal resampling folds.
+Although the `"cv"` resampling strategy in \pkg{mlr3} performs random, non-spatial partitioning by default, it can also be used for CV at the block level.
+This is achieved by specifying the "group" column role in a mlr3 Task object, which uses the factor levels as blocks.
+A completely group or block of observations is therefore assigned to a specific partition, which consequently honor the grouping structure.
+In \pkg{mlr} this concept was referred to as "blocking".
 
-The idea is to make use of inherent grouping structure in the observations or the sampling design in space and/or in time to determine partitions.
-In contrast to geometric blocking or clustering, the spatial or temporal location is not used explicitly, but additional metadata is exploited such as the membership in a specific agricultural management unit [@brenning2006], or in a site in hierarchical sampling [@kasurak2011].
-In \pkg{mlr} this concept was called "blocking".
+In contrast to geometric or clustering-based blocks, the spatial or temporal location is not used explicitly, but rather implicitly through the spatial or spatiotemporal footprint of each user-defined block.
+<!-- The following sentence is really a repetition from the general background section, and similar statements could be made in the custom_cv section. -> omit this sentence  -->
+<!--
+additional metadata is exploited such as the membership in a specific agricultural management unit [@brenning2006], or in a site in hierarchical sampling [@kasurak2011].
+-->
 
-In the following example we create a custom grouping of eight classes using a kmeans clustering.
+The following example uses $k$-means clustering to generate classes that are used as blocks.
+<!--
 Note that in practice usually the group creation would not be done in an unsupervised way but by making use of an inherent grouping information from the dataset.
-To showcase the honoring of the groups a uneven amount of folds (with respect to the number of groups) is requested.
-The test set in the first and second fold is composed out of three groups while the third fold is only made up from two groups.
+-->
+To underline the honoring of the groups, we chose a number of groups (eight) that is not a multiple of the number of folds (three).
+The test sets in the first and second folds are therefore composed of three groups while the third one holds two groups.
 
 ```{r cv-non-eval-1, eval=FALSE}
 task_cv = tsk("ecuador")
@@ -565,13 +570,12 @@ autoplot(rsmp_cv_group, size = 0.8, task = task_cv, fold_id = 1) *
 
 ### Clustering: using feature-based clustering --- `"spcv_env"`
 
-The last method from the \pkg{blockCV} package, "environmental blocking", makes use of *k-means* clustering [@hartigan1979a] in a possibly multivariate space.
-The user can select a variable via argument `feature` which denotes the variable that will be used to create clusters.
-Hereby, $k$-means will use Euclidean distance for cluster creation.
-Hence, the selected input variables should be of type numeric.
+The last method from the \pkg{blockCV} package, referred to as "environmental blocking" [@roberts2017], makes use of *k-means* clustering [@hartigan1979a] in a possibly multivariate space to define blocks for resampling at the block level.
+The user can select one or multiple numeric features via argument `feature` from which the clusters are created.
+Hereby, $k$-means will use Euclidean distance.
 To avoid a potential bias introduced by features with high variance when selecting multiple features, all features are standardized by default.
 
-The following example clusters by feature "distance to forest".
+In the following example, the observations are clustered based on the "distance to forest" feature, which results in a distance-based zonification:
 
 ```{r env-1-non-eval, eval=FALSE}
 rsmp_env = rsmp("spcv_env", features = "distdeforest", folds = 5)
@@ -586,7 +590,7 @@ library("patchwork")
 plot_env_single + plot_env_multi
 ```
 
-It is also possible to cluster based on multiple features:
+It is also possible to cluster based on multiple features, in this example the distance to deforestation and the slope angle:
 
 ```{r env-1-eval, fig.cap='Environmental leave-one-block-out CV from package blockCV using one (left, "distdeforest") and two (right, "distdeforest" and "slope") predictors to define blocks in the feature space. Due to feature space clustering observations are not (necessarily) grouped in the spatial domain.', out.width="100%", fig.pos="ht", echo=FALSE}
 rsmp_env = rsmp("spcv_env",
