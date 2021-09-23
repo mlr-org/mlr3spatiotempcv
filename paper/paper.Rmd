@@ -320,7 +320,7 @@ autoplot(rsmp_buffer,
 In the presence/background (or presence-only) situation, in contrast, only presence observations are recorded, and all other locations within the study area are referred to as the background and considered as pseudo-absences.
 Presence/background modeling can be enabled with the argument `spDataType = "PB"`.
 In this situation, the method constructs test folds that are centered at the recorded presence locations, offering two different modes of operation.
-With `addBG = TRUE` (the default), all background points with a distance of `theRange` around a test (presence) point are included in the test fold as absence data.
+With `addBG = TRUE` (the default), all background points with a distance of `theRange` around a test (presence) point are included in the test fold as absence data; note that in this case, there is no separation buffer between training and test samples.
 The `addBG = FALSE` setting, in contrast, no background data is added to the test fold, which then contains only one (presence) observation, and only the data at a distance of `theRange` or greater are included in the training sample, including background data from these areas.
 
 The application of LOO methods can be computationally expensive since the method cycles through the entire dataset and fits one model for each test fold.
