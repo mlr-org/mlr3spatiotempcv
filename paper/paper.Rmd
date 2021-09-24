@@ -5,6 +5,7 @@ author:
     affiliation: 'Friedrich Schiller University Jena'
     # affiliaton2: 'Ludwig-Maximilians-University Munich'
     # use this syntax to add text on several lines
+    # must use German name, see https://www.lmu.de/de/die-lmu/struktur/zentrale-universitaetsverwaltung/kommunikation-und-presse/lmu-brand-guide/content-style-guide/index.html
     address: |
       | Department of Geography
       | Geographic Information Science group
@@ -16,10 +17,10 @@ author:
       | Geographic Information Science group
     email: \email{alexander.brenning@uni-jena.de}
   - name: Marc Becker
-    affiliation: 'Ludwig-Maximilians-University Munich'
+    affiliation: 'Ludwig-Maximilians-Universität München'
     address: |
-      Department of Statistics
-      Statistical Learning and Data Science group
+      | Department of Statistics
+      | Statistical Learning and Data Science group
     # To add another line, use \AND at the end of the previous one as above
   - name: Michel Lang
     affiliation: TU Dortmund University
