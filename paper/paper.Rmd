@@ -868,43 +868,48 @@ It is also expected that spatial CV results better represent the model's transfe
 The magnitude of the difference between spatial and non-spatial CV estimates may depend on the dataset, the strength on spatial or spatiotemporal autocorrelation, and the learner itself.
 Algorithms with a higher tendency to overfit to the training set will tend to have a larger spread in such scenarios.
 
-<!-- AB: TODO: Check if the following paragraphs overlaps with the Discussion section; perhaps merge into Discussion. -->
-Since spatial CV can also be used for hyperparameter tuning in the \pkg{mlr3} framework, the model can be optimized to show an improved performance in a specific predictive setting [@schratz2019].
-This may, for example, involve a reduced maximum tree depth in the Ecuador case study, since this parameter leads to stronger generalization and reduced overfitting.
 
 # Discussion {#sec:disc}
 
-## Choosing a resampling method
+## Choosing a resampling method for model assessment
 
 The question which resampling method should be chosen for a prediction task and dataset at hand comes up regularly in practice.
 Even though there is and will be no definitive answer to this, we would like to give some guidance in this section to help finding an appropriate method.
+As a general rule, we recommend to use a resampling scheme that (1) mimics the predictive situation in which the model will be applied operationally, and (2) is consistent with the structure of the data. Both aspects are outlined in this section, starting with two concrete modeling scenarios.
 
-Although the case study example in section \@ref(sec:case-study) used the `"spcv_coords"` method, this should not give the impression that this method is the best or only method suitable for this example task.
-Even though this method is frequently used, it was mainly chosen because of its clear visual grouping differences when comparing spatial to random partitioning.
-Another advantage is its ability to adapt to the irregularly shaped study area of this example.
-Last, there are no obvious spatial groupings to our knowledge which need to be accounted for, also with respect to prediction purposes of the fitted model.
-Hence, this method is a valid choice for the given dataset.
+Although the case study example in section \@ref(sec:case-study) used the `"spcv_coords"` method for coordindate-based clustering, this should not give the impression that this method is the only method suitable for this example task.
+In this application setting, we want to assess how well the model generalized from the concrete set of historical landslide occurrences, which is why we ensured that training and test sets contain different, "new" hillslopes and landslides.
+Coordinate-based clustering is particularly appealing in this setting because of its ability to adapt to the irregularly shaped study area of this example.
+Resampling at the level of sub-catchments could have been a viable alternative approach that can be implemented using custom resampling (`"custom_cv"` method); however, this may result in less balanced sizes of test sets as catchment sizes may vary.
+When the timing of landslides is known (event-based inventories) or multiple inventories have been compiled for different time points, it can also be recommendable to additionally sample training and test data from different time points, as with the LLTO and LTO [@meyer2018] or similar methods [@brenning2005].
 
-Most often multiple spatial partitioning methods can be used for a dataset.
-It is recommended (required) to make oneself familiar with the available methods and to decide on one based on the specific characteristics of the dataset at hand and the prediction purpose of the fitted model.
-The prediction purpose is the model's ability for which areas or zones it actually can make predictions for.
-In the crop example given in section \@ref(sec:intro) this would be to distinguish and predict the crop type of 'new', unseen fields within an agricultural region.
-Hence, the CV partitioning is done at the field level to receive a honest estimate of the model's performance in a relevant predictive situation.
+In other application scenarios such as the crop classification example given in section&nbsp;\@ref(sec:intro) [@pena2015], the objective is to predict the fruit-tree crop type of 'new', unseen fields within an agricultural region.
+In this use case we are not at all interested in "predicting" the already known crop type of (other) grid cells within the same agricultural field.
+Also, a model will likely be much better able to predict the crop type within the same field from multitemporal remote-sensing data since all crops within that field are subject to identical management practices (e.g., use of pesticides, pruning of fruit trees, tree spacing), while 'new' fields may be managed differently.
+As a consequence, grid cells from the same field should be grouped into a block, and resampling should be done at the field level (`"cv"` method with grouping) to receive an honest estimate of the model's performance in a relevant predictive situation.
+If, in contrast, the objective is to apply the model to an adjacent agricultural region (e.g., adjacent county) where the same crop types are present, it may be advisable to use coordinate-based clustering (`"spcv_coords"` method) to obtain larger, contiguous test regions.
 
-There are various factors that might influence the choice of a partitioning method:
+In summary, there are various factors that may be considered in judging the suitability of a resampling method:
 
-- Do natural groupings exists in the data? Examples include multi-level sampling designs, land management units, or other characteristics of the study area or sampling design that may induce random effects.
-- How dense are the observations scattered both in space and time?
-  The closer observations are in space and/or time, the more similar they are, and hence the greater is the effect of spatio-temporal autocorrelation on performance estimates.
-- Are some of the predictor variables under consideration known to be strongly autocorrelated such as air temperature or precipitation at the regional level?
+- Will the model be applied to predict 'new' outcomes at near or more distant spatial locations? 
+- Will it be applied to predict into the future, or hindcast gaps between spatiotemporal observations in the past?
+- How densely are the observations distributed in space and time? Are they more densely distributed that the intended spatial or temporal prediction distance?
+- Is the data naturally grouped, e.g. because of the spatial extent of the studied objects, or as a consequence of multi-level (cluster) sampling?
+- With an eye on environmental blocking and extrapolation in feature space, is it intended to apply the model to predict 'new' outcomes for unobserved values of predictor variables?
 
-Based on these criteria users should choose a matching partitioning method that is either more restrictive (by discarding observations for fold creation) or more liberal (by not removing observations and eventually ignoring natural grouping patterns).
-For almost all methods implemented in \pkg{mlr3spatiotempcv}, there is a scientific publication describing the application areas of the respective approach (either linked in the help file of the package or its respective upstream packages), hence we are refraining from repeating them again in this study.
+Based on these criteria users may choose a matching resampling method that is either more restrictive (by discarding nearby observations for fold creation) or more liberal (by not removing observations and eventually ignoring natural grouping patterns).
+The specific publications related to the methods integrated into \pkg{mlr3spatiotempcv} may give further advice and provide additional use cases for the application of each respective approach.
+Users should therefore also refer to publications that are referenced of linked in the help files of this package or its respective upstream packages.
 
-Last, a note on best practices for the example shown in section \@ref(sec:case-study):
-In this example a cross-validation without hyperparameter tuning was applied.
-In ML practice most often a nested CV should be desired to optimize model hyperparameter within the CV.
-In such scenarios it is recommended to use the same spatial partitioning method for the inner loop (= tuning level) that was chosen for the outer one for consistency reasons.
+## Resampling for hyperparameter tuning
+
+CV is also widely used to assess model performance when tuning the hyperparameters of flexible machine-learning models, and this is also supported by the \pkg{mlr3} framework.
+Using the CV methods introduced here, \pkg{mlr3} can therefore be used to optimized models to show an improved performance in specific spatial or spatiotemporal predictive setting [@schratz2019].
+Such an optimization may, for example, result in a reduced maximum tree depth or increased minimum node size in the Ecuador case study, since these hyperparameter settings would result in a stronger generalization and reduced overfitting.
+
+We recommend using a nested CV for this purpose.
+In nested CV, an "inner" CV is performed on each CV training set since hyperparameter tuning is an integral part of model fitting that should not be able to use information from the CV test set.
+In such scenarios it is recommended to use the same spatial resampling method for the inner CV (hyperparameter tuning) as for the outer CV (model assessment) in order to use the appropriate objective function for optimization.
 See @schratz2019 for more details as well as chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace2019].
 
 ## Comparing and discussing spatiotemporal resampling methods
@@ -959,16 +964,18 @@ Hence, in package \pkg{mlr3spatiotempcv} this method was named `"spcv_coords"`, 
 
 ## Contributing new resampling methods
 
+<!-- AB: I do not understand the point of this discussion section. It is not clear to the reader if mlr3spatiotempcv supports both approaches or supports/recommends one of them. Also, an implementation 'most likely' being reviewed in an unspecified process does not exactly inspire much trust... -->
+
 <!-- discuss pros and cons of implementing methods in a standalone pkg vs a framework -->
-There are pros and cons on whether a new method should be integrated into an existing ecosystem such as \pkg{mlr3} directly or distributed in its own package.
-When contributing a method to an existing ecosystem, developers can benefit from existing structures and orient themselves towards how previous methods were implemented.
-They do not need to worry about complying with various R package related best practices (such as CRAN policies) and can solely focus on the method implementation.
-Also, the new method will be directly usable by all people using this ecosystem following an existing and familiar syntax.
-Contributions to (ML) ecosystems such as \pkg{mlr3} enables users to easily make use of a large variety of additional functionality, from preprocessing over hyperparameter tuning and feature selection to result visualization [@mlr3], which can be used in conjunction with the new resampling method.
-In addition, contributions most likely undergo a thorough review from other community members during the implementation, most often enhancing the code quality of the implementation.
+There are pros and cons to whether a new method should be integrated into an existing modeling framework such as \pkg{mlr3} directly or distributed in its own package.
+When contributing a method to an existing framework, developers can benefit from existing structures and orient themselves towards how previous methods were implemented.
+They do not need to worry about complying with various R package related best practices (such as CRAN policies) and can solely focus on the implementation of an additional method.
+Also, the new method will be directly usable by all people using this framework following an existing and familiar syntax.
+Contributions to (ML) ecosystems such as \pkg{mlr3} enable users to easily make use of a large variety of additional functionality, from preprocessing over hyperparameter tuning and feature selection to result visualization [@mlr3], which can be used in conjunction with the new resampling method.
+In addition, contributions **most likely undergo a thorough review** from other community members during the implementation, most often enhancing the code quality of the implementation. <!-- AB: I do not necessarily agree with this since there is no formalized review process. 'Most likely' is also not helpful. Would you read a paper from a journal that 'most likely' reviews papers thoroughly? -->
 A direct contribution also reduces the maintenance load for the ecosystem developers as they do not need to wrap a new method into their system and watch for possible future changes.
 
-On the contrary, people are forced to use the ecosystem and cannot easily use the method outside of it, whether its a different ecosystem or some other way.
+On the contrary, people are forced to use the ecosystem and cannot easily use the method outside of it, whether it is a different ecosystem or some other way.
 They might also be forced to follow certain (coding) guidelines of the ecosystem and potentially feel constrained in their personal way of doing things.
 Often, such ecosystems store their results in specialized classes, which make it hard for users to reuse them outside of the ecosystem.
 
