@@ -990,8 +990,8 @@ The compilation of resampling techniques in \pkg{mlr3spatiotempcv} is by no mean
 Additional methods or parameters may therefore be added in the future as they become available in upstream package or are contributed directly to this package.
 
 <!-- signoff -->
-Spatiotemporal cross-validation a paradigm that is not yet fully established in scientific workflows although it has been discussed intensively for more than a decade now.
-We anticipate that making the existing methods easily accessible to users is an important step to foster the acceptance of spatiotemporal cross-validation in the community and to allow modelers to produce less biased cross-validation results in environmental and ecological studies.
+Spatiotemporal cross-validation as a paradigm is not yet fully established in scientific workflows although it has been discussed intensively for more than a decade now.
+We anticipate that making the existing methods easily accessible to users is an important step to foster the acceptance of spatiotemporal cross-validation in the community and to allow modelers to produce bias-reduced model assessments in environmental and ecological studies.
 
 ```{r echo=FALSE, cache=FALSE}
 sessionInfo()
