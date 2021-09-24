@@ -738,11 +738,11 @@ With respect to functionality, \pkg{mlr3spatiotempcv} supports two-dimensional c
 We use a well-known case study to demonstrate the application of spatial and non-spatial resampling techniques for model assessment in \pkg{mlr3spatiotempcv}.
 The objective of landslide susceptibility modeling is to predict how prone to landslide initiation a location is.
 Models are fitted to historical landslide occurrences, but they need to learn generalizable relationships between predisposing variables and the response as opposed to perfectly reproducing or memorizing the historical distribution.
-This binary classification task on landslides in Ecuador [@muenchow2012] is available as a built-in task via `tsk("ecuador")`, but we generate it from the learning sample.
+This binary classification task on landslides in Ecuador [@muenchow2012] is available as a built-in task via `tsk("ecuador")`, but here we generate it from the learning sample.
 Random forest is used as a classifier, and the area under the ROC curve (AUROC) as the performance measure.
 
 Spatial CV is implemented in the form of leave-one-block-out CV using coordinate-based $k$-means clustering to generate  irregularly shaped blocks of roughly equal size.
-This approach is better suited for the shape of the present study area than a rectangular partitioning.
+This approach is better suited for the irregular shape of the present study area than a rectangular partitioning.
 Figures&nbsp;\@ref(fig:vis-spcv-eval)) and&nbsp;\@ref(fig:vis-nspcv-eval)) show the contrasting distributions of training and test samples.
 For demonstration purposes we use only four CV folds and two repetitions.
 
@@ -800,8 +800,8 @@ learner = lrn("classif.ranger", predict_type = "prob")
 A resampling is generated in \pkg{mlr3} with the `rsmp()` function, which is used to generate a resampling object for four-fold non-spatial CV with two repetitions.
 The object is constructed and instantiated with its `$instantiate()` method.
 
-Next, the created resampling object `rsmp_nsp` is passed to function `resample()` together with the task and learner objects created earlier to execute the model assessment.
-This is the actual, potentially time-consuming CV estimation. With the present settings, eight random forest classifiers are fitted and evaluated in this step.
+Next, the created resampling object `rsmp_nsp` is passed to the `resample()` function together with the task and learner objects created earlier to execute the model assessment.
+This is the actual, potentially time-consuming CV estimation. With the present settings, eight random forest classifiers are fitted and evaluated in this step --- one model fitted on each CV training set.
 
 Model performances are calculated from the CV predictions using the AUROC (`"classif.auc"` in \pkg{mlr3} notation).
 
@@ -837,7 +837,7 @@ rr_sp$aggregate(measures = msr("classif.auc"))
 
 ## Visualization of CV partitions
 
-Finally, we visualize the partitions that were used during performance estimation making use of the generic `autoplot()` function in package \pkg{mlr3spatiotempcv} (Figure&nbsp;\@ref(fig:vis-spcv-eval)).
+Finally, we visualize (two of) the partitions that were used during performance estimation making use of the generic `autoplot()` function in package \pkg{mlr3spatiotempcv} (Figure&nbsp;\@ref(fig:vis-spcv-eval)).
 
 ```{r vis-spcv-non-eval, eval=FALSE}
 autoplot(rsmp_sp, task, fold_id = c(1:2), size = 0.8)
@@ -861,10 +861,10 @@ autoplot(rsmp_nsp, task, fold_id = c(1:2), size = 0.8) *
 
 ## Interpretation
 
-The non-spatial CV estimate of AUC (0.76) is around 0.13 higher compared to the spatial CV estimate of 0.64.
-The higher non-spatial CV value results from over-optimism in the estimation with non-spatial CV and does imply better performance.
+The non-spatial CV estimate of AUC (0.76) is substantially higher compared to the spatial CV estimate of 0.64.
+Since test points in non-spatial CV may be from the same slopes or even the same landslides as the training data, the non-spatial CV result should be considered as an over-optimistic estimate of the model's ability to predict the susceptibility to "new" landslides.
 Spatial CV, in contrast, provides a better/more accurate measure of a model's ability to generalize from the training sample --- in this case study, from the specific hillslopes and historical landslides in the training sample.
-It is also expected that spatial CV results reflect a more honest performance of a model on new, spatially separate data.
+It is also expected that spatial CV results better represent the model's transferability to geologically and topographically similar areas adjacent to the training area.
 The magnitude of the difference between spatial and non-spatial CV estimates may depend on the dataset, the strength on spatial or spatiotemporal autocorrelation, and the learner itself.
 Algorithms with a higher tendency to overfit to the training set will tend to have a larger spread in such scenarios.
 
