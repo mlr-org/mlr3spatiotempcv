@@ -87,27 +87,27 @@ knitr::opts_chunk$set(fig.path = "./paper/figs/",
 Spatial and spatiotemporal prediction tasks are common in applications ranging from environmental sciences to archaeology and epidemiology.
 While sophisticated mathematical frameworks have long been developed in spatial statistics to characterize predictive uncertainties under well-defined mathematical assumptions such as intrinsic stationarity [e.g., @cressie1993], computational estimation procedures have only been proposed more recently to assess predictive performances of spatial and spatiotemporal prediction models [@brenning2005; @brenning2012; @pohjankukka2017; @roberts2017].
 
-Although alternatives such as the bootstrap exist and have some advantages [@efron1983; @hand1997], cross-validation is a particularly well-established, easy-to-implement algorithm for *model assessment* of supervised machine-learning models [@efron1983 and next section] and *model selection* [@arlot2010].
+Although alternatives such as the bootstrap exist and have some advantages [@efron1983; @hand1997], cross-validation (CV) is a particularly well-established, easy-to-implement algorithm for *model assessment* of supervised machine-learning models [@efron1983 and next section] and *model selection* [@arlot2010].
 In its basic form, it is based on resampling the data without paying attention to any possible dependence structure, which may arise from, e.g., grouped or structured data, or underlying environmental processes inducing some sort of spatial coherence at the landscape scale.
-In treating dependent observations as independent, or ignoring autocorrelation, cross-validation test samples may in fact be heavily correlated with, or even pseudo-replicates of, the data used for training the model, which introduces a potentially severe bias in assessing the transferability of flexible machine-learning models.
+In treating dependent observations as independent, or ignoring autocorrelation, CV test samples may in fact be heavily correlated with, or even pseudo-replicates of, the data used for training the model, which introduces a potentially severe bias in assessing the transferability of flexible machine-learning models.
 
-This cross-validation bias is well-known in spatial as well as non-spatial prediction [@brenning2005; @brenning2008; @arlot2010; @roberts2017] and in forecasting [@bergmeir2018].
+This CV bias is well-known in spatial as well as non-spatial prediction [@brenning2005; @brenning2008; @arlot2010; @roberts2017] and in forecasting [@bergmeir2018].
 It is most easily understood from a predictive modeling perspective by focusing on the question where (and when) the model should be used for prediction.
 In crop classification from remotely-sensed data, for instance, learning samples routinely contain multiple grid cells from a sample of fields with known crop type, for instance 2000 grid cells from 100 fields scattered across a large study region.
 The purpose of training a model on this particular sample is to make predictions on other, new fields within the same geographic domain [*intra-domain* prediction, @brenning2005] --- not *within* the same field, which obviously presents only a single crop type that is already known from the training sample.
 In this specific situation it would therefore seem rather unwise to train a model on a simple random subsample of grid cells, and to test it on the remaining data, using other grid cells from the same fields, as if we wanted to predict within a field.
 The results from this performance assessment would be over-optimistic, and perhaps badly so.
 To mimic the predictive situation for which the model is trained, one would rather have to resample at the level of fields, not grid cells [@pena2015].
-If the model was to be applied to adjacent agricultural regions, i.e., outside the learning sample's spatial domain [*extra-domain* prediction, @brenning2005], it would even seem necessary to resample at a higher level of spatial aggregation, i.e. at the level of agricultural sub-regions within the learning sample, in order to realistically mimic the actual prediction task.
-The cross-validation resampling needed therefore depends as much on the prediction task itself as on the data structure or dependency at hand.
+If the model was to be applied to adjacent agricultural regions, i.e., outside the learning sample's spatial domain [*extra-domain* prediction, @brenning2005], it would even seem necessary to resample at a higher level of spatial aggregation, i.e. at the level of sub-regions within the learning sample, in order to realistically mimic the actual prediction task.
+The CV resampling needed therefore depends as much on the prediction task itself as on the data structure or dependency at hand.
 
 While it is not the purpose of this article to recommend specific resampling schemes for specific use cases, this example may suffice to motivate the use of appropriate spatial and spatiotemporal cross-validation techniques, and the need for a unified framework and computational toolbox that accommodate a variety of prediction tasks that may be applicable to a broad range of application scenarios.
 \pkg{mlr3spatiotempcv} is such a toolbox.
 
 This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (Table&nbsp;\@ref(tab:sptcv-methods)).
-The earliest and most comprehensive of these implementations is the \pkg{sperrorest} R package [@brenning2012], which provides an extensible framework and includes predefined resampling strategies based on, for example, blocking, clustering, and buffering.
+The earliest and most comprehensive of these implementations is the \pkg{sperrorest} R package [@brenning2012], which provides an extensible framework and includes predefined resampling strategies based on, for example, geometric blocking, clustering, and buffering.
 In contrast, \pkg{blockCV} and \pkg{ENMeval} were developed for block and buffer resampling with a focus on species distribution modeling [@blockCV; @rest2014; @muscarella2014].
-Neither of these however have been integrated into established machine-learning frameworks such as \pkg{mlr}/\pkg{mlr3} or \pkg{caret}/\pkg{tidymodels}, and all of them lack support of temporal prediction tasks.
+However, neither of these have been integrated into established machine-learning frameworks such as \pkg{mlr}/\pkg{mlr3} or \pkg{caret}/\pkg{tidymodels}, and all of them lack support for temporal prediction tasks.
 The \pkg{CAST} package, in contrast, focuses on spatiotemporal prediction tasks and makes use of some functions of the \pkg{caret} framework [@cast; @meyer2018].
 One limitation of these packages is the sole focus on model assessment, while the proposed implementation within the \pkg{mlr3} framework offers a seamless integration into model selection.
 It is worth noting that a spatial cross-validation library named \pkg{spacv} has recently been developed for Python3, which can be used with the \pkg{scikit-learn} machine-learning framework [@pedregosa2011].
@@ -119,11 +119,11 @@ Our hope is that this implementation will facilitate reproducible geospatial mod
 The purpose of this paper is to give an overview of the methods implemented in the R package \pkg{mlr3spatiotempcv}.
 After presenting the conceptual background in the following section, the overall structure of the \pkg{mlr3spatiotempcv} package is outlined.
 Next, various spatial and spatiotemporal partitioning techniques are contrasted and compared, before their application is demonstrated in a machine-learning model assessment in the following section.
-Finally, limitations of existing methods are discussed and an outlook is given.
+Finally, recommendations for the selection of suitable resampling techniques are given.
 
-# Spatial and spatiotemporal cross-validation
+# Spatial and spatiotemporal CV
 
-In cross-validation for predictive model assessment, we consider the following formal setting.
+In CV for predictive model assessment, we consider the following formal setting.
 We are interested in predicting a numerical or categorical response $y$ of an object or instance using a feature vector $\mathbf{x} = (x^{(1)}, \ldots, x^{(p)})^t\in\mathbb{R}^p$ and a model $\hat{f}_\mathcal{L}$ that has been trained on a learning sample $\mathcal{L} = \{(y_i, \mathbf{x}_i),\ i = 1, ..., n\}$.
 Our goal is to estimate the expected value of the performance of $\hat{f}_\mathcal{L}$,
 \[
@@ -132,7 +132,7 @@ Our goal is to estimate the expected value of the performance of $\hat{f}_\mathc
 where $l$ is a real-valued loss function, and the expected value is with respect to the probability distribution of $X$, the features of an instance $(Y,X)$ drawn randomly from the underlying population.
 This is referred to as the *actual* or *conditional* performance measure as it is conditional on $\mathcal{L}$ [@hand1997].
 The loss function can take a variety of forms such as the misclassification error $I(Y\neq\hat{f}_\mathcal{L}(X))$ in classification, or the squared error $(Y-\hat{f}_\mathcal{L}(X))^2$ in regression, among many other possible measures.
-The choice of the performance measure is equally critical as the choice of the estimation procedure, but it is beyond the scope of this contribution to discuss performance metrics for regression and classification (see, e.g., @hand1997 for classification, and @hyndman2006 for regression and forecasting tasks).
+The choice of the performance measure is equally critical as the choice of the estimation procedure, but it is beyond the scope of this contribution to discuss performance measures for regression and classification (see, e.g., @hand1997 for classification, and @hyndman2006 for regression and forecasting tasks).
 
 Since we only have a sample $\mathcal{T}$ of test data drawn from the population, we can only *estimate* the conditional performance of $\hat{f}_\mathcal{L}$:
 \[
@@ -141,7 +141,7 @@ Since we only have a sample $\mathcal{T}$ of test data drawn from the population
 This representation as a point estimator of $\mathit{perf(\hat{f}_\mathcal{L})}$ underlines the importance of using a random sample for model assessment to avoid estimation bias. Other estimators than the simple mean may be required when $\mathcal{T}$ is not a simple random sample, for instance a stratified random sample [e.g., @thompson2012].
 As always, judgment sampling may lead to uncontrollable bias.
 
-Since re-using the learning sample $\mathcal{L}$ for testing, i.e. $\mathcal{T}:=\mathcal{L}$, would yield the over-optimistic *resubstitution* or *apparent* performance, cross-validation partitions the sample $\mathcal{L}$ into disjoint training and test sets.
+Since re-using the learning sample $\mathcal{L}$ for testing, i.e. $\mathcal{T}:=\mathcal{L}$, would yield the over-optimistic *resubstitution* or *apparent* performance, CV partitions the sample $\mathcal{L}$ into disjoint training and test sets.
 Specifically, $\mathcal{L}$ is split into $k$ partitions,
 \[
 \mathcal{L} = \mathcal{L}_1 \cup \ldots \cup \mathcal{L}_k,\qquad \mathcal{L}_i\cap \mathcal{L}_j = \emptyset\quad \textrm{for all}\ i\neq j,
@@ -157,37 +157,38 @@ The use of $k=5$ or $k=10$ folds is most commonly seen in practice, and these pr
 The $k$-fold CV estimator of model performance is a nearly unbiased estimator of the conditional performance measure when the observations were drawn independently [@efron1983].
 Since $\widehat{\mathit{perf}}_{\mathcal{L}, CV}(f)$ still depends on the particular partitioning chosen for $\mathcal{L}$, it is sometimes recommended to repeat the estimation using different random partitionings ($r$-repeated $k$-fold cross-validation) to reduce the influence of randomness when creating partitions [@vanwinckelen2012].
 
-In traditional cross-validation, the partitioning is based on uniform random resampling, which ignores spatial or temporal autocorrelation or any existing grouping structure as well as the structure of the prediction task, and may result in over-optimistic performance estimates.
+In traditional CV, the partitioning is based on uniform random resampling, which ignores spatial or temporal autocorrelation or any existing grouping structure as well as the structure of the prediction task, and may result in over-optimistic performance estimates.
 Several approaches have therefore been proposed in the literature and implemented in software to accommodate a variety of predictive situations (Table&nbsp;\@ref(tab:sptcv-methods)).
 
-Approaches based on *spatial blocking* or *grouping* require either the construction of spatial zones, or the use of pre-existing spatial structures in the data.
-Let's refer to these spatial units or zones as $\mathcal{Z}_i$, $1\le i\le n_z$.
-These zones are often constructed to serve as the $k=n_z$ spatial partitions, for example by performing $k$-means clustering of the sample coordinates [@russ2010], which we refer to as *coordinate-based clustering*, or generating the desired number of rectangular blocks.
-The zones may also be defined by a modeler based on an arbitrary (e.g., polygonal) partitioning of the study region, which we refer to as *custom resampling*.
-Similarly, the data can be partitioned in feature space instead of geographic space, which has been referred to as *environmental blocking* [@roberts2017].
+Approaches based on *spatial blocking* (or *grouping*) require either the construction of spatial zones, or the use of pre-existing spatial structures in the data.
+Let's refer to these spatial units or blocks as $\mathcal{Z}_i$, $1\le i\le n_z$.
+These blocks are often constructed to serve as the $k=n_z$ spatial partitions, for example by performing $k$-means clustering of the sample coordinates [@russ2010], which we refer to as *coordinate-based clustering*, or generating the desired number of rectangular blocks as an example of *geometric partitioning*.
+The blocks may also be defined by a modeler based on an arbitrary partitioning of the study region based on an external data source, which we refer to as *custom resampling*.
+This often used when the data is grouped. For example, when using to multi-level sampling designs or studying spatial objects, it has been proposed to apply LOO at the site level [@martin2008; @kasurak2011] or, in animal movement studies, at the animal level [@anderson2005].
+We will broadly refer to such groups of observations as 'blocks' in a generic sense, regardless of the shape or origin of the groups.
+Also, the data can be partitioned in feature space instead of geographic space, which has been referred to as "environmental blocking" [@roberts2017].
 
-When $n_z$ is much larger than the desired number of folds, $k$, then a partitioning can be applied to the zones themselves. In this case, the zone indices $1, \ldots, n_z$ are grouped into $k$ equally sized subsets $\mathcal{I}_1, \ldots, \mathcal{I}_k$.
+When $n_z$ is much larger than the desired number of folds, $k$, then a partitioning can be applied to the zones themselves. 
+In this case, the zone indices $1, \ldots, n_z$ are grouped into $k$ equally sized subsets $\mathcal{I}_1, \ldots, \mathcal{I}_k$.
 This approach has been applied, for example, in spatial CV at the agricultural field level [@pena2015].
-We would like to emphasize the conceptual distinction between CV *at the group (or block) level*, referring to this scenario, and the various previously types of block CV, where the blocks or groups themselves define the CV partitions.
+We would like to emphasize the conceptual distinction between *CV at the block level*, referring to this scenario, and *leave-one-block-out CV*, where the blocks themselves define the CV partitions.
+Figure&nbsp;\@ref(fig:rsmp-schema) gives an overview of the conceptual framework and terminology used in this work.
 
-A variant of cross-validation is leave-one-out (LOO) cross-validation, which has long been established in geostatistics [@cressie1993], sometimes with a focus on the spatial distribution of LOO error [@willmott2006].
+A variant of CV is leave-one-out (LOO) CV, which has long been established in geostatistics [@cressie1993], sometimes with a focus on the spatial distribution of LOO error [@willmott2006].
 Although this is just a special case of non-spatial CV with $k=n$, it is sometimes also referred to as spatial CV [@willmott2006].
 
-Spatial variants have been proposed that apply an exclusion buffer to the test locations to separate them from the training data [@brenning2005].
-We refer to this resampling scheme as *spatial buffering*.
-One approach that has been proposed for defining a separation distance is to use the range of autocorrelation of model residuals to determine the buffer distance as this ensures independence conditional on the predictors [@brenning2005; @roberts2017].
-When data is grouped, e.g., due to multi-level sampling designs or the study of spatial objects, it has been proposed to apply LOO at the site level [@martin2008; @kasurak2011] or, in animal movement studies, at the animal level [@anderson2005].
-We will broadly refer to such groups of observations as 'blocks' in a generic sense, and therefore refer to this type of LOO-CV as *leave-one-block-out CV*.
+Spatial variants of CV have been proposed that apply an exclusion *buffer* or guard zone to the test locations to separate them from the training data [@brenning2005; @roberts2017].
+One approach that has been proposed for defining a separation distance is to use the range of autocorrelation of model residuals to determine the buffer distance as this seeks to establish independence conditional on the predictors [@brenning2005; @roberts2017].
 
-It should be noted that $k$-fold cross-validation with a large value of $k$, and LOO-CV in particular ($k=n$), is not only very time-consuming since the model has to be trained $k$ times; these models will also be nearly identical since only a tiny fraction of the data is withheld, and therefore estimation bias increases.
-'Pure' LOO-CV is therefore not recommended for machine-learning model assessment.
+It should be noted that $k$-fold CV with a large value of $k$, and LOO CV in particular ($k=n$), is not only very time-consuming since the model has to be trained $k$ times; these models will also be nearly identical since only a tiny fraction of the data is withheld, and therefore estimation bias increases.
+'Pure' LOO CV is therefore not recommended for machine-learning model assessment.
 
 In the purely temporal domain, a special case is to leave out temporal observational units (or time slices; leave-time-out or LTO CV), as in leave-one-year-out CV [@anderson2005; @brenning2005].
-Cross-validation and hold-out validation strategies for time series have been discussed more extensively in the forecasting literature, considering also the effects of serial autocorrelation [@bergmeir2018].
+CV and hold-out validation strategies for time series have been discussed more extensively in the forecasting literature, considering also the effects of serial autocorrelation [@bergmeir2018]; these methods are not the focus of the implementation presented in this work.
 
 Turning to prediction tasks with spatiotemporal data, various spatial, temporal, or spatiotemporal partitioning strategies are being used, depending on the specific study objectives.
-While the former two ignore the spatial and temporal dimension of the data, respectively, it has also been proposed to leave out random subsets of locations and time points [@meyer2018] or spatiotemporal clusters [@cluto].
-<!-- AB: This short paragraph does certaintly not adequately describe Meyer's LLTO with its unique buffer in space and time dimensions. But I'm not sure if it's worth the effort. -->
+While the former two ignore the temporal and spatial dimension of the data, respectively, it has also been proposed to leave out random subsets of locations and time points [@meyer2018] or spatiotemporal clusters [@cluto].
+Details of these and other implementations are outlined in the respective subsections of Section&nbsp;\@ref(sec:implementation).
 
 # mlr3spatiotempcv within the mlr3 ecosystem
 
@@ -212,7 +213,7 @@ Partitioning objects in \pkg{mlr3spatiotempcv} are equipped with generic `plot()
 
 While \pkg{mlr3spatiotempcv} solely focuses on spatiotemporal resampling methods and their visualization, other packages such as \pkg{mlr3spatial} or \pkg{mlr3temporal} are planned in the mlr3 ecosystem to provide dedicated spatiotemporal learner and prediction methods.
 
-# Spatiotemporal partitioning methods and their implementation
+# Spatiotemporal partitioning methods and their implementation {#sec:implementation}
 
 At the most general level, resampling methods are categorized according to the level at which the data is partitioned and resampled (see Figure&nbsp;\@ref(fig:rsmp-schema)):
 
