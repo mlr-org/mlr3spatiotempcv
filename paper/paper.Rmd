@@ -519,15 +519,8 @@ A completely group or block of observations is therefore assigned to a specific 
 In \pkg{mlr} this concept was referred to as "blocking".
 
 In contrast to geometric or clustering-based blocks, the spatial or temporal location is not used explicitly, but rather implicitly through the spatial or spatiotemporal footprint of each user-defined block.
-<!-- The following sentence is really a repetition from the general background section, and similar statements could be made in the custom_cv section. -> omit this sentence  -->
-<!--
-additional metadata is exploited such as the membership in a specific agricultural management unit [@brenning2006], or in a site in hierarchical sampling [@kasurak2011].
--->
 
 The following example uses $k$-means clustering to generate classes that are used as blocks.
-<!--
-Note that in practice usually the group creation would not be done in an unsupervised way but by making use of an inherent grouping information from the dataset.
--->
 To underline the honoring of the groups, we chose a number of groups (eight) that is not a multiple of the number of folds (three).
 The test sets in the first and second folds are therefore composed of three groups while the third one holds two groups.
 
