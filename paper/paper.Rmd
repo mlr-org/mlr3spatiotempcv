@@ -172,7 +172,7 @@ When $n_z$ is much larger than the desired number of folds, $k$, then a partitio
 In this case, the zone indices $1, \ldots, n_z$ are grouped into $k$ equally sized subsets $\mathcal{I}_1, \ldots, \mathcal{I}_k$.
 This approach has been applied, for example, in spatial CV at the agricultural field level [@pena2015].
 We would like to emphasize the conceptual distinction between *CV at the block level*, referring to this scenario, and *leave-one-block-out CV*, where the blocks themselves define the CV partitions.
-Figure&nbsp;\@ref(fig:rsmp-schema) gives an overview of the conceptual framework and terminology used in this work.
+Figure \@ref(fig:rsmp-schema) gives an overview of the conceptual framework and terminology used in this work.
 
 A variant of CV is leave-one-out (LOO) CV, which has long been established in geostatistics [@cressie1993], sometimes with a focus on the spatial distribution of LOO error [@willmott2006].
 Although this is just a special case of non-spatial CV with $k=n$, it is sometimes also referred to as spatial CV [@willmott2006].
@@ -215,7 +215,7 @@ While \pkg{mlr3spatiotempcv} solely focuses on spatiotemporal resampling methods
 
 # Spatiotemporal partitioning methods and their implementation {#sec:implementation}
 
-At the most general level, resampling methods are categorized according to the level at which the data is partitioned and resampled (see Figure&nbsp;\@ref(fig:rsmp-schema)):
+At the most general level, resampling methods are categorized according to the level at which the data is partitioned and resampled (see Figure \@ref(fig:rsmp-schema)):
 
 - **Spatial leave-one-out resampling**: Each individual observation forms a test set;
 - **Leave-one-block-out CV**: Individual blocks are left out as test data, i.e. the number of folds equals the number of blocks;
@@ -289,7 +289,7 @@ Leave-one-disc-out resampling modifies this approach to leave out circular regio
 Leave-one-out CV with buffer and several adaptations for species distribution modeling [@hijmans2013] are implemented in the \pkg{blockCV} package as the so-called "buffering" method and integrated into \pkg{mlr3spatiotempcv} under the label `"spcv_buffer"`.
 In species distribution modeling, the response variable can either be recorded as presence/absence data or as presence/background information; both options are supported by this implementation. 
 By default, the dataset contains confirmed presence and confirmed absence observations, i.e. locations where a species was observed and not observed, respectively, and therefore spatial LOO CV in its usual sense can be carried out.
-Figure&nbsp;\@ref(fig:buffer-eval) shows the first test fold generated with this method for presence/absence data with a buffer distance of 1000 m.
+Figure \@ref(fig:buffer-eval) shows the first test fold generated with this method for presence/absence data with a buffer distance of 1000 m.
 
 ```{r buffer-non-eval, eval=FALSE}
 library("mlr3")
@@ -401,7 +401,7 @@ It uses rectangular blocks that can be rotated (argument `rotation`), and a mini
 Block size or number is specified via the argument `dsplit` or `nsplit`, respectively, and square blocks can be obtained with a single (or two identical) `dsplit` value.
 
 Note that the actual number of folds obtained may be smaller than `nsplit[1]*nsplit[2]` (or smaller than what would be expected based on `dsplit`) since some blocks may be empty or (optionally) merged into adjacent folds.
-In the example, there are only eleven folds instead of twelve because the southwestern part of the study area's bounding box does not contain observations  (Figure&nbsp;\@ref(fig:tile)).
+In the example, there are only eleven folds instead of twelve because the southwestern part of the study area's bounding box does not contain observations  (Figure \@ref(fig:tile)).
 
 ```{r tile-non-eval, eval=FALSE}
 rsmp_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
@@ -637,7 +637,7 @@ In the terminology used in this work, this can be referred to as resampling at t
 Thus, observations from the same time point are jointly sampled into the same test (or training) fold, with no constraints on the temporal distance between the sampled time points.
 This method does therefore not implement block CV in the sense of the time series literature.
 
-In the `cookfarm` example, we reduce the `Date` variable to five unique levels for better visualization, and then create a spatiotemporal regression task in \pkg{mlr3spatiotempcv} (Figure&nbsp;\@ref(fig:lto)).
+In the `cookfarm` example, we reduce the `Date` variable to five unique levels for better visualization, and then create a spatiotemporal regression task in \pkg{mlr3spatiotempcv} (Figure \@ref(fig:lto)).
 
 ```{r, results='hide'}
 data = cookfarm_sample
@@ -667,7 +667,7 @@ knitr::include_graphics("png/lto.png")
 #### CV at the location level: "leave-location-out" (LLO)
 
 In contrast to LTO, the LLO method randomly resamples locations that may, for example, correspond to time series.
-The sampled locations form the test partition while the temporal information is ignored (Figure&nbsp;\@ref(fig:llo)).
+The sampled locations form the test partition while the temporal information is ignored (Figure \@ref(fig:llo)).
 Unlike spatial CV methods that are based on geometric regions or the clustering of coordinates, the sampled test locations bear no particular spatial relationship.
 
 ```{r results='hide'}
@@ -684,7 +684,7 @@ knitr::include_graphics("png/llo.png")
 
 #### "Leave-location-and-time-out" (LLTO)
 
-In LLTO, a test set is first randomly sampled from the data set, and then all observations that correspond to the same location or time point are omitted from the training sample (Figure&nbsp;\@ref(fig:llto)).
+In LLTO, a test set is first randomly sampled from the data set, and then all observations that correspond to the same location or time point are omitted from the training sample (Figure \@ref(fig:llto)).
 LLTO resampling mimics the situation where a model is trained on time series data from a number of locations and time points, and used to predict the time series at other locations and time points that are not included in the training sample.
 
 Conceptually, LLTO applies zero-distance buffering in both space and time: The buffer zones consist of all observations whose distance to the test sample in either space or time equals zero.
@@ -829,7 +829,7 @@ rr_sp$aggregate(measures = msr("classif.auc"))
 
 ## Visualization of CV partitions
 
-Finally, we visualize (two of) the partitions that were used during performance estimation making use of the generic `autoplot()` function in package \pkg{mlr3spatiotempcv} (Figure&nbsp;\@ref(fig:vis-spcv-eval)).
+Finally, we visualize (two of) the partitions that were used during performance estimation making use of the generic `autoplot()` function in package \pkg{mlr3spatiotempcv} (Figure \@ref(fig:vis-spcv-eval)).
 
 ```{r vis-spcv-non-eval, eval=FALSE}
 autoplot(rsmp_sp, task, fold_id = c(1:2), size = 0.8)
