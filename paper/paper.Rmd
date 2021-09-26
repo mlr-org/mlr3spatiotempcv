@@ -691,6 +691,10 @@ Conceptually, LLTO applies zero-distance buffering in both space and time: The b
 In the mathematical sense, however, this buffering is not based on a valid metric (or distance function) in three-dimensional space (2D + time) as neither the identity of discernables nor the triangle inequality are satisfied by the underlying combined 'distance' measure.
 Also note that LLTO does not 'combine' LTO with LLO, as neither of these applies a buffer zone.
 
+The `"spcv_cstf"` methods LLO and LTO (with only one of `space_var` or `time_var` set) require a variable in the dataset which should be used for grouping.
+The specification of the variable(s) which should be used for a spatial, temporal or spatiotemporal grouping is not trivial because the final partitioning should, in the optimal case, ensure that the selected groups inherit substantial autocorrelation within themselves and simultaneously differ substantially from other partitions.
+Also, if the selected variable contains too many groups, the difference within train/test splits may become undesirably high and tend towards a LOO CV [@meyer2018].
+
 ```{r results='hide'}
 rsmp_cstf_time_loc = rsmp("sptcv_cstf",
   folds = 5,
@@ -908,11 +912,6 @@ Even though the prediction purpose should be the main decision criteria for choo
 All methods which make use of all variables in the dataset suffer from the problem that on the border between train and test sets, both in the spatial and temporal domain, autocorrelation is relatively high (unless the dataset inherits natural groupings or gaps between train and test sets).
 Methods that omit some observations (`"spcv_buffer"`, `"spcv_tiles"`, `"sptcv_cstf"` with both `space_var` and `time_var` set) are able to reduce the impact of autocorrelation in scenarios without a clear grouping or sufficient distance between train and test set observations.
 The downside is the removal of observations from the dataset which possibly reduces the power of the trained model and by this, depending on the specific observations that were removed, adds substantial bias to the CV results.
-
-<!-- sptcv LLO & LTO: requires additional variable to specify groupings -->
-The `"spcv_cstf"` methods (with only one of `space_var` or `time_var` set) require a variable in the dataset which should be used for grouping.
-The specification of such is not always easy because the grouping should ensure that the selected groups inherit substantial autocorrelation within themselves and simultaneously differ substantially from other groups.
-Also, if the selected variable contains too many groups, the difference within train/test splits may become undesirably high and tend towards a LOO CV [@meyer2018].
 
 <!-- only some methods are suited for repeated execution -->
 <!-- spcv_coords: limited variance due to limited k-means possibilities -->
