@@ -230,13 +230,9 @@ A finer distinction can then be made by looking at how the blocks are derived:
 
 In some resampling schemes, separation buffers or guard zones can be imposed to separate the training and test data.
 
-
-
 ```{r rsmp-schema, echo=FALSE, fig.cap="Conceptual overview of various spatial partitioning schemas. Starting from unpartioned spatial observations (top left) either a spatial block partitioning or a 'spatial leave-one-out resampling' is applied in the first step. A spatial block partitioning can further be turned into a 'leave-one-block-out resampling' or a 'k-fold CV resampling at the block level'. The use of a buffer is theoretically possible in any scenario but in practice only offered by specific method implementations.", out.width="100%",fig.pos="ht"}
 knitr::include_graphics("pdf/rsmp-schema.pdf")
 ```
-
-
 
 \pkg{mlr3spatiotempcv} currently implements the partitioning methods identified in Table&nbsp;\@ref(tab:sptcv-methods) with their \pkg{mlr3} class name.
 Several of the implemented algorithms are themselves versatile toolboxes with multiple options.
@@ -289,7 +285,6 @@ Contributors can orient themselves by looking at the already implemented methods
 Spatial leave-one-out methods use individual observations in space as test partitions and apply circular buffer or guard zones around around these test points to enforce a minimum prediction distance. 
 Leave-one-disc-out resampling modifies this approach to leave out circular regions centered at observation points. 
 
-
 ### Spatial leave-one-out with buffer --- `"spcv_buffer"`
 
 Leave-one-out CV with buffer and several adaptations for species distribution modeling [@hijmans2013] are implemented in the \pkg{blockCV} package as the so-called "buffering" method and integrated into \pkg{mlr3spatiotempcv} under the label `"spcv_buffer"`.
@@ -319,7 +314,6 @@ autoplot(rsmp_buffer,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-
 In the presence/background (or presence-only) situation, in contrast, only presence observations are recorded, and all other locations within the study area are referred to as the background and considered as pseudo-absences.
 Presence/background modeling can be enabled with the argument `spDataType = "PB"`.
 In this situation, the method constructs test folds that are centered at the recorded presence locations, offering two different modes of operation.
@@ -327,7 +321,6 @@ With `addBG = TRUE` (the default), all background points with a distance of `the
 The `addBG = FALSE` setting, in contrast, no background data is added to the test fold, which then contains only one (presence) observation, and only the data at a distance of `theRange` or greater are included in the training sample, including background data from these areas.
 
 The application of LOO methods can be computationally expensive since the method cycles through the entire dataset and fits one model for each test fold.
-
 
 ### Leave-one-disc-out with optional buffer --- `"spcv_disc"`
 
@@ -695,7 +688,6 @@ Conceptually, LLTO applies zero-distance buffering in both space and time: The b
 In the mathematical sense, however, this buffering is not based on a valid metric (or distance function) in three-dimensional space (2D + time) as neither the identity of discernables nor the triangle inequality are satisfied by the underlying combined 'distance' measure.
 Also note that LLTO does not 'combine' LTO with LLO, as neither of these applies a buffer zone.
 
-
 ```{r results='hide'}
 rsmp_cstf_time_loc = rsmp("sptcv_cstf",
   folds = 5,
@@ -739,7 +731,6 @@ Spatial CV is implemented in the form of leave-one-block-out CV using coordinate
 This approach is better suited for the irregular shape of the present study area than a rectangular partitioning.
 Figures&nbsp;\@ref(fig:vis-spcv-eval)) and&nbsp;\@ref(fig:vis-nspcv-eval)) show the contrasting distributions of training and test samples.
 For demonstration purposes we use only four CV folds and two repetitions.
-
 
 ## Task preparation
 
@@ -861,7 +852,6 @@ Spatial CV, in contrast, provides a better/more accurate measure of a model's ab
 It is also expected that spatial CV results better represent the model's transferability to geologically and topographically similar areas adjacent to the training area.
 The magnitude of the difference between spatial and non-spatial CV estimates may depend on the dataset, the strength on spatial or spatiotemporal autocorrelation, and the learner itself.
 Algorithms with a higher tendency to overfit to the training set will tend to have a larger spread in such scenarios.
-
 
 # Discussion {#sec:disc}
 
