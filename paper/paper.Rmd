@@ -188,7 +188,7 @@ CV and hold-out validation strategies for time series have been discussed more e
 
 Turning to prediction tasks with spatiotemporal data, various spatial, temporal, or spatiotemporal partitioning strategies are being used, depending on the specific study objectives.
 While the former two ignore the temporal and spatial dimension of the data, respectively, it has also been proposed to leave out random subsets of locations and time points [@meyer2018] or spatiotemporal clusters [@cluto].
-Details of these and other implementations are outlined in the respective subsections of Section&nbsp;\@ref(sec:implementation).
+Details of these and other implementations are outlined in the respective subsections of Section  \@ref(sec:implementation).
 
 # mlr3spatiotempcv within the mlr3 ecosystem
 
@@ -451,7 +451,7 @@ autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1) *
 
 Methods which operate at the block level first group the observations into blocks and then combine these blocks into CV partitions.
 In $k$-fold CV resampling at the block level, there are therefore $k$ partitions, each consisting of $1/k$-th of the blocks.
-The special case in which $k$ equals the number of blocks, CV at the block level simply becomes leave-one-block-out CV, for which dedicated implementations exist (Section&nbsp;\@ref(sec:lobo-cv)).
+The special case in which $k$ equals the number of blocks, CV at the block level simply becomes leave-one-block-out CV, for which dedicated implementations exist (Section  \@ref(sec:lobo-cv)).
 
 ### Geometric: using rectangular blocks --- `"spcv_block"`
 
@@ -724,7 +724,7 @@ With respect to functionality, \pkg{mlr3spatiotempcv} supports two-dimensional c
 
 <!-- \pkg{mlr3spatiotempcv} supports multiple resampling methods that are based on blocks:  -->
 <!-- (1) "Spatial blocking" from package \pkg{blockCV} implements $k$-fold CV resampling at the level of square or rectangular blocks, while (2) "Spatial tiles" from \pkg{sperrorest} offers leave-one-block-out resampling with square or rectangular, possibly rotated blocks. -->
-<!-- In addition, irregularly shaped blocks are available (3) through coordinate-based clustering as a leave-one-block-out technique from \pkg{sperrorest} (method `"spcv_coords"`, Section&nbsp;\@ref(sec:cluster-cv)), and (4) as a CV at the block level where blocks are defined by a factor variable that defines zones or groups (method `"custom_cv"` in \pkg{mlr3}, Section&nbsp;\@ref(sec:custom-cv)). -->
+<!-- In addition, irregularly shaped blocks are available (3) through coordinate-based clustering as a leave-one-block-out technique from \pkg{sperrorest} (method `"spcv_coords"`, Section  \@ref(sec:cluster-cv)), and (4) as a CV at the block level where blocks are defined by a factor variable that defines zones or groups (method `"custom_cv"` in \pkg{mlr3}, Section  \@ref(sec:custom-cv)). -->
 
 # Step-by-step example: Comparing spatial and non-spatial CV {#sec:case-study}
 
@@ -874,7 +874,7 @@ Coordinate-based clustering is particularly appealing in this setting because of
 Resampling at the level of sub-catchments could have been a viable alternative approach that can be implemented using custom resampling (`"custom_cv"` method); however, this may result in less balanced sizes of test sets as catchment sizes may vary.
 When the timing of landslides is known (event-based inventories) or multiple inventories have been compiled for different time points, it can also be recommendable to additionally sample training and test data from different time points, as with the LLTO and LTO [@meyer2018] or similar methods [@brenning2005].
 
-In other application scenarios such as the crop classification example given in section&nbsp;\@ref(sec:intro) [@pena2015], the objective is to predict the fruit-tree crop type of 'new', unseen fields within an agricultural region.
+In other application scenarios such as the crop classification example given in Section  \@ref(sec:intro) [@pena2015], the objective is to predict the fruit-tree crop type of 'new', unseen fields within an agricultural region.
 In this use case we are not at all interested in "predicting" the already known crop type of (other) grid cells within the same agricultural field.
 Also, a model will likely be much better able to predict the crop type within the same field from multitemporal remote-sensing data since all crops within that field are subject to identical management practices (e.g., use of pesticides, pruning of fruit trees, tree spacing), while 'new' fields may be managed differently.
 As a consequence, grid cells from the same field should be grouped into a block, and resampling should be done at the field level (`"cv"` method with grouping) to receive an honest estimate of the model's performance in a relevant predictive situation.
