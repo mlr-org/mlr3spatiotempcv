@@ -104,7 +104,7 @@ The CV resampling needed therefore depends as much on the prediction task itself
 While it is not the purpose of this article to recommend specific resampling schemes for specific use cases, this example may suffice to motivate the use of appropriate spatial and spatiotemporal cross-validation techniques, and the need for a unified framework and computational toolbox that accommodate a variety of prediction tasks that may be applicable to a broad range of application scenarios.
 \pkg{mlr3spatiotempcv} is such a toolbox.
 
-This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (Table&nbsp;\@ref(tab:sptcv-methods)).
+This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (Table \@ref(tab:sptcv-methods)).
 The earliest and most comprehensive of these implementations is the \pkg{sperrorest} R package [@brenning2012], which provides an extensible framework and includes predefined resampling strategies based on, for example, geometric blocking, clustering, and buffering.
 In contrast, \pkg{blockCV} and \pkg{ENMeval} were developed for block and buffer resampling with a focus on species distribution modeling [@blockCV; @rest2014; @muscarella2014].
 However, neither of these have been integrated into established machine-learning frameworks such as \pkg{mlr}/\pkg{mlr3} or \pkg{caret}/\pkg{tidymodels}, and all of them lack support for temporal prediction tasks.
@@ -158,7 +158,7 @@ The $k$-fold CV estimator of model performance is a nearly unbiased estimator of
 Since $\widehat{\mathit{perf}}_{\mathcal{L}, CV}(f)$ still depends on the particular partitioning chosen for $\mathcal{L}$, it is sometimes recommended to repeat the estimation using different random partitionings ($r$-repeated $k$-fold cross-validation) to reduce the influence of randomness when creating partitions [@vanwinckelen2012].
 
 In traditional CV, the partitioning is based on uniform random resampling, which ignores spatial or temporal autocorrelation or any existing grouping structure as well as the structure of the prediction task, and may result in over-optimistic performance estimates.
-Several approaches have therefore been proposed in the literature and implemented in software to accommodate a variety of predictive situations (Table&nbsp;\@ref(tab:sptcv-methods)).
+Several approaches have therefore been proposed in the literature and implemented in software to accommodate a variety of predictive situations (Table \@ref(tab:sptcv-methods)).
 
 Approaches based on *spatial blocking* (or *grouping*) require either the construction of spatial zones, or the use of pre-existing spatial structures in the data.
 Let's refer to these spatial units or blocks as $\mathcal{Z}_i$, $1\le i\le n_z$.
@@ -234,7 +234,7 @@ In some resampling schemes, separation buffers or guard zones can be imposed to 
 knitr::include_graphics("pdf/rsmp-schema.pdf")
 ```
 
-\pkg{mlr3spatiotempcv} currently implements the partitioning methods identified in Table&nbsp;\@ref(tab:sptcv-methods) with their \pkg{mlr3} class name.
+\pkg{mlr3spatiotempcv} currently implements the partitioning methods identified in Table \@ref(tab:sptcv-methods) with their \pkg{mlr3} class name.
 Several of the implemented algorithms are themselves versatile toolboxes with multiple options.
 Comprehensive and up-to-date information can be found in the package's online documentation (<https://mlr3spatiotempcv.mlr-org.com>).
 The following sections give an overview of most implemented partitioning strategies and their visualization options.
@@ -923,8 +923,8 @@ On the upside, `"spcv_coords"` works well with irregularly shaped study areas du
 <!-- spcv buffer and spcv disc: discards observations, LOO very expensive -->
 Methods `"spcv_buffer"` and `"spcv_disc"` (optionally) make use of the removal of observations to reduce the influence of spatial autocorrelation between train and test set.
 This can be a pretty effective way to reduce autocorrelation but also requires to discard many observations.
-In addition it comes with the downsides of a LOO-CV: many model fits which can be computationally very demanding and the results inheriting a high variance due to the high differences in the test sets (also commonly known as the "bias-variance tradeoff" [@wahba1998; @blockCV].
-If a large buffer size is chosen relative to the size of the study area, a large portion of it will remain unsampled.
+However, this approach also comes with the downsides of a LOO-CV: many model fits which can be computationally very demanding and the results may inherit a high variance due to the high differences in the test sets (also commonly known as the "bias-variance tradeoff" [@wahba1998; @blockCV].
+Also if a large buffer size is chosen relative to the size of the study area, a large portion of it will remain unsampled.
 One should try to refrain from selecting a value based on subjective notions with respect to study area characteristics.
 
 <!-- spcv coords: mention generic name -->
@@ -943,7 +943,7 @@ They are advised to focus on the spatial or spatiotemporal structure of the mode
 The compilation of resampling techniques in \pkg{mlr3spatiotempcv} is by no means complete.
 Additional methods or parameters may therefore be added in the future as they become available in upstream package or are contributed directly to this package.
 
-<!-- signoff -->
+<!-- sign-off -->
 Spatiotemporal cross-validation as a paradigm is not yet fully established in scientific workflows although it has been discussed intensively for more than a decade now.
 We anticipate that making the existing methods easily accessible to users is an important step to foster the acceptance of spatiotemporal cross-validation in the community and to allow modelers to produce bias-reduced model assessments in environmental and ecological studies.
 
