@@ -244,9 +244,8 @@ The available methods are further discussed in section \@ref(sec:disc).
   \centering
   \footnotesize
   \caption[t]{Spatiotemporal resampling methods available in the mlr3 ecosystem.
-    The Name column shows the mlr3 method name as found in the `mlr3::mlr\_resamplings` dictionary.
-    \# pub. indicates the number of studies that were found to have used this resampling technique until May 2021.
-    <!--- Literature appearances were only collected for methods with a "spcv" or "sptcv" prefix as methods which rely on custom grouping ("custom\_cv" and "cv") do not have a dedicated name or identifier to make them detectable in research papers. --->
+    The "Name" column shows the mlr3 method name as found in the \texttt{mlr3::mlr\_resamplings} dictionary.
+    "\# pub." indicates the number of studies that were found to have used this resampling technique until May 2021.
     For each method, up to three randomly chosen references were added to the table as footnotes.}
   \begingroup
     \begin{tabular}{lllll}
