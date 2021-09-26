@@ -736,7 +736,7 @@ Random forest is used as a classifier, and the area under the ROC curve (AUROC) 
 
 Spatial CV is implemented in the form of leave-one-block-out CV using coordinate-based $k$-means clustering to generate  irregularly shaped blocks of roughly equal size.
 This approach is better suited for the irregular shape of the present study area than a rectangular partitioning.
-Figures&nbsp;\@ref(fig:vis-spcv-eval)) and&nbsp;\@ref(fig:vis-nspcv-eval)) show the contrasting distributions of training and test samples.
+Figures \@ref(fig:vis-spcv-eval)) and \@ref(fig:vis-nspcv-eval)) show the contrasting distributions of training and test samples.
 For demonstration purposes we use only four CV folds and two repetitions.
 
 ## Task preparation
