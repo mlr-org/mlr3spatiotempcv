@@ -927,15 +927,6 @@ In addition it comes with the downsides of a LOO-CV: many model fits which can b
 If a large buffer size is chosen relative to the size of the study area, a large portion of it will remain unsampled.
 One should try to refrain from selecting a value based on subjective notions with respect to study area characteristics.
 
-<!-- cv vs custom_cv -->
-\pkg{mlr3spatiotempcv} supports two factor-based partitioning schemes: `"cv"` (with column role `"groups"` set) and `"custom_cv"`.
-Both are similar in that they require external user input for partition creation, i.e. a factor variable which assigns all observations into distinct groups.
-The idea of `"custom_cv"` is that each group becomes a test set in the CV (leave-one-group-out CV).
-By contrast, method `"cv"` (with column role `"groups"` set) resamples the initial groups and performs CV at the block level.
-The important point for method "cv" is that observations from a specific group will either be assigned to the train or test set and never be split up.
-In contrast to method `"custom_cv"`, this approach can be repeated multiple times because multiple different fold combinations are possible.
-However, it also requires the number of initial groups to be (substantially) higher than the number of folds so that a sensible combination is possible in the first place.
-
 <!-- spcv coords: mention generic name -->
 In @brenning2012, which is the reference commonly used for the $k$-means-based spatial partitioning approach, the method was not introduced with a unique name.
 Over time, studies which have used this method mainly referenced it using the generic "spatial CV" terminology.
