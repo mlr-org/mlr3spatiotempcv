@@ -688,7 +688,7 @@ In LLTO, a test set is first randomly sampled from the data set, and then all ob
 LLTO resampling mimics the situation where a model is trained on time series data from a number of locations and time points, and used to predict the time series at other locations and time points that are not included in the training sample.
 
 Conceptually, LLTO applies zero-distance buffering in both space and time: The buffer zones consist of all observations whose distance to the test sample in either space or time equals zero.
-In the mathematical sense, however, this buffering is not based on a valid metric (or distance function) in three-dimensional space (2D + time) as neither the identity of discernables nor the triangle inequality are satisfied by the underlying combined 'distance' measure.
+In the mathematical sense, however, this buffering is not based on a valid metric (or distance function) in three-dimensional space (2D + time) as neither the identity of detectability nor the triangle inequality are satisfied by the underlying combined 'distance' measure.
 Also note that LLTO does not 'combine' LTO with LLO, as neither of these applies a buffer zone.
 
 The `"spcv_cstf"` methods LLO and LTO (with only one of `space_var` or `time_var` set) require a variable in the dataset which should be used for grouping.
