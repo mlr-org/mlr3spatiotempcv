@@ -281,7 +281,8 @@ The available methods are further discussed in section \@ref(sec:disc).
   \endgroup\label{tab:sptcv-methods}
 \end{table}
 
-
+Contributions of new or missing spatiotemporal resampling methods is encouraged and can be done directly in \pkg{mlr3spatiotempcv}.
+Contributors can orient themselves by looking at the already implemented methods with respect to class structure, active bindings and methods.
 
 ## Spatial leave-one-out
 
@@ -954,23 +955,6 @@ In @brenning2012, which is the reference commonly used for the $k$-means-based s
 Over time, studies which have used this method mainly referenced it using the generic "spatial CV" terminology.
 However, using this notation potentially introduces confusion as the term "spatial CV" is of a generic nature which refers to the idea of accounting for spatial autocorrelation in spatial datasets and does not necessarily refer to a specific partitioning method in the first place.
 Hence, in package \pkg{mlr3spatiotempcv} this method was named `"spcv_coords"`, making use of the fact that the spatial coordinates are used for a cluster-based partition creation.
-
-## Contributing new resampling methods
-
-<!-- AB: I do not understand the point of this discussion section. It is not clear to the reader if mlr3spatiotempcv supports both approaches or supports/recommends one of them. Also, an implementation 'most likely' being reviewed in an unspecified process does not exactly inspire much trust... -->
-
-<!-- discuss pros and cons of implementing methods in a standalone pkg vs a framework -->
-There are pros and cons to whether a new method should be integrated into an existing modeling framework such as \pkg{mlr3} directly or distributed in its own package.
-When contributing a method to an existing framework, developers can benefit from existing structures and orient themselves towards how previous methods were implemented.
-They do not need to worry about complying with various R package related best practices (such as CRAN policies) and can solely focus on the implementation of an additional method.
-Also, the new method will be directly usable by all people using this framework following an existing and familiar syntax.
-Contributions to (ML) ecosystems such as \pkg{mlr3} enable users to easily make use of a large variety of additional functionality, from preprocessing over hyperparameter tuning and feature selection to result visualization [@mlr3], which can be used in conjunction with the new resampling method.
-In addition, contributions **most likely undergo a thorough review** from other community members during the implementation, most often enhancing the code quality of the implementation. <!-- AB: I do not necessarily agree with this since there is no formalized review process. 'Most likely' is also not helpful. Would you read a paper from a journal that 'most likely' reviews papers thoroughly? -->
-A direct contribution also reduces the maintenance load for the ecosystem developers as they do not need to wrap a new method into their system and watch for possible future changes.
-
-On the contrary, people are forced to use the ecosystem and cannot easily use the method outside of it, whether it is a different ecosystem or some other way.
-They might also be forced to follow certain (coding) guidelines of the ecosystem and potentially feel constrained in their personal way of doing things.
-Often, such ecosystems store their results in specialized classes, which make it hard for users to reuse them outside of the ecosystem.
 
 # Conclusion and outlook
 
