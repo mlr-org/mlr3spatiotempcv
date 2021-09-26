@@ -868,7 +868,7 @@ The question which resampling method should be chosen for a prediction task and 
 Even though there is and will be no definitive answer to this, we would like to give some guidance in this section to help finding an appropriate method.
 As a general rule, we recommend to use a resampling scheme that (1) mimics the predictive situation in which the model will be applied operationally, and (2) is consistent with the structure of the data. Both aspects are outlined in this section, starting with two concrete modeling scenarios.
 
-Although the case study example in section \@ref(sec:case-study) used the `"spcv_coords"` method for coordindate-based clustering, this should not give the impression that this method is the only method suitable for this example task.
+Although the case study example in section \@ref(sec:case-study) used the `"spcv_coords"` method for coordinate-based clustering, this should not give the impression that this method is the only method suitable for this example task.
 In this application setting, we want to assess how well the model generalized from the concrete set of historical landslide occurrences, which is why we ensured that training and test sets contain different, "new" hillslopes and landslides.
 Coordinate-based clustering is particularly appealing in this setting because of its ability to adapt to the irregularly shaped study area of this example.
 Resampling at the level of sub-catchments could have been a viable alternative approach that can be implemented using custom resampling (`"custom_cv"` method); however, this may result in less balanced sizes of test sets as catchment sizes may vary.
