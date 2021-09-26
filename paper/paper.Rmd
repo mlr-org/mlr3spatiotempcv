@@ -429,10 +429,6 @@ autoplot(rsmp_tiles,
 
 Support for user-defined partitioning strategies is built into \pkg{mlr3} directly.
 In this so-called "Custom CV", users supply a factor variable, each level of which defines a partition.
-<!-- AB: I think we can omit this sentence, otherwise we would have to repeat it for the other LOBO methods as well. Here we're in the leave-ONE-something-out section. -->
-<!--
-This partitioning concept should not be mistaken with "group-level resampling" (section \@ref(sec:group-level)), which conducts additional combination of data splits and performs CV at the block level.
--->
 The factor variable can either be specified through a factor vector of the same length as number of observations, or by passing the name of a feature of type `character` within the task (argument `col`).
 The following simple example from `sperrorest::partition_factor()` creates altitudinal zones that define the spatial partitions.
 
