@@ -455,12 +455,16 @@ The special case in which $k$ equals the number of blocks, CV at the block level
 
 ### Geometric: using rectangular blocks --- `"spcv_block"`
 
-The `"spcv_block"` method from package \pkg{blockCV} supports both random and systematic resampling of square blocks (`rsmp("spcv_block")` with argument `selection = "random"` and `"systematic"`, respectively; Figure&nbpsp;~\@ref(fig:block-random) and \@ref(fig:block-systematic)).
+The `"spcv_block"` method from package \pkg{blockCV} supports both random and systematic resampling of square blocks (`rsmp("spcv_block")` with argument `selection = "random"` and `"systematic"`, respectively; Figures \@ref(fig:block-random) and \@ref(fig:block-systematic)).
 There are additional options for modeling presence-only data, which is a typical situation in species distribution modeling.
 Users can also supply a user-defined polygon via an argument `rasterLayer` with predefined blocking zones.
 
-Block sizes (in meters) are determined by the `range` argument.
-Alternatively, rectangular blocks can be created by specifying the number of desired rows and columns (arguments `rows` and `cols`).
+Block sizes (square) (in meters) are determined by the `range` argument.
+Rectangular blocks can be created by specifying the number of desired rows and columns (arguments `rows` and `cols`).
+Due to the non-trivial specification of argument `range` package \pkg{blockCV} provides the helper functions `spatialAutoRange()` and `rangeExplorer()` to conduct a data-driven estimation of the distance at which the spatial autocorrelation within the data levels off [@blockCV].
+According to the package authors, this estimate should then be used for argument `range` to have a sensible value for the block sizes created in method `"spcv_block"`.
+
+It should be noted that rectangular partitioning can be problematic in irregularly shaped study areas as in Figure \@ref(fig:block-random) where some of the resulting partitions may contain substantially fewer observations than others.
 
 ```{r block-random-non-eval, eval=FALSE}
 rsmp_block_random = rsmp("spcv_block", range = 1000, folds = 5)
@@ -904,12 +908,6 @@ Even though the prediction purpose should be the main decision criteria for choo
 All methods which make use of all variables in the dataset suffer from the problem that on the border between train and test sets, both in the spatial and temporal domain, autocorrelation is relatively high (unless the dataset inherits natural groupings or gaps between train and test sets).
 Methods that omit some observations (`"spcv_buffer"`, `"spcv_tiles"`, `"sptcv_cstf"` with both `space_var` and `time_var` set) are able to reduce the impact of autocorrelation in scenarios without a clear grouping or sufficient distance between train and test set observations.
 The downside is the removal of observations from the dataset which possibly reduces the power of the trained model and by this, depending on the specific observations that were removed, adds substantial bias to the CV results.
-
-<!-- spcv_block: how to set argument `range`` -->
-Method `"spcv_block"` requires the user to supply a value for argument `range` which denotes the block size used to create the blocking scheme across the study area.
-This specification is non-trivial and therefore package \pkg{blockCV} provides some helper functions (`spatialAutoRange()` and `rangeExplorer()`) to conduct a data-driven estimation of the distance at which the spatial autocorrelation in the data levels off [@blockCV].
-According to the package authors, this estimate should then be used for argument `range` to have a sensible value for the block sizes created in method `"spcv_block"`.
-Rectangular partitioning can be problematic in irregularly shaped study areas where some of the resulting partitions may contain substantially fewer observations than others.
 
 <!-- sptcv LLO & LTO: requires additional variable to specify groupings -->
 The `"spcv_cstf"` methods (with only one of `space_var` or `time_var` set) require a variable in the dataset which should be used for grouping.
