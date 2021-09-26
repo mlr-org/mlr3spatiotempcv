@@ -26,7 +26,7 @@ jobs:
       matrix:
         config:
           # use a different tic template type if you do not want to build on all listed platforms
-          - { os: windows-latest, r: "release" }
+          # - { os: windows-latest, r: "release" }
           # [Custom matrix env var]
           - { os: macOS-latest, r: "release", latex: "true", codecov: "false" }
           - { os: ubuntu-latest, r: "devel" }
