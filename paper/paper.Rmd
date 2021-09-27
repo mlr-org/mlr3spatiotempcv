@@ -33,15 +33,13 @@ title:
   # For running headers, if needed
   # short:     "\\pkg{foo}: A Capitalized Title"
 abstract: >
-  The R package [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is an extension package of the machine-learning framework [mlr3](https://mlr3.mlr-org.com).
-  It adds support for spatiotemporal resampling methods and their visualization.
-  Spatiotemporal resampling methods are needed to assess model performance in a variety of predictive situations in which spatial, temporal, or spatiotemporal autocorrelation is present.
-  Cross-validation performance estimates may be biased when this is ignored.
+  Spatial and spatiotemporal machine-learning models require a suitable framework for their model assessment, model selection, and hyperparameter tuning, in order to avoid error estimation bias and over-fitting.
+  This contribution reviews the state-of-the-art in spatial and spatiotemporal CV, and introduces the R package [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) as an extension package of the machine-learning framework [mlr3](https://mlr3.mlr-org.com), demonstrating its use in a step-by-step example.
   Currently various R packages implementing different spatiotemporal partitioning strategies exist: sperrorest, blockCV, CAST.
   The goal of [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is to gather the available spatiotemporal resampling methods in R and make them available to users through a simple and common interface.
   This is made possible by integrating the package directly into the [mlr3](https://mlr3.mlr-org.com) machine-learning framework, which already has support for generic non-spatiotemporal resampling methods such as random partitioning.
-  This simplifies the step of integrating package-specific syntax into an overarching machine-learning pipeline, making it easier for users to choose from a variety of different spatiotemporal resampling methods.
-  The users' decision to use a specfic resampling method should depend on the predictive task at hand, the autocorrelation within the data, and the structure of the sampling design used to collect the data.
+  This simplifies the the integration of package-specific syntax into an overarching machine-learning pipeline, making it easier for users to choose from a variety of spatiotemporal resampling methods.
+    The users' decision to use a specfic resampling method should depend on the predictive task at hand, the autocorrelation within the data, and the spatial structure of the sampling design or geographic objects being studied.
 keywords:
   formatted: [cross-validation, predictive performance, machine learning, autocorrelation, spatial, temporal, "\\proglang{R}"]
   plain:     [cross-validation, predictive performance, autocorrelation, spatial, temporal, R]
