@@ -332,12 +332,6 @@ Leave-one-disc-out resampling becomes spatial LOO CV for a radius of 0 m and whe
 Note that the resampled discs will potentially overlap.
 Strictly speaking, this straightforward extension of spatial LOO does therefore not establish a disjoint partitioning as used for CV resampling in the traditional sense.
 
-<!-- AB: I don't think the following explanation is needed: -->
-<!--
-Even though the buffer creates a circular area which defines the test partition, it is not categorized as a "geometric" method as the origin of the circle is observation-based.
-In contrast, "geometric" methods do not take into account single observation locations but only focus on the study area extend and will include all observations which fall into their respective covered area.
--->
-
 
 
 ```{r disc-non-eval, eval=FALSE}
@@ -611,8 +605,6 @@ For their application in lower dimensions, usually only either the space or time
 
 @meyer2018 proposed a spatiotemporal resampling method in which a test set is selected and all observations that correspond to the same location or time point are omitted from the training sample.
 This method is referred to as "leave-location-and-time-out" (LLTO) in package \pkg{CAST}.
-<!-- AB: The following information is kinda obvious: -->
-<!-- It requires both space coordinates and time point identifiers that are used to locate observations. --> 
 Additional methods that resample in the temporal and spatial domain only are named "leave-time-out" (LTO) and "leave-location-out" (LLO), respectively, in \pkg{CAST}.
 Note that despite their names, LLTO, LTO and LLO are conceptually not leave-*one*-out methods as they place a certain fraction of observations in the test set, as in ordinary CV.
 Also, LTO and LLO are conceptually similar to \pkg{mlr3}'s "cv" method with a custom grouping as they perform a CV at the block level using a grouping structure defined by time points (LTO) and locations (i.e., time series; LLO).
@@ -868,6 +860,7 @@ In summary, there are various factors that may be considered in judging the suit
 
 - Will the model be applied to predict 'new' outcomes at near or more distant spatial locations? 
 - Will it be applied to predict into the future, or hindcast gaps between spatiotemporal observations in the past?
+- Is it necessary to impose a separation distance or prediction horizon as a spatial or temporal buffer between training and prediction locations?
 - How densely are the observations distributed in space and time? Are they more densely distributed that the intended spatial or temporal prediction distance?
 - Is the data naturally grouped, e.g. because of the spatial extent of the studied objects, or as a consequence of multi-level (cluster) sampling?
 - With an eye on environmental blocking and extrapolation in feature space, is it intended to apply the model to predict 'new' outcomes for unobserved values of predictor variables?
@@ -887,35 +880,22 @@ In nested CV, an "inner" CV is performed on each CV training set since hyperpara
 In such scenarios it is recommended to use the same spatial resampling method for the inner CV (hyperparameter tuning) as for the outer CV (model assessment) in order to use the appropriate objective function for optimization.
 See @schratz2019 for more details as well as chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace2019].
 
-## Comparing and discussing spatiotemporal resampling methods
+## Additional practical issues
 
-Even though the prediction purpose should be the main decision criteria for choosing an appropriate spatiotemporal resampling method, we would like to discuss the individual methods in more detail in the following section.
+Since \pkg{mlr3spatiotempcv} harvests already implemented resampling methods from existing R packages, the broader overview presented in this work has highlighted that there are still several gaps that may need to be closed in the future, if specific use cases require those features.
 
-<!-- high autocor on the border of test sets -->
-<!-- sptcv LLTO: discards many observations -->
-All methods which make use of all variables in the dataset suffer from the problem that on the border between train and test sets, both in the spatial and temporal domain, autocorrelation is relatively high (unless the dataset inherits natural groupings or gaps between train and test sets).
-Methods that omit some observations (`"spcv_buffer"`, `"spcv_tiles"`, `"sptcv_cstf"` with both `space_var` and `time_var` set) are able to reduce the impact of autocorrelation in scenarios without a clear grouping or sufficient distance between train and test set observations.
-The downside is the removal of observations from the dataset which possibly reduces the power of the trained model and by this, depending on the specific observations that were removed, adds substantial bias to the CV results.
+<!-- risks of using buffer zone -->
+For example, buffering, or the use of a spatial or temporal separation distance between training and test sets, is currently only implemented for some methods (`"spcv_buffer"`, `"spcv_disc"`, and `"sptcv_cstf"` with both `space_var` and `time_var`).
+Its use should, however, be limited to use cases involving a prediction distance, as a buffer zone reduces the size of the training sample and introduces the risk of geographically biased training data.
 
 <!-- only some methods are suited for repeated execution -->
 <!-- spcv_coords: limited variance due to limited k-means possibilities -->
-For repeated executions of method `"spcv_coords"`, the variance between repetitions can become quite small due to the limited possibilities of differing $k$-means-based clusters on the same dataset [@brenning2012].
-This applies even more to `"spcv_block"` with options `selection = "systematic"` and `selection = "checkerboard"` as the fold assignments are the same in each repetition.
-In general, only methods making use of a random component (e.g. `"spcv_coords"` or `"spcv_block"` with option `selection = "random"`) may be suited for using multiple repetitions.
-On the upside, `"spcv_coords"` works well with irregularly shaped study areas due to its ability to create partitions which adjust well to the shape of the study area.
-
-<!-- spcv buffer and spcv disc: discards observations, LOO very expensive -->
-Methods `"spcv_buffer"` and `"spcv_disc"` (optionally) make use of the removal of observations to reduce the influence of spatial autocorrelation between train and test set.
-This can be a pretty effective way to reduce autocorrelation but also requires to discard many observations.
-However, this approach also comes with the downsides of a LOO-CV: many model fits which can be computationally very demanding and the results may inherit a high variance due to the high differences in the test sets (also commonly known as the "bias-variance tradeoff" [@wahba1998; @blockCV].
-Also if a large buffer size is chosen relative to the size of the study area, a large portion of it will remain unsampled.
-One should try to refrain from selecting a value based on subjective notions with respect to study area characteristics.
-
-<!-- spcv coords: mention generic name -->
-In @brenning2012, which is the reference commonly used for the $k$-means-based spatial partitioning approach, the method was not introduced with a unique name.
-Over time, studies which have used this method mainly referenced it using the generic "spatial CV" terminology.
-However, using this notation potentially introduces confusion as the term "spatial CV" is of a generic nature which refers to the idea of accounting for spatial autocorrelation in spatial datasets and does not necessarily refer to a specific partitioning method in the first place.
-Hence, in package \pkg{mlr3spatiotempcv} this method was named `"spcv_coords"`, making use of the fact that the spatial coordinates are used for a cluster-based partition creation.
+CV is often executed repeatedly to reduce the possible influence of random variability on CV estimates.
+In general, only methods that involve a random mechanism for generating or resampling blocks are suited for this.
+In leave-one-block-out CV, coordinate-based and environmental clustering (`"spcv_coords"`, `"spcv_env"` and `"sptcv_cluto"`) achieve this as their clusters are generated based on random seeds.
+However, experience with `"spcv_coords"` shows that clusters from repeated executions may in some situations be nearly identical to each other, resulting in very little variability between CV repetitions.
+This issue is even more critical in CV at the block level with `"spcv_block"` with options `selection = "systematic"` and `selection = "checkerboard"` because identical folds are assigned in each repetition.
+In contrast, `"spcv_block"` with option `selection = "random"` avoids this problem.
 
 # Conclusion and outlook
 
