@@ -276,8 +276,8 @@ The available methods are further discussed in section \@ref(sec:disc).
   \endgroup\label{tab:sptcv-methods}
 \end{table}
 
-Contributions of new or missing spatiotemporal resampling methods is encouraged and can be done directly in \pkg{mlr3spatiotempcv}.
-Contributors can orient themselves by looking at the already implemented methods with respect to class structure, active bindings and methods.
+Users are encouraged to contribute new or missing spatiotemporal resampling methods directly to \pkg{mlr3spatiotempcv}.
+The already implemented methods can be inspected to get to know the class structure, active bindings and methods.
 
 ## Spatial leave-one-out
 
