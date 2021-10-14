@@ -892,6 +892,8 @@ CV is often executed repeatedly to reduce the possible influence of random varia
 In general, only methods that involve a random mechanism for generating or resampling blocks are suited for this.
 In leave-one-block-out CV, coordinate-based and environmental clustering (`"spcv_coords"`, `"spcv_env"` and `"sptcv_cluto"`) achieve this as their clusters are generated based on random seeds.
 However, experience with `"spcv_coords"` shows that clusters from repeated executions may in some situations be nearly identical to each other, resulting in very little variability between CV repetitions.
+While this effect also depends on the variable used for clustering, similar effects could potentially also apply to `"spcv_env"` and `"sptcv_cluto"` methods.
+However, such effects are more difficult to quantify because selected features of these methods are always different in contrast to `"spcv_coords"` which always uses coordinates for clustering.
 This issue is even more critical in CV at the block level with `"spcv_block"` with options `selection = "systematic"` and `selection = "checkerboard"` because identical folds are assigned in each repetition.
 In contrast, `"spcv_block"` with option `selection = "random"` avoids this problem.
 
