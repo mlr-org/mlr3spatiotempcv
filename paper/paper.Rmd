@@ -34,12 +34,12 @@ title:
   # short:     "\\pkg{foo}: A Capitalized Title"
 abstract: >
   Spatial and spatiotemporal machine-learning models require a suitable framework for their model assessment, model selection, and hyperparameter tuning, in order to avoid error estimation bias and over-fitting.
-  This contribution reviews the state-of-the-art in spatial and spatiotemporal CV, and introduces the R package [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) as an extension package of the machine-learning framework [mlr3](https://mlr3.mlr-org.com), demonstrating its use in a step-by-step example.
-  Currently various R packages implementing different spatiotemporal partitioning strategies exist: sperrorest, blockCV, CAST.
+  This contribution reviews the state-of-the-art in spatial and spatiotemporal CV, and introduces the R package [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) as an extension package of the machine-learning framework [mlr3](https://mlr3.mlr-org.com).
+  Currently various R packages implementing different spatiotemporal partitioning strategies exist: blockCV, CAST, skmeans and sperrorest.
   The goal of [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is to gather the available spatiotemporal resampling methods in R and make them available to users through a simple and common interface.
   This is made possible by integrating the package directly into the [mlr3](https://mlr3.mlr-org.com) machine-learning framework, which already has support for generic non-spatiotemporal resampling methods such as random partitioning.
-  This simplifies the the integration of package-specific syntax into an overarching machine-learning pipeline, making it easier for users to choose from a variety of spatiotemporal resampling methods.
-    The users' decision to use a specfic resampling method should depend on the predictive task at hand, the autocorrelation within the data, and the spatial structure of the sampling design or geographic objects being studied.
+  One advantage is the use of a consistent nomenclature in an overarching machine-learning toolkit instead of a varying package-specific syntax, making it easier for users to choose from a variety of spatiotemporal resampling methods.
+  This package avoids giving recommendations which method to use in practice as this decision depends on the predictive task at hand, the autocorrelation within the data, and the spatial structure of the sampling design or geographic objects being studied.
 keywords:
   formatted: [cross-validation, predictive performance, machine learning, autocorrelation, spatial, temporal, "\\proglang{R}"]
   plain:     [cross-validation, predictive performance, autocorrelation, spatial, temporal, R]
@@ -85,45 +85,45 @@ knitr::opts_chunk$set(fig.path = "./paper/figs/",
 Spatial and spatiotemporal prediction tasks are common in applications ranging from environmental sciences to archaeology and epidemiology.
 While sophisticated mathematical frameworks have long been developed in spatial statistics to characterize predictive uncertainties under well-defined mathematical assumptions such as intrinsic stationarity [e.g., @cressie1993], computational estimation procedures have only been proposed more recently to assess predictive performances of spatial and spatiotemporal prediction models [@brenning2005; @brenning2012; @pohjankukka2017; @roberts2017].
 
-Although alternatives such as the bootstrap exist and have some advantages [@efron1983; @hand1997], cross-validation (CV) is a particularly well-established, easy-to-implement algorithm for *model assessment* of supervised machine-learning models [@efron1983 and next section] and *model selection* [@arlot2010].
-In its basic form, it is based on resampling the data without paying attention to any possible dependence structure, which may arise from, e.g., grouped or structured data, or underlying environmental processes inducing some sort of spatial coherence at the landscape scale.
-In treating dependent observations as independent, or ignoring autocorrelation, CV test samples may in fact be heavily correlated with, or even pseudo-replicates of, the data used for training the model, which introduces a potentially severe bias in assessing the transferability of flexible machine-learning models.
+Although alternatives such as the bootstrap exist since some decades [@efron1983; @hand1997], cross-validation (CV) is a particularly well-established, easy-to-implement algorithm for *model assessment* of supervised machine-learning models [@efron1983 and next section] and *model selection* [@arlot2010].
+In its basic form, CV is based on resampling the data without paying attention to any possible dependence structure, which may arise from, e.g., grouped or structured data, or underlying environmental processes inducing some sort of spatial coherence at the landscape scale.
+In treating dependent observations as independent, or ignoring autocorrelation, CV test samples may in fact be heavily correlated with, or even pseudo-replicates of, the data used for training the model, which introduces a potentially severe bias in assessing the transferability of flexible machine-learning (ML) models.
 
 This CV bias is well-known in spatial as well as non-spatial prediction [@brenning2005; @brenning2008; @arlot2010; @roberts2017] and in forecasting [@bergmeir2018].
 It is most easily understood from a predictive modeling perspective by focusing on the question where (and when) the model should be used for prediction.
 In crop classification from remotely-sensed data, for instance, learning samples routinely contain multiple grid cells from a sample of fields with known crop type, for instance 2000 grid cells from 100 fields scattered across a large study region.
 The purpose of training a model on this particular sample is to make predictions on other, new fields within the same geographic domain [*intra-domain* prediction, @brenning2005] --- not *within* the same field, which obviously presents only a single crop type that is already known from the training sample.
-In this specific situation it would therefore seem rather unwise to train a model on a simple random subsample of grid cells, and to test it on the remaining data, using other grid cells from the same fields, as if we wanted to predict within a field.
+In this specific situation it would therefore seem rather unwise to train a model on a simple random subsample of grid cells, and to test it on the remaining data, using other grid cells from the same fields, as if one wanted to predict within a field.
 The results from this performance assessment would be over-optimistic, and perhaps badly so.
 To mimic the predictive situation for which the model is trained, one would rather have to resample at the level of fields, not grid cells [@pena2015].
 If the model was to be applied to adjacent agricultural regions, i.e., outside the learning sample's spatial domain [*extra-domain* prediction, @brenning2005], it would even seem necessary to resample at a higher level of spatial aggregation, i.e. at the level of sub-regions within the learning sample, in order to realistically mimic the actual prediction task.
 The CV resampling needed therefore depends as much on the prediction task itself as on the data structure or dependency at hand.
 
-While it is not the purpose of this article to recommend specific resampling schemes for specific use cases, this example may suffice to motivate the use of appropriate spatial and spatiotemporal cross-validation techniques, and the need for a unified framework and computational toolbox that accommodate a variety of prediction tasks that may be applicable to a broad range of application scenarios.
+While it is not the purpose of this article to recommend specific resampling schemes for specific use cases, the example from above may suffice to motivate the use of appropriate spatial and spatiotemporal cross-validation techniques, and the need for a unified framework and computational toolbox that accommodate a variety of prediction tasks that may be applicable to a broad range of application scenarios.
 \pkg{mlr3spatiotempcv} is such a toolbox.
 
 This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (Table \@ref(tab:sptcv-methods)).
-The earliest and most comprehensive of these implementations is the \pkg{sperrorest} R package [@brenning2012], which provides an extensible framework and includes predefined resampling strategies based on, for example, geometric blocking, clustering, and buffering.
-In contrast, \pkg{blockCV} and \pkg{ENMeval} were developed for block and buffer resampling with a focus on species distribution modeling [@blockCV; @rest2014; @muscarella2014].
+The earliest and most comprehensive of these implementations is the \pkg{sperrorest} R package [@brenning2012], which provides an extensible framework and includes predefined resampling strategies based on geometric blocking, clustering, and buffering.
+In contrast, packages \pkg{blockCV} and \pkg{ENMeval} were developed for block and buffer resampling with a focus on species distribution modeling [@blockCV; @rest2014; @muscarella2014].
 However, neither of these have been integrated into established machine-learning frameworks such as \pkg{mlr}/\pkg{mlr3} or \pkg{caret}/\pkg{tidymodels}, and all of them lack support for temporal prediction tasks.
 The \pkg{CAST} package, in contrast, focuses on spatiotemporal prediction tasks and makes use of some functions of the \pkg{caret} framework [@cast; @meyer2018].
-One limitation of these packages is the sole focus on model assessment, while the proposed implementation within the \pkg{mlr3} framework offers a seamless integration into model selection.
+One limitation of all these packages is the sole focus on model assessment, while the proposed implementation within the \pkg{mlr3} framework also offers seamless integration into model selection and provides parallel execution and enhanced logging abilities.
 It is worth noting that a spatial cross-validation library named \pkg{spacv} has recently been developed for Python3, which can be used with the \pkg{scikit-learn} machine-learning framework [@pedregosa2011].
 
 Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state-of-the-art compilation of spatial and spatiotemporal partitioning schemes that is well-integrated into a comprehensive machine-learning framework in R, the \pkg{mlr3} ecosystem [@mlr3].
 This package is furthermore equipped with a variety of two- and three-dimensional visualization capabilities.
-Our hope is that this implementation will facilitate reproducible geospatial modeling and code-sharing across a broad range of application domains.
+The hope is that this implementation will simplify and facilitate reproducible geospatial modeling and code-sharing across a broad range of application domains.
 
-The purpose of this paper is to give an overview of the methods implemented in the R package \pkg{mlr3spatiotempcv}.
+The purpose of this article is to give an overview of the methods implemented in the R package \pkg{mlr3spatiotempcv}.
 After presenting the conceptual background in the following section, the overall structure of the \pkg{mlr3spatiotempcv} package is outlined.
 Next, various spatial and spatiotemporal partitioning techniques are contrasted and compared, before their application is demonstrated in a machine-learning model assessment in the following section.
 Finally, recommendations for the selection of suitable resampling techniques are given.
 
 # Spatial and spatiotemporal CV
 
-In CV for predictive model assessment, we consider the following formal setting.
-We are interested in predicting a numerical or categorical response $y$ of an object or instance using a feature vector $\mathbf{x} = (x^{(1)}, \ldots, x^{(p)})^t\in\mathbb{R}^p$ and a model $\hat{f}_\mathcal{L}$ that has been trained on a learning sample $\mathcal{L} = \{(y_i, \mathbf{x}_i),\ i = 1, ..., n\}$.
-Our goal is to estimate the expected value of the performance of $\hat{f}_\mathcal{L}$,
+In CV for predictive model assessment, the following formal setting is considered.
+The interest is in predicting a numerical or categorical response $y$ of an object or instance using a feature vector $\mathbf{x} = (x^{(1)}, \ldots, x^{(p)})^t\in\mathbb{R}^p$ and a model $\hat{f}_\mathcal{L}$ that has been trained on a learning sample $\mathcal{L} = \{(y_i, \mathbf{x}_i),\ i = 1, ..., n\}$.
+The goal is to estimate the expected value of the performance of $\hat{f}_\mathcal{L}$,
 \[
 \mathit{perf(\hat{f}_\mathcal{L})} := E(l(Y,\hat{f}_\mathcal{L}(X))),
 \]
@@ -132,7 +132,7 @@ This is referred to as the *actual* or *conditional* performance measure as it i
 The loss function can take a variety of forms such as the misclassification error $I(Y\neq\hat{f}_\mathcal{L}(X))$ in classification, or the squared error $(Y-\hat{f}_\mathcal{L}(X))^2$ in regression, among many other possible measures.
 The choice of the performance measure is equally critical as the choice of the estimation procedure, but it is beyond the scope of this contribution to discuss performance measures for regression and classification (see, e.g., @hand1997 for classification, and @hyndman2006 for regression and forecasting tasks).
 
-Since we only have a sample $\mathcal{T}$ of test data drawn from the population, we can only *estimate* the conditional performance of $\hat{f}_\mathcal{L}$:
+Since there is only a sample $\mathcal{T}$ of test data drawn from the population, one can only *estimate* the conditional performance of $\hat{f}_\mathcal{L}$:
 \[
 \widehat{\mathit{perf}}_T(\hat{f}_\mathcal{L}) = \frac{1}{|\mathcal{T}|}\sum_{(Y,X)\in\mathcal{T}}l(Y,\hat{f}_\mathcal{L}(X)).
 \]
@@ -150,7 +150,7 @@ The $k$-fold CV estimator can therefore be written as
 \[
 \widehat{\mathit{perf}}_{\mathcal{L}, CV}(f) := \frac{1}{k}\sum_{i=1}^k\widehat{\mathit{perf}}_{\mathcal{L}_i}(\hat{f}_{\mathcal{L}_{(i)}}),
 \]
-where $f$ is a machine-learning algorithm, i.e. a mapping that trains a model $\hat{f}_\mathcal{S}$ using any suitable training sample $\mathcal{S}$.
+where $f$ is a ML algorithm, i.e. a mapping that trains a model $\hat{f}_\mathcal{S}$ using any suitable training sample $\mathcal{S}$.
 The use of $k=5$ or $k=10$ folds is most commonly seen in practice, and these preferences are also supported by theory [@bengio2004; @cawley2010].
 The $k$-fold CV estimator of model performance is a nearly unbiased estimator of the conditional performance measure when the observations were drawn independently [@efron1983].
 Since $\widehat{\mathit{perf}}_{\mathcal{L}, CV}(f)$ still depends on the particular partitioning chosen for $\mathcal{L}$, it is sometimes recommended to repeat the estimation using different random partitionings ($r$-repeated $k$-fold cross-validation) to reduce the influence of randomness when creating partitions [@vanwinckelen2012].
@@ -158,13 +158,13 @@ Since $\widehat{\mathit{perf}}_{\mathcal{L}, CV}(f)$ still depends on the partic
 In traditional CV, the partitioning is based on uniform random resampling, which ignores spatial or temporal autocorrelation or any existing grouping structure as well as the structure of the prediction task, and may result in over-optimistic performance estimates.
 Several approaches have therefore been proposed in the literature and implemented in software to accommodate a variety of predictive situations (Table \@ref(tab:sptcv-methods)).
 
-Approaches based on *spatial blocking* (or *grouping*) require either the construction of spatial zones, or the use of pre-existing spatial structures in the data.
+Approaches based on *spatial blocking* (or somtimes calld *grouping*) require either the construction of spatial zones, or the use of pre-existing spatial structures in the data.
 Let's refer to these spatial units or blocks as $\mathcal{Z}_i$, $1\le i\le n_z$.
-These blocks are often constructed to serve as the $k=n_z$ spatial partitions, for example by performing $k$-means clustering of the sample coordinates [@russ2010], which we refer to as *coordinate-based clustering*, or generating the desired number of rectangular blocks as an example of *geometric partitioning*.
+These blocks are often constructed to serve as the $k=n_z$ spatial partitions, for example by performing $k$-means clustering of the sample coordinates [@russ2010], which we refer to as *coordinate-based clustering*; or generating the desired number of rectangular blocks as an example of *geometric partitioning*.
 The blocks may also be defined by a modeler based on an arbitrary partitioning of the study region based on an external data source, which we refer to as *custom resampling*.
 This often used when the data is grouped. For example, when using to multi-level sampling designs or studying spatial objects, it has been proposed to apply LOO at the site level [@martin2008; @kasurak2011] or, in animal movement studies, at the animal level [@anderson2005].
 We will broadly refer to such groups of observations as 'blocks' in a generic sense, regardless of the shape or origin of the groups.
-Also, the data can be partitioned in feature space instead of geographic space, which has been referred to as "environmental blocking" [@roberts2017].
+Also, data can be partitioned in feature space instead of geographic space, which has been referred to as "environmental blocking" [@roberts2017].
 
 When $n_z$ is much larger than the desired number of folds, $k$, then a partitioning can be applied to the zones themselves. 
 In this case, the zone indices $1, \ldots, n_z$ are grouped into $k$ equally sized subsets $\mathcal{I}_1, \ldots, \mathcal{I}_k$.
@@ -172,7 +172,7 @@ This approach has been applied, for example, in spatial CV at the agricultural f
 We would like to emphasize the conceptual distinction between *CV at the block level*, referring to this scenario, and *leave-one-block-out CV*, where the blocks themselves define the CV partitions.
 Figure \@ref(fig:rsmp-schema) gives an overview of the conceptual framework and terminology used in this work.
 
-A variant of CV is leave-one-out (LOO) CV, which has long been established in geostatistics [@cressie1993], sometimes with a focus on the spatial distribution of LOO error [@willmott2006].
+One variant of CV is leave-one-out (LOO) CV, which has long been established in geostatistics [@cressie1993], sometimes with a focus on the spatial distribution of LOO error [@willmott2006].
 Although this is just a special case of non-spatial CV with $k=n$, it is sometimes also referred to as spatial CV [@willmott2006].
 
 Spatial variants of CV have been proposed that apply an exclusion *buffer* or guard zone to the test locations to separate them from the training data [@brenning2005; @roberts2017].
@@ -190,26 +190,26 @@ Details of these and other implementations are outlined in the respective subsec
 
 # mlr3spatiotempcv within the mlr3 ecosystem
 
-With the increased awareness of the importance of spatial and spatiotemporal resampling strategies and the growing popularity of R in environmental modeling and geocomputation, it is important to equip machine-learning frameworks such as \pkg{mlr3} with suitable algorithms.
-In this context, the \pkg{mlr3} ecosystem stands out as a unified, object-oriented and extensible framework designed to accommodate numerous machine-learning tasks with a variety of learners, feature and model selection tools, and model assessment capabilities [@mlr3; @mlr3book].
+With the increased awareness of the importance of spatial and spatiotemporal resampling strategies and the growing popularity of R in environmental modeling and geocomputation, it is important to equip ML frameworks such as \pkg{mlr3} with suitable algorithms.
+In this context, the \pkg{mlr3} ecosystem stands out as a unified, object-oriented and extensible framework designed to accommodate numerous ML tasks with a variety of learners, feature and model selection tools, and model assessment capabilities [@mlr3; @mlr3book].
 All of these are supported by advanced visualization tools, which are particularly important in a spatial and spatiotemporal setting.
 
 With its integrative approach and its aim to provide long-term support, \pkg{mlr3} overcomes the challenges of combining multiple specialized packages with poorly standardized interfaces.
-Issues that practitioners often face include varying argument lists of learners, different return values of `predict` methods, and support for only specific feature types.
-These challenges result in substantial overhead and possible reproducibility issues, which are exacerbated by asynchronous development timelines of different components of the machine-learning pipelines.
+Issues that practitioners often face include varying argument lists of learners, different return values of `predict()` methods, and support for only specific feature types.
+These challenges result in substantial overhead and possible reproducibility issues, which are exacerbated by asynchronous development timelines of different components of the used ML pipelines.
 
-Within the \pkg{mlr3} ecosystem, partitioning strategies are represented by their own objects of class \texttt{Resampling}, most of which are available within \pkg{mlr3} itself (e.g., random CV); other specialized strategies (e.g., \texttt{TaskClassifST} or \texttt{TaskRegrST}) are defined in extension packages such as \pkg{mlr3spatiotempcv}.
-In the machine-learning pipeline, these objects define the data splits used for model assessment and selection (hyperparameter tuning) by machine-learning algorithms.
+Within the \pkg{mlr3} ecosystem, partitioning strategies are represented by their own objects of class \texttt{Resampling}, most of which are available within \pkg{mlr3} itself (e.g., random CV); other specialized strategies are defined in extension packages such as \pkg{mlr3spatiotempcv}.
+In the ML pipeline, these objects define the data splits used for model assessment and selection (hyperparameter tuning) by ML algorithms.
 Spatial and spatiotemporal partitioning techniques in \pkg{mlr3spatiotempcv} are currently mostly imported and interfaced from other packages, in particular \pkg{sperrorest}, \pkg{blockCV} and \pkg{CAST} [@brenning2012; @blockCV; @cast], in order to expose them to \pkg{mlr3} functionality.
-To reduce dependencies, some methods were re-implemented instead of importing them from upstream packages.
+To reduce dependencies, some methods were re-implemented instead of importing them from the respective upstream packages.
 
 Resampling objects in \pkg{mlr3spatiotmpcv} inherit from class \texttt{mlr3::Resampling} and can be created from established object classes for geospatial data in R, including simple features [@pebesma2018], which facilitates their integration into domain-specific workflows in the geospatial sciences.
-Support for projected (planar) and unprojected (geographic) coordinate reference systems (CRS) currently varies depending on the partitioning techniques used, since these inherit their behavior from the underlying upstream R package.
+Support for projected (planar) and unprojected (geographic) coordinate reference systems (CRS) currently varies depending on the partitioning techniques used, since these inherit their behavior from the underlying upstream packages.
 
-Partitioning objects in \pkg{mlr3spatiotempcv} are equipped with generic `plot()` and `autoplot()` methods that visualize the groups created.
-`autoplot()` is \pkg{ggplot2}-based and uses [ggplot2](https://ggplot2.tidyverse.org) [@ggplot2] in two-dimensional geographic space and [plotly](https://github.com/ropensci/plotly) [@plotly] in three dimensions, i.e., geographic space plus time.
+Partitioning objects in \pkg{mlr3spatiotempcv} are equipped with generic `plot()` and `autoplot()` methods to visualize the created partitions.
+`autoplot()` is \pkg{ggplot2}-based and uses [ggplot2](https://ggplot2.tidyverse.org) [@ggplot2] in two-dimensional geographic space and [plotly](https://github.com/ropensci/plotly) [@plotly] in the three dimensions case, i.e., geographic space plus time.
 
-While \pkg{mlr3spatiotempcv} solely focuses on spatiotemporal resampling methods and their visualization, other packages such as \pkg{mlr3spatial} or \pkg{mlr3temporal} are planned in the mlr3 ecosystem to provide dedicated spatiotemporal learner and prediction methods.
+While \pkg{mlr3spatiotempcv} solely focuses on spatiotemporal resampling methods and their visualization, other packages such as \pkg{mlr3spatial} or \pkg{mlr3temporal} are planned in the \pkg{mlr3} ecosystem to provide dedicated spatiotemporal learner and prediction methods.
 
 # Spatiotemporal partitioning methods and their implementation {#sec:implementation}
 
@@ -228,11 +228,11 @@ A finer distinction can then be made by looking at how the blocks are derived:
 
 In some resampling schemes, separation buffers or guard zones can be imposed to separate the training and test data.
 
-```{r rsmp-schema, echo=FALSE, fig.cap="Conceptual overview of various spatial partitioning schemas. Starting from unpartioned spatial observations (top left) either a spatial block partitioning or a 'spatial leave-one-out resampling' is applied in the first step. A spatial block partitioning can further be turned into a 'leave-one-block-out resampling' or a 'k-fold CV resampling at the block level'. The use of a buffer is theoretically possible in any scenario but in practice only offered by specific method implementations.", out.width="100%",fig.pos="ht"}
+```{r rsmp-schema, echo=FALSE, fig.cap="Conceptual overview of various spatial partitioning schemas. Starting from unpartioned spatial observations (top left) either a 'spatial block partitioning' or a 'spatial leave-one-out resampling' is applied in the first step. A spatial block partitioning can further be turned into a 'leave-one-block-out resampling' or a 'k-fold CV resampling at the block level'. The use of a buffer is theoretically possible in any scenario but in practice only offered by specific method implementations.", out.width="100%",fig.pos="ht"}
 knitr::include_graphics("pdf/rsmp-schema.pdf")
 ```
 
-\pkg{mlr3spatiotempcv} currently implements the partitioning methods identified in Table \@ref(tab:sptcv-methods) with their \pkg{mlr3} class name.
+\pkg{mlr3spatiotempcv} currently implements the partitioning methods identified in Table \@ref(tab:sptcv-methods).
 Several of the implemented algorithms are themselves versatile toolboxes with multiple options.
 Comprehensive and up-to-date information can be found in the package's online documentation (<https://mlr3spatiotempcv.mlr-org.com>).
 The following sections give an overview of most implemented partitioning strategies and their visualization options.
@@ -244,7 +244,7 @@ The available methods are further discussed in section \@ref(sec:disc).
   \caption[t]{Spatiotemporal resampling methods available in the mlr3 ecosystem.
     The "Name" column shows the mlr3 method name as found in the \texttt{mlr3::mlr\_resamplings} dictionary.
     "\# pub." indicates the number of studies that were found to have used this resampling technique until May 2021.
-    For each method, up to three randomly chosen references were added to the table as footnotes.}
+    For each method, up to three randomly selected references were added to the table as footnotes.}
   \begingroup
     \begin{tabular}{lllll}
       \\
@@ -311,11 +311,11 @@ autoplot(rsmp_buffer,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-In the presence/background (or presence-only) situation, in contrast, only presence observations are recorded, and all other locations within the study area are referred to as the background and considered as pseudo-absences.
+In the presence/background (or presence-only) situation, in contrast, only presence observations are recorded, and all other locations within the study area are referred to as background and considered as pseudo-absences.
 Presence/background modeling can be enabled with the argument `spDataType = "PB"`.
 In this situation, the method constructs test folds that are centered at the recorded presence locations, offering two different modes of operation.
 With `addBG = TRUE` (the default), all background points with a distance of `theRange` around a test (presence) point are included in the test fold as absence data; note that in this case, there is no separation buffer between training and test samples.
-The `addBG = FALSE` setting, in contrast, no background data is added to the test fold, which then contains only one (presence) observation, and only the data at a distance of `theRange` or greater are included in the training sample, including background data from these areas.
+The `addBG = FALSE` setting, in contrast, for which no background data is added to the test fold, then contains only one (presence) observation, and only the data at a distance of `theRange` or greater are included in the training sample, including background data from these areas.
 
 The application of LOO methods can be computationally expensive since the method cycles through the entire dataset and fits one model for each test fold.
 
@@ -327,10 +327,8 @@ The number of discs is specified by the `folds` argument, which defaults to the 
 Sample locations are selected randomly when `folds` is smaller than $n$; it is optionally possible to sample with replacement (`replace = TRUE`).
 Leave-one-disc-out resampling becomes spatial LOO CV for a radius of 0 m and when each observation is at a unique location.
 
-Note that the resampled discs will potentially overlap.
+It should be noted that the resampled discs will potentially overlap.
 Strictly speaking, this straightforward extension of spatial LOO does therefore not establish a disjoint partitioning as used for CV resampling in the traditional sense.
-
-
 
 ```{r disc-non-eval, eval=FALSE}
 rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
@@ -390,7 +388,7 @@ autoplot(rsmp_coords,
 
 Leave-one-tile-out resampling is implemented in the `"spcv_tiles"` method imported from package \pkg{sperrorest}.
 It uses rectangular blocks that can be rotated (argument `rotation`), and a minimum number or fraction of observations per block can optionally be achieved by iteratively merging small blocks into adjacent blocks  (argument `reassign` in conjunction with `min_n` or `min_frac`).
-Block size or number is specified via the argument `dsplit` or `nsplit`, respectively, and square blocks can be obtained with a single (or two identical) `dsplit` value.
+Block size or number is specified via the argument `dsplit` or `nsplit`, respectively, and square blocks can be obtained with a single (or two identical) `dsplit` value(s).
 
 Note that the actual number of folds obtained may be smaller than `nsplit[1]*nsplit[2]` (or smaller than what would be expected based on `dsplit`) since some blocks may be empty or (optionally) merged into adjacent folds.
 In the example, there are only eleven folds instead of twelve because the southwestern part of the study area's bounding box does not contain observations  (Figure \@ref(fig:tile)).
@@ -414,8 +412,8 @@ autoplot(rsmp_tiles,
 
 Support for user-defined partitioning strategies is built into \pkg{mlr3} directly.
 In this so-called "Custom CV", users supply a factor variable, each level of which defines a partition.
-The factor variable can either be specified through a factor vector of the same length as number of observations, or by passing the name of a feature of type `character` within the task (argument `col`).
-The following simple example from `sperrorest::partition_factor()` creates altitudinal zones that define the spatial partitions.
+The factor variable can either be specified through a factor vector of the same length as number of observations, or by passing the name of a feature within the task (argument `col`).
+The following simple example (taken from `sperrorest::partition_factor()`) creates altitudinal zones that define the spatial partitions.
 
 ```{r custom-cv-non-eval, eval=FALSE}
 breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
@@ -443,20 +441,20 @@ autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1) *
 
 Methods which operate at the block level first group the observations into blocks and then combine these blocks into CV partitions.
 In $k$-fold CV resampling at the block level, there are therefore $k$ partitions, each consisting of $1/k$-th of the blocks.
-The special case in which $k$ equals the number of blocks, CV at the block level simply becomes leave-one-block-out CV, for which dedicated implementations exist (Section  \@ref(sec:lobo-cv)).
+The special case in which $k$ equals the number of blocks, CV at the block level simply becomes leave-one-block-out CV, for which dedicated implementations exist (see section \@ref(sec:lobo-cv)).
 
 ### Geometric: using rectangular blocks --- `"spcv_block"`
 
-The `"spcv_block"` method from package \pkg{blockCV} supports both random and systematic resampling of square blocks (`rsmp("spcv_block")` with argument `selection = "random"` and `"systematic"`, respectively; Figures \@ref(fig:block-random) and \@ref(fig:block-systematic)).
-There are additional options for modeling presence-only data, which is a typical situation in species distribution modeling.
-Users can also supply a user-defined polygon via an argument `rasterLayer` with predefined blocking zones.
+The `"spcv_block"` method from package \pkg{blockCV} supports both random and systematic resampling of square blocks with argument `selection = "random"` and `"systematic"`, respectively; (see figures \@ref(fig:block-random) and \@ref(fig:block-systematic)).
+There are additional options for modeling presence-only data, which is a typical use case in species distribution modeling.
+Users can furthermore supply a user-defined polygon via argument `rasterLayer` with predefined blocking zones.
 
-Block sizes (square) (in meters) are determined by the `range` argument.
+The size of the square blocks (in meters) are determined by the `range` argument.
 Rectangular blocks can be created by specifying the number of desired rows and columns (arguments `rows` and `cols`).
 Due to the non-trivial specification of argument `range` package \pkg{blockCV} provides the helper functions `spatialAutoRange()` and `rangeExplorer()` to conduct a data-driven estimation of the distance at which the spatial autocorrelation within the data levels off [@blockCV].
 According to the package authors, this estimate should then be used for argument `range` to have a sensible value for the block sizes created in method `"spcv_block"`.
 
-It should be noted that rectangular partitioning can be problematic in irregularly shaped study areas as in Figure \@ref(fig:block-random) where some of the resulting partitions may contain substantially fewer observations than others.
+It should be noted that rectangular partitioning can be problematic in irregularly shaped study areas as shown in Figure \@ref(fig:block-random) where some of the resulting partitions may contain substantially fewer observations than others.
 
 ```{r block-random-non-eval, eval=FALSE}
 rsmp_block_random = rsmp("spcv_block", range = 1000, folds = 5)
@@ -465,7 +463,7 @@ autoplot(rsmp_block_random, size = 0.8, fold_id = 1, task = task,
   show_blocks = TRUE, show_labels = TRUE)
 ```
 
-```{r block-random, fig.cap='Random resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "random" in mlr3spatiotempcv). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht", echo=FALSE}
+```{r block-random, fig.cap='Random resampling of square spatial blocks using the implementation in package blockCV (method "spcv\\_block" with option selection = "random" in mlr3spatiotempcv). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to the test partition.', out.width="40%", fig.pos="ht", echo=FALSE}
 rsmp_block_random = rsmp("spcv_block", range = 1000, folds = 5)
 
 autoplot(rsmp_block_random,
@@ -475,7 +473,7 @@ autoplot(rsmp_block_random,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-In systematic resampling, the blocks are numbered row by row, and blocks $i+j\cdot\texttt{folds}$ are assigned to fold $i$.
+In systematic resampling, the blocks are numbered row by row, and blocks $i+j\cdot\texttt{folds}$ are assigned to fold $i$ (see Figure \@ref(fig:block-systematic)).
 This may create undesired patterns when the number of columns is equal to or a multiple of the number of folds.
 
 ```{r block-systematic-non-eval, eval=FALSE}
@@ -500,21 +498,21 @@ autoplot(rsmp_block_systematic,
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 ```
 
-*Checkerboard* partitioning is a special case of a systematic block partitioning (`selection = "checkerboard"`).
+*Checkerboard* partitioning is a special case of a systematic block partitioning (`selection = "checkerboard"`) which is why we omitted a practical example for this option.
 It inherently supports only two folds, making it less appealing than the more commonly used five- or ten-fold resampling, which achieve larger training set sizes.
  
 ### Custom: `"cv"` with grouping in mlr3 {#sec:group-level}
 
 Although the `"cv"` resampling strategy in \pkg{mlr3} performs random, non-spatial partitioning by default, it can also be used for CV at the block level.
 This is achieved by specifying the "group" column role in a mlr3 Task object, which uses the factor levels as blocks.
-A completely group or block of observations is therefore assigned to a specific partition, which consequently honor the grouping structure.
-In \pkg{mlr} this concept was referred to as "blocking".
+A complete group or block of observations is therefore assigned to a specific partition, which consequently honors the grouping structure.
+In the deprecated \pkg{mlr} package this concept was referred to as "blocking".
 
 In contrast to geometric or clustering-based blocks, the spatial or temporal location is not used explicitly, but rather implicitly through the spatial or spatiotemporal footprint of each user-defined block.
 
 The following example uses $k$-means clustering to generate classes that are used as blocks.
-To underline the honoring of the groups, we chose a number of groups (eight) that is not a multiple of the number of folds (three).
-The test sets in the first and second folds are therefore composed of three groups while the third one holds two groups.
+To underline the honoring of the groups, a number of groups (eight) that is not a multiple of the number of folds (three) was chosen.
+The test sets in the first and second folds are therefore composed out of three groups while the third one holds two groups.
 
 ```{r cv-non-eval-1, eval=FALSE}
 task_cv = tsk("ecuador")
@@ -527,7 +525,7 @@ rsmp_cv_group = rsmp("cv", folds = 3)$instantiate(task_cv)
 print(rsmp_cv_group$instance)
 ```
 
-```{r cv-non-eval-2, fig.cap='Cross-Validation at the block level including predefined groups from package mlr3 (method "cv"). A factor variable is used to define the grouping. Each class is either assigned to the test or training set.', out.width="40%", fig.pos="ht", eval=FALSE}
+```{r cv-non-eval-2, fig.cap='Cross-Validation at the block level including predefined groups from package mlr3 (method "cv"). A factor variable (named "group") was used to define the grouping. Each class is either assigned to the test or training set.', out.width="40%", fig.pos="ht", eval=FALSE}
 autoplot(rsmp_cv_group, size = 0.8, task = task_cv, fold_id = 1)
 ```
 
@@ -555,7 +553,9 @@ The user can select one or multiple numeric features via argument `feature` from
 Hereby, $k$-means will use Euclidean distance.
 To avoid a potential bias introduced by features with high variance when selecting multiple features, all features are standardized by default.
 
-In the following example, the observations are clustered based on the "distance to forest" feature, which results in a distance-based zonification:
+In the following example, the observations are clustered based on the feature "distance to forest" (left sub-figure of Figure \@ref(fig:env-1-eval)), which results in a distance-based zonification.
+This method also allows to use multiple features for clustering.
+The right sub-figure of Figure \@ref(fig:env-1-eval) shows the outcome when using "distance to deforestation" and "slope angle".
 
 ```{r env-1-non-eval, eval=FALSE}
 rsmp_env = rsmp("spcv_env", features = "distdeforest", folds = 5)
@@ -569,8 +569,6 @@ plot_env_multi = autoplot(rsmp_env_multi, size = 0.5, fold_id = 1, task = task)
 library("patchwork")
 plot_env_single + plot_env_multi
 ```
-
-It is also possible to cluster based on multiple features, in this example the distance to deforestation and the slope angle:
 
 ```{r env-1-eval, fig.cap='Environmental leave-one-block-out CV from package blockCV using one (left, "distdeforest") and two (right, "distdeforest" and "slope") predictors to define blocks in the feature space. Due to feature space clustering observations are not (necessarily) grouped in the spatial domain.', out.width="100%", fig.pos="ht", echo=FALSE}
 rsmp_env = rsmp("spcv_env",
@@ -603,15 +601,15 @@ For their application in lower dimensions, usually only either the space or time
 
 @meyer2018 proposed a spatiotemporal resampling method in which a test set is selected and all observations that correspond to the same location or time point are omitted from the training sample.
 This method is referred to as "leave-location-and-time-out" (LLTO) in package \pkg{CAST}.
-Additional methods that resample in the temporal and spatial domain only are named "leave-time-out" (LTO) and "leave-location-out" (LLO), respectively, in \pkg{CAST}.
+Additional methods that resample in the temporal and spatial domain only are named "leave-time-out" (LTO) and "leave-location-out" (LLO), respectively.
 Note that despite their names, LLTO, LTO and LLO are conceptually not leave-*one*-out methods as they place a certain fraction of observations in the test set, as in ordinary CV.
 Also, LTO and LLO are conceptually similar to \pkg{mlr3}'s "cv" method with a custom grouping as they perform a CV at the block level using a grouping structure defined by time points (LTO) and locations (i.e., time series; LLO).
 
-In this section the `cookfarm` dataset is used as an example because has a temporal dimension identified by the variable "Date".
+In this section the `cookfarm` dataset is used as an example because it comes with a temporal dimension via variable "Date".
 
-Two visualization types are supported by `mlr3spatiotempcv::autoplot()` for this method: a two-dimensional and a three-dimensional one which can be selected via the logical argument `plot3D`.
-The 3D visualization (i.e. 2D + time) is done via package \pkg{plotly}.
-Because a dynamic image cannot be included in this manuscript, a static version, which can be generated by setting `static_image = TRUE`, is shown.
+`mlr3spatiotempcv::autoplot()` supports two visualization types for spatiotemporal methods which can be selected via the logical argument `plot3D`.
+The heavy lifiting of the 3D visualization (i.e. 2D + time) option is done via package \pkg{plotly}.
+Because a dynamic image cannot be included in this manuscript, static versions, which can be generated by setting `static_image = TRUE`, are shown (see for example Figure \@ref(fig:lto)).
 
 #### CV at the time-point level: "leave-time-out" (LTO)
 
@@ -620,7 +618,7 @@ In the terminology used in this work, this can be referred to as resampling at t
 Thus, observations from the same time point are jointly sampled into the same test (or training) fold, with no constraints on the temporal distance between the sampled time points.
 This method does therefore not implement block CV in the sense of the time series literature.
 
-In the `cookfarm` example, we reduce the `Date` variable to five unique levels for better visualization, and then create a spatiotemporal regression task in \pkg{mlr3spatiotempcv} (Figure \@ref(fig:lto)).
+In the `cookfarm` example dataset, the `Date` variable was reduced to five unique levels for better visualization, and then used to create a spatiotemporal regression task in \pkg{mlr3spatiotempcv} (Figure \@ref(fig:lto)).
 
 ```{r, results='hide'}
 data = cookfarm_sample
@@ -651,7 +649,7 @@ knitr::include_graphics("png/lto.png")
 
 In contrast to LTO, the LLO method randomly resamples locations that may, for example, correspond to time series.
 The sampled locations form the test partition while the temporal information is ignored (Figure \@ref(fig:llo)).
-Unlike spatial CV methods that are based on geometric regions or the clustering of coordinates, the sampled test locations bear no particular spatial relationship.
+Unlike spatial CV methods that are based on geometric regions or the clustering of coordinates, the sampled test locations include no particular spatial relationship.
 
 ```{r results='hide'}
 rsmp_cstf_loc = rsmp("sptcv_cstf", folds = 5, space_var = "SOURCEID")
@@ -661,7 +659,7 @@ autoplot(rsmp_cstf_loc,
   fold_id = 5, task = task_spt, plot3D = TRUE)
 ```
 
-```{r llo, echo=FALSE, out.width="70%", fig.cap='Perspective plot of "leave-location-out" CV from package CAST (method "sptcv\\_cstf" and argument space\\_var = "SOURCEID"). The data is viewed from the future towards the past.', fig.pos="ht"}
+```{r llo, echo=FALSE, out.width="70%", fig.cap='Birds-eye view of "leave-location-out" CV from package CAST (method "sptcv\\_cstf" and argument space\\_var = "SOURCEID").', fig.pos="ht"}
 knitr::include_graphics("png/llo.png")
 ```
 
@@ -671,7 +669,7 @@ In LLTO, a test set is first randomly sampled from the data set, and then all ob
 LLTO resampling mimics the situation where a model is trained on time series data from a number of locations and time points, and used to predict the time series at other locations and time points that are not included in the training sample.
 
 Conceptually, LLTO applies zero-distance buffering in both space and time: The buffer zones consist of all observations whose distance to the test sample in either space or time equals zero.
-In the mathematical sense, however, this buffering is not based on a valid metric (or distance function) in three-dimensional space (2D + time) as neither the identity of detectability nor the triangle inequality are satisfied by the underlying combined 'distance' measure.
+In a mathematical sense, however, this buffering is not based on a valid metric (or distance function) in three-dimensional space (2D + time) as neither the identity of detectability nor the triangle inequality are satisfied by the underlying combined 'distance' measure.
 Also note that LLTO does not 'combine' LTO with LLO, as neither of these applies a buffer zone.
 
 The `"spcv_cstf"` methods LLO and LTO (with only one of `space_var` or `time_var` set) require a variable in the dataset which should be used for grouping.
@@ -689,33 +687,32 @@ autoplot(rsmp_cstf_time_loc,
   show_omitted = TRUE)
 ```
 
-```{r llto, echo=FALSE, out.width="70%", fig.cap='Perspective plot of leave-location-and-time-out CV from package CAST (method "sptcv\\_cstf" and arguments time\\_var = "Date" and space\\_var = "SOURCEID"). The grey points are excluded from both the training and the test set in this fold.', fig.pos="h"}
+```{r llto, echo=FALSE, out.width="70%", fig.cap='Perspective plot of "leave-location-and-time-out" CV from package CAST (method "sptcv\\_cstf" and arguments time\\_var = "Date" and space\\_var = "SOURCEID"). The grey points are excluded from both the training and the test set in this fold.', fig.pos="h"}
 knitr::include_graphics("png/llto.png")
 ```
 
 ### Clustering: using CLUTO --- `"sptcv_cluto"`
 
-Considering the wealth and continuing development of spatial and spatiotemporal partitioning techniques for specific applications, we will refrain from providing a complete account of these algorithms.
 At present, \pkg{mlr3spatiotempcv} also supports spatiotemporal partitioning using the versatile CLUTO clustering algorithm [@cluto].
 CLUTO is available in R through the \pkg{skmeans} package, which provides an interface to a downloadable compiled library with a restriction to non-commercial uses (see `help("ResamplingSptCVCluto", package = "mlr3spatiotempcv")` for more information).
-With respect to functionality, \pkg{mlr3spatiotempcv} supports two-dimensional clustering based on coordinates, time or features and three-dimensional clustering on coordinates and time.
+Due to this restriction and the age of the latest release (14 years at the time of writing) this method is not explained in greater detail.
 
 # Step-by-step example: Comparing spatial and non-spatial CV {#sec:case-study}
 
-We use a well-known case study to demonstrate the application of spatial and non-spatial resampling techniques for model assessment in \pkg{mlr3spatiotempcv}.
+A well-known case study is used to demonstrate the application of spatial and non-spatial resampling techniques for model assessment in \pkg{mlr3spatiotempcv}.
 The objective of landslide susceptibility modeling is to predict how prone to landslide initiation a location is.
 Models are fitted to historical landslide occurrences, but they need to learn generalizable relationships between predisposing variables and the response as opposed to perfectly reproducing or memorizing the historical distribution.
-This binary classification task on landslides in Ecuador [@muenchow2012] is available as a built-in task via `tsk("ecuador")`, but here we generate it from the learning sample.
+This binary classification task on landslides in Ecuador [@muenchow2012] is available as a built-in task via `tsk("ecuador")`, but is generated from the learning sample in this example.
 Random forest is used as a classifier, and the area under the ROC curve (AUROC) as the performance measure.
 
 Spatial CV is implemented in the form of leave-one-block-out CV using coordinate-based $k$-means clustering to generate  irregularly shaped blocks of roughly equal size.
 This approach is better suited for the irregular shape of the present study area than a rectangular partitioning.
-Figures \@ref(fig:vis-spcv-eval)) and \@ref(fig:vis-nspcv-eval)) show the contrasting distributions of training and test samples.
-For demonstration purposes we use only four CV folds and two repetitions.
+Figures \@ref(fig:vis-spcv-eval) and \@ref(fig:vis-nspcv-eval) show the contrasting distributions of training and test samples.
+For demonstration purposes only four CV folds and two repetitions are used.
 
 ## Task preparation
 
-In \pkg{mlr3}, machine-learning tasks with their respective dataset and response variable are represented by objects of the class `Task`. \pkg{mlr3spatiotempcv}'s spatial and spatiotemporal machine-learning tasks are derived from this superclass.
+In \pkg{mlr3}, machine-learning tasks with their respective dataset and response variable are represented by objects of class `Task`. \pkg{mlr3spatiotempcv}'s spatial and spatiotemporal machine-learning tasks are also derived from this superclass.
 Specifically, the `TaskClassifST` and `TaskRegrST` classes for classification and regression tasks require several additional arguments that must be passed as a named list using the `extra_args` argument:
 
 - `coordinate_names`: Names of the features that represent the spatial coordinates.
@@ -737,8 +734,8 @@ lgr::get_logger("mlr3")$set_threshold("warn")
 set.seed(42)
 ```
 
-The task `"ecuador"` is available in \pkg{mlr3spatiotempcv} through `tsk("ecuador")`.
-To set it up manually, we proceed as follows:
+The task `"ecuador"` is available as an example task in \pkg{mlr3spatiotempcv} through `tsk("ecuador")`.
+To create it manually from a `data.frame` named `ecuador`, one would do:
 
 ```{r create-task}
 backend = mlr3::as_data_backend(ecuador)
@@ -763,8 +760,7 @@ learner = lrn("classif.ranger", predict_type = "prob")
 
 ## Non-spatial cross-validation
 
-A resampling is generated in \pkg{mlr3} with the `rsmp()` function, which is used to generate a resampling object for four-fold non-spatial CV with two repetitions.
-The object is constructed and instantiated with its `$instantiate()` method.
+To define a resampling strategy, the `rsmp()` function is used to generate a resampling object using four folds and two repetitions following a random sampling logic ("cv").
 
 Next, the created resampling object `rsmp_nsp` is passed to the `resample()` function together with the task and learner objects created earlier to execute the model assessment.
 This is the actual, potentially time-consuming CV estimation. With the present settings, eight random forest classifiers are fitted and evaluated in this step --- one model fitted on each CV training set.
@@ -786,7 +782,7 @@ rr_nsp$aggregate(measures = msr("classif.auc"))
 
 ## Spatial cross-validation via coordinate-based clustering
 
-The model assessment is now repeated using spatial CV resampling, for which we only need to replace `"repeated_cv"` with `"repeated_spcv_coords"`.
+The model assessment is now repeated again using spatial CV resampling, for which the only required change is to replace `"repeated_cv"` by `"repeated_spcv_coords"`.
 
 ```{r rr-spcv-1, cache.lazy = FALSE, results='hide'}
 rsmp_sp = rsmp("repeated_spcv_coords", folds = 4, repeats = 2)
@@ -803,7 +799,7 @@ rr_sp$aggregate(measures = msr("classif.auc"))
 
 ## Visualization of CV partitions
 
-Finally, we visualize (two of) the partitions that were used during performance estimation making use of the generic `autoplot()` function in package \pkg{mlr3spatiotempcv} (Figure \@ref(fig:vis-spcv-eval)).
+Finally, we visualize (two of) the partitions that were used during performance estimation by making use of the generic `autoplot()` function in package \pkg{mlr3spatiotempcv} (Figure \@ref(fig:vis-spcv-eval)).
 
 ```{r vis-spcv-non-eval, eval=FALSE}
 autoplot(rsmp_sp, task, fold_id = c(1:2), size = 0.8)
@@ -827,8 +823,8 @@ autoplot(rsmp_nsp, task, fold_id = c(1:2), size = 0.8) *
 
 ## Interpretation
 
-The non-spatial CV estimate of AUC (0.76) is substantially higher compared to the spatial CV estimate of 0.64.
-Since test points in non-spatial CV may be from the same slopes or even the same landslides as the training data, the non-spatial CV result should be considered as an over-optimistic estimate of the model's ability to predict the susceptibility to "new" landslides.
+If one takes a closer look at the results, the non-spatial CV estimate of AUC (0.76) is substantially higher compared to the spatial CV estimate of 0.64.
+Since test points in non-spatial CV may be from the same slopes or even the same landslides as the training data, the non-spatial CV result should/can be considered as an over-optimistic estimate of the model's ability to predict the susceptibility to "new" landslides.
 Spatial CV, in contrast, provides a better/more accurate measure of a model's ability to generalize from the training sample --- in this case study, from the specific hillslopes and historical landslides in the training sample.
 It is also expected that spatial CV results better represent the model's transferability to geologically and topographically similar areas adjacent to the training area.
 The magnitude of the difference between spatial and non-spatial CV estimates may depend on the dataset, the strength on spatial or spatiotemporal autocorrelation, and the learner itself.
@@ -839,7 +835,7 @@ Algorithms with a higher tendency to overfit to the training set will tend to ha
 ## Choosing a resampling method for model assessment
 
 The question which resampling method should be chosen for a prediction task and dataset at hand comes up regularly in practice.
-Even though there is and will be no definitive answer to this, we would like to give some guidance in this section to help finding an appropriate method.
+Even though there is and most likely will be no definitive answer to this question, we would like to give some guidance in this section to help finding an appropriate method.
 As a general rule, we recommend to use a resampling scheme that (1) mimics the predictive situation in which the model will be applied operationally, and (2) is consistent with the structure of the data. Both aspects are outlined in this section, starting with two concrete modeling scenarios.
 
 Although the case study example in section \@ref(sec:case-study) used the `"spcv_coords"` method for coordinate-based clustering, this should not give the impression that this method is the only method suitable for this example task.
@@ -873,7 +869,7 @@ CV is also widely used to assess model performance when tuning the hyperparamete
 Using the CV methods introduced here, \pkg{mlr3} can therefore be used to optimized models to show an improved performance in specific spatial or spatiotemporal predictive setting [@schratz2019].
 Such an optimization may, for example, result in a reduced maximum tree depth or increased minimum node size in the Ecuador case study, since these hyperparameter settings would result in a stronger generalization and reduced overfitting.
 
-We recommend using a nested CV for this purpose.
+We recommend using nested CV for this purpose.
 In nested CV, an "inner" CV is performed on each CV training set since hyperparameter tuning is an integral part of model fitting that should not be able to use information from the CV test set.
 In such scenarios it is recommended to use the same spatial resampling method for the inner CV (hyperparameter tuning) as for the outer CV (model assessment) in order to use the appropriate objective function for optimization.
 See @schratz2019 for more details as well as chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace2019].
@@ -900,7 +896,7 @@ In contrast, `"spcv_block"` with option `selection = "random"` avoids this probl
 # Conclusion and outlook
 
 The \pkg{mlr3spatiotempcv} package is the first package to bundle and categorize spatiotemporal resampling methods implemented in multiple other packages in R.
-The available resampling techniques allow the users to vary the scale or granularity of the resampled spatiotemporal units as well as their shape and possible buffer distance between training and test samples.
+The available resampling techniques allow users to vary the scale or granularity of the resampled spatiotemporal units as well as their shape and possible buffer distance between training and test samples.
 These settings may account for the specific characteristics of spatiotemporal prediction tasks, but modelers now have to make the important decision of choosing a method that is adequate for their situation.
 They are advised to focus on the spatial or spatiotemporal structure of the model's prediction task, consider the structure of the learning sample at hand, and think about how the autocorrelation between training and test samples might affect their model assessment and selection.
 
