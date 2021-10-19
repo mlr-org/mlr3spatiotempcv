@@ -15,11 +15,13 @@ author:
     address: |
       | Department of Statistics
       | Statistical Learning and Data Science group
+    email: marc.becker@stat.uni-muenchen.de
     # To add another line, use \AND at the end of the previous one as above
   - name: Michel Lang
     affiliation: TU Dortmund University
     address: |
       | Faculty of Statistics
+    email: lang@statistik.tu-dortmund.de
   - name: Alexander Brenning
     affiliation: 'Friedrich Schiller University Jena'
     address: |
@@ -27,17 +29,17 @@ author:
       | Geographic Information Science group
     email: \email{alexander.brenning@uni-jena.de}
 title:
-  formatted: "\\pkg{mlr3spatiotempcv}: Spatiotemporal resampling methods for machine learning in R with \\pkg{mlr3}"
+  formatted: "\\pkg{mlr3spatiotempcv}: Spatiotemporal resampling methods for machine learning in R"
   # If you use tex in the formatted title, also supply version without
-  plain:     "mlr3spatiotempcv: spatiotemporal resampling methods for machine learning in R with mlr3"
+  plain:     "mlr3spatiotempcv: spatiotemporal resampling methods for machine learning in R"
   # For running headers, if needed
   # short:     "\\pkg{foo}: A Capitalized Title"
 abstract: >
   Spatial and spatiotemporal machine-learning models require a suitable framework for their model assessment, model selection, and hyperparameter tuning, in order to avoid error estimation bias and over-fitting.
-  This contribution reviews the state-of-the-art in spatial and spatiotemporal CV, and introduces the R package [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) as an extension package of the machine-learning framework [mlr3](https://mlr3.mlr-org.com).
-  Currently various R packages implementing different spatiotemporal partitioning strategies exist: blockCV, CAST, skmeans and sperrorest.
-  The goal of [mlr3spatiotempcv](https://mlr3spatiotempcv.mlr-org.com) is to gather the available spatiotemporal resampling methods in R and make them available to users through a simple and common interface.
-  This is made possible by integrating the package directly into the [mlr3](https://mlr3.mlr-org.com) machine-learning framework, which already has support for generic non-spatiotemporal resampling methods such as random partitioning.
+  This contribution reviews the state-of-the-art in spatial and spatiotemporal CV, and introduces the R package mlr3spatiotempcv as an extension package of the machine-learning framework **mlr3**.
+  Currently various R packages implementing different spatiotemporal partitioning strategies exist: **blockCV**, **CAST**, **skmeans** and **sperrorest**.
+  The goal of **mlr3spatiotempcv** is to gather the available spatiotemporal resampling methods in R and make them available to users through a simple and common interface.
+  This is made possible by integrating the package directly into the **mlr3** machine-learning framework, which already has support for generic non-spatiotemporal resampling methods such as random partitioning.
   One advantage is the use of a consistent nomenclature in an overarching machine-learning toolkit instead of a varying package-specific syntax, making it easier for users to choose from a variety of spatiotemporal resampling methods.
   This package avoids giving recommendations which method to use in practice as this decision depends on the predictive task at hand, the autocorrelation within the data, and the spatial structure of the sampling design or geographic objects being studied.
 keywords:
@@ -61,6 +63,7 @@ bibliography: paper.bib
 output:
   bookdown::pdf_book:
     base_format: rticles::jss_article
+    citation_package: "natbib"
     includes:
       in_header: header.tex
 ---
@@ -105,12 +108,12 @@ While it is not the purpose of this article to recommend specific resampling sch
 This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (Table \@ref(tab:sptcv-methods)).
 The earliest and most comprehensive of these implementations is the \pkg{sperrorest} R package [@brenning2012], which provides an extensible framework and includes predefined resampling strategies based on geometric blocking, clustering, and buffering.
 In contrast, packages \pkg{blockCV} and \pkg{ENMeval} were developed for block and buffer resampling with a focus on species distribution modeling [@blockCV; @rest2014; @muscarella2014].
-However, neither of these have been integrated into established machine-learning frameworks such as \pkg{mlr}/\pkg{mlr3} or \pkg{caret}/\pkg{tidymodels}, and all of them lack support for temporal prediction tasks.
+However, neither of these have been integrated into established machine-learning frameworks such as \pkg{mlr}/\pkg{mlr3} [@mlr3] or \pkg{caret}/\pkg{tidymodels} [@kuhn2020], and all of them lack support for temporal prediction tasks.
 The \pkg{CAST} package, in contrast, focuses on spatiotemporal prediction tasks and makes use of some functions of the \pkg{caret} framework [@cast; @meyer2018].
 One limitation of all these packages is the sole focus on model assessment, while the proposed implementation within the \pkg{mlr3} framework also offers seamless integration into model selection and provides parallel execution and enhanced logging abilities.
 It is worth noting that a spatial cross-validation library named \pkg{spacv} has recently been developed for Python3, which can be used with the \pkg{scikit-learn} machine-learning framework [@pedregosa2011].
 
-Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state-of-the-art compilation of spatial and spatiotemporal partitioning schemes that is well-integrated into a comprehensive machine-learning framework in R, the \pkg{mlr3} ecosystem [@mlr3].
+Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state-of-the-art compilation of spatial and spatiotemporal partitioning schemes that is well-integrated into a comprehensive machine-learning framework in R, the \pkg{mlr3} ecosystem.
 This package is furthermore equipped with a variety of two- and three-dimensional visualization capabilities.
 The hope is that this implementation will simplify and facilitate reproducible geospatial modeling and code-sharing across a broad range of application domains.
 
@@ -284,7 +287,7 @@ Leave-one-disc-out resampling modifies this approach to leave out circular regio
 
 ### Spatial leave-one-out with buffer --- `"spcv_buffer"`
 
-Leave-one-out CV with buffer and several adaptations for species distribution modeling [@hijmans2013] are implemented in the \pkg{blockCV} package as the so-called "buffering" method and integrated into \pkg{mlr3spatiotempcv} under the label `"spcv_buffer"`.
+Leave-one-out CV with buffer and several adaptations for species distribution modeling [@hijmans2020] are implemented in the \pkg{blockCV} package as the so-called "buffering" method and integrated into \pkg{mlr3spatiotempcv} under the label `"spcv_buffer"`.
 In species distribution modeling, the response variable can either be recorded as presence/absence data or as presence/background information; both options are supported by this implementation. 
 By default, the dataset contains confirmed presence and confirmed absence observations, i.e. locations where a species was observed and not observed, respectively, and therefore spatial LOO CV in its usual sense can be carried out.
 Figure \@ref(fig:buffer-eval) shows the first test fold generated with this method for presence/absence data with a buffer distance of 1000 m.
