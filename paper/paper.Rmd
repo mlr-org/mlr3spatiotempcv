@@ -245,10 +245,6 @@ The available methods are further discussed in section \@ref(sec:disc).
 \begin{table}[h]
   \centering
   \footnotesize
-  \caption[t]{Spatiotemporal resampling methods available in the mlr3 ecosystem.
-    The "Name" column shows the mlr3 method name as found in the \texttt{mlr3::mlr\_resamplings} dictionary.
-    "\# pub." indicates the number of studies that were found to have used this resampling technique until May 2021.
-    For each method, up to three randomly selected references were added to the table as footnotes.}
   \begingroup
     \begin{tabular}{lllll}
       \\
@@ -276,6 +272,10 @@ The available methods are further discussed in section \@ref(sec:disc).
                                       \bottomrule
     \end{tabular}
   \endgroup\label{tab:sptcv-methods}
+  \caption[b]{Spatiotemporal resampling methods available in the mlr3 ecosystem.
+    The "Name" column shows the mlr3 method name as found in the \texttt{mlr3::mlr\_resamplings} dictionary.
+    "\# pub." indicates the number of studies that were found to have used this resampling technique until May 2021.
+    For each method, up to three randomly selected references were added to the table as footnotes.}
 \end{table}
 
 Users are encouraged to contribute new or missing spatiotemporal resampling methods directly to \pkg{mlr3spatiotempcv}.
