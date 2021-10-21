@@ -4,8 +4,8 @@
 \alias{as_task_regr_st}
 \alias{as_task_regr_st.TaskRegrST}
 \alias{as_task_regr_st.data.frame}
-\alias{as_task_regr_st.DataBackend}
-\alias{as_task_regr_st.sf}
+\alias{as_task_regr_st.DataBackendVector}
+\alias{as_task_regr}
 \title{Convert to a Spatiotemporal Regression Task}
 \usage{
 as_task_regr_st(x, ...)
@@ -22,23 +22,17 @@ as_task_regr_st(x, ...)
   ...
 )
 
-\method{as_task_regr_st}{DataBackend}(
+\method{as_task_regr_st}{DataBackendVector}(
   x,
   target = NULL,
   id = deparse(substitute(x)),
   crs = NA,
   coords_as_features = FALSE,
-  coordinate_names = c("x", "y"),
+  coordinate_names = colnames(sf::st_coordinates(x$geometry)),
   ...
 )
 
-\method{as_task_regr_st}{sf}(
-  x,
-  target = NULL,
-  id = deparse(substitute(x)),
-  coords_as_features = FALSE,
-  ...
-)
+as_task_regr(x, ...)
 }
 \arguments{
 \item{x}{(\code{any})\cr
@@ -79,6 +73,9 @@ This is a S3 generic for the following objects:
 constructor of \link{TaskRegrST}.
 \item \link[sf:sf]{sf::sf}.
 }
+
+Convert object to a \link{TaskRegr}.
+This is a S3 generic for \link{TaskRegrST}.
 }
 \examples{
 library("mlr3")
@@ -97,4 +94,7 @@ as_task_regr_st(cookfarm_sf, target = "PHIHOX")
 # TaskRegrST
 task = tsk("cookfarm")
 as_task_regr_st(task)
+}
+\seealso{
+\code{\link[mlr3:as_task_regr]{mlr3::as_task_regr()}}
 }

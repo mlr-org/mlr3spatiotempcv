@@ -58,8 +58,9 @@ as_task_regr_st.data.frame = function(x, target = NULL, id = deparse(substitute(
 
 #' @rdname as_task_regr_st
 #' @export
-as_task_regr_st.DataBackend = function(x, target = NULL, id = deparse(substitute(x)),
-  crs = NA, coords_as_features = FALSE, coordinate_names = c("x", "y"), ...) {
+as_task_regr_st.DataBackendVector = function(x, target = NULL, id = deparse(substitute(x)),
+  crs = NA, coords_as_features = FALSE, coordinate_names = colnames(sf::st_coordinates(x$geometry)), ...) {
+  backend$data()
   TaskRegrST$new(id = id, backend = x, target = target,
     extra_args = list(coordinate_names = coordinate_names, coords_as_features = coords_as_features,
       crs = crs))
@@ -67,11 +68,11 @@ as_task_regr_st.DataBackend = function(x, target = NULL, id = deparse(substitute
 
 #' @rdname as_task_regr_st
 #' @export
-as_task_regr_st.sf = function(x, target = NULL, id = deparse(substitute(x)),
-  coords_as_features = FALSE, ...) {
-  TaskRegrST$new(id = id, backend = x, target = target,
-    extra_args = list(coords_as_features = coords_as_features))
-}
+# as_task_regr_st.sf = function(x, target = NULL, id = deparse(substitute(x)),
+#   coords_as_features = FALSE, ...) {
+#   TaskRegrST$new(id = id, backend = x, target = target,
+#     extra_args = list(coords_as_features = coords_as_features))
+# }
 
 #' @inherit mlr3::as_task_regr title return
 #' @inheritParams mlr3::as_task_regr

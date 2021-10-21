@@ -27,32 +27,39 @@ test_that("as_task_classif_st.sf works", {
   expect_equal(new_task$extra_args$coordinate_names, c("X", "Y"))
 })
 
-test_that("as_task_classif_st.DataBackendSf works", {
+test_that("as_task_classif_st.DataBackendVector works", {
   data("ecuador", package = "mlr3spatiotempcv")
   ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = "epsg:32717")
   library(mlr3spatial)
-  backend_sf = DataBackendSf$new(ecuador_sf)
+  backend_sf = DataBackendVector$new(ecuador_sf)
   new_task = as_task_classif_st(backend_sf, target = "slides", positive = "TRUE")
 
   expect_class(new_task, "TaskClassifST")
   expect_equal(new_task$extra_args$crs, "epsg:32717")
-  expect_equal(new_task$extra_args$coordinate_names, NULL)
+  expect_equal(new_task$extra_args$coordinate_names, c("X", "Y"))
 })
 
-# test_that("as_task_classif_st.DataBackendSpatRaster works", {
-#   library(mlr3spatial)
-#   stack_classif = demo_stack_spatraster(size = 1, layers = 5)
-#   value = data.table(ID = c(0, 1), y = c("negative", "positive"))
-#   terra::setCats(stack_classif, layer = "y", value = value)
-#   colnames = c(names(stack_classif), "..row_id")
-#   backend_terra = DataBackendSpatRaster$new(stack_classif)
-#
-#   new_task = as_task_classif_st(backend_terra, target = "y", positive = "positive")
-#
-#   expect_class(new_task, "TaskClassifST")
-#   expect_class(new_task$extra_args$crs, "crs")
-#   expect_equal(new_task$extra_args$crs$input, "epsg:32717")
-# })
+test_that("as_task_classif_st.DataBackendRaster works", {
+  library(mlr3spatial)
+  # SpatRaster
+  stack_classif = demo_stack_spatraster(0.1)
+  crs(stack_classif) = "epsg:4326"
+  value = data.table(ID = c(0, 1), y = c("negative", "positive"))
+  terra::setCats(stack_classif, layer = "y", value = value)
+  colnames = names(stack_classif)
+  file = tempfile(fileext = ".tif")
+  terra::writeRaster(stack_classif, file)
+  stack_classif = terra::rast(file)
+
+  # RasterBrick
+  backend = DataBackendRaster$new(stack_classif)
+
+  new_task = as_task_classif_st(backend, target = "y", positive = "positive")
+
+  expect_class(new_task, "TaskClassifST")
+  expect_class(new_task$extra_args$crs, "crs")
+  expect_equal(new_task$extra_args$crs$input, "epsg:32717")
+})
 
 # regr -------------------------------------------------------------------------
 

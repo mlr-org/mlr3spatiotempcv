@@ -4,10 +4,9 @@
 \alias{as_task_classif_st}
 \alias{as_task_classif_st.TaskClassifST}
 \alias{as_task_classif_st.data.frame}
-\alias{as_task_classif_st.DataBackend}
+\alias{as_task_classif_st.DataBackendVector}
 \alias{as_task_classif_st.sf}
-\alias{as_task_classif_st.DataBackendSf}
-\alias{as_task_classif_st.DataBackendSpatRaster}
+\alias{as_task_classif_st.DataBackendRaster}
 \title{Convert to a Spatiotemporal Classification Task}
 \usage{
 as_task_classif_st(x, ...)
@@ -25,14 +24,14 @@ as_task_classif_st(x, ...)
   ...
 )
 
-\method{as_task_classif_st}{DataBackend}(
+\method{as_task_classif_st}{DataBackendVector}(
   x,
   target = NULL,
   id = deparse(substitute(x)),
   positive = NULL,
-  crs = NA,
+  crs = sf::st_crs(x$geometry)$input,
   coords_as_features = FALSE,
-  coordinate_names = c("x", "y"),
+  coordinate_names = colnames(sf::st_coordinates(x$geometry)),
   ...
 )
 
@@ -47,22 +46,12 @@ as_task_classif_st(x, ...)
   ...
 )
 
-\method{as_task_classif_st}{DataBackendSf}(
+\method{as_task_classif_st}{DataBackendRaster}(
   x,
   target = NULL,
   id = deparse(substitute(x)),
   positive = NULL,
-  crs = sf::st_crs(x$coordinates)$input,
-  coords_as_features = FALSE,
-  ...
-)
-
-\method{as_task_classif_st}{DataBackendSpatRaster}(
-  x,
-  target = NULL,
-  id = deparse(substitute(x)),
-  positive = NULL,
-  crs = terra::crs(x$stack),
+  crs = terra::crs(x$stack, describe = TRUE)$EPSG,
   coords_as_features = FALSE,
   coordinate_names = c("x", "y"),
   ...

@@ -58,8 +58,8 @@ as_task_classif_st.data.frame = function(x, target = NULL, id = deparse(substitu
 
 #' @rdname as_task_classif_st
 #' @export
-as_task_classif_st.DataBackend = function(x, target = NULL, id = deparse(substitute(x)),
-  positive = NULL, crs = NA, coords_as_features = FALSE, coordinate_names = c("x", "y"), ...) {
+as_task_classif_st.DataBackendVector = function(x, target = NULL, id = deparse(substitute(x)),
+  positive = NULL, crs = sf::st_crs(x$geometry)$input, coords_as_features = FALSE, coordinate_names = colnames(sf::st_coordinates(x$geometry)), ...) {
   TaskClassifST$new(id = id, backend = x, target = target, positive = positive,
     extra_args = list(coordinate_names = coordinate_names, coords_as_features = coords_as_features,
       crs = crs))
@@ -105,25 +105,11 @@ as_task_classif.TaskClassifST = function(x) {
 
 #' @rdname as_task_classif_st
 #' @export
-as_task_classif_st.DataBackendSf = function(x, target = NULL, id = deparse(substitute(x)),
-  positive = NULL, crs = sf::st_crs(x$coordinates)$input, coords_as_features = FALSE, ...) {
-
-  eval(id)
-  eval(crs)
-
-  coordinates = sf::st_coordinates(x$coordinates)
-  # ensure a point feature has been passed
-  checkmate::assert_character(as.character(sf::st_geometry_type(x$coordinates, by_geometry = FALSE)), fixed = "POINT") # nolint
-
-  TaskClassifST$new(id = id, backend = x, target = target, positive = positive,
-    extra_args = list(coords_as_features = coords_as_features, crs = crs))
-}
-
-#' @rdname as_task_classif_st
-#' @export
-as_task_classif_st.DataBackendSpatRaster = function(x, target = NULL, id = deparse(substitute(x)),
-  positive = NULL, crs = terra::crs(x$stack),
+as_task_classif_st.DataBackendRaster = function(x, target = NULL, id = deparse(substitute(x)),
+  positive = NULL, crs = terra::crs(x$stack, describe = TRUE)$EPSG,
   coords_as_features = FALSE, coordinate_names = c("x", "y"), ...) {
+  # transfer to polygons to extract coordinates
+  as.polygons(x$stack)
 
   TaskClassifST$new(id = id, backend = x, target = target, positive = positive,
     extra_args = list(coordinate_names = coordinate_names,
