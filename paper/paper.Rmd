@@ -15,13 +15,13 @@ author:
     address: |
       | Department of Statistics
       | Statistical Learning and Data Science group
-    email: marc.becker@stat.uni-muenchen.de
+    email: \email{marc.becker@stat.uni-muenchen.de}
     # To add another line, use \AND at the end of the previous one as above
   - name: Michel Lang
     affiliation: TU Dortmund University
     address: |
       | Faculty of Statistics
-    email: lang@statistik.tu-dortmund.de
+    email: \email{lang@statistik.tu-dortmund.de}
   - name: Alexander Brenning
     affiliation: 'Friedrich Schiller University Jena'
     address: |
@@ -78,7 +78,7 @@ knitr::knit_hooks$set(plot = function(x, options) {
 
 ```{r setup-2, echo=FALSE, purl=T}
 # for knitr spin later
-knitr::opts_chunk$set(fig.path = "./paper/figs/",
+knitr::opts_chunk$set(fig.path = "./figs/",
   cache = TRUE,
   cache.lazy = TRUE)
 ```
