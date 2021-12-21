@@ -22,7 +22,8 @@ repos:
       - id: readme-rmd-rendered
       - id: parsable-R
       - id: no-browser-statement
-      - id: deps-in-desc
+      # uncomment after https://github.com/lorenzwalthert/precommit/issues/352
+      # - id: deps-in-desc
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
