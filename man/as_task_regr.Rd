@@ -10,10 +10,10 @@ as_task_regr(x, ...)
 \method{as_task_regr}{TaskRegrST}(x)
 }
 \arguments{
-\item{x}{(\code{any})\cr
+\item{x}{(any)\cr
 Object to convert.}
 
-\item{...}{(\code{any})\cr
+\item{...}{(any)\cr
 Additional arguments.}
 }
 \value{
