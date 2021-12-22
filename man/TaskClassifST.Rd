@@ -74,6 +74,7 @@ Required for \code{\link[=convert_task]{convert_task()}}.}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="add_strata">}\href{../../mlr3/html/Task.html#method-add_strata}{\code{mlr3::Task$add_strata()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="cbind">}\href{../../mlr3/html/Task.html#method-cbind}{\code{mlr3::Task$cbind()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="data">}\href{../../mlr3/html/Task.html#method-data}{\code{mlr3::Task$data()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="filter">}\href{../../mlr3/html/Task.html#method-filter}{\code{mlr3::Task$filter()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="format">}\href{../../mlr3/html/Task.html#method-format}{\code{mlr3::Task$format()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="formula">}\href{../../mlr3/html/Task.html#method-formula}{\code{mlr3::Task$formula()}}\out{</span>}
@@ -85,8 +86,8 @@ Required for \code{\link[=convert_task]{convert_task()}}.}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="rename">}\href{../../mlr3/html/Task.html#method-rename}{\code{mlr3::Task$rename()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="select">}\href{../../mlr3/html/Task.html#method-select}{\code{mlr3::Task$select()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="set_col_roles">}\href{../../mlr3/html/Task.html#method-set_col_roles}{\code{mlr3::Task$set_col_roles()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="set_levels">}\href{../../mlr3/html/Task.html#method-set_levels}{\code{mlr3::Task$set_levels()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="set_row_roles">}\href{../../mlr3/html/Task.html#method-set_row_roles}{\code{mlr3::Task$set_row_roles()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="TaskClassif" data-id="data">}\href{../../mlr3/html/TaskClassif.html#method-data}{\code{mlr3::TaskClassif$data()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="TaskClassif" data-id="droplevels">}\href{../../mlr3/html/TaskClassif.html#method-droplevels}{\code{mlr3::TaskClassif$droplevels()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="TaskClassif" data-id="truth">}\href{../../mlr3/html/TaskClassif.html#method-truth}{\code{mlr3::TaskClassif$truth()}}\out{</span>}
 }

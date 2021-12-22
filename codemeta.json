@@ -2,19 +2,19 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "mlr3spatiotempcv",
-  "description": "Extends the mlr3 ML framework with spatio-temporal resampling\n    methods to account for the presence of spatiotemporal autocorrelation\n    (STAC) in predictor variables. STAC may cause highly biased\n    performance estimates in cross-validation if ignored.",
+  "description": "Extends the mlr3 ML framework with spatio-temporal resampling methods to account for the presence of spatiotemporal autocorrelation (STAC) in predictor variables. STAC may cause highly biased performance estimates in cross-validation if ignored.",
   "name": "mlr3spatiotempcv: Spatiotemporal Resampling Methods for 'mlr3'",
-  "codeRepository": "https://github.com/mlr-org/mlr3spatiotempcv",
   "relatedLink": ["https://mlr3spatiotempcv.mlr-org.com/", "https://mlr3book.mlr-org.com"],
+  "codeRepository": "https://github.com/mlr-org/mlr3spatiotempcv",
   "issueTracker": "https://github.com/mlr-org/mlr3spatiotempcv/issues",
   "license": "https://spdx.org/licenses/LGPL-3.0",
-  "version": "1.0.0",
+  "version": "1.0.0.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.1 Patched (2021-08-27 r80829)",
+  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -443,5 +443,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "28804.024KB"
+  "fileSize": "17909.575KB"
 }

@@ -4,13 +4,9 @@
 \alias{ResamplingSpCVCoords}
 \title{(sperrorest) Coordinate-based k-means clustering}
 \description{
-\code{partition_cv} creates a \link[sperrorest]{represampling} object for
-\code{length(repetition)}-repeated \code{nfold}-fold cross-validation.
-}
-\details{
-This function does not actually perform a cross-validation or
-partition the data set itself; it simply creates a data structure
-containing the indices of training and test samples.
+(sperrorest) Coordinate-based k-means clustering
+
+(sperrorest) Coordinate-based k-means clustering
 }
 \section{{mlr3spatiotempcv} notes}{
 

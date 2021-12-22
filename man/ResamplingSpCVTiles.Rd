@@ -4,10 +4,9 @@
 \alias{ResamplingSpCVTiles}
 \title{(sperrorest) Spatial "Tiles" resampling}
 \description{
-\code{partition_tiles} divides the study area into a specified number
-of rectangular tiles. Optionally small partitions can be merged with
-adjacent tiles to achieve a minimum number or percentage of samples in each
-tile.
+(sperrorest) Spatial "Tiles" resampling
+
+(sperrorest) Spatial "Tiles" resampling
 }
 \note{
 Default parameter settings may change in future releases. This
