@@ -10,10 +10,10 @@ as_task_classif(x, ...)
 \method{as_task_classif}{TaskClassifST}(x)
 }
 \arguments{
-\item{x}{(\code{any})\cr
+\item{x}{(any)\cr
 Object to convert.}
 
-\item{...}{(\code{any})\cr
+\item{...}{(any)\cr
 Additional arguments.}
 }
 \value{
