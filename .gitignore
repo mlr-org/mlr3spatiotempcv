@@ -413,3 +413,6 @@ _book
 paper.tex
 figs
 paper_files
+jstatsoft*.pdf
+cover-letter.pdf
+*.zip
