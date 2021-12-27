@@ -1,53 +1,41 @@
 # All available hooks: https://pre-commit.com/hooks.html
 # R specific hooks: https://github.com/lorenzwalthert/precommit
 repos:
--   repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.1.3.9014
+  - repo: https://github.com/lorenzwalthert/precommit
+    rev: v0.2.2.9006
     hooks:
-    # -   id: style-files
-    #     args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
-    -   id: roxygenize
-    # codemeta must be above use-tidy-description when both are used
-    -   id: codemeta-description-updated
-    -   id: use-tidy-description
-    # -   id: spell-check
-        exclude: >
-          (?x)^(
-          data/.*|
-          (.*/|)\.Rprofile|
-          (.*/|)\.Renviron|
-          (.*/|)\.gitignore|
-          (.*/|)NAMESPACE|
-          (.*/|)WORDLIST|
-          (.*/|)\.travis.yml|
-          (.*/|)appveyor.yml|
-          (.*/|)\.Rbuildignore|
-          (.*/|)\.pre-commit-.*|
-          .*\.[rR]|
-          .*\.Rproj|
-          .*\.py|
-          .*\.feather|
-          .*\.rds|
-          .*\.Rds|
-          .*\.sh|
-          .*\.RData|
-          .*\.svg
-          )$
-    # -   id: lintr
-    -   id: readme-rmd-rendered
-    -   id: parsable-R
-    -   id: no-browser-statement
-    -   id: deps-in-desc
--   repo: https://github.com/pre-commit/pre-commit-hooks
+      - id: style-files
+        args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
+        additional_dependencies:
+        - mlr-org/styler.mlr
+      - id: roxygenize
+        additional_dependencies:
+        -    checkmate
+        -    data.table
+        -    ggplot2
+        -    mlr3
+        -    mlr3misc
+        -    paradox
+        -    R6
+        -    utils
+      # codemeta must be above use-tidy-description when both are used
+      - id: codemeta-description-updated
+      - id: use-tidy-description
+      - id: readme-rmd-rendered
+      - id: parsable-R
+      - id: no-browser-statement
+      # uncomment after https://github.com/lorenzwalthert/precommit/issues/352
+      # - id: deps-in-desc
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
-    -   id: check-added-large-files
-        args: ['--maxkb=1000']
-    -   id: end-of-file-fixer
+      - id: check-added-large-files
+        args: ["--maxkb=1000"]
+      - id: end-of-file-fixer
         exclude: '\.Rd'
--   repo: local
+  - repo: local
     hooks:
-    -   id: forbid-to-commit
+      - id: forbid-to-commit
         name: Don't commit common R artifacts
         entry: Cannot commit .Rhistory, .RData, .Rds or .rds.
         language: fail

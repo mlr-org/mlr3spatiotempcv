@@ -1,10 +1,8 @@
 url: https://mlr3spatiotempcv.mlr-org.com
 
 template:
+  bootstrap: 5
   package: mlr3pkgdowntemplate
-  params:
-    bootswatch: journal
-  default_assets: false
 
 development:
   mode: auto
@@ -17,7 +15,7 @@ authors:
 
 navbar:
   structure:
-    left:  [reference, news, book]
+    left:  [intro, reference, news, articles, book]
     right: [github, mattermost, stackoverflow, rss]
   components:
     home: ~
