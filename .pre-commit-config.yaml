@@ -27,7 +27,7 @@ repos:
       # uncomment after https://github.com/lorenzwalthert/precommit/issues/352
       # - id: deps-in-desc
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.1.0
     hooks:
       - id: check-added-large-files
         args: ["--maxkb=1000"]
