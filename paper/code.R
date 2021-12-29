@@ -14,7 +14,7 @@ knitr::include_graphics("pdf/rsmp-schema.pdf")
 ## library("mlr3spatiotempcv")
 ## task = tsk("ecuador")
 ## rsmp_buffer = rsmp("spcv_buffer", theRange = 1000)
-## 
+##
 ## autoplot(rsmp_buffer, size = 0.8, task = task, fold_id = 1)
 
 
@@ -34,7 +34,7 @@ autoplot(rsmp_buffer,
 ## ----disc-non-eval, eval=FALSE-----------------------------------------------------
 ## rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
 ## rsmp_disc
-## 
+##
 ## autoplot(rsmp_disc, size = 0.8, task = task, fold_id = 1)
 
 
@@ -53,7 +53,7 @@ autoplot(rsmp_disc,
 
 ## ----coords-non-eval, eval=FALSE---------------------------------------------------
 ## rsmp_coords = rsmp("spcv_coords", folds = 5)
-## 
+##
 ## autoplot(rsmp_coords, size = 0.8, fold_id = 1, task = task)
 
 
@@ -68,7 +68,7 @@ autoplot(rsmp_coords,
 
 ## ----tile-non-eval, eval=FALSE-----------------------------------------------------
 ## rsmp_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
-## 
+##
 ## autoplot(rsmp_tiles, size = 0.8, fold_id = 1, task = task)
 
 
@@ -84,10 +84,10 @@ autoplot(rsmp_tiles,
 ## ----custom-cv-non-eval, eval=FALSE------------------------------------------------
 ## breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
 ## zclass = cut(task$data()$dem, breaks, include.lowest = TRUE)
-## 
+##
 ## rsmp_custom = rsmp("custom_cv")
 ## rsmp_custom$instantiate(task, f = zclass)
-## 
+##
 ## autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1)
 
 
@@ -105,7 +105,7 @@ autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1) *
 
 ## ----block-random-non-eval, eval=FALSE---------------------------------------------
 ## rsmp_block_random = rsmp("spcv_block", range = 1000, folds = 5)
-## 
+##
 ## autoplot(rsmp_block_random, size = 0.8, fold_id = 1, task = task,
 ##   show_blocks = TRUE, show_labels = TRUE)
 
@@ -124,7 +124,7 @@ autoplot(rsmp_block_random,
 ## rsmp_block_systematic = rsmp("spcv_block",
 ##   range = 1000, folds = 5, selection = "systematic"
 ## )
-## 
+##
 ## autoplot(rsmp_block_systematic, size = 0.8, fold_id = 1, task = task,
 ##   show_blocks = TRUE, show_labels = TRUE)
 
@@ -147,9 +147,9 @@ autoplot(rsmp_block_systematic,
 ## group = as.factor(kmeans(task$coordinates(), 8)$cluster)
 ## task_cv$cbind(data.frame("group" = group))
 ## task_cv$set_col_roles("group", roles = "group")
-## 
+##
 ## rsmp_cv_group = rsmp("cv", folds = 3)$instantiate(task_cv)
-## 
+##
 ## print(rsmp_cv_group$instance)
 
 
@@ -176,13 +176,13 @@ autoplot(rsmp_cv_group, size = 0.8, task = task_cv, fold_id = 1) *
 
 ## ----env-1-non-eval, eval=FALSE----------------------------------------------------
 ## rsmp_env = rsmp("spcv_env", features = "distdeforest", folds = 5)
-## 
+##
 ## rsmp_env_multi = rsmp("spcv_env", features = c("distdeforest", "slope"), folds = 5)
-## 
+##
 ## plot_env_single = autoplot(rsmp_env, size = 0.5, fold_id = 1, task = task) +
-## 
+##
 ##   plot_env_multi = autoplot(rsmp_env_multi, size = 0.5, fold_id = 1, task = task)
-## 
+##
 ## library("patchwork")
 ## plot_env_single + plot_env_multi
 
