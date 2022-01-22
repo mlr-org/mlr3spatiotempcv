@@ -14,7 +14,7 @@ This package extends the [mlr3](https://github.com/mlr-org/mlr3) package framewo
 
 If you prefer the [tidymodels](https://www.tidymodels.org/) ecosystem, have a look at the [{spatialsample}](https://spatialsample.tidymodels.org/index.html) package for spatial sampling methods.
 
-# Installation
+## Installation
 
 CRAN version
 
@@ -31,7 +31,7 @@ remotes::install_github("mlr-org/mlr3spatiotempcv")
 install.packages('mlr3spatiotempcv', mlrorg = 'https://mlr-org.r-universe.dev')
 ```
 
-# Get Started
+## Get Started
 
 See the ["Get Started"](https://mlr3spatiotempcv.mlr-org.com/articles/mlr3spatiotempcv.html) vignette for a quick introduction.
 
@@ -39,10 +39,14 @@ For more detailed information including an usage example see the ["Spatiotempora
 
 Article ["Spatiotemporal Visualization"](https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html) shows how 3D subplots grids can be created.
 
-# Citation
+## Citation
 
 To cite the package in publications, use the output of `citation("mlr3spatiotempcv")`.
 
+## Resources
+
+- [Recorded talk about mlr3spatiotempcv and mlr3spatial at OpenDataScience Europe Conference 2021 in Wageningen, NL](https://av.tib.eu/media/55271)
+- [List of scientific articles related to spatiotemporal modeling and/or spatial partitioning](https://pat-s.notion.site/Spatial-autocorrelation-in-modeling-b62e1bc904b546b9a489b171913a3551)
 # Other spatiotemporal resampling packages
 
 This list does not claim to be comprehensive.
