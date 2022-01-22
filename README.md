@@ -56,6 +56,7 @@ This list does not claim to be comprehensive.
 | sperrorest    | R        | [Paper](https://doi.org/10.1109%2Figarss.2012.6352393), [CRAN](https://cran.r-project.org/package=sperrorest)                                                          |
 | Pyspatialml   | Python   | [GitHub](https://github.com/stevenpawley/Pyspatialml)                                                                                                                                  |
 | spacv         | Python   | [GitHub](https://github.com/SamComber/spacv)                                                                                                                                           |
+| Museo Toolbox         | Python   | [Paper](https://joss.theoj.org/papers/10.21105/joss.01978), [GitHub](https://github.com/nkarasiak/MuseoToolBox)                                                                                                                                           |
 
 # FAQ
 
