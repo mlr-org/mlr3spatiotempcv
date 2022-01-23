@@ -36,3 +36,4 @@
 vignettes/.*_cache$
 autoplot-repeated-show-blocks-true-show-labels-true.svg$
 ^\.textlintrc$
+^figs$
