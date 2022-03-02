@@ -22,8 +22,8 @@ knitr::opts_chunk$set(
 # Introduction
 
 This package adds resampling methods for the {mlr3} package framework suited for spatial, temporal and spatiotemporal data.
-These methods can help to reduce the influence of [autocorrelation](https://mlr3book.mlr-org.com/spatiotemporal.html#spatiotemporal-intro) on performance estimates when performing cross-validation.
-While this article gives a rather technical introduction to the package, a more applied approach can be found in the [mlr3book section on "Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/spatiotemporal.html#spatiotemporal).
+These methods can help to reduce the influence of [autocorrelation](https://mlr3book.mlr-org.com/special-tasks.html#spatiotemporal-intro) on performance estimates when performing cross-validation.
+While this article gives a rather technical introduction to the package, a more applied approach can be found in the [mlr3book section on "Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/special-tasks.html#spatiotemporal).
 
 After loading the package via `library("mlr3spatiotempcv")`, the spatiotemporal resampling methods and example tasks provided by {mlr3spatiotempcv} are available to the user **alongside the default {mlr3} resampling methods and tasks**.
 
@@ -59,7 +59,7 @@ task = TaskClassifST$new("ecuador",
 ```
 
 Now this Task can be used as a normal {mlr3} task in any kind of modeling scenario.
-Have a look at the [mlr3book section on "Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/spatiotemporal.html#spatiotemporal) on how to apply a spatiotemporal resampling method to such a task.
+Have a look at the [mlr3book section on "Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/special-tasks.html#spatiotemporal) on how to apply a spatiotemporal resampling method to such a task.
 
 # Contributed assets by {mlr3spatiotempcv}
 

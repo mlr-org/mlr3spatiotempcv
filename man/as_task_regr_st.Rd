@@ -55,7 +55,7 @@ Name of the target column.}
 
 \item{id}{(\code{character(1)})\cr
 Id for the new task.
-Defaults to the (deparsed and substituted) name of the data argument.}
+Defaults to the (deparsed and substituted) name of \code{x}.}
 
 \item{crs}{\verb{[character(1)]}\cr
 Coordinate reference system. Either a PROJ string or an
