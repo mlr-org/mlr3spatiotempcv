@@ -1,20 +1,19 @@
-mlr3spatiotempcv 1.0.0
+mlr3spatiotempcv 1.0.1
 
 ## Cran Repository Policy
 
-- [x] Reviewed CRP last edited 2021-04-25.
+- [ ] Reviewed CRP last edited 2022-02-08.
+
+See changes at https://github.com/eddelbuettel/crp/compare/master@%7B2021-04-25%7D...master@%7B2022-02-08%7D
 
 ## R CMD check results
 
-- [x] Checked locally, R 4.1.1
-- [x] Checked on CI system, R 4.1.1
-- [x] Checked on win-builder, R devel
+- [x] Checked locally, R 4.1.2
+- [ ] Checked on CI system, R 4.1.2
+- [ ] Checked on win-builder, R devel
 
 Check the boxes above after successful execution and remove this line. Then run `fledge::release()`.
 
 ## Current CRAN check results
 
-- [x] Checked on 2021-08-19, problems found: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
-- [x] WARN: r-release-macos-arm64
-
-Check results at: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
+- [x] Checked on 2022-03-02, no problems found.
