@@ -65,6 +65,9 @@ TaskClassifST = R6::R6Class("TaskClassifST",
 
       assert_string(target)
 
+      # restore extra_args defaults
+      extra_args = insert_named(list(coords_as_features = FALSE, crs = NA, coordinate_names = NA), extra_args)
+
       # support for 'sf' tasks
       if (inherits(backend, "sf")) {
         extra_args$crs = sf::st_crs(backend)$input
@@ -97,6 +100,7 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       }
 
       # check coordinates
+      if (anyNA(extra_args$coordinate_names)) stop("No coordinate names provided.")
       assert_names(self$backend$colnames, must.include = extra_args$coordinate_names)
       for (coord in extra_args$coordinate_names) {
         assert_numeric(self$data(cols = coord)[[1L]], any.missing = FALSE)
@@ -105,7 +109,7 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       # mark columns as coordinates and check if coordinates should be included
       # as features
       self$col_roles$coordinates = extra_args$coordinate_names
-      if (isFALSE(extra_args$coords_as_features)) {
+      if (!extra_args$coords_as_features) {
         self$col_roles$feature = setdiff(
           self$col_roles$feature,
           extra_args$coordinate_names)
