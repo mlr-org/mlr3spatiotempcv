@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 1.0.1
+
+- Same as previous version.
+
+
 # mlr3spatiotempcv 1.0.0.9000
 
 - Add `autoplot()` support for `"groups"` column role in `rsmp("cv")`
