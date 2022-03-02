@@ -35,7 +35,7 @@ install.packages('mlr3spatiotempcv', mlrorg = 'https://mlr-org.r-universe.dev')
 
 See the ["Get Started"](https://mlr3spatiotempcv.mlr-org.com/articles/mlr3spatiotempcv.html) vignette for a quick introduction.
 
-For more detailed information including an usage example see the ["Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/spatiotemporal.html) chapter in the mlr3book.
+For more detailed information including an usage example see the ["Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/special-tasks.html#spatiotemporal) chapter in the mlr3book.
 
 Article ["Spatiotemporal Visualization"](https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html) shows how 3D subplots grids can be created.
 
@@ -53,9 +53,9 @@ This list does not claim to be comprehensive.
 
 | Name          | Language | Resources                                                                                                                                                                              |
 | ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| blockCV       | R        | [Paper](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13107), [CRAN](https://cran.r-project.org/package=blockCV)                              |
+| blockCV       | R        | [Paper](https://doi.org/10.1111/2041-210X.13107), [CRAN](https://cran.r-project.org/package=blockCV)                              |
 | CAST          | R        | [Paper](https://www.sciencedirect.com/science/article/pii/S1364815217310976), [CRAN](https://cran.r-project.org/package=CAST) |
-| ENMeval       | R        | [Paper](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12261), [CRAN](https://cran.r-project.org/package=ENMeval)                              |
+| ENMeval       | R        | [Paper](https://doi.org/10.1111/2041-210X.12261), [CRAN](https://cran.r-project.org/package=ENMeval)                              |
 | spatialsample | R        | [CRAN](https://cran.r-project.org/package=spatialsample)                                                                                                               |
 | sperrorest    | R        | [Paper](https://doi.org/10.1109%2Figarss.2012.6352393), [CRAN](https://cran.r-project.org/package=sperrorest)                                                          |
 | Pyspatialml   | Python   | [GitHub](https://github.com/stevenpawley/Pyspatialml)                                                                                                                                  |
