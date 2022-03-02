@@ -34,6 +34,9 @@ TaskRegrST = R6::R6Class("TaskRegrST",
         coords_as_features = FALSE, crs = NA,
         coordinate_names = NA)) {
 
+      # restore extra_args defaults
+      extra_args = insert_named(list(coords_as_features = FALSE, crs = NA, coordinate_names = NA), extra_args)
+
       # support for 'sf' tasks
 
       if (inherits(backend, "sf")) {
@@ -60,6 +63,7 @@ TaskRegrST = R6::R6Class("TaskRegrST",
       }
 
       # check coordinates
+      if (anyNA(extra_args$coordinate_names)) stop("No coordinate names provided.")
       assert_names(self$backend$colnames, must.include = extra_args$coordinate_names)
       for (coord in extra_args$coordinate_names) {
         assert_numeric(self$data(cols = coord)[[1L]], any.missing = FALSE)
@@ -68,7 +72,7 @@ TaskRegrST = R6::R6Class("TaskRegrST",
       # mark columns as coordinates and check if coordinates should be included
       # as features
       self$col_roles$coordinates = extra_args$coordinate_names
-      if (isFALSE(extra_args$coords_as_features)) {
+      if (!extra_args$coords_as_features) {
         self$col_roles$feature = setdiff(
           self$col_roles$feature,
           extra_args$coordinate_names)

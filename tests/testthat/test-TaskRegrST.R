@@ -30,3 +30,19 @@ test_that("tasks created from sf objects do not duplicate rows", {
 
   expect_equal(nrow(task$data()), nrow(data))
 })
+
+test_that("extra_args contains default arguments", {
+  data = test_make_sp()
+  data$p_1 = c(rep("A", 18), rep("B", 18))
+  data$response = rnorm(36)
+
+  task = TaskRegrST$new(
+    id = "sp_regression",
+    backend = data,
+    target = "response",
+    extra_args = list(
+      coordinate_names = c("x", "y"))
+  )
+
+  expect_equal(task$extra_args, list(coords_as_features = FALSE, crs = NA, coordinate_names = c("x", "y")))
+})
