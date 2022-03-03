@@ -58,7 +58,7 @@ Name of the target column.}
 
 \item{id}{(\code{character(1)})\cr
 Id for the new task.
-Defaults to the (deparsed and substituted) name of the data argument.}
+Defaults to the (deparsed and substituted) name of \code{x}.}
 
 \item{positive}{(\code{character(1)})\cr
 Level of the positive class. See \link[mlr3]{TaskClassif}.}
