@@ -7,6 +7,7 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   task = tsk("diplodia")
@@ -29,6 +30,7 @@
 #'
 #'   # Internal storage:
 #'   rrcv$instance # table
+#' }
 #' }
 ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
   inherit = mlr3::Resampling,

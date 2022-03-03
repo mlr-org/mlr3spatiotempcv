@@ -11,7 +11,7 @@
 #'   mlr3 spatial resampling object of class [ResamplingSpCVBuffer].
 #' @export
 #' @seealso
-#'   - mlr3book chapter on on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions).
+#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special-tasks.html#vis-spt-partitions)
 #'   - [autoplot.ResamplingSpCVBlock()]
 #'   - [autoplot.ResamplingSpCVCoords()]
 #'   - [autoplot.ResamplingSpCVEnv()]

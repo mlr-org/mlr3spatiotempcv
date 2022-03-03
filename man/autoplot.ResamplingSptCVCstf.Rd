@@ -151,7 +151,7 @@ if (mlr3misc::require_namespaces(c("sf", "plotly"), quietly = TRUE)) {
 }
 \seealso{
 \itemize{
-\item mlr3book chapter on on \href{https://mlr3book.mlr-org.com/spatiotemporal.html#vis-spt-partitions}{"Spatiotemporal Visualization"}.
+\item mlr3book chapter on \href{https://mlr3book.mlr-org.com/special-tasks.html#vis-spt-partitions}{"Spatiotemporal Visualization"}
 \item Vignette \href{https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html}{Spatiotemporal Visualization}.
 \item \code{\link[=autoplot.ResamplingSpCVBlock]{autoplot.ResamplingSpCVBlock()}}
 \item \code{\link[=autoplot.ResamplingSpCVBuffer]{autoplot.ResamplingSpCVBuffer()}}
