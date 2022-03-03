@@ -7,11 +7,7 @@
 
 # mlr3spatiotempcv 1.0.1
 
-- Same as previous version.
-
-
-# mlr3spatiotempcv 1.0.0.9000
-
+- Fixed a issue which caused coordinates to appear in the feature set when a data.frame was supplied (#166, @be-marc)
 - Add `autoplot()` support for `"groups"` column role in `rsmp("cv")`
 
 
