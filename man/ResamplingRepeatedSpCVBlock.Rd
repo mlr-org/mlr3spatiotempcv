@@ -27,6 +27,7 @@ For a list of available arguments, please see \link[blockCV:spatialBlock]{blockC
 }
 
 \examples{
+\dontrun{
 if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   library(mlr3)
   task = tsk("diplodia")
@@ -49,6 +50,7 @@ if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 
   # Internal storage:
   rrcv$instance # table
+}
 }
 }
 \references{
