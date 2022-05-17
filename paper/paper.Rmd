@@ -344,6 +344,7 @@ autoplot(rsmp_disc, size = 0.8, task = task, fold_id = 1)
 ```{r disc-eval, fig.cap='Visualization of one training set / test set combination generated with the leave-one-disc-out method from package sperrorest (method "spcv\\_disc" in mlr3spatiotempcv). The disc has a radius of 300 m and is surrounded by a 400-m buffer.', out.width="40%", echo=FALSE,fig.pos="ht"}
 library("mlr3")
 library("mlr3spatiotempcv")
+requireNamespace("blockCV")
 task = tsk("ecuador")
 rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
 rsmp_disc
@@ -398,6 +399,7 @@ Note that the actual number of folds obtained may be smaller than `nsplit[1]*nsp
 In the example, there are only eleven folds instead of twelve because the southwestern part of the study area's bounding box does not contain observations  (Figure \@ref(fig:tile)).
 
 ```{r tile-non-eval, eval=FALSE}
+requireNamespace("sperrorest")
 rsmp_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
 
 autoplot(rsmp_tiles, size = 0.8, fold_id = 1, task = task)
