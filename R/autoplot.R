@@ -1141,7 +1141,7 @@ plot.ResamplingRepeatedSpCVTiles = function(x, ...) {
 #'   - [autoplot.ResamplingSptCVCstf()]
 #'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
-#' if (mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"), quietly = TRUE)) {
+#' if (mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext", "ggsci"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
 #'   task = tsk("ecuador")
