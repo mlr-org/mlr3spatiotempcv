@@ -54,7 +54,7 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
     instantiate = function(task) {
 
       mlr3::assert_task(task)
-      checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
+      assert_spatial_task(task)
       pv = self$param_set$values
 
       # Set values to default if missing

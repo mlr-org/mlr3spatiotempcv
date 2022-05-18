@@ -98,7 +98,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     instantiate = function(task) {
 
       mlr3::assert_task(task)
-      checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
+      assert_spatial_task(task)
       pv = self$param_set$values
       assert_numeric(pv$repeats, min.len = 1)
 
@@ -158,8 +158,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       }
       instance = private$.sample(
         task$row_ids,
-        task$coordinates(),
-        task$extra_args$crs
+        get_coordinates(task),
+        get_crs(task)
       )
 
       self$instance = instance

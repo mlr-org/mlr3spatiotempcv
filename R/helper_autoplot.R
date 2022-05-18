@@ -4,7 +4,7 @@ prepare_autoplot_cstf = function(task, resampling) {
   data = task$data()
   data$row_id = task$row_ids
   data$indicator = ""
-  coords = task$coordinates()
+  coords = get_coordinates(task)
   coords$row_id = task$row_ids
 
   if (grepl("Repeated", class(resampling)[1])) {
