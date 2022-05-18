@@ -86,7 +86,7 @@ By default a plot is returned; if \code{fold_id} is set, a gridded plot is
 created. If \code{plot_as_grid = FALSE}, a list of plot objects is returned.
 This can be used to align the plots individually.
 
-When no single fold is selected, the \code{\link[ggsci:scale_color_ucscgb]{ggsci::scale_color_ucscgb()}} palette
+When no single fold is selected, the \code{\link[ggsci:scale_ucscgb]{ggsci::scale_color_ucscgb()}} palette
 is used to display all partitions.
 If you want to change the colors, call \verb{<plot> + <color-palette>()}.
 }
