@@ -60,7 +60,6 @@ preamble: >
   \usepackage{placeins}
   \usepackage{scrextend}
   \usepackage{tablefootnote}
-  \usepackage{hyperref}
   \newcommand{\specialcell}[2][l]{%
     \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
 tables: true
@@ -69,8 +68,8 @@ output:
   bookdown::pdf_book:
     base_format: rticles::jss_article
     citation_package: "natbib"
-    # includes:
-    #   in_header: header.tex
+    includes:
+      in_header: header.tex
 ---
 
 ```{r setup, echo=FALSE, purl=FALSE}
