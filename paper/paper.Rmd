@@ -2,6 +2,7 @@
 documentclass: jss
 author:
   - name: Patrick Schratz
+    orcid: 0000-0003-0748-6624
     affiliation: 'Friedrich Schiller University Jena'
     # affiliaton2: 'Ludwig-Maximilians-University Munich'
     # use this syntax to add text on several lines
@@ -11,6 +12,7 @@ author:
       | Geographic Information Science group
     email: \email{patrick.schratz@uni-jena.de}
   - name: Marc Becker
+    orcid: 0000-0002-8115-0400
     affiliation: 'Ludwig-Maximilians-Universität München \AND'
     address: |
       | Department of Statistics
@@ -18,11 +20,13 @@ author:
     email: \email{marc.becker@stat.uni-muenchen.de}
     # To add another line, use \AND at the end of the previous one as above
   - name: Michel Lang
+    orcid: 0000-0001-9754-0393
     affiliation: TU Dortmund University
     address: |
       | Faculty of Statistics
     email: \email{lang@statistik.tu-dortmund.de}
   - name: Alexander Brenning
+    orcid: 0000-0001-6640-679
     affiliation: 'Friedrich Schiller University Jena'
     address: |
       | Department of Geography
@@ -37,7 +41,7 @@ title:
 abstract: >
   Spatial and spatiotemporal machine-learning models require a suitable framework for their model assessment, model selection, and hyperparameter tuning, in order to avoid error estimation bias and over-fitting.
   This contribution reviews the state-of-the-art in spatial and spatiotemporal CV, and introduces the \proglang{R} package mlr3spatiotempcv as an extension package of the machine-learning framework **mlr3**.
-  Currently various \proglang{R} packages implementing different spatiotemporal partitioning strategies exist: \pkg{blockCV}, \pkg{CAST}, \pkg{kmeans} and \pkg{sperrorest}.
+  Currently various \proglang{R} packages implementing different spatiotemporal partitioning strategies exist: \pkg{blockCV}, \pkg{CAST}, \pkg{skmeans} and \pkg{sperrorest}.
   The goal of \pkg{mlr3spatiotempcv} is to gather the available spatiotemporal resampling methods in \proglang{R} and make them available to users through a simple and common interface.
   This is made possible by integrating the package directly into the \pkg{mlr3} machine-learning framework, which already has support for generic non-spatiotemporal resampling methods such as random partitioning.
   One advantage is the use of a consistent nomenclature in an overarching machine-learning toolkit instead of a varying package-specific syntax, making it easier for users to choose from a variety of spatiotemporal resampling methods.
@@ -56,6 +60,7 @@ preamble: >
   \usepackage{placeins}
   \usepackage{scrextend}
   \usepackage{tablefootnote}
+  \usepackage{hyperref}
   \newcommand{\specialcell}[2][l]{%
     \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
 tables: true
@@ -64,8 +69,8 @@ output:
   bookdown::pdf_book:
     base_format: rticles::jss_article
     citation_package: "natbib"
-    includes:
-      in_header: header.tex
+    # includes:
+    #   in_header: header.tex
 ---
 
 ```{r setup, echo=FALSE, purl=FALSE}
@@ -74,6 +79,7 @@ output:
 knitr::knit_hooks$set(plot = function(x, options) {
   knitr::hook_plot_tex(x, options)
 })
+options(prompt = "R> ", continue = "+ ")
 ```
 
 ```{r setup-2, echo=FALSE, purl=T}
@@ -169,7 +175,7 @@ This often used when the data is grouped. For example, when using to multi-level
 We will broadly refer to such groups of observations as 'blocks' in a generic sense, regardless of the shape or origin of the groups.
 Also, data can be partitioned in feature space instead of geographic space, which has been referred to as "environmental blocking" [@roberts2017].
 
-When $n_z$ is much larger than the desired number of folds, $k$, then a partitioning can be applied to the zones themselves. 
+When $n_z$ is much larger than the desired number of folds, $k$, then a partitioning can be applied to the zones themselves.
 In this case, the zone indices $1, \ldots, n_z$ are grouped into $k$ equally sized subsets $\mathcal{I}_1, \ldots, \mathcal{I}_k$.
 This approach has been applied, for example, in spatial CV at the agricultural field level [@pena2015].
 We would like to emphasize the conceptual distinction between *CV at the block level*, referring to this scenario, and *leave-one-block-out CV*, where the blocks themselves define the CV partitions.
@@ -283,13 +289,13 @@ The already implemented methods can be inspected to get to know the class struct
 
 ## Spatial leave-one-out
 
-Spatial leave-one-out methods use individual observations in space as test partitions and apply circular buffer or guard zones around around these test points to enforce a minimum prediction distance. 
-Leave-one-disc-out resampling modifies this approach to leave out circular regions centered at observation points. 
+Spatial leave-one-out methods use individual observations in space as test partitions and apply circular buffer or guard zones around around these test points to enforce a minimum prediction distance.
+Leave-one-disc-out resampling modifies this approach to leave out circular regions centered at observation points.
 
 ### Spatial leave-one-out with buffer --- `"spcv_buffer"`
 
 Leave-one-out CV with buffer and several adaptations for species distribution modeling [@hijmans2020] are implemented in the \pkg{blockCV} package as the so-called "buffering" method and integrated into \pkg{mlr3spatiotempcv} under the label `"spcv_buffer"`.
-In species distribution modeling, the response variable can either be recorded as presence/absence data or as presence/background information; both options are supported by this implementation. 
+In species distribution modeling, the response variable can either be recorded as presence/absence data or as presence/background information; both options are supported by this implementation.
 By default, the dataset contains confirmed presence and confirmed absence observations, i.e. locations where a species was observed and not observed, respectively, and therefore spatial LOO CV in its usual sense can be carried out.
 Figure \@ref(fig:buffer-eval) shows the first test fold generated with this method for presence/absence data with a buffer distance of 1000 m.
 
@@ -506,7 +512,7 @@ autoplot(rsmp_block_systematic,
 
 *Checkerboard* partitioning is a special case of a systematic block partitioning (`selection = "checkerboard"`) which is why we omitted a practical example for this option.
 It inherently supports only two folds, making it less appealing than the more commonly used five- or ten-fold resampling, which achieve larger training set sizes.
- 
+
 ### Custom: `"cv"` with grouping in mlr3 {#sec:group-level}
 
 Although the `"cv"` resampling strategy in \pkg{mlr3} performs random, non-spatial partitioning by default, it can also be used for CV at the block level.
@@ -862,7 +868,7 @@ If, in contrast, the objective is to apply the model to an adjacent agricultural
 
 In summary, there are various factors that may be considered in judging the suitability of a resampling method:
 
-- Will the model be applied to predict 'new' outcomes at near or more distant spatial locations? 
+- Will the model be applied to predict 'new' outcomes at near or more distant spatial locations?
 - Will it be applied to predict into the future, or hindcast gaps between spatiotemporal observations in the past?
 - Is it necessary to impose a separation distance or prediction horizon as a spatial or temporal buffer between training and prediction locations?
 - How densely are the observations distributed in space and time? Are they more densely distributed than the intended spatial or temporal prediction distance?
