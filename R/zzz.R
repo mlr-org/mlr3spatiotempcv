@@ -1,6 +1,5 @@
 #' @rawNamespace import(data.table, except = transpose)
 #' @importFrom R6 R6Class
-#' @importFrom mlr3 TaskClassif TaskRegr Resampling as_data_backend assert_task rsmp tsk rsmps lrn msr mlr_resamplings
 #' @import mlr3misc
 #' @import checkmate
 #' @import paradox

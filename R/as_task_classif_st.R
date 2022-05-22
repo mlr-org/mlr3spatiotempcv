@@ -75,16 +75,6 @@ as_task_classif_st.sf = function(x, target = NULL, id = deparse(substitute(x)), 
     extra_args = list(coords_as_features = coords_as_features))
 }
 
-#' @inherit mlr3::as_task_classif title return
-#' @inheritParams mlr3::as_task_classif
-#' @description
-#' Convert object to a [TaskClassif].
-#' This is a S3 generic for [TaskClassifST].
-#' @seealso [mlr3::as_task_classif()]
-as_task_classif = function(x, ...) {
-  UseMethod("as_task_classif", x)
-}
-
 #' @rdname as_task_classif
 #' @inheritParams mlr3::convert_task
 #' @export
