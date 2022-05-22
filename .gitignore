@@ -404,13 +404,13 @@ TSWLatexianTemp*
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 
-paper.pdf
+article.pdf
 joss.md
 joss.tex
 inst/debug.R
 CRAN-RELEASE
 _book
-paper.tex
+article.tex
 figs
 paper_files
 jstatsoft*.pdf
