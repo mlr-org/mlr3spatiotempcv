@@ -8,24 +8,22 @@
 #' @export
 #' @examples
 #' library(mlr3)
-#' library(mlr3spatiotempcv)
 #' task = tsk("cookfarm")
+#' task$set_col_roles("SOURCEID", roles = "space")
+#' task$set_col_roles("Date", roles = "time")
 #'
 #' # Instantiate Resampling
-#' rrcv = rsmp("repeated_sptcv_cstf", folds = 3, repeats = 5, time_var = "Date")
-#' rrcv$instantiate(task)
-#' # Individual sets:
-#' rrcv$iters
-#' rrcv$folds(1:6)
-#' rrcv$repeats(1:6)
+#' rcv = rsmp("repeated_sptcv_cstf", folds = 5, repeats = 3)
+#' rcv$instantiate(task)
 #'
 #' # Individual sets:
-#' rrcv$train_set(1)
-#' rrcv$test_set(1)
-#' intersect(rrcv$train_set(1), rrcv$test_set(1))
+#' rcv$train_set(1)
+#' rcv$test_set(1)
+#' # check that no obs are in both sets
+#' intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 #'
 #' # Internal storage:
-#' rrcv$instance # table
+#' rcv$instance # table
 ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
   inherit = mlr3::Resampling,
   public = list(
@@ -39,13 +37,11 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_sptcv_cstf") {
       ps = ParamSet$new(params = list(
-        ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
-        ParamInt$new("repeats", lower = 1, default = 1L, tags = "required"),
-        ParamUty$new("space_var", custom_check = function(x) check_character(x, len = 1)),
-        ParamUty$new("time_var", custom_check = function(x) check_character(x, len = 1)),
-        ParamUty$new("class", custom_check = function(x) check_character(x, len = 1))
+        ParamInt$new("folds", lower = 1L, default = 3L, tags = "required"),
+        ParamInt$new("repeats", lower = 1, default = 10L, tags = "required"),
+        ParamLgl$new("stratify", default = FALSE)
       ))
-      ps$values = list(folds = 10L, repeats = 1)
+      ps$values = list(folds = 3L, repeats = 10L, stratify = FALSE)
 
       super$initialize(
         id = id,
@@ -75,24 +71,23 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
     #' @param task [Task]\cr
     #'   A task to instantiate.
     instantiate = function(task) {
-
-      pv = self$param_set$values
-
-      mlr3::assert_task(task)
-      checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
-      checkmate::assert_subset(pv$time_var,
-        choices = task$feature_names,
-        empty.ok = TRUE)
-      checkmate::assert_subset(pv$space_var,
-        choices = task$feature_names,
-        empty.ok = TRUE)
+      task = assert_task(as_task(task))
+      strata = task$strata
       groups = task$groups
 
       if (!is.null(groups)) {
-        stopf("Grouping is not supported for spatial resampling methods") # nocov
+        stopf("Grouping is not supported for spatial resampling methods.")
       }
 
-      private$.sample(task)
+      if (!is.null(strata)) {
+        stopf("Stratified sampling is not supported for spatial resampling methods.")
+      }
+
+      if (!length(task$col_roles$space) && !length(task$col_roles$time)) {
+        stopf("%s has no column role 'space' or 'time'.", format(task))
+      }
+
+      self$instance = private$.sample(task)
 
       self$task_hash = task$hash
       self$task_nrow = task$nrow
@@ -104,7 +99,8 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
-    iters = function() {
+    iters = function(rhs) {
+      assert_ro_binding(rhs)
       pv = self$param_set$values
       as.integer(pv$repeats) * as.integer(pv$folds)
     }
@@ -112,38 +108,7 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
   private = list(
     .sample = function(task) {
       pv = self$param_set$values
-
-      # declare empty list so the for-loop can write to its fields
-      self$instance = vector("list", length = pv$repeats)
-
-      for (rep in seq_len(pv$repeats)) {
-        sptfolds = sample_cstf(
-          self = self, task, pv$space_var, pv$time_var,
-          pv$class, pv$folds, task$data())
-
-        # combine space and time folds
-        for (i in 1:pv$folds) {
-          if (!is.null(pv$time_var) & !is.null(sptfolds$space_var)) {
-            self$instance[[rep]]$test[[i]] = which(sptfolds$data[[sptfolds$space_var]] %in%
-              sptfolds$spacefolds[[i]] &
-              sptfolds$data[[pv$time_var]] %in% sptfolds$timefolds[[i]])
-            self$instance[[rep]]$train[[i]] = which(!sptfolds$data[[sptfolds$space_var]] %in%
-              sptfolds$spacefolds[[i]] &
-              sptfolds$data[[pv$time_var]] %in% sptfolds$timefolds[[i]])
-          } else if (is.null(pv$time_var) & !is.null(sptfolds$space_var)) {
-            self$instance[[rep]]$test[[i]] = which(sptfolds$data[[sptfolds$space_var]] %in%
-              sptfolds$spacefolds[[i]])
-            self$instance[[rep]]$train[[i]] = which(!sptfolds$data[[sptfolds$space_var]] %in%
-              sptfolds$spacefolds[[i]])
-          } else if (!is.null(pv$time_var) & is.null(sptfolds$space_var)) {
-            self$instance[[rep]]$test[[i]] = which(sptfolds$data[[pv$time_var]] %in%
-              sptfolds$timefolds[[i]])
-            self$instance[[rep]]$train[[i]] = which(!sptfolds$data[[pv$time_var]] %in%
-              sptfolds$timefolds[[i]])
-          }
-        }
-      }
-      invisible(self)
+      map(seq_len(pv$repeats), function(i) sample_cast(task, pv$stratify, pv$folds))
     },
     .get_train = function(i) {
       i = as.integer(i) - 1L

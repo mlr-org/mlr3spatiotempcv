@@ -1,6 +1,6 @@
 #' @rawNamespace import(data.table, except = transpose)
 #' @importFrom R6 R6Class
-#' @importFrom mlr3 TaskClassif TaskRegr Resampling as_data_backend assert_task rsmp tsk rsmps lrn msr mlr_resamplings
+#' @importFrom mlr3 TaskClassif TaskRegr Resampling as_data_backend assert_task rsmp tsk rsmps lrn msr mlr_resamplings as_task
 #' @import mlr3misc
 #' @import checkmate
 #' @import paradox
@@ -59,6 +59,13 @@ register_mlr3 = function() { # nocov start
   # append "coordinates" to col_roles
   x$task_col_roles$classif_st = append(x$task_col_roles$classif, "coordinates")
   x$task_col_roles$regr_st = append(x$task_col_roles$regr, "coordinates")
+
+  # append "space" and "time" to col_roles
+  # used in CAST
+  x$task_col_roles$classif = c(x$task_col_roles$classif, "space", "time")
+  x$task_col_roles$regr = c(x$task_col_roles$regr, "space", "time")
+  x$task_col_roles$classif_st = c(x$task_col_roles$classif_st, "space", "time")
+  x$task_col_roles$regr_st = c(x$task_col_roles$regr_st, "space", "time")
 
   # tasks --------------------------------------------------------------------
 

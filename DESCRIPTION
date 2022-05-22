@@ -47,7 +47,6 @@ Suggests:
     bbotk,
     blockCV (>= 2.1.4),
     caret,
-    CAST,
     ggsci,
     ggtext,
     knitr,
@@ -75,4 +74,4 @@ Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0

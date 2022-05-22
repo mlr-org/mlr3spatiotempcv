@@ -9,11 +9,11 @@
 #' @examples
 #' library(mlr3)
 #' task = tsk("cookfarm")
+#' task$set_col_roles("SOURCEID", roles = "space")
+#' task$set_col_roles("Date", roles = "time")
 #'
 #' # Instantiate Resampling
-#' rcv = rsmp("sptcv_cstf",
-#'   folds = 5,
-#'   time_var = "Date", space_var = "SOURCEID")
+#' rcv = rsmp("sptcv_cstf", folds = 5)
 #' rcv$instantiate(task)
 #'
 #' # Individual sets:
@@ -37,12 +37,10 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "sptcv_cstf") {
       ps = ParamSet$new(params = list(
-        ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
-        ParamUty$new("space_var", custom_check = function(x) check_character(x, len = 1)),
-        ParamUty$new("time_var", custom_check = function(x) check_character(x, len = 1)),
-        ParamUty$new("class", custom_check = function(x) check_character(x, len = 1))
+        ParamInt$new("folds", lower = 1L, default = 3L, tags = "required"),
+        ParamLgl$new("stratify", default = FALSE)
       ))
-      ps$values = list(folds = 10L)
+      ps$values = list(folds = 3L, stratify = FALSE)
 
       super$initialize(
         id = id,
@@ -56,24 +54,23 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
     #' @param task [Task]\cr
     #'   A task to instantiate.
     instantiate = function(task) {
-
-      pv = self$param_set$values
-
-      mlr3::assert_task(task)
-      checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
-      checkmate::assert_subset(pv$time_var,
-        choices = task$feature_names,
-        empty.ok = TRUE)
-      checkmate::assert_subset(pv$space_var,
-        choices = task$feature_names,
-        empty.ok = TRUE)
+      task = assert_task(as_task(task))
+      strata = task$strata
       groups = task$groups
 
       if (!is.null(groups)) {
-        stopf("Grouping is not supported for spatial resampling methods") # nocov # nolint
+        stopf("Grouping is not supported for spatial resampling methods.")
       }
 
-      private$.sample(task)
+      if (!is.null(strata)) {
+        stopf("Stratified sampling is not supported for spatial resampling methods.")
+      }
+
+      if (!length(task$col_roles$space) && !length(task$col_roles$time)) {
+        stopf("%s has no column role 'space' or 'time'.", format(task))
+      }
+
+      self$instance = private$.sample(task)
 
       self$task_hash = task$hash
       self$task_nrow = task$nrow
@@ -84,45 +81,17 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
     #' @field iters `integer(1)`\cr
     #'   Returns the number of resampling iterations, depending on the
     #'   values stored in the `param_set`.
-    iters = function() {
+    iters = function(rhs) {
+      assert_ro_binding(rhs)
       self$param_set$values$folds
     }
   ),
   private = list(
     .sample = function(task) {
       pv = self$param_set$values
-
-      sptfolds = sample_cstf(
-        self = self, task, pv$space_var, pv$time_var,
-        pv$class, pv$folds, task$data()
-      )
-
-      # combine space and time folds
-      for (i in 1:pv$folds) {
-        if (!is.null(pv$time_var) & !is.null(sptfolds$space_var)) {
-          self$instance$test[[i]] = which(sptfolds$data[[sptfolds$space_var]] %in%
-            sptfolds$spacefolds[[i]] &
-            sptfolds$data[[pv$time_var]] %in% sptfolds$timefolds[[i]])
-          self$instance$train[[i]] = which(!sptfolds$data[[sptfolds$space_var]] %in%
-            sptfolds$spacefolds[[i]] &
-            !sptfolds$data[[pv$time_var]] %in% sptfolds$timefolds[[i]])
-        } else if (is.null(pv$time_var) & !is.null(sptfolds$space_var)) {
-          self$instance$test[[i]] = which(sptfolds$data[[sptfolds$space_var]] %in%
-            sptfolds$spacefolds[[i]])
-          self$instance$train[[i]] = which(!sptfolds$data[[sptfolds$space_var]] %in%
-            sptfolds$spacefolds[[i]])
-        } else if (!is.null(pv$time_var) & is.null(sptfolds$space_var)) {
-          self$instance$test[[i]] = which(sptfolds$data[[pv$time_var]] %in%
-            sptfolds$timefolds[[i]])
-          self$instance$train[[i]] = which(!sptfolds$data[[pv$time_var]] %in%
-            sptfolds$timefolds[[i]])
-        }
-      }
-      invisible(self)
+      sample_cast(task, pv$stratify, pv$folds)
     },
 
-    # private get funs for train and test which are used by
-    # Resampling$.get_set()
     .get_train = function(i) {
       self$instance$train[[i]]
     },
@@ -131,3 +100,54 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
     }
   )
 )
+
+sample_cast = function(task, stratify = FALSE, folds) {
+  target = if (stratify) task$target_names else NULL
+  space = task$col_roles$space
+  time = task$col_roles$time
+  data = task$data(cols = c(target, space, time))
+
+  if (length(space)) {
+    # group observations by space
+    group_space = unique(data, by = space)
+
+    if (nrow(group_space) < folds) {
+      stop("The number of folds is higher than the number of spatial units.")
+    }
+
+    # assign fold to each group
+    # optionally stratify by target
+    group_space[, fold_space := shuffle(seq_len0(.N) %% folds + 1), by = target]
+    # add fold to all observations in group
+    instance_space = merge(data, group_space, by = space, sort = FALSE)
+    # add row id
+    instance_space[, row_id := .I]
+    # extract folds
+    train_space = map(seq_len(folds), function(i) instance_space[!list(i), row_id , on = "fold_space"])
+    test_space = map(seq_len(folds), function(i) instance_space[list(i), row_id, on = "fold_space"])
+  }
+
+  if (length(time)) {
+    # group observations by time
+    group_time = unique(data, by = time)
+
+    if (nrow(group_time) < folds) {
+      stop("The number of folds is higher than the number of temporal units.")
+    }
+
+    # assign fold to each group
+    group_time[, fold_time := shuffle(seq_len0(.N) %% folds + 1)]
+    # add fold to all observations in group
+    instance_time = merge(data, group_time, by = time, sort = FALSE)
+    # add row id
+    instance_time[, row_id := .I]
+    # extract folds
+    train_time = map(seq_len(folds), function(i) instance_time[!list(i), row_id , on = "fold_time"])
+    test_time = map(seq_len(folds), function(i) instance_time[list(i), row_id, on = "fold_time"])
+  }
+
+  # combine space and time folds
+  train = if (length(space) && length(time)) pmap(list(train_space, train_time), function(x, y) intersect(x, y)) else if (length(space)) train_space else train_time
+  test = if (length(space) && length(time)) pmap(list(test_space, test_time), function(x, y) intersect(x, y)) else if (length(space)) test_space else test_time
+  list(train = train, test = test)
+}
