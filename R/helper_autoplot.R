@@ -22,7 +22,7 @@ prepare_autoplot_cstf = function(task, resampling) {
     data$train[data$row_id %in% row_id_train] = i
   }
 
-  data$Date = as.Date(data$Date)
+  data$Date = as.Date(task$data(cols = task$col_roles$time)[[1]])
   # merge the coords for the 3D plot
   data_coords = merge(data, coords, by = "row_id")
   return(data_coords)

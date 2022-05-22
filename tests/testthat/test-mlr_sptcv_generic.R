@@ -9,7 +9,7 @@ test_that("no duplicated ids", {
     expect_identical(i$duplicated_ids, FALSE)
   }
 
-  sptcv_rsp = rsmps(c("sptcv_cluto", "sptcv_cstf"), folds = 2, time_var = "Date")
+  sptcv_rsp = rsmps(c("sptcv_cluto", "sptcv_cstf"), folds = 2)
 
   for (i in sptcv_rsp) {
     expect_identical(i$duplicated_ids, FALSE)

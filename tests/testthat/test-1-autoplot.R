@@ -337,7 +337,8 @@ test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
   set.seed(42)
 
   task = tsk("cookfarm")
-  rsp = rsmp("sptcv_cstf", folds = 4, time_var = "Date")
+  task$set_col_roles("Date", roles = "time")
+  rsp = rsmp("sptcv_cstf", folds = 4)
   rsp$instantiate(task)
 
   p1 = autoplot(rsp, task = task)
@@ -369,7 +370,8 @@ test_that("plot() works for 'sptcv_cstf' 2D - space_var", {
   set.seed(42)
 
   task = tsk("cookfarm")
-  rsp = rsmp("sptcv_cstf", folds = 4, space_var = "SOURCEID")
+  task$set_col_roles("SOURCEID", roles = "space")
+  rsp = rsmp("sptcv_cstf", folds = 4)
   rsp$instantiate(task)
 
   p1 = autoplot(rsp, task = task)
@@ -399,7 +401,8 @@ test_that("plot() works for 'sptcv_cstf'", {
   set.seed(42)
 
   task = tsk("cookfarm")
-  rsp = rsmp("sptcv_cstf", folds = 4, time_var = "Date")
+  task$set_col_roles("Date", roles = "time")
+  rsp = rsmp("sptcv_cstf", folds = 4)
   rsp$instantiate(task)
 
   expect_error(autoplot(rsp, task = task, plot3D = TRUE))
@@ -420,7 +423,8 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
   set.seed(42)
 
   task = tsk("cookfarm")
-  rsp = rsmp("repeated_sptcv_cstf", folds = 4, repeats = 2, time_var = "Date")
+  task$set_col_roles("Date", roles = "time")
+  rsp = rsmp("repeated_sptcv_cstf", folds = 4, repeats = 2)
   rsp$instantiate(task)
 
   expect_error(autoplot(rsp, task = task, plot3D = TRUE))
@@ -462,8 +466,9 @@ test_that("autoplot time + space", {
     extra_args = list(
       coordinate_names = c("x", "y"), coords_as_features = FALSE,
       crs = 26911))
-
-  rsp = rsmp("sptcv_cstf", folds = 5, time_var = "Date", space_var = "SOURCEID")
+  task$set_col_roles("Date", roles = "time")
+  task$set_col_roles("SOURCEID", roles = "space")
+  rsp = rsmp("sptcv_cstf", folds = 5)
   set.seed(42)
   rsp$instantiate(task)
 
