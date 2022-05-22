@@ -71,7 +71,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
 
     sf_df = sf::st_as_sf(table,
       coords = task$extra_args$coordinate_names,
-      crs = get_coordinates(task))
+      crs = get_crs(task))
 
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
 
