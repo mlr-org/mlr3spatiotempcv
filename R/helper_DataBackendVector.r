@@ -15,7 +15,8 @@ get_coordinates = function(task) {
 }
 
 assert_spatial_task = function(task) {
-  if (!checkmate::test_class(task$backend, "DataBackendVector") && !checkmate::test_multi_class(task, c("TaskClassifST", "TaskRegrST"))) {
-    stopf("Assertion on 'task' failed: Must inherit from class 'TaskClassifST', 'TaskRegrST' or 'Task' with 'DataBackendVector'.")
+  if (!checkmate::test_class(task$backend, "DataBackendVector") &&
+    !checkmate::test_multi_class(task, c("TaskClassifST", "TaskRegrST"))) {
+    stopf("Assertion on 'task' failed: Must inherit from class 'TaskClassifST', 'TaskRegrST' or a 'Task' with 'DataBackendVector'.") # nolint
   }
 }
