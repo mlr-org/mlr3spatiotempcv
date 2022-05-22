@@ -1,16 +1,16 @@
 test_that("group by space works", {
   # each space unit contains one observation per day
   data = rowwise_table(
-  ~ polygon, ~ day, ~class,
-  "L1",          1,    "A",
-  "L1",          2,    "A",
-  "L1",          3,    "A",
-  "L2",          1,    "A",
-  "L2",          2,    "A",
-  "L2",          3,    "A",
-  "L3",          1,    "B",
-  "L3",          2,    "B",
-  "L3",          3,    "B"
+    ~polygon, ~day, ~class,
+    "L1",          1,    "A",
+    "L1",          2,    "A",
+    "L1",          3,    "A",
+    "L2",          1,    "A",
+    "L2",          2,    "A",
+    "L2",          3,    "A",
+    "L3",          1,    "B",
+    "L3",          2,    "B",
+    "L3",          3,    "B"
   )
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
@@ -33,7 +33,7 @@ test_that("group by space works", {
 test_that("group by time works", {
   # each space unit contains one observation per day
   data = mlr3misc::rowwise_table(
-    ~ polygon, ~ day, ~class,
+    ~polygon, ~day, ~class,
     "L1",          1,    "A",
     "L1",          2,    "A",
     "L1",          3,    "A",
@@ -65,7 +65,7 @@ test_that("group by time works", {
 test_that("group by space and time works", {
   # each space unit contains one observation per day
   data = mlr3misc::rowwise_table(
-    ~ polygon, ~ day, ~class,
+    ~polygon, ~day, ~class,
     "L1",          1,    "A",
     "L1",          2,    "A",
     "L1",          3,    "A",
@@ -100,7 +100,7 @@ test_that("group by space and time works", {
 test_that("stratify on target and group by space works", {
   # each space unit contains one observation per day
   data = mlr3misc::rowwise_table(
-    ~ polygon, ~ day, ~class,
+    ~polygon, ~day, ~class,
     "L1",          1,    "A",
     "L1",          2,    "A",
     "L1",          3,    "A",
@@ -152,7 +152,7 @@ test_that("stratify on target and group by space works", {
 test_that("group by space works with multiple observations within space unit", {
   # each space unit contains three observation per day
   data = mlr3misc::rowwise_table(
-    ~ polygon, ~ day, ~class,
+    ~polygon, ~day, ~class,
     "L1",          1,    "A",
     "L1",          2,    "A",
     "L1",          3,    "A",
@@ -202,7 +202,7 @@ test_that("group by space works with multiple observations within space unit", {
 test_that("group by time works with multiple observations within space unit", {
   # each space unit contains three observation per day
   data = mlr3misc::rowwise_table(
-    ~ polygon, ~ day, ~class,
+    ~polygon, ~day, ~class,
     "L1",          1,    "A",
     "L1",          2,    "A",
     "L1",          3,    "A",
@@ -252,7 +252,7 @@ test_that("group by time works with multiple observations within space unit", {
 test_that("group by space and time works with multiple observations within space unit", {
   # each space unit contains three observation per day
   data = mlr3misc::rowwise_table(
-    ~ polygon, ~ day, ~class,
+    ~polygon, ~day, ~class,
     "L1",          1,    "A",
     "L1",          2,    "A",
     "L1",          3,    "A",
@@ -305,7 +305,7 @@ test_that("group by space and time works with multiple observations within space
 test_that("stratify on target and group by space works with multiple observations within space unit", {
   # each space unit contains three observation per day
   data = mlr3misc::rowwise_table(
-    ~ polygon, ~ day, ~class,
+    ~polygon, ~day, ~class,
     "L1",          1,    "A",
     "L1",          2,    "A",
     "L1",          3,    "A",
@@ -411,7 +411,7 @@ test_that("stratify on target and group by space works with multiple observation
 test_that("group by space works with one polygon more than folds", {
   # each space unit contains one observation per day
   data = mlr3misc::rowwise_table(
-    ~ polygon, ~ day, ~class,
+    ~polygon, ~day, ~class,
     "L1",          1,    "A",
     "L1",          2,    "A",
     "L1",          3,    "A",
@@ -454,7 +454,7 @@ test_that("group by space works with one polygon more than folds", {
 test_that("group by space errors with one spatial unit less than folds", {
   # each space unit contains one observation per day
   data = mlr3misc::rowwise_table(
-    ~ polygon, ~ day, ~class,
+    ~polygon, ~day, ~class,
     "L1",          1,    "A",
     "L1",          2,    "A",
     "L1",          3,    "A",
@@ -476,7 +476,7 @@ test_that("group by space errors with one spatial unit less than folds", {
 test_that("group by time errors with one temporal unit less than folds", {
   # each space unit contains one observation per day
   data = mlr3misc::rowwise_table(
-    ~ polygon, ~ day, ~class,
+    ~polygon, ~day, ~class,
     "L1",          1,    "A",
     "L1",          2,    "A",
     "L2",          1,    "A",
@@ -498,16 +498,16 @@ test_that("group by time errors with one temporal unit less than folds", {
 test_that("group by space works", {
   # each space unit contains one observation per day
   data = rowwise_table(
-  ~ polygon, ~ day, ~class,
-  "L1",          1,    "A",
-  "L1",          2,    "A",
-  "L1",          3,    "A",
-  "L2",          1,    "A",
-  "L2",          2,    "A",
-  "L2",          3,    "A",
-  "L3",          1,    "B",
-  "L3",          2,    "B",
-  "L3",          3,    "B"
+    ~polygon, ~day, ~class,
+    "L1",          1,    "A",
+    "L1",          2,    "A",
+    "L1",          3,    "A",
+    "L2",          1,    "A",
+    "L2",          2,    "A",
+    "L2",          3,    "A",
+    "L3",          1,    "B",
+    "L3",          2,    "B",
+    "L3",          3,    "B"
   )
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]

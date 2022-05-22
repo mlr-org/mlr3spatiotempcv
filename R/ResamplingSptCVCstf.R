@@ -123,7 +123,7 @@ sample_cast = function(task, stratify = FALSE, folds) {
     # add row id
     instance_space[, row_id := .I]
     # extract folds
-    train_space = map(seq_len(folds), function(i) instance_space[!list(i), row_id , on = "fold_space"])
+    train_space = map(seq_len(folds), function(i) instance_space[!list(i), row_id, on = "fold_space"])
     test_space = map(seq_len(folds), function(i) instance_space[list(i), row_id, on = "fold_space"])
   }
 
@@ -142,7 +142,7 @@ sample_cast = function(task, stratify = FALSE, folds) {
     # add row id
     instance_time[, row_id := .I]
     # extract folds
-    train_time = map(seq_len(folds), function(i) instance_time[!list(i), row_id , on = "fold_time"])
+    train_time = map(seq_len(folds), function(i) instance_time[!list(i), row_id, on = "fold_time"])
     test_time = map(seq_len(folds), function(i) instance_time[list(i), row_id, on = "fold_time"])
   }
 
