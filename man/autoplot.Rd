@@ -2,12 +2,8 @@
 % Please edit documentation in R/reexports.R
 \name{autoplot}
 \alias{autoplot}
-\title{Re-export of \code{autoplot}
-
-See \code{\link[ggplot2:autoplot]{ggplot2::autoplot()}}.}
+\title{Re-export of \code{autoplot}}
 \description{
-Re-export of \code{autoplot}
-
 See \code{\link[ggplot2:autoplot]{ggplot2::autoplot()}}.
 }
 \keyword{internal}
