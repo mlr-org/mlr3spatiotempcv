@@ -1,7 +1,8 @@
 test_that("get_coordinates function works", {
   task_1 = tsk("ecuador")
 
-  sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
+  sf = sf::st_as_sf(ecuador, coords = c("x", "y"),
+    crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
   backend = as_data_backend(sf)
   task_2 = TaskClassif$new(id = "test", backend = backend, target = "slides")
 
@@ -12,7 +13,8 @@ test_that("get_coordinates function works", {
 test_that("get_crs function works", {
   task_1 = tsk("ecuador")
 
-  sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
+  sf = sf::st_as_sf(ecuador, coords = c("x", "y"),
+    crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
   backend = as_data_backend(sf)
   task_2 = TaskClassif$new(id = "test", backend = backend, target = "slides")
 
@@ -24,7 +26,8 @@ test_that("assert_spatial_task function works", {
 
   assert_spatial_task(task_1)
 
-  sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
+  sf = sf::st_as_sf(ecuador, coords = c("x", "y"),
+    crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
   backend = as_data_backend(sf)
   task_2 = TaskClassif$new(id = "test", backend = backend, target = "slides")
 
