@@ -169,6 +169,7 @@ test_that("plot() works for 'repeated_spcv_coords'", {
 
 test_that("plot() works for 'spcv_block'", {
   skip_if_not_installed("vdiffr")
+  skip_if_not_installed("blockCV")
   set.seed(42)
 
   plots = prepare_autoplot("spcv_block", cols = 2, rows = 2, folds = 4)
@@ -218,6 +219,7 @@ test_that("plot() works for 'repeated_spcv_block'", {
 
 test_that("autplot blockCV shows correct blocks", {
   skip_if_not_installed("vdiffr")
+  skip_if_not_installed("blockCV")
   # file size of resulting svg is too large
   skip_on_cran()
 
@@ -274,6 +276,7 @@ test_that("autplot blockCV shows correct blocks for repeated_cv", {
 
 test_that("plot() works for 'spcv_env'", {
   skip_if_not_installed("vdiffr")
+  skip_if_not_installed("blockCV")
   set.seed(42)
 
   plots = prepare_autoplot("spcv_env", folds = 4)

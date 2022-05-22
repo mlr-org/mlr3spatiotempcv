@@ -1,4 +1,6 @@
 test_that("resampling iterations equals number of observations (two-class response)", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("spcv_buffer", theRange = 1)
   rsp$instantiate(task)
@@ -7,6 +9,8 @@ test_that("resampling iterations equals number of observations (two-class respon
 })
 
 test_that("resampling iterations equals number of observations (multi-class response)", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_multiclass()
   rsp = rsmp("spcv_buffer", theRange = 1)
   rsp$instantiate(task)
@@ -15,6 +19,8 @@ test_that("resampling iterations equals number of observations (multi-class resp
 })
 
 test_that("resampling iterations equals number of observations (continuous response)", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_regr_task()
   rsp = rsmp("spcv_buffer", theRange = 1)
   rsp$instantiate(task)
@@ -23,6 +29,8 @@ test_that("resampling iterations equals number of observations (continuous respo
 })
 
 test_that("buffered observations are excludes in train set", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("spcv_buffer", theRange = 1, spDataType = "PA")
   rsp$instantiate(task)
@@ -32,6 +40,8 @@ test_that("buffered observations are excludes in train set", {
 })
 
 test_that("test sets only include positive observations", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("spcv_buffer", theRange = 1, spDataType = "PB", addBG = FALSE)
   rsp$instantiate(task)
@@ -41,6 +51,8 @@ test_that("test sets only include positive observations", {
 })
 
 test_that("test sets include background observations", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("spcv_buffer", theRange = 1, spDataType = "PB", addBG = TRUE)
   rsp$instantiate(task)
@@ -54,6 +66,8 @@ test_that("test sets include background observations", {
 })
 
 test_that("spDataType = 'PA' and addBG = TRUE throws an error", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("spcv_buffer", theRange = 1, spDataType = "PA", addBG = TRUE)
 
@@ -61,6 +75,8 @@ test_that("spDataType = 'PA' and addBG = TRUE throws an error", {
 })
 
 test_that("spDataType = 'PB' and continuous response throws an error", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_regr_task()
   rsp = rsmp("spcv_buffer", theRange = 1, spDataType = "PB")
 
@@ -68,6 +84,8 @@ test_that("spDataType = 'PB' and continuous response throws an error", {
 })
 
 test_that("spDataType = 'PB' and multi-class response throws an error", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_regr_task()
   rsp = rsmp("spcv_buffer", theRange = 1, spDataType = "PB")
 
@@ -75,6 +93,8 @@ test_that("spDataType = 'PB' and multi-class response throws an error", {
 })
 
 test_that("grouping throws errors when 'groups' is set", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task(group = TRUE)
   rsp = rsmp("spcv_buffer", theRange = 1)
 
