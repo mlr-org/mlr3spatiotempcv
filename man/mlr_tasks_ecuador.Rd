@@ -20,11 +20,9 @@ subset of) the one from the 'natural' part of the RBSF area and corresponds
 to landslide distribution in the year 2000.
 }
 \section{Usage}{
-
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_tasks$get("ecuador")
+\preformatted{mlr_tasks$get("ecuador")
 tsk("ecuador")
-}\if{html}{\out{</div>}}
+}
 }
 
 \references{

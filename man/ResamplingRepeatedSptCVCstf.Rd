@@ -4,14 +4,9 @@
 \alias{ResamplingRepeatedSptCVCstf}
 \title{(CAST) Repeated "leave-location-and-time-out" resampling}
 \description{
-Create spatial, temporal or spatio-temporal Folds for cross validation
-}
-\details{
-Using "class" is helpful in the case that data are clustered in space
-and are categorical. E.g This is the case for land cover classifications when
-training data come as training polygons. In this case the data should be split in a way
-that entire polygons are held back (spacevar="polygonID") but at the same time the distribution of classes
-should be similar in each fold (class="LUC").
+(CAST) Repeated "leave-location-and-time-out" resampling
+
+(CAST) Repeated "leave-location-and-time-out" resampling
 }
 \note{
 Standard k-fold cross-validation can lead to considerable
@@ -72,27 +67,27 @@ values stored in the \code{param_set}.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-ResamplingRepeatedSptCVCstf-new}{\code{ResamplingRepeatedSptCVCstf$new()}}
-\item \href{#method-ResamplingRepeatedSptCVCstf-folds}{\code{ResamplingRepeatedSptCVCstf$folds()}}
-\item \href{#method-ResamplingRepeatedSptCVCstf-repeats}{\code{ResamplingRepeatedSptCVCstf$repeats()}}
-\item \href{#method-ResamplingRepeatedSptCVCstf-instantiate}{\code{ResamplingRepeatedSptCVCstf$instantiate()}}
-\item \href{#method-ResamplingRepeatedSptCVCstf-clone}{\code{ResamplingRepeatedSptCVCstf$clone()}}
+\item \href{#method-new}{\code{ResamplingRepeatedSptCVCstf$new()}}
+\item \href{#method-folds}{\code{ResamplingRepeatedSptCVCstf$folds()}}
+\item \href{#method-repeats}{\code{ResamplingRepeatedSptCVCstf$repeats()}}
+\item \href{#method-instantiate}{\code{ResamplingRepeatedSptCVCstf$instantiate()}}
+\item \href{#method-clone}{\code{ResamplingRepeatedSptCVCstf$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="format"><a href='../../mlr3/html/Resampling.html#method-Resampling-format'><code>mlr3::Resampling$format()</code></a></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="help"><a href='../../mlr3/html/Resampling.html#method-Resampling-help'><code>mlr3::Resampling$help()</code></a></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="print"><a href='../../mlr3/html/Resampling.html#method-Resampling-print'><code>mlr3::Resampling$print()</code></a></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="test_set"><a href='../../mlr3/html/Resampling.html#method-Resampling-test_set'><code>mlr3::Resampling$test_set()</code></a></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="train_set"><a href='../../mlr3/html/Resampling.html#method-Resampling-train_set'><code>mlr3::Resampling$train_set()</code></a></li>
-</ul>
-</details>
-}}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="format">}\href{../../mlr3/html/Resampling.html#method-format}{\code{mlr3::Resampling$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="help">}\href{../../mlr3/html/Resampling.html#method-help}{\code{mlr3::Resampling$help()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="print">}\href{../../mlr3/html/Resampling.html#method-print}{\code{mlr3::Resampling$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="test_set">}\href{../../mlr3/html/Resampling.html#method-test_set}{\code{mlr3::Resampling$test_set()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="train_set">}\href{../../mlr3/html/Resampling.html#method-train_set}{\code{mlr3::Resampling$train_set()}}\out{</span>}
+}
+\out{</details>}
+}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ResamplingRepeatedSptCVCstf-new"></a>}}
-\if{latex}{\out{\hypertarget{method-ResamplingRepeatedSptCVCstf-new}{}}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create a "Spacetime Folds" resampling instance.
 
@@ -112,8 +107,8 @@ Identifier for the resampling strategy.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ResamplingRepeatedSptCVCstf-folds"></a>}}
-\if{latex}{\out{\hypertarget{method-ResamplingRepeatedSptCVCstf-folds}{}}}
+\if{html}{\out{<a id="method-folds"></a>}}
+\if{latex}{\out{\hypertarget{method-folds}{}}}
 \subsection{Method \code{folds()}}{
 Translates iteration numbers to fold number.
 \subsection{Usage}{
@@ -130,8 +125,8 @@ Iteration number.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ResamplingRepeatedSptCVCstf-repeats"></a>}}
-\if{latex}{\out{\hypertarget{method-ResamplingRepeatedSptCVCstf-repeats}{}}}
+\if{html}{\out{<a id="method-repeats"></a>}}
+\if{latex}{\out{\hypertarget{method-repeats}{}}}
 \subsection{Method \code{repeats()}}{
 Translates iteration numbers to repetition number.
 \subsection{Usage}{
@@ -148,8 +143,8 @@ Iteration number.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ResamplingRepeatedSptCVCstf-instantiate"></a>}}
-\if{latex}{\out{\hypertarget{method-ResamplingRepeatedSptCVCstf-instantiate}{}}}
+\if{html}{\out{<a id="method-instantiate"></a>}}
+\if{latex}{\out{\hypertarget{method-instantiate}{}}}
 \subsection{Method \code{instantiate()}}{
 Materializes fixed training and test splits for a given task.
 \subsection{Usage}{
@@ -166,8 +161,8 @@ A task to instantiate.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ResamplingRepeatedSptCVCstf-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-ResamplingRepeatedSptCVCstf-clone}{}}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
