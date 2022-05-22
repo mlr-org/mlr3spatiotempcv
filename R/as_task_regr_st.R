@@ -21,22 +21,24 @@
 #' @return [TaskRegrST].
 #' @export
 #' @examples
-#' library("mlr3")
-#' data("cookfarm_sample", package = "mlr3spatiotempcv")
+#' if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
+#'   library("mlr3")
+#'   data("cookfarm_sample", package = "mlr3spatiotempcv")
 #'
-#' # data.frame
-#' as_task_regr_st(cookfarm_sample, target = "PHIHOX",
-#'   coords_as_features = FALSE,
-#'   crs = 26911,
-#'   coordinate_names = c("x", "y"))
+#'   # data.frame
+#'   as_task_regr_st(cookfarm_sample, target = "PHIHOX",
+#'     coords_as_features = FALSE,
+#'     crs = 26911,
+#'     coordinate_names = c("x", "y"))
 #'
-#' # sf
-#' cookfarm_sf = sf::st_as_sf(cookfarm_sample, coords = c("x", "y"), crs = 26911)
-#' as_task_regr_st(cookfarm_sf, target = "PHIHOX")
+#'   # sf
+#'   cookfarm_sf = sf::st_as_sf(cookfarm_sample, coords = c("x", "y"), crs = 26911)
+#'   as_task_regr_st(cookfarm_sf, target = "PHIHOX")
 #'
-#' # TaskRegrST
-#' task = tsk("cookfarm")
-#' as_task_regr_st(task)
+#'   # TaskRegrST
+#'   task = tsk("cookfarm")
+#'   as_task_regr_st(task)
+#' }
 as_task_regr_st = function(x, ...) {
   UseMethod("as_task_regr_st", x)
 }

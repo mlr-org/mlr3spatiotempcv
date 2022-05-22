@@ -182,7 +182,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     .sample = function(ids, coords, crs) {
 
       # since blockCV >= 2.1.4 and sf >= 1.0
-      requireNamespace("rgdal", quietly = TRUE)
+      mlr3misc::require_namespaces("rgdal", quietly = TRUE)
 
       pv = self$param_set$values
 
