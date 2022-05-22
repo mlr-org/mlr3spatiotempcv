@@ -544,7 +544,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
   resampling_sub = resampling$clone()
 
-  if (grepl("Repeated", class(resampling)[1])) {
+  if (any(grepl("ResamplingRepeated", class(resampling)))) {
     resampling_sub$instance = resampling_sub$instance[[repeats_id]]
   }
 
@@ -864,7 +864,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
   resampling_sub = resampling$clone(deep = TRUE)
 
-  if (grepl("Repeated", class(resampling)[1])) {
+  if (any(grepl("ResamplingRepeated", class(resampling)))) {
     resampling_sub$instance = resampling_sub$instance[[repeats_id]]
   }
 
@@ -1141,7 +1141,7 @@ plot.ResamplingRepeatedSpCVTiles = function(x, ...) {
 #'   - [autoplot.ResamplingSptCVCstf()]
 #'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
-#' if (mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"), quietly = TRUE)) {
+#' if (mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext", "ggsci"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
 #'   task = tsk("ecuador")
@@ -1316,7 +1316,7 @@ autoplot_spatial = function(
     coords_resamp = merge(coords, rsmp_autopl$instance, by = "row_id")
   }
 
-  if (grepl("Repeated", class(rsmp_autopl)[1])) {
+  if (any(grepl("ResamplingRepeated", class(rsmp_autopl)))) {
     coords_resamp = coords_resamp[rep == repeats_id, ]
   }
 
@@ -1337,7 +1337,7 @@ autoplot_spatial = function(
       sf_df = reorder_levels(sf_df)
 
       if (show_blocks) {
-        if (grepl("Repeated", class(rsmp_autopl)[1])) {
+        if (any(grepl("ResamplingRepeated", class(rsmp_autopl)))) {
           coords_resamp = coords_resamp[rep == repeats_id, ]
           blocks = rsmp_autopl$blocks[[repeats_id]]
         } else {
@@ -1491,7 +1491,7 @@ autoplot_spatiotemp = function(
   }
 
   # set some required defaults
-  if (grepl("Repeated", class(resampling)[1])) {
+  if (any(grepl("ResamplingRepeated", class(resampling)))) {
     task_resamp_ids = task_resamp_ids[rep == repeats_id, ]
   }
 

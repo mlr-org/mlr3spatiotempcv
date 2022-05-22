@@ -114,7 +114,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
 
   resampling_sub = resampling$clone()
 
-  if (grepl("Repeated", class(resampling)[1])) {
+  if (any(grepl("ResamplingRepeated", class(resampling)))) {
     resampling_sub$instance = resampling_sub$instance[[repeats_id]]
   }
 

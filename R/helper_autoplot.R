@@ -7,7 +7,7 @@ prepare_autoplot_cstf = function(task, resampling) {
   coords = task$coordinates()
   coords$row_id = task$row_ids
 
-  if (grepl("Repeated", class(resampling)[1])) {
+  if (any(grepl("ResamplingRepeated", class(resampling)))) {
     n_iters = resampling$iters / resampling$repeats(resampling$iters)
   } else {
     n_iters = resampling$iters

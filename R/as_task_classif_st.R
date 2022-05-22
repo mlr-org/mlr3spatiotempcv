@@ -21,22 +21,24 @@
 #' @return [TaskClassifST].
 #' @export
 #' @examples
-#' library("mlr3")
-#' data("ecuador", package = "mlr3spatiotempcv")
+#' if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
+#'   library("mlr3")
+#'   data("ecuador", package = "mlr3spatiotempcv")
 #'
-#' # data.frame
-#' as_task_classif_st(ecuador, target = "slides", positive = "TRUE",
-#'   coords_as_features = FALSE,
-#'   crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs",
-#'   coordinate_names = c("x", "y"))
+#'   # data.frame
+#'   as_task_classif_st(ecuador, target = "slides", positive = "TRUE",
+#'     coords_as_features = FALSE,
+#'     crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs",
+#'     coordinate_names = c("x", "y"))
 #'
-#' # sf
-#' ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 32717)
-#' as_task_classif_st(ecuador_sf, target = "slides", positive = "TRUE")
+#'   # sf
+#'   ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 32717)
+#'   as_task_classif_st(ecuador_sf, target = "slides", positive = "TRUE")
 #'
-#' # TaskClassifST
-#' task = tsk("ecuador")
-#' as_task_classif_st(task)
+#'   # TaskClassifST
+#'   task = tsk("ecuador")
+#'   as_task_classif_st(task)
+#' }
 as_task_classif_st = function(x, ...) {
   UseMethod("as_task_classif_st", x)
 }

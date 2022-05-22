@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/mlr-org/mlr3spatiotempcv",
   "issueTracker": "https://github.com/mlr-org/mlr3spatiotempcv/issues",
   "license": "https://spdx.org/licenses/LGPL-3.0",
-  "version": "1.0.0.9000",
+  "version": "1.0.1.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
+  "runtimePlatform": "R version 4.2.0 (2022-04-22)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -397,7 +397,7 @@
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://github.com/mlr-org/mlr3"
+      "sameAs": "https://CRAN.R-project.org/package=mlr3"
     },
     "6": {
       "@type": "SoftwareApplication",
@@ -410,7 +410,7 @@
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://github.com/mlr-org/mlr3misc"
+      "sameAs": "https://CRAN.R-project.org/package=mlr3misc"
     },
     "7": {
       "@type": "SoftwareApplication",
@@ -443,5 +443,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "18273.567KB"
+  "fileSize": "6996.391KB"
 }

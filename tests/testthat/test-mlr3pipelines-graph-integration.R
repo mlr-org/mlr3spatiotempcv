@@ -1,5 +1,7 @@
 test_that("spcv methods work in a Graph Learner", {
 
+  skip_if_not_installed("mlr3pipelines")
+
   # - spcv_buffer is missing due to runtime reasons
   # - spcv_block is missing due to runtime reasons
   rsmps = rsmps(c("spcv_coords", "spcv_env"), folds = 2)
@@ -13,8 +15,12 @@ test_that("spcv methods work in a Graph Learner", {
 })
 
 test_that("sptcv methods work in a Graph Learner", {
+
+  skip_if_not_installed("mlr3pipelines")
+
   skip_on_cran()
   skip_on_os("mac")
+  skip_if_not_installed("skmeans")
   rsmps = rsmps(c("sptcv_cstf", "sptcv_cluto"), folds = 2, time_var = "Date")
 
   out = mlr3misc::map_lgl(rsmps, function(x) {
