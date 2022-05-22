@@ -3,6 +3,7 @@
 #' @import mlr3misc
 #' @import checkmate
 #' @import paradox
+#' @import mlr3
 #' @import ggplot2
 #' @importFrom utils globalVariables
 #' @section Main resources:
