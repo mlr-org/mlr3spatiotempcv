@@ -1,4 +1,6 @@
 test_that("folds can be printed", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", folds = 3, repeats = 2, range = c(2L, 4L))
   rsp$instantiate(task)
@@ -7,6 +9,8 @@ test_that("folds can be printed", {
 })
 
 test_that("reps can be printed", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", folds = 3, repeats = 2, range = c(2L, 4L))
   rsp$instantiate(task)
@@ -15,6 +19,8 @@ test_that("reps can be printed", {
 })
 
 test_that("resampling iterations equals folds * repeats", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", folds = 3, repeats = 2, range = c(2L, 4L))
   rsp$instantiate(task)
@@ -23,6 +29,8 @@ test_that("resampling iterations equals folds * repeats", {
 })
 
 test_that("error when neither cols & rows | range is specified", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsmp = rsmp("repeated_spcv_block", repeats = 2)
   expect_error(
@@ -31,6 +39,8 @@ test_that("error when neither cols & rows | range is specified", {
 })
 
 test_that("error when length(range) != length(repeats)", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", repeats = 2, range = 5L)
   expect_error(
@@ -40,18 +50,24 @@ test_that("error when length(range) != length(repeats)", {
 })
 
 test_that("no error when length(range) == repeats", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", folds = 3, repeats = 2, range = c(2L, 4L))
   expect_silent(rsp$instantiate(task))
 })
 
 test_that("error when number of desired folds is larger than number possible blocks", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", folds = 10, repeats = 2, range = c(2L, 4L))
   expect_error(rsp$instantiate(task))
 })
 
 test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and rows", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_blockCV_test_task()
 
   sf::sf_use_s2(use_s2 = FALSE)
@@ -83,6 +99,8 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
 })
 
 test_that("Error when selection = checkboard and folds > 2", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_blockCV_test_task()
   expect_error(rsmp("repeated_spcv_block", range = 10000L,
     selection = "checkerboard", folds = 5)$instantiate(task))

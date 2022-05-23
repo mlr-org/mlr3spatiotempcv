@@ -1,4 +1,6 @@
 test_that("resampling iterations equals folds", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("spcv_env", folds = 2, features = "p_1")
   rsp$instantiate(task)
@@ -7,6 +9,7 @@ test_that("resampling iterations equals folds", {
 })
 
 test_that("feature p_1 seperates the observations in two folds of equal size", {
+  skip_if_not_installed("blockCV")
   set.seed(1)
 
   task = test_make_twoclass_task()
@@ -20,6 +23,8 @@ test_that("feature p_1 seperates the observations in two folds of equal size", {
 })
 
 test_that("non-numeric feature throws an error", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("spcv_env", folds = 2, features = "p_2")
 
@@ -27,6 +32,8 @@ test_that("non-numeric feature throws an error", {
 })
 
 test_that("non-existing feature throws an error", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("spcv_env", folds = 2, features = "p_3")
 

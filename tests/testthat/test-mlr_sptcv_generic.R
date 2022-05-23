@@ -62,6 +62,7 @@ test_that("train and test set getter functions are working for sptcv", {
   skip_on_cran()
   skip_on_os("mac")
   task = tsk("cookfarm")
+  skip_if_not_installed("skmeans")
 
   sptcv_rsp = rsmps(c("repeated_sptcv_cluto", "repeated_sptcv_cstf"),
     folds = 2, time_var = "Date")
@@ -74,6 +75,8 @@ test_that("train and test set getter functions are working for sptcv", {
 })
 
 test_that("cloning works", {
+  skip_if_not_installed("skmeans")
+
   spcv_rsp = rsmps(c("spcv_coords", "spcv_env"), folds = 2)
   spcv_rsp = append(spcv_rsp, rsmp("spcv_block", folds = 2, rows = 2, cols = 2))
   spcv_rsp = append(spcv_rsp, rsmp("spcv_buffer", theRange = 1000))

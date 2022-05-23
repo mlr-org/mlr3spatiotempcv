@@ -1,4 +1,6 @@
 test_that("folds can be printed", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_env")
   rsp$param_set$values = list(folds = 3, repeats = 5, features = "p_1")
@@ -8,6 +10,8 @@ test_that("folds can be printed", {
 })
 
 test_that("reps can be printed", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_env")
   rsp$param_set$values = list(folds = 3, repeats = 5, features = "p_1")
@@ -17,6 +21,8 @@ test_that("reps can be printed", {
 })
 
 test_that("resampling iterations equals folds * repeats", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_env", folds = 2, repeats = 5, features = "p_1")
   rsp$instantiate(task)
@@ -25,6 +31,7 @@ test_that("resampling iterations equals folds * repeats", {
 })
 
 test_that("feature p_1 seperates the observations in folds of equal size", {
+  skip_if_not_installed("blockCV")
   set.seed(1)
 
   task = test_make_twoclass_task()
@@ -38,6 +45,7 @@ test_that("feature p_1 seperates the observations in folds of equal size", {
 })
 
 test_that("non-numeric feature throws an error", {
+  skip_if_not_installed("blockCV")
   task = test_make_twoclass_task(features = c("numeric", "factor"))
   rsp = rsmp("repeated_spcv_env", folds = 2, repeats = 5, features = "p_2")
 
@@ -45,6 +53,7 @@ test_that("non-numeric feature throws an error", {
 })
 
 test_that("non-existing feature throws an error", {
+  skip_if_not_installed("blockCV")
   task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_env", folds = 2, repeats = 5, features = "p_3")
 

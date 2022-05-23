@@ -1,6 +1,7 @@
 # spcv_buffer ------------------------------------------------------------------
 
 test_that("plot() works for 'spcv_buffer'", {
+  skip_if_not_installed("blockCV")
   skip_if_not_installed("vdiffr")
   set.seed(42)
 

@@ -1,4 +1,6 @@
 test_that("resampling iterations equals folds", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("spcv_block", folds = 2, range = 2L)
   rsp$instantiate(task)
@@ -7,6 +9,8 @@ test_that("resampling iterations equals folds", {
 })
 
 test_that("error when number of desired folds is larger than number possible blocks", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("spcv_block", folds = 10, range = 4L)
 
@@ -14,6 +18,8 @@ test_that("error when number of desired folds is larger than number possible blo
 })
 
 test_that("error when neither cols & rows | range is specified", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("spcv_block")
 
@@ -23,6 +29,8 @@ test_that("error when neither cols & rows | range is specified", {
 })
 
 test_that("error when only one of rows or cols is set", {
+  skip_if_not_installed("blockCV")
+
   task = test_make_twoclass_task()
   rsp = rsmp("spcv_block", rows = 4)
 
@@ -33,11 +41,14 @@ test_that("error when only one of rows or cols is set", {
 })
 
 test_that("Error when length(range) >= 2", {
+  skip_if_not_installed("blockCV")
+
   expect_error(rsmp("spcv_block", range = c(500L, 1000L)))
 })
 
 
 test_that("mlr3spatiotempcv indices are the same as blockCV indices: selection = checkerboard", {
+  skip_if_not_installed("blockCV")
 
   # see https://github.com/mlr-org/mlr3spatiotempcv/issues/92
 
