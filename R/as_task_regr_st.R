@@ -74,10 +74,3 @@ as_task_regr_st.sf = function(x, target = NULL, id = deparse(substitute(x)),
   TaskRegrST$new(id = id, backend = x, target = target,
     extra_args = list(coords_as_features = coords_as_features))
 }
-
-#' @rdname as_task_regr
-#' @inheritParams mlr3::convert_task
-#' @export
-as_task_regr.TaskRegrST = function(x, ...) {
-  TaskRegr$new(id = x$id, backend = x$backend, target = x$target_names)
-}
