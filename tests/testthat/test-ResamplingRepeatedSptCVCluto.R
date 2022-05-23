@@ -1,6 +1,7 @@
 test_that("folds can be printed", {
   skip_on_cran()
   skip_on_os("mac")
+  skip_if_not_installed("skmeans")
   task = tsk("cookfarm")
   rsp = rsmp("repeated_sptcv_cluto", folds = 3, repeats = 5, time_var = "Date")
   rsp$instantiate(task)
@@ -11,6 +12,7 @@ test_that("folds can be printed", {
 test_that("reps and folds can be printed", {
   skip_on_cran()
   skip_on_os("mac")
+  skip_if_not_installed("skmeans")
   task = tsk("cookfarm")
   rsp = rsmp("repeated_sptcv_cluto", folds = 3, repeats = 5, time_var = "Date")
   rsp$instantiate(task)
@@ -22,6 +24,7 @@ test_that("reps and folds can be printed", {
 test_that("resampling iterations equals folds * repeats", {
   skip_on_cran()
   skip_on_os("mac")
+  skip_if_not_installed("skmeans")
   task = tsk("cookfarm")
   rsp = rsmp("repeated_sptcv_cluto", folds = 3, repeats = 5, time_var = "Date")
   rsp$instantiate(task)
@@ -32,6 +35,7 @@ test_that("resampling iterations equals folds * repeats", {
 test_that("resampling iterations equals folds * repeats", {
   skip_on_cran()
   skip_on_os("mac")
+  skip_if_not_installed("skmeans")
   task = tsk("cookfarm")
   rsp = rsmp("repeated_sptcv_cluto", folds = 3, repeats = 5, time_var = "Date")
   rsp$instantiate(task)
