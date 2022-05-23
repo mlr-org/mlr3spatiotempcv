@@ -13,6 +13,10 @@
 #' changed by setting `extra_args$coords_as_features = TRUE`.
 #'
 #' @family Task
+#' @section S3 Methods:
+#' * `as_task_regr.TaskRegrST(x, ...) `\cr
+#'    * `x` [Task]\cr
+#'      \pkg{mlr3} [Task] object
 #' @export
 TaskRegrST = R6::R6Class("TaskRegrST",
   inherit = TaskRegr,
@@ -105,3 +109,8 @@ TaskRegrST = R6::R6Class("TaskRegrST",
     extra_args = NULL
   )
 )
+
+#' @export
+as_task_regr.TaskRegrST = function(x, ...) {
+  TaskRegr$new(id = x$id, backend = x$backend, target = x$target_names)
+}
