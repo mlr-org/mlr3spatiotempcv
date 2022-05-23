@@ -74,10 +74,3 @@ as_task_classif_st.sf = function(x, target = NULL, id = deparse(substitute(x)), 
   TaskClassifST$new(id = id, backend = x, target = target, positive = positive,
     extra_args = list(coords_as_features = coords_as_features))
 }
-
-#' @rdname as_task_classif
-#' @inheritParams mlr3::convert_task
-#' @export
-as_task_classif.TaskClassifST = function(x, ...) {
-  TaskClassif$new(id = x$id, backend = x$backend, target = x$target_names, positive = x$positive)
-}
