@@ -75,16 +75,6 @@ as_task_regr_st.sf = function(x, target = NULL, id = deparse(substitute(x)),
     extra_args = list(coords_as_features = coords_as_features))
 }
 
-#' @inherit mlr3::as_task_regr title return
-#' @inheritParams mlr3::as_task_regr
-#' @description
-#' Convert object to a [TaskRegr].
-#' This is a S3 generic for [TaskRegrST].
-#' @seealso [mlr3::as_task_regr()]
-as_task_regr = function(x, ...) {
-  UseMethod("as_task_regr", x)
-}
-
 #' @rdname as_task_regr
 #' @inheritParams mlr3::convert_task
 #' @export
