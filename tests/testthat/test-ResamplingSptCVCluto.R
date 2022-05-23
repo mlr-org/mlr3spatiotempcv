@@ -3,6 +3,7 @@
 test_that("resampling iterations equals folds", {
   skip_on_cran()
   skip_on_os("mac")
+  skip_if_not_installed("skmeans")
 
   task = tsk("cookfarm")
   rsp = rsmp("sptcv_cluto", folds = 2, time_var = "Date")
@@ -14,6 +15,7 @@ test_that("resampling iterations equals folds", {
 test_that("reps can be printed", {
   skip_on_cran()
   skip_on_os("mac")
+  skip_if_not_installed("skmeans")
 
   task = tsk("cookfarm")
   rsp = rsmp("repeated_sptcv_cluto",
@@ -27,6 +29,7 @@ test_that("reps can be printed", {
 test_that("resampling iterations equals folds * repeats", {
   skip_on_cran()
   skip_on_os("mac")
+  skip_if_not_installed("skmeans")
 
   task = tsk("cookfarm")
   rsp = rsmp("repeated_sptcv_cluto",
@@ -40,6 +43,7 @@ test_that("resampling iterations equals folds * repeats", {
 test_that("check_cluto_path() works", {
   skip_on_cran()
   skip_on_os("mac")
+  skip_if_not_installed("skmeans")
   withr::with_envvar(c("CLUTO_PATH" = ""), {
     task = tsk("cookfarm")
     rsp = rsmp("sptcv_cluto",
@@ -54,6 +58,7 @@ test_that("check_cluto_path() works", {
 test_that("clustering on coords only works", {
   skip_on_cran()
   skip_on_os("mac")
+  skip_if_not_installed("skmeans")
 
   task = tsk("cookfarm")
   rsp = rsmp("sptcv_cluto", folds = 2)
