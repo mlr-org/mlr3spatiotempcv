@@ -4,9 +4,14 @@
 \alias{ResamplingRepeatedSptCVCstf}
 \title{(CAST) Repeated "leave-location-and-time-out" resampling}
 \description{
-(CAST) Repeated "leave-location-and-time-out" resampling
-
-(CAST) Repeated "leave-location-and-time-out" resampling
+Create spatial, temporal or spatio-temporal Folds for cross validation
+}
+\details{
+Using "class" is helpful in the case that data are clustered in space
+and are categorical. E.g This is the case for land cover classifications when
+training data come as training polygons. In this case the data should be split in a way
+that entire polygons are held back (spacevar="polygonID") but at the same time the distribution of classes
+should be similar in each fold (class="LUC").
 }
 \note{
 Standard k-fold cross-validation can lead to considerable

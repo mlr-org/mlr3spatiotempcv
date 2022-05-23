@@ -15,6 +15,17 @@ one which was used during data creation, otherwise offsets of multiple meters
 may occur. By default, coordinates are not used as features. This can be
 changed by setting \code{extra_args$coords_as_features = TRUE}.
 }
+\section{S3 Methods}{
+
+\itemize{
+\item \code{as_task_regr.TaskRegrST(x, ...) }\cr
+\itemize{
+\item \code{x} \link{Task}\cr
+\pkg{mlr3} \link{Task} object
+}
+}
+}
+
 \seealso{
 Other Task: 
 \code{\link{TaskClassifST}},

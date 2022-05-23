@@ -13,6 +13,10 @@
 #' changed by setting `extra_args$coords_as_features = TRUE`.
 #'
 #' @family Task
+#' @section S3 Methods:
+#' * `as_task_classif.TaskClassifST(x, ...) `\cr
+#'    * `x` [Task]\cr
+#'      \pkg{mlr3} [Task] object
 #' @export
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
@@ -142,3 +146,8 @@ TaskClassifST = R6::R6Class("TaskClassifST",
     extra_args = NULL
   )
 )
+
+#' @export
+as_task_classif.TaskClassifST = function(x, ...) {
+  TaskClassif$new(id = x$id, backend = x$backend, target = x$target_names, positive = x$positive)
+}
