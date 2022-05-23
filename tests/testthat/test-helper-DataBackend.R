@@ -1,4 +1,7 @@
 test_that("get_coordinates function works", {
+
+  skip_if_not_installed("mlr3spatial")
+  requireNamespace("mlr3spatial", quietly = TRUE)
   task_1 = tsk("ecuador")
 
   sf = sf::st_as_sf(ecuador, coords = c("x", "y"),
@@ -11,6 +14,9 @@ test_that("get_coordinates function works", {
 })
 
 test_that("get_crs function works", {
+  skip_if_not_installed("mlr3spatial")
+  requireNamespace("mlr3spatial", quietly = TRUE)
+
   task_1 = tsk("ecuador")
 
   sf = sf::st_as_sf(ecuador, coords = c("x", "y"),
@@ -22,6 +28,10 @@ test_that("get_crs function works", {
 })
 
 test_that("assert_spatial_task function works", {
+
+  skip_if_not_installed("mlr3spatial")
+  requireNamespace("mlr3spatial", quietly = TRUE)
+
   task_1 = tsk("ecuador")
 
   assert_spatial_task(task_1)
