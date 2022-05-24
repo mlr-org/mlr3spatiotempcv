@@ -1,8 +1,6 @@
 ## code to prepare `cookfarm_sample` dataset goes here
 
 # retrieved from package https://github.com/envirometrix/landmap after GSIF was archived on CRAN in 2021-03
-# saveRDS(cookfarm, "R/sysdata.rda", version = 2)
-# cookfarm = readRDS("R/sysdata.rda")
 set.seed(42)
 
 cookfarm = readRDS("data-raw/cookfarm.rds")
@@ -18,20 +16,8 @@ cookfarm_mlr3_sf = cookfarm_profiles %>%
 
 cookfarm_sample = cookfarm_mlr3_sf %>%
   sf::st_set_geometry(NULL) %>%
-  stats::na.omit() # %>%
-# dplyr::sample_n(500)
+  stats::na.omit()
 
 # mapview::mapview(cookfarm_sample)
-
-### unique timestamps
-# length(unique(cookfarm_mlr3_sf$Date))
-# = 365 (out of 500)
-
-### unique coordinates
-# sf::st_coordinates(cookfarm_mlr3_sf) %>%
-#   as.data.frame() %>%
-#   dplyr::group_by(X, Y) %>%
-#   unique()
-# = 44
 
 usethis::use_data(cookfarm_sample, overwrite = TRUE)
