@@ -1,13 +1,11 @@
 ## code to prepare `cookfarm_sample` dataset goes here
 
-# mlr3misc::require_namespaces("GSIF", quietly = TRUE)
-# library(GSIF)
-# moved to package https://github.com/envirometrix/landmap after GSIF was archived on CRAN in 2021-03
-data(cookfarm)
+# retrieved from package https://github.com/envirometrix/landmap after GSIF was archived on CRAN in 2021-03
 # saveRDS(cookfarm, "R/sysdata.rda", version = 2)
 # cookfarm = readRDS("R/sysdata.rda")
 set.seed(42)
 
+cookfarm = readRDS("data-raw/cookfarm.rds")
 cookfarm_profiles = cookfarm$profiles
 
 cookfarm_mlr3_sf = cookfarm_profiles %>%
@@ -20,8 +18,8 @@ cookfarm_mlr3_sf = cookfarm_profiles %>%
 
 cookfarm_sample = cookfarm_mlr3_sf %>%
   sf::st_set_geometry(NULL) %>%
-  stats::na.omit() %>%
-  dplyr::sample_n(500)
+  stats::na.omit() # %>%
+# dplyr::sample_n(500)
 
 # mapview::mapview(cookfarm_sample)
 
