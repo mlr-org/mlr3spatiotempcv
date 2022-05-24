@@ -4,9 +4,27 @@
 \alias{ResamplingSpCVEnv}
 \title{(blockCV) "Environmental blocking" resampling}
 \description{
-(blockCV) "Environmental blocking" resampling
+Environmental blocking for cross-validation. This function uses clustering methods to specify sets of similar environmental
+conditions based on the input covariates. Species data corresponding to any of these groups or clusters are assigned to a
+fold. This function does the clustering in raster space and species data. Clustering is done using \code{\link[stats]{kmeans}}
+for both approaches. This function works on single or
+multiple raster files; multiple rasters need to be in a raster brick or stack format.
+}
+\details{
+As k-means algorithms use Euclidean distance to estimate clusters, the input covariates should be quantitative variables. Since
+variables with wider ranges of values might dominate the clusters and bias the environmental clustering (Hastie et al., 2009),
+all the input rasters are first standardized within the function. This is done either by normalizing based on subtracting the
+mean and dividing by the standard deviation of each raster (the default) or optionally by standardizing using linear scaling
+to constrain all raster values between 0 and 1.
 
-(blockCV) "Environmental blocking" resampling
+By default, the clustering is done in the raster space. In this approach the clusters will be consistent throughout the region
+and across species (in the same region). However, this may result in a cluster(s) that covers none of the species records (the spatial location of response samples),
+espcially when species data is not dispersed throughout the region or the number of clusters (k or folds) is high. In this
+case, the number of folds is less than specified \code{k}. If \code{rasterBlock = FALSE}, the clustering will be done in
+species points and the number of the folds will be the same as \code{k}.
+
+Note that the input raster layer should cover all the species points, otherwise an error will rise. The records with no raster
+value should be deleted prior to the analysis or another raster layer would be provided.
 }
 \section{{mlr3spatiotempcv} notes}{
 
@@ -56,25 +74,25 @@ values stored in the \code{param_set}.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ResamplingSpCVEnv$new()}}
-\item \href{#method-instantiate}{\code{ResamplingSpCVEnv$instantiate()}}
-\item \href{#method-clone}{\code{ResamplingSpCVEnv$clone()}}
+\item \href{#method-ResamplingSpCVEnv-new}{\code{ResamplingSpCVEnv$new()}}
+\item \href{#method-ResamplingSpCVEnv-instantiate}{\code{ResamplingSpCVEnv$instantiate()}}
+\item \href{#method-ResamplingSpCVEnv-clone}{\code{ResamplingSpCVEnv$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="format">}\href{../../mlr3/html/Resampling.html#method-format}{\code{mlr3::Resampling$format()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="help">}\href{../../mlr3/html/Resampling.html#method-help}{\code{mlr3::Resampling$help()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="print">}\href{../../mlr3/html/Resampling.html#method-print}{\code{mlr3::Resampling$print()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="test_set">}\href{../../mlr3/html/Resampling.html#method-test_set}{\code{mlr3::Resampling$test_set()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="train_set">}\href{../../mlr3/html/Resampling.html#method-train_set}{\code{mlr3::Resampling$train_set()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="format"><a href='../../mlr3/html/Resampling.html#method-Resampling-format'><code>mlr3::Resampling$format()</code></a></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="help"><a href='../../mlr3/html/Resampling.html#method-Resampling-help'><code>mlr3::Resampling$help()</code></a></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="print"><a href='../../mlr3/html/Resampling.html#method-Resampling-print'><code>mlr3::Resampling$print()</code></a></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="test_set"><a href='../../mlr3/html/Resampling.html#method-Resampling-test_set'><code>mlr3::Resampling$test_set()</code></a></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="train_set"><a href='../../mlr3/html/Resampling.html#method-Resampling-train_set'><code>mlr3::Resampling$train_set()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ResamplingSpCVEnv-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ResamplingSpCVEnv-new}{}}}
 \subsection{Method \code{new()}}{
 Create an "Environmental Block" resampling instance.
 
@@ -93,8 +111,8 @@ Identifier for the resampling strategy.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-instantiate"></a>}}
-\if{latex}{\out{\hypertarget{method-instantiate}{}}}
+\if{html}{\out{<a id="method-ResamplingSpCVEnv-instantiate"></a>}}
+\if{latex}{\out{\hypertarget{method-ResamplingSpCVEnv-instantiate}{}}}
 \subsection{Method \code{instantiate()}}{
 Materializes fixed training and test splits for a given task.
 \subsection{Usage}{
@@ -111,8 +129,8 @@ A task to instantiate.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ResamplingSpCVEnv-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ResamplingSpCVEnv-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -25,9 +25,11 @@ The dataset was borrowed and adapted from package GSIF which was on archived on
 CRAN in 2021-03.
 }
 \section{Usage}{
-\preformatted{mlr_tasks$get("cookfarm")
+
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_tasks$get("cookfarm")
 tsk("cookfarm")
-}
+}\if{html}{\out{</div>}}
 }
 
 \references{

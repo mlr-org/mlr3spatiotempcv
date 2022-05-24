@@ -4,9 +4,32 @@
 \alias{ResamplingRepeatedSpCVBlock}
 \title{(blockCV) Repeated spatial block resampling}
 \description{
-(blockCV) Repeated spatial block resampling
+This function creates spatially separated folds based on a pre-specified distance. It assigns blocks to the training and
+testing folds  \strong{randomly},  \strong{systematically} or in a  \strong{checkerboard pattern}. The distance (\code{theRange})
+should be in \strong{metres}, regardless of the unit of the reference system of
+the input data (for more information see the details section). By default,
+the function creates blocks according to the extent and shape of the study area, assuming that the user has considered the
+landscape for the given species and case study. Alternatively, blocks can solely be created based on species spatial data.
+Blocks can also be offset so the origin is not at the outer
+corner of the rasters. Instead of providing a distance, the blocks can also be created by specifying a number of rows and/or
+columns and divide the study area into vertical or horizontal bins, as presented in Wenger & Olden (2012) and Bahn & McGill (2012).
+Finally, the blocks can be specified by a user-defined spatial polygon layer.
+}
+\details{
+To keep the consistency, all the functions use \strong{metres} as their unit. In this function, when the input map
+has geographic coordinate system (decimal degrees), the block size is calculated based on deviding \code{theRange} by
+111325 (the standard distance of a degree in metres, on the Equator) to change the unit to degree. This value is optional
+and can be changed by user via \code{degMetre} argument.
 
-(blockCV) Repeated spatial block resampling
+The \code{xOffset} and \code{yOffset} can be used to change the spatial position of the blocks. It can also be used to
+assess the sensitivity of analysis results to shifting in the blocking arrangements. These options are available when \code{theRange}
+is defined. By default the region is located in the middle of the blocks and by setting the offsets, the blocks will shift.
+
+Roberts et. al. (2017) suggest that blocks should be substantially bigger than the range of spatial
+autocorrelation (in model residual) to obtain realistic error estimates, while a buffer with the size of
+the spatial autocorrelation range would result in a good estimation of error. This is because of the so-called
+edge effect (O'Sullivan & Unwin, 2014), whereby points located on the edges of the blocks of opposite sets are
+not separated spatially. Blocking with a buffering strategy overcomes this issue (see \code{\link[blockCV]{buffering}}).
 }
 \section{{mlr3spatiotempcv} notes}{
 
@@ -83,27 +106,27 @@ values stored in the \code{param_set}.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ResamplingRepeatedSpCVBlock$new()}}
-\item \href{#method-folds}{\code{ResamplingRepeatedSpCVBlock$folds()}}
-\item \href{#method-repeats}{\code{ResamplingRepeatedSpCVBlock$repeats()}}
-\item \href{#method-instantiate}{\code{ResamplingRepeatedSpCVBlock$instantiate()}}
-\item \href{#method-clone}{\code{ResamplingRepeatedSpCVBlock$clone()}}
+\item \href{#method-ResamplingRepeatedSpCVBlock-new}{\code{ResamplingRepeatedSpCVBlock$new()}}
+\item \href{#method-ResamplingRepeatedSpCVBlock-folds}{\code{ResamplingRepeatedSpCVBlock$folds()}}
+\item \href{#method-ResamplingRepeatedSpCVBlock-repeats}{\code{ResamplingRepeatedSpCVBlock$repeats()}}
+\item \href{#method-ResamplingRepeatedSpCVBlock-instantiate}{\code{ResamplingRepeatedSpCVBlock$instantiate()}}
+\item \href{#method-ResamplingRepeatedSpCVBlock-clone}{\code{ResamplingRepeatedSpCVBlock$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="format">}\href{../../mlr3/html/Resampling.html#method-format}{\code{mlr3::Resampling$format()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="help">}\href{../../mlr3/html/Resampling.html#method-help}{\code{mlr3::Resampling$help()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="print">}\href{../../mlr3/html/Resampling.html#method-print}{\code{mlr3::Resampling$print()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="test_set">}\href{../../mlr3/html/Resampling.html#method-test_set}{\code{mlr3::Resampling$test_set()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="train_set">}\href{../../mlr3/html/Resampling.html#method-train_set}{\code{mlr3::Resampling$train_set()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="format"><a href='../../mlr3/html/Resampling.html#method-Resampling-format'><code>mlr3::Resampling$format()</code></a></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="help"><a href='../../mlr3/html/Resampling.html#method-Resampling-help'><code>mlr3::Resampling$help()</code></a></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="print"><a href='../../mlr3/html/Resampling.html#method-Resampling-print'><code>mlr3::Resampling$print()</code></a></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="test_set"><a href='../../mlr3/html/Resampling.html#method-Resampling-test_set'><code>mlr3::Resampling$test_set()</code></a></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="train_set"><a href='../../mlr3/html/Resampling.html#method-Resampling-train_set'><code>mlr3::Resampling$train_set()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ResamplingRepeatedSpCVBlock-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ResamplingRepeatedSpCVBlock-new}{}}}
 \subsection{Method \code{new()}}{
 Create an "spatial block" repeated resampling instance.
 
@@ -122,8 +145,8 @@ Identifier for the resampling strategy.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-folds"></a>}}
-\if{latex}{\out{\hypertarget{method-folds}{}}}
+\if{html}{\out{<a id="method-ResamplingRepeatedSpCVBlock-folds"></a>}}
+\if{latex}{\out{\hypertarget{method-ResamplingRepeatedSpCVBlock-folds}{}}}
 \subsection{Method \code{folds()}}{
 Translates iteration numbers to fold number.
 \subsection{Usage}{
@@ -140,8 +163,8 @@ Iteration number.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-repeats"></a>}}
-\if{latex}{\out{\hypertarget{method-repeats}{}}}
+\if{html}{\out{<a id="method-ResamplingRepeatedSpCVBlock-repeats"></a>}}
+\if{latex}{\out{\hypertarget{method-ResamplingRepeatedSpCVBlock-repeats}{}}}
 \subsection{Method \code{repeats()}}{
 Translates iteration numbers to repetition number.
 \subsection{Usage}{
@@ -158,8 +181,8 @@ Iteration number.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-instantiate"></a>}}
-\if{latex}{\out{\hypertarget{method-instantiate}{}}}
+\if{html}{\out{<a id="method-ResamplingRepeatedSpCVBlock-instantiate"></a>}}
+\if{latex}{\out{\hypertarget{method-ResamplingRepeatedSpCVBlock-instantiate}{}}}
 \subsection{Method \code{instantiate()}}{
 Materializes fixed training and test splits for a given task.
 \subsection{Usage}{
@@ -176,8 +199,8 @@ A task to instantiate.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ResamplingRepeatedSpCVBlock-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ResamplingRepeatedSpCVBlock-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
