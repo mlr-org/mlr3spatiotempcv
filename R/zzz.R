@@ -5,6 +5,7 @@
 #' @import paradox
 #' @import mlr3
 #' @import ggplot2
+#' @import mlr3spatial
 #' @importFrom utils globalVariables
 #' @section Main resources:
 #' * Book on mlr3: \url{https://mlr3book.mlr-org.com}
