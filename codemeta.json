@@ -186,18 +186,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "mlr3spatial",
-      "name": "mlr3spatial",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=mlr3spatial"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "mlr3tuning",
       "name": "mlr3tuning",
       "provider": {
@@ -426,6 +414,18 @@
     },
     "7": {
       "@type": "SoftwareApplication",
+      "identifier": "mlr3spatial",
+      "name": "mlr3spatial",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=mlr3spatial"
+    },
+    "8": {
+      "@type": "SoftwareApplication",
       "identifier": "paradox",
       "name": "paradox",
       "provider": {
@@ -436,7 +436,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=paradox"
     },
-    "8": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "R6",
       "name": "R6",
@@ -448,12 +448,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
     },
-    "9": {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     },
     "SystemRequirements": null
   },
-  "fileSize": "7489.025KB"
+  "fileSize": "7004.408KB"
 }
