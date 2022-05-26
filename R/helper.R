@@ -18,7 +18,7 @@ check_cluto_path = function() {
       "Linux" = {
         if (!file.exists(system.file("vcluster",
           package = "mlr3spatiotempcv"))) {
-          stopf("vcluster.exe not found. Please install CLUTO first.
+          stopf("vcluster executable not found. Please install CLUTO first.
             See ?ResamplingSptCVCluto for instructions.", wrap = TRUE)
         }
         # nocov start

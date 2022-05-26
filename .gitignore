@@ -418,3 +418,4 @@ cover-letter.pdf
 *.zip
 CRAN-SUBMISSION
 .editorconfig
+inst/vcluster*
