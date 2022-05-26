@@ -197,8 +197,16 @@ test_make_multiclass = function() {
 
 # mlr3pipelines Graph learner --------------------------------------------------
 
-test_graph_learner = function(task, resampling, learner = "classif.featureless",
+test_graph_learner = function(task, resampling,
+  time_var = NULL,
+  space_var = NULL,
+  learner = "classif.featureless",
   measure = "classif.ce") {
+
+  if (!is.null(time_var)) {
+    task$set_col_roles(time, "time")
+    task$set_col_roles(space_var, "space")
+  }
 
   lgr::get_logger("mlr3")$set_threshold("warn")
   lgr::get_logger("bbotk")$set_threshold("warn")
