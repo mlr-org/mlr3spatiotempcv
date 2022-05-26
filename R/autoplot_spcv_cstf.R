@@ -160,7 +160,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
       if (length(fold_id) == 1) {
         ### only one fold
 
-        data_coords = prepare_autoplot_cstf(task, resampling_sub)
+        data_coords = format_resampling_list(task, resampling_sub)
 
         # suppress undefined global variables note
         data_coords$indicator = ""
@@ -224,7 +224,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
 
         plot = mlr3misc::map(fold_id, function(.x) {
 
-          data_coords = prepare_autoplot_cstf(task, resampling_sub)
+          data_coords = format_resampling_list(task, resampling_sub)
 
           # get test and train indices
           row_id_test = resampling_sub$instance$test[[.x]]
