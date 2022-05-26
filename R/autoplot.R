@@ -552,7 +552,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
     if (length(fold_id) == 1) {
       ### only one fold
 
-      data_coords = prepare_autoplot_cstf(task, resampling_sub)
+      data_coords = format_resampling_list(task, resampling_sub)
 
       # suppress undefined global variables note
       data_coords$indicator = ""
@@ -625,7 +625,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
       # FIXME: redundant code - call function from single plots?
       plot_list = mlr3misc::map(fold_id, function(.x) {
 
-        data_coords = prepare_autoplot_cstf(task, resampling_sub)
+        data_coords = format_resampling_list(task, resampling_sub)
 
         # suppress undefined global variables note
         data_coords$indicator = ""
@@ -712,7 +712,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
     ### Create one plot colored by all test folds
 
-    data_coords = prepare_autoplot_cstf(task, resampling_sub)
+    data_coords = format_resampling_list(task, resampling_sub)
 
     # extract test ids from lists
     row_ids_test = data.table::rbindlist(
@@ -872,7 +872,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
     if (length(fold_id) == 1) {
       ### only one fold
 
-      data_coords = prepare_autoplot_cstf(task, resampling_sub)
+      data_coords = format_resampling_list(task, resampling_sub)
 
       # suppress undefined global variables note
       data_coords$indicator = ""
@@ -945,7 +945,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
       # FIXME: redundant code - call function from single plots?
       plot_list = mlr3misc::map(fold_id, function(.x) {
 
-        data_coords = prepare_autoplot_cstf(task, resampling_sub)
+        data_coords = format_resampling_list(task, resampling_sub)
 
         # suppress undefined global variables note
         data_coords$indicator = ""
@@ -1032,7 +1032,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
     ### Create one plot colored by all test folds
 
-    data_coords = prepare_autoplot_cstf(task, resampling_sub)
+    data_coords = format_resampling_list(task, resampling_sub)
 
     names(resampling_sub$instance$test) = seq_len(length(resampling_sub$instance$test))
 
