@@ -4,6 +4,7 @@ test_that("resampling iterations equals folds", {
   skip_on_cran()
   skip_on_os("mac")
   skip_if_not_installed("skmeans")
+  skip_if(Sys.info()[["machine"]] != "x86_64")
 
   library(mlr3spatiotempcv)
   task = tsk("cookfarm")
@@ -17,6 +18,7 @@ test_that("reps can be printed", {
   skip_on_cran()
   skip_on_os("mac")
   skip_if_not_installed("skmeans")
+  skip_if(Sys.info()[["machine"]] != "x86_64")
 
   task = tsk("cookfarm")
   rsp = rsmp("repeated_sptcv_cluto",
@@ -32,6 +34,7 @@ test_that("resampling iterations equals folds * repeats", {
   skip_on_cran()
   skip_on_os("mac")
   skip_if_not_installed("skmeans")
+  skip_if(Sys.info()[["machine"]] != "x86_64")
 
   task = tsk("cookfarm")
   rsp = rsmp("repeated_sptcv_cluto",
@@ -50,6 +53,7 @@ test_that("clustering on coords only works", {
   skip_on_cran()
   skip_on_os("mac")
   skip_if_not_installed("skmeans")
+  skip_if(Sys.info()[["machine"]] != "x86_64")
 
   task = tsk("cookfarm")
   rsp = rsmp("sptcv_cluto", folds = 2)
