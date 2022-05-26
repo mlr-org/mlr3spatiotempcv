@@ -97,25 +97,25 @@ values stored in the \code{param_set}.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-ResamplingSpCVBlock-new}{\code{ResamplingSpCVBlock$new()}}
-\item \href{#method-ResamplingSpCVBlock-instantiate}{\code{ResamplingSpCVBlock$instantiate()}}
-\item \href{#method-ResamplingSpCVBlock-clone}{\code{ResamplingSpCVBlock$clone()}}
+\item \href{#method-new}{\code{ResamplingSpCVBlock$new()}}
+\item \href{#method-instantiate}{\code{ResamplingSpCVBlock$instantiate()}}
+\item \href{#method-clone}{\code{ResamplingSpCVBlock$clone()}}
 }
 }
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
-<ul>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="format"><a href='../../mlr3/html/Resampling.html#method-Resampling-format'><code>mlr3::Resampling$format()</code></a></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="help"><a href='../../mlr3/html/Resampling.html#method-Resampling-help'><code>mlr3::Resampling$help()</code></a></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="print"><a href='../../mlr3/html/Resampling.html#method-Resampling-print'><code>mlr3::Resampling$print()</code></a></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="test_set"><a href='../../mlr3/html/Resampling.html#method-Resampling-test_set'><code>mlr3::Resampling$test_set()</code></a></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="train_set"><a href='../../mlr3/html/Resampling.html#method-Resampling-train_set'><code>mlr3::Resampling$train_set()</code></a></li>
-</ul>
-</details>
-}}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="format">}\href{../../mlr3/html/Resampling.html#method-format}{\code{mlr3::Resampling$format()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="help">}\href{../../mlr3/html/Resampling.html#method-help}{\code{mlr3::Resampling$help()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="print">}\href{../../mlr3/html/Resampling.html#method-print}{\code{mlr3::Resampling$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="test_set">}\href{../../mlr3/html/Resampling.html#method-test_set}{\code{mlr3::Resampling$test_set()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="train_set">}\href{../../mlr3/html/Resampling.html#method-train_set}{\code{mlr3::Resampling$train_set()}}\out{</span>}
+}
+\out{</details>}
+}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ResamplingSpCVBlock-new"></a>}}
-\if{latex}{\out{\hypertarget{method-ResamplingSpCVBlock-new}{}}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Create an "spatial block" resampling instance.
 
@@ -135,8 +135,8 @@ Identifier for the resampling strategy.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ResamplingSpCVBlock-instantiate"></a>}}
-\if{latex}{\out{\hypertarget{method-ResamplingSpCVBlock-instantiate}{}}}
+\if{html}{\out{<a id="method-instantiate"></a>}}
+\if{latex}{\out{\hypertarget{method-instantiate}{}}}
 \subsection{Method \code{instantiate()}}{
 Materializes fixed training and test splits for a given task.
 \subsection{Usage}{
@@ -153,8 +153,8 @@ A task to instantiate.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ResamplingSpCVBlock-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-ResamplingSpCVBlock-clone}{}}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

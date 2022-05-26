@@ -72,7 +72,7 @@ plotly::layout(pl_subplot,
 ```
 
 ```{r, echo=FALSE, fig.align='center', fig.align='center'}
-# plotly::orca(foo, "man/figures/sptcv_cstf_multiplot.png", width = 1200, height = 1200)
+# plotly::save_image(foo, "man/figures/sptcv_cstf_multiplot.png", width = 1200, height = 1200)
 knitr::include_graphics("../man/figures/sptcv_cstf_multiplot.png")
 ```
 
