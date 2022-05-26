@@ -19,11 +19,12 @@ repos:
         -    R6
         -    utils
         -    mlr3spatial
-        - blockCV
-        - sf
-        - sperrorest
-        - vctrs
-        - CAST
+        -    ggsci
+        -    blockCV
+        -    sf
+        -    sperrorest
+        -    vctrs
+        -    CAST
       # codemeta must be above use-tidy-description when both are used
       - id: codemeta-description-updated
       - id: use-tidy-description
