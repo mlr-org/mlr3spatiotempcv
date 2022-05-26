@@ -55,9 +55,10 @@ if (mlr3misc::require_namespaces("skmeans", quietly = TRUE)) {
   library(mlr3)
   library(mlr3spatiotempcv)
   task = tsk("cookfarm")
+  task$set_col_roles("Date", "time")
 
   # Instantiate Resampling
-  rcv = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
+  rcv = rsmp("sptcv_cluto", folds = 5)
   rcv$instantiate(task)
 
   # Individual sets:
@@ -83,10 +84,6 @@ Zhao Y, Karypis G (2002).
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{time_var}}{\link{character}\cr
-The name of the variable which represents the time dimension.
-Must be of type numeric.}
-
 \item{\code{clmethod}}{\link{character}\cr
 Name of the clustering method to use within \code{vcluster}.
 See Details for more information.}
@@ -114,31 +111,30 @@ values stored in the \code{param_set}.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ResamplingSptCVCluto$new()}}
-\item \href{#method-instantiate}{\code{ResamplingSptCVCluto$instantiate()}}
-\item \href{#method-clone}{\code{ResamplingSptCVCluto$clone()}}
+\item \href{#method-ResamplingSptCVCluto-new}{\code{ResamplingSptCVCluto$new()}}
+\item \href{#method-ResamplingSptCVCluto-instantiate}{\code{ResamplingSptCVCluto$instantiate()}}
+\item \href{#method-ResamplingSptCVCluto-clone}{\code{ResamplingSptCVCluto$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="format">}\href{../../mlr3/html/Resampling.html#method-format}{\code{mlr3::Resampling$format()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="help">}\href{../../mlr3/html/Resampling.html#method-help}{\code{mlr3::Resampling$help()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="print">}\href{../../mlr3/html/Resampling.html#method-print}{\code{mlr3::Resampling$print()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="test_set">}\href{../../mlr3/html/Resampling.html#method-test_set}{\code{mlr3::Resampling$test_set()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="train_set">}\href{../../mlr3/html/Resampling.html#method-train_set}{\code{mlr3::Resampling$train_set()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="format"><a href='../../mlr3/html/Resampling.html#method-Resampling-format'><code>mlr3::Resampling$format()</code></a></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="help"><a href='../../mlr3/html/Resampling.html#method-Resampling-help'><code>mlr3::Resampling$help()</code></a></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="print"><a href='../../mlr3/html/Resampling.html#method-Resampling-print'><code>mlr3::Resampling$print()</code></a></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="test_set"><a href='../../mlr3/html/Resampling.html#method-Resampling-test_set'><code>mlr3::Resampling$test_set()</code></a></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Resampling" data-id="train_set"><a href='../../mlr3/html/Resampling.html#method-Resampling-train_set'><code>mlr3::Resampling$train_set()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ResamplingSptCVCluto-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ResamplingSptCVCluto-new}{}}}
 \subsection{Method \code{new()}}{
 Create an repeated resampling instance using the CLUTO algorithm.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCluto$new(
   id = "sptcv_cluto",
-  time_var = NULL,
   clmethod = "direct",
   cluto_parameters = NULL,
   verbose = TRUE
@@ -150,10 +146,6 @@ Create an repeated resampling instance using the CLUTO algorithm.
 \describe{
 \item{\code{id}}{\code{character(1)}\cr
 Identifier for the resampling strategy.}
-
-\item{\code{time_var}}{\link{character}\cr
-The name of the variable which represents the time dimension.
-Must be of type numeric.}
 
 \item{\code{clmethod}}{\link{character}\cr
 Name of the clustering method to use within \code{vcluster}.
@@ -167,13 +159,17 @@ See the CLUTO documentation for a full list of supported parameters.}
 
 \item{\code{verbose}}{\link{logical}\cr
 Whether to show \code{vcluster} progress and summary output.}
+
+\item{\code{time_var}}{\link{character}\cr
+The name of the variable which represents the time dimension.
+Must be of type numeric.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-instantiate"></a>}}
-\if{latex}{\out{\hypertarget{method-instantiate}{}}}
+\if{html}{\out{<a id="method-ResamplingSptCVCluto-instantiate"></a>}}
+\if{latex}{\out{\hypertarget{method-ResamplingSptCVCluto-instantiate}{}}}
 \subsection{Method \code{instantiate()}}{
 Materializes fixed training and test splits for a given task.
 \subsection{Usage}{
@@ -190,8 +186,8 @@ A task to instantiate.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ResamplingSptCVCluto-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ResamplingSptCVCluto-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
