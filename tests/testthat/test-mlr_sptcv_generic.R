@@ -62,10 +62,13 @@ test_that("train and test set getter functions are working for sptcv", {
   skip_on_cran()
   skip_on_os("mac")
   task = tsk("cookfarm")
+  task$set_col_roles("Date", "time")
   skip_if_not_installed("skmeans")
 
-  sptcv_rsp = rsmps(c("repeated_sptcv_cluto", "repeated_sptcv_cstf"),
-    folds = 2, time_var = "Date")
+  sptcv_rsp = rsmps(
+    c("repeated_sptcv_cluto", "repeated_sptcv_cstf"),
+    folds = 2
+  )
 
   for (i in sptcv_rsp) {
     i$instantiate(task)
