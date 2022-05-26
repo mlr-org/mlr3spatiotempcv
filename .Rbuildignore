@@ -39,3 +39,5 @@ autoplot-repeated-show-blocks-true-show-labels-true.svg$
 ^figs$
 ^CRAN-SUBMISSION$
 ^cache$
+^inst/vcluster$
+^inst/vcluster\.exe$
