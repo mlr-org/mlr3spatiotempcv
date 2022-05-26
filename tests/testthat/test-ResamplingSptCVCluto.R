@@ -6,8 +6,8 @@ test_that("resampling iterations equals folds", {
   skip_if_not_installed("skmeans")
 
   library(mlr3spatiotempcv)
-  task <- tsk("cookfarm")
-  rsp <- rsmp("sptcv_cluto", folds = 2, time_var = "Date")
+  task = tsk("cookfarm")
+  rsp = rsmp("sptcv_cluto", folds = 2, time_var = "Date")
   rsp$instantiate(task)
 
   expect_equal(rsp$iters, 2)
@@ -18,8 +18,8 @@ test_that("reps can be printed", {
   skip_on_os("mac")
   skip_if_not_installed("skmeans")
 
-  task <- tsk("cookfarm")
-  rsp <- rsmp("repeated_sptcv_cluto",
+  task = tsk("cookfarm")
+  rsp = rsmp("repeated_sptcv_cluto",
     folds = 3, repeats = 5,
     time_var = "Date"
   )
@@ -33,8 +33,8 @@ test_that("resampling iterations equals folds * repeats", {
   skip_on_os("mac")
   skip_if_not_installed("skmeans")
 
-  task <- tsk("cookfarm")
-  rsp <- rsmp("repeated_sptcv_cluto",
+  task = tsk("cookfarm")
+  rsp = rsmp("repeated_sptcv_cluto",
     folds = 3, repeats = 2,
     time_var = "Date"
   )
@@ -51,8 +51,8 @@ test_that("clustering on coords only works", {
   skip_on_os("mac")
   skip_if_not_installed("skmeans")
 
-  task <- tsk("cookfarm")
-  rsp <- rsmp("sptcv_cluto", folds = 2)
+  task = tsk("cookfarm")
+  rsp = rsmp("sptcv_cluto", folds = 2)
   rsp$instantiate(task)
 
   expect_equal(rsp$iters, 2)
