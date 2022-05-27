@@ -1527,6 +1527,9 @@ autoplot_spatiotemp = function(
       indicator = NULL
       fold = NULL
 
+      # add time col role back to `task_resamp_ids` as its needed for plotting
+      task_resamp_ids$Date = task$data(cols = task$col_roles$time)[[task$col_roles$time]]
+
       task_resamp_ids$indicator = as.factor(as.character(task_resamp_ids$indicator))
       task_resamp_ids[, indicator := ifelse(fold == fold_id, "Test", "Train")]
       plot_single_plotly = plotly::plot_ly(task_resamp_ids,
@@ -1558,6 +1561,8 @@ autoplot_spatiotemp = function(
       return(invisible(plot_single_plotly))
     } else {
       # Multiplot across multiple folds with train and test set
+
+      task_resamp_ids$Date = task$data(cols = task$col_roles$time)[[task$col_roles$time]]
 
       task_resamp_ids$indicator = as.factor(as.character(task_resamp_ids$indicator))
       plot_list = mlr3misc::map(fold_id, function(.x) {
@@ -1637,6 +1642,9 @@ autoplot_spatiotemp = function(
       return(invisible(plot_list))
     }
   } else {
+    # add time col role back to `task_resamp_ids` as its needed for plotting
+    task_resamp_ids$Date = task$data(cols = task$col_roles$time)[[task$col_roles$time]]
+
     pl = plotly::plot_ly(task_resamp_ids,
       x = ~x, y = ~y, z = ~Date,
       color = ~fold, colors = ggsci::pal_ucscgb("default")(26),

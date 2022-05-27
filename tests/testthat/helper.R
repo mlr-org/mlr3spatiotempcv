@@ -204,7 +204,7 @@ test_graph_learner = function(task, resampling,
   measure = "classif.ce") {
 
   if (!is.null(time_var)) {
-    task$set_col_roles(time, "time")
+    task$set_col_roles(time_var, "time")
     task$set_col_roles(space_var, "space")
   }
 
