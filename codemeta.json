@@ -346,11 +346,24 @@
   "softwareRequirements": {
     "1": {
       "@type": "SoftwareApplication",
+      "identifier": "mlr3",
+      "name": "mlr3",
+      "version": ">= 0.12.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=mlr3"
+    },
+    "2": {
+      "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
       "version": ">= 3.5.0"
     },
-    "2": {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "checkmate",
       "name": "checkmate",
@@ -362,7 +375,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=checkmate"
     },
-    "3": {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "data.table",
       "name": "data.table",
@@ -374,7 +387,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=data.table"
     },
-    "4": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
@@ -385,19 +398,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=ggplot2"
-    },
-    "5": {
-      "@type": "SoftwareApplication",
-      "identifier": "mlr3",
-      "name": "mlr3",
-      "version": ">= 0.12.0",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=mlr3"
     },
     "6": {
       "@type": "SoftwareApplication",
@@ -414,6 +414,18 @@
     },
     "7": {
       "@type": "SoftwareApplication",
+      "identifier": "mlr3spatial",
+      "name": "mlr3spatial",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=mlr3spatial"
+    },
+    "8": {
+      "@type": "SoftwareApplication",
       "identifier": "paradox",
       "name": "paradox",
       "provider": {
@@ -424,7 +436,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=paradox"
     },
-    "8": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "R6",
       "name": "R6",
@@ -436,12 +448,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
     },
-    "9": {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     },
     "SystemRequirements": null
   },
-  "fileSize": "6996.391KB"
+  "fileSize": "7004.408KB"
 }

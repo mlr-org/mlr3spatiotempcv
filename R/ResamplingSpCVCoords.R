@@ -51,7 +51,7 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
     instantiate = function(task) {
 
       mlr3::assert_task(task)
-      checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
+      assert_spatial_task(task)
       groups = task$groups
 
 
@@ -59,7 +59,7 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
         stopf("Grouping is not supported for spatial resampling methods")
       }
 
-      instance = private$.sample(task$row_ids, task$coordinates())
+      instance = private$.sample(task$row_ids, get_coordinates(task))
 
       self$instance = instance
       self$task_hash = task$hash

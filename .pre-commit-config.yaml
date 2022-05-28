@@ -8,22 +8,23 @@ repos:
         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
         additional_dependencies:
         - mlr-org/styler.mlr
-      - id: roxygenize
-        additional_dependencies:
-        -    checkmate
-        -    data.table
-        -    ggplot2
-        -    mlr3
-        -    mlr3misc
-        -    paradox
-        -    R6
-        -    utils
-        -    mlr3spatial
-        - blockCV
-        - sf
-        - sperrorest
-        - vctrs
-        - CAST
+      # - id: roxygenize
+      #   additional_dependencies:
+      #   -    checkmate
+      #   -    data.table
+      #   -    ggplot2
+      #   -    mlr3
+      #   -    mlr3misc
+      #   -    paradox
+      #   -    R6
+      #   -    utils
+      #   -    mlr3spatial
+      #   - blockCV
+      #   - sf
+      #   - sperrorest
+      #   - vctrs
+      #   - CAST
+      #   - ggsci
       # codemeta must be above use-tidy-description when both are used
       - id: codemeta-description-updated
       - id: use-tidy-description

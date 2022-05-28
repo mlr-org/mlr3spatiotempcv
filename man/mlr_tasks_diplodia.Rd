@@ -21,9 +21,11 @@ Sapinea} in the Basque Country in Spain. Predictors are environmental
 variables like temperature, precipitation, soil and more.
 }
 \section{Usage}{
-\preformatted{mlr_tasks$get("diplodia")
+
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_tasks$get("diplodia")
 tsk("diplodia")
-}
+}\if{html}{\out{</div>}}
 }
 
 \references{

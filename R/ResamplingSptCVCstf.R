@@ -60,7 +60,7 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
       pv = self$param_set$values
 
       mlr3::assert_task(task)
-      checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
+      assert_spatial_task(task)
       checkmate::assert_subset(pv$time_var,
         choices = task$feature_names,
         empty.ok = TRUE)
