@@ -55,10 +55,11 @@ if (mlr3misc::require_namespaces("skmeans", quietly = TRUE)) {
   library(mlr3)
   library(mlr3spatiotempcv)
   task = tsk("cookfarm")
+  task$set_col_roles("Date", "time")
 
   # Instantiate Resampling
   rrcv = rsmp("repeated_sptcv_cluto", folds = 3, repeats = 5)
-  rrcv$instantiate(task, time_var = "Date")
+  rrcv$instantiate(task)
 
   # Individual sets:
   rrcv$iters
@@ -87,10 +88,6 @@ Zhao Y, Karypis G (2002).
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{time_var}}{\link{character}\cr
-The name of the variable which represents the time dimension.
-Must be of type numeric.}
-
 \item{\code{clmethod}}{\link{character}\cr
 Name of the clustering method to use within \code{vcluster}.
 See Details for more information.}
@@ -144,7 +141,6 @@ Create an repeated resampling instance using the CLUTO algorithm.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCluto$new(
   id = "repeated_sptcv_cluto",
-  time_var = NULL,
   clmethod = "direct",
   cluto_parameters = NULL,
   verbose = TRUE
@@ -156,10 +152,6 @@ Create an repeated resampling instance using the CLUTO algorithm.
 \describe{
 \item{\code{id}}{\code{character(1)}\cr
 Identifier for the resampling strategy.}
-
-\item{\code{time_var}}{\link{character}\cr
-The name of the variable which represents the time dimension.
-Must be of type numeric.}
 
 \item{\code{clmethod}}{\link{character}\cr
 Name of the clustering method to use within \code{vcluster}.
@@ -227,23 +219,6 @@ Materializes fixed training and test splits for a given task.
 \describe{
 \item{\code{task}}{\link{Task}\cr
 A task to instantiate.}
-
-\item{\code{time_var}}{\link{character}\cr
-The name of the variable which represents the time dimension.
-Must be of type numeric.}
-
-\item{\code{clmethod}}{\link{character}\cr
-Name of the clustering method to use within \code{vcluster}.
-See Details for more information.}
-
-\item{\code{cluto_parameters}}{\link{character}\cr
-Additional parameters to pass to \code{vcluster}.
-Must be given as a single character string, e.g.
-\code{"param1='value1'param2='value2'"}.
-See the CLUTO documentation for a full list of supported parameters.}
-
-\item{\code{verbose}}{\link{logical}\cr
-Whether to show \code{vcluster} progress and summary output.}
 }
 \if{html}{\out{</div>}}
 }

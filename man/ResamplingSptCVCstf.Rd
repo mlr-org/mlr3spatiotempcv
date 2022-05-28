@@ -4,40 +4,37 @@
 \alias{ResamplingSptCVCstf}
 \title{(CAST) "Leave-location-and-time-out" resampling}
 \description{
-Create spatial, temporal or spatio-temporal Folds for cross validation
+Splits data using Leave-Location-Out (LLO), Leave-Time-Out (LTO) and Leave-Location-and-Time-Out (LLTO) Cross-Validation.
+See \code{CreateSpacetimeFolds()} from package \CRANpkg{CAST} and Meyer et al. (2018) for further information.
 }
 \details{
-Using "class" is helpful in the case that data are clustered in space
-and are categorical. E.g This is the case for land cover classifications when
-training data come as training polygons. In this case the data should be split in a way
-that entire polygons are held back (spacevar="polygonID") but at the same time the distribution of classes
-should be similar in each fold (class="LUC").
+LLO predicts on unknown locations i.e. complete locations are left out in the training sets.
+The \code{"space"} role in \code{Task$col_roles} identifies spatial units.
+If \code{stratify} is \code{TRUE}, the target distribution is similar in each fold.
+This is useful for land cover classification when the observations are polygons.
+In this case, LLO with stratification should be used to hold back complete polygons and have a similar target distribution in each fold.
+LTO leaves out complete temporal units which are identified by the \code{"time"}  role in \code{Task$col_roles}.
+LLTO leaves out spatial and temporal units.
+See the examples.
 }
-\note{
-Standard k-fold cross-validation can lead to considerable
-misinterpretation in spatial-temporal modelling tasks. This function can be
-used to prepare a Leave-Location-Out, Leave-Time-Out or
-Leave-Location-and-Time-Out cross-validation as target-oriented validation
-strategies for spatial-temporal prediction tasks. See Meyer et al. (2018)
-for further information.
+\section{Parameters}{
+
+\itemize{
+\item \code{folds} (\code{integer(1)})\cr
+Number of folds.
+\item \code{stratify}\cr
+If \code{TRUE}, stratify on the target column.
 }
-\section{{mlr3spatiotempcv} notes}{
-
-
-The 'Description', 'Details' and 'Note' fields are inherited from the
-respective upstream function.
-
-For a list of available arguments, please see \link[CAST:CreateSpacetimeFolds]{CAST::CreateSpacetimeFolds}.
 }
 
 \examples{
 library(mlr3)
 task = tsk("cookfarm")
+task$set_col_roles("SOURCEID", roles = "space")
+task$set_col_roles("Date", roles = "time")
 
 # Instantiate Resampling
-rcv = rsmp("sptcv_cstf",
-  folds = 5,
-  time_var = "Date", space_var = "SOURCEID")
+rcv = rsmp("sptcv_cstf", folds = 5)
 rcv$instantiate(task)
 
 # Individual sets:

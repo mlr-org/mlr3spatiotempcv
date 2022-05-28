@@ -6,9 +6,9 @@ test_that("resampling iterations equals folds", {
   skip_if_not_installed("skmeans")
   skip_if(Sys.info()[["machine"]] != "x86_64")
 
-  library(mlr3spatiotempcv)
   task = tsk("cookfarm")
-  rsp = rsmp("sptcv_cluto", folds = 2, time_var = "Date")
+  task$set_col_roles("Date", "time")
+  rsp = rsmp("sptcv_cluto", folds = 2)
   rsp$instantiate(task)
 
   expect_equal(rsp$iters, 2)
@@ -21,9 +21,9 @@ test_that("reps can be printed", {
   skip_if(Sys.info()[["machine"]] != "x86_64")
 
   task = tsk("cookfarm")
+  task$set_col_roles("Date", "time")
   rsp = rsmp("repeated_sptcv_cluto",
-    folds = 3, repeats = 5,
-    time_var = "Date"
+    folds = 3, repeats = 5
   )
   rsp$instantiate(task)
 
@@ -37,9 +37,9 @@ test_that("resampling iterations equals folds * repeats", {
   skip_if(Sys.info()[["machine"]] != "x86_64")
 
   task = tsk("cookfarm")
+  task$set_col_roles("Date", "time")
   rsp = rsmp("repeated_sptcv_cluto",
-    folds = 3, repeats = 2,
-    time_var = "Date"
+    folds = 3, repeats = 2
   )
   rsp$instantiate(task)
 
@@ -56,6 +56,7 @@ test_that("clustering on coords only works", {
   skip_if(Sys.info()[["machine"]] != "x86_64")
 
   task = tsk("cookfarm")
+  task$set_col_roles("Date", "time")
   rsp = rsmp("sptcv_cluto", folds = 2)
   rsp$instantiate(task)
 

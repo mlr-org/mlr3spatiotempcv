@@ -14,6 +14,14 @@ get_coordinates = function(task) {
   }
 }
 
+get_coordinate_names = function(task) {
+  if (checkmate::test_class(task$backend, "DataBackendVector")) {
+    names(as.data.table(sf::st_coordinates(task$backend$geometry)))
+  } else {
+    task$extra_args$coordinate_names
+  }
+}
+
 assert_spatial_task = function(task) {
   if (!checkmate::test_class(task$backend, "DataBackendVector") &&
     !checkmate::test_multi_class(task, c("TaskClassifST", "TaskRegrST"))) {

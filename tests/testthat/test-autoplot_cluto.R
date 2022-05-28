@@ -8,7 +8,8 @@ test_that("plot() works for 'sptcv_cluto'", {
   set.seed(42)
 
   task = tsk("cookfarm")
-  rsp = rsmp("sptcv_cluto", folds = 4, time_var = "Date")
+  task$set_col_roles("Date", "time")
+  rsp = rsmp("sptcv_cluto", folds = 4)
   rsp$instantiate(task)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
@@ -35,7 +36,8 @@ test_that("plot() works for 'repeated_sptcv_cluto'", {
   set.seed(42)
 
   task = tsk("cookfarm")
-  rsp = rsmp("repeated_sptcv_cluto", folds = 4, time_var = "Date")
+  task$set_col_roles("Date", "time")
+  rsp = rsmp("repeated_sptcv_cluto", folds = 4)
   rsp$instantiate(task)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
