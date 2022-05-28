@@ -138,9 +138,9 @@ if (mlr3misc::require_namespaces(c("sf", "plotly"), quietly = TRUE)) {
   library(mlr3)
   library(mlr3spatiotempcv)
   task_st = tsk("cookfarm")
-  resampling = rsmp("sptcv_cstf",
-    folds = 5, time_var = "Date",
-    space_var = "SOURCEID")
+  task_st$set_col_roles("SOURCEID", "space")
+  task_st$set_col_roles("Date", "time")
+  resampling = rsmp("sptcv_cstf", folds = 5)
   resampling$instantiate(task_st)
 
   # with both `space_var` and `time_var` (LLTO), the omitted observations per

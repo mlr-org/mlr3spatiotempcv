@@ -41,7 +41,8 @@
 
 utils::globalVariables(c(
   "row_id", "cookfarm_sample", "ecuador", "diplodia",
-  "resampling", "task", "indicator", "fold", "id", "type"))
+  "resampling", "task", "indicator", "fold", "id", "type",
+  "fold_space", "fold_time"))
 
 register_mlr3 = function() { # nocov start
   # reflections ----------------------------------------------------------------
@@ -60,6 +61,16 @@ register_mlr3 = function() { # nocov start
   # append "coordinates" to col_roles
   x$task_col_roles$classif_st = append(x$task_col_roles$classif, "coordinates")
   x$task_col_roles$regr_st = append(x$task_col_roles$regr, "coordinates")
+
+  # append "space" and "time" to col_roles
+  # used in CAST
+  # prevent redudant addition when calling pkgload::load_all()
+  if (!any(c("space", "time") %in% x$task_col_roles$classif)) {
+    x$task_col_roles$classif = c(x$task_col_roles$classif, "space", "time")
+    x$task_col_roles$regr = c(x$task_col_roles$regr, "space", "time")
+    x$task_col_roles$classif_st = c(x$task_col_roles$classif_st, "space", "time")
+    x$task_col_roles$regr_st = c(x$task_col_roles$regr_st, "space", "time")
+  }
 
   # tasks --------------------------------------------------------------------
 

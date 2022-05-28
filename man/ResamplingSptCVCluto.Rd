@@ -55,9 +55,10 @@ if (mlr3misc::require_namespaces("skmeans", quietly = TRUE)) {
   library(mlr3)
   library(mlr3spatiotempcv)
   task = tsk("cookfarm")
+  task$set_col_roles("Date", "time")
 
   # Instantiate Resampling
-  rcv = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
+  rcv = rsmp("sptcv_cluto", folds = 5)
   rcv$instantiate(task)
 
   # Individual sets:
@@ -83,10 +84,6 @@ Zhao Y, Karypis G (2002).
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{time_var}}{\link{character}\cr
-The name of the variable which represents the time dimension.
-Must be of type numeric.}
-
 \item{\code{clmethod}}{\link{character}\cr
 Name of the clustering method to use within \code{vcluster}.
 See Details for more information.}
@@ -138,7 +135,6 @@ Create an repeated resampling instance using the CLUTO algorithm.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingSptCVCluto$new(
   id = "sptcv_cluto",
-  time_var = NULL,
   clmethod = "direct",
   cluto_parameters = NULL,
   verbose = TRUE
@@ -150,10 +146,6 @@ Create an repeated resampling instance using the CLUTO algorithm.
 \describe{
 \item{\code{id}}{\code{character(1)}\cr
 Identifier for the resampling strategy.}
-
-\item{\code{time_var}}{\link{character}\cr
-The name of the variable which represents the time dimension.
-Must be of type numeric.}
 
 \item{\code{clmethod}}{\link{character}\cr
 Name of the clustering method to use within \code{vcluster}.
@@ -167,6 +159,10 @@ See the CLUTO documentation for a full list of supported parameters.}
 
 \item{\code{verbose}}{\link{logical}\cr
 Whether to show \code{vcluster} progress and summary output.}
+
+\item{\code{time_var}}{\link{character}\cr
+The name of the variable which represents the time dimension.
+Must be of type numeric.}
 }
 \if{html}{\out{</div>}}
 }

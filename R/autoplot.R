@@ -382,7 +382,7 @@ plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
 #'   task_st = tsk("cookfarm")
-#'   resampling = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
+#'   resampling = rsmp("sptcv_cluto", folds = 5)
 #'   resampling$instantiate(task_st)
 #'
 #'   # plot
@@ -641,7 +641,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
           data_coords[indicator == "", indicator := "Omitted"]
 
           sf_df = sf::st_as_sf(data_coords,
-            coords = task$extra_args$coordinate_names,
+            coords = get_coordinate_names(task),
             crs = get_crs(task))
           sf_df = reorder_levels(sf_df)
 
@@ -723,7 +723,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
     test_folds = merge(data_coords, row_ids_test, by = "row_id", all = TRUE)
 
     sf_df = sf::st_as_sf(test_folds,
-      coords = task$extra_args$coordinate_names,
+      coords = get_coordinate_names(task),
       crs = get_crs(task))
 
     # only keep test ids
@@ -915,7 +915,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
         data_coords = data_coords[indicator != ""]
 
         sf_df = sf::st_as_sf(data_coords,
-          coords = task$extra_args$coordinate_names,
+          coords = get_coordinate_names(task),
           crs = get_crs(task))
         sf_df = reorder_levels(sf_df)
 
@@ -988,7 +988,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
           data_coords = data_coords[indicator != ""]
 
           sf_df = sf::st_as_sf(data_coords,
-            coords = task$extra_args$coordinate_names,
+            coords = get_coordinate_names(task),
             crs = get_crs(task))
           sf_df = reorder_levels(sf_df)
 
@@ -1331,7 +1331,7 @@ autoplot_spatial = function(
       dt[, indicator := ifelse(fold == .x, "Test", "Train")]
 
       sf_df = sf::st_as_sf(dt,
-        coords = task$extra_args$coordinate_names,
+        coords = get_coordinate_names(task),
         crs = get_crs(task))
 
       sf_df = reorder_levels(sf_df)
@@ -1432,7 +1432,7 @@ autoplot_spatial = function(
 
     sf_df =
       sf::st_as_sf(coords_resamp,
-        coords = task$extra_args$coordinate_names,
+        coords = get_coordinate_names(task),
         crs = get_crs(task))
 
     # order fold ids
@@ -1527,6 +1527,9 @@ autoplot_spatiotemp = function(
       indicator = NULL
       fold = NULL
 
+      # add time col role back to `task_resamp_ids` as its needed for plotting
+      task_resamp_ids$Date = task$data(cols = task$col_roles$time)[[task$col_roles$time]]
+
       task_resamp_ids$indicator = as.factor(as.character(task_resamp_ids$indicator))
       task_resamp_ids[, indicator := ifelse(fold == fold_id, "Test", "Train")]
       plot_single_plotly = plotly::plot_ly(task_resamp_ids,
@@ -1558,6 +1561,8 @@ autoplot_spatiotemp = function(
       return(invisible(plot_single_plotly))
     } else {
       # Multiplot across multiple folds with train and test set
+
+      task_resamp_ids$Date = task$data(cols = task$col_roles$time)[[task$col_roles$time]]
 
       task_resamp_ids$indicator = as.factor(as.character(task_resamp_ids$indicator))
       plot_list = mlr3misc::map(fold_id, function(.x) {
@@ -1637,6 +1642,9 @@ autoplot_spatiotemp = function(
       return(invisible(plot_list))
     }
   } else {
+    # add time col role back to `task_resamp_ids` as its needed for plotting
+    task_resamp_ids$Date = task$data(cols = task$col_roles$time)[[task$col_roles$time]]
+
     pl = plotly::plot_ly(task_resamp_ids,
       x = ~x, y = ~y, z = ~Date,
       color = ~fold, colors = ggsci::pal_ucscgb("default")(26),
@@ -1721,7 +1729,7 @@ autoplot_custom_cv = function(
       dt[, indicator := ifelse(fold == .x, "Test", "Train")]
 
       sf_df = sf::st_as_sf(dt,
-        coords = task$extra_args$coordinate_names,
+        coords = get_coordinate_names(task),
         crs = get_crs(task))
 
       sf_df = reorder_levels(sf_df)
@@ -1760,7 +1768,7 @@ autoplot_custom_cv = function(
     # Create one plot colored by all test folds --------------------------------
 
     sf_df = sf::st_as_sf(coords_resamp,
-      coords = task$extra_args$coordinate_names,
+      coords = get_coordinate_names(task),
       crs = get_crs(task))
 
     # order fold ids

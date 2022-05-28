@@ -33,9 +33,9 @@ It makes use of the returned 3D plotly objects which are returned in a list by `
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm")
-resampling = rsmp("sptcv_cstf",
-  folds = 5, time_var = "Date",
-  space_var = "SOURCEID")
+task_st$set_col_roles("SOURCEID", roles = "space")
+task_st$set_col_roles("Date", roles = "time")
+resampling = rsmp("sptcv_cstf", folds = 5)
 resampling$instantiate(task_st)
 
 pl = autoplot(resampling, task_st, c(1, 2, 3, 4),
@@ -72,7 +72,7 @@ plotly::layout(pl_subplot,
 ```
 
 ```{r, echo=FALSE, fig.align='center', fig.align='center'}
-# plotly::orca(foo, "man/figures/sptcv_cstf_multiplot.png", width = 1200, height = 1200)
+# plotly::save_image(foo, "man/figures/sptcv_cstf_multiplot.png", width = 1200, height = 1200)
 knitr::include_graphics("../man/figures/sptcv_cstf_multiplot.png")
 ```
 
