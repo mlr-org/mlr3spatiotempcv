@@ -1,5 +1,10 @@
-# reducing redundant code parts
-prepare_autoplot_cstf = function(task, resampling) {
+# helper for resampling instances with a list structure
+# (default is a data.table with `row_id` and `fold` columns)
+# applies to:
+# - SpCVDisc
+# - SpCVCstf
+# - SpCVTiles
+format_resampling_list = function(task, resampling) {
 
   data = task$data()
   data$row_id = task$row_ids
@@ -22,7 +27,6 @@ prepare_autoplot_cstf = function(task, resampling) {
     data$train[data$row_id %in% row_id_train] = i
   }
 
-  data$Date = as.Date(data$Date)
   # merge the coords for the 3D plot
   data_coords = merge(data, coords, by = "row_id")
   return(data_coords)
