@@ -54,7 +54,7 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
     #' @param task [Task]\cr
     #'   A task to instantiate.
     instantiate = function(task) {
-      task = assert_task(as_task(task))
+      task = assert_task(task)
       strata = task$strata
       groups = task$groups
 

@@ -51,7 +51,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   resampling = assert_autoplot(resampling, fold_id, task)
 
   # add the row_ids of the task to the coordinates
-  coords = task$coordinates()
+  coords = get_coordinates(task)
   coords$row_id = task$row_ids
 
   if (is.null(fold_id)) {
@@ -71,7 +71,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
 
     sf_df = sf::st_as_sf(table,
       coords = task$extra_args$coordinate_names,
-      crs = task$extra_args$crs)
+      crs = get_crs(task))
 
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
 

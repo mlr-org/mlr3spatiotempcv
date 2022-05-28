@@ -93,9 +93,8 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
     instantiate = function(task) {
 
       mlr3misc::require_namespaces("skmeans", quietly = TRUE)
-
       mlr3::assert_task(task)
-      checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
+      assert_spatial_task(task)
       groups = task$groups
 
       if (!is.null(groups)) {
@@ -108,10 +107,10 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
         # time in seconds since 1/1/1970
         time_num = as.numeric(time)
 
-        data_matrix = data.matrix(data.frame(task$coordinates(), time_num))
+        data_matrix = data.matrix(data.frame(get_coordinates(task), time_num))
         colnames(data_matrix) = c("x", "y", "z")
       } else {
-        data_matrix = data.matrix(data.frame(task$coordinates()))
+        data_matrix = data.matrix(data.frame(get_coordinates(task)))
 
         colnames(data_matrix) = c("x", "y")
       }

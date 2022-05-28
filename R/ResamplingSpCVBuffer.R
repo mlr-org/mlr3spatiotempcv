@@ -56,7 +56,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
     instantiate = function(task) {
 
       mlr3::assert_task(task)
-      checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
+      assert_spatial_task(task)
       groups = task$groups
 
       if (!is.null(groups)) {
@@ -66,9 +66,9 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       instance = private$.sample(
         task$row_ids,
         task$data()[[task$target_names]],
-        task$coordinates(),
+        get_coordinates(task),
         task$extra_args$positive,
-        task$extra_args$crs,
+        get_crs(task),
         task$properties)
 
       self$instance = instance

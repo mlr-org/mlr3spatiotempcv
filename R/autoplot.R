@@ -528,7 +528,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
   ...) {
 
   resampling = object
-  coords = task$coordinates()
+  coords = get_coordinates(task)
   coords$row_id = task$row_ids
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
 
@@ -569,7 +569,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
         sf_df = sf::st_as_sf(data_coords,
           coords = task$extra_args$coordinate_names,
-          crs = task$extra_args$crs)
+          crs = get_crs(task))
         sf_df = reorder_levels(sf_df)
 
         ggplot() +
@@ -596,7 +596,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
         sf_df = sf::st_as_sf(data_coords,
           coords = task$extra_args$coordinate_names,
-          crs = task$extra_args$crs)
+          crs = get_crs(task))
         sf_df = reorder_levels(sf_df)
 
         ggplot() +
@@ -642,7 +642,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
           sf_df = sf::st_as_sf(data_coords,
             coords = task$extra_args$coordinate_names,
-            crs = task$extra_args$crs)
+            crs = get_crs(task))
           sf_df = reorder_levels(sf_df)
 
           ggplot() +
@@ -669,7 +669,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
           sf_df = sf::st_as_sf(data_coords,
             coords = task$extra_args$coordinate_names,
-            crs = task$extra_args$crs)
+            crs = get_crs(task))
           sf_df = reorder_levels(sf_df)
 
           ggplot() +
@@ -724,7 +724,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
     sf_df = sf::st_as_sf(test_folds,
       coords = task$extra_args$coordinate_names,
-      crs = task$extra_args$crs)
+      crs = get_crs(task))
 
     # only keep test ids
     sf_df = stats::na.omit(sf_df, cols = "fold")
@@ -848,7 +848,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
   ...) {
 
   resampling = object
-  coords = task$coordinates()
+  coords = get_coordinates(task)
   coords$row_id = task$row_ids
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
 
@@ -889,7 +889,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
         sf_df = sf::st_as_sf(data_coords,
           coords = task$extra_args$coordinate_names,
-          crs = task$extra_args$crs)
+          crs = get_crs(task))
         sf_df = reorder_levels(sf_df)
 
         ggplot() +
@@ -916,7 +916,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
         sf_df = sf::st_as_sf(data_coords,
           coords = task$extra_args$coordinate_names,
-          crs = task$extra_args$crs)
+          crs = get_crs(task))
         sf_df = reorder_levels(sf_df)
 
         ggplot() +
@@ -962,7 +962,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
           sf_df = sf::st_as_sf(data_coords,
             coords = task$extra_args$coordinate_names,
-            crs = task$extra_args$crs)
+            crs = get_crs(task))
           sf_df = reorder_levels(sf_df)
 
           ggplot() +
@@ -989,7 +989,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
           sf_df = sf::st_as_sf(data_coords,
             coords = task$extra_args$coordinate_names,
-            crs = task$extra_args$crs)
+            crs = get_crs(task))
           sf_df = reorder_levels(sf_df)
 
           ggplot() +
@@ -1048,7 +1048,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
     sf_df = sf::st_as_sf(test_folds,
       coords = task$extra_args$coordinate_names,
-      crs = task$extra_args$crs)
+      crs = get_crs(task))
 
     # only keep test ids
     sf_df = stats::na.omit(sf_df, cols = "fold")
@@ -1296,7 +1296,7 @@ autoplot_spatial = function(
   rsmp_autopl = assert_autoplot(rsmp_autopl, fold_id, task)
 
   # add the row_ids of the task to the coordinates
-  coords = task$coordinates()
+  coords = get_coordinates(task)
   coords$row_id = task$row_ids
 
   if (is.null(repeats_id)) {
@@ -1332,7 +1332,7 @@ autoplot_spatial = function(
 
       sf_df = sf::st_as_sf(dt,
         coords = task$extra_args$coordinate_names,
-        crs = task$extra_args$crs)
+        crs = get_crs(task))
 
       sf_df = reorder_levels(sf_df)
 
@@ -1433,7 +1433,7 @@ autoplot_spatial = function(
     sf_df =
       sf::st_as_sf(coords_resamp,
         coords = task$extra_args$coordinate_names,
-        crs = task$extra_args$crs)
+        crs = get_crs(task))
 
     # order fold ids
     sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
@@ -1477,7 +1477,7 @@ autoplot_spatiotemp = function(
   resampling = assert_autoplot(resampling, fold_id, task)
 
   # add the row_ids of the task to the coordinates
-  coords = task$coordinates()
+  coords = get_coordinates(task)
   coords$row_id = task$row_ids
 
   data = task$data()
@@ -1495,9 +1495,9 @@ autoplot_spatiotemp = function(
     task_resamp_ids = task_resamp_ids[rep == repeats_id, ]
   }
 
-  coords = sf::st_coordinates(sf::st_as_sf(task$coordinates(),
+  coords = sf::st_coordinates(sf::st_as_sf(get_coordinates(task),
     coords = task$extra_args$coordinate_names,
-    crs = task$extra_args$crs))
+    crs = get_crs(task)))
   task_resamp_ids$x = coords[, 1]
   task_resamp_ids$y = coords[, 2]
 
@@ -1705,7 +1705,7 @@ autoplot_custom_cv = function(
   rsmp_autopl = assert_autoplot(rsmp_autopl, fold_id, task)
 
   # add the row_ids of the task to the coordinates
-  coords = task$coordinates()
+  coords = get_coordinates(task)
   coords$row_id = task$row_ids
 
   # bring into correct format (complicated alternative to reshape::melt)
@@ -1730,7 +1730,7 @@ autoplot_custom_cv = function(
 
       sf_df = sf::st_as_sf(dt,
         coords = task$extra_args$coordinate_names,
-        crs = task$extra_args$crs)
+        crs = get_crs(task))
 
       sf_df = reorder_levels(sf_df)
 
@@ -1769,7 +1769,7 @@ autoplot_custom_cv = function(
 
     sf_df = sf::st_as_sf(coords_resamp,
       coords = task$extra_args$coordinate_names,
-      crs = task$extra_args$crs)
+      crs = get_crs(task))
 
     # order fold ids
     sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
