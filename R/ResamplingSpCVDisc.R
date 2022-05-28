@@ -60,7 +60,7 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
     instantiate = function(task) {
 
       mlr3::assert_task(task)
-      checkmate::assert_multi_class(task, c("TaskClassifST", "TaskRegrST"))
+      assert_spatial_task(task)
       groups = task$groups
 
       # Set values to default if missing
@@ -73,7 +73,7 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
         stopf("Grouping is not supported for spatial resampling methods")
       }
 
-      private$.sample(task$row_ids, task$coordinates())
+      private$.sample(task$row_ids, get_coordinates(task))
 
       self$task_hash = task$hash
       self$task_nrow = task$nrow
