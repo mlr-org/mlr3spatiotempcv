@@ -44,6 +44,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
       super$initialize(
         id = id,
         param_set = ps,
+        label = "Spatial buffering resampling",
         man = "mlr3spatiotempcv::mlr_resamplings_spcv_buffer"
       )
       mlr3misc::require_namespaces(c("blockCV", "sf"))

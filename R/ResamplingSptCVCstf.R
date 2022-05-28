@@ -1,4 +1,4 @@
-#' @title (CAST) "Leave-location-and-time-out" resampling
+#' @title (CAST) Spatiotemporal "Leave-location-and-time-out" resampling
 #'
 #' @template rox_sptcv_cstf
 #'
@@ -45,6 +45,7 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
       super$initialize(
         id = id,
         param_set = ps,
+        label = "Spatiotemporal 'Leave-location-and-time-out' resampling",
         man = "mlr3spatiotempcv::mlr_resamplings_sptcv_cstf"
       )
     },
