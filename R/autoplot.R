@@ -641,7 +641,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
           data_coords[indicator == "", indicator := "Omitted"]
 
           sf_df = sf::st_as_sf(data_coords,
-            coords = task$extra_args$coordinate_names,
+            coords = get_coordinate_names(task),
             crs = get_crs(task))
           sf_df = reorder_levels(sf_df)
 
@@ -723,7 +723,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
     test_folds = merge(data_coords, row_ids_test, by = "row_id", all = TRUE)
 
     sf_df = sf::st_as_sf(test_folds,
-      coords = task$extra_args$coordinate_names,
+      coords = get_coordinate_names(task),
       crs = get_crs(task))
 
     # only keep test ids
@@ -915,7 +915,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
         data_coords = data_coords[indicator != ""]
 
         sf_df = sf::st_as_sf(data_coords,
-          coords = task$extra_args$coordinate_names,
+          coords = get_coordinate_names(task),
           crs = get_crs(task))
         sf_df = reorder_levels(sf_df)
 
@@ -988,7 +988,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
           data_coords = data_coords[indicator != ""]
 
           sf_df = sf::st_as_sf(data_coords,
-            coords = task$extra_args$coordinate_names,
+            coords = get_coordinate_names(task),
             crs = get_crs(task))
           sf_df = reorder_levels(sf_df)
 
@@ -1331,7 +1331,7 @@ autoplot_spatial = function(
       dt[, indicator := ifelse(fold == .x, "Test", "Train")]
 
       sf_df = sf::st_as_sf(dt,
-        coords = task$extra_args$coordinate_names,
+        coords = get_coordinate_names(task),
         crs = get_crs(task))
 
       sf_df = reorder_levels(sf_df)
@@ -1432,7 +1432,7 @@ autoplot_spatial = function(
 
     sf_df =
       sf::st_as_sf(coords_resamp,
-        coords = task$extra_args$coordinate_names,
+        coords = get_coordinate_names(task),
         crs = get_crs(task))
 
     # order fold ids
@@ -1729,7 +1729,7 @@ autoplot_custom_cv = function(
       dt[, indicator := ifelse(fold == .x, "Test", "Train")]
 
       sf_df = sf::st_as_sf(dt,
-        coords = task$extra_args$coordinate_names,
+        coords = get_coordinate_names(task),
         crs = get_crs(task))
 
       sf_df = reorder_levels(sf_df)
@@ -1768,7 +1768,7 @@ autoplot_custom_cv = function(
     # Create one plot colored by all test folds --------------------------------
 
     sf_df = sf::st_as_sf(coords_resamp,
-      coords = task$extra_args$coordinate_names,
+      coords = get_coordinate_names(task),
       crs = get_crs(task))
 
     # order fold ids
