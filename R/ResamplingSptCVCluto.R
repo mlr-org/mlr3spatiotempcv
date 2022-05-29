@@ -1,4 +1,4 @@
-#' @title (skmeans) Spatiotemporal clustering resampling
+#' @title (skmeans) Spatiotemporal clustering resampling via CLUTO
 #'
 #' @template rox_sptcv_cluto
 #'
@@ -82,6 +82,7 @@ ResamplingSptCVCluto = R6Class("ResamplingSptCVCluto",
       super$initialize(
         id = id,
         param_set = ps,
+        label = "Spatiotemporal clustering resampling via CLUTO",
         man = "mlr3spatiotempcv::mlr_resamplings_sptcv_cluto"
       )
     },

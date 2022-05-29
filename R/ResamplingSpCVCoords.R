@@ -40,6 +40,7 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
       super$initialize(
         id = id,
         param_set = ps,
+        label = "Coordinate-based k-means clustering resampling",
         man = "mlr3spatiotempcv::mlr_resamplings_spcv_coords"
       )
     },

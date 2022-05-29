@@ -63,6 +63,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       super$initialize(
         id = id,
         param_set = ps,
+        label = "Spatial block resampling",
         man = "mlr3spatiotempcv::mlr_resamplings_spcv_block"
       )
       mlr3misc::require_namespaces(c("blockCV", "sf"))
