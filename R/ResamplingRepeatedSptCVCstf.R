@@ -2,6 +2,11 @@
 #'
 #' @template rox_sptcv_cstf
 #'
+#' @section Parameters:
+#'
+#' * `repeats` (`integer(1)`)\cr
+#'   Number of repeats.
+#'
 #' @references
 #' `r format_bib("zhao2002")`
 #'

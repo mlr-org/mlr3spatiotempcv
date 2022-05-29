@@ -4,16 +4,22 @@
 \alias{ResamplingSptCVCstf}
 \title{(CAST) "Leave-location-and-time-out" resampling}
 \description{
-Splits data using Leave-Location-Out (LLO), Leave-Time-Out (LTO) and Leave-Location-and-Time-Out (LLTO) Cross-Validation.
-See \code{CreateSpacetimeFolds()} from package \CRANpkg{CAST} and Meyer et al. (2018) for further information.
+Splits data using Leave-Location-Out (LLO), Leave-Time-Out (LTO) and
+Leave-Location-and-Time-Out (LLTO) partitioning.
+See the upstream implementation at \code{CAST::CreateSpacetimeFolds()} and
+Meyer et al. (2018) for further information.
 }
 \details{
-LLO predicts on unknown locations i.e. complete locations are left out in the training sets.
+LLO predicts on unknown locations i.e. complete locations are left out in the
+training sets.
 The \code{"space"} role in \code{Task$col_roles} identifies spatial units.
 If \code{stratify} is \code{TRUE}, the target distribution is similar in each fold.
-This is useful for land cover classification when the observations are polygons.
-In this case, LLO with stratification should be used to hold back complete polygons and have a similar target distribution in each fold.
-LTO leaves out complete temporal units which are identified by the \code{"time"}  role in \code{Task$col_roles}.
+This is useful for land cover classification when the observations
+are polygons.
+In this case, LLO with stratification should be used to hold back complete
+polygons and have a similar target distribution in each fold.
+LTO leaves out complete temporal units which are identified by the
+\code{"time"} role in \code{Task$col_roles}.
 LLTO leaves out spatial and temporal units.
 See the examples.
 }

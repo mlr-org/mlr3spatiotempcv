@@ -1,17 +1,18 @@
-#' @inherit sperrorest::partition_disc description details note references
+#' @description
+#' Spatial partitioning using circular test areas of one of more observations.
+#' Optionally, a buffer around the test area can be used to exclude observations.
+#' See the upstream implementation at `sperrorest::partition_disc()` and
+#' Brenning (2012) for further information.
 #'
-#' @note Test area discs are centered at (random) samples, not at general random
-#'   locations. Test area discs may (and likely will) overlap independently of
-#'   the value of `replace`. `replace` only controls the replacement of the
-#'   center point of discs when drawing center points from the samples.
-#'
-#' @section {mlr3spatiotempcv} notes:
-#'
-#' The 'Description' and 'Note' fields are inherited from the respective
-#' upstream function.
-#'
-#' For a list of available arguments, please see [sperrorest::partition_disc].
-#'
-#' This method is similar to [ResamplingSpCVBuffer].
-#'
-#' @seealso ResamplingSpCVBuffer
+#' @section Parameters:
+#' * `folds` (`integer(1)`)\cr
+#'   Number of folds.
+#' * `radius` (`numeric(1)`)\cr
+#'   Radius of test area disc.
+#' * `buffer` (`integer(1)`)\cr
+#'   Radius around test area disc which is excluded from training or test set.
+#' * `prob` (`integer(1)`)\cr
+#'   Optional argument passed down to `sample()`.
+#' * `replace` (`logical(1)`)\cr
+#'   Optional argument passed down to `sample()`. Sample with or without
+#'   replacement.

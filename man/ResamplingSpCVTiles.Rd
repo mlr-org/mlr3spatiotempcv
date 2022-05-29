@@ -4,29 +4,61 @@
 \alias{ResamplingSpCVTiles}
 \title{(sperrorest) Spatial "Tiles" resampling}
 \description{
-\code{partition_tiles} divides the study area into a specified number
-of rectangular tiles. Optionally small partitions can be merged with
-adjacent tiles to achieve a minimum number or percentage of samples in each
-tile.
+Spatial partitioning using rectangular tiles.
+Small partitions can optionally be merged into adjacent ones to avoid
+partitions with too few observations.
+This method is similar to \code{ResamplingSpCVBlock} by making use of
+rectangular zones in the coordinate space.
+See the upstream implementation at \code{sperrorest::partition_disc()} and
+Brenning (2012) for further information.
 }
-\note{
-Default parameter settings may change in future releases. This
-function, especially the rotation and shifting part of it and the algorithm
-for cleaning up small tiles is still a bit experimental. Use with caution.
-For non-zero offsets (\verb{offset!='none')}), the number of tiles may actually
-be greater than \code{nsplit[1]*nsplit[2]} because of fractional tiles lurking
-into the study region. \code{reassign=TRUE} with suitable thresholds is
-therefore recommended for non-zero (including random) offsets.
+\section{Parameters}{
+
+\itemize{
+\item \code{dsplit} (\code{integer(2)})\cr
+Equidistance of splits in (possibly rotated) x direction (\verb{dsplit[1]``) and y direction (}dsplit\link{2}``) used to define tiles.
+If dsplit is of length 1, its value is recycled.
+Either \code{dsplit} or `nsplit` must be specified.
+\item \code{nsplit} (\code{integer(2)})\cr
+Number of splits in (possibly rotated) x direction (\code{nsplit[1]}) and y direction (\code{nsplit[2]}) used to define tiles.
+If \code{nsplit} is of length 1, its value is recycled.
+\item \code{rotation} (\code{character(1)})\cr
+Whether and how the rectangular grid should be rotated; random rotation is only possible between -45 and +45 degrees.
+Accepted values: One of \code{c("none", "random", "user")}.
+\item \code{user_rotation} (\code{character(1)})\cr
+Only used when \code{rotation = "user"}.
+Angle(s) (in degrees) by which the rectangular grid is to be rotated in
+each repetition.
+Either a vector of same length as \code{repeats}, or a single number that
+will be replicated \code{length(repeats)} times.
+\item \code{offset} (\code{logical(1)})\cr
+Whether and how the rectangular grid should be shifted by an offset.
+Accepted values: One of \code{c("none", "random", "user")}.
+\item \code{user_offset} (\code{logical(1)})\cr
+Only used when \code{offset = "user"}.
+A list (or vector) of two components specifying a shift of the rectangular
+grid in (possibly rotated) x and y direction.
+The offset values are relative values, a value of 0.5 resulting in a
+one-half tile shift towards the left, or upward.
+If this is a list, its first (second) component refers to the rotated
+x (y) direction, and both components must have same length as \code{repeats}
+(or length 1).
+If a vector of length 2 (or list components have length 1), the two values
+will be interpreted as relative shifts in (rotated) x and y direction,
+respectively, and will therefore be recycled as needed (\code{length(repeats)}
+times each).
+\item \code{reassign} (\code{logical(1)})\cr
+If \code{TRUE}, 'small' tiles (as per \code{min_frac} and \code{min_n}) are merged with
+(smallest) adjacent tiles.
+If \code{FALSE}, small tiles are 'eliminated', i.e., set to \code{NA.}
+\item \code{min_frac} (\code{numeric(1)})\cr
+Value must be >=0, <1.
+Minimum relative size of partition as percentage of sample.
+\item \code{min_n} (\code{integer(1)})\cr
+Minimum number of samples per partition.
+\item \code{iterate} (\code{integer(1)})\cr
+Passed down to \code{\link[sperrorest:tile_neighbors]{sperrorest::tile_neighbors()}}.
 }
-\section{{mlr3spatiotempcv} notes}{
-
-
-The 'Description' and 'Note' fields are inherited from the respective
-upstream function.
-
-For a list of available arguments, please see \link[sperrorest:partition_tiles]{sperrorest::partition_tiles}.
-
-This method is similar to \link{ResamplingSpCVBlock}.
 }
 
 \examples{
