@@ -49,6 +49,14 @@ upstream function.
 For a list of available arguments, please see \link[blockCV:spatialBlock]{blockCV::spatialBlock}.
 }
 
+\section{Parameters}{
+
+\itemize{
+\item \code{repeats} (\code{integer(1)})\cr
+Number of repeats.
+}
+}
+
 \examples{
 \dontrun{
 if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {

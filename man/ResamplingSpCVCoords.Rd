@@ -4,21 +4,21 @@
 \alias{ResamplingSpCVCoords}
 \title{(sperrorest) Coordinate-based k-means clustering}
 \description{
-\code{partition_cv} creates a \link[sperrorest]{represampling} object for
-\code{length(repetition)}-repeated \code{nfold}-fold cross-validation.
+Splits data by clustering in the coordinate space.
+See the upstream implementation at \code{sperrorest::partition_kmeans()} and
+Brenning (2012) for further information.
 }
 \details{
-This function does not actually perform a cross-validation or
-partition the data set itself; it simply creates a data structure
-containing the indices of training and test samples.
+Universal partitioning method that splits the data in the coordinate space.
+Useful for spatially homogeneous datasets that cannot be split well with
+rectangular approaches like \code{ResamplingSpCVBlock}.
 }
-\section{{mlr3spatiotempcv} notes}{
+\section{Parameters}{
 
-
-The 'Description' and 'Details' fields are inherited from the respective
-upstream function.
-
-For a list of available arguments, please see \link[sperrorest:partition_cv]{sperrorest::partition_cv}.
+\itemize{
+\item \code{folds} (\code{integer(1)})\cr
+Number of folds.
+}
 }
 
 \examples{

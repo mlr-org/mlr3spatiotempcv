@@ -3,6 +3,11 @@
 #' @references
 #' `r format_bib("brenning2012")`
 #'
+#' @section Parameters:
+#'
+#' * `repeats` (`integer(1)`)\cr
+#'   Number of repeats.
+#'
 #' @export
 #' @examples
 #' library(mlr3)

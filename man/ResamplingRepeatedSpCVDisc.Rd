@@ -8,6 +8,14 @@
 
 (sperrorest) Repeated spatial "disc" resampling
 }
+\section{Parameters}{
+
+\itemize{
+\item \code{repeats} (\code{integer(1)})\cr
+Number of repeats.
+}
+}
+
 \examples{
 library(mlr3)
 task = tsk("ecuador")

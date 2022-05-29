@@ -1,5 +1,7 @@
 # sptcv_Cluto ------------------------------------------------------------------
 
+# nocov start
+
 test_that("plot() works for 'sptcv_cluto'", {
   skip_if_not_installed("skmeans")
   skip_if_not_installed("vdiffr")
@@ -61,3 +63,5 @@ test_that("plot() works for 'repeated_sptcv_cluto'", {
   vdiffr::expect_doppelganger("RepSptCVCluto - Fold 1-2, Rep 2", p4)
   vdiffr::expect_doppelganger("RepSptCVCluto - Fold 1, Rep 2", p5)
 })
+
+# nocov end
