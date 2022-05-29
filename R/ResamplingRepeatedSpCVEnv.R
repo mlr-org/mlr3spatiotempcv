@@ -42,6 +42,7 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
       super$initialize(
         id = id,
         param_set = ps,
+        label = "Repeated spatial 'environmental blocking' resampling",
         man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcv_env"
       )
     },
