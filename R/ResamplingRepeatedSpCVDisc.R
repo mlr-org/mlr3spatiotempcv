@@ -59,6 +59,7 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
       super$initialize(
         id = id,
         param_set = ps,
+        label = "Repeated Spatial 'disc' resampling",
         man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcv_disc"
       )
     },

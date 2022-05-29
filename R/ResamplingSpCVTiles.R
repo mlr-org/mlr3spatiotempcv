@@ -48,7 +48,9 @@ ResamplingSpCVTiles = R6Class("ResamplingSpCVTiles",
       ))
       super$initialize(
         id = id,
-        param_set = ps
+        param_set = ps,
+        label = "Spatial 'tiles' resampling",
+        man = "mlr3spatiotempcv::mlr_resamplings_spcv_tiles"
       )
     },
 

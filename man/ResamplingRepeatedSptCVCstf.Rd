@@ -2,7 +2,7 @@
 % Please edit documentation in R/ResamplingRepeatedSptCVCstf.R
 \name{ResamplingRepeatedSptCVCstf}
 \alias{ResamplingRepeatedSptCVCstf}
-\title{(CAST) Repeated "leave-location-and-time-out" resampling}
+\title{(CAST) Repeated spatiotemporal "leave-location-and-time-out" resampling}
 \description{
 Splits data using Leave-Location-Out (LLO), Leave-Time-Out (LTO) and
 Leave-Location-and-Time-Out (LLTO) partitioning.
