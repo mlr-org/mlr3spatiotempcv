@@ -16,9 +16,9 @@ Brenning (2012) for further information.
 
 \itemize{
 \item \code{dsplit} (\code{integer(2)})\cr
-Equidistance of splits in (possibly rotated) x direction (\verb{dsplit[1]``) and y direction (}dsplit\link{2}``) used to define tiles.
+Equidistance of splits in (possibly rotated) x direction (\code{dsplit[1]}) and y direction (\code{dsplit[2]}) used to define tiles.
 If dsplit is of length 1, its value is recycled.
-Either \code{dsplit} or `nsplit` must be specified.
+Either \code{dsplit} or \code{nsplit} must be specified.
 \item \code{nsplit} (\code{integer(2)})\cr
 Number of splits in (possibly rotated) x direction (\code{nsplit[1]}) and y direction (\code{nsplit[2]}) used to define tiles.
 If \code{nsplit} is of length 1, its value is recycled.

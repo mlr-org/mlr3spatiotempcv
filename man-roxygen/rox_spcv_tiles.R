@@ -9,7 +9,7 @@
 #'
 #' @section Parameters:
 #' * `dsplit` (`integer(2)`)\cr
-#'   Equidistance of splits in (possibly rotated) x direction (`dsplit[1]``) and y direction (`dsplit[2]``) used to define tiles.
+#'   Equidistance of splits in (possibly rotated) x direction (`dsplit[1]`) and y direction (`dsplit[2]`) used to define tiles.
 #'   If dsplit is of length 1, its value is recycled.
 #'   Either `dsplit` or `nsplit` must be specified.
 #' * `nsplit` (`integer(2)`)\cr
