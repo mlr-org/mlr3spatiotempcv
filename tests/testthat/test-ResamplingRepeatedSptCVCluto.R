@@ -1,3 +1,5 @@
+# nocov start
+
 test_that("folds can be printed", {
   skip_on_cran()
   skip_on_os("mac")
@@ -46,3 +48,5 @@ test_that("resampling iterations equals folds * repeats", {
 
   expect_equal(rsp$iters, 15)
 })
+
+# nocov end
