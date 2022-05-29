@@ -2,6 +2,11 @@
 #'
 #' @template rox_spcv_block
 #'
+#' @section Parameters:
+#'
+#' * `repeats` (`integer(1)`)\cr
+#'   Number of repeats.
+#'
 #' @references
 #' `r format_bib("valavi2018")`
 #'
