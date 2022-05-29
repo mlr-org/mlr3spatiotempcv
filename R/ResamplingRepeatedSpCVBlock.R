@@ -2,6 +2,11 @@
 #'
 #' @template rox_spcv_block
 #'
+#' @section Parameters:
+#'
+#' * `repeats` (`integer(1)`)\cr
+#'   Number of repeats.
+#'
 #' @references
 #' `r format_bib("valavi2018")`
 #'
@@ -71,6 +76,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       super$initialize(
         id = id,
         param_set = ps,
+        label = "Repeated 'spatial block' resampling",
         man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcv_block"
       )
     },

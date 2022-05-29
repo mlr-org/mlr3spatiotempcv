@@ -2,6 +2,11 @@
 #'
 #' @template rox_spcv_tiles
 #'
+#' @section Parameters:
+#'
+#' * `repeats` (`integer(1)`)\cr
+#'   Number of repeats.
+#'
 #' @references
 #' `r format_bib("brenning2012")`
 #'
@@ -58,6 +63,7 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
       super$initialize(
         id = id,
         param_set = ps,
+        label = "Repeated spatial 'tiles' resampling",
         man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcv_tiles"
       )
     },

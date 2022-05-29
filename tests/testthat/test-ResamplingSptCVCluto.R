@@ -1,5 +1,7 @@
 # spatiotemporal ---------------------------------------------------------------
 
+# nocov start
+
 test_that("resampling iterations equals folds", {
   skip_on_cran()
   skip_on_os("mac")
@@ -62,3 +64,5 @@ test_that("clustering on coords only works", {
 
   expect_equal(rsp$iters, 2)
 })
+
+# nocov end

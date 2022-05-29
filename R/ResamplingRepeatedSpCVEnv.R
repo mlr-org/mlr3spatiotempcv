@@ -2,6 +2,11 @@
 #'
 #' @template rox_spcv_env
 #'
+#' @section Parameters:
+#'
+#' * `repeats` (`integer(1)`)\cr
+#'   Number of repeats.
+#'
 #' @references
 #' `r format_bib("valavi2018")`
 #'
@@ -42,6 +47,7 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
       super$initialize(
         id = id,
         param_set = ps,
+        label = "Repeated spatial 'environmental blocking' resampling",
         man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcv_env"
       )
     },

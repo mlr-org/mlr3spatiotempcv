@@ -4,27 +4,26 @@
 \alias{ResamplingSpCVDisc}
 \title{(sperrorest) Spatial "disc" resampling}
 \description{
-\code{partition_disc} partitions the sample into training and tests
-set by selecting circular test areas (possibly surrounded by an exclusion
-buffer) and using the remaining samples as training samples
-(leave-one-disc-out cross-validation). \code{partition_loo} creates training and
-test sets for leave-one-out cross-validation with (optional) buffer.
+Spatial partitioning using circular test areas of one of more observations.
+Optionally, a buffer around the test area can be used to exclude observations.
+See the upstream implementation at \code{sperrorest::partition_disc()} and
+Brenning (2012) for further information.
 }
-\note{
-Test area discs are centered at (random) samples, not at general random
-locations. Test area discs may (and likely will) overlap independently of
-the value of \code{replace}. \code{replace} only controls the replacement of the
-center point of discs when drawing center points from the samples.
+\section{Parameters}{
+
+\itemize{
+\item \code{folds} (\code{integer(1)})\cr
+Number of folds.
+\item \code{radius} (\code{numeric(1)})\cr
+Radius of test area disc.
+\item \code{buffer} (\code{integer(1)})\cr
+Radius around test area disc which is excluded from training or test set.
+\item \code{prob} (\code{integer(1)})\cr
+Optional argument passed down to \code{sample()}.
+\item \code{replace} (\code{logical(1)})\cr
+Optional argument passed down to \code{sample()}. Sample with or without
+replacement.
 }
-\section{{mlr3spatiotempcv} notes}{
-
-
-The 'Description' and 'Note' fields are inherited from the respective
-upstream function.
-
-For a list of available arguments, please see \link[sperrorest:partition_disc]{sperrorest::partition_disc}.
-
-This method is similar to \link{ResamplingSpCVBuffer}.
 }
 
 \examples{
@@ -49,9 +48,6 @@ Brenning A (2012).
 \dQuote{Spatial cross-validation and bootstrap for the assessment of prediction rules in remote sensing: The R package sperrorest.}
 In \emph{2012 IEEE International Geoscience and Remote Sensing Symposium}.
 \doi{10.1109/igarss.2012.6352393}.
-}
-\seealso{
-ResamplingSpCVBuffer
 }
 \section{Super class}{
 \code{\link[mlr3:Resampling]{mlr3::Resampling}} -> \code{ResamplingSpCVDisc}

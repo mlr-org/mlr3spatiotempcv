@@ -1,6 +1,11 @@
-#' @title (CAST) Repeated "leave-location-and-time-out" resampling
+#' @title (CAST) Repeated spatiotemporal "leave-location-and-time-out" resampling
 #'
 #' @template rox_sptcv_cstf
+#'
+#' @section Parameters:
+#'
+#' * `repeats` (`integer(1)`)\cr
+#'   Number of repeats.
 #'
 #' @references
 #' `r format_bib("zhao2002")`
@@ -46,6 +51,7 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
       super$initialize(
         id = id,
         param_set = ps,
+        label = "Repeated spatiotemporal 'Leave-location-and-time-out' resampling",
         man = "mlr3spatiotempcv::mlr_resamplings_repeated_sptcv_cstf"
       )
     },

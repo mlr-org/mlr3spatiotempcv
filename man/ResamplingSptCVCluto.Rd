@@ -2,7 +2,7 @@
 % Please edit documentation in R/ResamplingSptCVCluto.R
 \name{ResamplingSptCVCluto}
 \alias{ResamplingSptCVCluto}
-\title{(skmeans) Spatiotemporal clustering resampling}
+\title{(skmeans) Spatiotemporal clustering resampling via CLUTO}
 \description{
 Spatiotemporal cluster partitioning via the \code{vcluster} executable of the
 CLUTO clustering application.

@@ -2,6 +2,11 @@
 #'
 #' @template rox_spcv_coords
 #'
+#' @section Parameters:
+#'
+#' * `repeats` (`integer(1)`)\cr
+#'   Number of repeats.
+#'
 #' @references
 #' `r format_bib("brenning2012")`
 #'
@@ -44,6 +49,7 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
       super$initialize(
         id = id,
         param_set = ps,
+        label = "Repeated coordinate-based k-means clustering resampling",
         man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcv_coords"
       )
     },

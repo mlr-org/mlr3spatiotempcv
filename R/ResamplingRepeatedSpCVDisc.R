@@ -3,6 +3,11 @@
 #' @references
 #' `r format_bib("brenning2012")`
 #'
+#' @section Parameters:
+#'
+#' * `repeats` (`integer(1)`)\cr
+#'   Number of repeats.
+#'
 #' @export
 #' @examples
 #' library(mlr3)
@@ -54,6 +59,7 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
       super$initialize(
         id = id,
         param_set = ps,
+        label = "Repeated Spatial 'disc' resampling",
         man = "mlr3spatiotempcv::mlr_resamplings_repeated_spcv_disc"
       )
     },
