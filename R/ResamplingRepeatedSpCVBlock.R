@@ -103,6 +103,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     #'  A task to instantiate.
     instantiate = function(task) {
 
+      mlr3misc::require_namespaces(c("blockCV", "sf"))
+
       mlr3::assert_task(task)
       assert_spatial_task(task)
       pv = self$param_set$values
