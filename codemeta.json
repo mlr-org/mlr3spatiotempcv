@@ -423,7 +423,7 @@
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=mlr3spatial"
+      "sameAs": "https://github.com/mlr-org/mlr3spatial"
     },
     "8": {
       "@type": "SoftwareApplication",
@@ -456,5 +456,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "137913.257KB"
+  "fileSize": "137913.29KB"
 }
