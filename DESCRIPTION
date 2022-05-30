@@ -28,7 +28,7 @@ Imports:
     data.table,
     ggplot2,
     mlr3misc (>= 0.9.2),
-    mlr3spatial,
+    mlr3spatial (> 0.1.2),
     paradox,
     R6,
     utils
@@ -52,6 +52,7 @@ Suggests:
     sf,
     skmeans,
     sperrorest,
+    terra,
     testthat (>= 3.0.0),
     vdiffr (>= 1.0.0),
     withr
