@@ -1,6 +1,7 @@
 test_that("get_coordinates function works", {
 
   skip_if_not_installed("mlr3spatial")
+  skip_if_not_installed("sf")
   requireNamespace("mlr3spatial", quietly = TRUE)
   task_1 = tsk("ecuador")
 
@@ -15,6 +16,7 @@ test_that("get_coordinates function works", {
 
 test_that("get_crs function works", {
   skip_if_not_installed("mlr3spatial")
+  skip_if_not_installed("sf")
   requireNamespace("mlr3spatial", quietly = TRUE)
 
   task_1 = tsk("ecuador")
@@ -30,6 +32,7 @@ test_that("get_crs function works", {
 test_that("assert_spatial_task function works", {
 
   skip_if_not_installed("mlr3spatial")
+  skip_if_not_installed("sf")
   requireNamespace("mlr3spatial", quietly = TRUE)
 
   task_1 = tsk("ecuador")

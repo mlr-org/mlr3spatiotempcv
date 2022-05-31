@@ -1,6 +1,9 @@
 # generic tests
 
 test_that("errors are thrown for non-valid argument settings", {
+  skip_if_not_installed("sf")
+  skip_if_not_installed("patchwork")
+  skip_if_not_installed("ggtext")
   task = test_make_twoclass_task()
   # type does not matter here
   rsp = rsmp("spcv_coords")
@@ -454,6 +457,9 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
 })
 
 test_that("autoplot time + space", {
+  skip_if_not_installed("sf")
+  skip_if_not_installed("patchwork")
+  skip_if_not_installed("ggtext")
   # special data with five temporal levels
   data = cookfarm_sample
   b = mlr3::as_data_backend(data)
