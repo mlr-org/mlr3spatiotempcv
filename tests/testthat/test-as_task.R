@@ -18,6 +18,7 @@ test_that("as_task_classif_st.data.rame works", {
 })
 
 test_that("as_task_classif_st.sf works", {
+  skip_if_not_installed("sf")
   data("ecuador", package = "mlr3spatiotempcv")
   ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = "epsg:32717")
   new_task = as_task_classif_st(ecuador_sf, target = "slides", positive = "TRUE")
@@ -48,6 +49,7 @@ test_that("as_task_regr_st.data.rame works", {
 })
 
 test_that("as_task_regr_st.sf works", {
+  skip_if_not_installed("sf")
   data("cookfarm_sample", package = "mlr3spatiotempcv")
   cookfarm_sf = sf::st_as_sf(cookfarm_sample, coords = c("x", "y"), crs = 26911)
   new_task = as_task_regr_st(cookfarm_sf, target = "PHIHOX")

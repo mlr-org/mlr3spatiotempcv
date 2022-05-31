@@ -1,6 +1,8 @@
 library(mlr3)
 
 test_that("no duplicated ids", {
+  skip_if_not_installed("blockCV")
+  skip_if_not_installed("sf")
   spcv_rsp = mlr_resamplings$mget(
     as.data.table(mlr_resamplings)[map_lgl(key, grepl, pattern = "spcv"), key]
   )
@@ -17,6 +19,8 @@ test_that("no duplicated ids", {
 })
 
 test_that("grouping throws errors when 'groups' is set", {
+  skip_if_not_installed("blockCV")
+  skip_if_not_installed("sf")
   task = test_make_twoclass_task(group = TRUE)
 
   spcv_rsp = rsmps(c("spcv_coords", "spcv_env"), folds = 2)
@@ -31,6 +35,8 @@ test_that("grouping throws errors when 'groups' is set", {
 })
 
 test_that("train and test set getter functions are working", {
+  skip_if_not_installed("blockCV")
+  skip_if_not_installed("sf")
   task = test_make_twoclass_task()
 
   spcv_rsp = rsmps(c("spcv_coords", "spcv_env"), folds = 2)
@@ -45,6 +51,8 @@ test_that("train and test set getter functions are working", {
 })
 
 test_that("train and test set getter functions are working", {
+  skip_if_not_installed("blockCV")
+  skip_if_not_installed("sf")
   task = test_make_twoclass_task()
 
   spcv_rsp = rsmps(c("repeated_spcv_coords", "repeated_spcv_env"), folds = 2)

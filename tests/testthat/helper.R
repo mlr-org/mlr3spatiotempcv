@@ -1,5 +1,4 @@
 # for graph learner tests
-loadNamespace("mlr3pipelines")
 loadNamespace("mlr3")
 
 # Create 6x6 point grid with 1m distance between points
@@ -202,6 +201,8 @@ test_graph_learner = function(task, resampling,
   space_var = NULL,
   learner = "classif.featureless",
   measure = "classif.ce") {
+
+  loadNamespace("mlr3pipelines")
 
   if (!is.null(time_var)) {
     task$set_col_roles(time_var, "time")
