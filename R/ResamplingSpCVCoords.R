@@ -55,7 +55,6 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
       assert_spatial_task(task)
       groups = task$groups
 
-
       if (!is.null(groups)) {
         stopf("Grouping is not supported for spatial resampling methods")
       }
