@@ -122,8 +122,6 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
       # declare empty list so the for-loop can write to its fields
       self$instance = vector("list", length = reps)
 
-      # k = self$param_set$values$folds
-
       for (rep in seq_len(reps)) {
         index = sample.int(nrow(coords),
           size = self$param_set$values$folds,
@@ -136,6 +134,8 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
         # the index is required for assigning the train/test sets to their
         # respective folds
         mlr3_index = 1
+
+        ### start: this part is mainly copied from sperrorest::partition_disc()
 
         for (i in index) {
           if (!is.null(self$param_set$values$buffer) |
@@ -164,6 +164,8 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
               wrap = TRUE
             )
           }
+
+          ### end: this part is mainly copied from sperrorest::partition_disc()
 
           # similar result structure as in sptcv_cstf
           self$instance[[rep]]$test[[mlr3_index]] = test_sel
