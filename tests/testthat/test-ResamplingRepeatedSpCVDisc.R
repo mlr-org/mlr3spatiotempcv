@@ -29,6 +29,7 @@ test_that("resampling iterations equals folds * repeats", {
 })
 
 test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - radius + buffer", {
+  skip_if_not_installed("sperrorest")
   task = tsk("ecuador")
   set.seed(42)
   rsp = rsmp("repeated_spcv_disc",
@@ -55,6 +56,7 @@ test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - radius + buffer"
 })
 
 test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - radius", {
+  skip_if_not_installed("sperrorest")
   task = tsk("ecuador")
   set.seed(42)
   rsp = rsmp("repeated_spcv_disc",
@@ -80,6 +82,7 @@ test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - radius", {
 })
 
 test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - replace", {
+  skip_if_not_installed("sperrorest")
   task = tsk("ecuador")
   set.seed(42)
   rsp = rsmp("repeated_spcv_disc",

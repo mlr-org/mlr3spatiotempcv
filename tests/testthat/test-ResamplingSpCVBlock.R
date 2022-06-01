@@ -73,6 +73,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: selection =
 })
 
 test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and rows", {
+  skip_if_not_installed("sf")
   task = test_make_blockCV_test_task()
 
   sf::sf_use_s2(use_s2 = FALSE)
@@ -102,6 +103,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
 })
 
 test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer", {
+  skip_if_not_installed("sf")
 
   # cran test failure (Error: no arguments in initialization list)
   testthat::skip_on_os("solaris")
@@ -140,6 +142,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer
 })
 
 test_that("Error when selection = checkboard and folds > 2", {
+  skip_if_not_installed("sf")
   task = test_make_blockCV_test_task()
   expect_error(rsmp("spcv_block", range = 10000L,
     selection = "checkerboard", folds = 5)$instantiate(task))

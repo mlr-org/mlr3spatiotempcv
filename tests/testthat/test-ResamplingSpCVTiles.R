@@ -1,4 +1,5 @@
 test_that("mlr3spatiotempcv is equal to sperrorest (repeated)", {
+  skip_if_not_installed("sperrorest")
   task = tsk("ecuador")
   set.seed(42)
   rsp = rsmp("spcv_tiles", reassign = FALSE, nsplit = c(4L, 3L))
@@ -21,6 +22,7 @@ test_that("mlr3spatiotempcv is equal to sperrorest (repeated)", {
 })
 
 test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - nsplit + dsplit", {
+  skip_if_not_installed("sperrorest")
   task = tsk("ecuador")
   set.seed(42)
   rsp = rsmp("spcv_tiles",
@@ -44,6 +46,7 @@ test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - nsplit + dsplit"
 })
 
 test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - reassign", {
+  skip_if_not_installed("sperrorest")
   task = tsk("ecuador")
   set.seed(42)
   rsp = rsmp("spcv_tiles",
@@ -67,6 +70,7 @@ test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - reassign", {
 })
 
 test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - user_rotation", {
+  skip_if_not_installed("sperrorest")
   task = tsk("ecuador")
   set.seed(42)
   rsp = rsmp("spcv_tiles",
@@ -92,6 +96,7 @@ test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - user_rotation", 
 })
 
 test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - random rotation", {
+  skip_if_not_installed("sperrorest")
   task = tsk("ecuador")
   set.seed(42)
   rsp = rsmp("spcv_tiles",
@@ -117,6 +122,7 @@ test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - random rotation"
 })
 
 test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - random offset", {
+  skip_if_not_installed("sperrorest")
   task = tsk("ecuador")
   set.seed(42)
   rsp = rsmp("spcv_tiles",
@@ -142,6 +148,7 @@ test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - random offset", 
 })
 
 test_that("mlr3spatiotempcv is equal to sperrorest (repeated) - user offset", {
+  skip_if_not_installed("sperrorest")
   task = tsk("ecuador")
   set.seed(42)
   rsp = rsmp("spcv_tiles",

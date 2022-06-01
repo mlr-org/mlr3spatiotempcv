@@ -1,4 +1,5 @@
 test_that("mlr3spatiotempcv is equal to sperrorest (repeated)", {
+  skip_if_not_installed("sperrorest")
   task = tsk("ecuador")
   set.seed(42)
   rsp = rsmp("spcv_disc", folds = 3L, radius = 200L, buffer = 200L)

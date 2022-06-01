@@ -25,6 +25,7 @@ test_that("coordinates can be used as features", {
 })
 
 test_that("sf objects can be used for task creation", {
+  skip_if_not_installed("sf")
   task = test_make_sf_twoclass_task()
 
   expect_output(print(task))
@@ -33,6 +34,7 @@ test_that("sf objects can be used for task creation", {
 })
 
 test_that("sf objects can be used for task creation", {
+  skip_if_not_installed("sf")
   task = test_make_sf_regr_task()
 
   expect_output(print(task))
@@ -42,6 +44,7 @@ test_that("sf objects can be used for task creation", {
 
 # https://github.com/mlr-org/mlr3spatiotempcv/issues/151
 test_that("tasks created from sf objects do not duplicate rows", {
+  skip_if_not_installed("sf")
   data = test_make_sf_twoclass_df()
 
   task = TaskClassifST$new(
