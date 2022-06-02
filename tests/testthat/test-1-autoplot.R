@@ -461,7 +461,7 @@ test_that("autoplot time + space", {
   skip_if_not_installed("patchwork")
   skip_if_not_installed("ggtext")
   # special data with five temporal levels
-  data = cookfarm_sample
+  data = cookfarm_mlr3
   b = mlr3::as_data_backend(data)
   b$hash = "_mlr3_tasks_cookfarm_"
   task = TaskRegrST$new(
