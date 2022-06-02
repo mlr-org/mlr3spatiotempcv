@@ -822,7 +822,7 @@ plot.ResamplingRepeatedSpCVDisc = function(x, ...) {
 #'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' \donttest{
-#' if (mlr3misc::require_namespaces("sf", quietly = TRUE)) {
+#' if (mlr3misc::require_namespaces(c("sf", "sperrorest"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
 #'   task = tsk("ecuador")
