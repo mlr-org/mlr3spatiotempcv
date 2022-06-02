@@ -102,9 +102,10 @@ register_mlr3 = function() { # nocov start
 
 .onLoad = function(libname, pkgname) { # nolint
   register_mlr3()
-  assign("lg", lgr::get_logger("mlr3spatiotempcv"), envir = parent.env(environment()))
-  setHook(packageEvent("mlr3", "onLoad"), function(...) register_mlr3(),
-    action = "append")
+  assign("lg", lgr::get_logger("mlr3/mlr3spatiotempcv"), envir = parent.env(environment()))
+  if (Sys.getenv("IN_PKGDOWN") == "true") {
+    lg$set_threshold("warn")
+  }
 }
 
 .onUnload = function(libpath) { # nolint

@@ -13,3 +13,14 @@ if (Sys.getenv("NOT_CRAN") != "" && Sys.getenv("R_COVR") == "") {
     }
   }
 }
+
+data = cookfarm_mlr3 %>%
+  na.omit()
+b = mlr3::as_data_backend(data)
+task_cluto = TaskRegrST$new(
+  id = "cookfarm", b, target = "PHIHOX",
+  extra_args = list(
+    coordinate_names = c("x", "y"), coords_as_features = FALSE,
+    crs = 26911))
+task_cluto$set_col_roles("Date", roles = "time")
+task_cluto$set_col_roles("SOURCEID", roles = "space")
