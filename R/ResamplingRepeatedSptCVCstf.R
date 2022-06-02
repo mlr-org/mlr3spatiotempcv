@@ -1,6 +1,7 @@
 #' @title (CAST) Repeated spatiotemporal "leave-location-and-time-out" resampling
 #'
 #' @template rox_sptcv_cstf
+#' @name mlr_resamplings_repeated_sptcv_cstf
 #'
 #' @section Parameters:
 #'

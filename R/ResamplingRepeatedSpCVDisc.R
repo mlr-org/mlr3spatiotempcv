@@ -1,5 +1,6 @@
 #' @title (sperrorest) Repeated spatial "disc" resampling
 #'
+#' @name mlr_resamplings_repeated_spcv_disc
 #' @references
 #' `r format_bib("brenning2012")`
 #'

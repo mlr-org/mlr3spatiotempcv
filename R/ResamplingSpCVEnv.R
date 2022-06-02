@@ -1,6 +1,7 @@
 #' @title (blockCV) "Environmental blocking" resampling
 #'
 #' @template rox_spcv_env
+#' @name mlr_resamplings_spcv_env
 #'
 #' @references
 #' `r format_bib("valavi2018")`

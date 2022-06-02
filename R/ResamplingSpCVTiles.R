@@ -1,6 +1,7 @@
 #' @title (sperrorest) Spatial "Tiles" resampling
 #'
 #' @template rox_spcv_tiles
+#' @name mlr_resamplings_spcv_tiles
 #'
 #' @references
 #' `r format_bib("brenning2012")`

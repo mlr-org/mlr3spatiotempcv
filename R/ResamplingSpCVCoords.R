@@ -1,6 +1,7 @@
 #' @title (sperrorest) Coordinate-based k-means clustering
 #'
 #' @template rox_spcv_coords
+#' @name mlr_resamplings_spcv_coords
 #'
 #' @references
 #' `r format_bib("brenning2012")`

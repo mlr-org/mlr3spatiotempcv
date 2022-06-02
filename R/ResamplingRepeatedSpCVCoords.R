@@ -1,6 +1,7 @@
 #' @title (sperrorest) Repeated coordinate-based k-means clustering
 #'
 #' @template rox_spcv_coords
+#' @name mlr_resamplings_repeated_spcv_coords
 #'
 #' @section Parameters:
 #'
