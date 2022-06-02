@@ -28,7 +28,7 @@ test_that("sptcv methods work in a Graph Learner", {
   rsmps = rsmps(c("sptcv_cstf", "sptcv_cluto"), folds = 2)
 
   out = mlr3misc::map_lgl(rsmps, function(x) {
-    test_graph_learner(tsk("cookfarm"), x,
+    test_graph_learner(task_cluto, x,
       time_var = "Date",
       learner = "regr.featureless",
       measure = "regr.mse")
