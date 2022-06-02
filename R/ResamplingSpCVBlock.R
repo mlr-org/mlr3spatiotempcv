@@ -1,6 +1,7 @@
 #' @title (blockCV) Spatial block resampling
 #'
 #' @template rox_spcv_block
+#' @name mlr_resamplings_spcv_block
 #'
 #' @references
 #' `r format_bib("valavi2018")`

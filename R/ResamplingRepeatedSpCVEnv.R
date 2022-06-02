@@ -1,6 +1,7 @@
 #' @title (blockCV) Repeated "environmental blocking" resampling
 #'
 #' @template rox_spcv_env
+#' @name mlr_resamplings_repeated_spcv_env
 #'
 #' @section Parameters:
 #'

@@ -1,6 +1,7 @@
 #' @title (blockCV) Spatial buffering resampling
 #'
 #' @template rox_spcv_buffer
+#' @name mlr_resamplings_spcv_buffer
 #'
 #' @references
 #' `r format_bib("valavi2018")`

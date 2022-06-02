@@ -1,6 +1,7 @@
 #' @title (blockCV) Repeated spatial block resampling
 #'
 #' @template rox_spcv_block
+#' @name mlr_resamplings_repeated_spcv_block
 #'
 #' @section Parameters:
 #'
