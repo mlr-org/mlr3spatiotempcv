@@ -67,7 +67,6 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         label = "Spatial block resampling",
         man = "mlr3spatiotempcv::mlr_resamplings_spcv_block"
       )
-      mlr3misc::require_namespaces(c("blockCV", "sf"))
     },
 
     #' @description
@@ -75,6 +74,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     #' @param task [Task]\cr
     #'  A task to instantiate.
     instantiate = function(task) {
+      mlr3misc::require_namespaces(c("blockCV", "sf"))
 
       mlr3::assert_task(task)
       assert_spatial_task(task)
