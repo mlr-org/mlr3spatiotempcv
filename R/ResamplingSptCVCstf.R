@@ -1,6 +1,7 @@
 #' @title (CAST) Spatiotemporal "Leave-location-and-time-out" resampling
 #'
 #' @template rox_sptcv_cstf
+#' @name mlr_resamplings_sptcv_cstf
 #'
 #' @references
 #' `r format_bib("meyer2018")`

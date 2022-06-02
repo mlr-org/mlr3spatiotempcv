@@ -1,6 +1,7 @@
 #' @title (skmeans) Spatiotemporal clustering resampling via CLUTO
 #'
 #' @template rox_sptcv_cluto
+#' @name mlr_resamplings_sptcv_cluto
 #'
 #' @references
 #' `r format_bib("zhao2002")`

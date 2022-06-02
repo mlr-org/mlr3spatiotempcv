@@ -1,6 +1,7 @@
 #' @title (sperrorest) Repeated spatial "tiles" resampling
 #'
 #' @template rox_spcv_tiles
+#' @name mlr_resamplings_repeated_spcv_tiles
 #'
 #' @section Parameters:
 #'

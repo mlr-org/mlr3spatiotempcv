@@ -1,6 +1,7 @@
 #' @title (sperrorest) Spatial "disc" resampling
 #'
 #' @template rox_spcv_disc
+#' @name mlr_resamplings_spcv_disc
 #'
 #' @references
 #' `r format_bib("brenning2012")`
