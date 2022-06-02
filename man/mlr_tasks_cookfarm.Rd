@@ -19,7 +19,7 @@ properties and a number of spatial and temporal regression covariates.
 
 Here, only the "Profiles" dataset is used from the collection.
 The \code{Date} column was appended from the \code{readings} dataset.
-500 random samples were drawn from the complete sample.
+In addition coordinates were appended to the task as variables \code{"x"} and \code{"y"}.
 
 The dataset was borrowed and adapted from package GSIF which was on archived on
 CRAN in 2021-03.
@@ -30,6 +30,16 @@ CRAN in 2021-03.
 \if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_tasks$get("cookfarm")
 tsk("cookfarm")
 }\if{html}{\out{</div>}}
+}
+
+\section{Column roles}{
+
+The task has set column roles "space" and "time" for variables \code{"Date"} and
+\code{"SOURCEID"}, respectively.
+These are used by certain methods during partitioning, e.g.,
+\code{mlr_resamplings_sptcv_cstf} with variant "Leave-location-and-time-out".
+If only one of space or time should left out, the column roles must be
+adjusted by the user!
 }
 
 \references{

@@ -19,10 +19,18 @@
 #'
 #' Here, only the "Profiles" dataset is used from the collection.
 #' The `Date` column was appended from the `readings` dataset.
-#' 500 random samples were drawn from the complete sample.
+#' In addition coordinates were appended to the task as variables `"x"` and `"y"`.
 #'
 #' The dataset was borrowed and adapted from package GSIF which was on archived on
 #' CRAN in 2021-03.
+#'
+#' @section Column roles:
+#' The task has set column roles "space" and "time" for variables `"Date"` and
+#'  `"SOURCEID"`, respectively.
+#' These are used by certain methods during partitioning, e.g.,
+#'  `mlr_resamplings_sptcv_cstf` with variant "Leave-location-and-time-out".
+#' If only one of space or time should left out, the column roles must be
+#' adjusted by the user!
 #'
 #' @references
 #' Gasch, C.K., Hengl, T., Gräler, B., Meyer, H., Magney, T., Brown, D.J., 2015.
@@ -49,5 +57,7 @@ load_task_cookfarm = function(id = "cookfarm") {
     extra_args = list(
       coordinate_names = c("x", "y"), coords_as_features = FALSE,
       crs = 26911))
+  task$set_col_roles("Date", roles = "time")
+  task$set_col_roles("SOURCEID", roles = "space")
   return(task)
 }

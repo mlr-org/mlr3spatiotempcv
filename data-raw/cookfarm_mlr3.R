@@ -14,10 +14,10 @@ cookfarm_mlr3_sf = cookfarm_profiles %>%
   dplyr::mutate(y = sf::st_coordinates(.)[, "Y"]) %>%
   dplyr::mutate(Date = as.character(Date))
 
-cookfarm_sample = cookfarm_mlr3_sf %>%
-  sf::st_set_geometry(NULL) %>%
-  stats::na.omit()
+cookfarm_mlr3 = cookfarm_mlr3_sf %>%
+  sf::st_set_geometry(NULL) # %>%
+# stats::na.omit()
 
-# mapview::mapview(cookfarm_sample)
+# mapview::mapview(cookfarm_mlr3)
 
-usethis::use_data(cookfarm_sample, overwrite = TRUE)
+usethis::use_data(cookfarm_mlr3, overwrite = TRUE)
