@@ -16,7 +16,7 @@ if (Sys.getenv("NOT_CRAN") != "") {
 
 data = cookfarm_mlr3 %>%
   na.omit()
-b = mlr3::as_data_backend(cookfarm_mlr3)
+b = mlr3::as_data_backend(data)
 task_cluto = TaskRegrST$new(
   id = "cookfarm", b, target = "PHIHOX",
   extra_args = list(
