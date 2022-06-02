@@ -161,6 +161,8 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
         pv$repeats = 1
       }
 
+      ### start: this part is mainly copied from sperrorest::partition_tiles()
+
       if (pv$rotation == "none") {
         phi = rep(0, length(seq_len(pv$repeats)))
       } else if (pv$rotation == "random") {
@@ -325,6 +327,8 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
         }
 
         tile = sperrorest::as.resampling(tile)
+
+        ### end: this part is mainly copied from sperrorest::partition_tiles()
 
         class(tile) == "list"
         train_inds = lapply(tile, function(x) x$train)

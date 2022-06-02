@@ -1,6 +1,7 @@
 test_that("`get_coordinates()` works with DataBackendVector", {
 
   skip_if_not_installed("mlr3spatial")
+  skip_if_not_installed("sf")
   requireNamespace("mlr3spatial", quietly = TRUE)
   task_1 = tsk("ecuador")
 
@@ -15,6 +16,7 @@ test_that("`get_coordinates()` works with DataBackendVector", {
 
 test_that("`get_crs()` works with DataBackendVector", {
   skip_if_not_installed("mlr3spatial")
+  skip_if_not_installed("sf")
   requireNamespace("mlr3spatial", quietly = TRUE)
 
   task_1 = tsk("ecuador")
@@ -30,6 +32,7 @@ test_that("`get_crs()` works with DataBackendVector", {
 test_that("`assert_spatial_task()` works", {
 
   skip_if_not_installed("mlr3spatial")
+  skip_if_not_installed("sf")
   requireNamespace("mlr3spatial", quietly = TRUE)
 
   sf = sf::st_as_sf(ecuador, coords = c("x", "y"),

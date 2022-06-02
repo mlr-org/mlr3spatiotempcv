@@ -1,4 +1,8 @@
 test_that("AutoTuner works with sptcv methods", {
+
+  skip_if_not_installed("mlr3tuning")
+  skip_if_not_installed("paradox")
+
   library("paradox")
   library("mlr3tuning")
   library("mlr3spatiotempcv")

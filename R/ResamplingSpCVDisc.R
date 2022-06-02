@@ -105,6 +105,7 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
       # respective folds
       mlr3_index = 1
 
+      ### start: this part is mainly copied from sperrorest::partition_disc()
       for (i in index) {
         if (!is.null(self$param_set$values$buffer) |
           self$param_set$values$radius >= 0) {
@@ -132,6 +133,7 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
             wrap = TRUE
           )
         }
+        ### end: this part is mainly copied from sperrorest::partition_disc()
 
         # similar result structure as in sptcv_cstf
         self$instance$test[[mlr3_index]] = test_sel
