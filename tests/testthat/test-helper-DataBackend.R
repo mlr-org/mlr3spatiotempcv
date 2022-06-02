@@ -47,8 +47,12 @@ test_that("`get_coordinates()` works with DataBackendRaster", {
 
   skip_if_not_installed(c("mlr3spatial", "terra"))
   requireNamespace("mlr3spatial", quietly = TRUE)
-  ras = mlr3spatial::demo_stack_spatraster()
-  terra::crs(ras) = "EPSG:4326" # dummy
+
+
+  ras = mlr3spatial::generate_stack(list(
+    mlr3spatial::numeric_layer("x_1"),
+    mlr3spatial::factor_layer("y", levels = c("a", "b"))),
+  dimension = 10)
   value = data.table(ID = c(0, 1), y = c("negative", "positive"))
   terra::set.cats(ras, layer = "y", value = value)
   backend = as_data_backend(ras)
@@ -67,8 +71,10 @@ test_that("`get_coordinates()` works with DataBackendRaster", {
 test_that("`get_crs()` works with DataBackendRaster", {
   skip_if_not_installed(c("mlr3spatial", "terra"))
   requireNamespace("mlr3spatial", quietly = TRUE)
-  ras = mlr3spatial::demo_stack_spatraster()
-  terra::crs(ras) = "EPSG:4326" # dummy
+  ras = mlr3spatial::generate_stack(list(
+    mlr3spatial::numeric_layer("x_1"),
+    mlr3spatial::factor_layer("y", levels = c("a", "b"))),
+  dimension = 10)
   value = data.table(ID = c(0, 1), y = c("negative", "positive"))
   terra::set.cats(ras, layer = "y", value = value)
   backend = as_data_backend(ras)
