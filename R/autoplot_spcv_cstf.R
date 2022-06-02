@@ -118,6 +118,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
     resampling_sub$instance = resampling_sub$instance[[repeats_id]]
   }
 
+  # FIXME: check space and time var from column roles!
   # check if we are in a 2D or 3D scenario
   if (is.null(plot3D)) {
     if (!is.null(resampling_sub$space_var) &&
