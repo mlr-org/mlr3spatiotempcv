@@ -1,4 +1,4 @@
-## code to prepare `cookfarm_sample` dataset goes here
+## code to prepare `cookfarm_mlr3` dataset goes here
 
 # retrieved from package https://github.com/envirometrix/landmap after GSIF was archived on CRAN in 2021-03
 set.seed(42)
