@@ -38,8 +38,8 @@ test_that("as_task_regr_st.TaskRegrST works", {
 })
 
 test_that("as_task_regr_st.data.rame works", {
-  data("cookfarm_sample", package = "mlr3spatiotempcv")
-  new_task = as_task_regr_st(cookfarm_sample, target = "PHIHOX",
+  data("cookfarm_mlr3", package = "mlr3spatiotempcv")
+  new_task = as_task_regr_st(cookfarm_mlr3, target = "PHIHOX",
     id = "cookfarm",
     coords_as_features = FALSE,
     crs = 26911,
@@ -50,8 +50,8 @@ test_that("as_task_regr_st.data.rame works", {
 
 test_that("as_task_regr_st.sf works", {
   skip_if_not_installed("sf")
-  data("cookfarm_sample", package = "mlr3spatiotempcv")
-  cookfarm_sf = sf::st_as_sf(cookfarm_sample, coords = c("x", "y"), crs = 26911)
+  data("cookfarm_mlr3", package = "mlr3spatiotempcv")
+  cookfarm_sf = sf::st_as_sf(cookfarm_mlr3, coords = c("x", "y"), crs = 26911)
   new_task = as_task_regr_st(cookfarm_sf, target = "PHIHOX")
 
   expect_class(new_task, "TaskRegrST")

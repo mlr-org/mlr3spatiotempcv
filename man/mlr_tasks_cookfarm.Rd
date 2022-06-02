@@ -3,13 +3,13 @@
 \docType{data}
 \name{mlr_tasks_cookfarm}
 \alias{mlr_tasks_cookfarm}
-\alias{cookfarm_sample}
+\alias{cookfarm_mlr3}
 \title{Cookfarm Profiles Regression Task}
 \format{
 \link[R6:R6Class]{R6::R6Class} inheriting from \link{TaskRegr}.
 }
 \usage{
-data(cookfarm_sample)
+data(cookfarm_mlr3)
 }
 \description{
 The R.J. Cook Agronomy Farm (cookfarm) is a Long-Term Agroecosystem Research
