@@ -70,7 +70,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
     table = rbind(coords_train, coords_test)
 
     sf_df = sf::st_as_sf(table,
-      coords = task$extra_args$coordinate_names,
+      coords = get_coordinate_names(task),
       crs = get_crs(task))
 
     sf_df$indicator = as.factor(as.character(sf_df$indicator))
