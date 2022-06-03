@@ -163,7 +163,6 @@ autoplot.ResamplingSptCVCstf = function( # nolint
 
         data_coords = format_resampling_list(task, resampling_sub)
 
-        # FIXME: this is just an escape, fix before merging
         if (length(task$col_roles$time)) {
           data_coords$Date = as.Date(task$data(cols = task$col_roles$time)[[1]])
         } else {
