@@ -36,7 +36,7 @@
 #'   as_task_regr_st(cookfarm_sf, target = "PHIHOX")
 #'
 #'   # TaskRegrST
-#'   task = tsk("cookfarm")
+#'   task = tsk("cookfarm_mlr3")
 #'   as_task_regr_st(task)
 #' }
 as_task_regr_st = function(x, ...) {

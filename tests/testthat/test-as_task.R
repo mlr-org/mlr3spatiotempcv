@@ -31,7 +31,7 @@ test_that("as_task_classif_st.sf works", {
 # regr -------------------------------------------------------------------------
 
 test_that("as_task_regr_st.TaskRegrST works", {
-  task = tsk("cookfarm")
+  task = tsk("cookfarm_mlr3")
   new_task = as_task_regr_st(task)
 
   expect_equal(task, new_task)
@@ -69,7 +69,7 @@ test_that("as_task_classif.TaskClassifST works", {
 })
 
 test_that("as_task_regr.TaskRegrST works", {
-  task = tsk("cookfarm")
+  task = tsk("cookfarm_mlr3")
   new_task = as_task_regr(task)
 
   expect_class(new_task, "TaskRegr")

@@ -78,7 +78,7 @@ register_mlr3 = function() { # nocov start
 
   mlr_tasks$add("ecuador", load_task_ecuador)
   mlr_tasks$add("diplodia", load_task_diplodia)
-  mlr_tasks$add("cookfarm", load_task_cookfarm)
+  mlr_tasks$add("cookfarm_mlr3", load_task_cookfarm)
 
   # resampling methods ---------------------------------------------------------
 

@@ -5,7 +5,7 @@
 #' factor. The `task_type` is set to `"classif"` and `"spatiotemporal"`.
 #'
 #' A spatial example task is available via `tsk("ecuador")`, a spatiotemporal
-#' one via `tsk("cookfarm")`.
+#' one via `tsk("cookfarm_mlr3")`.
 #'
 #' The coordinate reference system passed during initialization must match the
 #' one which was used during data creation, otherwise offsets of multiple meters

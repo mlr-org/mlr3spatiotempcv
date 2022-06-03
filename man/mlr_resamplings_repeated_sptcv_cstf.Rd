@@ -42,7 +42,7 @@ Number of repeats.
 
 \examples{
 library(mlr3)
-task = tsk("cookfarm")
+task = tsk("cookfarm_mlr3")
 task$set_col_roles("SOURCEID", roles = "space")
 task$set_col_roles("Date", roles = "time")
 

@@ -16,7 +16,7 @@ pkgdown = Sys.getenv("IN_PKGDOWN") != ""
 ## ---- fig.align='center', eval=os&&!is_cran&&pkgdown, fig.width=8, fig.height=9----
 #  library(mlr3)
 #  library(mlr3spatiotempcv)
-#  task_st = tsk("cookfarm")
+#  task_st = tsk("cookfarm_mlr3")
 #  resampling = rsmp("sptcv_cluto", folds = 5, time_var = "Date")
 #  resampling$instantiate(task_st)
 #

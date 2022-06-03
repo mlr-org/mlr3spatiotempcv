@@ -69,7 +69,7 @@
 #' if (mlr3misc::require_namespaces(c("sf", "plotly"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
-#'   task_st = tsk("cookfarm")
+#'   task_st = tsk("cookfarm_mlr3")
 #'   task_st$set_col_roles("SOURCEID", "space")
 #'   task_st$set_col_roles("Date", "time")
 #'   resampling = rsmp("sptcv_cstf", folds = 5)

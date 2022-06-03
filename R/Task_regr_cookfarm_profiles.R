@@ -8,7 +8,7 @@
 #' @section Usage:
 #' ```
 #' mlr_tasks$get("cookfarm")
-#' tsk("cookfarm")
+#' tsk("cookfarm_mlr3")
 #' ```
 #'
 #' @description
@@ -49,7 +49,7 @@
 #' @template seealso_task
 "cookfarm_mlr3"
 
-load_task_cookfarm = function(id = "cookfarm") {
+load_task_cookfarm = function(id = "cookfarm_mlr3") {
   b = mlr3::as_data_backend(cookfarm_mlr3)
   b$hash = "_mlr3_tasks_cookfarm_"
   task = TaskRegrST$new(

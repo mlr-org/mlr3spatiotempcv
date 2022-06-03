@@ -339,7 +339,7 @@ test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
 
   set.seed(42)
 
-  task = tsk("cookfarm")
+  task = tsk("cookfarm_mlr3")
   task$set_col_roles("Date", roles = "time")
   rsp = rsmp("sptcv_cstf", folds = 4)
   rsp$instantiate(task)
@@ -372,7 +372,7 @@ test_that("plot() works for 'sptcv_cstf' 2D - space_var", {
 
   set.seed(42)
 
-  task = tsk("cookfarm")
+  task = tsk("cookfarm_mlr3")
   task$set_col_roles("SOURCEID", roles = "space")
   rsp = rsmp("sptcv_cstf", folds = 4)
   rsp$instantiate(task)
@@ -403,7 +403,7 @@ test_that("plot() works for 'sptcv_cstf'", {
   skip_if_not_installed("vdiffr")
   set.seed(42)
 
-  task = tsk("cookfarm")
+  task = tsk("cookfarm_mlr3")
   task$set_col_roles("Date", roles = "time")
   rsp = rsmp("sptcv_cstf", folds = 4)
   rsp$instantiate(task)
@@ -429,7 +429,7 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
   skip_if_not_installed("vdiffr")
   set.seed(42)
 
-  task = tsk("cookfarm")
+  task = tsk("cookfarm_mlr3")
   task$set_col_roles("Date", roles = "time")
   rsp = rsmp("repeated_sptcv_cstf", folds = 4, repeats = 2)
   rsp$instantiate(task)
