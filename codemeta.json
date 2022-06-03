@@ -102,18 +102,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "CAST",
-      "name": "CAST",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=CAST"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "ggsci",
       "name": "ggsci",
       "provider": {
@@ -306,6 +294,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "terra",
+      "name": "terra",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=terra"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
       "version": ">= 3.0.0",
@@ -416,13 +416,14 @@
       "@type": "SoftwareApplication",
       "identifier": "mlr3spatial",
       "name": "mlr3spatial",
+      "version": "> 0.1.2",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=mlr3spatial"
+      "sameAs": "https://github.com/mlr-org/mlr3spatial"
     },
     "8": {
       "@type": "SoftwareApplication",
@@ -455,5 +456,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "7004.408KB"
+  "fileSize": "137913.29KB"
 }

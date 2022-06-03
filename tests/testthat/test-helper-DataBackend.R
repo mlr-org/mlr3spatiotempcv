@@ -1,4 +1,4 @@
-test_that("get_coordinates function works", {
+test_that("`get_coordinates()` works with DataBackendVector", {
 
   skip_if_not_installed("mlr3spatial")
   skip_if_not_installed("sf")
@@ -8,13 +8,13 @@ test_that("get_coordinates function works", {
   sf = sf::st_as_sf(ecuador, coords = c("x", "y"),
     crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
   backend = as_data_backend(sf)
-  task_2 = TaskClassif$new(id = "test", backend = backend, target = "slides")
+  task_vec = TaskClassif$new(id = "test", backend = backend, target = "slides")
 
-  expect_equal(get_coordinates(task_1)$x, get_coordinates(task_2)$X)
-  expect_equal(get_coordinates(task_1)$y, get_coordinates(task_2)$Y)
+  expect_equal(get_coordinates(task_1)$x, get_coordinates(task_vec)$X)
+  expect_equal(get_coordinates(task_1)$y, get_coordinates(task_vec)$Y)
 })
 
-test_that("get_crs function works", {
+test_that("`get_crs()` works with DataBackendVector", {
   skip_if_not_installed("mlr3spatial")
   skip_if_not_installed("sf")
   requireNamespace("mlr3spatial", quietly = TRUE)
@@ -24,25 +24,62 @@ test_that("get_crs function works", {
   sf = sf::st_as_sf(ecuador, coords = c("x", "y"),
     crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
   backend = as_data_backend(sf)
-  task_2 = TaskClassif$new(id = "test", backend = backend, target = "slides")
+  task_vec = TaskClassif$new(id = "test", backend = backend, target = "slides")
 
-  expect_equal(get_crs(task_1), get_crs(task_2)$input)
+  expect_equal(get_crs(task_1), get_crs(task_vec)$input)
 })
 
-test_that("assert_spatial_task function works", {
+test_that("`assert_spatial_task()` works", {
 
   skip_if_not_installed("mlr3spatial")
   skip_if_not_installed("sf")
   requireNamespace("mlr3spatial", quietly = TRUE)
 
-  task_1 = tsk("ecuador")
-
-  assert_spatial_task(task_1)
-
   sf = sf::st_as_sf(ecuador, coords = c("x", "y"),
     crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
   backend = as_data_backend(sf)
-  task_2 = TaskClassif$new(id = "test", backend = backend, target = "slides")
+  task_vec = TaskClassif$new(id = "test", backend = backend, target = "slides")
 
-  assert_spatial_task(task_2)
+  assert_spatial_task(task_vec)
+})
+
+test_that("`get_coordinates()` works with DataBackendRaster", {
+
+  skip_if_not_installed(c("mlr3spatial", "terra"))
+  requireNamespace("mlr3spatial", quietly = TRUE)
+
+
+  ras = mlr3spatial::generate_stack(list(
+    mlr3spatial::numeric_layer("x_1"),
+    mlr3spatial::factor_layer("y", levels = c("a", "b"))),
+  dimension = 10)
+  value = data.table(ID = c(0, 1), y = c("negative", "positive"))
+  terra::set.cats(ras, layer = "y", value = value)
+  backend = as_data_backend(ras)
+  task_ras = TaskClassif$new(id = "y", backend = backend, target = "y")
+
+  coord_names = get_coordinate_names(task_ras)
+  expect_equal(coord_names, c("x", "y"))
+
+  expect_silent(get_coordinates(task_ras)[[coord_names[1]]])
+  expect_silent(get_coordinates(task_ras)[[coord_names[2]]])
+
+  expect_length(get_crs(task_ras), 5)
+  expect_length(get_crs(task_ras, pretty = FALSE), 1)
+})
+
+test_that("`get_crs()` works with DataBackendRaster", {
+  skip_if_not_installed(c("mlr3spatial", "terra"))
+  requireNamespace("mlr3spatial", quietly = TRUE)
+  ras = mlr3spatial::generate_stack(list(
+    mlr3spatial::numeric_layer("x_1"),
+    mlr3spatial::factor_layer("y", levels = c("a", "b"))),
+  dimension = 10)
+  value = data.table(ID = c(0, 1), y = c("negative", "positive"))
+  terra::set.cats(ras, layer = "y", value = value)
+  backend = as_data_backend(ras)
+  task_ras = TaskClassif$new(id = "y", backend = backend, target = "y")
+
+  expect_length(get_crs(task_ras), 5)
+  expect_length(get_crs(task_ras, pretty = FALSE), 1)
 })
