@@ -15,7 +15,7 @@ test_that("check that ecuador example task works", {
 })
 
 test_that("check that cookfarm example task works", {
-  task = tsk("cookfarm")
+  task = tsk("cookfarm_mlr3")
   rsp = rsmp("spcv_coords", folds = 2)
   rsp$instantiate(task)
 

@@ -381,7 +381,7 @@ plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
 #' if (mlr3misc::require_namespaces(c("sf", "skmeans", "plotly"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
-#'   task_st = tsk("cookfarm")
+#'   task_st = tsk("cookfarm_mlr3")
 #'   resampling = rsmp("sptcv_cluto", folds = 5)
 #'   resampling$instantiate(task_st)
 #'

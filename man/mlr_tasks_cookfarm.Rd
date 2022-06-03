@@ -28,7 +28,7 @@ CRAN in 2021-03.
 
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{mlr_tasks$get("cookfarm")
-tsk("cookfarm")
+tsk("cookfarm_mlr3")
 }\if{html}{\out{</div>}}
 }
 

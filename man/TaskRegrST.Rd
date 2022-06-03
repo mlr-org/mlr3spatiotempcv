@@ -8,7 +8,7 @@ This task specializes \link{Task} and \link{TaskSupervised} for spatiotemporal
 classification problems.
 
 A spatial example task is available via \code{tsk("ecuador")}, a spatiotemporal
-one via \code{tsk("cookfarm")}.
+one via \code{tsk("cookfarm_mlr3")}.
 
 The coordinate reference system passed during initialization must match the
 one which was used during data creation, otherwise offsets of multiple meters

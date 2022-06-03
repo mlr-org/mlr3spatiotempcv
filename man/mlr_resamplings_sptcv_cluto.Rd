@@ -55,7 +55,7 @@ change at any time without prior notice.
 if (mlr3misc::require_namespaces("skmeans", quietly = TRUE)) {
   library(mlr3)
   library(mlr3spatiotempcv)
-  task = tsk("cookfarm")
+  task = tsk("cookfarm_mlr3")
   task$set_col_roles("Date", "time")
 
   # Instantiate Resampling

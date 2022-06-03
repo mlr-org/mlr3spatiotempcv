@@ -9,7 +9,7 @@ spatiotemporal classification problems. The target column is assumed to be a
 factor. The \code{task_type} is set to \code{"classif"} and \code{"spatiotemporal"}.
 
 A spatial example task is available via \code{tsk("ecuador")}, a spatiotemporal
-one via \code{tsk("cookfarm")}.
+one via \code{tsk("cookfarm_mlr3")}.
 
 The coordinate reference system passed during initialization must match the
 one which was used during data creation, otherwise offsets of multiple meters
