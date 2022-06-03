@@ -66,10 +66,10 @@ register_mlr3 = function() { # nocov start
   # used in CAST
   # prevent redudant addition when calling pkgload::load_all()
   if (!any(c("space", "time") %in% x$task_col_roles$classif)) {
-    x$task_col_roles$classif = c(x$task_col_roles$classif, "space", "time")
-    x$task_col_roles$regr = c(x$task_col_roles$regr, "space", "time")
-    x$task_col_roles$classif_st = c(x$task_col_roles$classif_st, "space", "time")
-    x$task_col_roles$regr_st = c(x$task_col_roles$regr_st, "space", "time")
+    x$task_col_roles$classif = c(x$task_col_roles$classif, "space", "time", "plot")
+    x$task_col_roles$regr = c(x$task_col_roles$regr, "space", "time", "plot")
+    x$task_col_roles$classif_st = c(x$task_col_roles$classif_st, "space", "time", "plot")
+    x$task_col_roles$regr_st = c(x$task_col_roles$regr_st, "space", "time", "plot")
   }
 
   # tasks --------------------------------------------------------------------

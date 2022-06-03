@@ -32,7 +32,7 @@ It makes use of the returned 3D plotly objects which are returned in a list by `
 ```{r, fig.align='center', eval=FALSE}
 library(mlr3)
 library(mlr3spatiotempcv)
-task_st = tsk("cookfarm")
+task_st = tsk("cookfarm_mlr3")
 task_st$set_col_roles("SOURCEID", roles = "space")
 task_st$set_col_roles("Date", roles = "time")
 resampling = rsmp("sptcv_cstf", folds = 5)

@@ -329,7 +329,7 @@ test_that("plot() works for 'repeated_spcv_env'", {
 
 # sptcv_cstf -------------------------------------------------------------------
 
-# 2D -------------------------------------------------------------------------
+# 2D ---------------------------------------------------------------------------
 test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
   skip_if_not_installed("vdiffr")
 
@@ -337,24 +337,22 @@ test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
   skip_on_os("linux")
   skip_on_os("windows")
 
-  set.seed(42)
-
-  task = tsk("cookfarm_mlr3")
-  task$set_col_roles("Date", roles = "time")
+  tsk_cookfarm_sub$set_col_roles("Date", roles = "time")
+  tsk_cookfarm_sub$col_roles$space = character()
   rsp = rsmp("sptcv_cstf", folds = 4)
-  rsp$instantiate(task)
+  rsp$instantiate(tsk_cookfarm_sub)
 
-  p1 = autoplot(rsp, task = task)
-  p2 = autoplot(rsp, task, 1, plot3D = FALSE)
+  p1 = autoplot(rsp, task = tsk_cookfarm_sub)
+  p2 = autoplot(rsp, tsk_cookfarm_sub, 1, plot3D = FALSE)
   # plot() would force image printing here
-  p3 = autoplot(rsp, task, c(1, 2))
+  p3 = suppressMessages(autoplot(rsp, tsk_cookfarm_sub, c(1, 2)))
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_list(p3)
 
-  p4 = autoplot(rsp, task, repeats_id = 2)
-  p5 = autoplot(rsp, task, fold_id = 1, repeats_id = 2)
+  p4 = autoplot(rsp, tsk_cookfarm_sub, repeats_id = 2)
+  p5 = autoplot(rsp, tsk_cookfarm_sub, fold_id = 1, repeats_id = 2)
 
   vdiffr::expect_doppelganger("SptCVCstf 2D time_var all test sets", p1)
   vdiffr::expect_doppelganger("SptCVCstf 2D time_var - Fold 1", p2)
@@ -370,25 +368,22 @@ test_that("plot() works for 'sptcv_cstf' 2D - space_var", {
   skip_on_os("linux")
   skip_on_os("windows")
 
-  set.seed(42)
-
-  task = tsk("cookfarm_mlr3")
-  task$set_col_roles("SOURCEID", roles = "space")
+  tsk_cookfarm_sub$col_roles$time = character()
+  tsk_cookfarm_sub$set_col_roles("SOURCEID", "space")
   rsp = rsmp("sptcv_cstf", folds = 4)
-  rsp$instantiate(task)
+  rsp$instantiate(tsk_cookfarm_sub)
 
-  p1 = autoplot(rsp, task = task)
-  p2 = autoplot(rsp, task, 1, plot3D = FALSE)
+  p1 = autoplot(rsp, task = tsk_cookfarm_sub)
+  p2 = autoplot(rsp, tsk_cookfarm_sub, 1, plot3D = FALSE)
   # plot() would force image printing here
-  p3 = autoplot(rsp, task, c(1, 2))
+  p3 = autoplot(rsp, tsk_cookfarm_sub, c(1, 2))
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_list(p3)
 
-  p4 = autoplot(rsp, task, repeats_id = 2)
-  p5 = autoplot(rsp, task, fold_id = 1, repeats_id = 2)
-
+  p4 = autoplot(rsp, tsk_cookfarm_sub, repeats_id = 2)
+  p5 = autoplot(rsp, tsk_cookfarm_sub, fold_id = 1, repeats_id = 2)
 
   vdiffr::expect_doppelganger("SptCVCstf 2D space_var all test sets", p1)
   vdiffr::expect_doppelganger("SptCVCstf 2D space_var - Fold 1", p2)
@@ -401,21 +396,27 @@ test_that("plot() works for 'sptcv_cstf' 2D - space_var", {
 
 test_that("plot() works for 'sptcv_cstf'", {
   skip_if_not_installed("vdiffr")
-  set.seed(42)
 
-  task = tsk("cookfarm_mlr3")
-  task$set_col_roles("Date", roles = "time")
+  # only use Date for plotting, not for partitioning
+  tsk_cookfarm_sub$set_col_roles("Date", roles = "plot")
+  tsk_cookfarm_sub$col_roles$time = character()
   rsp = rsmp("sptcv_cstf", folds = 4)
-  rsp$instantiate(task)
+  rsp$instantiate(tsk_cookfarm_sub)
 
-  expect_error(autoplot(rsp, task = task, plot3D = TRUE))
+  expect_error(autoplot(rsp, task = tsk_cookfarm_sub, plot3D = TRUE))
   p2 = suppressWarnings(
-    autoplot(rsp, task, 1, plot3D = TRUE)
+    autoplot(rsp, tsk_cookfarm_sub, 1, plot3D = TRUE)
   )
   # plot() would force image printing here
   p3 = suppressWarnings(
-    suppressMessages(autoplot(rsp, task, c(1, 2), plot3D = TRUE))
+    suppressMessages(autoplot(rsp, tsk_cookfarm_sub, c(1, 2), plot3D = TRUE))
   )
+
+  # test error if neither time nor plot col roles are defined
+  # only use Date for plotting, not for partitioning
+  tsk_cookfarm_sub$col_roles$time = character()
+  tsk_cookfarm_sub$col_roles$plot = character()
+  expect_error(autoplot(rsp, tsk_cookfarm_sub, 1, plot3D = TRUE))
 
   expect_s3_class(p2, "plotly")
   expect_list(p3)
@@ -427,23 +428,22 @@ test_that("plot() works for 'sptcv_cstf'", {
 
 test_that("plot() works for 'repeated_spcv_cstf'", {
   skip_if_not_installed("vdiffr")
-  set.seed(42)
 
-  task = tsk("cookfarm_mlr3")
-  task$set_col_roles("Date", roles = "time")
+  tsk_cookfarm_sub$col_roles$time = "Date"
+  tsk_cookfarm_sub$col_roles$space = "SOURCEID"
   rsp = rsmp("repeated_sptcv_cstf", folds = 4, repeats = 2)
-  rsp$instantiate(task)
+  rsp$instantiate(tsk_cookfarm_sub)
 
-  expect_error(autoplot(rsp, task = task, plot3D = TRUE))
+  expect_error(autoplot(rsp, task = tsk_cookfarm_sub, plot3D = TRUE))
   p2 = suppressWarnings(
-    autoplot(rsp, task, 1,
+    autoplot(rsp, tsk_cookfarm_sub, 1,
       show_omitted = TRUE, plot3D = TRUE,
       repeats_id = 2) # missing on purpose for codecov reasons
   )
   p3 = suppressWarnings(
-    suppressMessages(autoplot(rsp, task, c(1, 2), plot3D = TRUE))
+    suppressMessages(autoplot(rsp, tsk_cookfarm_sub, c(1, 2), plot3D = TRUE))
   )
-  p4 = autoplot(rsp, task, c(1, 2),
+  p4 = autoplot(rsp, tsk_cookfarm_sub, c(1, 2),
     crs = 4326, plot_as_grid = FALSE,
     repeats_id = 2,
     plot3D = TRUE)
@@ -452,7 +452,7 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
   expect_list(p3)
 
   p5 = suppressWarnings(
-    autoplot(rsp, task,
+    autoplot(rsp, tsk_cookfarm_sub,
       fold_id = 1, repeats_id = 2,
       plot3D = TRUE)
   )
@@ -470,24 +470,15 @@ test_that("autoplot time + space", {
   skip_if_not_installed("sf")
   skip_if_not_installed("patchwork")
   skip_if_not_installed("ggtext")
-  # special data with five temporal levels
-  data = cookfarm_mlr3
-  b = mlr3::as_data_backend(data)
-  b$hash = "_mlr3_tasks_cookfarm_"
-  task = TaskRegrST$new(
-    id = "cookfarm", b, target = "PHIHOX",
-    extra_args = list(
-      coordinate_names = c("x", "y"), coords_as_features = FALSE,
-      crs = 26911))
-  task$set_col_roles("Date", roles = "time")
-  task$set_col_roles("SOURCEID", roles = "space")
-  rsp = rsmp("sptcv_cstf", folds = 5)
-  set.seed(42)
-  rsp$instantiate(task)
+
+  tsk_cookfarm_sub$set_col_roles("Date", roles = "time")
+  tsk_cookfarm_sub$set_col_roles("SOURCEID", roles = "space")
+  rsp = rsmp("sptcv_cstf", folds = 4)
+  rsp$instantiate(tsk_cookfarm_sub)
 
   # without omitted, we have no values on the y-axis and the plot is not shown
   p1 = suppressWarnings(
-    autoplot(rsp, task, fold_id = 5, show_omitted = TRUE, plot3D = TRUE)
+    autoplot(rsp, tsk_cookfarm_sub, fold_id = 4, show_omitted = TRUE, plot3D = TRUE)
   )
 
   suppressWarnings(vdiffr::expect_doppelganger("SptCVCstf - + omitted points, 3D", p1))

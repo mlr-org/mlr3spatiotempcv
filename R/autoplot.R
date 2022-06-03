@@ -1631,13 +1631,9 @@ autoplot_spatiotemp = function(
     if (!plot_as_grid) {
       return(invisible(plot_list))
     } else {
-      messagef("Unfortunately plotly does not support a dynamic
-       arrangement of multiple subplots.
-       See article 'Visualization of spatiotemporal clusters'
-       (https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz) for a
-       manual workaround.
-       Use the objects in the returned list to arrange a custom grid.",
-        wrap = TRUE)
+      lg$warn("Unfortunately plotly does not support a dynamic arrangement of multiple subplots.
+       See article 'Visualization of spatiotemporal clusters' (https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz) for a manual workaround.
+       Use the objects in the returned list to arrange a custom grid.")
 
       return(invisible(plot_list))
     }

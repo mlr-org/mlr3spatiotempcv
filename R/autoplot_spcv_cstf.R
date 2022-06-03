@@ -4,12 +4,13 @@
 #'   visualize mlr3 spatiotemporal resampling objects.
 #'
 #' @details
-#' This method requires to set argument `fold_id` and no plot containing all
-#' partitions can be created. This is because the method does not make use of
-#' all observations but only a subset of them (many observations are left out).
+#' This method requires to set argument `fold_id`.
+#' No plot showing all folds in one plot can be created.
+#' This is because the LLTO method does not make use of all observations but only
+#' a subset of them (many observations are omitted).
 #' Hence, train and test sets of one fold are not re-used in other folds as in
-#' other methods and plotting these without a train/test indicator would not
-#' make sense.
+#' other methods and plotting these without a train/test indicator would be
+#' misleading.
 #'
 #' @section 2D vs 3D plotting:
 #' This method has both a 2D and a 3D plotting method.
@@ -75,7 +76,7 @@
 #'   resampling = rsmp("sptcv_cstf", folds = 5)
 #'   resampling$instantiate(task_st)
 #'
-#'   # with both `space_var` and `time_var` (LLTO), the omitted observations per
+#'   # with both `"space"` and `"time"` column roles set (LLTO), the omitted observations per
 #'   # fold can be shown by setting `show_omitted = TRUE`
 #'   autoplot(resampling, task_st, fold_id = 1, show_omitted = TRUE)
 #' }
@@ -118,11 +119,10 @@ autoplot.ResamplingSptCVCstf = function( # nolint
     resampling_sub$instance = resampling_sub$instance[[repeats_id]]
   }
 
-  # FIXME: check space and time var from column roles!
   # check if we are in a 2D or 3D scenario
   if (is.null(plot3D)) {
-    if (!is.null(resampling_sub$space_var) &&
-      !is.null(resampling_sub$time_var)) {
+    if (length(task$col_roles$space) &&
+      length(task$col_roles$time)) {
       plot3D = TRUE
     } else {
       plot3D = FALSE
@@ -162,6 +162,19 @@ autoplot.ResamplingSptCVCstf = function( # nolint
         ### only one fold
 
         data_coords = format_resampling_list(task, resampling_sub)
+
+        # FIXME: this is just an escape, fix before merging
+        if (length(task$col_roles$time)) {
+          data_coords$Date = as.Date(task$data(cols = task$col_roles$time)[[1]])
+        } else {
+          # if time col is not set, check for plot_time col role
+          if (length(task$col_roles$plot)) {
+            data_coords$Date = as.Date(task$data(cols = task$col_roles$plot)[[1]])
+          } else {
+            lg$error("Neither 'time' or 'plot' column roles are set. At least one is required for 3D plotting. If the variable is only used for plotting purposes, please define column role 'plot'.")
+            stop()
+          }
+        }
 
         # suppress undefined global variables note
         data_coords$indicator = ""
@@ -303,7 +316,8 @@ autoplot.ResamplingSptCVCstf = function( # nolint
     }
 
     else {
-      stop("This method requires to set argument 'fold_id'. See ?autoplot.ResamplingSptCVCstf for more information.") # nolint
+      lg$fatal("This method requires to set argument 'fold_id'. See ?autoplot.ResamplingSptCVCstf for more information.") # nolint
+      stop()
     }
 
     # is a grid requested?
@@ -313,13 +327,9 @@ autoplot.ResamplingSptCVCstf = function( # nolint
       }
       return(plot)
     } else {
-      messagef("Unfortunately plotly does not support a dynamic
-       arrangement of multiple subplots.
-       See article 'Visualization of spatiotemporal clusters'
-       (https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz) for a
-       manual workaround.
-       Use the objects in the returned list to arrange a custom grid.",
-        wrap = TRUE)
+      lg$warn("Unfortunately plotly does not support a dynamic arrangement of multiple subplots.
+       See article 'Visualization of spatiotemporal clusters' (https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz) for a manual workaround.
+       Use the objects in the returned list to arrange a custom grid.")
 
       if (static_image) {
         plotly::orca(plot, ...)

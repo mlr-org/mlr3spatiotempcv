@@ -119,7 +119,7 @@ as.data.table(mlr_resamplings)
 Additional example tasks:
 
 - `tsk("ecuador")` (spatial, classif)
-- `tsk("cookfarm")` (spatiotemp, regr)
+- `tsk("cookfarm_mlr3")` (spatiotemp, regr)
 
 # Upstream Packages and Scientific References
 

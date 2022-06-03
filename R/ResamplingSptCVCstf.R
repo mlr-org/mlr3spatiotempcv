@@ -106,13 +106,13 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
 sample_cast = function(task, stratify = FALSE, folds) {
 
   if (length(task$col_roles$time) && length(task$col_roles$space)) {
-    lg$info(sprintf("Using column roles 'space' (var. '%s') and 'time' (var. '%s') for partitioning", task$col_roles$space, task$col_roles$time))
+    lg$info(sprintf("Using column roles 'space' ('%s') and 'time' ('%s') for partitioning", task$col_roles$space, task$col_roles$time))
 
   } else if (length(task$col_roles$time)) {
-    lg$info(sprintf("Using column role 'time' (var. '%s') for partitioning", task$col_roles$time))
+    lg$info(sprintf("Using column role 'time' ('%s') for partitioning", task$col_roles$time))
   }
   else if (length(task$col_roles$space)) {
-    lg$info(sprintf("Using column role 'space' (var. '%s') for partitioning", task$col_roles$space))
+    lg$info(sprintf("Using column role 'space' ('%s') for partitioning", task$col_roles$space))
   }
 
   target = if (stratify) task$target_names else NULL

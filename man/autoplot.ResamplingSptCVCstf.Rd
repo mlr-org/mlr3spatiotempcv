@@ -113,12 +113,13 @@ Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods to
 visualize mlr3 spatiotemporal resampling objects.
 }
 \details{
-This method requires to set argument \code{fold_id} and no plot containing all
-partitions can be created. This is because the method does not make use of
-all observations but only a subset of them (many observations are left out).
+This method requires to set argument \code{fold_id}.
+No plot showing all folds in one plot can be created.
+This is because the LLTO method does not make use of all observations but only
+a subset of them (many observations are omitted).
 Hence, train and test sets of one fold are not re-used in other folds as in
-other methods and plotting these without a train/test indicator would not
-make sense.
+other methods and plotting these without a train/test indicator would be
+misleading.
 }
 \section{2D vs 3D plotting}{
 
@@ -143,7 +144,7 @@ if (mlr3misc::require_namespaces(c("sf", "plotly"), quietly = TRUE)) {
   resampling = rsmp("sptcv_cstf", folds = 5)
   resampling$instantiate(task_st)
 
-  # with both `space_var` and `time_var` (LLTO), the omitted observations per
+  # with both `"space"` and `"time"` column roles set (LLTO), the omitted observations per
   # fold can be shown by setting `show_omitted = TRUE`
   autoplot(resampling, task_st, fold_id = 1, show_omitted = TRUE)
 }
