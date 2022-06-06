@@ -17,14 +17,14 @@
 #' rcv = rsmp("sptcv_cstf", folds = 5)
 #' rcv$instantiate(task)
 #'
-#' # Individual sets:
-#' rcv$train_set(1)
-#' rcv$test_set(1)
+#' ### Individual sets:
+#' # rcv$train_set(1)
+#' # rcv$test_set(1)
 #' # check that no obs are in both sets
 #' intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 #'
 #' # Internal storage:
-#' rcv$instance # table
+#' # rcv$instance # table
 ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
   inherit = mlr3::Resampling,
   public = list(
