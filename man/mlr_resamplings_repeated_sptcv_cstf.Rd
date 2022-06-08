@@ -50,14 +50,14 @@ task$set_col_roles("Date", roles = "time")
 rcv = rsmp("repeated_sptcv_cstf", folds = 5, repeats = 3)
 rcv$instantiate(task)
 
-# Individual sets:
-rcv$train_set(1)
-rcv$test_set(1)
+### Individual sets:
+# rcv$train_set(1)
+# rcv$test_set(1)
 # check that no obs are in both sets
 intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 
 # Internal storage:
-rcv$instance # table
+# rcv$instance # table
 }
 \references{
 Zhao Y, Karypis G (2002).

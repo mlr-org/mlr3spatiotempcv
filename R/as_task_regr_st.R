@@ -10,7 +10,7 @@
 #' 2. [sf::sf].
 #'
 #' @inheritParams mlr3::as_task_regr
-#' @param  crs `[character(1)]`\cr
+#' @param crs `[character(1)]`\cr
 #'     Coordinate reference system. Either a PROJ string or an
 #'     [EPSG](https://epsg.io/) code.
 #' @param coords_as_features `[logical(1)]`\cr
