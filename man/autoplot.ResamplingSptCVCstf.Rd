@@ -22,6 +22,7 @@
   static_image = FALSE,
   show_omitted = FALSE,
   plot3D = NULL,
+  plot_time_var = NULL,
   ...
 )
 
@@ -39,6 +40,7 @@
   point_size = 3,
   axis_label_fontsize = 11,
   plot3D = NULL,
+  plot_time_var = NULL,
   ...
 )
 
@@ -98,6 +100,11 @@ Whether to show points not used in train or test set for the current fold.}
 Whether to create a 2D image via \pkg{ggplot2} or a 3D plot via
 \pkg{plotly}.}
 
+\item{plot_time_var}{\verb{[character]}\cr
+The variable to use for the z-axis (time).
+Remove the column role \code{feature} for this variable to only use
+it for plotting.}
+
 \item{...}{Passed down to \code{plotly::orca()}. Only effective when
 \code{static_image = TRUE}.}
 
@@ -113,12 +120,13 @@ Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods to
 visualize mlr3 spatiotemporal resampling objects.
 }
 \details{
-This method requires to set argument \code{fold_id} and no plot containing all
-partitions can be created. This is because the method does not make use of
-all observations but only a subset of them (many observations are left out).
+This method requires to set argument \code{fold_id}.
+No plot showing all folds in one plot can be created.
+This is because the LLTO method does not make use of all observations but only
+a subset of them (many observations are omitted).
 Hence, train and test sets of one fold are not re-used in other folds as in
-other methods and plotting these without a train/test indicator would not
-make sense.
+other methods and plotting these without a train/test indicator would be
+misleading.
 }
 \section{2D vs 3D plotting}{
 
@@ -143,7 +151,7 @@ if (mlr3misc::require_namespaces(c("sf", "plotly"), quietly = TRUE)) {
   resampling = rsmp("sptcv_cstf", folds = 5)
   resampling$instantiate(task_st)
 
-  # with both `space_var` and `time_var` (LLTO), the omitted observations per
+  # with both `"space"` and `"time"` column roles set (LLTO), the omitted observations per
   # fold can be shown by setting `show_omitted = TRUE`
   autoplot(resampling, task_st, fold_id = 1, show_omitted = TRUE)
 }

@@ -29,16 +29,15 @@ changed by setting \code{extra_args$coords_as_features = TRUE}.
 
 \examples{
 if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
-
-  data = mlr3::as_data_backend(ecuador)
-  task = TaskClassifST$new("ecuador",
+  data <- mlr3::as_data_backend(ecuador)
+  task <- TaskClassifST$new("ecuador",
     backend = data, target = "slides",
     positive = "TRUE", extra_args = list(coordinate_names = c("x", "y"))
   )
 
   # passing objects of class 'sf' is also supported
-  data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"))
-  task = TaskClassifST$new("ecuador_sf",
+  data_sf <- sf::st_as_sf(ecuador, coords = c("x", "y"))
+  task <- TaskClassifST$new("ecuador_sf",
     backend = data_sf, target = "slides", positive = "TRUE"
   )
 

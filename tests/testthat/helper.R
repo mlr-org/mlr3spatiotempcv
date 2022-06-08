@@ -175,6 +175,19 @@ test_make_blockCV_test_task = function() {
 
 }
 
+# subset of cookfarm task for smaller vdiffr snaps
+# we need at least 10k obs as otherwise we get less than 4 unique spatial locations for var 'SOURCEID'
+set.seed(42)
+b = mlr3::as_data_backend(cookfarm_mlr3[sample(10000), ])
+b$hash = "_mlr3_tasks_cookfarm_"
+tsk_cookfarm_sub = TaskRegrST$new(
+  id = "cookfarm", b, target = "PHIHOX",
+  extra_args = list(
+    coordinate_names = c("x", "y"), coords_as_features = FALSE,
+    crs = 26911))
+tsk_cookfarm_sub$set_col_roles("Date", roles = "time")
+tsk_cookfarm_sub$set_col_roles("SOURCEID", roles = "space")
+
 # multiclass tasks -------------------------------------------------------------
 #
 # Create multiclass task

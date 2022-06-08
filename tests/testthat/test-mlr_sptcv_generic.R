@@ -95,11 +95,10 @@ test_that("cloning works", {
     expect_true(all.equal(i, clone))
   }
 
-  # FIXME: this notation is not valid anymore
-  # sptcv_rsp = rsmps(c("sptcv_cluto", "sptcv_cstf"), folds = 2, time_var = "Date")
-  #
-  # for (i in sptcv_rsp) {
-  #   clone = i$clone(deep = TRUE)
-  #   expect_true(all.equal(i, clone))
-  # }
+  sptcv_rsp = rsmps(c("sptcv_cluto", "sptcv_cstf"), folds = 2)
+
+  for (i in sptcv_rsp) {
+    clone = i$clone(deep = TRUE)
+    expect_true(all.equal(i, clone))
+  }
 })
