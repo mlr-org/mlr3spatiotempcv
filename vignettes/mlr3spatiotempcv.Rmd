@@ -21,6 +21,10 @@ knitr::opts_chunk$set(
 
 # Introduction
 
+```{r, include=FALSE}
+library(mlr3spatiotempcv)
+```
+
 This package adds resampling methods for the {mlr3} package framework suited for spatial, temporal and spatiotemporal data.
 These methods can help to reduce the influence of [autocorrelation](https://mlr3book.mlr-org.com/special-tasks.html#spatiotemporal-intro) on performance estimates when performing cross-validation.
 While this article gives a rather technical introduction to the package, a more applied approach can be found in the [mlr3book section on "Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/special-tasks.html#spatiotemporal).
@@ -30,10 +34,10 @@ After loading the package via `library("mlr3spatiotempcv")`, the spatiotemporal 
 ## Creating a spatial Task
 
 To make use of spatial resampling methods, a {mlr3} task that is aware of its spatial characteristic needs to be created.
-Two child classes exist in {mlr3spatiotempcv} for this purpose: 
+Two child classes exist in {mlr3spatiotempcv} for this purpose:
 
-- `TaskClassifST`
-- `TaskRegrST`
+- `TaskClassifST$new()`
+- `TaskRegrST$new()`
 
 To create one of these, one can either pass a `sf` object as the "backend" directly:
 
@@ -61,7 +65,7 @@ task = TaskClassifST$new("ecuador",
 Now this Task can be used as a normal {mlr3} task in any kind of modeling scenario.
 Have a look at the [mlr3book section on "Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/special-tasks.html#spatiotemporal) on how to apply a spatiotemporal resampling method to such a task.
 
-# Contributed assets by {mlr3spatiotempcv}
+# Contributed reflections by {mlr3spatiotempcv}
 
 In {mlr3}, dictionaries are used for overview purposes of available methods.
 The following sections show which dictionaries get appended with new entries when loading {mlr3spatiotempcv}.
@@ -70,9 +74,8 @@ The following sections show which dictionaries get appended with new entries whe
 
 Additional task types:
 
--   `TaskClassifST`
-
--   `TaskRegrST`
+- `TaskClassifST`
+- `TaskRegrST`
 
 ```{r}
 mlr_reflections$task_types
@@ -82,7 +85,9 @@ mlr_reflections$task_types
 
 Additional column roles:
 
--   `coordinates`
+- `coordinates`
+- `space`
+- `time`
 
 ```{r}
 mlr_reflections$task_col_roles
@@ -92,34 +97,31 @@ mlr_reflections$task_col_roles
 
 Additional resampling methods:
 
--   `spcv_block`
+* `mlr_resampling_spcv_block`
 
--   `spcv_buffer`
+* `mlr_resampling_spcv_buffer`
 
--   `spcv_coords`
+* `mlr_resampling_spcv_coords`
 
--   `spcv_disc`
+* `mlr_resampling_spcv_disc`
 
--   `spcv_tiles`
+* `mlr_resampling_spcv_tiles`
 
--   `spcv_env`
+* `mlr_resampling_spcv_env`
 
--   `sptcv_cluto`
+* `mlr_resampling_sptcv_cluto`
 
--   `sptcv_cstf`
+* `mlr_resampling_sptcv_cstf`
 
 and their respective repeated versions.
-
-```{r, warning=FALSE}
-as.data.table(mlr_resamplings)
-```
+See `as.data.table(mlr_resamplings)` for the full dictionary.
 
 # Examples Tasks
 
 Additional example tasks:
 
 - `tsk("ecuador")` (spatial, classif)
-- `tsk("cookfarm")` (spatiotemp, regr)
+- `tsk("cookfarm_mlr3")` (spatiotemp, regr)
 
 # Upstream Packages and Scientific References
 
@@ -129,27 +131,27 @@ All methods besides `"spcv_buffer"` also have a corresponding "repeated" method.
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
 | Category                       | (Package) Method Name                         | Reference         | mlr3 Notation                        |
 +================================+===============================================+===================+======================================+
-| **Buffering**, spatial         | (blockCV) Spatial Buffering                   | @valavi2018       | `rsmp("spcv_buffer")`                |
+| **Buffering**, spatial         | (blockCV) Spatial Buffering                   | @valavi2018       | `mlr_resamplings_spcv_buffer`                |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
-| **Buffering**, spatial         | (sperrorest) Spatial Disc                     | @brenning2012     | `rsmp("spcv_disc")`                  |
+| **Buffering**, spatial         | (sperrorest) Spatial Disc                     | @brenning2012     | `mlr_resamplings_spcv_disc`                  |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
-| **Blocking**, spatial          | (blockCV) Spatial Blocking                    | @valavi2018       | `rsmp("spcv_block")`                 |
+| **Blocking**, spatial          | (blockCV) Spatial Blocking                    | @valavi2018       | `mlr_resamplings_spcv_block`                 |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
-| **Blocking**, spatial          | (sperrorest) Spatial Tiles                    | @valavi2018       | `rsmp("spcv_tiles")`                 |
+| **Blocking**, spatial          | (sperrorest) Spatial Tiles                    | @valavi2018       | `mlr_resamplings_spcv_tiles`                 |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
-| **Clustering**, spatial        | (sperrorest) Spatial CV                       | @brenning2012     | `rsmp("spcv_coords")`                |
+| **Clustering**, spatial        | (sperrorest) Spatial CV                       | @brenning2012     | `mlr_resamplings_spcv_coords`                |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
-| **Clustering**, feature-space  | (blockCV) Environmental Blocking              | @valavi2018       | `rsmp("spcv_env")`                   |
+| **Clustering**, feature-space  | (blockCV) Environmental Blocking              | @valavi2018       | `mlr_resamplings_spcv_env`                   |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
 | ------------------------------ | --------------------------------------------- | ----------------- | ------------------------------------ |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
-| **Grouping**, predefined inds  | (mlr3) Predefined partitions                  |        -          | `rsmp("custom_cv")`                  |
+| **Grouping**, predefined inds  | (mlr3) Predefined partitions                  |        -          | `mlr_resamplings_custom_cv`                  |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
-| **Grouping**, spatiotemporal   | (mlr3) via `col_roles` `"group"`              |        -          | `rsmp("cv")`, `Task$set_col_roles()` |
+| **Grouping**, spatiotemporal   | (mlr3) via `col_roles` `"group"`              |        -          | `mlr_resamplings_cv`, `Task$set_col_roles(<variable, "group")` |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
-| **Grouping**, spatiotemporal   | (CAST) Leave-Location-and-Time-Out            | @meyer2018        | `rsmp("sptcv_cstf")`                 |
+| **Grouping**, spatiotemporal   | (CAST) Leave-Location-and-Time-Out            | @meyer2018        | `mlr_resamplings_sptcv_cstf`, `Task$set_col_roles(<variable>, "space|time")`              |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
-| **Clustering**, spatiotemporal | (skmeans) Spatiotemporal Clustering           | @zhao2002         | `rsmp("sptcv_cluto")`                |
+| **Clustering**, spatiotemporal | (skmeans) Spatiotemporal Clustering           | @zhao2002         | `mlr_resamplings_sptcv_cluto`                |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
 
 # References
