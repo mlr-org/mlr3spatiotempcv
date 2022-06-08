@@ -101,6 +101,16 @@ TaskRegrST = R6::R6Class("TaskRegrST",
       super$print(...)
       cat("* Coordinates:\n")
       print(self$coordinates())
+      if (length(self$col_roles$time) && length(self$col_roles$space)) {
+        cat("* Column roles:\n- Time:", self$col_roles$time,
+          "\n- Space:", self$col_roles$space, "\n")
+      } else if (length(self$col_roles$time)) {
+        cat("* Column roles:\n- Time:", self$col_roles$time, "\n")
+      } else if (length(self$col_roles$space)) {
+        cat("* Column roles:\n- Space:", self$col_roles$space, "\n")
+      } else if (length(self$col_roles$plot)) {
+        cat("* Column roles:\n- Plot:", self$col_roles$plot, "\n")
+      }
     },
 
     #' @field extra_args (named `list()`)\cr
