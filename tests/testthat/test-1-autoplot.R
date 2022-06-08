@@ -398,24 +398,23 @@ test_that("plot() works for 'sptcv_cstf'", {
   skip_if_not_installed("vdiffr")
 
   # only use Date for plotting, not for partitioning
-  tsk_cookfarm_sub$set_col_roles("Date", roles = "plot")
+  tsk_cookfarm_sub$col_roles$feature = setdiff(tsk_cookfarm_sub$col_roles$feature, "Date")
   tsk_cookfarm_sub$col_roles$time = character()
   rsp = rsmp("sptcv_cstf", folds = 4)
   rsp$instantiate(tsk_cookfarm_sub)
 
   expect_error(autoplot(rsp, task = tsk_cookfarm_sub, plot3D = TRUE))
   p2 = suppressWarnings(
-    autoplot(rsp, tsk_cookfarm_sub, 1, plot3D = TRUE)
+    autoplot(rsp, tsk_cookfarm_sub, 1, plot3D = TRUE, plot_time_var = "Date")
   )
   # plot() would force image printing here
   p3 = suppressWarnings(
-    suppressMessages(autoplot(rsp, tsk_cookfarm_sub, c(1, 2), plot3D = TRUE))
+    suppressMessages(autoplot(rsp, tsk_cookfarm_sub, c(1, 2), plot3D = TRUE, plot_time_var = "Date"))
   )
 
   # test error if neither time nor plot col roles are defined
   # only use Date for plotting, not for partitioning
   tsk_cookfarm_sub$col_roles$time = character()
-  tsk_cookfarm_sub$col_roles$plot = character()
   expect_error(autoplot(rsp, tsk_cookfarm_sub, 1, plot3D = TRUE))
 
   expect_s3_class(p2, "plotly")

@@ -53,6 +53,10 @@
 #' @param plot3D `[logical]`\cr
 #'   Whether to create a 2D image via \pkg{ggplot2} or a 3D plot via
 #'   \pkg{plotly}.
+#' @param plot_time_var `[character]`\cr
+#'   The variable to use for the z-axis (time).
+#'   Remove the column role `feature` for this variable to only use
+#'   it for plotting.
 #' @param ... Passed down to `plotly::orca()`. Only effective when
 #' `static_image = TRUE`.
 #' @export
@@ -96,6 +100,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   static_image = FALSE,
   show_omitted = FALSE,
   plot3D = NULL,
+  plot_time_var = NULL,
   ...) {
 
   dots = list(...)
@@ -167,10 +172,10 @@ autoplot.ResamplingSptCVCstf = function( # nolint
           data_coords$Date = as.Date(task$data(cols = task$col_roles$time)[[1]])
         } else {
           # if time col is not set, check for plot_time col role
-          if (length(task$col_roles$plot)) {
-            data_coords$Date = as.Date(task$data(cols = task$col_roles$plot)[[1]])
+          if (!is.null(plot_time_var)) {
+            data_coords$Date = as.Date(task$data(cols = plot_time_var)[[1]])
           } else {
-            lg$error("Neither 'time' or 'plot' column roles are set. At least one is required for 3D plotting. If the variable is only used for plotting purposes, please define column role 'plot'.")
+            lg$error("Neither 'time' or 'plot' column roles are set. At least one is required for 3D plotting. If the variable is only used for plotting purposes, please define argument 'plot_time_var' in `autoplot()` and remove the column role 'feature' for this variable.")
             stop()
           }
         }
@@ -356,6 +361,7 @@ autoplot.ResamplingRepeatedSptCVCstf = function( # nolint
   point_size = 3,
   axis_label_fontsize = 11,
   plot3D = NULL,
+  plot_time_var = NULL,
   ...) {
 
   autoplot.ResamplingSptCVCstf(
@@ -370,7 +376,8 @@ autoplot.ResamplingRepeatedSptCVCstf = function( # nolint
     nticks_y = nticks_y,
     point_size = point_size,
     axis_label_fontsize = axis_label_fontsize,
-    plot3D = plot3D,
+    plot3D = plot3D, ,
+    plot_time_var = plot_time_var,
     ...,
     # ellipsis
     repeats_id = repeats_id

@@ -22,6 +22,7 @@
   static_image = FALSE,
   show_omitted = FALSE,
   plot3D = NULL,
+  plot_time_var = NULL,
   ...
 )
 
@@ -39,6 +40,7 @@
   point_size = 3,
   axis_label_fontsize = 11,
   plot3D = NULL,
+  plot_time_var = NULL,
   ...
 )
 
@@ -97,6 +99,11 @@ Whether to show points not used in train or test set for the current fold.}
 \item{plot3D}{\verb{[logical]}\cr
 Whether to create a 2D image via \pkg{ggplot2} or a 3D plot via
 \pkg{plotly}.}
+
+\item{plot_time_var}{\verb{[character]}\cr
+The variable to use for the z-axis (time).
+Remove the column role \code{feature} for this variable to only use
+it for plotting.}
 
 \item{...}{Passed down to \code{plotly::orca()}. Only effective when
 \code{static_image = TRUE}.}
