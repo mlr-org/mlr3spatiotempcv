@@ -32,11 +32,10 @@ It makes use of the returned 3D plotly objects which are returned in a list by `
 ```{r, fig.align='center', eval=FALSE}
 library(mlr3)
 library(mlr3spatiotempcv)
-task_st = tsk("cookfarm")
+task_st = tsk("cookfarm_mlr3")
 task_st$set_col_roles("SOURCEID", roles = "space")
 task_st$set_col_roles("Date", roles = "time")
 resampling = rsmp("sptcv_cstf", folds = 5)
-resampling$instantiate(task_st)
 
 pl = autoplot(resampling, task_st, c(1, 2, 3, 4),
   crs = 4326, point_size = 3, axis_label_fontsize = 10,
@@ -76,87 +75,72 @@ plotly::layout(pl_subplot,
 knitr::include_graphics("../man/figures/sptcv_cstf_multiplot.png")
 ```
 
-Note: The image shown above is a static version created with `plotly::orca()`.
+Note: The image shown above is a static version created with `plotly::save_image()`.
 
-Subplot titles can unfortunately not created dynamically.
+Unfortunately, titles in subplots cannot be created dynamically.
 However, there is a manual workaround via [annotations](https://plotly.com/r/reference/#layout-annotations) show in this [RPubs post](https://rpubs.com/bcd/subplot-titles).
 
 ## Examples of spatial partitioning (2D)
 
-The following plots are based on a three fold partitioning of the [ecuador](https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_ecuador.html) example task (expect method `p_buffer` which is LOO-CV).
-They do not claim to make sense or make use of useful settings - they only have a showcase purpose.
-The code which produced the plots can be found [here](https://github.com/mlr-org/mlr3spatiotempcv/blob/main/vignettes/spatiotemp-viz.Rmd).
+The following plots are based on a three fold partitioning of the [ecuador](https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_ecuador.html) example task.
+Method `mlr_resampling_sptcv_cstf` is omitted here as the `ecuador` task does not have a factor grouping variable which is required by this method.
+The partitions created on this dataset do not claim to necessarily make sense in practice - they should only contrast the individual methods against each other.
+The source code can be found [here](https://github.com/mlr-org/mlr3spatiotempcv/blob/main/vignettes/spatiotemp-viz.Rmd).
 
 ```{r, echo=FALSE, cache=TRUE, fig.width=10, fig.height=8, eval=!on_mac}
 library(patchwork)
 library(ggplot2)
 library(mlr3)
 library(mlr3spatiotempcv)
-task = tsk("ecuador")
+task_ecuador = tsk("ecuador")
+task_cookfarm = tsk("cookfarm_mlr3")
 
 set.seed(42)
 
 # block
 resampling_block = rsmp("spcv_block", range = 1000L, folds = 3)
-resampling_block$instantiate(task)
-p_block = autoplot(resampling_block, task, fold_id = 1,
-  show_blocks = TRUE, size = 0.6) +
+p_block = autoplot(resampling_block, task_ecuador,
+  fold_id = 1,
+  show_blocks = TRUE, size = 0.6
+) +
   scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) +
   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02)) +
   theme(legend.position = "none")
 
 # buffer
 resampling_buffer = rsmp("spcv_buffer", theRange = 1000L)
-resampling_buffer$instantiate(task)
-p_buffer = autoplot(resampling_buffer, task, fold_id = 1, size = 0.6) +
+p_buffer = autoplot(resampling_buffer, task_ecuador, fold_id = 1, size = 0.6) +
   scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) +
   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02)) +
   theme(legend.position = "none")
 
 # coords
 resampling_coords = rsmp("spcv_coords", folds = 3)
-resampling_coords$instantiate(task)
-p_coords = autoplot(resampling_coords, task, fold_id = 1, size = 0.6) +
+p_coords = autoplot(resampling_coords, task_ecuador, fold_id = 1, size = 0.6) +
   scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) +
   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02)) +
   theme(legend.position = "none")
 
 # env
 resampling_env = rsmp("spcv_env", folds = 3, features = "distroad")
-resampling_env$instantiate(task)
-p_env = autoplot(resampling_env, task, fold_id = 1, size = 0.6) +
+p_env = autoplot(resampling_env, task_ecuador, fold_id = 1, size = 0.6) +
   scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) +
   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02)) +
   theme(legend.position = "none")
 
 # disc
 resampling_disc = rsmp("spcv_disc", folds = 3L, radius = 200L, buffer = 200L)
-resampling_disc$instantiate(task)
-p_disc = autoplot(resampling_disc, task, fold_id = 1, size = 0.6) +
+p_disc = autoplot(resampling_disc, task_ecuador, fold_id = 1, size = 0.6) +
   scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) +
   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02)) +
   theme(legend.position = "none")
 
-# disc
+# tiles
 resampling_tiles = rsmp("spcv_tiles", nsplit = c(4L, 3L), reassign = FALSE)
-resampling_tiles$instantiate(task)
-p_tiles = autoplot(resampling_tiles, task, fold_id = 1, size = 0.6) +
+p_tiles = autoplot(resampling_tiles, task_ecuador, fold_id = 1, size = 0.6) +
   scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) +
   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02)) +
   theme(legend.position = "none")
-
-# cstf space
-# resampling_cstf_space = rsmp("sptcv_cstf", folds = 3L, space_var = "SOURCEID")
-# resampling_cstf_space$instantiate(task)
-# p_cstf_space = autoplot(resampling_cstf_space, task, fold_id = 1) +
-#   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02))  +
-#   theme(legend.position = "none")
-#
-# # cstf time
-# resampling_cstf_space = rsmp("sptcv_cstf", folds = 3L, time_var = "Date")
-# resampling_cstf_space$instantiate(task)
-# p_cstf_time = autoplot(resampling_cstf_space, task, fold_id = 1) +
-#   scale_x_continuous(breaks = seq(-79.085, -79.055, 0.02))
 
 # plot
 p_block + p_coords + p_env + p_disc + p_tiles + p_buffer +
@@ -164,14 +148,11 @@ p_block + p_coords + p_env + p_disc + p_tiles + p_buffer +
   plot_annotation(tag_levels = "A")
 ```
 
-- **A**: `"spcv_block"`
-
-- **B**: `"spcv_coords"`
-
-- **C**: `"spcv_env"`
-
-- **D**: `"spcv_disc"`
-
-- **E**: `"spcv_tiles"`
-
-- **F**: `"spcv_buffer"`
+| Identifier | Method Name                  |
+| :--------- | :--------------------------- |
+| A          | `mlr_resampling_spcv_block`  |
+| B          | `mlr_resampling_spcv_coords` |
+| C          | `mlr_resampling_spcv_env`    |
+| D          | `mlr_resampling_spcv_disc`   |
+| E          | `mlr_resampling_spcv_tiles`  |
+| F          | `mlr_resampling_spcv_buffer` |
