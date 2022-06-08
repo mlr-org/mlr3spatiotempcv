@@ -27,11 +27,6 @@ format_resampling_list = function(task, resampling) {
     data$train[data$row_id %in% row_id_train] = i
   }
 
-  # FIXME: this is just an escape, fix before merging
-  if (length(task$col_roles$time)) {
-    data$Date = as.Date(task$data(cols = task$col_roles$time)[[1]])
-  }
-
   # merge the coords for the 3D plot
   data_coords = merge(data, coords, by = "row_id")
   return(data_coords)

@@ -20,7 +20,6 @@
 #' @export
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
-#'
 #'   data = mlr3::as_data_backend(ecuador)
 #'   task = TaskClassifST$new("ecuador",
 #'     backend = data, target = "slides",
@@ -43,7 +42,6 @@
 #' }
 TaskClassifST = R6::R6Class("TaskClassifST",
   inherit = TaskClassif,
-
   public = list(
 
     #' @description
@@ -65,8 +63,8 @@ TaskClassifST = R6::R6Class("TaskClassifST",
     initialize = function(id, backend, target, positive = NULL,
       extra_args = list(
         coords_as_features = FALSE, crs = NA,
-        coordinate_names = NA)) {
-
+        coordinate_names = NA
+      )) {
       assert_string(target)
 
       # restore extra_args defaults
@@ -85,7 +83,8 @@ TaskClassifST = R6::R6Class("TaskClassifST",
 
       super$initialize(
         id = id, backend = backend, target = target,
-        positive = positive, extra_args = extra_args)
+        positive = positive, extra_args = extra_args
+      )
 
       self$extra_args$coordinate_names = extra_args$coordinate_names
 
@@ -98,7 +97,8 @@ TaskClassifST = R6::R6Class("TaskClassifST",
 
       self$properties = union(
         self$properties,
-        if (length(levels) == 2L) "twoclass" else "multiclass")
+        if (length(levels) == 2L) "twoclass" else "multiclass"
+      )
       if (!is.null(positive)) {
         self$positive = positive
       }
@@ -116,7 +116,8 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       if (!extra_args$coords_as_features) {
         self$col_roles$feature = setdiff(
           self$col_roles$feature,
-          extra_args$coordinate_names)
+          extra_args$coordinate_names
+        )
       }
     },
 
@@ -138,6 +139,16 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       super$print(...)
       cat("* Coordinates:\n")
       print(self$coordinates())
+      if (length(self$col_roles$time) && length(self$col_roles$space)) {
+        cat(
+          "* Column roles:\n- Time:", self$col_roles$time,
+          "\n- Space:", self$col_roles$space, "\n"
+        )
+      } else if (length(self$col_roles$time)) {
+        cat("* Column roles:\n- Time:", self$col_roles$time, "\n")
+      } else if (length(self$col_roles$space)) {
+        cat("* Column roles:\n- Space:", self$col_roles$space, "\n")
+      }
     },
 
     #' @field extra_args (named `list()`)\cr
