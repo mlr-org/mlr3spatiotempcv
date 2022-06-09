@@ -65,11 +65,11 @@ register_mlr3 = function() { # nocov start
   # append "space" and "time" to col_roles
   # used in CAST
   # prevent redundant addition when calling `pkgload::load_all()`
-  if (!any(c("space", "time", "plot_time", "coordinates") %in% x$task_col_roles$classif)) {
-    x$task_col_roles$classif = append(x$task_col_roles$classif, c("coordinates", "space", "time"))
-    x$task_col_roles$classif_st = append(x$task_col_roles$classif_st, c("coordinates", "space", "time"))
-    x$task_col_roles$regr = append(x$task_col_roles$regr, c("coordinates", "space", "time"))
-    x$task_col_roles$regr_st = append(x$task_col_roles$regr_st, c("coordinates", "space", "time"))
+  if (!any(c("space", "time", "plot_time", "coordinate") %in% x$task_col_roles$classif)) {
+    x$task_col_roles$classif = append(x$task_col_roles$classif, c("coordinate", "space", "time"))
+    x$task_col_roles$classif_st = append(x$task_col_roles$classif_st, c("coordinate", "space", "time"))
+    x$task_col_roles$regr = append(x$task_col_roles$regr, c("coordinate", "space", "time"))
+    x$task_col_roles$regr_st = append(x$task_col_roles$regr_st, c("coordinate", "space", "time"))
   }
 
   # tasks --------------------------------------------------------------------

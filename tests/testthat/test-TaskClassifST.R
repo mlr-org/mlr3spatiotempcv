@@ -47,14 +47,13 @@ test_that("tasks created from sf objects do not duplicate rows", {
   skip_if_not_installed("sf")
   data = test_make_sf_twoclass_df()
 
-  task = TaskClassifST$new(
+  task = as_task_classif_st(
+    data,
     id = "sp_regression",
-    backend = data,
     target = "response",
-    extra_args = list(
-      coordinate_names = c("x", "y"),
-      crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
-      coords_as_features = FALSE)
+    coordinate_names = c("x", "y"),
+    crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
+    coords_as_features = FALSE
   )
 
   expect_equal(nrow(task$data()), nrow(data))
@@ -66,9 +65,9 @@ test_that("extra_args contains default arguments", {
     id = "sp_regression",
     backend = ecuador,
     target = "slides",
-    extra_args = list(
-      coordinate_names = c("x", "y"))
+    coordinate_names = c("x", "y")
   )
 
-  expect_equal(task$extra_args, list(coords_as_features = FALSE, crs = NA, coordinate_names = c("x", "y")))
+  expect_equal(task$extra_args, list(coords_as_features = FALSE, crs = NA_character_,
+    coordinate_names = c("x", "y")))
 })

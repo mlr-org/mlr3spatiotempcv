@@ -10,7 +10,7 @@
 #' The coordinate reference system passed during initialization must match the
 #' one which was used during data creation, otherwise offsets of multiple meters
 #' may occur. By default, coordinates are not used as features. This can be
-#' changed by setting `extra_args$coords_as_features = TRUE`.
+#' changed by setting `coords_as_features = TRUE`.
 #'
 #' @template rox_param_id
 #' @template rox_param_backend
@@ -53,15 +53,13 @@ TaskClassifST = R6::R6Class("TaskClassifST",
 
       super$initialize(id = id, backend = backend, target = target,
         positive = positive, extra_args = extra_args)
-      self$crs = crs
-      self$coordinate_names = coordinate_names
+      self$extra_args$coords_as_features = assert_flag(coords_as_features)
+      self$extra_args$crs = crs
+      self$extra_args$coordinate_names = coordinate_names
       mlr3misc::walk(coordinate_names, function(x) {
         assert_numeric(self$backend$head(1)[[x]], .var.name = x)
       })
-      self$extra_args$coords_as_features = assert_flag(coords_as_features)
 
-      # adjust classif task
-      self$task_type = "classif_st"
       new_col_roles = named_list(
         setdiff(mlr_reflections$task_col_roles[["classif_st"]],
           names(private$.col_roles)), character(0)
@@ -111,7 +109,8 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       if (missing(rhs)) {
         return(self$extra_args$crs)
       }
-      self$extra_args$crs = assert_string(rhs, na.ok = TRUE)
+      # FIXME:
+      # self$crs = assert_string(rhs, na.ok = TRUE)
     },
 
     #' @field coordinate_names (`character()`)\cr

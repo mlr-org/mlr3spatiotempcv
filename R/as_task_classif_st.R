@@ -40,7 +40,6 @@
 #'   # sf
 #'   ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 32717)
 #'   as_task_classif_st(ecuador_sf, target = "slides", positive = "TRUE")
-#'
 #' }
 as_task_classif_st = function(x, ...) {
   UseMethod("as_task_classif_st")
@@ -94,7 +93,7 @@ as_task_classif_st.sf = function(x, target = NULL, id = deparse(substitute(x)),
   }
 
   # extract spatial meta data
-  crs = sf::st_crs(x)$wkt
+  crs = sf::st_crs(x)$input
   coordinates = as.data.frame(sf::st_coordinates(x))
   coordinate_names = colnames(coordinates)
 

@@ -23,21 +23,24 @@ as_task_regr_st(x, ...)
 
 \method{as_task_regr_st}{data.frame}(
   x,
-  target = NULL,
+  target,
   id = deparse(substitute(x)),
-  crs = NA,
+  coordinate_names,
+  crs = NA_character_,
   coords_as_features = FALSE,
-  coordinate_names = NA,
+  label = NA_character_,
   ...
 )
 
 \method{as_task_regr_st}{DataBackend}(
   x,
-  target = NULL,
+  target,
   id = deparse(substitute(x)),
-  crs = NA,
+  positive = NULL,
+  coordinate_names,
+  crs,
   coords_as_features = FALSE,
-  coordinate_names = c("x", "y"),
+  label = NA_character_,
   ...
 )
 
@@ -46,6 +49,15 @@ as_task_regr_st(x, ...)
   target = NULL,
   id = deparse(substitute(x)),
   coords_as_features = FALSE,
+  label = NA_character_,
+  ...
+)
+
+\method{as_task_regr_st}{TaskClassifST}(
+  x,
+  target = NULL,
+  drop_original_target = FALSE,
+  drop_levels = TRUE,
   ...
 )
 }
@@ -73,27 +85,38 @@ If \code{TRUE}, ensures that the returned object is not the same as the input \c
 Id for the new task.
 Defaults to the (deparsed and substituted) name of the data argument.}
 
-\item{crs}{\verb{[character(1)]}\cr
-Coordinate reference system. Either a PROJ string or an
-\href{https://epsg.io/}{EPSG} code.}
+\item{coordinate_names}{(\code{character(1)})\cr
+The column names of the coordinates in the data.}
 
-\item{coords_as_features}{\verb{[logical(1)]}\cr
-Whether the coordinates should also be used as features.}
+\item{crs}{(\code{character(1)})\cr
+Coordinate reference system.
+WKT2 or EPSG string.}
 
-\item{coordinate_names}{(\code{character()})\cr
-The variables names of the coordinates in the data.}
+\item{coords_as_features}{(\code{logical(1)})\cr
+If \code{TRUE}, coordinates are used as features.}
+
+\item{label}{(\code{character(1)})\cr
+Label for the new instance. Shown in \code{as.data.table(mlr_tasks)}.}
+
+\item{positive}{(\code{character(1)})\cr
+Only for binary classification: Name of the positive class.
+The levels of the target columns are reordered accordingly, so that the
+first element of \verb{$class_names} is the positive class, and the second
+element is the negative class.}
 }
 \value{
-\link{TaskRegrST}.
+\link{TaskRegrST}
 }
 \description{
-Convert an object to a \link{TaskRegrST}.
-This is a S3 generic for the following objects:
+Convert object to a \link{TaskRegrST}.
+
+This is a S3 generic, specialized for at least the following objects:
 \enumerate{
-\item \link{TaskRegrST}: ensure the identity
-\item \code{\link[=data.frame]{data.frame()}} and \link{DataBackend}: provides an alternative to the
+\item \link{TaskRegrST}: Ensure the identity.
+\item \code{\link[=data.frame]{data.frame()}} and \link{DataBackend}: Provides an alternative to the
 constructor of \link{TaskRegrST}.
-\item \link[sf:sf]{sf::sf}.
+\item \link[sf:sf]{sf::sf}: Extracts spatial meta data before construction.
+\item \link{TaskClassif}: Calls \code{\link[=convert_task]{convert_task()}}.
 }
 }
 \examples{
@@ -103,16 +126,11 @@ if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
 
   # data.frame
   as_task_regr_st(cookfarm_mlr3, target = "PHIHOX",
-    coords_as_features = FALSE,
-    crs = 26911,
+    coords_as_features = FALSE, crs = 26911,
     coordinate_names = c("x", "y"))
 
   # sf
   cookfarm_sf = sf::st_as_sf(cookfarm_mlr3, coords = c("x", "y"), crs = 26911)
   as_task_regr_st(cookfarm_sf, target = "PHIHOX")
-
-  # TaskRegrST
-  task = tsk("cookfarm_mlr3")
-  as_task_regr_st(task)
 }
 }

@@ -20,10 +20,9 @@ test_make_regr_task = function(coords_as_features = FALSE) {
     id = "sp_regression",
     backend = data,
     target = "response",
-    extra_args = list(
-      coordinate_names = c("x", "y"),
-      crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
-      coords_as_features = coords_as_features)
+    coordinate_names = c("x", "y"),
+    crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
+    coords_as_features = coords_as_features
   )
 }
 
@@ -37,14 +36,13 @@ test_make_sf_regr_task = function(coords_as_features = FALSE) {
 
   data_sf = sf::st_as_sf(data, coords = c("x", "y"), crs = "epsg:4326")
 
-  TaskRegrST$new(
+  as_task_regr_st(
+    data_sf,
     id = "sf_regr",
-    backend = data_sf,
     target = "response",
-    extra_args = list(
-      coordinate_names = c("x", "y"),
-      crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
-      coords_as_features = FALSE)
+    coordinate_names = c("x", "y"),
+    crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
+    coords_as_features = FALSE
   )
 }
 
@@ -71,11 +69,10 @@ test_make_twoclass_task = function(group = FALSE, coords_as_features = FALSE,
     id = "sp_twoclass",
     backend = data,
     target = "response",
-    extra_args = list(
-      coordinate_names = c("x", "y"),
-      crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
-      positive = "A",
-      coords_as_features = coords_as_features)
+    coordinate_names = c("x", "y"),
+    crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
+    positive = "A",
+    coords_as_features = coords_as_features
   )
 
   if (group) {
@@ -104,13 +101,12 @@ test_make_sf_twoclass_task = function(group = FALSE, coords_as_features = FALSE,
 
   data_sf = sf::st_as_sf(data, coords = c("x", "y"), crs = "epsg:4326")
 
-  task = TaskClassifST$new(
+  task = as_task_classif_st(
+    data_sf,
     id = "sf_twoclass",
-    backend = data_sf,
     target = "response",
-    extra_args = list(
-      positive = "A",
-      coords_as_features = coords_as_features)
+    positive = "A",
+    coords_as_features = coords_as_features
   )
 
   if (group) {
@@ -159,16 +155,15 @@ test_make_blockCV_test_df = function() {
     crs = "EPSG:4326")
 
   return(data_sf)
-
 }
 
 # mlr3 task to compare mlr3spatiotempcv results with {blockCV} results
 test_make_blockCV_test_task = function() {
   data = test_make_blockCV_test_df()
 
-  task = TaskClassifST$new(
+  task = as_task_classif_st(
+    data,
     id = "test",
-    backend = data,
     target = "label",
     positive = "1")
   return(task)
@@ -182,9 +177,9 @@ b = mlr3::as_data_backend(cookfarm_mlr3[sample(10000), ])
 b$hash = "_mlr3_tasks_cookfarm_"
 tsk_cookfarm_sub = TaskRegrST$new(
   id = "cookfarm", b, target = "PHIHOX",
-  extra_args = list(
-    coordinate_names = c("x", "y"), coords_as_features = FALSE,
-    crs = 26911))
+  coordinate_names = c("x", "y"), coords_as_features = FALSE,
+  crs = 26911
+)
 tsk_cookfarm_sub$set_col_roles("Date", roles = "time")
 tsk_cookfarm_sub$set_col_roles("SOURCEID", roles = "space")
 
@@ -200,10 +195,9 @@ test_make_multiclass = function() {
     id = "sp_multiclass",
     backend = data,
     target = "response",
-    extra_args = list(
-      coordinate_names = c("x", "y"),
-      crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
-      coords_as_features = FALSE)
+    coordinate_names = c("x", "y"),
+    crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
+    coords_as_features = FALSE
   )
 }
 

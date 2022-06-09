@@ -110,6 +110,5 @@ if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
   # sf
   ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 32717)
   as_task_classif_st(ecuador_sf, target = "slides", positive = "TRUE")
-
 }
 }

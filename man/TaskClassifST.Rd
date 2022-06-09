@@ -14,7 +14,7 @@ one via \code{tsk("cookfarm_mlr3")}.
 The coordinate reference system passed during initialization must match the
 one which was used during data creation, otherwise offsets of multiple meters
 may occur. By default, coordinates are not used as features. This can be
-changed by setting \code{extra_args$coords_as_features = TRUE}.
+changed by setting \code{coords_as_features = TRUE}.
 }
 \examples{
 if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {

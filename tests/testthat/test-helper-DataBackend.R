@@ -48,7 +48,6 @@ test_that("`get_coordinates()` works with DataBackendRaster", {
   skip_if_not_installed(c("mlr3spatial", "terra"))
   requireNamespace("mlr3spatial", quietly = TRUE)
 
-
   ras = mlr3spatial::generate_stack(list(
     mlr3spatial::numeric_layer("x_1"),
     mlr3spatial::factor_layer("y", levels = c("a", "b"))),
