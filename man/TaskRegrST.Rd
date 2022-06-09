@@ -107,18 +107,9 @@ converted to a \link{DataBackendDataTable}.}
 \item{\code{target}}{\verb{[character(1)]}\cr
 Name of the target column.}
 
-\item{\code{extra_args}}{\verb{[named list]}\cr
-Additional task arguments set during construction. Required for
-\code{\link[=convert_task]{convert_task()}}.
-\itemize{
-\item crs \verb{[character(1)]}\cr
-Coordinate reference system. Either a PROJ string or an
-\href{https://epsg.io/}{EPSG} code.
-\item coords_as_features \verb{[logical(1)]}\cr
-Whether the coordinates should also be used as features.
-\item coordinate_names \verb{[character(2)]}\cr
-The variables names of the coordinates in the data.
-}}
+\item{\code{extra_args}}{(named \code{list()})\cr
+Named list of constructor arguments, required for converting task types
+via \code{\link[=convert_task]{convert_task()}}.}
 }
 \if{html}{\out{</div>}}
 }

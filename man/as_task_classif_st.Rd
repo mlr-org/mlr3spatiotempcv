@@ -14,23 +14,25 @@ as_task_classif_st(x, ...)
 
 \method{as_task_classif_st}{data.frame}(
   x,
-  target = NULL,
+  target,
   id = deparse(substitute(x)),
   positive = NULL,
-  crs = NA,
+  coordinate_names,
+  crs = NA_character_,
   coords_as_features = FALSE,
-  coordinate_names = NA,
+  label = NA_character_,
   ...
 )
 
 \method{as_task_classif_st}{DataBackend}(
   x,
-  target = NULL,
+  target,
   id = deparse(substitute(x)),
   positive = NULL,
-  crs = NA,
+  coordinate_names,
+  crs,
   coords_as_features = FALSE,
-  coordinate_names = c("x", "y"),
+  label = NA_character_,
   ...
 )
 
@@ -40,6 +42,7 @@ as_task_classif_st(x, ...)
   id = deparse(substitute(x)),
   positive = NULL,
   coords_as_features = FALSE,
+  label = NA_character_,
   ...
 )
 }
@@ -50,9 +53,6 @@ Object to convert.}
 \item{...}{(any)\cr
 Additional arguments.}
 
-\item{clone}{(\code{logical(1)})\cr
-If \code{TRUE}, ensures that the returned object is not the same as the input \code{x}.}
-
 \item{target}{(\code{character(1)})\cr
 Name of the target column.}
 
@@ -61,17 +61,23 @@ Id for the new task.
 Defaults to the (deparsed and substituted) name of the data argument.}
 
 \item{positive}{(\code{character(1)})\cr
-Level of the positive class. See \link[mlr3]{TaskClassif}.}
+Only for binary classification: Name of the positive class.
+The levels of the target columns are reordered accordingly, so that the
+first element of \verb{$class_names} is the positive class, and the second
+element is the negative class.}
 
-\item{crs}{\verb{[character(1)]}\cr
-Coordinate reference system. Either a PROJ string or an
-\href{https://epsg.io/}{EPSG} code.}
+\item{coordinate_names}{(\code{character(1)})\cr
+The column names of the coordinates in the data.}
 
-\item{coords_as_features}{\verb{[logical(1)]}\cr
-Whether the coordinates should also be used as features.}
+\item{crs}{(\code{character(1)})\cr
+Coordinate reference system.
+WKT2 or EPSG string.}
 
-\item{coordinate_names}{(\code{character()})\cr
-The variables names of the coordinates in the data.}
+\item{coords_as_features}{(\code{logical(1)})\cr
+If \code{TRUE}, coordinates are used as features.}
+
+\item{label}{(\code{character(1)})\cr
+Label for the new instance. Shown in \code{as.data.table(mlr_tasks)}.}
 }
 \value{
 \link{TaskClassifST}.
@@ -80,10 +86,11 @@ The variables names of the coordinates in the data.}
 Convert an object to a \link{TaskClassifST}.
 This is a S3 generic for the following objects:
 \enumerate{
-\item \link{TaskClassifST}: ensure the identity
-\item \code{\link[=data.frame]{data.frame()}} and \link{DataBackend}: provides an alternative to the
+\item \link{TaskClassifST}: Ensure the identity.
+\item \code{\link[=data.frame]{data.frame()}} and \link{DataBackend}: Provides an alternative to the
 constructor of \link{TaskClassifST}.
-\item \link[sf:sf]{sf::sf}.
+\item \link[sf:sf]{sf::sf}: Extracts spatial meta data before construction.
+\item \link{TaskRegr}: Calls \code{\link[=convert_task]{convert_task()}}.
 }
 }
 \examples{
