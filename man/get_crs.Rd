@@ -7,10 +7,12 @@
 get_crs(task, pretty = TRUE)
 }
 \arguments{
+\item{task}{(\link[mlr3]{Task}).}
+
 \item{pretty}{\verb{[logical]}\cr
 If \code{TRUE}, returns the pretty coordinate information instead of raw CRS
 string.}
 }
 \description{
-Returns the CRS of the Task or a spatial backend.
+Get CRS from Task or Backend
 }

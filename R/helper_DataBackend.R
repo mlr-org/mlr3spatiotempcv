@@ -1,6 +1,6 @@
 #' Get CRS from Task or Backend
 #' @description
-#'   Returns the CRS of the Task or a spatial backend.
+#' @inheritParams mlr3::assert_task
 #' @param pretty `[logical]`\cr
 #'   If `TRUE`, returns the pretty coordinate information instead of raw CRS
 #'   string.
