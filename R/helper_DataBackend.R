@@ -10,7 +10,7 @@ get_crs = function(task, pretty = TRUE) {
   } else if (checkmate::test_class(task$backend, "DataBackendRaster")) {
     terra::crs(task$backend$stack[[1]], describe = pretty)
   } else {
-    task$extra_args$crs
+    task$crs
   }
 }
 
@@ -30,7 +30,7 @@ get_coordinate_names = function(task) {
   } else if (checkmate::test_class(task$backend, "DataBackendRaster")) {
     names(as.data.table(terra::crds(task$backend$stack[[1]])))
   } else {
-    task$extra_args$coordinate_names
+    task$coordinate_names
   }
 }
 
