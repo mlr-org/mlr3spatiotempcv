@@ -41,15 +41,13 @@
 #'   ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 32717)
 #'   as_task_classif_st(ecuador_sf, target = "slides", positive = "TRUE")
 #'
-#'   # TaskClassifST
-#'   task = tsk("ecuador")
-#'   as_task_classif_st(task)
 #' }
 as_task_classif_st = function(x, ...) {
   UseMethod("as_task_classif_st")
 }
 
 #' @rdname as_task_classif_st
+#' @inheritParams mlr3::as_task
 #' @export as_task_classif_st.TaskClassifST
 #' @exportS3Method
 as_task_classif_st.TaskClassifST = function(x, clone = FALSE, ...) { # nolint

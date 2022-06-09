@@ -53,6 +53,9 @@ Object to convert.}
 \item{...}{(any)\cr
 Additional arguments.}
 
+\item{clone}{(\code{logical(1)})\cr
+If \code{TRUE}, ensures that the returned object is not the same as the input \code{x}.}
+
 \item{target}{(\code{character(1)})\cr
 Name of the target column.}
 
@@ -108,8 +111,5 @@ if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
   ecuador_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 32717)
   as_task_classif_st(ecuador_sf, target = "slides", positive = "TRUE")
 
-  # TaskClassifST
-  task = tsk("ecuador")
-  as_task_classif_st(task)
 }
 }
