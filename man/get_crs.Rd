@@ -14,5 +14,6 @@ If \code{TRUE}, returns the pretty coordinate information instead of raw CRS
 string.}
 }
 \description{
-Get CRS from Task or Backend
+Returns the CRS of the given Task or Backend.
 }
+\keyword{internal}
