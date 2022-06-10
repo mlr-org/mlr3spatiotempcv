@@ -30,10 +30,13 @@ Other Task:
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{crs}}{(\code{character(1)})\cr
-Coordinate reference system.}
+Returns coordinate reference system of task.}
 
 \item{\code{coordinate_names}}{(\code{character()})\cr
 Coordinate names.}
+
+\item{\code{coords_as_features}}{(\code{logical(1)})\cr
+If \code{TRUE}, coordinates are used as features.}
 }
 \if{html}{\out{</div>}}
 }
@@ -75,6 +78,7 @@ Coordinate names.}
 \if{latex}{\out{\hypertarget{method-TaskRegrST-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new spatiotemporal resampling Task
+Returns coordinates of observations.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TaskRegrST$new(
   id,
@@ -126,17 +130,20 @@ via \code{\link[=convert_task]{convert_task()}}.}
 \if{html}{\out{<a id="method-TaskRegrST-coordinates"></a>}}
 \if{latex}{\out{\hypertarget{method-TaskRegrST-coordinates}{}}}
 \subsection{Method \code{coordinates()}}{
-Return the coordinates of the task
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TaskRegrST$coordinates(rows = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TaskRegrST$coordinates(row_ids = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{rows}}{Row IDs. Can be used to subset the returned coordinates.}
+\item{\code{row_ids}}{(\code{integer()})\cr
+Vector of rows indices as subset of \code{task$row_ids}.}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{\link[data.table:data.table]{data.table::data.table()}}
 }
 }
 \if{html}{\out{<hr>}}

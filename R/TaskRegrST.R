@@ -59,15 +59,15 @@ TaskRegrST = R6::R6Class("TaskRegrST",
       }
     },
 
-    #' @description
-    #' Return the coordinates of the task
-    #' @param rows Row IDs. Can be used to subset the returned coordinates.
-    coordinates = function(rows = NULL) {
-      if (is.null(rows)) {
-        # Return coords in task$data order
-        rows = self$row_ids
-      }
-      self$backend$data(rows = rows, cols = self$extra_args$coordinate_names)
+    #' Returns coordinates of observations.
+    #'
+    #' @param row_ids (`integer()`)\cr
+    #'   Vector of rows indices as subset of `task$row_ids`.
+    #'
+    #' @return [data.table::data.table()]
+    coordinates = function(row_ids = NULL) {
+      if (is.null(row_ids)) row_ids = self$row_ids
+      self$backend$data(rows = row_ids, cols = self$coordinate_names)
     },
 
     #' @description
@@ -92,13 +92,12 @@ TaskRegrST = R6::R6Class("TaskRegrST",
   active = list(
 
     #' @field crs (`character(1)`)\cr
-    #'   Coordinate reference system.
+    #'   Returns coordinate reference system of task.
     crs = function(rhs) {
       if (missing(rhs)) {
         return(self$extra_args$crs)
       }
-      # FIXME:
-      # self$extra_args$crs = assert_string(rhs, na.ok = TRUE)
+      self$extra_args$crs = assert_string(rhs, na.ok = TRUE)
     },
 
     #' @field coordinate_names (`character()`)\cr
@@ -109,6 +108,21 @@ TaskRegrST = R6::R6Class("TaskRegrST",
       }
       self$extra_args$coordinate_names = assert_character(rhs, len = 2,
         all.missing = FALSE, any.missing = FALSE)
+    },
+
+    #' @field coords_as_features (`logical(1)`)\cr
+    #'   If `TRUE`, coordinates are used as features.
+    coords_as_features = function(rhs) {
+      if (missing(rhs)) {
+        return(self$extra_args$coords_as_features)
+      }
+
+      self$extra_args$coords_as_features = assert_flag(rhs)
+      if (rhs) {
+        self$set_col_roles(self$coordinate_names, add_to = "coordinate")
+      } else {
+        self$set_col_roles(self$coordinate_names, roles = "coordinate")
+      }
     }
   )
 )
