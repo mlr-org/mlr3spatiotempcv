@@ -392,19 +392,23 @@ test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
   rsp = rsmp("sptcv_cstf", folds = 4)
   rsp$instantiate(tsk_cookfarm_sub)
 
-  p1 = autoplot(rsp, task = tsk_cookfarm_sub)
-  p2 = autoplot(rsp, tsk_cookfarm_sub, 1, plot3D = FALSE)
+  p1 = autoplot(rsp, task = tsk_cookfarm_sub, sample_fold_n = 3L)
+  p2 = autoplot(rsp, tsk_cookfarm_sub, 1, plot3D = FALSE, sample_fold_n = 3L)
   # plot() would force image printing here
-  p3 = suppressMessages(autoplot(rsp, tsk_cookfarm_sub, c(1, 2)))
+  p3 = suppressMessages(
+    autoplot(rsp, tsk_cookfarm_sub, fold_id = c(1, 2),
+      sample_fold_n = 3L)
+  )
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_list(p3)
 
-  p4 = autoplot(rsp, tsk_cookfarm_sub, repeats_id = 2)
-  p5 = autoplot(rsp, tsk_cookfarm_sub, fold_id = 1, repeats_id = 2)
+  p4 = autoplot(rsp, tsk_cookfarm_sub, repeats_id = 2, sample_fold_n = 3L)
+  p5 = autoplot(rsp, tsk_cookfarm_sub, fold_id = 1, repeats_id = 2,
+    sample_fold_n = 3L)
 
-  ### sample_fold_n
+  ### sample_fold_nj
   p7 = autoplot(rsp, tsk_cookfarm_sub, sample_fold_n = 3L)
   p8 = autoplot(rsp, tsk_cookfarm_sub, fold_id = 1, sample_fold_n = 3L)
   p9 = autoplot(rsp, tsk_cookfarm_sub, fold_id = c(1, 2), sample_fold_n = 3L)
@@ -412,13 +416,13 @@ test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
   vdiffr::expect_doppelganger("SptCVCstf 2D time_var all test sets", p1)
   vdiffr::expect_doppelganger("SptCVCstf 2D time_var - Fold 1", p2)
   vdiffr::expect_doppelganger("SptCVCstf 2D time_var - Fold 1-2", p3)
-  vdiffr::expect_doppelganger("RepSptCVCstf 2D time_var - Fold 1-2, Rep 2", p4)
-  vdiffr::expect_doppelganger("RepSptCVCstf 2D time_var - Fold 1, Rep 2", p5)
+  vdiffr::expect_doppelganger("SptCVCstf 2D time_var - Fold 1-2, Rep 2", p4)
+  vdiffr::expect_doppelganger("SptCVCstf 2D time_var - Fold 1, Rep 2", p5)
 
   ### sample_fold_n
-  vdiffr::expect_doppelganger("RepSptCVCstf 2D time_var - sample_fold_n", p7)
-  vdiffr::expect_doppelganger("RepSptCVCstf 2D time_var - Fold 1 - sample_fold_n", p8)
-  vdiffr::expect_doppelganger("RepSptCVCstf 2D time_var - Fold 1-2 - sample_fold_n", p9)
+  vdiffr::expect_doppelganger("SptCVCstf 2D time_var - sample_fold_n", p7)
+  vdiffr::expect_doppelganger("SptCVCstf 2D time_var - Fold 1 - sample_fold_n", p8)
+  vdiffr::expect_doppelganger("SptCVCstf 2D time_var - Fold 1-2 - sample_fold_n", p9)
 
 })
 
@@ -431,20 +435,21 @@ test_that("plot() works for 'sptcv_cstf' 2D - space_var", {
 
   tsk_cookfarm_sub$col_roles$time = character()
   tsk_cookfarm_sub$set_col_roles("SOURCEID", "space")
-  rsp = rsmp("sptcv_cstf", folds = 4)
+  rsp = rsmp("repeated_sptcv_cstf", folds = 4, repeats = 2)
   rsp$instantiate(tsk_cookfarm_sub)
 
-  p1 = autoplot(rsp, task = tsk_cookfarm_sub)
-  p2 = autoplot(rsp, tsk_cookfarm_sub, 1, plot3D = FALSE)
+  p1 = autoplot(rsp, task = tsk_cookfarm_sub, sample_fold_n = 3L)
+  p2 = autoplot(rsp, tsk_cookfarm_sub, 1, plot3D = FALSE, sample_fold_n = 3L)
   # plot() would force image printing here
-  p3 = autoplot(rsp, tsk_cookfarm_sub, c(1, 2))
+  p3 = autoplot(rsp, tsk_cookfarm_sub, c(1, 2), sample_fold_n = 3L)
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_list(p3)
 
-  p4 = autoplot(rsp, tsk_cookfarm_sub, repeats_id = 2)
-  p5 = autoplot(rsp, tsk_cookfarm_sub, fold_id = 1, repeats_id = 2)
+  p4 = autoplot(rsp, tsk_cookfarm_sub, repeats_id = 2, sample_fold_n = 3L)
+  p5 = autoplot(rsp, tsk_cookfarm_sub, fold_id = 1, repeats_id = 2,
+    sample_fold_n = 3L)
 
   vdiffr::expect_doppelganger("SptCVCstf 2D space_var all test sets", p1)
   vdiffr::expect_doppelganger("SptCVCstf 2D space_var - Fold 1", p2)
@@ -500,15 +505,15 @@ test_that("plot() works for 'sptcv_cstf'", {
   )
 
   # vdiffr::expect_doppelganger("SptCVCstf all test sets", p1)
-  suppressWarnings(vdiffr::expect_doppelganger("SptCVCstf - Fold 1", p2))
-  suppressWarnings(vdiffr::expect_doppelganger("SptCVCstf - Fold 1-2", p3))
-  suppressWarnings(vdiffr::expect_doppelganger("SptCVCstf - Fold 1 - sample_fold_n", p4))
+  suppressWarnings(vdiffr::expect_doppelganger("SptCVCstf 3d time var - Fold 1", p2))
+  suppressWarnings(vdiffr::expect_doppelganger("SptCVCstf 3d time var - Fold 1-2", p3))
+  suppressWarnings(vdiffr::expect_doppelganger("SptCVCstf 3d time var - Fold 1 - sample_fold_n", p4))
 
   ### sample_fold_n
   expect_s3_class(p8, "plotly")
   expect_list(p9)
-  vdiffr::expect_doppelganger("RepSptCVCstf 3D time_var - Fold 1 - sample_fold_n", p8)
-  vdiffr::expect_doppelganger("RepSptCVCstf 3D time_var - Fold 1-2 - sample_fold_n", p9)
+  vdiffr::expect_doppelganger("SptCVCstf 3D time_var - Fold 1 - sample_fold_n", p8)
+  vdiffr::expect_doppelganger("SptCVCstf 3D time_var - Fold 1-2 - sample_fold_n", p9)
 
 })
 

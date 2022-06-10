@@ -92,6 +92,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  repeats_id = NULL,
   tickformat_date = "%Y-%m",
   nticks_x = 3,
   nticks_y = 3,
@@ -139,24 +140,210 @@ autoplot.ResamplingSptCVCstf = function( # nolint
 
   if (!plot3D) {
 
-    # bring into correct format (complicated alternative to reshape::melt)
-    resampling_sub$instance = data.table::rbindlist(
-      lapply(resampling_sub$instance$test, as.data.table),
-      idcol = "fold")
-    setnames(resampling_sub$instance, c("fold", "row_id"))
+    if (!is.null(fold_id)) {
+      if (length(fold_id) == 1) {
+        ### only one fold
 
-    plot = autoplot_spatial(
-      resampling = resampling_sub,
-      task = task,
-      fold_id = fold_id,
-      plot_as_grid = plot_as_grid,
-      train_color = train_color,
-      test_color = test_color,
-      show_blocks = FALSE,
-      show_labels = FALSE,
-      sample_fold_n = sample_fold_n,
-      ...)
-    return(invisible(plot))
+        data_coords = format_resampling_list(task, resampling_sub)
+
+        # suppress undefined global variables note
+        data_coords$indicator = ""
+
+        row_id_test = resampling_sub$instance$test[[fold_id]]
+        row_id_train = resampling_sub$instance$train[[fold_id]]
+
+        data_coords[row_id %in% row_id_test, indicator := "Test"]
+        data_coords[row_id %in% row_id_train, indicator := "Train"]
+
+        # take stratified random sample from folds
+        if (!is.null(sample_fold_n)) {
+          assert_integer(sample_fold_n)
+          if (sample_fold_n > min(table(data_coords$test))) {
+            lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(data_coords$test))))
+            stopf()
+          }
+          data_coords = data_coords[, .SD[sample(x = .N, size = sample_fold_n)],
+            by = test]
+        }
+
+        data_coords = data_coords[indicator != ""]
+
+        sf_df = sf::st_as_sf(data_coords,
+          coords = get_coordinate_names(task),
+          crs = get_crs(task))
+        sf_df = reorder_levels(sf_df)
+
+        plot = ggplot() +
+          geom_sf(data = sf_df, aes(color = indicator), ...) +
+          scale_color_manual(values = c(
+            "Train" = "#0072B5",
+            "Test" = "#E18727"
+          )) +
+          labs(color = "Set", title = sprintf(
+            "Fold %s, Repetition %s", fold_id,
+            repeats_id)) +
+          theme(
+            plot.title = ggtext::element_textbox(
+              size = 10,
+              color = "black", fill = "#ebebeb", box.color = "black",
+              height = unit(0.33, "inch"), width = unit(1, "npc"),
+              linetype = 1, r = unit(5, "pt"),
+              valign = 0.5, halign = 0.5,
+              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+          )
+        return(invisible(plot))
+      }
+      else {
+        ### Multiplot of multiple partitions with train and test set
+
+        # FIXME: redundant code - call function from single plots?
+        plot_list = mlr3misc::map(fold_id, function(.x) {
+
+          data_coords = format_resampling_list(task, resampling_sub)
+
+          # suppress undefined global variables note
+          data_coords$indicator = ""
+
+          row_id_test = resampling_sub$instance$test[[.x]]
+          row_id_train = resampling_sub$instance$train[[.x]]
+
+          data_coords[row_id %in% row_id_test, indicator := "Test"]
+          data_coords[row_id %in% row_id_train, indicator := "Train"]
+
+          # take stratified random sample from folds
+          if (!is.null(sample_fold_n)) {
+            assert_integer(sample_fold_n)
+            if (sample_fold_n > min(table(data_coords$test))) {
+              lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(data_coords$test))))
+              stopf()
+            }
+            data_coords = data_coords[, .SD[sample(x = .N, size = sample_fold_n)],
+              by = test]
+          }
+
+          # should omitted points be shown?
+          if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
+            data_coords[indicator == "", indicator := "Omitted"]
+
+            sf_df = sf::st_as_sf(data_coords,
+              coords = get_coordinate_names(task),
+              crs = get_crs(task))
+            sf_df = reorder_levels(sf_df)
+
+            plot = ggplot() +
+              geom_sf(data = sf_df, aes(color = indicator), ...) +
+              scale_color_manual(values = c(
+                "Omitted" = "grey",
+                "Train" = "#0072B5",
+                "Test" = "#E18727"
+              )) +
+              labs(color = "Set", title = sprintf(
+                "Fold %s, Repetition %s", .x,
+                repeats_id)) +
+              theme(
+                plot.title = ggtext::element_textbox(
+                  size = 10,
+                  color = "black", fill = "#ebebeb", box.color = "black",
+                  height = unit(0.33, "inch"), width = unit(1, "npc"),
+                  linetype = 1, r = unit(5, "pt"),
+                  valign = 0.5, halign = 0.5,
+                  padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+              )
+          } else {
+            data_coords = data_coords[indicator != ""]
+
+            sf_df = sf::st_as_sf(data_coords,
+              coords = get_coordinate_names(task),
+              crs = get_crs(task))
+            sf_df = reorder_levels(sf_df)
+
+            plot = ggplot() +
+              geom_sf(data = sf_df, aes(color = indicator), ...) +
+              scale_color_manual(values = c(
+                "Train" = "#0072B5",
+                "Test" = "#E18727"
+              )) +
+              labs(color = "Set", title = sprintf(
+                "Fold %s, Repetition %s", .x,
+                repeats_id)) +
+              theme(
+                plot.title = ggtext::element_textbox(
+                  size = 10,
+                  color = "black", fill = "#ebebeb", box.color = "black",
+                  height = unit(0.33, "inch"), width = unit(1, "npc"),
+                  linetype = 1, r = unit(5, "pt"),
+                  valign = 0.5, halign = 0.5,
+                  padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
+              )
+          }
+          return(invisible(plot))
+        })
+
+        # Return a plot grid via patchwork?
+
+        if (!plot_as_grid) {
+          return(invisible(plot_list))
+        } else {
+          # for repeated cv we also print out the rep number
+          if (is.null(repeats_id)) {
+            repeats_id = 1 # nocov
+          }
+
+          plot_list_pw = patchwork::wrap_plots(plot_list) +
+            patchwork::plot_layout(guides = "collect")
+          return(plot_list_pw)
+        }
+      }
+    } else {
+      ### Create one plot colored by all test folds
+
+      data_coords = format_resampling_list(task, resampling_sub)
+
+      # extract test ids from lists
+      row_ids_test = data.table::rbindlist(
+        lapply(resampling_sub$instance$test, as.data.table),
+        idcol = "fold")
+      setnames(row_ids_test, c("fold", "row_id"))
+
+      test_folds = merge(data_coords, row_ids_test, by = "row_id", all = TRUE)
+
+      # take stratified random sample from folds
+      if (!is.null(sample_fold_n)) {
+        assert_integer(sample_fold_n)
+        if (sample_fold_n > min(table(test_folds$fold))) {
+          lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(test_folds$fold))))
+          stopf()
+        }
+        test_folds = test_folds[, .SD[sample(x = .N, size = sample_fold_n)],
+          by = test]
+      }
+
+      sf_df = sf::st_as_sf(test_folds,
+        coords = get_coordinate_names(task),
+        crs = get_crs(task))
+
+      # only keep test ids
+      sf_df = stats::na.omit(sf_df, cols = "fold")
+
+      # order fold ids
+      sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
+      sf_df$fold = as.factor(as.character(sf_df$fold))
+      sf_df$fold = factor(sf_df$fold, levels = unique(as.character(sf_df$fold)))
+
+      # for all non-repeated rsmp cases
+      if (is.null(repeats_id)) {
+        repeats_id = 1 # nocov
+      }
+
+      plot = ggplot() +
+        geom_sf(
+          data = sf_df["fold"], show.legend = "point",
+          aes(color = fold)
+        ) +
+        ggsci::scale_color_ucscgb() +
+        labs(color = sprintf("Partition #, Rep %s", repeats_id))
+      return(plot)
+    }
   }
 
   # 3D -------------------------------------------------------------------------

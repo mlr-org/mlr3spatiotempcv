@@ -14,6 +14,7 @@
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  repeats_id = NULL,
   tickformat_date = "\%Y-\%m",
   nticks_x = 3,
   nticks_y = 3,
@@ -71,6 +72,9 @@ The color to use for the training set observations.}
 \item{test_color}{\verb{[character(1)]}\cr
 The color to use for the test set observations.}
 
+\item{repeats_id}{\verb{[numeric]}\cr
+Repetition ID to plot.}
+
 \item{tickformat_date}{\verb{[character]}\cr
 Date format for z-axis.}
 
@@ -114,9 +118,6 @@ reduce overplotting in dense datasets.}
 \item{...}{Passed down to \code{plotly::orca()}. Only effective when
 \code{static_image = TRUE}.}
 
-\item{repeats_id}{\verb{[numeric]}\cr
-Repetition ID to plot.}
-
 \item{x}{\verb{[Resampling]}\cr
 mlr3 spatial resampling object of class \link{ResamplingSptCVCstf} or
 \link{ResamplingRepeatedSptCVCstf}.}
@@ -157,8 +158,8 @@ if (mlr3misc::require_namespaces(c("sf", "plotly"), quietly = TRUE)) {
   resampling = rsmp("sptcv_cstf", folds = 5)
   resampling$instantiate(task_st)
 
-  # with both `"space"` and `"time"` column roles set (LLTO), the omitted observations per
-  # fold can be shown by setting `show_omitted = TRUE`
+  # with both `"space"` and `"time"` column roles set (LLTO), the omitted
+  # observations per fold can be shown by setting `show_omitted = TRUE`
   autoplot(resampling, task_st, fold_id = 1, show_omitted = TRUE)
 }
 }
