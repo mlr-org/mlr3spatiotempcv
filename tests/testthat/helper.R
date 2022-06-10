@@ -141,8 +141,8 @@ test_make_sf_twoclass_df = function(group = FALSE,
 test_make_blockCV_test_df = function() {
 
   set.seed(123)
-  x = runif(5000, -80.4, -74)
-  y = runif(5000, 39.6, 41)
+  x = runif(1000, -80.4, -74)
+  y = runif(1000, 39.6, 41)
 
   data = data.frame(
     spp = "test",
