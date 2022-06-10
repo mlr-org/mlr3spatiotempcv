@@ -94,7 +94,7 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
         stopf("%s has no column role 'space' or 'time'.", format(task))
       }
 
-      self$instance = private$.sample(task)
+      private$.sample(task)
 
       self$task_hash = task$hash
       self$task_nrow = task$nrow
@@ -114,8 +114,12 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
   ),
   private = list(
     .sample = function(task) {
+      reps = self$param_set$values$repeats
       pv = self$param_set$values
-      map(seq_len(pv$repeats), function(i) sample_cast(task, pv$stratify, pv$folds))
+
+      for (rep in seq_len(pv$repeats)) {
+        self$instance[[rep]] = sample_cast(task, pv$stratify, pv$folds)
+      }
     },
     .get_train = function(i) {
       i = as.integer(i) - 1L
