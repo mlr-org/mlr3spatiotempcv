@@ -34,6 +34,10 @@
 #'   Whether to show an overlay of the spatial block IDs.
 #' @param ... Passed to `geom_sf()`. Helpful for adjusting point sizes and
 #'   shapes.
+#' @param sample_fold_n `[integer]`\cr
+#'   Number of points in a random sample stratified over partitions.
+#'   This argument aims to keep file sizes of resulting plots reasonable and
+#'   reduce overplotting in dense datasets.
 #' @details
 #' By default a plot is returned; if `fold_id` is set, a gridded plot is
 #' created. If `plot_as_grid = FALSE`, a list of plot objects is returned.
@@ -91,6 +95,7 @@ autoplot.ResamplingSpCVBlock = function( # nolint
   test_color = "#E18727",
   show_blocks = FALSE,
   show_labels = FALSE,
+  sample_fold_n = NULL,
   ...) {
 
   autoplot_spatial(
@@ -102,6 +107,7 @@ autoplot.ResamplingSpCVBlock = function( # nolint
     test_color = test_color,
     show_blocks = show_blocks,
     show_labels = show_labels,
+    sample_fold_n = sample_fold_n,
     ... = ...
   )
 }
@@ -118,6 +124,7 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
   test_color = "#E18727",
   show_blocks = FALSE,
   show_labels = FALSE,
+  sample_fold_n = NULL,
   ...) {
 
   autoplot.ResamplingSpCVBlock(
@@ -129,6 +136,7 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
     test_color = test_color,
     show_blocks = show_blocks,
     show_labels = show_labels,
+    sample_fold_n = sample_fold_n,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -196,12 +204,14 @@ autoplot.ResamplingSpCVEnv = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  sample_fold_n = NULL,
   ...) {
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
+    sample_fold_n = sample_fold_n,
     ... = ...
   )
 }
@@ -216,6 +226,7 @@ autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  sample_fold_n = NULL,
   ...) {
 
   autoplot.ResamplingSpCVEnv(
@@ -225,6 +236,7 @@ autoplot.ResamplingRepeatedSpCVEnv = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
+    sample_fold_n = sample_fold_n,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -291,12 +303,14 @@ autoplot.ResamplingSpCVCoords = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  sample_fold_n = NULL,
   ...) {
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
+    sample_fold_n = sample_fold_n,
     ... = ...
   )
 }
@@ -311,6 +325,7 @@ autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  sample_fold_n = NULL,
   ...) {
 
   autoplot.ResamplingSpCVCoords(
@@ -320,6 +335,7 @@ autoplot.ResamplingRepeatedSpCVCoords = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
+    sample_fold_n = sample_fold_n,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -403,6 +419,7 @@ autoplot.ResamplingSptCVCluto = function( # nolint
   nticks_y = 3,
   point_size = 3,
   axis_label_fontsize = 11,
+  sample_fold_n = NULL,
   ...) {
 
   autoplot_spatiotemp(
@@ -415,6 +432,7 @@ autoplot.ResamplingSptCVCluto = function( # nolint
     nticks_x = nticks_y,
     point_size = point_size,
     axis_label_fontsize = axis_label_fontsize,
+    sample_fold_n = sample_fold_n,
     ... = ...
   )
 }
@@ -429,6 +447,7 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  sample_fold_n = NULL,
   ...) {
 
   autoplot.ResamplingSptCVCluto(
@@ -438,6 +457,7 @@ autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
+    sample_fold_n = sample_fold_n,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -525,6 +545,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
   test_color = "#E18727",
   repeats_id = NULL,
   show_omitted = FALSE,
+  sample_fold_n = NULL,
   ...) {
 
   resampling = object
@@ -562,6 +583,17 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
       data_coords[row_id %in% row_id_test, indicator := "Test"]
       data_coords[row_id %in% row_id_train, indicator := "Train"]
+
+      # take stratified random sample from folds
+      if (!is.null(sample_fold_n)) {
+        assert_integer(sample_fold_n)
+        if (sample_fold_n > min(table(data_coords$test))) {
+          lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(data_coords$test))))
+          stopf()
+        }
+        data_coords = data_coords[, .SD[sample(x = .N, size = sample_fold_n)],
+          by = test]
+      }
 
       # should omitted points be shown?
       if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
@@ -635,6 +667,17 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
         data_coords[row_id %in% row_id_test, indicator := "Test"]
         data_coords[row_id %in% row_id_train, indicator := "Train"]
+
+        # take stratified random sample from folds
+        if (!is.null(sample_fold_n)) {
+          assert_integer(sample_fold_n)
+          if (sample_fold_n > min(table(data_coords$test))) {
+            lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(data_coords$test))))
+            stopf()
+          }
+          data_coords = data_coords[, .SD[sample(x = .N, size = sample_fold_n)],
+            by = test]
+        }
 
         # should omitted points be shown?
         if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
@@ -722,6 +765,17 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
     test_folds = merge(data_coords, row_ids_test, by = "row_id", all = TRUE)
 
+    # take stratified random sample from folds
+    if (!is.null(sample_fold_n)) {
+      assert_integer(sample_fold_n)
+      if (sample_fold_n > min(table(test_folds$fold))) {
+        lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(test_folds$fold))))
+        stopf()
+      }
+      test_folds = test_folds[, .SD[sample(x = .N, size = sample_fold_n)],
+        by = test]
+    }
+
     sf_df = sf::st_as_sf(test_folds,
       coords = get_coordinate_names(task),
       crs = get_crs(task))
@@ -761,6 +815,7 @@ autoplot.ResamplingRepeatedSpCVDisc = function( # nolint
   train_color = "#0072B5",
   test_color = "#E18727",
   show_omitted = FALSE,
+  sample_fold_n = NULL,
   ...) {
 
   autoplot.ResamplingSpCVDisc(
@@ -771,6 +826,7 @@ autoplot.ResamplingRepeatedSpCVDisc = function( # nolint
     train_color = train_color,
     test_color = test_color,
     show_omitted = show_omitted,
+    sample_fold_n = sample_fold_n,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -845,6 +901,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
   test_color = "#E18727",
   repeats_id = NULL,
   show_omitted = FALSE,
+  sample_fold_n = NULL,
   ...) {
 
   resampling = object
@@ -882,6 +939,17 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
       data_coords[row_id %in% row_id_test, indicator := "Test"]
       data_coords[row_id %in% row_id_train, indicator := "Train"]
+
+      # take stratified random sample from folds
+      if (!is.null(sample_fold_n)) {
+        assert_integer(sample_fold_n)
+        if (sample_fold_n > min(table(data_coords$test))) {
+          lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(data_coords$test))))
+          stopf()
+        }
+        data_coords = data_coords[, .SD[sample(x = .N, size = sample_fold_n)],
+          by = test]
+      }
 
       # should omitted points be shown?
       if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
@@ -955,6 +1023,17 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
         data_coords[row_id %in% row_id_test, indicator := "Test"]
         data_coords[row_id %in% row_id_train, indicator := "Train"]
+
+        # take stratified random sample from folds
+        if (!is.null(sample_fold_n)) {
+          assert_integer(sample_fold_n)
+          if (sample_fold_n > min(table(data_coords$test))) {
+            lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(data_coords$test))))
+            stopf()
+          }
+          data_coords = data_coords[, .SD[sample(x = .N, size = sample_fold_n)],
+            by = test]
+        }
 
         # should omitted points be shown?
         if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
@@ -1046,6 +1125,17 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
     test_folds$fold = as.integer(test_folds$fold)
 
+    # take stratified random sample from folds
+    if (!is.null(sample_fold_n)) {
+      assert_integer(sample_fold_n)
+      if (sample_fold_n > min(table(test_folds$fold))) {
+        lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(test_folds$fold))))
+        stopf()
+      }
+      test_folds = test_folds[, .SD[sample(x = .N, size = sample_fold_n)],
+        by = test]
+    }
+
     sf_df = sf::st_as_sf(test_folds,
       coords = get_coordinate_names(task),
       crs = get_crs(task))
@@ -1085,6 +1175,7 @@ autoplot.ResamplingRepeatedSpCVTiles = function( # nolint
   train_color = "#0072B5",
   test_color = "#E18727",
   show_omitted = FALSE,
+  sample_fold_n = NULL,
   ...) {
 
   autoplot.ResamplingSpCVTiles(
@@ -1095,6 +1186,7 @@ autoplot.ResamplingRepeatedSpCVTiles = function( # nolint
     train_color = train_color,
     test_color = test_color,
     show_omitted = show_omitted,
+    sample_fold_n = sample_fold_n,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -1161,12 +1253,14 @@ autoplot.ResamplingCV = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  sample_fold_n = NULL,
   ...) {
   autoplot_spatial(
     resampling = object,
     task = task,
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
+    sample_fold_n = sample_fold_n,
     ... = ...
   )
 }
@@ -1181,6 +1275,7 @@ autoplot.ResamplingRepeatedCV = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  sample_fold_n = NULL,
   ...) {
 
   autoplot.ResamplingCV(
@@ -1190,6 +1285,7 @@ autoplot.ResamplingRepeatedCV = function( # nolint
     plot_as_grid = plot_as_grid,
     train_color = train_color,
     test_color = test_color,
+    sample_fold_n = sample_fold_n,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -1244,12 +1340,14 @@ autoplot.ResamplingCustomCV = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  sample_fold_n = NULL,
   ...) {
   autoplot_custom_cv(
     resampling = object,
     task = task,
     fold_id = fold_id,
     plot_as_grid = plot_as_grid,
+    sample_fold_n = sample_fold_n,
     ... = ...
   )
 }
@@ -1285,6 +1383,7 @@ autoplot_spatial = function(
   test_color = NULL,
   show_blocks = FALSE,
   show_labels = FALSE,
+  sample_fold_n = NULL,
   ...) {
 
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
@@ -1329,6 +1428,17 @@ autoplot_spatial = function(
       dt = coords_resamp
       dt$indicator = rep("foo", nrow(dt))
       dt[, indicator := ifelse(fold == .x, "Test", "Train")]
+
+      # take stratified random sample from folds
+      if (!is.null(sample_fold_n)) {
+        assert_integer(sample_fold_n)
+        if (sample_fold_n > min(table(dt$fold))) {
+          lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(dt$fold))))
+          stopf()
+        }
+        dt = dt[, .SD[sample(x = .N, size = sample_fold_n)],
+          by = fold]
+      }
 
       sf_df = sf::st_as_sf(dt,
         coords = get_coordinate_names(task),
@@ -1430,6 +1540,17 @@ autoplot_spatial = function(
       coords_resamp$blocks = NULL
     }
 
+    # take stratified random sample from folds
+    if (!is.null(sample_fold_n)) {
+      assert_integer(sample_fold_n)
+      if (sample_fold_n > min(table(coords_resamp$fold))) {
+        lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(coords_resamp$fold))))
+        stopf()
+      }
+      coords_resamp = coords_resamp[, .SD[sample(x = .N, size = sample_fold_n)],
+        by = fold]
+    }
+
     sf_df =
       sf::st_as_sf(coords_resamp,
         coords = get_coordinate_names(task),
@@ -1471,6 +1592,7 @@ autoplot_spatiotemp = function(
   nticks_y = NULL,
   point_size = NULL,
   axis_label_fontsize = NULL,
+  sample_fold_n = NULL,
   ...) {
 
   mlr3misc::require_namespaces("plotly")
@@ -1532,6 +1654,17 @@ autoplot_spatiotemp = function(
 
       task_resamp_ids$indicator = as.factor(as.character(task_resamp_ids$indicator))
       task_resamp_ids[, indicator := ifelse(fold == fold_id, "Test", "Train")]
+
+      # take sample from groups
+      if (!is.null(sample_fold_n)) {
+        assert_integer(sample_fold_n)
+        if (!resampling$iters %% sample_fold_n == 0) {
+          lg$error("'sample_fold_n' must be a multiple of the number of folds.")
+          stopf()
+        }
+        task_resamp_ids = task_resamp_ids[, .SD[sample(x = .N, size = sample_fold_n)], by = test]
+      }
+
       plot_single_plotly = plotly::plot_ly(task_resamp_ids,
         x = ~x, y = ~y, z = ~Date,
         color = ~indicator, colors = c(
@@ -1565,6 +1698,17 @@ autoplot_spatiotemp = function(
       task_resamp_ids$Date = task$data(cols = task$col_roles$time)[[task$col_roles$time]]
 
       task_resamp_ids$indicator = as.factor(as.character(task_resamp_ids$indicator))
+
+      # take sample from groups
+      if (!is.null(sample_fold_n)) {
+        assert_integer(sample_fold_n)
+        if (!resampling$iters %% sample_fold_n == 0) {
+          lg$error("'sample_fold_n' must be a multiple of the number of folds.")
+          stopf()
+        }
+        task_resamp_ids = task_resamp_ids[, .SD[sample(x = .N, size = sample_fold_n)], by = test]
+      }
+
       plot_list = mlr3misc::map(fold_id, function(.x) {
 
         dt = task_resamp_ids
@@ -1690,6 +1834,7 @@ autoplot_custom_cv = function(
   plot_as_grid = NULL,
   train_color = NULL,
   test_color = NULL,
+  sample_fold_n = NULL,
   ...) {
 
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
@@ -1713,6 +1858,17 @@ autoplot_custom_cv = function(
   coords_resamp = merge(coords, rsmp_autopl$instance, by = "row_id")
   # we need integers and not characters for the upcoming map() calls
   coords_resamp$fold = as.integer(as.factor(coords_resamp$fold))
+
+  # take stratified random sample from folds
+  if (!is.null(sample_fold_n)) {
+    assert_integer(sample_fold_n)
+    if (sample_fold_n > min(table(coords_resamp$fold))) {
+      lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(coords_resamp$fold))))
+      stopf()
+    }
+    coords_resamp = coords_resamp[, .SD[sample(x = .N, size = sample_fold_n)],
+      by = fold]
+  }
 
   if (!is.null(fold_id)) {
 

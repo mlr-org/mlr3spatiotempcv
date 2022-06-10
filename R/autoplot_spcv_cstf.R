@@ -80,8 +80,8 @@
 #'   resampling = rsmp("sptcv_cstf", folds = 5)
 #'   resampling$instantiate(task_st)
 #'
-#'   # with both `"space"` and `"time"` column roles set (LLTO), the omitted observations per
-#'   # fold can be shown by setting `show_omitted = TRUE`
+#'   # with both `"space"` and `"time"` column roles set (LLTO), the omitted
+#'   # observations per fold can be shown by setting `show_omitted = TRUE`
 #'   autoplot(resampling, task_st, fold_id = 1, show_omitted = TRUE)
 #' }
 #' }
@@ -101,6 +101,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   show_omitted = FALSE,
   plot3D = NULL,
   plot_time_var = NULL,
+  sample_fold_n = NULL,
   ...) {
 
   dots = list(...)
@@ -153,6 +154,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
       test_color = test_color,
       show_blocks = FALSE,
       show_labels = FALSE,
+      sample_fold_n = sample_fold_n,
       ...)
     return(invisible(plot))
   }
@@ -188,6 +190,17 @@ autoplot.ResamplingSptCVCstf = function( # nolint
 
         data_coords[row_id %in% row_id_test, indicator := "Test"]
         data_coords[row_id %in% row_id_train, indicator := "Train"]
+
+        # take stratified random sample from folds
+        if (!is.null(sample_fold_n)) {
+          assert_integer(sample_fold_n)
+          if (sample_fold_n > min(table(data_coords$test))) {
+            lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(data_coords$test))))
+            stopf()
+          }
+          data_coords = data_coords[, .SD[sample(x = .N, size = sample_fold_n)],
+            by = test]
+        }
 
         if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
           data_coords[indicator == "", indicator := "Omitted"]
@@ -253,6 +266,17 @@ autoplot.ResamplingSptCVCstf = function( # nolint
           data_coords[row_id %in% row_id_train, indicator := "Train"]
 
           data_coords$Date = as.Date(data_coords$Date)
+
+          # take stratified random sample from folds
+          if (!is.null(sample_fold_n)) {
+            assert_integer(sample_fold_n)
+            if (sample_fold_n > min(table(data_coords$test))) {
+              lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(data_coords$test))))
+              stopf()
+            }
+            data_coords = data_coords[, .SD[sample(x = .N, size = sample_fold_n)],
+              by = test]
+          }
 
           if (show_omitted) {
             data_coords[indicator == "", indicator := "Omitted"]

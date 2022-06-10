@@ -23,6 +23,7 @@
   show_omitted = FALSE,
   plot3D = NULL,
   plot_time_var = NULL,
+  sample_fold_n = NULL,
   ...
 )
 
@@ -104,6 +105,11 @@ Whether to create a 2D image via \pkg{ggplot2} or a 3D plot via
 The variable to use for the z-axis (time).
 Remove the column role \code{feature} for this variable to only use
 it for plotting.}
+
+\item{sample_fold_n}{\verb{[integer]}\cr
+Number of points in a random sample stratified over partitions.
+This argument aims to keep file sizes of resulting plots reasonable and
+reduce overplotting in dense datasets.}
 
 \item{...}{Passed down to \code{plotly::orca()}. Only effective when
 \code{static_image = TRUE}.}

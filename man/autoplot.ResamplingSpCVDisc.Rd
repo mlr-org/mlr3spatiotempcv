@@ -16,6 +16,7 @@
   test_color = "#E18727",
   repeats_id = NULL,
   show_omitted = FALSE,
+  sample_fold_n = NULL,
   ...
 )
 
@@ -28,6 +29,7 @@
   train_color = "#0072B5",
   test_color = "#E18727",
   show_omitted = FALSE,
+  sample_fold_n = NULL,
   ...
 )
 
@@ -62,6 +64,11 @@ Repetition ID to plot.}
 
 \item{show_omitted}{\verb{[logical]}\cr
 Whether to show points not used in train or test set for the current fold.}
+
+\item{sample_fold_n}{\verb{[integer]}\cr
+Number of points in a random sample stratified over partitions.
+This argument aims to keep file sizes of resulting plots reasonable and
+reduce overplotting in dense datasets.}
 
 \item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and
 shapes.}

@@ -12,6 +12,7 @@
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  sample_fold_n = NULL,
   ...
 )
 
@@ -37,6 +38,11 @@ The color to use for the training set observations.}
 
 \item{test_color}{\verb{[character(1)]}\cr
 The color to use for the test set observations.}
+
+\item{sample_fold_n}{\verb{[integer]}\cr
+Number of points in a random sample stratified over partitions.
+This argument aims to keep file sizes of resulting plots reasonable and
+reduce overplotting in dense datasets.}
 
 \item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and
 shapes.}

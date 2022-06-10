@@ -28,6 +28,11 @@ test_that("plot() works for 'cv'", {
   p2 = autoplot(plots$rsp, plots$task, 1)
   p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
+  ### sample_fold_n
+  p7 = autoplot(plots$rsp, plots$task, sample_fold_n = 3L)
+  p8 = autoplot(plots$rsp, plots$task, fold_id = 1, sample_fold_n = 3L)
+  p9 = autoplot(plots$rsp, plots$task, fold_id = c(1, 2), sample_fold_n = 3L)
+
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
@@ -35,6 +40,11 @@ test_that("plot() works for 'cv'", {
   vdiffr::expect_doppelganger("CV all test sets", p1)
   vdiffr::expect_doppelganger("CV - Fold 1", p2)
   vdiffr::expect_doppelganger("CV - Fold 1-2", p3)
+
+  ### sample_fold_n
+  vdiffr::expect_doppelganger("CV - sample_fold_n", p7)
+  vdiffr::expect_doppelganger("CV - Fold 1 - sample_fold_n", p8)
+  vdiffr::expect_doppelganger("CV - Fold 1-2 - sample_fold_n", p9)
 })
 
 test_that("plot() works for 'repeated-cv'", {
@@ -100,13 +110,18 @@ test_that("plot() works for 'custom_cv'", {
   breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
   zclass = cut(task$data()$dem, breaks, include.lowest = TRUE)
 
-  resampling = rsmp("custom_cv")
-  resampling$instantiate(task, f = zclass)
+  rsp = rsmp("custom_cv")
+  rsp$instantiate(task, f = zclass)
 
   # autoplot() is used instead of plot() to prevent side-effect plotting
-  p1 = autoplot(resampling, task)
-  p2 = autoplot(resampling, task, 1)
-  p3 = autoplot(resampling, task, c(1, 2))
+  p1 = autoplot(rsp, task)
+  p2 = autoplot(rsp, task, 1)
+  p3 = autoplot(rsp, task, c(1, 2))
+
+  ### sample_fold_n
+  p7 = autoplot(rsp, task, sample_fold_n = 3L)
+  p8 = autoplot(rsp, task, fold_id = 1, sample_fold_n = 3L)
+  p9 = autoplot(rsp, task, fold_id = c(1, 2), sample_fold_n = 3L)
 
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
@@ -115,6 +130,11 @@ test_that("plot() works for 'custom_cv'", {
   vdiffr::expect_doppelganger("Custom-CV all test sets", p1)
   vdiffr::expect_doppelganger("Custom-CV - Fold 1", p2)
   vdiffr::expect_doppelganger("Custom-CV - Fold 1-2", p3)
+
+  ### sample_fold_n
+  vdiffr::expect_doppelganger("Custom-CV - sample_fold_n", p7)
+  vdiffr::expect_doppelganger("Custom-CV - Fold 1 - sample_fold_n", p8)
+  vdiffr::expect_doppelganger("Custom-CV - Fold 1-2 - sample_fold_n", p9)
 })
 
 # spcv_coords ------------------------------------------------------------------
@@ -158,6 +178,11 @@ test_that("plot() works for 'repeated_spcv_coords'", {
   p4 = autoplot(plots$rsp, plots$task, repeats_id = 2)
   p5 = autoplot(plots$rsp, plots$task, fold_id = 1, repeats_id = 2)
 
+  ### sample_fold_n
+  p7 = autoplot(plots$rsp, plots$task, sample_fold_n = 3L)
+  p8 = autoplot(plots$rsp, plots$task, fold_id = 1, sample_fold_n = 3L)
+  p9 = autoplot(plots$rsp, plots$task, fold_id = c(1, 2), sample_fold_n = 3L)
+
   expect_true(is.ggplot(p4))
   expect_true(is.ggplot(p5))
 
@@ -166,6 +191,11 @@ test_that("plot() works for 'repeated_spcv_coords'", {
   vdiffr::expect_doppelganger("RepSpCVCoords - Fold 1-2 Rep 1", p3)
   vdiffr::expect_doppelganger("RepSpCVCoords - Fold 1-2, Rep 2", p4)
   vdiffr::expect_doppelganger("RepSpCVCoords - Fold 1, Rep 2", p5)
+
+  ### sample_fold_n
+  vdiffr::expect_doppelganger("RepSpCVCoords - sample_fold_n", p7)
+  vdiffr::expect_doppelganger("RepSpCVCoords - Fold 1 - sample_fold_n", p8)
+  vdiffr::expect_doppelganger("RepSpCVCoords - Fold 1-2 - sample_fold_n", p9)
 })
 
 # spcv_block -------------------------------------------------------------------
@@ -182,6 +212,11 @@ test_that("plot() works for 'spcv_block'", {
   p2 = autoplot(plots$rsp, plots$task, 1)
   p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
+  ### sample_fold_n
+  p7 = autoplot(plots$rsp, plots$task, sample_fold_n = 3L)
+  p8 = autoplot(plots$rsp, plots$task, fold_id = 1, sample_fold_n = 3L)
+  p9 = autoplot(plots$rsp, plots$task, fold_id = c(1, 2), sample_fold_n = 3L)
+
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
@@ -189,6 +224,11 @@ test_that("plot() works for 'spcv_block'", {
   vdiffr::expect_doppelganger("SpCVBlock all test sets", p1)
   vdiffr::expect_doppelganger("SpCVBlock - Fold 1", p2)
   vdiffr::expect_doppelganger("SpCVBlock - Fold 1-2", p3)
+
+  ### sample_fold_n
+  vdiffr::expect_doppelganger("SpCVBlock - sample_fold_n", p7)
+  vdiffr::expect_doppelganger("SpCVBlock - Fold 1 - sample_fold_n", p8)
+  vdiffr::expect_doppelganger("SpCVBlock - Fold 1-2 - sample_fold_n", p9)
 })
 
 test_that("plot() works for 'repeated_spcv_block'", {
@@ -289,6 +329,11 @@ test_that("plot() works for 'spcv_env'", {
   p2 = autoplot(plots$rsp, plots$task, 1)
   p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
+  ### sample_fold_n
+  p7 = autoplot(plots$rsp, plots$task, sample_fold_n = 2L)
+  p8 = autoplot(plots$rsp, plots$task, fold_id = 1, sample_fold_n = 2L)
+  p9 = autoplot(plots$rsp, plots$task, fold_id = c(1, 2), sample_fold_n = 2L)
+
   expect_true(is.ggplot(p1))
   expect_true(is.ggplot(p2))
   expect_true(is.ggplot(p2))
@@ -296,6 +341,11 @@ test_that("plot() works for 'spcv_env'", {
   vdiffr::expect_doppelganger("SpCVEnv all test sets", p1)
   vdiffr::expect_doppelganger("SpCVEnv - Fold 1", p2)
   vdiffr::expect_doppelganger("SpCVEnv - Fold 1-2", p3)
+
+  ### sample_fold_n
+  vdiffr::expect_doppelganger("SpCVEnv - sample_fold_n", p7)
+  vdiffr::expect_doppelganger("SpCVEnv - Fold 1 - sample_fold_n", p8)
+  vdiffr::expect_doppelganger("SpCVEnv - Fold 1-2 - sample_fold_n", p9)
 })
 
 test_that("plot() works for 'repeated_spcv_env'", {
@@ -354,11 +404,22 @@ test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
   p4 = autoplot(rsp, tsk_cookfarm_sub, repeats_id = 2)
   p5 = autoplot(rsp, tsk_cookfarm_sub, fold_id = 1, repeats_id = 2)
 
+  ### sample_fold_n
+  p7 = autoplot(rsp, tsk_cookfarm_sub, sample_fold_n = 3L)
+  p8 = autoplot(rsp, tsk_cookfarm_sub, fold_id = 1, sample_fold_n = 3L)
+  p9 = autoplot(rsp, tsk_cookfarm_sub, fold_id = c(1, 2), sample_fold_n = 3L)
+
   vdiffr::expect_doppelganger("SptCVCstf 2D time_var all test sets", p1)
   vdiffr::expect_doppelganger("SptCVCstf 2D time_var - Fold 1", p2)
   vdiffr::expect_doppelganger("SptCVCstf 2D time_var - Fold 1-2", p3)
   vdiffr::expect_doppelganger("RepSptCVCstf 2D time_var - Fold 1-2, Rep 2", p4)
   vdiffr::expect_doppelganger("RepSptCVCstf 2D time_var - Fold 1, Rep 2", p5)
+
+  ### sample_fold_n
+  vdiffr::expect_doppelganger("RepSptCVCstf 2D time_var - sample_fold_n", p7)
+  vdiffr::expect_doppelganger("RepSptCVCstf 2D time_var - Fold 1 - sample_fold_n", p8)
+  vdiffr::expect_doppelganger("RepSptCVCstf 2D time_var - Fold 1-2 - sample_fold_n", p9)
+
 })
 
 test_that("plot() works for 'sptcv_cstf' 2D - space_var", {
@@ -401,7 +462,6 @@ test_that("plot() works for 'sptcv_cstf'", {
   tsk_cookfarm_sub$col_roles$feature = setdiff(tsk_cookfarm_sub$col_roles$feature, "Date")
   tsk_cookfarm_sub$col_roles$time = character()
   rsp = rsmp("sptcv_cstf", folds = 4)
-  rsp$instantiate(tsk_cookfarm_sub)
 
   expect_error(autoplot(rsp, task = tsk_cookfarm_sub, plot3D = TRUE))
   p2 = suppressWarnings(
@@ -409,7 +469,13 @@ test_that("plot() works for 'sptcv_cstf'", {
   )
   # plot() would force image printing here
   p3 = suppressWarnings(
-    suppressMessages(autoplot(rsp, tsk_cookfarm_sub, c(1, 2), plot3D = TRUE, plot_time_var = "Date"))
+    suppressMessages(autoplot(rsp, tsk_cookfarm_sub, c(1, 2), plot3D = TRUE,
+      plot_time_var = "Date"))
+  )
+
+  p4 = suppressWarnings(
+    suppressMessages(autoplot(rsp, tsk_cookfarm_sub, 1, plot3D = TRUE,
+      plot_time_var = "Date", sample_fold_n = 200L))
   )
 
   # test error if neither time nor plot col roles are defined
@@ -419,10 +485,31 @@ test_that("plot() works for 'sptcv_cstf'", {
 
   expect_s3_class(p2, "plotly")
   expect_list(p3)
+  expect_s3_class(p4, "plotly")
+
+  ### sample_fold_n
+  # p7 omitted because fold_id is required for this option
+  # p7 = autoplot(rsp, tsk_cookfarm_sub, sample_fold_n = 3L, plot3D = TRUE)
+  p8 = suppressWarnings(
+    autoplot(rsp, tsk_cookfarm_sub, fold_id = 1, sample_fold_n = 3L,
+      plot3D = TRUE, plot_time_var = "Date")
+  )
+  p9 = suppressWarnings(
+    autoplot(rsp, tsk_cookfarm_sub, fold_id = c(1, 2), sample_fold_n = 3L,
+      plot3D = TRUE, , plot_time_var = "Date")
+  )
 
   # vdiffr::expect_doppelganger("SptCVCstf all test sets", p1)
   suppressWarnings(vdiffr::expect_doppelganger("SptCVCstf - Fold 1", p2))
   suppressWarnings(vdiffr::expect_doppelganger("SptCVCstf - Fold 1-2", p3))
+  suppressWarnings(vdiffr::expect_doppelganger("SptCVCstf - Fold 1 - sample_fold_n", p4))
+
+  ### sample_fold_n
+  expect_s3_class(p8, "plotly")
+  expect_list(p9)
+  vdiffr::expect_doppelganger("RepSptCVCstf 3D time_var - Fold 1 - sample_fold_n", p8)
+  vdiffr::expect_doppelganger("RepSptCVCstf 3D time_var - Fold 1-2 - sample_fold_n", p9)
+
 })
 
 test_that("plot() works for 'repeated_spcv_cstf'", {
@@ -437,7 +524,7 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
   p2 = suppressWarnings(
     autoplot(rsp, tsk_cookfarm_sub, 1,
       show_omitted = TRUE, plot3D = TRUE,
-      repeats_id = 2) # missing on purpose for codecov reasons
+      repeats_id = 1) # missing on purpose for codecov reasons
   )
   p3 = suppressWarnings(
     suppressMessages(autoplot(rsp, tsk_cookfarm_sub, c(1, 2), plot3D = TRUE))
@@ -456,13 +543,19 @@ test_that("plot() works for 'repeated_spcv_cstf'", {
       plot3D = TRUE)
   )
 
+  p6 = suppressWarnings(
+    autoplot(rsp, tsk_cookfarm_sub, 1,
+      show_omitted = TRUE, plot3D = TRUE, sample_fold_n = 200L)
+  )
+
   expect_s3_class(p5, "plotly")
 
   # vdiffr::expect_doppelganger("RepSptCVCstf all test sets", p1)
-  suppressWarnings(vdiffr::expect_doppelganger("RepSptCVCstf Fold 1 Rep 1", p2))
+  suppressWarnings(vdiffr::expect_doppelganger("RepSptCVCstf Fold 1 Rep 1 - show omitted", p2))
   suppressWarnings(vdiffr::expect_doppelganger("RepSptCVCstf - Fold 1-2 Rep 1", p3))
   suppressWarnings(vdiffr::expect_doppelganger("RepSptCVCstf - Fold 1-2, Rep 2", p4))
   suppressWarnings(vdiffr::expect_doppelganger("RepSptCVCstf - Fold 1, Rep 2", p5))
+  suppressWarnings(vdiffr::expect_doppelganger("RepSptCVCstf Fold 1 Rep 1 - sample_fold_n", p6))
 })
 
 test_that("autoplot time + space", {
@@ -517,6 +610,11 @@ test_that("plot() works for 'spcv_disc'", {
   p5 = autoplot(rsp, task, repeats_id = 2)
   p6 = autoplot(rsp, task, fold_id = 1, repeats_id = 2)
 
+  ### sample_fold_n
+  p7 = autoplot(rsp, task, sample_fold_n = 3L)
+  p8 = autoplot(rsp, task, fold_id = 1, sample_fold_n = 3L)
+  p9 = autoplot(rsp, task, fold_id = c(1, 2), sample_fold_n = 3L)
+
   vdiffr::expect_doppelganger("SpCVDisc all test sets", p1)
   vdiffr::expect_doppelganger("SpCVDisc Fold 1", p2)
   vdiffr::expect_doppelganger("SpCVDisc Fold 1-2", p3)
@@ -524,6 +622,12 @@ test_that("plot() works for 'spcv_disc'", {
 
   vdiffr::expect_doppelganger("RepSpCVDisc - Fold 1-2, Rep 2", p5)
   vdiffr::expect_doppelganger("RepSpCVDisc - Fold 1, Rep 2", p6)
+  vdiffr::expect_doppelganger("RepSpCVDisc - Fold 1, Rep 1 - sample_n_fold", p7)
+
+  ### sample_fold_n
+  vdiffr::expect_doppelganger("RepSpCVDisc - sample_fold_n", p7)
+  vdiffr::expect_doppelganger("RepSpCVDisc - Fold 1 - sample_fold_n", p8)
+  vdiffr::expect_doppelganger("RepSpCVDisc - Fold 1-2 - sample_fold_n", p9)
 })
 
 # spcv_tiles --------------------------------------------------------------------
@@ -560,11 +664,20 @@ test_that("plot() works for 'spcv_tiles'", {
   p5 = autoplot(rsp, task, c(1, 2), repeats_id = 2)
   p6 = autoplot(rsp, task, fold_id = 1, repeats_id = 2)
 
-  vdiffr::expect_doppelganger("SpCVTiles all test sets", p1)
-  vdiffr::expect_doppelganger("SpCVTiles Fold 1", p2)
-  vdiffr::expect_doppelganger("SpCVTiles Fold 1-2", p3)
-  vdiffr::expect_doppelganger("SpCVTiles show_omitted", p4)
+  ### sample_fold_n
+  p7 = autoplot(rsp, task, sample_fold_n = 3L)
+  p8 = autoplot(rsp, task, fold_id = 1, sample_fold_n = 3L)
+  p9 = autoplot(rsp, task, fold_id = c(1, 2), sample_fold_n = 3L)
+
+  vdiffr::expect_doppelganger("RepSpCVTiles all test sets", p1)
+  vdiffr::expect_doppelganger("RepSpCVTiles Fold 1", p2)
+  vdiffr::expect_doppelganger("RepSpCVTiles Fold 1-2", p3)
+  vdiffr::expect_doppelganger("RepSpCVTiles show_omitted", p4)
 
   vdiffr::expect_doppelganger("RepSpCVTiles - Fold 1-2, Rep 2", p5)
   vdiffr::expect_doppelganger("RepSpCVTiles - Fold 1, Rep 2", p6)
+
+  vdiffr::expect_doppelganger("RepSpCVTiles - sample_fold_n", p7)
+  vdiffr::expect_doppelganger("RepSpCVTiles - Fold 1 - sample_fold_n", p8)
+  vdiffr::expect_doppelganger("RepSpCVTiles - Fold 1-2 - sample_fold_n", p9)
 })

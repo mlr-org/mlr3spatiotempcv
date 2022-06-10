@@ -171,9 +171,10 @@ test_make_blockCV_test_task = function() {
 }
 
 # subset of cookfarm task for smaller vdiffr snaps
-# we need at least 10k obs as otherwise we get less than 4 unique spatial locations for var 'SOURCEID'
+# sampling 2 observations per Date+SOURCEID group
 set.seed(42)
-b = mlr3::as_data_backend(cookfarm_mlr3[sample(10000), ])
+# b = as_data_backend(as.data.table(cookfarm_mlr3)[, .SD[sample(x = .N, size = 2)], by = .(Date, SOURCEID)])
+b = readRDS("../../data-raw/cookfarm_subset.rds")
 b$hash = "_mlr3_tasks_cookfarm_"
 tsk_cookfarm_sub = TaskRegrST$new(
   id = "cookfarm", b, target = "PHIHOX",
