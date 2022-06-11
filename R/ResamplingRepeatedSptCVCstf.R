@@ -114,9 +114,7 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
   ),
   private = list(
     .sample = function(task) {
-      reps = self$param_set$values$repeats
       pv = self$param_set$values
-
       map(seq_len(pv$repeats), function(i) sample_cast(task, pv$stratify, pv$folds))
     },
     .get_train = function(i) {
