@@ -1,6 +1,3 @@
-# for graph learner tests
-loadNamespace("mlr3")
-
 # Create 6x6 point grid with 1m distance between points
 test_make_sp = function() {
   coordinates = expand.grid(315172:315177, 5690670:5690675)
