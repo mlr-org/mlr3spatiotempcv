@@ -36,12 +36,17 @@ TaskRegrST = R6::R6Class("TaskRegrST",
         id = id, backend = backend, target = target,
         extra_args = extra_args
       )
-      self$extra_args$coords_as_features = assert_flag(coords_as_features)
-      self$extra_args$crs = crs
+
+      # add coordinates as features
+      self$coords_as_features = assert_flag(coords_as_features)
+      self$crs = crs
       self$coordinate_names = coordinate_names
       walk(coordinate_names, function(x) {
         assert_numeric(self$backend$head(1)[[x]], .var.name = x)
       })
+
+      # add coordinates as features
+      self$coords_as_features = assert_flag(coords_as_features)
 
       new_col_roles = named_list(
         setdiff(
@@ -50,13 +55,6 @@ TaskRegrST = R6::R6Class("TaskRegrST",
         ), character(0)
       )
       private$.col_roles = insert_named(private$.col_roles, new_col_roles)
-
-      # add coordinates as features
-      if (coords_as_features) {
-        self$set_col_roles(self$coordinate_names, add_to = "coordinate")
-      } else {
-        self$set_col_roles(self$coordinate_names, roles = "coordinate")
-      }
     },
 
     #' Returns coordinates of observations.
@@ -100,7 +98,7 @@ TaskRegrST = R6::R6Class("TaskRegrST",
       if (missing(rhs)) {
         return(self$extra_args$crs)
       }
-      self$extra_args$crs = assert_string(rhs, na.ok = TRUE)
+      self$extra_args$crs = rhs
     },
 
     #' @field coordinate_names (`character()`)\cr
