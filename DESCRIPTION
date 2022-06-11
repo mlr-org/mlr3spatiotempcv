@@ -36,6 +36,7 @@ Suggests:
     bbotk,
     blockCV (>= 2.1.4),
     caret,
+    CAST,
     ggsci,
     ggtext,
     knitr,

@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/mlr-org/mlr3spatiotempcv",
   "issueTracker": "https://github.com/mlr-org/mlr3spatiotempcv/issues",
   "license": "https://spdx.org/licenses/LGPL-3.0",
-  "version": "1.0.1.9000",
+  "version": "1.0.1.9002",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -99,6 +99,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=caret"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "CAST",
+      "name": "CAST",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=CAST"
     },
     {
       "@type": "SoftwareApplication",
@@ -456,5 +468,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "137913.29KB"
+  "fileSize": "7708.342KB"
 }
