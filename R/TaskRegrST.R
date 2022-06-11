@@ -37,13 +37,12 @@ TaskRegrST = R6::R6Class("TaskRegrST",
         extra_args = extra_args
       )
 
-      # add coordinates as features
-      self$coords_as_features = assert_flag(coords_as_features)
       self$crs = crs
       self$coordinate_names = coordinate_names
       walk(coordinate_names, function(x) {
         assert_numeric(self$backend$head(1)[[x]], .var.name = x)
       })
+      self$coords_as_features = assert_flag(coords_as_features)
 
       # add coordinates as features
       self$coords_as_features = assert_flag(coords_as_features)

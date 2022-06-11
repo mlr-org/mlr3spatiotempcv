@@ -41,6 +41,7 @@ test_that("extra_args contains default arguments", {
     coordinate_names = c("x", "y")
   )
 
-  expect_equal(task$extra_args, list(coords_as_features = FALSE, crs = NA_character_,
-    coordinate_names = c("x", "y")))
+  expect_equal(task$extra_args, list(crs = NA_character_,
+    coordinate_names = c("x", "y"), coords_as_features = FALSE
+  ))
 })
