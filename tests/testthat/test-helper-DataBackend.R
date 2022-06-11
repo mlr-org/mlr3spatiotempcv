@@ -2,7 +2,6 @@ test_that("`get_coordinates()` works with DataBackendVector", {
 
   skip_if_not_installed("mlr3spatial")
   skip_if_not_installed("sf")
-  requireNamespace("mlr3spatial", quietly = TRUE)
   task_1 = tsk("ecuador")
 
   sf = sf::st_as_sf(ecuador, coords = c("x", "y"),
@@ -17,7 +16,6 @@ test_that("`get_coordinates()` works with DataBackendVector", {
 test_that("`get_crs()` works with DataBackendVector", {
   skip_if_not_installed("mlr3spatial")
   skip_if_not_installed("sf")
-  requireNamespace("mlr3spatial", quietly = TRUE)
 
   task_1 = tsk("ecuador")
 
@@ -33,7 +31,6 @@ test_that("`assert_spatial_task()` works", {
 
   skip_if_not_installed("mlr3spatial")
   skip_if_not_installed("sf")
-  requireNamespace("mlr3spatial", quietly = TRUE)
 
   sf = sf::st_as_sf(ecuador, coords = c("x", "y"),
     crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
@@ -46,7 +43,6 @@ test_that("`assert_spatial_task()` works", {
 test_that("`get_coordinates()` works with DataBackendRaster", {
 
   skip_if_not_installed(c("mlr3spatial", "terra"))
-  requireNamespace("mlr3spatial", quietly = TRUE)
 
   ras = generate_stack(list(
     numeric_layer("x_1"),
@@ -69,7 +65,6 @@ test_that("`get_coordinates()` works with DataBackendRaster", {
 
 test_that("`get_crs()` works with DataBackendRaster", {
   skip_if_not_installed(c("mlr3spatial", "terra"))
-  requireNamespace("mlr3spatial", quietly = TRUE)
   ras = generate_stack(list(
     numeric_layer("x_1"),
     factor_layer("y", levels = c("a", "b"))),

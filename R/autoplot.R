@@ -570,218 +570,14 @@ autoplot.ResamplingSpCVDisc = function( # nolint
   }
 
   if (!is.null(fold_id)) {
-    if (length(fold_id) == 1) {
-      ### only one fold
-
-      data_coords = format_resampling_list(task, resampling_sub)
-
-      # suppress undefined global variables note
-      data_coords$indicator = ""
-
-      row_id_test = resampling_sub$instance$test[[fold_id]]
-      row_id_train = resampling_sub$instance$train[[fold_id]]
-
-      data_coords[row_id %in% row_id_test, indicator := "Test"]
-      data_coords[row_id %in% row_id_train, indicator := "Train"]
-
-      # take stratified random sample from folds
-      if (!is.null(sample_fold_n)) {
-        data_coords = strat_sample_folds(data_coords, "test", sample_fold_n)
-      }
-
-      # should omitted points be shown?
-      if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
-        data_coords[indicator == "", indicator := "Omitted"]
-
-        sf_df = sf::st_as_sf(data_coords,
-          coords = get_coordinate_names(task),
-          crs = get_crs(task))
-        sf_df = reorder_levels(sf_df)
-
-        ggplot() +
-          geom_sf(data = sf_df, aes(color = indicator), ...) +
-          scale_color_manual(values = c(
-            "Omitted" = "grey",
-            "Train" = "#0072B5",
-            "Test" = "#E18727"
-          )) +
-          labs(color = "Set", title = sprintf(
-            "Fold %s, Repetition %s", fold_id,
-            repeats_id)) +
-          theme(
-            plot.title = ggtext::element_textbox(
-              size = 10,
-              color = "black", fill = "#ebebeb", box.color = "black",
-              height = unit(0.33, "inch"), width = unit(1, "npc"),
-              linetype = 1, r = unit(5, "pt"),
-              valign = 0.5, halign = 0.5,
-              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
-          )
-      } else {
-        data_coords = data_coords[indicator != ""]
-
-        sf_df = sf::st_as_sf(data_coords,
-          coords = get_coordinate_names(task),
-          crs = get_crs(task))
-        sf_df = reorder_levels(sf_df)
-
-        ggplot() +
-          geom_sf(data = sf_df, aes(color = indicator), ...) +
-          scale_color_manual(values = c(
-            "Train" = "#0072B5",
-            "Test" = "#E18727"
-          )) +
-          labs(color = "Set", title = sprintf(
-            "Fold %s, Repetition %s", fold_id,
-            repeats_id)) +
-          theme(
-            plot.title = ggtext::element_textbox(
-              size = 10,
-              color = "black", fill = "#ebebeb", box.color = "black",
-              height = unit(0.33, "inch"), width = unit(1, "npc"),
-              linetype = 1, r = unit(5, "pt"),
-              valign = 0.5, halign = 0.5,
-              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
-          )
-      }
-    }
-    else {
-      ### Multiplot of multiple partitions with train and test set
-
-      # FIXME: redundant code - call function from single plots?
-      plot_list = mlr3misc::map(fold_id, function(.x) {
-
-        data_coords = format_resampling_list(task, resampling_sub)
-
-        # suppress undefined global variables note
-        data_coords$indicator = ""
-
-        row_id_test = resampling_sub$instance$test[[.x]]
-        row_id_train = resampling_sub$instance$train[[.x]]
-
-        data_coords[row_id %in% row_id_test, indicator := "Test"]
-        data_coords[row_id %in% row_id_train, indicator := "Train"]
-
-        # take stratified random sample from folds
-        if (!is.null(sample_fold_n)) {
-          data_coords = strat_sample_folds(data_coords, "test", sample_fold_n)
-        }
-
-        # should omitted points be shown?
-        if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
-          data_coords[indicator == "", indicator := "Omitted"]
-
-          sf_df = sf::st_as_sf(data_coords,
-            coords = get_coordinate_names(task),
-            crs = get_crs(task))
-          sf_df = reorder_levels(sf_df)
-
-          ggplot() +
-            geom_sf(data = sf_df, aes(color = indicator), ...) +
-            scale_color_manual(values = c(
-              "Omitted" = "grey",
-              "Train" = "#0072B5",
-              "Test" = "#E18727"
-            )) +
-            labs(color = "Set", title = sprintf(
-              "Fold %s, Repetition %s", .x,
-              repeats_id)) +
-            theme(
-              plot.title = ggtext::element_textbox(
-                size = 10,
-                color = "black", fill = "#ebebeb", box.color = "black",
-                height = unit(0.33, "inch"), width = unit(1, "npc"),
-                linetype = 1, r = unit(5, "pt"),
-                valign = 0.5, halign = 0.5,
-                padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
-            )
-        } else {
-          data_coords = data_coords[indicator != ""]
-
-          sf_df = sf::st_as_sf(data_coords,
-            coords = get_coordinate_names(task),
-            crs = get_crs(task))
-          sf_df = reorder_levels(sf_df)
-
-          ggplot() +
-            geom_sf(data = sf_df, aes(color = indicator), ...) +
-            scale_color_manual(values = c(
-              "Train" = "#0072B5",
-              "Test" = "#E18727"
-            )) +
-            labs(color = "Set", title = sprintf(
-              "Fold %s, Repetition %s", .x,
-              repeats_id)) +
-            theme(
-              plot.title = ggtext::element_textbox(
-                size = 10,
-                color = "black", fill = "#ebebeb", box.color = "black",
-                height = unit(0.33, "inch"), width = unit(1, "npc"),
-                linetype = 1, r = unit(5, "pt"),
-                valign = 0.5, halign = 0.5,
-                padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
-            )
-        }
-      })
-
-      # Return a plot grid via patchwork?
-
-      if (!plot_as_grid) {
-        return(invisible(plot_list))
-      } else {
-        # for repeated cv we also print out the rep number
-        if (is.null(repeats_id)) {
-          repeats_id = 1 # nocov
-        }
-
-        plot_list_pw = patchwork::wrap_plots(plot_list) +
-          patchwork::plot_layout(guides = "collect")
-        return(plot_list_pw)
-      }
-    }
+    ### Multiplot of single folds with train and test
+    plot = autoplot_multi_fold_list(task, resampling_sub, sample_fold_n,
+      fold_id, repeats_id, plot_as_grid, show_omitted)
+    return(plot)
   } else {
-
-    ### Create one plot colored by all test folds
-
-    data_coords = format_resampling_list(task, resampling_sub)
-
-    # extract test ids from lists
-    row_ids_test = data.table::rbindlist(
-      lapply(resampling_sub$instance$test, as.data.table),
-      idcol = "fold")
-    setnames(row_ids_test, c("fold", "row_id"))
-
-    test_folds = merge(data_coords, row_ids_test, by = "row_id", all = TRUE)
-
-    # take stratified random sample from folds
-    if (!is.null(sample_fold_n)) {
-      test_folds = strat_sample_folds(test_folds, "test", sample_fold_n)
-    }
-
-    sf_df = sf::st_as_sf(test_folds,
-      coords = get_coordinate_names(task),
-      crs = get_crs(task))
-
-    # only keep test ids
-    sf_df = stats::na.omit(sf_df, cols = "fold")
-
-    # order fold ids
-    sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
-    sf_df$fold = as.factor(as.character(sf_df$fold))
-    sf_df$fold = factor(sf_df$fold, levels = unique(as.character(sf_df$fold)))
-
-    # for all non-repeated rsmp cases
-    if (is.null(repeats_id)) {
-      repeats_id = 1 # nocov
-    }
-
-    plot = ggplot() +
-      geom_sf(
-        data = sf_df["fold"], show.legend = "point",
-        aes(color = fold)
-      ) +
-      ggsci::scale_color_ucscgb() +
-      labs(color = sprintf("Partition #, Rep %s", repeats_id))
+    ### One plot showing all test folds
+    plot = autoplot_all_folds_list(task, resampling_sub, sample_fold_n,
+      fold_id, repeats_id)
     return(plot)
   }
 }
@@ -908,222 +704,14 @@ autoplot.ResamplingSpCVTiles = function( # nolint
   }
 
   if (!is.null(fold_id)) {
-    if (length(fold_id) == 1) {
-      ### only one fold
-
-      data_coords = format_resampling_list(task, resampling_sub)
-
-      # suppress undefined global variables note
-      data_coords$indicator = ""
-
-      row_id_test = resampling_sub$instance$test[[fold_id]]
-      row_id_train = resampling_sub$instance$train[[fold_id]]
-
-      data_coords[row_id %in% row_id_test, indicator := "Test"]
-      data_coords[row_id %in% row_id_train, indicator := "Train"]
-
-      # take stratified random sample from folds
-      if (!is.null(sample_fold_n)) {
-        data_coords = strat_sample_folds(data_coords, "test", sample_fold_n)
-      }
-
-      # should omitted points be shown?
-      if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
-        data_coords[indicator == "", indicator := "Omitted"]
-
-        sf_df = sf::st_as_sf(data_coords,
-          coords = get_coordinate_names(task),
-          crs = get_crs(task))
-        sf_df = reorder_levels(sf_df)
-
-        ggplot() +
-          geom_sf(data = sf_df, aes(color = indicator), ...) +
-          scale_color_manual(values = c(
-            "Omitted" = "grey",
-            "Train" = "#0072B5",
-            "Test" = "#E18727"
-          )) +
-          labs(color = "Set", title = sprintf(
-            "Fold %s, Repetition %s", fold_id,
-            repeats_id)) +
-          theme(
-            plot.title = ggtext::element_textbox(
-              size = 10,
-              color = "black", fill = "#ebebeb", box.color = "black",
-              height = unit(0.33, "inch"), width = unit(1, "npc"),
-              linetype = 1, r = unit(5, "pt"),
-              valign = 0.5, halign = 0.5,
-              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
-          )
-      } else {
-        data_coords = data_coords[indicator != ""]
-
-        sf_df = sf::st_as_sf(data_coords,
-          coords = get_coordinate_names(task),
-          crs = get_crs(task))
-        sf_df = reorder_levels(sf_df)
-
-        ggplot() +
-          geom_sf(data = sf_df, aes(color = indicator), ...) +
-          scale_color_manual(values = c(
-            "Train" = "#0072B5",
-            "Test" = "#E18727"
-          )) +
-          labs(color = "Set", title = sprintf(
-            "Fold %s, Repetition %s", fold_id,
-            repeats_id)) +
-          theme(
-            plot.title = ggtext::element_textbox(
-              size = 10,
-              color = "black", fill = "#ebebeb", box.color = "black",
-              height = unit(0.33, "inch"), width = unit(1, "npc"),
-              linetype = 1, r = unit(5, "pt"),
-              valign = 0.5, halign = 0.5,
-              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
-          )
-      }
-    }
-    else {
-      ### Multiplot of multiple partitions with train and test set
-
-      # FIXME: redundant code - call function from single plots?
-      plot_list = mlr3misc::map(fold_id, function(.x) {
-
-        data_coords = format_resampling_list(task, resampling_sub)
-
-        # suppress undefined global variables note
-        data_coords$indicator = ""
-
-        row_id_test = resampling_sub$instance$test[[.x]]
-        row_id_train = resampling_sub$instance$train[[.x]]
-
-        data_coords[row_id %in% row_id_test, indicator := "Test"]
-        data_coords[row_id %in% row_id_train, indicator := "Train"]
-
-        # take stratified random sample from folds
-        if (!is.null(sample_fold_n)) {
-          data_coords = strat_sample_folds(data_coords, "test", sample_fold_n)
-        }
-
-        # should omitted points be shown?
-        if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
-          data_coords[indicator == "", indicator := "Omitted"]
-
-          sf_df = sf::st_as_sf(data_coords,
-            coords = get_coordinate_names(task),
-            crs = get_crs(task))
-          sf_df = reorder_levels(sf_df)
-
-          ggplot() +
-            geom_sf(data = sf_df, aes(color = indicator), ...) +
-            scale_color_manual(values = c(
-              "Omitted" = "grey",
-              "Train" = "#0072B5",
-              "Test" = "#E18727"
-            )) +
-            labs(color = "Set", title = sprintf(
-              "Fold %s, Repetition %s", .x,
-              repeats_id)) +
-            theme(
-              plot.title = ggtext::element_textbox(
-                size = 10,
-                color = "black", fill = "#ebebeb", box.color = "black",
-                height = unit(0.33, "inch"), width = unit(1, "npc"),
-                linetype = 1, r = unit(5, "pt"),
-                valign = 0.5, halign = 0.5,
-                padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
-            )
-        } else {
-          data_coords = data_coords[indicator != ""]
-
-          sf_df = sf::st_as_sf(data_coords,
-            coords = get_coordinate_names(task),
-            crs = get_crs(task))
-          sf_df = reorder_levels(sf_df)
-
-          ggplot() +
-            geom_sf(data = sf_df, aes(color = indicator), ...) +
-            scale_color_manual(values = c(
-              "Train" = "#0072B5",
-              "Test" = "#E18727"
-            )) +
-            labs(color = "Set", title = sprintf(
-              "Fold %s, Repetition %s", .x,
-              repeats_id)) +
-            theme(
-              plot.title = ggtext::element_textbox(
-                size = 10,
-                color = "black", fill = "#ebebeb", box.color = "black",
-                height = unit(0.33, "inch"), width = unit(1, "npc"),
-                linetype = 1, r = unit(5, "pt"),
-                valign = 0.5, halign = 0.5,
-                padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
-            )
-        }
-      })
-
-      # Return a plot grid via patchwork?
-
-      if (!plot_as_grid) {
-        return(invisible(plot_list))
-      } else {
-        # for repeated cv we also print out the rep number
-        if (is.null(repeats_id)) {
-          repeats_id = 1 # nocov
-        }
-
-        plot_list_pw = patchwork::wrap_plots(plot_list) +
-          patchwork::plot_layout(guides = "collect")
-        return(plot_list_pw)
-      }
-    }
+    ### Multiplot of single folds with train and test
+    plot = autoplot_multi_fold_list(task, resampling_sub, sample_fold_n,
+      fold_id, repeats_id, plot_as_grid, show_omitted)
+    return(plot)
   } else {
-
-    ### Create one plot colored by all test folds
-
-    data_coords = format_resampling_list(task, resampling_sub)
-
-    names(resampling_sub$instance$test) = seq_len(length(resampling_sub$instance$test))
-
-    # extract test ids from lists
-    row_ids_test = data.table::rbindlist(
-      lapply(resampling_sub$instance$test, as.data.table),
-      idcol = "fold")
-    setnames(row_ids_test, c("fold", "row_id"))
-
-    test_folds = merge(data_coords, row_ids_test, by = "row_id", all = TRUE)
-
-    test_folds$fold = as.integer(test_folds$fold)
-
-    # take stratified random sample from folds
-    if (!is.null(sample_fold_n)) {
-      test_folds = strat_sample_folds(test_folds, "test", sample_fold_n)
-    }
-
-    sf_df = sf::st_as_sf(test_folds,
-      coords = get_coordinate_names(task),
-      crs = get_crs(task))
-
-    # only keep test ids
-    sf_df = stats::na.omit(sf_df, cols = "fold")
-
-    # order fold ids
-    sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
-    sf_df$fold = as.factor(as.character(sf_df$fold))
-    sf_df$fold = factor(sf_df$fold, levels = unique(as.character(sf_df$fold)))
-
-    # for all non-repeated rsmp cases
-    if (is.null(repeats_id)) {
-      repeats_id = 1 # nocov
-    }
-
-    plot = ggplot() +
-      geom_sf(
-        data = sf_df["fold"], show.legend = "point",
-        aes(color = fold)
-      ) +
-      ggsci::scale_color_ucscgb() +
-      labs(color = sprintf("Partition #, Rep %s", repeats_id))
+    ### One plot showing all test folds
+    plot = autoplot_all_folds_list(task, resampling_sub, sample_fold_n,
+      fold_id, repeats_id)
     return(plot)
   }
 }
@@ -1170,6 +758,82 @@ plot.ResamplingRepeatedSpCVTiles = function(x, ...) {
   print(autoplot(x, ...)) # nocov
 }
 
+# SpCVBuffer -------------------------------------------------------------------
+
+#' @title Visualization Functions for SpCV Buffer Methods.
+#'
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods to
+#'   visualize mlr3 spatiotemporal resampling objects.
+#'
+#' @name autoplot.ResamplingSpCVBuffer
+#' @inheritParams autoplot.ResamplingSpCVBlock
+#' @param object `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingSpCVBuffer].
+#' @param x `[Resampling]`\cr
+#'   mlr3 spatial resampling object of class [ResamplingSpCVBuffer].
+#' @export
+#' @seealso
+#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special-tasks.html#vis-spt-partitions)
+#'   - [autoplot.ResamplingSpCVBlock()]
+#'   - [autoplot.ResamplingSpCVCoords()]
+#'   - [autoplot.ResamplingSpCVEnv()]
+#'   - [autoplot.ResamplingCV()]
+#'   - [autoplot.ResamplingSptCVCstf()]
+#'   - [autoplot.ResamplingSptCVCluto()]
+#' @examples
+#' \donttest{
+#' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
+#'   library(mlr3)
+#'   library(mlr3spatiotempcv)
+#'   task = tsk("ecuador")
+#'   resampling = rsmp("spcv_buffer", theRange = 1000)
+#'   resampling$instantiate(task)
+#'
+#'   ## single fold
+#'   autoplot(resampling, task, fold_id = 1) +
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+#'
+#'   ## multiple folds
+#'   autoplot(resampling, task, fold_id = c(1, 2)) *
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+#' }
+#' }
+autoplot.ResamplingSpCVBuffer = function( # nolint
+  object,
+  task,
+  fold_id = NULL,
+  plot_as_grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  ...) {
+
+  mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
+  resampling = object
+
+  resampling = assert_autoplot(resampling, fold_id, task)
+  resampling_sub = resampling$clone(deep = TRUE)
+
+  # add the row_ids of the task to the coordinates
+  coords = get_coordinates(task)
+  coords$row_id = task$row_ids
+
+  if (is.null(fold_id)) {
+    stopf("Please provide a fold ID.
+      Plotting all folds of a LOOCV instance is not supported", wrap = TRUE)
+  }
+
+  ### Multiplot of single folds with train and test ----------------------
+  plot = autoplot_multi_fold_list(task, resampling_sub,
+    sample_fold_n = NULL,
+    fold_id, repeats_id = 1)
+  return(plot)
+}
+
+#' @rdname autoplot.ResamplingSpCVBuffer
+#' @export
+plot.ResamplingSpCVBuffer = function(x, ...) {
+  print(autoplot(x, ...)) # nocov
+}
 
 # CV ---------------------------------------------------------------------------
 
@@ -1372,7 +1036,8 @@ autoplot_spatial = function(
     rsmp_autopl$instance$group = rsmp_autopl$instance$row_id
     rsmp_autopl$instance$row_id = NULL
     coords_resamp$group = as.character(coords_resamp$group)
-    coords_resamp = merge(coords_resamp, rsmp_autopl$instance, by = "group", all = TRUE)
+    coords_resamp = merge(coords_resamp, rsmp_autopl$instance, by = "group",
+      all = TRUE)
     setorder(coords_resamp, "row_id")
     coords_resamp$group = NULL
   } else {
@@ -1384,148 +1049,20 @@ autoplot_spatial = function(
   }
 
   if (!is.null(fold_id)) {
-
-    # Multiplot with train and test set for each fold --------------------------
-
-    plot_list = mlr3misc::map(fold_id, function(.x) {
-
-      dt = coords_resamp
-      dt$indicator = rep("foo", nrow(dt))
-      dt[, indicator := ifelse(fold == .x, "Test", "Train")]
-
-      # take stratified random sample from folds
-      if (!is.null(sample_fold_n)) {
-        dt = strat_sample_folds(dt, "fold", sample_fold_n)
-      }
-
-      sf_df = sf::st_as_sf(dt,
-        coords = get_coordinate_names(task),
-        crs = get_crs(task))
-
-      sf_df = reorder_levels(sf_df)
-
-      if (show_blocks) {
-        if (any(grepl("ResamplingRepeated", class(rsmp_autopl)))) {
-          coords_resamp = coords_resamp[rep == repeats_id, ]
-          blocks = rsmp_autopl$blocks[[repeats_id]]
-        } else {
-          blocks = rsmp_autopl$blocks
-        }
-        blocks = sf::st_set_crs(blocks, sf::st_crs(sf_df))
-
-        p1 = ggplot() +
-          geom_sf(data = sf_df, aes(color = indicator), ...) +
-          geom_sf(
-            data = blocks, color = "black", alpha = 0,
-            size = 0.7) +
-          scale_color_manual(values = c(
-            "Train" = "#0072B5",
-            "Test" = "#E18727"
-          )) +
-          labs(color = "Set", title = sprintf(
-            "Fold %s, Repetition %s", .x,
-            repeats_id)) +
-          theme(
-            plot.title = ggtext::element_textbox(
-              size = 10,
-              color = "black", fill = "#ebebeb", box.color = "black",
-              height = unit(0.33, "inch"), width = unit(1, "npc"),
-              linetype = 1, r = unit(5, "pt"),
-              valign = 0.5, halign = 0.5,
-              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
-          )
-
-        if (show_labels) {
-          p1 = p1 +
-            geom_sf_label(
-              data = blocks, color = "black",
-              label = blocks$fold,
-              size = 2, label.padding = unit(0.1, "lines"),
-              fun.geometry = function(x) {
-                # Warning: In st_point_on_surface.sfc(sf::st_zm(x)) :
-                # st_point_on_surface may not give correct results for
-                # longitude/latitude data
-                suppressWarnings(sf::st_point_on_surface(sf::st_zm(x)))
-              }
-            )
-        }
-        return(p1)
-      } else {
-
-        ggplot() +
-          geom_sf(data = sf_df, aes(color = indicator), ...) +
-          scale_color_manual(values = c(
-            "Train" = "#0072B5",
-            "Test" = "#E18727"
-          )) +
-          labs(color = "Set", title = sprintf(
-            "Fold %s, Repetition %s", .x,
-            repeats_id)) +
-          theme(
-            plot.title = ggtext::element_textbox(
-              size = 10,
-              color = "black", fill = "#ebebeb", box.color = "black",
-              height = unit(0.33, "inch"), width = unit(1, "npc"),
-              linetype = 1, r = unit(5, "pt"),
-              valign = 0.5, halign = 0.5,
-              padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
-          )
-      }
-    })
-
-    # Return a plot grid via patchwork? ----------------------------------------
-
-    if (!plot_as_grid) {
-      return(invisible(plot_list))
-    } else {
-      # for repeated cv we also print out the rep number
-      if (is.null(repeats_id)) {
-        repeats_id = 1 # nocov
-      }
-
-      plot_list_pw = patchwork::wrap_plots(plot_list) +
-        patchwork::plot_layout(guides = "collect")
-      return(plot_list_pw)
-    }
+    ### Multiplot of single folds with train and test --------------------------
+    plot = autoplot_multi_fold_dt(task = task, resampling = rsmp_autopl,
+      resampling_mod = coords_resamp,
+      sample_fold_n = sample_fold_n, fold_id = fold_id,
+      repeats_id = repeats_id, plot_as_grid = plot_as_grid,
+      show_blocks = show_blocks, show_labels = show_labels, ...)
   } else {
-
-    # Create one plot colored by all test folds --------------------------------
-
-    if (show_blocks) {
-      blocks = sf::st_as_sf(coords_resamp)
-    }
-    if (!is.null(coords_resamp$blocks)) {
-      coords_resamp$blocks = NULL
-    }
-
-    # take stratified random sample from folds
-    if (!is.null(sample_fold_n)) {
-      coords_resamp = strat_sample_folds(coords_resamp, "fold", sample_fold_n)
-    }
-
-    sf_df = sf::st_as_sf(coords_resamp,
-      coords = get_coordinate_names(task),
-      crs = get_crs(task))
-
-    # order fold ids
-    sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
-    sf_df$fold = as.factor(as.character(sf_df$fold))
-    sf_df$fold = factor(sf_df$fold, levels = unique(as.character(sf_df$fold)))
-
-    # for all non-repeated rsmp cases
-    if (is.null(repeats_id)) {
-      repeats_id = 1 # nocov
-    }
-
-    plot = ggplot() +
-      geom_sf(
-        data = sf_df["fold"], show.legend = "point",
-        aes(color = fold)
-      ) +
-      ggsci::scale_color_ucscgb() +
-      labs(color = sprintf("Partition #, Rep %s", repeats_id))
-    return(plot)
+    ### One plot showing all test folds ----------------------------------------
+    plot = autoplot_all_folds_dt(task = task, resampling = coords_resamp,
+      sample_fold_n = sample_fold_n, fold_id = fold_id,
+      repeats_id = repeats_id, plot_as_grid = plot_as_grid,
+      show_blocks = show_blocks, show_labels = show_labels, ...)
   }
+  return(plot)
 }
 
 # autoplot_spatiotemp ----------------------------------------------------------
@@ -1800,82 +1337,21 @@ autoplot_custom_cv = function(
   # we need integers and not characters for the upcoming map() calls
   coords_resamp$fold = as.integer(as.factor(coords_resamp$fold))
 
-  # take stratified random sample from folds
-  if (!is.null(sample_fold_n)) {
-    assert_integer(sample_fold_n)
-    if (sample_fold_n > min(table(coords_resamp$fold))) {
-      lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(coords_resamp$fold))))
-      stopf()
-    }
-    coords_resamp = coords_resamp[, .SD[sample(x = .N, size = sample_fold_n)],
-      by = fold]
+  if (is.null(repeats_id)) {
+    repeats_id = 1
   }
 
   if (!is.null(fold_id)) {
-
-    # Multiplot with train and test set for each fold --------------------------
-
-    plot_list = mlr3misc::map(fold_id, function(.x) {
-
-      dt = coords_resamp
-      dt$indicator = rep("foo", nrow(dt))
-      dt[, indicator := ifelse(fold == .x, "Test", "Train")]
-
-      sf_df = sf::st_as_sf(dt,
-        coords = get_coordinate_names(task),
-        crs = get_crs(task))
-
-      sf_df = reorder_levels(sf_df)
-
-      ggplot() +
-        geom_sf(data = sf_df, aes(color = indicator), ...) +
-        scale_color_manual(values = c(
-          "Train" = "#0072B5",
-          "Test" = "#E18727"
-        )) +
-        labs(color = "Set", title = sprintf(
-          "Fold %s", .x)) +
-        theme(
-          plot.title = ggtext::element_textbox(
-            size = 10,
-            color = "black", fill = "#ebebeb", box.color = "black",
-            height = unit(0.33, "inch"), width = unit(1, "npc"),
-            linetype = 1, r = unit(5, "pt"),
-            valign = 0.5, halign = 0.5,
-            padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
-        )
-    })
-
-    # Return a plot grid via patchwork? ----------------------------------------
-
-    if (!plot_as_grid) {
-      return(invisible(plot_list))
-    } else {
-
-      plot_list_pw = patchwork::wrap_plots(plot_list) +
-        patchwork::plot_layout(guides = "collect")
-      return(plot_list_pw)
-    }
+    ### Multiplot of single folds with train and test --------------------------
+    plot = autoplot_multi_fold_dt(task = task, resampling = rsmp_autopl,
+      resampling_mod = coords_resamp,
+      sample_fold_n = sample_fold_n, fold_id = fold_id,
+      repeats_id = repeats_id, plot_as_grid = plot_as_grid, ...)
   } else {
-
-    # Create one plot colored by all test folds --------------------------------
-
-    sf_df = sf::st_as_sf(coords_resamp,
-      coords = get_coordinate_names(task),
-      crs = get_crs(task))
-
-    # order fold ids
-    sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
-    sf_df$fold = as.factor(as.character(sf_df$fold))
-    sf_df$fold = factor(sf_df$fold, levels = unique(as.character(sf_df$fold)))
-
-    plot = ggplot() +
-      geom_sf(
-        data = sf_df["fold"], show.legend = "point",
-        aes(color = fold)
-      ) +
-      ggsci::scale_color_ucscgb() +
-      labs(color = sprintf("Partition #, Rep %s", repeats_id))
-    return(plot)
+    ### One plot showing all test folds ----------------------------------------
+    plot = autoplot_all_folds_dt(task = task, resampling = coords_resamp,
+      sample_fold_n = sample_fold_n, fold_id = fold_id,
+      repeats_id = repeats_id, plot_as_grid = plot_as_grid, ...)
   }
+  return(plot)
 }

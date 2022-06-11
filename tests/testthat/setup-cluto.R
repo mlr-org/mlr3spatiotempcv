@@ -5,8 +5,8 @@ if (Sys.getenv("NOT_CRAN") != "" && Sys.getenv("R_COVR") == "") {
   if (Sys.info()[["sysname"]] == "Linux") {
     if (!file.exists(system.file("vcluster", package = "mlr3spatiotempcv"))) {
       source(gist_url)
-      fs::dir_create("tests/testthat/bin")
-      fs::file_move(sprintf("%s/vcluster", system.file(package = "mlr3spatiotempcv"), "tests/testthat/bin/vcluster"))
+      dir.create("tests/testthat/bin")
+      file.copy(sprintf("%s/vcluster", system.file(package = "mlr3spatiotempcv"), "tests/testthat/bin/vcluster"))
       Sys.setenv("CLUTO_PATH", test_path("bin", "vcluster"))
     }
   }

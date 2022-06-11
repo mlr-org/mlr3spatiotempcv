@@ -5,7 +5,6 @@
 # - SpCVCstf
 # - SpCVTiles
 format_resampling_list = function(task, resampling) {
-
   data = task$data()
   data$row_id = task$row_ids
   data$indicator = ""
@@ -19,9 +18,13 @@ format_resampling_list = function(task, resampling) {
   }
 
   for (i in seq_len(n_iters)) {
-
-    row_id_test = resampling$instance$test[[i]]
-    row_id_train = resampling$instance$train[[i]]
+    if (any(grepl("ResamplingSpCVBuffer", class(resampling)))) {
+      row_id_train = coords[row_id %in% resampling$train_set(n_iters)][["row_id"]]
+      row_id_test = coords[row_id %in% resampling$test_set(n_iters)][["row_id"]]
+    } else {
+      row_id_test = resampling$instance$test[[i]]
+      row_id_train = resampling$instance$train[[i]]
+    }
 
     data$test[data$row_id %in% row_id_test] = i
     data$train[data$row_id %in% row_id_train] = i
@@ -63,7 +66,8 @@ reorder_levels = function(object) {
   if ("Omitted" %in% levels(object$indicator)) {
     # reorder factor levels so that "train" comes first
     object$indicator = ordered(object$indicator,
-      levels = c("Train", "Test", "Omitted"))
+      levels = c("Train", "Test", "Omitted")
+    )
   } else {
 
     # reorder factor levels so that "train" comes first
@@ -81,7 +85,6 @@ reorder_levels = function(object) {
 #'   Sample size per group
 #' @keywords internal
 strat_sample_folds = function(data, col, n) {
-
   assertClass(data, "data.table")
   assert_int(n)
 
@@ -94,7 +97,8 @@ strat_sample_folds = function(data, col, n) {
       stopf()
     }
     data = data[, .SD[sample(x = .N, size = n)],
-      by = col]
+      by = col
+    ]
   }
   return(data)
 }
