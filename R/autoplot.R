@@ -768,8 +768,8 @@ autoplot.ResamplingSpCVDisc = function( # nolint
     # take stratified random sample from folds
     if (!is.null(sample_fold_n)) {
       assert_integer(sample_fold_n)
-      if (sample_fold_n > min(table(test_folds$fold))) {
-        lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(test_folds$fold))))
+      if (sample_fold_n > min(setDT(test_folds)[, .N, keyby = fold][, N])) {
+        lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(test_folds)[, .N, keyby = fold][, N])))
         stopf()
       }
       test_folds = test_folds[, .SD[sample(x = .N, size = sample_fold_n)],
@@ -1128,8 +1128,8 @@ autoplot.ResamplingSpCVTiles = function( # nolint
     # take stratified random sample from folds
     if (!is.null(sample_fold_n)) {
       assert_integer(sample_fold_n)
-      if (sample_fold_n > min(table(test_folds$fold))) {
-        lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(test_folds$fold))))
+      if (sample_fold_n > min(setDT(test_folds)[, .N, keyby = fold][, N])) {
+        lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(test_folds)[, .N, keyby = fold][, N])))
         stopf()
       }
       test_folds = test_folds[, .SD[sample(x = .N, size = sample_fold_n)],
@@ -1432,8 +1432,8 @@ autoplot_spatial = function(
       # take stratified random sample from folds
       if (!is.null(sample_fold_n)) {
         assert_integer(sample_fold_n)
-        if (sample_fold_n > min(table(dt$fold))) {
-          lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(dt$fold))))
+        if (sample_fold_n > min(setDT(dt)[, .N, keyby = fold][, N])) {
+          lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(dt)[, .N, keyby = fold][, N])))
           stopf()
         }
         dt = dt[, .SD[sample(x = .N, size = sample_fold_n)],
