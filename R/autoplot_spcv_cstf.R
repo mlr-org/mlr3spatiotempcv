@@ -147,7 +147,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
         data_coords = format_resampling_list(task, resampling_sub)
 
         # suppress undefined global variables note
-        data_coords$indicator = ""
+        data_coords$indicator = NA
 
         row_id_test = resampling_sub$instance$test[[fold_id]]
         row_id_train = resampling_sub$instance$train[[fold_id]]
@@ -159,14 +159,14 @@ autoplot.ResamplingSptCVCstf = function( # nolint
         if (!is.null(sample_fold_n)) {
           assert_integer(sample_fold_n)
           if (sample_fold_n > min(setDT(data_coords)[, .N, keyby = test][, N])) {
-            lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(data_coords)[, .N, keyby = test][, N])))
+            lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(data_coords)[, .N, keyby = test][, N]))) # nolint
             stopf()
           }
           data_coords = data_coords[, .SD[sample(x = .N, size = sample_fold_n)],
             by = test]
         }
 
-        data_coords = data_coords[indicator != ""]
+        data_coords = data_coords[!is.na(indicator)]
 
         sf_df = sf::st_as_sf(data_coords,
           coords = get_coordinate_names(task),
