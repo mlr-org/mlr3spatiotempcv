@@ -586,13 +586,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
       # take stratified random sample from folds
       if (!is.null(sample_fold_n)) {
-        assert_integer(sample_fold_n)
-        if (sample_fold_n > min(setDT(data_coords)[, .N, keyby = test][, N])) {
-          lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(data_coords)[, .N, keyby = test][, N])))
-          stopf()
-        }
-        data_coords = data_coords[, .SD[sample(x = .N, size = sample_fold_n)],
-          by = test]
+        data_coords = strat_sample_folds(data_coords, "test", sample_fold_n)
       }
 
       # should omitted points be shown?
@@ -670,13 +664,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
         # take stratified random sample from folds
         if (!is.null(sample_fold_n)) {
-          assert_integer(sample_fold_n)
-          if (sample_fold_n > min(setDT(data_coords)[, .N, keyby = test][, N])) {
-            lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(data_coords)[, .N, keyby = test][, N])))
-            stopf()
-          }
-          data_coords = data_coords[, .SD[sample(x = .N, size = sample_fold_n)],
-            by = test]
+          data_coords = strat_sample_folds(data_coords, "test", sample_fold_n)
         }
 
         # should omitted points be shown?
@@ -767,13 +755,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
 
     # take stratified random sample from folds
     if (!is.null(sample_fold_n)) {
-      assert_integer(sample_fold_n)
-      if (sample_fold_n > min(setDT(test_folds)[, .N, keyby = fold][, N])) {
-        lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(test_folds)[, .N, keyby = fold][, N])))
-        stopf()
-      }
-      test_folds = test_folds[, .SD[sample(x = .N, size = sample_fold_n)],
-        by = test]
+      test_folds = strat_sample_folds(test_folds, "test", sample_fold_n)
     }
 
     sf_df = sf::st_as_sf(test_folds,
@@ -942,13 +924,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
       # take stratified random sample from folds
       if (!is.null(sample_fold_n)) {
-        assert_integer(sample_fold_n)
-        if (sample_fold_n > min(setDT(data_coords)[, .N, keyby = test][, N])) {
-          lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(data_coords)[, .N, keyby = test][, N])))
-          stopf()
-        }
-        data_coords = data_coords[, .SD[sample(x = .N, size = sample_fold_n)],
-          by = test]
+        data_coords = strat_sample_folds(data_coords, "test", sample_fold_n)
       }
 
       # should omitted points be shown?
@@ -1026,13 +1002,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
         # take stratified random sample from folds
         if (!is.null(sample_fold_n)) {
-          assert_integer(sample_fold_n)
-          if (sample_fold_n > min(setDT(data_coords)[, .N, keyby = test][, N])) {
-            lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(data_coords)[, .N, keyby = test][, N])))
-            stopf()
-          }
-          data_coords = data_coords[, .SD[sample(x = .N, size = sample_fold_n)],
-            by = test]
+          data_coords = strat_sample_folds(data_coords, "test", sample_fold_n)
         }
 
         # should omitted points be shown?
@@ -1127,13 +1097,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
 
     # take stratified random sample from folds
     if (!is.null(sample_fold_n)) {
-      assert_integer(sample_fold_n)
-      if (sample_fold_n > min(setDT(test_folds)[, .N, keyby = fold][, N])) {
-        lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(test_folds)[, .N, keyby = fold][, N])))
-        stopf()
-      }
-      test_folds = test_folds[, .SD[sample(x = .N, size = sample_fold_n)],
-        by = test]
+      test_folds = strat_sample_folds(test_folds, "test", sample_fold_n)
     }
 
     sf_df = sf::st_as_sf(test_folds,
@@ -1431,13 +1395,7 @@ autoplot_spatial = function(
 
       # take stratified random sample from folds
       if (!is.null(sample_fold_n)) {
-        assert_integer(sample_fold_n)
-        if (sample_fold_n > min(setDT(dt)[, .N, keyby = fold][, N])) {
-          lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(dt)[, .N, keyby = fold][, N])))
-          stopf()
-        }
-        dt = dt[, .SD[sample(x = .N, size = sample_fold_n)],
-          by = fold]
+        dt = strat_sample_folds(dt, "fold", sample_fold_n)
       }
 
       sf_df = sf::st_as_sf(dt,
@@ -1542,19 +1500,12 @@ autoplot_spatial = function(
 
     # take stratified random sample from folds
     if (!is.null(sample_fold_n)) {
-      assert_integer(sample_fold_n)
-      if (sample_fold_n > min(table(coords_resamp$fold))) {
-        lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(table(coords_resamp$fold))))
-        stopf()
-      }
-      coords_resamp = coords_resamp[, .SD[sample(x = .N, size = sample_fold_n)],
-        by = fold]
+      coords_resamp = strat_sample_folds(coords_resamp, "fold", sample_fold_n)
     }
 
-    sf_df =
-      sf::st_as_sf(coords_resamp,
-        coords = get_coordinate_names(task),
-        crs = get_crs(task))
+    sf_df = sf::st_as_sf(coords_resamp,
+      coords = get_coordinate_names(task),
+      crs = get_crs(task))
 
     # order fold ids
     sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]
@@ -1655,14 +1606,9 @@ autoplot_spatiotemp = function(
       task_resamp_ids$indicator = as.factor(as.character(task_resamp_ids$indicator))
       task_resamp_ids[, indicator := ifelse(fold == fold_id, "Test", "Train")]
 
-      # take sample from groups
+      # take stratified random sample from folds
       if (!is.null(sample_fold_n)) {
-        assert_integer(sample_fold_n)
-        if (!resampling$iters %% sample_fold_n == 0) {
-          lg$error("'sample_fold_n' must be a multiple of the number of folds.")
-          stopf()
-        }
-        task_resamp_ids = task_resamp_ids[, .SD[sample(x = .N, size = sample_fold_n)], by = test]
+        task_resamp_ids = strat_sample_folds(task_resamp_ids, test, sample_fold_n)
       }
 
       plot_single_plotly = plotly::plot_ly(task_resamp_ids,
@@ -1699,14 +1645,9 @@ autoplot_spatiotemp = function(
 
       task_resamp_ids$indicator = as.factor(as.character(task_resamp_ids$indicator))
 
-      # take sample from groups
+      # take stratified random sample from folds
       if (!is.null(sample_fold_n)) {
-        assert_integer(sample_fold_n)
-        if (!resampling$iters %% sample_fold_n == 0) {
-          lg$error("'sample_fold_n' must be a multiple of the number of folds.")
-          stopf()
-        }
-        task_resamp_ids = task_resamp_ids[, .SD[sample(x = .N, size = sample_fold_n)], by = test]
+        task_resamp_ids = strat_sample_folds(task_resamp_ids, test, sample_fold_n)
       }
 
       plot_list = mlr3misc::map(fold_id, function(.x) {

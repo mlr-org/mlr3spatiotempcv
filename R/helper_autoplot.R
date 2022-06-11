@@ -71,3 +71,30 @@ reorder_levels = function(object) {
   }
   return(object)
 }
+
+#' Stratified random sampling
+#' @param data (`data.table`)\cr
+#'   Data
+#' @param col (`character(1)`)\cr
+#'   Column to stratify on.
+#' @param n (`integer`)\cr
+#'   Sample size per group
+#' @keywords internal
+strat_sample_folds = function(data, col, n) {
+
+  assertClass(data, "data.table")
+  assert_int(n)
+
+  # col = substitute2(col)
+
+  if (!is.null(n)) {
+    assert_integer(n)
+    if (n > min(setDT(data)[, .N, keyby = col][, N])) {
+      lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(data)[, .N, keyby = col][, N])))
+      stopf()
+    }
+    data = data[, .SD[sample(x = .N, size = n)],
+      by = col]
+  }
+  return(data)
+}
