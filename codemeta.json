@@ -174,19 +174,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "mlr3spatial",
-      "name": "mlr3spatial",
-      "version": "> 0.1.2",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://github.com/mlr-org/mlr3spatial"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "mlr3tuning",
       "name": "mlr3tuning",
       "provider": {
@@ -456,5 +443,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "8553.472KB"
+  "fileSize": "10714.38KB"
 }

@@ -41,7 +41,6 @@ Suggests:
     lgr,
     mlr3filters,
     mlr3pipelines,
-    mlr3spatial (> 0.1.2),
     mlr3tuning,
     patchwork,
     plotly,
