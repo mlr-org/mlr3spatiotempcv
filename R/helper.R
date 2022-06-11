@@ -34,3 +34,7 @@ check_cluto_path = function() {
   }
   return(vcluster_loc)
 }
+
+catn = function(..., file = "") {
+  cat(paste0(..., collapse = "\n"), "\n", sep = "", file = file)
+}

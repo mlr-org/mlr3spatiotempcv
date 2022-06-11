@@ -94,14 +94,17 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       cat("* Coordinates:\n")
       print(self$coordinates(), nrows = 10)
       if (length(self$col_roles$time) && length(self$col_roles$space)) {
-        cat(
-          "* Column roles:\n- Time:", self$col_roles$time,
-          "\n- Space:", self$col_roles$space, "\n"
-        )
+        catn(c(
+          "* Column roles:",
+          sprintf("  - Time: %s", self$col_roles$time),
+          sprintf("  - Space: %s", self$col_roles$space)
+        ))
       } else if (length(self$col_roles$time)) {
-        cat("* Column roles:\n- Time:", self$col_roles$time, "\n")
+        catn(c("* Column roles:",
+          sprintf("  - Time: %s", self$col_roles$time)))
       } else if (length(self$col_roles$space)) {
-        cat("* Column roles:\n- Space:", self$col_roles$space, "\n")
+        catn(c("* Column roles:",
+          sprintf("  - Space: %s", self$col_roles$space)))
       }
     }
   ),
