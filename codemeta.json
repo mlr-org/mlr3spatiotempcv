@@ -198,6 +198,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "here",
+      "name": "here",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=here"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "plotly",
       "name": "plotly",
       "provider": {
@@ -443,5 +455,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "7749.947KB"
+  "fileSize": "7750.018KB"
 }

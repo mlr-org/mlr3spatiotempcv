@@ -5,15 +5,10 @@ if (Sys.getenv("NOT_CRAN") != "" && Sys.getenv("R_COVR") == "") {
   if (Sys.info()[["sysname"]] == "Linux") {
     if (!file.exists(system.file("vcluster", package = "mlr3spatiotempcv"))) {
       source(gist_url)
-      dir.create("tests/testthat/bin")
+      dir.create(here::here("tests/testthat/bin"), recursive = TRUE)
       file.copy(sprintf("%s/vcluster",
-        system.file(package = "mlr3spatiotempcv")), "tests/testthat/bin/vcluster")
-      Sys.setenv("CLUTO_PATH" = "tests/testthat/bin/vcluster")
-    }
-  }
-  if (Sys.info()[["sysname"]] == "Windows") {
-    if (!file.exists(system.file("vcluster.exe", package = "mlr3spatiotempcv"))) {
-      source(gist_url)
+        system.file(package = "mlr3spatiotempcv")), here::here("tests/testthat/bin/vcluster"))
+      Sys.setenv("CLUTO_PATH" = here::here("tests/testthat/bin/vcluster"))
     }
   }
 }
