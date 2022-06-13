@@ -5,8 +5,7 @@ autoplot_multi_fold_list = function(task, resampling, sample_fold_n, fold_id,
 
     data_coords = format_resampling_list(task, resampling)
 
-    # suppress undefined global variables note
-    data_coords$indicator = ""
+    data_coords$indicator = NA_character_
 
     if (any(grepl("ResamplingSpCVBuffer", class(resampling)))) {
       spcv_buffer = TRUE
@@ -22,8 +21,8 @@ autoplot_multi_fold_list = function(task, resampling, sample_fold_n, fold_id,
       row_id_train = resampling$instance$train[[.x]]
     }
 
-    data_coords[row_id %in% row_id_test, indicator := "Test"]
-    data_coords[row_id %in% row_id_train, indicator := "Train"]
+    data_coords[list(row_id_train), "indicator" := "Train", on = "row_id"]
+    data_coords[list(row_id_test), "indicator" := "Test", on = "row_id"]
 
     # take stratified random sample from folds
     if (!is.null(sample_fold_n)) {
@@ -31,8 +30,8 @@ autoplot_multi_fold_list = function(task, resampling, sample_fold_n, fold_id,
     }
 
     # should omitted points be shown?
-    if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
-      data_coords[indicator == "", indicator := "Omitted"]
+    if (show_omitted && nrow(data_coords[is.na(indicator)]) > 0) {
+      data_coords[is.na(get("indicator")), "indicator" := "Omitted"]
 
       sf_df = sf::st_as_sf(data_coords,
         coords = get_coordinate_names(task),
@@ -66,7 +65,7 @@ autoplot_multi_fold_list = function(task, resampling, sample_fold_n, fold_id,
             padding = margin(2, 2, 2, 2), margin = margin(3, 3, 3, 3))
         )
     } else {
-      data_coords = data_coords[indicator != ""]
+      data_coords = data_coords[!is.na(get("indicator")), , ]
 
       sf_df = sf::st_as_sf(data_coords,
         coords = get_coordinate_names(task),

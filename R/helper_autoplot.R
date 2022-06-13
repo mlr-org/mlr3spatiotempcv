@@ -92,8 +92,8 @@ strat_sample_folds = function(data, col, n) {
 
   if (!is.null(n)) {
     assert_integer(n)
-    if (n > min(setDT(data)[, .N, keyby = col][, N])) {
-      lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(setDT(data)[, .N, keyby = col][, N])))
+    if (n > min(data[, .N, keyby = col][, N])) {
+      lg$error(sprintf("The minimum sample per fold group must be less or equal to the number of observations in the smallest fold group (%s).", min(data[, .N, keyby = col][, N])))
       stopf()
     }
     data = data[, .SD[sample(x = .N, size = n)],

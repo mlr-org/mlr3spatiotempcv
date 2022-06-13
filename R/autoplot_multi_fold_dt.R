@@ -11,7 +11,7 @@ autoplot_multi_fold_dt = function(task, resampling, resampling_mod,
   plot_list = mlr3misc::map(fold_id, function(.x) {
 
     dt = resampling_mod
-    dt$indicator = rep("foo", nrow(dt))
+    dt$indicator = NA_character_
     dt[, indicator := ifelse(fold == .x, "Test", "Train")]
 
     # take stratified random sample from folds

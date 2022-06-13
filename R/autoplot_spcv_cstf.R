@@ -141,12 +141,6 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   if (!plot3D) {
 
     if (!is.null(fold_id)) {
-      # if (length(fold_id) == 1) {
-      #   ### Single fold with train and test ------------------------------------
-      #   plot = autoplot_single_fold_list(task, resampling_sub, sample_fold_n,
-      #     fold_id, repeats_id, show_omitted)
-      # }
-      # else {
       ### Multiplot of single folds with train and test ----------------------
       plot = autoplot_multi_fold_list(task, resampling_sub, sample_fold_n,
         fold_id, repeats_id, plot_as_grid, show_omitted)
@@ -182,14 +176,11 @@ autoplot.ResamplingSptCVCstf = function( # nolint
           }
         }
 
-        # suppress undefined global variables note
-        data_coords$indicator = ""
-
         row_id_test = resampling_sub$instance$test[[fold_id]]
         row_id_train = resampling_sub$instance$train[[fold_id]]
 
-        data_coords[row_id %in% row_id_test, indicator := "Test"]
-        data_coords[row_id %in% row_id_train, indicator := "Train"]
+        data_coords[list(row_id_train), "indicator" := "Train", on = "row_id"]
+        data_coords[list(row_id_test), "indicator" := "Test", on = "row_id"]
 
         # take stratified random sample from folds
         if (!is.null(sample_fold_n)) {
@@ -197,7 +188,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
         }
 
         if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
-          data_coords[indicator == "", indicator := "Omitted"]
+          data_coords[is.na(get("indicator")), "indicator" := "Omitted"]
 
           plot_single_plotly = plotly::plot_ly(data_coords,
             x = ~x, y = ~y, z = ~Date,
@@ -207,7 +198,8 @@ autoplot.ResamplingSptCVCstf = function( # nolint
             sizes = c(20, 100)
           )
         } else {
-          data_coords = data_coords[indicator != ""]
+          data_coords = data_coords[!is.na(get("indicator")), , ]
+
           plot_single_plotly = plotly::plot_ly(data_coords,
             x = ~x, y = ~y, z = ~Date,
             color = ~indicator, colors = c(
