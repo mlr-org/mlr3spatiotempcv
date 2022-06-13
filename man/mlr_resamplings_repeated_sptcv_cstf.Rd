@@ -7,8 +7,8 @@
 \description{
 Splits data using Leave-Location-Out (LLO), Leave-Time-Out (LTO) and
 Leave-Location-and-Time-Out (LLTO) partitioning.
-See the upstream implementation at \code{CAST::CreateSpacetimeFolds()} and
-Meyer et al. (2018) for further information.
+See the upstream implementation at \code{CreateSpacetimeFolds()}
+(package \CRANpkg{CAST}) and Meyer et al. (2018) for further information.
 }
 \details{
 LLO predicts on unknown locations i.e. complete locations are left out in the
@@ -103,9 +103,6 @@ values stored in the \code{param_set}.}
 \if{latex}{\out{\hypertarget{method-ResamplingRepeatedSptCVCstf-new}{}}}
 \subsection{Method \code{new()}}{
 Create a "Spacetime Folds" resampling instance.
-
-For a list of available arguments, please see
-\link[CAST:CreateSpacetimeFolds]{CAST::CreateSpacetimeFolds}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingRepeatedSptCVCstf$new(id = "repeated_sptcv_cstf")}\if{html}{\out{</div>}}
 }

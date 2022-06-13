@@ -16,6 +16,7 @@
   test_color = "#E18727",
   show_blocks = FALSE,
   show_labels = FALSE,
+  sample_fold_n = NULL,
   ...
 )
 
@@ -29,6 +30,7 @@
   test_color = "#E18727",
   show_blocks = FALSE,
   show_labels = FALSE,
+  sample_fold_n = NULL,
   ...
 )
 
@@ -63,6 +65,11 @@ Whether to show an overlay of the spatial blocks polygons.}
 
 \item{show_labels}{\verb{[logical(1)]}\cr
 Whether to show an overlay of the spatial block IDs.}
+
+\item{sample_fold_n}{\verb{[integer]}\cr
+Number of points in a random sample stratified over partitions.
+This argument aims to keep file sizes of resulting plots reasonable and
+reduce overplotting in dense datasets.}
 
 \item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and
 shapes.}

@@ -19,6 +19,7 @@
   nticks_y = 3,
   point_size = 3,
   axis_label_fontsize = 11,
+  sample_fold_n = NULL,
   ...
 )
 
@@ -30,6 +31,7 @@
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  sample_fold_n = NULL,
   ...
 )
 
@@ -73,6 +75,11 @@ Point size of markers.}
 
 \item{axis_label_fontsize}{\verb{[integer]}\cr
 Font size of axis labels.}
+
+\item{sample_fold_n}{\verb{[integer]}\cr
+Number of points in a random sample stratified over partitions.
+This argument aims to keep file sizes of resulting plots reasonable and
+reduce overplotting in dense datasets.}
 
 \item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and
 shapes.}

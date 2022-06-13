@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/mlr-org/mlr3spatiotempcv",
   "issueTracker": "https://github.com/mlr-org/mlr3spatiotempcv/issues",
   "license": "https://spdx.org/licenses/LGPL-3.0",
-  "version": "1.0.1.9000",
+  "version": "1.0.1.9002",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -195,6 +195,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=patchwork"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "here",
+      "name": "here",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=here"
     },
     {
       "@type": "SoftwareApplication",
@@ -414,19 +426,6 @@
     },
     "7": {
       "@type": "SoftwareApplication",
-      "identifier": "mlr3spatial",
-      "name": "mlr3spatial",
-      "version": "> 0.1.2",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://github.com/mlr-org/mlr3spatial"
-    },
-    "8": {
-      "@type": "SoftwareApplication",
       "identifier": "paradox",
       "name": "paradox",
       "provider": {
@@ -437,7 +436,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=paradox"
     },
-    "9": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "R6",
       "name": "R6",
@@ -449,12 +448,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
     },
-    "10": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     },
     "SystemRequirements": null
   },
-  "fileSize": "137913.29KB"
+  "fileSize": "7750.018KB"
 }

@@ -5,7 +5,6 @@
 #' @import paradox
 #' @import mlr3
 #' @import ggplot2
-#' @import mlr3spatial
 #' @importFrom utils globalVariables
 #' @section Main resources:
 #' * Book on mlr3: \url{https://mlr3book.mlr-org.com}
@@ -42,7 +41,7 @@
 utils::globalVariables(c(
   "row_id", "cookfarm_mlr3", "ecuador", "diplodia",
   "resampling", "task", "indicator", "fold", "id", "type",
-  "fold_space", "fold_time"))
+  "fold_space", "fold_time", "test", "N"))
 
 register_mlr3 = function() { # nocov start
   # reflections ----------------------------------------------------------------
@@ -65,11 +64,11 @@ register_mlr3 = function() { # nocov start
   # append "space" and "time" to col_roles
   # used in CAST
   # prevent redundant addition when calling `pkgload::load_all()`
-  if (!any(c("space", "time", "plot_time", "coordinates") %in% x$task_col_roles$classif)) {
-    x$task_col_roles$classif = append(x$task_col_roles$classif, c("coordinates", "space", "time"))
-    x$task_col_roles$classif_st = append(x$task_col_roles$classif_st, c("coordinates", "space", "time"))
-    x$task_col_roles$regr = append(x$task_col_roles$regr, c("coordinates", "space", "time"))
-    x$task_col_roles$regr_st = append(x$task_col_roles$regr_st, c("coordinates", "space", "time"))
+  if (!any(c("space", "time", "plot_time", "coordinate") %in% x$task_col_roles$classif)) {
+    x$task_col_roles$classif = append(x$task_col_roles$classif, c("coordinate", "space", "time"))
+    x$task_col_roles$classif_st = append(x$task_col_roles$classif_st, c("coordinate", "space", "time"))
+    x$task_col_roles$regr = append(x$task_col_roles$regr, c("coordinate", "space", "time"))
+    x$task_col_roles$regr_st = append(x$task_col_roles$regr_st, c("coordinate", "space", "time"))
   }
 
   # tasks --------------------------------------------------------------------
@@ -102,7 +101,7 @@ register_mlr3 = function() { # nocov start
 
 .onLoad = function(libname, pkgname) { # nolint
   register_mlr3()
-  assign("lg", lgr::get_logger("mlr3/mlr3spatiotempcv"), envir = parent.env(environment()))
+  assign("lg", lgr::get_logger("mlr3"), envir = parent.env(environment()))
   if (Sys.getenv("IN_PKGDOWN") == "true") {
     lg$set_threshold("warn")
   }

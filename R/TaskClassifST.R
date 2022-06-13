@@ -10,27 +10,28 @@
 #' The coordinate reference system passed during initialization must match the
 #' one which was used during data creation, otherwise offsets of multiple meters
 #' may occur. By default, coordinates are not used as features. This can be
-#' changed by setting `extra_args$coords_as_features = TRUE`.
+#' changed by setting `coords_as_features = TRUE`.
+#'
+#' @template rox_param_id
+#' @template rox_param_backend
+#' @template rox_param_target
+#' @template rox_param_positive
+#' @template rox_param_label
+#' @template rox_param_coords_as_features
+#' @template rox_param_crs
+#' @template rox_param_coordinate_names
+#' @template rox_param_extra_args
 #'
 #' @family Task
-#' @section S3 Methods:
-#' * `as_task_classif.TaskClassifST(x, ...) `\cr
-#'    * `x` [Task]\cr
-#'      \pkg{mlr3} [Task] object
 #' @export
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
-#'   data = mlr3::as_data_backend(ecuador)
-#'   task = TaskClassifST$new("ecuador",
-#'     backend = data, target = "slides",
-#'     positive = "TRUE", extra_args = list(coordinate_names = c("x", "y"))
-#'   )
+#'   task = as_task_classif_st(ecuador, target = "slides",
+#'     positive = "TRUE", coordinate_names = c("x", "y"))
 #'
 #'   # passing objects of class 'sf' is also supported
 #'   data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"))
-#'   task = TaskClassifST$new("ecuador_sf",
-#'     backend = data_sf, target = "slides", positive = "TRUE"
-#'   )
+#'   task = as_task_classif_st(data_sf, target = "slides", positive = "TRUE")
 #'
 #'   task$task_type
 #'   task$formula()
@@ -46,90 +47,40 @@ TaskClassifST = R6::R6Class("TaskClassifST",
 
     #' @description
     #' Create a new spatiotemporal resampling Task
-    #' @param id `[character(1)]`\cr
-    #'   Identifier for the task.
-    #' @param backend [DataBackend]\cr
-    #'   Either a [DataBackend], or any object which is convertible to a
-    #'   DataBackend with `as_data_backend()`. E.g., a `data.frame()` will be
-    #'   converted to a [DataBackendDataTable].
-    #' @param target `[character(1)]`\cr
-    #'   Name of the target column.
-    #' @param positive `[character(1)]`\cr
-    #'   Only for binary classification: Name of the positive class.
-    #'   The levels of the target columns are reordered accordingly, so that the
-    #'   first element of `$class_names` is the positive class, and the second
-    #'   element is the negative class.
-    #' @template rox_param_extra_args
     initialize = function(id, backend, target, positive = NULL,
-      extra_args = list(
-        coords_as_features = FALSE, crs = NA,
-        coordinate_names = NA
-      )) {
-      assert_string(target)
+      label = NA_character_, coordinate_names, crs = NA_character_,
+      coords_as_features = FALSE, extra_args = list()) {
 
-      # restore extra_args defaults
-      extra_args = insert_named(list(coords_as_features = FALSE, crs = NA, coordinate_names = NA), extra_args)
+      super$initialize(id = id, backend = backend, target = target,
+        positive = positive, extra_args = extra_args)
 
-      # support for 'sf' tasks
-      if (inherits(backend, "sf")) {
-        extra_args$crs = sf::st_crs(backend)$input
-        coordinates = sf::st_coordinates(backend)
-        # ensure a point feature has been passed
-        checkmate::assert_character(as.character(sf::st_geometry_type(backend, by_geometry = FALSE)), fixed = "POINT") # nolint
-        backend = sf::st_set_geometry(backend, NULL)
-        backend = cbind(backend, coordinates)
-        extra_args$coordinate_names = colnames(coordinates)
-      }
+      self$crs = crs
+      self$coordinate_names = coordinate_names
+      walk(coordinate_names, function(x) {
+        assert_numeric(self$backend$head(1)[[x]], .var.name = x)
+      })
+      self$coords_as_features = assert_flag(coords_as_features)
 
-      super$initialize(
-        id = id, backend = backend, target = target,
-        positive = positive, extra_args = extra_args
+      # add coordinates as features
+      self$coords_as_features = assert_flag(coords_as_features)
+
+      new_col_roles = named_list(
+        setdiff(mlr_reflections$task_col_roles[["classif_st"]],
+          names(private$.col_roles)), character(0)
       )
-
-      self$extra_args$coordinate_names = extra_args$coordinate_names
-
-      info = self$col_info[id == target]
-      levels = info$levels[[1L]]
-
-      if (info$type %nin% c("factor", "character", "ordered")) {
-        stopf("Target column '%s' must be a factor, character or ordered.", target) # nocov
-      }
-
-      self$properties = union(
-        self$properties,
-        if (length(levels) == 2L) "twoclass" else "multiclass"
-      )
-      if (!is.null(positive)) {
-        self$positive = positive
-      }
-
-      # check coordinates
-      if (anyNA(extra_args$coordinate_names)) stop("No coordinate names provided.")
-      assert_names(self$backend$colnames, must.include = extra_args$coordinate_names)
-      for (coord in extra_args$coordinate_names) {
-        assert_numeric(self$data(cols = coord)[[1L]], any.missing = FALSE)
-      }
-
-      # mark columns as coordinates and check if coordinates should be included
-      # as features
-      self$col_roles$coordinates = extra_args$coordinate_names
-      if (!extra_args$coords_as_features) {
-        self$col_roles$feature = setdiff(
-          self$col_roles$feature,
-          extra_args$coordinate_names
-        )
-      }
+      private$.col_roles = insert_named(private$.col_roles, new_col_roles)
     },
 
     #' @description
-    #' Return the coordinates of the task
-    #' @param rows Row IDs. Can be used to subset the returned coordinates.
-    coordinates = function(rows = NULL) {
-      if (is.null(rows)) {
-        # Return coords in task$data order
-        rows = self$row_ids
-      }
-      self$backend$data(rows = rows, cols = self$extra_args$coordinate_names)
+    #' Returns coordinates of observations.
+    #'
+    #' @param row_ids (`integer()`)\cr
+    #'   Vector of rows indices as subset of `task$row_ids`.
+    #'
+    #' @return [data.table::data.table()]
+    coordinates = function(row_ids = NULL) {
+      if (is.null(row_ids)) row_ids = self$row_ids
+      self$backend$data(rows = row_ids, cols = self$coordinate_names)
     },
 
     #' @description
@@ -138,27 +89,56 @@ TaskClassifST = R6::R6Class("TaskClassifST",
     print = function(...) {
       super$print(...)
       cat("* Coordinates:\n")
-      print(self$coordinates())
+      print(self$coordinates(), nrows = 10)
       if (length(self$col_roles$time) && length(self$col_roles$space)) {
-        cat(
-          "* Column roles:\n- Time:", self$col_roles$time,
-          "\n- Space:", self$col_roles$space, "\n"
-        )
+        catn(c(
+          "* Column roles:",
+          sprintf("  - Time: %s", self$col_roles$time),
+          sprintf("  - Space: %s", self$col_roles$space)
+        ))
       } else if (length(self$col_roles$time)) {
-        cat("* Column roles:\n- Time:", self$col_roles$time, "\n")
+        catn(c("* Column roles:",
+          sprintf("  - Time: %s", self$col_roles$time)))
       } else if (length(self$col_roles$space)) {
-        cat("* Column roles:\n- Space:", self$col_roles$space, "\n")
+        catn(c("* Column roles:",
+          sprintf("  - Space: %s", self$col_roles$space)))
       }
+    }
+  ),
+  active = list(
+
+    #' @field crs (`character(1)`)\cr
+    #'   Returns coordinate reference system of task.
+    crs = function(rhs) {
+      if (missing(rhs)) {
+        return(self$extra_args$crs)
+      }
+      self$extra_args$crs = rhs
     },
 
-    #' @field extra_args (named `list()`)\cr
-    #' Additional task arguments set during construction.
-    #' Required for [convert_task()].
-    extra_args = NULL
+    #' @field coordinate_names (`character()`)\cr
+    #'   Coordinate names.
+    coordinate_names = function(rhs) {
+      if (missing(rhs)) {
+        return(self$extra_args$coordinate_names)
+      }
+      self$extra_args$coordinate_names = assert_character(rhs, len = 2,
+        all.missing = FALSE, any.missing = FALSE)
+    },
+
+    #' @field coords_as_features (`logical(1)`)\cr
+    #'   If `TRUE`, coordinates are used as features.
+    coords_as_features = function(rhs) {
+      if (missing(rhs)) {
+        return(self$extra_args$coords_as_features)
+      }
+
+      self$extra_args$coords_as_features = assert_flag(rhs)
+      if (rhs) {
+        self$set_col_roles(self$coordinate_names, add_to = "coordinate")
+      } else {
+        self$set_col_roles(self$coordinate_names, roles = "coordinate")
+      }
+    }
   )
 )
-
-#' @export
-as_task_classif.TaskClassifST = function(x, ...) {
-  TaskClassif$new(id = x$id, backend = x$backend, target = x$target_names, positive = x$positive)
-}

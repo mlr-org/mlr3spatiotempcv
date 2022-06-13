@@ -131,7 +131,7 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
         stopf("Grouping is not supported for spatial resampling methods")
       }
 
-      private$.sample(task$row_ids, get_coordinates(task))
+      private$.sample(task$row_ids, task$coordinates())
 
       self$task_hash = task$hash
       self$task_nrow = task$nrow

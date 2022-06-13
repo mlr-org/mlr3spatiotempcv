@@ -1,8 +1,8 @@
 #' @description
 #' Splits data using Leave-Location-Out (LLO), Leave-Time-Out (LTO) and
 #' Leave-Location-and-Time-Out (LLTO) partitioning.
-#' See the upstream implementation at `CAST::CreateSpacetimeFolds()` and
-#' Meyer et al. (2018) for further information.
+#' See the upstream implementation at `CreateSpacetimeFolds()`
+#' (package \CRANpkg{CAST}) and Meyer et al. (2018) for further information.
 #'
 #' @section Parameters:
 #' * `folds` (`integer(1)`)\cr
