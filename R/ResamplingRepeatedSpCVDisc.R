@@ -100,7 +100,7 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
         function(x) private$.set_default_param_values(x)
       )
 
-      private$.sample(task$row_ids, get_coordinates(task))
+      private$.sample(task$row_ids, task$coordinates())
 
       self$task_hash = task$hash
       self$task_nrow = task$nrow

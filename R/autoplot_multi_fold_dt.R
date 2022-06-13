@@ -20,8 +20,8 @@ autoplot_multi_fold_dt = function(task, resampling, resampling_mod,
     }
 
     sf_df = sf::st_as_sf(dt,
-      coords = get_coordinate_names(task),
-      crs = get_crs(task))
+      coords = task$coordinate_names,
+      crs = task$crs)
 
     sf_df = reorder_levels(sf_df)
 

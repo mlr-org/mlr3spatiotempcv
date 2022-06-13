@@ -108,7 +108,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   dots = list(...)
 
   resampling = object
-  coords = get_coordinates(task)
+  coords = task$coordinates()
   coords$row_id = task$row_ids
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
 

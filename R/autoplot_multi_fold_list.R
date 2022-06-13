@@ -34,8 +34,8 @@ autoplot_multi_fold_list = function(task, resampling, sample_fold_n, fold_id,
       data_coords[is.na(get("indicator")), "indicator" := "Omitted"]
 
       sf_df = sf::st_as_sf(data_coords,
-        coords = get_coordinate_names(task),
-        crs = get_crs(task))
+        coords = task$coordinate_names,
+        crs = task$crs)
       sf_df = reorder_levels(sf_df)
 
       plot = ggplot() +
@@ -68,8 +68,8 @@ autoplot_multi_fold_list = function(task, resampling, sample_fold_n, fold_id,
       data_coords = data_coords[!is.na(get("indicator")), , ]
 
       sf_df = sf::st_as_sf(data_coords,
-        coords = get_coordinate_names(task),
-        crs = get_crs(task))
+        coords = task$coordinate_names,
+        crs = task$crs)
       sf_df = reorder_levels(sf_df)
 
       plot = ggplot() +

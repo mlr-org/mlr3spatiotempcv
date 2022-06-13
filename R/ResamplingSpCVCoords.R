@@ -60,7 +60,7 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
         stopf("Grouping is not supported for spatial resampling methods")
       }
 
-      instance = private$.sample(task$row_ids, get_coordinates(task))
+      instance = private$.sample(task$row_ids, task$coordinates())
 
       self$instance = instance
       self$task_hash = task$hash

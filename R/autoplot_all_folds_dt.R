@@ -6,8 +6,8 @@ autoplot_all_folds_dt = function(task, resampling, sample_fold_n, fold_id,
   }
 
   sf_df = sf::st_as_sf(resampling,
-    coords = get_coordinate_names(task),
-    crs = get_crs(task))
+    coords = task$coordinate_names,
+    crs = task$crs)
 
   # order fold ids
   sf_df = sf_df[order(sf_df$fold, decreasing = FALSE), ]

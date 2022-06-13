@@ -8,7 +8,7 @@ format_resampling_list = function(task, resampling) {
   data = task$data()
   data$row_id = task$row_ids
   data$indicator = ""
-  coords = get_coordinates(task)
+  coords = task$coordinates()
   coords$row_id = task$row_ids
 
   if (any(grepl("ResamplingRepeated", class(resampling)))) {

@@ -15,8 +15,8 @@ autoplot_all_folds_list = function(task, resampling, sample_fold_n, fold_id, rep
   }
 
   sf_df = sf::st_as_sf(test_folds,
-    coords = get_coordinate_names(task),
-    crs = get_crs(task))
+    coords = task$coordinate_names,
+    crs = task$crs)
 
   # only keep test ids
   sf_df = stats::na.omit(sf_df, cols = "fold")

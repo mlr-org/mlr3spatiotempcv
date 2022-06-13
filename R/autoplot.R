@@ -549,7 +549,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
   ...) {
 
   resampling = object
-  coords = get_coordinates(task)
+  coords = task$coordinates()
   coords$row_id = task$row_ids
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
 
@@ -683,7 +683,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
   ...) {
 
   resampling = object
-  coords = get_coordinates(task)
+  coords = task$coordinates()
   coords$row_id = task$row_ids
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
 
@@ -814,7 +814,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   resampling_sub = resampling$clone(deep = TRUE)
 
   # add the row_ids of the task to the coordinates
-  coords = get_coordinates(task)
+  coords = task$coordinates()
   coords$row_id = task$row_ids
 
   if (is.null(fold_id)) {
@@ -1023,7 +1023,7 @@ autoplot_spatial = function(
   rsmp_autopl = assert_autoplot(rsmp_autopl, fold_id, task)
 
   # add the row_ids of the task to the coordinates
-  coords = get_coordinates(task)
+  coords = task$coordinates()
   coords$row_id = task$row_ids
 
   if (is.null(repeats_id)) {
@@ -1087,7 +1087,7 @@ autoplot_spatiotemp = function(
   resampling = assert_autoplot(resampling, fold_id, task)
 
   # add the row_ids of the task to the coordinates
-  coords = get_coordinates(task)
+  coords = task$coordinates()
   coords$row_id = task$row_ids
 
   data = task$data()
@@ -1105,9 +1105,9 @@ autoplot_spatiotemp = function(
     task_resamp_ids = task_resamp_ids[rep == repeats_id, ]
   }
 
-  coords = sf::st_coordinates(sf::st_as_sf(get_coordinates(task),
-    coords = get_coordinate_names(task),
-    crs = get_crs(task)))
+  coords = sf::st_coordinates(sf::st_as_sf(task$coordinates(),
+    coords = task$coordinate_names,
+    crs = task$crs))
   task_resamp_ids$x = coords[, 1]
   task_resamp_ids$y = coords[, 2]
 
@@ -1324,7 +1324,7 @@ autoplot_custom_cv = function(
   rsmp_autopl = assert_autoplot(rsmp_autopl, fold_id, task)
 
   # add the row_ids of the task to the coordinates
-  coords = get_coordinates(task)
+  coords = task$coordinates()
   coords$row_id = task$row_ids
 
   # bring into correct format (complicated alternative to reshape::melt)
