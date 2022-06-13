@@ -24,8 +24,8 @@ test_that("as_task_classif_st.sf works", {
   new_task = as_task_classif_st(ecuador_sf, target = "slides", positive = "TRUE")
 
   expect_class(new_task, "TaskClassifST")
-  expect_equal(new_task$extra_args$crs, "epsg:32717")
-  expect_equal(new_task$extra_args$coordinate_names, c("X", "Y"))
+  expect_equal(new_task$crs, "epsg:32717")
+  expect_equal(new_task$coordinate_names, c("X", "Y"))
 })
 
 # regr -------------------------------------------------------------------------
@@ -55,8 +55,8 @@ test_that("as_task_regr_st.sf works", {
   new_task = as_task_regr_st(cookfarm_sf, target = "PHIHOX")
 
   expect_class(new_task, "TaskRegrST")
-  expect_equal(new_task$extra_args$crs, "EPSG:26911")
-  expect_equal(new_task$extra_args$coordinate_names, c("X", "Y"))
+  expect_equal(new_task$crs, "EPSG:26911")
+  expect_equal(new_task$coordinate_names, c("X", "Y"))
 })
 
 # conversion to non-ST task ----------------------------------------------------

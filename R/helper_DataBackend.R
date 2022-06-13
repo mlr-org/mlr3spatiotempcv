@@ -1,39 +1,10 @@
-#' @param pretty `[logical]`\cr
-#'   If `TRUE`, returns the pretty coordinate information instead of raw CRS
-#'   string.
-get_crs = function(task, pretty = TRUE) {
-  if (checkmate::test_class(task$backend, "DataBackendVector")) {
-    sf::st_crs(task$backend$geometry)
-  } else if (checkmate::test_class(task$backend, "DataBackendRaster")) {
-    terra::crs(task$backend$stack[[1]], describe = pretty)
-  } else {
-    task$extra_args$crs
-  }
-}
-
-get_coordinates = function(task) {
-  if (checkmate::test_class(task$backend, "DataBackendVector")) {
-    as.data.table(sf::st_coordinates(task$backend$geometry))
-  } else if (checkmate::test_class(task$backend, "DataBackendRaster")) {
-    as.data.table(terra::crds(task$backend$stack[[1]]))
-  } else {
-    task$coordinates()
-  }
-}
-
-get_coordinate_names = function(task) {
-  if (checkmate::test_class(task$backend, "DataBackendVector")) {
-    names(as.data.table(sf::st_coordinates(task$backend$geometry)))
-  } else if (checkmate::test_class(task$backend, "DataBackendRaster")) {
-    names(as.data.table(terra::crds(task$backend$stack[[1]])))
-  } else {
-    task$extra_args$coordinate_names
-  }
-}
-
+#' Check spatial task
+#' @description
+#'   Assertion helper for spatial mlr3 tasks.
+#' @inheritParams mlr3::assert_task
+#' @keywords internal
 assert_spatial_task = function(task) {
-  if (!checkmate::test_multi_class(task$backend, c("DataBackendVector", "DataBackendRaster")) &&
-    !checkmate::test_multi_class(task, c("TaskClassifST", "TaskRegrST"))) {
-    stopf("Assertion on 'task' failed: Must inherit from class 'TaskClassifST', 'TaskRegrST' or a 'Task' with 'DataBackendVector' or 'DataBackendRaster'.") # nolint
+  if (!checkmate::test_multi_class(task, c("TaskClassifST", "TaskRegrST"))) {
+    stopf("Assertion on 'task' failed: Must inherit from class 'TaskClassifST' or 'TaskRegrST'.") # nolint
   }
 }

@@ -127,10 +127,10 @@ ResamplingRepeatedSptCVCluto = R6Class("ResamplingRepeatedSptCVCluto",
         # time in seconds since 1/1/1970
         time_num = as.numeric(time)
 
-        data_matrix = data.matrix(data.frame(get_coordinates(task), time_num))
+        data_matrix = data.matrix(data.frame(task$coordinates(), time_num))
         colnames(data_matrix) = c("x", "y", "z")
       } else {
-        data_matrix = data.matrix(data.frame(get_coordinates(task)))
+        data_matrix = data.matrix(data.frame(task$coordinates()))
 
         colnames(data_matrix) = c("x", "y")
       }

@@ -80,8 +80,8 @@
 #'   resampling = rsmp("sptcv_cstf", folds = 5)
 #'   resampling$instantiate(task_st)
 #'
-#'   # with both `"space"` and `"time"` column roles set (LLTO), the omitted observations per
-#'   # fold can be shown by setting `show_omitted = TRUE`
+#'   # with both `"space"` and `"time"` column roles set (LLTO), the omitted
+#'   # observations per fold can be shown by setting `show_omitted = TRUE`
 #'   autoplot(resampling, task_st, fold_id = 1, show_omitted = TRUE)
 #' }
 #' }
@@ -92,6 +92,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  repeats_id = NULL,
   tickformat_date = "%Y-%m",
   nticks_x = 3,
   nticks_y = 3,
@@ -101,12 +102,13 @@ autoplot.ResamplingSptCVCstf = function( # nolint
   show_omitted = FALSE,
   plot3D = NULL,
   plot_time_var = NULL,
+  sample_fold_n = NULL,
   ...) {
 
   dots = list(...)
 
   resampling = object
-  coords = get_coordinates(task)
+  coords = task$coordinates()
   coords$row_id = task$row_ids
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
 
@@ -138,23 +140,17 @@ autoplot.ResamplingSptCVCstf = function( # nolint
 
   if (!plot3D) {
 
-    # bring into correct format (complicated alternative to reshape::melt)
-    resampling_sub$instance = data.table::rbindlist(
-      lapply(resampling_sub$instance$test, as.data.table),
-      idcol = "fold")
-    setnames(resampling_sub$instance, c("fold", "row_id"))
-
-    plot = autoplot_spatial(
-      resampling = resampling_sub,
-      task = task,
-      fold_id = fold_id,
-      plot_as_grid = plot_as_grid,
-      train_color = train_color,
-      test_color = test_color,
-      show_blocks = FALSE,
-      show_labels = FALSE,
-      ...)
-    return(invisible(plot))
+    if (!is.null(fold_id)) {
+      ### Multiplot of single folds with train and test ----------------------
+      plot = autoplot_multi_fold_list(task, resampling_sub, sample_fold_n,
+        fold_id, repeats_id, plot_as_grid, show_omitted)
+      # }
+    } else {
+      ### One plot showing all test folds --------------------------------------
+      plot = autoplot_all_folds_list(task, resampling_sub, sample_fold_n,
+        fold_id, repeats_id)
+    }
+    return(plot)
   }
 
   # 3D -------------------------------------------------------------------------
@@ -180,17 +176,19 @@ autoplot.ResamplingSptCVCstf = function( # nolint
           }
         }
 
-        # suppress undefined global variables note
-        data_coords$indicator = ""
-
         row_id_test = resampling_sub$instance$test[[fold_id]]
         row_id_train = resampling_sub$instance$train[[fold_id]]
 
-        data_coords[row_id %in% row_id_test, indicator := "Test"]
-        data_coords[row_id %in% row_id_train, indicator := "Train"]
+        data_coords[list(row_id_train), "indicator" := "Train", on = "row_id"]
+        data_coords[list(row_id_test), "indicator" := "Test", on = "row_id"]
+
+        # take stratified random sample from folds
+        if (!is.null(sample_fold_n)) {
+          data_coords = strat_sample_folds(data_coords, "test", sample_fold_n)
+        }
 
         if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
-          data_coords[indicator == "", indicator := "Omitted"]
+          data_coords[is.na(get("indicator")), "indicator" := "Omitted"]
 
           plot_single_plotly = plotly::plot_ly(data_coords,
             x = ~x, y = ~y, z = ~Date,
@@ -200,7 +198,8 @@ autoplot.ResamplingSptCVCstf = function( # nolint
             sizes = c(20, 100)
           )
         } else {
-          data_coords = data_coords[indicator != ""]
+          data_coords = data_coords[!is.na(get("indicator")), , ]
+
           plot_single_plotly = plotly::plot_ly(data_coords,
             x = ~x, y = ~y, z = ~Date,
             color = ~indicator, colors = c(
@@ -253,6 +252,11 @@ autoplot.ResamplingSptCVCstf = function( # nolint
           data_coords[row_id %in% row_id_train, indicator := "Train"]
 
           data_coords$Date = as.Date(data_coords$Date)
+
+          # take stratified random sample from folds
+          if (!is.null(sample_fold_n)) {
+            data_coords = strat_sample_folds(data_coords, "test", sample_fold_n)
+          }
 
           if (show_omitted) {
             data_coords[indicator == "", indicator := "Omitted"]

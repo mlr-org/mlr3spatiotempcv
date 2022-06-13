@@ -31,9 +31,6 @@ ResamplingSptCVCstf = R6Class("ResamplingSptCVCstf",
 
     #' @description
     #' Create a "Spacetime Folds" resampling instance.
-    #'
-    #' For a list of available arguments, please see
-    #' [CAST::CreateSpacetimeFolds].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "sptcv_cstf") {

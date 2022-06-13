@@ -15,7 +15,7 @@ test_that("printing works", {
 test_that("Supplying a non-spatio temporal task gives descriptive error message", {
   expect_error(
     rsmp("spcv_coords")$instantiate(tsk("boston_housing")),
-    "Must inherit from class 'TaskClassifST', 'TaskRegrST' or a 'Task' with 'DataBackendVector'") # nolint
+    "Must inherit from class 'TaskClassifST' or 'TaskRegrST'.") # nolint
 })
 
 test_that("coordinates can be used as features", {
@@ -47,14 +47,13 @@ test_that("tasks created from sf objects do not duplicate rows", {
   skip_if_not_installed("sf")
   data = test_make_sf_twoclass_df()
 
-  task = TaskClassifST$new(
+  task = as_task_classif_st(
+    data,
     id = "sp_regression",
-    backend = data,
     target = "response",
-    extra_args = list(
-      coordinate_names = c("x", "y"),
-      crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
-      coords_as_features = FALSE)
+    coordinate_names = c("x", "y"),
+    crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
+    coords_as_features = FALSE
   )
 
   expect_equal(nrow(task$data()), nrow(data))
@@ -66,9 +65,10 @@ test_that("extra_args contains default arguments", {
     id = "sp_regression",
     backend = ecuador,
     target = "slides",
-    extra_args = list(
-      coordinate_names = c("x", "y"))
+    coordinate_names = c("x", "y")
   )
 
-  expect_equal(task$extra_args, list(coords_as_features = FALSE, crs = NA, coordinate_names = c("x", "y")))
+  expect_equal(task$extra_args, list(crs = NA_character_,
+    coordinate_names = c("x", "y"), coords_as_features = FALSE
+  ))
 })

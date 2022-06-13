@@ -14,32 +14,16 @@ one via \code{tsk("cookfarm_mlr3")}.
 The coordinate reference system passed during initialization must match the
 one which was used during data creation, otherwise offsets of multiple meters
 may occur. By default, coordinates are not used as features. This can be
-changed by setting \code{extra_args$coords_as_features = TRUE}.
+changed by setting \code{coords_as_features = TRUE}.
 }
-\section{S3 Methods}{
-
-\itemize{
-\item \code{as_task_classif.TaskClassifST(x, ...) }\cr
-\itemize{
-\item \code{x} \link{Task}\cr
-\pkg{mlr3} \link{Task} object
-}
-}
-}
-
 \examples{
 if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
-  data <- mlr3::as_data_backend(ecuador)
-  task <- TaskClassifST$new("ecuador",
-    backend = data, target = "slides",
-    positive = "TRUE", extra_args = list(coordinate_names = c("x", "y"))
-  )
+  task = as_task_classif_st(ecuador, target = "slides",
+    positive = "TRUE", coordinate_names = c("x", "y"))
 
   # passing objects of class 'sf' is also supported
-  data_sf <- sf::st_as_sf(ecuador, coords = c("x", "y"))
-  task <- TaskClassifST$new("ecuador_sf",
-    backend = data_sf, target = "slides", positive = "TRUE"
-  )
+  data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"))
+  task = as_task_classif_st(data_sf, target = "slides", positive = "TRUE")
 
   task$task_type
   task$formula()
@@ -61,12 +45,17 @@ Other Task:
 \section{Super classes}{
 \code{\link[mlr3:Task]{mlr3::Task}} -> \code{\link[mlr3:TaskSupervised]{mlr3::TaskSupervised}} -> \code{\link[mlr3:TaskClassif]{mlr3::TaskClassif}} -> \code{TaskClassifST}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{extra_args}}{(named \code{list()})\cr
-Additional task arguments set during construction.
-Required for \code{\link[=convert_task]{convert_task()}}.}
+\item{\code{crs}}{(\code{character(1)})\cr
+Returns coordinate reference system of task.}
+
+\item{\code{coordinate_names}}{(\code{character()})\cr
+Coordinate names.}
+
+\item{\code{coords_as_features}}{(\code{logical(1)})\cr
+If \code{TRUE}, coordinates are used as features.}
 }
 \if{html}{\out{</div>}}
 }
@@ -114,42 +103,50 @@ Create a new spatiotemporal resampling Task
   backend,
   target,
   positive = NULL,
-  extra_args = list(coords_as_features = FALSE, crs = NA, coordinate_names = NA)
+  label = NA_character_,
+  coordinate_names,
+  crs = NA_character_,
+  coords_as_features = FALSE,
+  extra_args = list()
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{\verb{[character(1)]}\cr
-Identifier for the task.}
+\item{\code{id}}{(\code{character(1)})\cr
+Identifier for the new instance.}
 
-\item{\code{backend}}{\link{DataBackend}\cr
+\item{\code{backend}}{(\link{DataBackend})\cr
 Either a \link{DataBackend}, or any object which is convertible to a
-DataBackend with \code{as_data_backend()}. E.g., a \code{data.frame()} will be
-converted to a \link{DataBackendDataTable}.}
+\link{DataBackend} with \code{as_data_backend()}.
+E.g., am \code{sf} will be converted to a \link{DataBackendDataTable}.}
 
-\item{\code{target}}{\verb{[character(1)]}\cr
+\item{\code{target}}{(\code{character(1)})\cr
 Name of the target column.}
 
-\item{\code{positive}}{\verb{[character(1)]}\cr
+\item{\code{positive}}{(\code{character(1)})\cr
 Only for binary classification: Name of the positive class.
 The levels of the target columns are reordered accordingly, so that the
 first element of \verb{$class_names} is the positive class, and the second
 element is the negative class.}
 
-\item{\code{extra_args}}{\verb{[named list]}\cr
-Additional task arguments set during construction. Required for
-\code{\link[=convert_task]{convert_task()}}.
-\itemize{
-\item crs \verb{[character(1)]}\cr
-Coordinate reference system. Either a PROJ string or an
-\href{https://epsg.io/}{EPSG} code.
-\item coords_as_features \verb{[logical(1)]}\cr
-Whether the coordinates should also be used as features.
-\item coordinate_names \verb{[character(2)]}\cr
-The variables names of the coordinates in the data.
-}}
+\item{\code{label}}{(\code{character(1)})\cr
+Label for the new instance. Shown in \code{as.data.table(mlr_tasks)}.}
+
+\item{\code{coordinate_names}}{(\code{character(1)})\cr
+The column names of the coordinates in the data.}
+
+\item{\code{crs}}{(\code{character(1)})\cr
+Coordinate reference system.
+WKT2 or EPSG string.}
+
+\item{\code{coords_as_features}}{(\code{logical(1)})\cr
+If \code{TRUE}, coordinates are used as features.}
+
+\item{\code{extra_args}}{(named \code{list()})\cr
+Named list of constructor arguments, required for converting task types
+via \code{\link[=convert_task]{convert_task()}}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -158,17 +155,21 @@ The variables names of the coordinates in the data.
 \if{html}{\out{<a id="method-TaskClassifST-coordinates"></a>}}
 \if{latex}{\out{\hypertarget{method-TaskClassifST-coordinates}{}}}
 \subsection{Method \code{coordinates()}}{
-Return the coordinates of the task
+Returns coordinates of observations.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TaskClassifST$coordinates(rows = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TaskClassifST$coordinates(row_ids = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{rows}}{Row IDs. Can be used to subset the returned coordinates.}
+\item{\code{row_ids}}{(\code{integer()})\cr
+Vector of rows indices as subset of \code{task$row_ids}.}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{\link[data.table:data.table]{data.table::data.table()}}
 }
 }
 \if{html}{\out{<hr>}}

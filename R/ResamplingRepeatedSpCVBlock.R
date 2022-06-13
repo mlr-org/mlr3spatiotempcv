@@ -167,8 +167,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       }
       instance = private$.sample(
         task$row_ids,
-        get_coordinates(task),
-        get_crs(task)
+        task$coordinates(),
+        task$crs
       )
 
       self$instance = instance
