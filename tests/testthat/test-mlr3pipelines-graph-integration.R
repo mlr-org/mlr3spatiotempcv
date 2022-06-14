@@ -1,6 +1,7 @@
 test_that("spcv methods work in a Graph Learner", {
 
   skip_if_not_installed("mlr3pipelines")
+  skip_if_not_installed("blockCV")
 
   # - spcv_buffer is missing due to runtime reasons
   # - spcv_block is missing due to runtime reasons
