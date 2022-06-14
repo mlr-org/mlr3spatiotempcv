@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 2.0.0
+
+- Internal changes only.
+
+
 # mlr3spatiotempcv 1.0.1.9002
 
 - Add `plot_time_var` argument to `autoplot()` for 3D plotting of `mlr_resamplings_sptcv_cstf` (#197)
