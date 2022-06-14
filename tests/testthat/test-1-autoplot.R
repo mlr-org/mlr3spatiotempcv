@@ -233,6 +233,7 @@ test_that("plot() works for 'spcv_block'", {
 
 test_that("plot() works for 'repeated_spcv_block'", {
   skip_if_not_installed("vdiffr")
+  skip_if_not_installed("blockCV")
   set.seed(42)
 
   plots = prepare_autoplot("repeated_spcv_block",
@@ -350,6 +351,8 @@ test_that("plot() works for 'spcv_env'", {
 
 test_that("plot() works for 'repeated_spcv_env'", {
   skip_if_not_installed("vdiffr")
+  skip_if_not_installed("blockCV")
+
   set.seed(42)
 
   plots = prepare_autoplot("repeated_spcv_env",

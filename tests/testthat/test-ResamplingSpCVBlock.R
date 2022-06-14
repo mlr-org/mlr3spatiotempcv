@@ -74,6 +74,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: selection =
 
 test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and rows", {
   skip_if_not_installed("sf")
+  skip_if_not_installed("blockCV")
   task = test_make_blockCV_test_task()
 
   sf::sf_use_s2(use_s2 = FALSE)
@@ -104,6 +105,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
 
 test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer", {
   skip_if_not_installed("sf")
+  skip_if_not_installed("terra")
 
   # cran test failure (Error: no arguments in initialization list)
   testthat::skip_on_os("solaris")
