@@ -1,6 +1,6 @@
 Package: mlr3spatiotempcv
 Title: Spatiotemporal Resampling Methods for 'mlr3'
-Version: 2.0.0
+Version: 2.0.0.9000
 Authors@R: c(
     person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0748-6624")),
