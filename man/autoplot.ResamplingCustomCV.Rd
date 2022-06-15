@@ -73,7 +73,7 @@ if (mlr3misc::require_namespaces(c("sf", "patchwork"), quietly = TRUE)) {
 }
 \seealso{
 \itemize{
-\item mlr3book chapter on \href{https://mlr3book.mlr-org.com/special-tasks.html#vis-spt-partitions}{"Spatiotemporal Visualization"}
+\item mlr3book chapter on \href{https://mlr3book.mlr-org.com/08-special-spatiotemp.html#vis-spt-partitions}{"Spatiotemporal Visualization"}
 \item \code{\link[=autoplot.ResamplingSpCVBlock]{autoplot.ResamplingSpCVBlock()}}
 \item \code{\link[=autoplot.ResamplingSpCVBuffer]{autoplot.ResamplingSpCVBuffer()}}
 \item \code{\link[=autoplot.ResamplingSpCVCoords]{autoplot.ResamplingSpCVCoords()}}
