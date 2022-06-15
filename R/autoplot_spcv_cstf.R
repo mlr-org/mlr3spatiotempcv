@@ -164,6 +164,8 @@ autoplot.ResamplingSptCVCstf = function( # nolint
 
         data_coords = format_resampling_list(task, resampling_sub)
 
+        data_coords$indicator = NA_character_
+
         if (length(task$col_roles$time)) {
           data_coords$Date = as.Date(task$data(cols = task$col_roles$time)[[1]])
         } else {
@@ -187,13 +189,15 @@ autoplot.ResamplingSptCVCstf = function( # nolint
           data_coords = strat_sample_folds(data_coords, "test", sample_fold_n)
         }
 
-        if (show_omitted && nrow(data_coords[indicator == ""]) > 0) {
+        if (show_omitted && length(is.na(data_coords$indicator)) > 0) {
           data_coords[is.na(get("indicator")), "indicator" := "Omitted"]
 
           plot_single_plotly = plotly::plot_ly(data_coords,
             x = ~x, y = ~y, z = ~Date,
             color = ~indicator, colors = c(
-              "grey", "#E18727", "#0072B5"
+              "Omitted" = "grey",
+              "Test" = "#E18727",
+              "Train" = "#0072B5"
             ),
             sizes = c(20, 100)
           )
@@ -203,7 +207,8 @@ autoplot.ResamplingSptCVCstf = function( # nolint
           plot_single_plotly = plotly::plot_ly(data_coords,
             x = ~x, y = ~y, z = ~Date,
             color = ~indicator, colors = c(
-              "#E18727", "#0072B5"
+              "Test" = "#E18727",
+              "Train" = "#0072B5"
             ),
             sizes = c(20, 100)
           )
@@ -233,8 +238,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
           plotly::orca(plot_single_plotly, ...)
         }
 
-        print(plot_single_plotly)
-        return(invisible(plot_single_plotly))
+        return(plot_single_plotly)
       } else {
 
         ### Multiplot of multiple partitions with train and test set
@@ -242,6 +246,8 @@ autoplot.ResamplingSptCVCstf = function( # nolint
         plot = mlr3misc::map(fold_id, function(.x) {
 
           data_coords = format_resampling_list(task, resampling_sub)
+
+          data_coords$indicator = NA_character_
 
           # get test and train indices
           row_id_test = resampling_sub$instance$test[[.x]]
@@ -259,12 +265,14 @@ autoplot.ResamplingSptCVCstf = function( # nolint
           }
 
           if (show_omitted) {
-            data_coords[indicator == "", indicator := "Omitted"]
+            data_coords[is.na(get("indicator")), "indicator" := "Omitted"]
 
             pl = plotly::plot_ly(data_coords,
               x = ~x, y = ~y, z = ~Date,
               color = ~indicator, colors = c(
-                "grey", "#E18727", "#0072B5"
+                "Omitted" = "grey",
+                "Test" = "#E18727",
+                "Train" = "#0072B5"
               ),
               #   # this is needed for later when doing 3D subplots
               scene = paste0("scene", .x),
@@ -275,7 +283,8 @@ autoplot.ResamplingSptCVCstf = function( # nolint
             pl = plotly::plot_ly(data_coords,
               x = ~x, y = ~y, z = ~Date,
               color = ~indicator, colors = c(
-                "#E18727", "#0072B5"
+                "Test" = "#E18727",
+                "Train" = "#0072B5"
               ),
               #   # this is needed for later when doing 3D subplots
               scene = paste0("scene", .x),
@@ -343,7 +352,6 @@ autoplot.ResamplingSptCVCstf = function( # nolint
         plotly::orca(plot, ...)
       }
       return(plot)
-      return(invisible(plot))
     }
   }
 
