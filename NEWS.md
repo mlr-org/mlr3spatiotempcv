@@ -1,8 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
-# mlr3spatiotempcv 2.0.0.9000
+# mlr3spatiotempcv 2.0.0.9001
 
-- Internal changes only.
+## Bugfixes
+
+- fix "omitted" color label sptcv_cstf plots and don't return plot invisibly
 
 
 # mlr3spatiotempcv 2.0.0
