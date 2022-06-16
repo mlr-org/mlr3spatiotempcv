@@ -1,10 +1,14 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 2.0.0.9002
+
+- fix return of plotly subplots in in `autoplot()` for `sptcv_cstf` when multiple folds are selected
+
 # mlr3spatiotempcv 2.0.0.9001
 
 ## Bugfixes
 
-- fix "omitted" color label sptcv_cstf plots and don't return plot invisibly
+- fix display of the "omitted" color label in `autoplot()` for `sptcv_cstf`
 
 
 # mlr3spatiotempcv 2.0.0
