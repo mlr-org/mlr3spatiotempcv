@@ -249,6 +249,18 @@ autoplot.ResamplingSptCVCstf = function( # nolint
 
           data_coords$indicator = NA_character_
 
+          if (length(task$col_roles$time)) {
+            data_coords$Date = as.Date(task$data(cols = task$col_roles$time)[[1]])
+          } else {
+            # if time col is not set, check for plot_time col role
+            if (!is.null(plot_time_var)) {
+              data_coords$Date = as.Date(task$data(cols = plot_time_var)[[1]])
+            } else {
+              lg$error("Neither 'time' or 'plot' column roles are set. At least one is required for 3D plotting. If the variable is only used for plotting purposes, please define argument 'plot_time_var' in `autoplot()` and remove the column role 'feature' for this variable.")
+              stop()
+            }
+          }
+
           # get test and train indices
           row_id_test = resampling_sub$instance$test[[.x]]
           row_id_train = resampling_sub$instance$train[[.x]]
@@ -279,7 +291,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
               showlegend = ifelse(.x == 1, TRUE, FALSE)
             )
           } else {
-            data_coords = data_coords[indicator != ""]
+            data_coords[is.na(get("indicator")), "indicator" := "Omitted"]
             pl = plotly::plot_ly(data_coords,
               x = ~x, y = ~y, z = ~Date,
               color = ~indicator, colors = c(
@@ -326,7 +338,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
             paste0("scene", .x)
           )
 
-          pl = mlr3misc::invoke(plotly::layout, .args = layout_args)
+          plot = mlr3misc::invoke(plotly::layout, .args = layout_args)
 
         })
       }
