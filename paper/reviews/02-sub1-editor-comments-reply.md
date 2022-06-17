@@ -3,21 +3,20 @@
 > A more general overview on the functionality provided and how it can be accessed and used would seem important in addition to the examples to facilitate the evaluation of the software contribution but also to guide readers to understand what the main functions with their main arguments are. This implies that Section 4 should be split into two sections where one focuses on the software design and presents the functionality provided before then having a separate section presenting the functions in more details as well as some examples of the use of the package illustrating the intended workflow to the reader. For this section it would also seem preferable to not only have a spatial, but a spatial-temporal example included illustrating the application of the package in this case. It would also be good to compare on a single example the different features and in this way provide readers with suitable example code and inform them about how to use the package in practice.
 
 Thank you for the high-level feedback!
-Transporting the package purpose to users is a very important but also tricky part.
+Transporting the package purpose to users is a very important part.
+We have added a paragraph at the end of section 3 which explains the overall workflow in mlr3 of conducting a nested resampling - and where {mlr3spatiotempcv} comes into play in this process.
+In addition, users can get a sense of the capabilities of the spatiotemporal methods in section 4.4 (Cross-validation for spatiotemporal data) and should be able to adapt the existing example easily to a spatiotemporal dataset thanks to the consistent building block structure of the mlr3 framework.
+We are interested in getting more feedback on this topic and of how much important/interest the spatiotemporal methods are for users during a review of the manuscript.
 
 For `mlr3spatiotempcv`, there are no "main functions" as there are for many other R packages.
 Instead `mlr3spatiotempcv` acts as an extension package to the `mlr3` machine learning framework and provides resampling methods from various upstream sources.
 Hence, we a dedicated section describing the main functions would not apply here in our view.
-As a compensatory measure we list all the available resampling methods and their (subjective) categorization in Table 1, which is similar to the idea of presenting the "main functions".
-
-With respect to the workflow presentation and the addition of a spatiotemporal example:
-The authors agreed on focusing on a spatial example as this is the most relevant use case in practice and avoids (more) tricky 3D plotting visualizations in the manuscript.
-Users can get a sense of the capabilities of the spatiotemporal methods in section 4.4 (Cross-validation for spatiotemporal data) and should be able to adapt the existing example easily to a spatiotemporal dataset thanks to the consistent building block structure of the mlr3 framework.
-We would be interested in getting more feedback on this topic and of how much important/interest the spatiotemporal methods are for users during a review of the manuscript.
+We list all the available resampling methods and their (subjective) categorization in Table 1, which is similar to the idea of presenting the "main functions" in our view.
 
 Regarding more examples and practical use case tutorial: note that aside from this manuscript and the package examples, there is also the "mlr3book" and the "mlr3gallery" which aim to provide more helpful resources to users.
-However, adding more uses cases to the manuscript would unnecessarily prolong the manuscript and not add much more added value to it.
-Both resources are linked prominently in many parts (e.g. the package README or its package help page (?mlr3spatiotempcv::`mlr3spatiotempcv-package`) and general mlr3 framework resources and should be easily discoverable by users (if not yet known).
+We have linked both resources at the appropriate places in a new version of the manuscript now.
+In addition they are linked prominently in the package README or the package help page (?mlr3spatiotempcv::`mlr3spatiotempcv-package`).
+Adding more uses cases to the manuscript would unnecessarily prolong the manuscript and not add much more added value to it.
 
 > The package version on CRAN is 1.0.1, the submitted package version is 1.0.0.9000. It would be preferable to have these versions in sync.
 
@@ -32,18 +31,25 @@ We believe that (at least) bug fixes should be acceptable during the review peri
 For what its worth, one can also checkout a desired version from the GitHub source via the git tag directly using
 
 ```
-git checkout tags/<tag> -b <branch>
+git checkout tags/<tag>
 ```
 
-Which would be `git checkout tags/v1.0.0.9000 -b main` in this specific case.
+Which would have been `git checkout tags/v1.0.0.9000` in this specific case.
 
 For the resubmisson at hand, we have updated the package and package a new version on CRAN which will match the submitted version of the package.
+This one can be checked out locally via
+
+```
+git clone https://github.com/mlr-org/mlr3spatiotempcv.git
+cd mlr3spatiotempcv
+git checkout tags/v2.0.0
+```
 
 > The package seems to contain copy copied from other packages. The CRAN Repository Policy asks package authors to take care that authorship is not misrepresented.
 
 We apologize for this oversight.
-We have added comments to `ResamplingSpCVDisc` and `ResamplingSpCVTiles` highlighting code parts which were mainly copied from the `sperrorest` package.
-While this is of course something that should always be done, we would like to note that both authors of the `sperrorest` package are also authors/contributors to `mlr3spatiotempcv` and/or this manuscript.
+We have added code comments to `ResamplingSpCVDisc` and `ResamplingSpCVTiles` highlighting code parts which were mainly copied from the {sperrorest} package.
+While this is of course something that should always be done, we would like to note that both authors of the `sperrorest` package are also authors/contributors to {mlr3spatiotempcv} and/or this manuscript.
 
 > The "Writing R Extensions" manual recommends that a package should also be checked with the suggested packages not being available, e.g., by not having them available and setting `_R_CHECK_FORCE_SUGGESTS_=false`. In this case checking the package gives a number of errors.
 
@@ -76,7 +82,7 @@ The article itself is also "special" in that case as it aims to showcase a large
 
 In addition, putting all upstream dependencies into IMPORTS would have side-effects with respect to the mlr3 framework as a whole as it would heavily increase the 1st order dependency chain for certain actions which load larger subparts of the framework.
 
-That being said, we've added a conditional call to `install.packages()` to the replication script at the very beginning which now installs suggested packages of mlr3spatiotempcv which are not installed to make it easier for users and reviewers to execute the replication script.
+That being said, we've added a conditional call to `install.packages()` to the replication script at the very beginning which now installs suggested packages of {mlr3spatiotempcv} which are not installed to make it easier for users and reviewers to execute the replication script.
 
 > The replication code file should be adapted to remove parts which are knitr-specific for the dynamic document and maybe also avoid relying on some files being accessible with specific relative paths.
 
@@ -109,15 +115,13 @@ Anyhow, we agree that the code is not really universally written and have rewrit
 > The manuscript abstract claims that various R packages exist implementing different spatiotemporal partitioning strategies. The enumeration of packages also lists package kmeans. However, there does not seem to be a package of this name on CRAN. The remaining manuscript also does not provide a formal reference for this package nor for all other packages mentioned (which would be required by the style guidelines of JSS).
 
 Thanks for spotting this.
-This was caused by a typo on our side, the referenced package is `skmeans`, not `kmeans`. There are two other instances in the manuscript where the package was correctly referenced.
-We have found that the reference for package `skmeans` was missing whereas all others were properly cited.
-We'd appreciate specific pointers to package citations if there are still some which might be missing by accident.
+This was caused by a typo on our side, the referenced package is {skmeans}, not `kmeans`.
+There are two other instances in the manuscript where the package was correctly referenced.
+We have found that the reference for package {skmeans} was missing whereas all others were properly cited.
 
 > - The manuscript text refers to a Table 4. However, the manuscript contains only a single table which is labeled Table 1.
 
-This was caused by having placed the `\label{}` command before `\caption{}`.
-Apparently `\label{}` must be placed after `\caption{}` to get correct reference labels
-As this is quite hard to spot and not trivial to troubleshoot, this could be a potential candidate for the "author information" section.
+Thanks for the information, we have corrected the reference.
 
 > The style guidelines need to be better followed. The required mark-up for packages and software environments is not applied, the references to software package not included and the style file seems to have been tweaked to include more numberings. The list of footnotes looks awkward.
 
