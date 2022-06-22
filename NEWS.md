@@ -1,5 +1,288 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 2.0.1.9000
+
+## Bug fixes 
+
+- use default extra_args (#166).
+
+
+
+## Features 
+
+- support Task with DataBackendVector (#173).
+
+
+
+## Chore 
+
+- unify testthat.R
+
+
+
+## lifecycle 
+
+- stable
+
+
+
+## tests 
+
+- lower lgr log level in tests
+
+- use data without NA for cluto
+
+- escape all examples for non-installed pkgs
+
+
+
+## article 
+
+- readd function names in header titles
+
+
+
+## paper 
+
+- various style fixes
+
+
+
+## testthat 
+
+- test in parallel
+
+
+
+## travis 
+
+- no branch builds
+
+- require spatial stack
+
+
+
+## GHA 
+
+- update tic templates
+
+- install spatial libs also on macOS release
+
+- Fix linux block
+
+
+
+## pkgdown 
+
+- use mlr3pkgdowntemplate
+
+
+
+## Uncategorized 
+
+- fix return of plotly subplots in sptcv_cstf autoplot()
+
+- fix "omitted" color label sptcv_cstf plots and don't return plot invisibly
+
+- Add `plot_time_var` argument to `autoplot()` for 3D plotting (#197)
+
+- feat: Print column roles `space`, `time` or `plot` in Task (#198)
+
+- chore: remove whitespace
+
+- chore: rename task cookfarm to `cookfarm_mlr3`
+
+- feat: Add support for `DataBackendRaster` (@33069354+be-marc, #191)
+
+- cstf: print info log message which column roles are used for partitioning
+
+- cookfarm task: include NA observations and set column roles "space" and "time" by default
+
+- add support for mlr3 man file notation for resampling methods
+
+- update help pages (@33069354+be-marc, #190)
+
+- fix typo (@33069354+be-marc, #190)
+
+- turn off codecov for cluto (@33069354+be-marc, #190)
+
+- rewrite CAST implementation (@66853113+pre-commit-ci[bot], #174)
+
+- Use full cookfarm dataset (#181)
+
+- use full cookfarm dataset
+
+- clean preprocess script
+
+- update vdiffr snapshots
+
+- remove custom levels for time+space plot
+
+- Robustify CLUTO test setup (#182)
+
+- add cluto method
+
+- optimize "choosing a method"
+
+- use pdf_book reference mechanism
+
+- use cache
+
+- adjust figure placements
+
+- restructure chapters
+
+- write CSTF methods
+
+- SptCV methods: move arguments from `instantiate()` to constructor
+
+- replace {cowplot} by {patchwork} and make visualization of multiple folds more flexible and eye appealing
+
+- return descriptive error message if a non-spatiotemporal task was provided (#74)
+
+- Adapt to mlr3 "extra_args" approach for tasks arguments
+
+- add pkgdown reference grouping, (fixes #67)
+
+- use underscores instead of hyphens for resampling method naming
+
+- Optimize `autoplot()` and add `plot()`
+
+- update registering of column roles: append instead of overwrite
+
+- Add `ResamplingSptCVCluto` (#53)
+
+- add/update unit tests, especially for `SpCVEnv`
+
+- `SpCVBuffer`: Enables spDataType and addBG parameter
+
+- `SpCVBuffer`: Adds parameter tests
+
+- `SpCVBuffer`: Fixes train and test set storage
+
+- `SpCVBuffer`: Add 6x6 point grid tasks (two-class, multi-class and continuous response)
+
+- `SpCVBuffer`: Add unit tests for `ResamplingSpCVBuffer` with 6x6 point grid tasks
+
+- `SpCVBuffer`: Update `autoplot` unit test `vdiffr` images
+
+- `SpCVEnv`: Remove setting of `cols` and `rows`
+
+- `SpCVEnv`: Add param `features` to parameter set
+
+- "Getting Started" vignette (#34)
+
+- `autoplot()`: support CV and RepeatedCV (#37)
+
+- Add ResamplingRepeatedSpCVBlock (#35)
+
+- Document defaults of param `folds`
+
+- add class `RepeatedSpCVCoords`
+
+- skip vdiffr tests on CI
+
+- add a "Getting Started" vignette
+
+- use .bib file for references
+
+- save ecuador data without rownamesto avoid warning
+
+- rewrite all classes to roxygen2 R6 notation
+
+- restructure zzz.R following mlr3proba approach
+
+- resave ecuador data without rownames
+
+- use `train_set()` and `test_set()` from mlr3::Resampling
+
+- fix `iters()` of spcv-buffer
+
+- test package on Circle CI
+
+- update README
+
+- skip vdiffr tests on CI
+
+- ...
+
+- ...
+
+- ...
+
+- stringr::str_detect -> grepl
+
+- require_namespaces for suggested pkgs
+
+- stringr::str_detect -> grepl
+
+- fix Rd
+
+- revalidate plots in tests
+
+- simplify
+
+- upd spcv-block, update plots
+
+- add --run-donttest
+
+- try resolving merge conflict
+
+- add TaskRegrST
+
+- upd TaskClassifST with upstream TaskClassif changes
+
+- fix example
+
+- remove example for now
+
+- make spcv tests generic
+
+- suggest stringr
+
+- fix typo
+
+- test grouping and stratification combinations
+
+- add spcv-block specific test
+
+- remove unused .combine function
+
+- test setter and getter, test cloning
+
+- fix test and train getter tests
+
+- rename
+
+- move buffer tests into own file
+
+- optimize error message
+
+- add task diplodia
+
+- add spcv-env test file
+
+- <- to =
+
+- fix spcv-env tst
+
+- need assignment operator once
+
+- typo
+
+- format roxygen
+
+- upd README badges
+
+- add test for TaskClassifST
+
+- formot roxygen
+
+- minor notes
+
+- last coverage %
+
+
 # mlr3spatiotempcv 2.0.1
 
 ## Bug fixes 
