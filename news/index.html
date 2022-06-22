@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mlr3spatiotempcv</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,6 +82,154 @@
       <small>Source: <a href="https://github.com/mlr-org/mlr3spatiotempcv/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.0.1" id="mlr3spatiotempcv-201">mlr3spatiotempcv 2.0.1<a class="anchor" aria-label="anchor" href="#mlr3spatiotempcv-201"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-2-0-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-0-1"></a></h3>
+<ul><li>use default extra_args (<a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/166" class="external-link">#166</a>).</li></ul></div>
+<div class="section level3">
+<h3 id="features-2-0-1">Features<a class="anchor" aria-label="anchor" href="#features-2-0-1"></a></h3>
+<ul><li>support Task with DataBackendVector (<a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/173" class="external-link">#173</a>).</li></ul></div>
+<div class="section level3">
+<h3 id="chore-2-0-1">Chore<a class="anchor" aria-label="anchor" href="#chore-2-0-1"></a></h3>
+<ul><li>unify testthat.R</li></ul></div>
+<div class="section level3">
+<h3 id="lifecycle-2-0-1">lifecycle<a class="anchor" aria-label="anchor" href="#lifecycle-2-0-1"></a></h3>
+<ul><li>stable</li></ul></div>
+<div class="section level3">
+<h3 id="tests-2-0-1">tests<a class="anchor" aria-label="anchor" href="#tests-2-0-1"></a></h3>
+<ul><li><p>lower lgr log level in tests</p></li>
+<li><p>use data without NA for cluto</p></li>
+<li><p>escape all examples for non-installed pkgs</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="article-2-0-1">article<a class="anchor" aria-label="anchor" href="#article-2-0-1"></a></h3>
+<ul><li>readd function names in header titles</li></ul></div>
+<div class="section level3">
+<h3 id="paper-2-0-1">paper<a class="anchor" aria-label="anchor" href="#paper-2-0-1"></a></h3>
+<ul><li>various style fixes</li></ul></div>
+<div class="section level3">
+<h3 id="testthat-2-0-1">testthat<a class="anchor" aria-label="anchor" href="#testthat-2-0-1"></a></h3>
+<ul><li>test in parallel</li></ul></div>
+<div class="section level3">
+<h3 id="travis-2-0-1">travis<a class="anchor" aria-label="anchor" href="#travis-2-0-1"></a></h3>
+<ul><li><p>no branch builds</p></li>
+<li><p>require spatial stack</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="gha-2-0-1">GHA<a class="anchor" aria-label="anchor" href="#gha-2-0-1"></a></h3>
+<ul><li><p>update tic templates</p></li>
+<li><p>install spatial libs also on macOS release</p></li>
+<li><p>Fix linux block</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="pkgdown-2-0-1">pkgdown<a class="anchor" aria-label="anchor" href="#pkgdown-2-0-1"></a></h3>
+<ul><li>use mlr3pkgdowntemplate</li></ul></div>
+<div class="section level3">
+<h3 id="uncategorized-2-0-1">Uncategorized<a class="anchor" aria-label="anchor" href="#uncategorized-2-0-1"></a></h3>
+<ul><li><p>fix return of plotly subplots in sptcv_cstf autoplot()</p></li>
+<li><p>fix “omitted” color label sptcv_cstf plots and don’t return plot invisibly</p></li>
+<li><p>Add <code>plot_time_var</code> argument to <code><a href="../reference/autoplot.html">autoplot()</a></code> for 3D plotting (<a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/197" class="external-link">#197</a>)</p></li>
+<li><p>feat: Print column roles <code>space</code>, <code>time</code> or <code>plot</code> in Task (<a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/198" class="external-link">#198</a>)</p></li>
+<li><p>chore: remove whitespace</p></li>
+<li><p>chore: rename task cookfarm to <code>cookfarm_mlr3</code></p></li>
+<li><p>feat: Add support for <code>DataBackendRaster</code> (<a href="https://github.com/33069354" class="external-link">@33069354</a>+be-marc, <a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/191" class="external-link">#191</a>)</p></li>
+<li><p>cstf: print info log message which column roles are used for partitioning</p></li>
+<li><p>cookfarm task: include NA observations and set column roles “space” and “time” by default</p></li>
+<li><p>add support for mlr3 man file notation for resampling methods</p></li>
+<li><p>update help pages (<a href="https://github.com/33069354" class="external-link">@33069354</a>+be-marc, <a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/190" class="external-link">#190</a>)</p></li>
+<li><p>fix typo (<a href="https://github.com/33069354" class="external-link">@33069354</a>+be-marc, <a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/190" class="external-link">#190</a>)</p></li>
+<li><p>turn off codecov for cluto (<a href="https://github.com/33069354" class="external-link">@33069354</a>+be-marc, <a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/190" class="external-link">#190</a>)</p></li>
+<li><p>rewrite CAST implementation (<a href="https://github.com/66853113" class="external-link">@66853113</a>+pre-commit-ci[bot], <a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/174" class="external-link">#174</a>)</p></li>
+<li><p>Use full cookfarm dataset (<a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/181" class="external-link">#181</a>)</p></li>
+<li><p>use full cookfarm dataset</p></li>
+<li><p>clean preprocess script</p></li>
+<li><p>update vdiffr snapshots</p></li>
+<li><p>remove custom levels for time+space plot</p></li>
+<li><p>Robustify CLUTO test setup (<a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/182" class="external-link">#182</a>)</p></li>
+<li><p>add cluto method</p></li>
+<li><p>optimize “choosing a method”</p></li>
+<li><p>use pdf_book reference mechanism</p></li>
+<li><p>use cache</p></li>
+<li><p>adjust figure placements</p></li>
+<li><p>restructure chapters</p></li>
+<li><p>write CSTF methods</p></li>
+<li><p>SptCV methods: move arguments from <code>instantiate()</code> to constructor</p></li>
+<li><p>replace {cowplot} by {patchwork} and make visualization of multiple folds more flexible and eye appealing</p></li>
+<li><p>return descriptive error message if a non-spatiotemporal task was provided (<a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/74" class="external-link">#74</a>)</p></li>
+<li><p>Adapt to mlr3 “extra_args” approach for tasks arguments</p></li>
+<li><p>add pkgdown reference grouping, (fixes <a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/67" class="external-link">#67</a>)</p></li>
+<li><p>use underscores instead of hyphens for resampling method naming</p></li>
+<li><p>Optimize <code><a href="../reference/autoplot.html">autoplot()</a></code> and add <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code></p></li>
+<li><p>update registering of column roles: append instead of overwrite</p></li>
+<li><p>Add <code>ResamplingSptCVCluto</code> (<a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/53" class="external-link">#53</a>)</p></li>
+<li><p>add/update unit tests, especially for <code>SpCVEnv</code></p></li>
+<li><p><code>SpCVBuffer</code>: Enables spDataType and addBG parameter</p></li>
+<li><p><code>SpCVBuffer</code>: Adds parameter tests</p></li>
+<li><p><code>SpCVBuffer</code>: Fixes train and test set storage</p></li>
+<li><p><code>SpCVBuffer</code>: Add 6x6 point grid tasks (two-class, multi-class and continuous response)</p></li>
+<li><p><code>SpCVBuffer</code>: Add unit tests for <code>ResamplingSpCVBuffer</code> with 6x6 point grid tasks</p></li>
+<li><p><code>SpCVBuffer</code>: Update <code>autoplot</code> unit test <code>vdiffr</code> images</p></li>
+<li><p><code>SpCVEnv</code>: Remove setting of <code>cols</code> and <code>rows</code></p></li>
+<li><p><code>SpCVEnv</code>: Add param <code>features</code> to parameter set</p></li>
+<li><p>“Getting Started” vignette (<a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/34" class="external-link">#34</a>)</p></li>
+<li><p><code><a href="../reference/autoplot.html">autoplot()</a></code>: support CV and RepeatedCV (<a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/37" class="external-link">#37</a>)</p></li>
+<li><p>Add ResamplingRepeatedSpCVBlock (<a href="https://github.com/mlr-org/mlr3spatiotempcv/issues/35" class="external-link">#35</a>)</p></li>
+<li><p>Document defaults of param <code>folds</code></p></li>
+<li><p>add class <code>RepeatedSpCVCoords</code></p></li>
+<li><p>skip vdiffr tests on CI</p></li>
+<li><p>add a “Getting Started” vignette</p></li>
+<li><p>use .bib file for references</p></li>
+<li><p>save ecuador data without rownamesto avoid warning</p></li>
+<li><p>rewrite all classes to roxygen2 R6 notation</p></li>
+<li><p>restructure zzz.R following mlr3proba approach</p></li>
+<li><p>resave ecuador data without rownames</p></li>
+<li><p>use <code>train_set()</code> and <code>test_set()</code> from mlr3::Resampling</p></li>
+<li><p>fix <code>iters()</code> of spcv-buffer</p></li>
+<li><p>test package on Circle CI</p></li>
+<li><p>update README</p></li>
+<li><p>skip vdiffr tests on CI</p></li>
+<li><p>…</p></li>
+<li><p>…</p></li>
+<li><p>…</p></li>
+<li><p>stringr::str_detect -&gt; grepl</p></li>
+<li><p>require_namespaces for suggested pkgs</p></li>
+<li><p>stringr::str_detect -&gt; grepl</p></li>
+<li><p>fix Rd</p></li>
+<li><p>revalidate plots in tests</p></li>
+<li><p>simplify</p></li>
+<li><p>upd spcv-block, update plots</p></li>
+<li><p>add –run-donttest</p></li>
+<li><p>try resolving merge conflict</p></li>
+<li><p>add TaskRegrST</p></li>
+<li><p>upd TaskClassifST with upstream TaskClassif changes</p></li>
+<li><p>fix example</p></li>
+<li><p>remove example for now</p></li>
+<li><p>make spcv tests generic</p></li>
+<li><p>suggest stringr</p></li>
+<li><p>fix typo</p></li>
+<li><p>test grouping and stratification combinations</p></li>
+<li><p>add spcv-block specific test</p></li>
+<li><p>remove unused .combine function</p></li>
+<li><p>test setter and getter, test cloning</p></li>
+<li><p>fix test and train getter tests</p></li>
+<li><p>rename</p></li>
+<li><p>move buffer tests into own file</p></li>
+<li><p>optimize error message</p></li>
+<li><p>add task diplodia</p></li>
+<li><p>add spcv-env test file</p></li>
+<li><p>&lt;- to =</p></li>
+<li><p>fix spcv-env tst</p></li>
+<li><p>need assignment operator once</p></li>
+<li><p>typo</p></li>
+<li><p>format roxygen</p></li>
+<li><p>upd README badges</p></li>
+<li><p>add test for TaskClassifST</p></li>
+<li><p>formot roxygen</p></li>
+<li><p>minor notes</p></li>
+<li><p>last coverage %</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.0.0.9002" id="mlr3spatiotempcv-2009002">mlr3spatiotempcv 2.0.0.9002<a class="anchor" aria-label="anchor" href="#mlr3spatiotempcv-2009002"></a></h2>
 <ul><li>fix return of plotly subplots in in <code><a href="../reference/autoplot.html">autoplot()</a></code> for <code>sptcv_cstf</code> when multiple folds are selected</li></ul></div>
