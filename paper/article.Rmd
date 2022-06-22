@@ -295,7 +295,7 @@ The available methods are further discussed in section \ref{sec:disc}.
                                       \bottomrule
     \end{tabular}
   \endgroup
-  \caption[b]{Spatiotemporal resampling methods available in the \pkg{mlr3} ecosystem.
+  \caption[b]{Available spatiotemporal resampling methods in the \pkg{mlr3} ecosystem.
     The "Name" column shows the \pkg{mlr3} method name as found in the \texttt{mlr3::mlr\_resamplings} dictionary.
     The count in brackets after the package name represents the number of studies that were found having used this resampling technique until May 2021.
     For each method, up to three randomly selected references were added to the table.}
