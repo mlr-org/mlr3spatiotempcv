@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/mlr-org/mlr3spatiotempcv",
   "issueTracker": "https://github.com/mlr-org/mlr3spatiotempcv/issues",
   "license": "https://spdx.org/licenses/LGPL-3.0",
-  "version": "1.0.1.9002",
+  "version": "2.0.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -455,5 +455,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "7750.018KB"
+  "fileSize": "7905.182KB"
 }
