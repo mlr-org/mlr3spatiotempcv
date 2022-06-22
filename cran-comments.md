@@ -7,8 +7,8 @@ mlr3spatiotempcv 2.0.1
 ## R CMD check results
 
 - [x] Checked locally, R 4.2.0
-- [ ] Checked on CI system, R 4.2.0
-- [ ] Checked on win-builder, R devel
+- [x] Checked on CI system, R 4.2.0
+- [x] Checked on win-builder, R devel
 
 Check the boxes above after successful execution and remove this line. Then run `fledge::release()`.
 
