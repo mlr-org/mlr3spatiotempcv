@@ -11,7 +11,7 @@ test_that("no duplicated ids", {
     expect_identical(i$duplicated_ids, FALSE)
   }
 
-  sptcv_rsp = rsmps(c("sptcv_cluto", "sptcv_cstf"), folds = 2)
+  sptcv_rsp = rsmps(c("sptcv_cstf"), folds = 2)
 
   for (i in sptcv_rsp) {
     expect_identical(i$duplicated_ids, FALSE)
@@ -72,7 +72,7 @@ test_that("train and test set getter functions are working for sptcv", {
   skip_if_not_installed("skmeans")
 
   sptcv_rsp = rsmps(
-    c("repeated_sptcv_cluto", "repeated_sptcv_cstf"),
+    c("repeated_sptcv_cstf"),
     folds = 2
   )
 
@@ -95,7 +95,7 @@ test_that("cloning works", {
     expect_true(all.equal(i, clone))
   }
 
-  sptcv_rsp = rsmps(c("sptcv_cluto", "sptcv_cstf"), folds = 2)
+  sptcv_rsp = rsmps(c("sptcv_cstf"), folds = 2)
 
   for (i in sptcv_rsp) {
     clone = i$clone(deep = TRUE)
