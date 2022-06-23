@@ -26,7 +26,7 @@ author:
       | Faculty of Statistics
     email: \email{lang@statistik.tu-dortmund.de}
   - name: Alexander Brenning
-    orcid: 0000-0001-6640-679
+    orcid: 0000-0001-6640-679X
     affiliation: 'Friedrich Schiller University Jena'
     address: |
       | Department of Geography
@@ -63,16 +63,8 @@ preamble: >
   \usepackage{tablefootnote}
   \newcommand{\specialcell}[2][l]{%
     \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
-# tables: true
 bibliography: paper.bib
 output: rticles::jss_article
-  # bookdown::pdf_book:
-  #   base_format: rticles::jss_article
-  #   citation_package: "natbib"
-    # includes:
-    #   in_header: header.tex
-# nocite: |
-#   @ploton2020
 ---
 
 ```{r setup, echo=FALSE, purl=FALSE}
@@ -87,7 +79,7 @@ options(prompt = "R> ", continue = "+ ")
 ```{r setup-2, echo=FALSE, purl=T}
 # for knitr spin later
 knitr::opts_chunk$set(
-  cache = TRUE,
+  cache = FALSE,
   cache.lazy = TRUE)
 ```
 
