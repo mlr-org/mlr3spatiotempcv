@@ -7,6 +7,7 @@ test_that("plot() works for 'sptcv_cluto'", {
   skip_if_not_installed("vdiffr")
   skip_on_cran()
   skip_on_os("mac")
+  skip_on_ci()
   set.seed(42)
 
   rsp = rsmp("sptcv_cluto", folds = 4)
@@ -32,6 +33,7 @@ test_that("plot() works for 'repeated_sptcv_cluto'", {
   skip_if_not_installed("vdiffr")
   skip_on_cran()
   skip_on_os("mac")
+  skip_on_ci()
 
   set.seed(42)
 

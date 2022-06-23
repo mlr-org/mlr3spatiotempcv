@@ -1,17 +1,17 @@
 # install CLUTO executable into $PROJ_ROOT/inst/ for testthat to work
 # system.file() is shimed in testthat and pkgload::load_all()
-if (Sys.getenv("NOT_CRAN") != "" && Sys.getenv("R_COVR") == "") {
-  gist_url = "https://gist.githubusercontent.com/pat-s/6430470cf817050e27d26c43c0e9be72/raw/9a1bee360880be5c2ab8dc5168b4ff9543e499d6/install-cluto.R" # nolint
-  if (Sys.info()[["sysname"]] == "Linux") {
-    if (!file.exists(system.file("vcluster", package = "mlr3spatiotempcv"))) {
-      source(gist_url)
-      dir.create(here::here("tests/testthat/bin"), recursive = TRUE)
-      file.copy(sprintf("%s/vcluster",
-        system.file(package = "mlr3spatiotempcv")), here::here("tests/testthat/bin/vcluster"))
-      Sys.setenv("CLUTO_PATH" = here::here("tests/testthat/bin/vcluster"))
-    }
-  }
-}
+# if (Sys.getenv("NOT_CRAN") != "" && Sys.getenv("R_COVR") == "") {
+#   gist_url = "https://gist.githubusercontent.com/pat-s/6430470cf817050e27d26c43c0e9be72/raw/9a1bee360880be5c2ab8dc5168b4ff9543e499d6/install-cluto.R" # nolint
+#   if (Sys.info()[["sysname"]] == "Linux") {
+#     if (!file.exists(system.file("vcluster", package = "mlr3spatiotempcv"))) {
+#       source(gist_url)
+#       dir.create(here::here("tests/testthat/bin"), recursive = TRUE)
+#       file.copy(sprintf("%s/vcluster",
+#         system.file(package = "mlr3spatiotempcv")), here::here("tests/testthat/bin/vcluster"))
+#       Sys.setenv("CLUTO_PATH" = here::here("tests/testthat/bin/vcluster"))
+#     }
+#   }
+# }
 
 data = cookfarm_mlr3 %>%
   na.omit()

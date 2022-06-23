@@ -30,9 +30,9 @@ jobs:
           # - { os: windows-latest, r: "release" }
           # [Custom matrix env var]
           - { os: macOS-latest, r: "release", latex: "true", codecov: "false" }
-          - { os: ubuntu-latest, r: "devel" }
+          - { os: ubuntu-latest, r: "devel", codecov: "true" }
           # [Custom matrix env var]
-          - { os: ubuntu-latest, r: "release", pkgdown: "true", codecov: "true" }
+          - { os: ubuntu-latest, r: "release", pkgdown: "true", codecov: "false" }
 
     env:
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
@@ -145,7 +145,7 @@ jobs:
         run: Rscript -e "tic::after_success()"
 
       - name: "[Custom block] [Stage] After Success on Linux"
-        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
+        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'devel'
         run: Rscript -e "tic::after_success()"
 
       - name: "[Stage] Upload R CMD check artifacts"
