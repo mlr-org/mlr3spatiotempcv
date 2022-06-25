@@ -137,20 +137,20 @@
 </ul>
 <p>To create one of these, one can either pass a <code>sf</code> object as the “backend” directly:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># create 'sf' object</span>
-<span class="va">data_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">ecuador</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># create mlr3 task</span>
-<span class="va">task</span> <span class="op">=</span> <span class="va"><a href="../reference/TaskClassifST.html">TaskClassifST</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"ecuador_sf"</span>,
-  backend <span class="op">=</span> <span class="va">data_sf</span>, target <span class="op">=</span> <span class="st">"slides"</span>, positive <span class="op">=</span> <span class="st">"TRUE"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># create 'sf' object</span></span>
+<span><span class="va">data_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">ecuador</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create mlr3 task</span></span>
+<span><span class="va">task</span> <span class="op">=</span> <span class="va"><a href="../reference/TaskClassifST.html">TaskClassifST</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"ecuador_sf"</span>,</span>
+<span>  backend <span class="op">=</span> <span class="va">data_sf</span>, target <span class="op">=</span> <span class="st">"slides"</span>, positive <span class="op">=</span> <span class="st">"TRUE"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>or use a plain <code>data.frame</code>. In this case, the constructor of <code>TaskClassifST</code> needs a few more arguments:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data</span> <span class="op">=</span> <span class="fu">mlr3</span><span class="fu">::</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">as_data_backend</a></span><span class="op">(</span><span class="va">ecuador</span><span class="op">)</span>
-<span class="va">task</span> <span class="op">=</span> <span class="va"><a href="../reference/TaskClassifST.html">TaskClassifST</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"ecuador"</span>,
-  backend <span class="op">=</span> <span class="va">data</span>, target <span class="op">=</span> <span class="st">"slides"</span>,
-  positive <span class="op">=</span> <span class="st">"TRUE"</span>, extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>coordinate_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">=</span> <span class="fu">mlr3</span><span class="fu">::</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">as_data_backend</a></span><span class="op">(</span><span class="va">ecuador</span><span class="op">)</span></span>
+<span><span class="va">task</span> <span class="op">=</span> <span class="va"><a href="../reference/TaskClassifST.html">TaskClassifST</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"ecuador"</span>,</span>
+<span>  backend <span class="op">=</span> <span class="va">data</span>, target <span class="op">=</span> <span class="st">"slides"</span>,</span>
+<span>  positive <span class="op">=</span> <span class="st">"TRUE"</span>, extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>coordinate_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Now this Task can be used as a normal {mlr3} task in any kind of modeling scenario. Have a look at the <a href="https://mlr3book.mlr-org.com/08-special-spatiotemp.html" class="external-link">mlr3book section on “Spatiotemporal Analysis”</a> on how to apply a spatiotemporal resampling method to such a task.</p>
 </div>
 </div>
@@ -168,17 +168,17 @@
 <li><code>TaskRegrST</code></li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mlr_reflections</span><span class="op">$</span><span class="va">task_types</span>
-<span class="co">#&gt;       type          package          task        learner        prediction</span>
-<span class="co">#&gt; 1: classif             mlr3   TaskClassif LearnerClassif PredictionClassif</span>
-<span class="co">#&gt; 2: classif mlr3spatiotempcv TaskClassifST LearnerClassif PredictionClassif</span>
-<span class="co">#&gt; 3:    regr             mlr3      TaskRegr    LearnerRegr    PredictionRegr</span>
-<span class="co">#&gt; 4:    regr mlr3spatiotempcv    TaskRegrST    LearnerRegr    PredictionRegr</span>
-<span class="co">#&gt;           measure</span>
-<span class="co">#&gt; 1: MeasureClassif</span>
-<span class="co">#&gt; 2: MeasureClassif</span>
-<span class="co">#&gt; 3:    MeasureRegr</span>
-<span class="co">#&gt; 4:    MeasureRegr</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mlr_reflections</span><span class="op">$</span><span class="va">task_types</span></span>
+<span><span class="co">#&gt;       type          package          task        learner        prediction</span></span>
+<span><span class="co">#&gt; 1: classif             mlr3   TaskClassif LearnerClassif PredictionClassif</span></span>
+<span><span class="co">#&gt; 2: classif mlr3spatiotempcv TaskClassifST LearnerClassif PredictionClassif</span></span>
+<span><span class="co">#&gt; 3:    regr             mlr3      TaskRegr    LearnerRegr    PredictionRegr</span></span>
+<span><span class="co">#&gt; 4:    regr mlr3spatiotempcv    TaskRegrST    LearnerRegr    PredictionRegr</span></span>
+<span><span class="co">#&gt;           measure</span></span>
+<span><span class="co">#&gt; 1: MeasureClassif</span></span>
+<span><span class="co">#&gt; 2: MeasureClassif</span></span>
+<span><span class="co">#&gt; 3:    MeasureRegr</span></span>
+<span><span class="co">#&gt; 4:    MeasureRegr</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="task-column-roles">Task Column Roles<a class="anchor" aria-label="anchor" href="#task-column-roles"></a>
@@ -190,20 +190,20 @@
 <li><code>time</code></li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mlr_reflections</span><span class="op">$</span><span class="va">task_col_roles</span>
-<span class="co">#&gt; $regr</span>
-<span class="co">#&gt;  [1] "feature"    "target"     "name"       "order"      "stratum"   </span>
-<span class="co">#&gt;  [6] "group"      "weight"     "coordinate" "space"      "time"      </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $classif</span>
-<span class="co">#&gt;  [1] "feature"    "target"     "name"       "order"      "stratum"   </span>
-<span class="co">#&gt;  [6] "group"      "weight"     "coordinate" "space"      "time"      </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $classif_st</span>
-<span class="co">#&gt; [1] "coordinate" "space"      "time"      </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $regr_st</span>
-<span class="co">#&gt; [1] "coordinate" "space"      "time"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mlr_reflections</span><span class="op">$</span><span class="va">task_col_roles</span></span>
+<span><span class="co">#&gt; $regr</span></span>
+<span><span class="co">#&gt;  [1] "feature"    "target"     "name"       "order"      "stratum"   </span></span>
+<span><span class="co">#&gt;  [6] "group"      "weight"     "coordinate" "space"      "time"      </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $classif</span></span>
+<span><span class="co">#&gt;  [1] "feature"    "target"     "name"       "order"      "stratum"   </span></span>
+<span><span class="co">#&gt;  [6] "group"      "weight"     "coordinate" "space"      "time"      </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $classif_st</span></span>
+<span><span class="co">#&gt; [1] "coordinate" "space"      "time"      </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $regr_st</span></span>
+<span><span class="co">#&gt; [1] "coordinate" "space"      "time"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="resampling-methods">Resampling Methods<a class="anchor" aria-label="anchor" href="#resampling-methods"></a>

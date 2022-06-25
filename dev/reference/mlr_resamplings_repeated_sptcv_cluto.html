@@ -208,12 +208,12 @@ values stored in the <code>param_set</code>.</p></dd>
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Create an repeated resampling instance using the CLUTO algorithm.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/mlr_resamplings_repeated_sptcv_cluto.html">ResamplingRepeatedSptCVCluto</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  id <span class="op">=</span> <span class="st">"repeated_sptcv_cluto"</span>,
-  clmethod <span class="op">=</span> <span class="st">"direct"</span>,
-  cluto_parameters <span class="op">=</span> <span class="cn">NULL</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/mlr_resamplings_repeated_sptcv_cluto.html">ResamplingRepeatedSptCVCluto</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  id <span class="op">=</span> <span class="st">"repeated_sptcv_cluto"</span>,</span>
+<span>  clmethod <span class="op">=</span> <span class="st">"direct"</span>,</span>
+<span>  cluto_parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -249,7 +249,7 @@ Whether to show <code>vcluster</code> progress and summary output.</p></dd>
 <h3 id="method-folds-">Method <code>folds()</code><a class="anchor" aria-label="anchor" href="#method-folds-"></a></h3>
 <p>Translates iteration numbers to fold number.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ResamplingRepeatedSptCVCluto</span><span class="op">$</span><span class="fu">folds</span><span class="op">(</span><span class="va">iters</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ResamplingRepeatedSptCVCluto</span><span class="op">$</span><span class="fu">folds</span><span class="op">(</span><span class="va">iters</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -266,7 +266,7 @@ Iteration number.</p></dd>
 <h3 id="method-repeats-">Method <code>repeats()</code><a class="anchor" aria-label="anchor" href="#method-repeats-"></a></h3>
 <p>Translates iteration numbers to repetition number.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ResamplingRepeatedSptCVCluto</span><span class="op">$</span><span class="fu">repeats</span><span class="op">(</span><span class="va">iters</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ResamplingRepeatedSptCVCluto</span><span class="op">$</span><span class="fu">repeats</span><span class="op">(</span><span class="va">iters</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -283,7 +283,7 @@ Iteration number.</p></dd>
 <h3 id="method-instantiate-">Method <code>instantiate()</code><a class="anchor" aria-label="anchor" href="#method-instantiate-"></a></h3>
 <p>Materializes fixed training and test splits for a given task.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ResamplingRepeatedSptCVCluto</span><span class="op">$</span><span class="fu">instantiate</span><span class="op">(</span><span class="va">task</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ResamplingRepeatedSptCVCluto</span><span class="op">$</span><span class="fu">instantiate</span><span class="op">(</span><span class="va">task</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -300,7 +300,7 @@ A task to instantiate.</p></dd>
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ResamplingRepeatedSptCVCluto</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ResamplingRepeatedSptCVCluto</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -318,31 +318,31 @@ A task to instantiate.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu">mlr3misc</span><span class="fu">::</span><span class="fu"><a href="https://mlr3misc.mlr-org.com/reference/require_namespaces.html" class="external-link">require_namespaces</a></span><span class="op">(</span><span class="st">"skmeans"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3.mlr-org.com" class="external-link">mlr3</a></span><span class="op">)</span></span>
-<span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3spatiotempcv.mlr-org.com/">mlr3spatiotempcv</a></span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"cookfarm_mlr3"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">task</span><span class="op">$</span><span class="fu">set_col_roles</span><span class="op">(</span><span class="st">"Date"</span>, <span class="st">"time"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># Instantiate Resampling</span></span>
-<span class="r-in">  <span class="va">rrcv</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">rsmp</a></span><span class="op">(</span><span class="st">"repeated_sptcv_cluto"</span>, folds <span class="op">=</span> <span class="fl">3</span>, repeats <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">rrcv</span><span class="op">$</span><span class="fu">instantiate</span><span class="op">(</span><span class="va">task</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># Individual sets:</span></span>
-<span class="r-in">  <span class="va">rrcv</span><span class="op">$</span><span class="va">iters</span></span>
-<span class="r-in">  <span class="va">rrcv</span><span class="op">$</span><span class="fu">folds</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">rrcv</span><span class="op">$</span><span class="fu">repeats</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># Individual sets:</span></span>
-<span class="r-in">  <span class="va">rrcv</span><span class="op">$</span><span class="fu">train_set</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">rrcv</span><span class="op">$</span><span class="fu">test_set</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">intersect</a></span><span class="op">(</span><span class="va">rrcv</span><span class="op">$</span><span class="fu">train_set</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, <span class="va">rrcv</span><span class="op">$</span><span class="fu">test_set</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># Internal storage:</span></span>
-<span class="r-in">  <span class="va">rrcv</span><span class="op">$</span><span class="va">instance</span> <span class="co"># table</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">mlr3misc</span><span class="fu">::</span><span class="fu"><a href="https://mlr3misc.mlr-org.com/reference/require_namespaces.html" class="external-link">require_namespaces</a></span><span class="op">(</span><span class="st">"skmeans"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3.mlr-org.com" class="external-link">mlr3</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3spatiotempcv.mlr-org.com/">mlr3spatiotempcv</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"cookfarm_mlr3"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">task</span><span class="op">$</span><span class="fu">set_col_roles</span><span class="op">(</span><span class="st">"Date"</span>, <span class="st">"time"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Instantiate Resampling</span></span></span>
+<span class="r-in"><span>  <span class="va">rrcv</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">rsmp</a></span><span class="op">(</span><span class="st">"repeated_sptcv_cluto"</span>, folds <span class="op">=</span> <span class="fl">3</span>, repeats <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">rrcv</span><span class="op">$</span><span class="fu">instantiate</span><span class="op">(</span><span class="va">task</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Individual sets:</span></span></span>
+<span class="r-in"><span>  <span class="va">rrcv</span><span class="op">$</span><span class="va">iters</span></span></span>
+<span class="r-in"><span>  <span class="va">rrcv</span><span class="op">$</span><span class="fu">folds</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">rrcv</span><span class="op">$</span><span class="fu">repeats</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Individual sets:</span></span></span>
+<span class="r-in"><span>  <span class="va">rrcv</span><span class="op">$</span><span class="fu">train_set</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">rrcv</span><span class="op">$</span><span class="fu">test_set</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">intersect</a></span><span class="op">(</span><span class="va">rrcv</span><span class="op">$</span><span class="fu">train_set</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, <span class="va">rrcv</span><span class="op">$</span><span class="fu">test_set</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># Internal storage:</span></span></span>
+<span class="r-in"><span>  <span class="va">rrcv</span><span class="op">$</span><span class="va">instance</span> <span class="co"># table</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

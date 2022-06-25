@@ -175,17 +175,17 @@ If <code>TRUE</code>, coordinates are used as features.</p></dd>
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Create a new spatiotemporal resampling Task</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/TaskClassifST.html">TaskClassifST</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  <span class="va">id</span>,
-  <span class="va">backend</span>,
-  <span class="va">target</span>,
-  positive <span class="op">=</span> <span class="cn">NULL</span>,
-  label <span class="op">=</span> <span class="cn">NA_character_</span>,
-  <span class="va">coordinate_names</span>,
-  crs <span class="op">=</span> <span class="cn">NA_character_</span>,
-  coords_as_features <span class="op">=</span> <span class="cn">FALSE</span>,
-  extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/TaskClassifST.html">TaskClassifST</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  <span class="va">id</span>,</span>
+<span>  <span class="va">backend</span>,</span>
+<span>  <span class="va">target</span>,</span>
+<span>  positive <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  label <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
+<span>  <span class="va">coordinate_names</span>,</span>
+<span>  crs <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
+<span>  coords_as_features <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -249,7 +249,7 @@ via <code>convert_task()</code>.</p></dd>
 <h3 id="method-coordinates-">Method <code>coordinates()</code><a class="anchor" aria-label="anchor" href="#method-coordinates-"></a></h3>
 <p>Returns coordinates of observations.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">TaskClassifST</span><span class="op">$</span><span class="fu">coordinates</span><span class="op">(</span>row_ids <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskClassifST</span><span class="op">$</span><span class="fu">coordinates</span><span class="op">(</span>row_ids <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -270,7 +270,7 @@ Vector of rows indices as subset of <code>task$row_ids</code>.</p></dd>
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Print the task.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">TaskClassifST</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskClassifST</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -286,7 +286,7 @@ Vector of rows indices as subset of <code>task$row_ids</code>.</p></dd>
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">TaskClassifST</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TaskClassifST</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -304,22 +304,22 @@ Vector of rows indices as subset of <code>task$row_ids</code>.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu">mlr3misc</span><span class="fu">::</span><span class="fu"><a href="https://mlr3misc.mlr-org.com/reference/require_namespaces.html" class="external-link">require_namespaces</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sf"</span>, <span class="st">"blockCV"</span><span class="op">)</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="as_task_classif_st.html">as_task_classif_st</a></span><span class="op">(</span><span class="va">ecuador</span>, target <span class="op">=</span> <span class="st">"slides"</span>,</span>
-<span class="r-in">    positive <span class="op">=</span> <span class="st">"TRUE"</span>, coordinate_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># passing objects of class 'sf' is also supported</span></span>
-<span class="r-in">  <span class="va">data_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">ecuador</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="as_task_classif_st.html">as_task_classif_st</a></span><span class="op">(</span><span class="va">data_sf</span>, target <span class="op">=</span> <span class="st">"slides"</span>, positive <span class="op">=</span> <span class="st">"TRUE"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">task</span><span class="op">$</span><span class="va">task_type</span></span>
-<span class="r-in">  <span class="va">task</span><span class="op">$</span><span class="fu">formula</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">task</span><span class="op">$</span><span class="va">class_names</span></span>
-<span class="r-in">  <span class="va">task</span><span class="op">$</span><span class="va">positive</span></span>
-<span class="r-in">  <span class="va">task</span><span class="op">$</span><span class="va">negative</span></span>
-<span class="r-in">  <span class="va">task</span><span class="op">$</span><span class="fu">coordinates</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">task</span><span class="op">$</span><span class="va">coordinate_names</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">mlr3misc</span><span class="fu">::</span><span class="fu"><a href="https://mlr3misc.mlr-org.com/reference/require_namespaces.html" class="external-link">require_namespaces</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sf"</span>, <span class="st">"blockCV"</span><span class="op">)</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="as_task_classif_st.html">as_task_classif_st</a></span><span class="op">(</span><span class="va">ecuador</span>, target <span class="op">=</span> <span class="st">"slides"</span>,</span></span>
+<span class="r-in"><span>    positive <span class="op">=</span> <span class="st">"TRUE"</span>, coordinate_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># passing objects of class 'sf' is also supported</span></span></span>
+<span class="r-in"><span>  <span class="va">data_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">ecuador</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="as_task_classif_st.html">as_task_classif_st</a></span><span class="op">(</span><span class="va">data_sf</span>, target <span class="op">=</span> <span class="st">"slides"</span>, positive <span class="op">=</span> <span class="st">"TRUE"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">task</span><span class="op">$</span><span class="va">task_type</span></span></span>
+<span class="r-in"><span>  <span class="va">task</span><span class="op">$</span><span class="fu">formula</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">task</span><span class="op">$</span><span class="va">class_names</span></span></span>
+<span class="r-in"><span>  <span class="va">task</span><span class="op">$</span><span class="va">positive</span></span></span>
+<span class="r-in"><span>  <span class="va">task</span><span class="op">$</span><span class="va">negative</span></span></span>
+<span class="r-in"><span>  <span class="va">task</span><span class="op">$</span><span class="fu">coordinates</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">task</span><span class="op">$</span><span class="va">coordinate_names</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "X" "Y"</span>
 </code></pre></div>
     </div>
