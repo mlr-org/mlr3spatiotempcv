@@ -29,9 +29,9 @@ This package adds resampling methods for the {mlr3} package framework suited for
 These methods can help to reduce the influence of [autocorrelation](https://mlr3book.mlr-org.com/08-special-spatiotemp.html#spatiotemporal-intro) on performance estimates when performing cross-validation.
 While this article gives a rather technical introduction to the package, a more applied approach can be found in the [mlr3book section on "Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/08-special-spatiotemp.html).
 
-After loading the package via `library("mlr3spatiotempcv`, the spatiotemporal resampling methods and example tasks provided by {mlr3spatiotempcv} are available to the user **alongside the default {mlr3} resampling methods and tasks**.
+After loading the package via `library("mlr3spatiotempcv")`, the spatiotemporal resampling methods and example tasks provided by {mlr3spatiotempcv} are available to the user **alongside the default {mlr3} resampling methods and tasks**.
 
-## Creating a Spatial Task
+## Creating a spatial Task
 
 To make use of spatial resampling methods, a {mlr3} task that is aware of its spatial characteristic needs to be created.
 Two child classes of `Task` exist in {mlr3spatiotempcv} for this purpose:
@@ -127,8 +127,8 @@ See `as.data.table(mlr_resamplings)` for the full dictionary.
 
 Additional example tasks:
 
-- `tsk("ecuador` (spatial, classif)
-- `tsk("cookfarm_mlr3` (spatiotemp, regr)
+- `tsk("ecuador")` (spatial, classif)
+- `tsk("cookfarm_mlr3")` (spatiotemp, regr)
 
 # Upstream Packages and Scientific References
 
@@ -154,9 +154,9 @@ All methods besides `"spcv_buffer"` also have a corresponding "repeated" method.
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
 | **Grouping**, predefined inds  | (mlr3) Predefined partitions                  |        -          | `mlr_resamplings_custom_cv`                  |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
-| **Grouping**, spatiotemporal   | (mlr3) via `col_roles` `"group"`              |        -          | `mlr_resamplings_cv`, `Task$set_col_roles(<variable, "group` |
+| **Grouping**, spatiotemporal   | (mlr3) via `col_roles` `"group"`              |        -          | `mlr_resamplings_cv`, `Task$set_col_roles(<variable, "group")` |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
-| **Grouping**, spatiotemporal   | (CAST) Leave-Location-and-Time-Out            | @meyer2018        | `mlr_resamplings_sptcv_cstf`, `Task$set_col_roles(<variable>, "space|time`              |
+| **Grouping**, spatiotemporal   | (CAST) Leave-Location-and-Time-Out            | @meyer2018        | `mlr_resamplings_sptcv_cstf`, `Task$set_col_roles(<variable>, "space|time")`              |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
 | **Clustering**, spatiotemporal | (skmeans) Spatiotemporal Clustering           | @zhao2002         | `mlr_resamplings_sptcv_cluto`                |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
