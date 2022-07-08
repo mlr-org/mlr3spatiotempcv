@@ -93,7 +93,7 @@ TaskClassifST = R6::R6Class("TaskClassifST",
     #'
     #' @return [data.table::data.table()]
     coordinates = function(row_ids = NULL) {
-      if (is.null(row_ids)) row_ids <- self$row_ids
+      if (is.null(row_ids)) row_ids = self$row_ids
       self$backend$data(rows = row_ids, cols = self$coordinate_names)
     },
 
