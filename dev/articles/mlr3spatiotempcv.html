@@ -130,28 +130,52 @@
 <div class="section level3">
 <h3 id="creating-a-spatial-task">Creating a spatial Task<a class="anchor" aria-label="anchor" href="#creating-a-spatial-task"></a>
 </h3>
-<p>To make use of spatial resampling methods, a {mlr3} task that is aware of its spatial characteristic needs to be created. Two child classes exist in {mlr3spatiotempcv} for this purpose:</p>
+<p>To make use of spatial resampling methods, a {mlr3} task that is aware of its spatial characteristic needs to be created. Two child classes of <code>Task</code> exist in {mlr3spatiotempcv} for this purpose:</p>
 <ul>
-<li><code>TaskClassifST$new()</code></li>
-<li><code>TaskRegrST$new()</code></li>
+<li><code>TaskClassifST</code></li>
+<li><code>TaskRegrST</code></li>
 </ul>
-<p>To create one of these, one can either pass a <code>sf</code> object as the “backend” directly:</p>
+<p>To create one of these, you have multiple options:</p>
+<ol style="list-style-type: decimal">
+<li>Use the constructor of the <code>Task</code> directly via <code>$new()</code>
+</li>
+<li>Use the <code>as_task_*</code> converters</li>
+</ol>
+<p>We recommend the latter, as these converters aim to make Task construction easier, e.g. by creating the <code>DataBackend</code> automatically and setting the <code>crs</code> and <code>coordinate_names</code> fields. Let’s assume you start with an <code>sf</code> object, which is a common start scenario for spatial analysis in R:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create 'sf' object</span></span>
-<span><span class="va">data_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">ecuador</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">data_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">ecuador</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">32717</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># create mlr3 task</span></span>
-<span><span class="va">task</span> <span class="op">=</span> <span class="va"><a href="../reference/TaskClassifST.html">TaskClassifST</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"ecuador_sf"</span>,</span>
-<span>  backend <span class="op">=</span> <span class="va">data_sf</span>, target <span class="op">=</span> <span class="st">"slides"</span>, positive <span class="op">=</span> <span class="st">"TRUE"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>or use a plain <code>data.frame</code>. In this case, the constructor of <code>TaskClassifST</code> needs a few more arguments:</p>
+<span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../reference/as_task_classif_st.html">as_task_classif_st</a></span><span class="op">(</span><span class="va">data_sf</span>, id <span class="op">=</span> <span class="st">"ecuador_task"</span>,</span>
+<span>  target <span class="op">=</span> <span class="st">"slides"</span>, positive <span class="op">=</span> <span class="st">"TRUE"</span><span class="op">)</span></span></code></pre></div>
+<p>You can also use a plain <code>data.frame</code>. In this case, <code>crs</code> and <code>coordinate_names</code> need to be passed along explicitly as they cannot be inferred from the <code>sf</code> object as in the previous example:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">=</span> <span class="fu">mlr3</span><span class="fu">::</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">as_data_backend</a></span><span class="op">(</span><span class="va">ecuador</span><span class="op">)</span></span>
-<span><span class="va">task</span> <span class="op">=</span> <span class="va"><a href="../reference/TaskClassifST.html">TaskClassifST</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"ecuador"</span>,</span>
-<span>  backend <span class="op">=</span> <span class="va">data</span>, target <span class="op">=</span> <span class="st">"slides"</span>,</span>
-<span>  positive <span class="op">=</span> <span class="st">"TRUE"</span>, extra_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>coordinate_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>Now this Task can be used as a normal {mlr3} task in any kind of modeling scenario. Have a look at the <a href="https://mlr3book.mlr-org.com/08-special-spatiotemp.html" class="external-link">mlr3book section on “Spatiotemporal Analysis”</a> on how to apply a spatiotemporal resampling method to such a task.</p>
+<code class="sourceCode R"><span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../reference/as_task_classif_st.html">as_task_classif_st</a></span><span class="op">(</span><span class="va">ecuador</span>, id <span class="op">=</span> <span class="st">"ecuador_task"</span>,</span>
+<span>  target <span class="op">=</span> <span class="st">"slides"</span>, positive <span class="op">=</span> <span class="st">"TRUE"</span>,</span>
+<span>  coordinate_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">32717</span><span class="op">)</span></span></code></pre></div>
+<p>The <code>*ST</code> task family prints a subset of the coordinates by default:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">task</span></span>
+<span><span class="co">#&gt; &lt;TaskClassifST:ecuador_task&gt; (751 x 11)</span></span>
+<span><span class="co">#&gt; * Target: slides</span></span>
+<span><span class="co">#&gt; * Properties: twoclass</span></span>
+<span><span class="co">#&gt; * Features (10):</span></span>
+<span><span class="co">#&gt;   - dbl (10): carea, cslope, dem, distdeforest, distroad,</span></span>
+<span><span class="co">#&gt;     distslidespast, hcurv, log.carea, slope, vcurv</span></span>
+<span><span class="co">#&gt; * Coordinates:</span></span>
+<span><span class="co">#&gt;             x       y</span></span>
+<span><span class="co">#&gt;   1: 712882.5 9560002</span></span>
+<span><span class="co">#&gt;   2: 715232.5 9559582</span></span>
+<span><span class="co">#&gt;   3: 715392.5 9560172</span></span>
+<span><span class="co">#&gt;   4: 715042.5 9559312</span></span>
+<span><span class="co">#&gt;   5: 715382.5 9560142</span></span>
+<span><span class="co">#&gt;  ---                 </span></span>
+<span><span class="co">#&gt; 747: 714472.5 9558482</span></span>
+<span><span class="co">#&gt; 748: 713142.5 9560992</span></span>
+<span><span class="co">#&gt; 749: 713322.5 9560562</span></span>
+<span><span class="co">#&gt; 750: 715392.5 9557932</span></span>
+<span><span class="co">#&gt; 751: 713802.5 9560862</span></span></code></pre></div>
+<p>All <code>*ST</code> tasks can be treated as their super class equivalents <code>TaskClassif</code> or <code>TaskRegr</code> in any upcoming modeling step.</p>
 </div>
 </div>
 <div class="section level2">
@@ -167,7 +191,7 @@
 <li><code>TaskClassifST</code></li>
 <li><code>TaskRegrST</code></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mlr_reflections</span><span class="op">$</span><span class="va">task_types</span></span>
 <span><span class="co">#&gt;       type          package          task        learner        prediction</span></span>
 <span><span class="co">#&gt; 1: classif             mlr3   TaskClassif LearnerClassif PredictionClassif</span></span>
@@ -189,7 +213,7 @@
 <li><code>space</code></li>
 <li><code>time</code></li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mlr_reflections</span><span class="op">$</span><span class="va">task_col_roles</span></span>
 <span><span class="co">#&gt; $regr</span></span>
 <span><span class="co">#&gt;  [1] "feature"    "target"     "name"       "order"      "stratum"   </span></span>
