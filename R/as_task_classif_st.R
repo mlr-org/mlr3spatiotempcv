@@ -86,24 +86,15 @@ as_task_classif_st.DataBackend = function(x, target,
 as_task_classif_st.sf = function(x, target = NULL, id = deparse(substitute(x)),
   positive = NULL, coords_as_features = FALSE, label = NA_character_, ...) {
   id = as.character(id)
-  geometries = as.character(unique(sf::st_geometry_type(x)))
-  if (!test_names(geometries, identical.to = "POINT")) {
-    stop("Simple feature may not contain geometries of type '%s'",
-      str_collapse(setdiff(geometries, "POINT")))
+
+  if (inherits(x, "sf")) {
+    # extract spatial meta data
+    crs = sf::st_crs(x)$input
+    coordinates = as.data.frame(sf::st_coordinates(x))
+    coordinate_names = colnames(coordinates)
+
+    x = format_sf(x)
   }
-
-  # extract spatial meta data
-  crs = sf::st_crs(x)$input
-  coordinates = as.data.frame(sf::st_coordinates(x))
-  coordinate_names = colnames(coordinates)
-
-  # convert sf to data.frame
-  x[[attr(x, "sf_column")]] = NULL
-  attr(x, "sf_column") = NULL
-  x = as.data.frame(x)
-
-  # add coordinates
-  x = cbind(x, coordinates)
 
   as_task_classif_st(x, target = target, id = id, positive = positive,
     coords_as_features = coords_as_features, crs = crs,

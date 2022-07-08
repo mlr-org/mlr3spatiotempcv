@@ -15,7 +15,8 @@ test_that("printing works", {
 test_that("Supplying a non-spatio temporal task gives descriptive error message", {
   expect_error(
     rsmp("spcv_coords")$instantiate(tsk("boston_housing")),
-    "Must inherit from class 'TaskClassifST' or 'TaskRegrST'.") # nolint
+    "Must inherit from class 'TaskClassifST' or 'TaskRegrST'."
+  ) # nolint
 })
 
 test_that("coordinates can be used as features", {
@@ -68,7 +69,25 @@ test_that("extra_args contains default arguments", {
     coordinate_names = c("x", "y")
   )
 
-  expect_equal(task$extra_args, list(crs = NA_character_,
+  expect_equal(task$extra_args, list(
+    crs = NA_character_,
     coordinate_names = c("x", "y"), coords_as_features = FALSE
   ))
+})
+
+test_that("Task creation works via constructor and sf object", {
+  data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"))
+
+  # create mlr3 task
+  task = TaskClassifST$new("ecuador_sf",
+    backend = data_sf, target = "slides", positive = "TRUE"
+  )
+
+  task_as = as_task_classif_st(data_sf,
+    id = "ecuador_sf",
+    target = "slides", positive = "TRUE"
+  )
+
+
+  expect_equal(task, task_as, ignore_attr = "hash")
 })

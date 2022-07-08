@@ -29,41 +29,48 @@ This package adds resampling methods for the {mlr3} package framework suited for
 These methods can help to reduce the influence of [autocorrelation](https://mlr3book.mlr-org.com/08-special-spatiotemp.html#spatiotemporal-intro) on performance estimates when performing cross-validation.
 While this article gives a rather technical introduction to the package, a more applied approach can be found in the [mlr3book section on "Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/08-special-spatiotemp.html).
 
-After loading the package via `library("mlr3spatiotempcv")`, the spatiotemporal resampling methods and example tasks provided by {mlr3spatiotempcv} are available to the user **alongside the default {mlr3} resampling methods and tasks**.
+After loading the package via `library("mlr3spatiotempcv`, the spatiotemporal resampling methods and example tasks provided by {mlr3spatiotempcv} are available to the user **alongside the default {mlr3} resampling methods and tasks**.
 
-## Creating a spatial Task
+## Creating a Spatial Task
 
 To make use of spatial resampling methods, a {mlr3} task that is aware of its spatial characteristic needs to be created.
-Two child classes exist in {mlr3spatiotempcv} for this purpose:
+Two child classes of `Task` exist in {mlr3spatiotempcv} for this purpose:
 
-- `TaskClassifST$new()`
-- `TaskRegrST$new()`
+- `TaskClassifST`
+- `TaskRegrST`
 
-To create one of these, one can either pass a `sf` object as the "backend" directly:
+To create one of these, you have multiple options:
 
-```r
+1. Use the constructor of the `Task` directly via `$new()`
+1. Use the `as_task_*` converters
+
+We recommend the latter, as these converters aim to make Task construction easier, e.g. by creating the `DataBackend` automatically and setting the `crs` and `coordinate_names` fields.
+Let's assume you start with an `sf` object, which is a common start scenario for spatial analysis in R:
+
+```{r 08-special-spatiotemp-002}
 # create 'sf' object
-data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"))
+data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 32717)
 
-# create mlr3 task
-task = TaskClassifST$new("ecuador_sf",
-  backend = data_sf, target = "slides", positive = "TRUE"
-)
+task = as_task_classif_st(data_sf, id = "ecuador_task",
+  target = "slides", positive = "TRUE")
 ```
 
-or use a plain `data.frame`.
-In this case, the constructor of `TaskClassifST` needs a few more arguments:
+You can also use a plain `data.frame`.
+In this case, `crs` and `coordinate_names` need to be passed along explicitly as they cannot be inferred from the `sf` object as in the previous example:
 
-```r
-data = mlr3::as_data_backend(ecuador)
-task = TaskClassifST$new("ecuador",
-  backend = data, target = "slides",
-  positive = "TRUE", extra_args = list(coordinate_names = c("x", "y"))
-)
+```{r 08-special-spatiotemp-003}
+task = as_task_classif_st(ecuador, id = "ecuador_task",
+  target = "slides", positive = "TRUE",
+  coordinate_names = c("x", "y"), crs = 32717)
 ```
 
-Now this Task can be used as a normal {mlr3} task in any kind of modeling scenario.
-Have a look at the [mlr3book section on "Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/08-special-spatiotemp.html) on how to apply a spatiotemporal resampling method to such a task.
+The `*ST` task family prints a subset of the coordinates by default:
+
+```{r 08-special-spatiotemp-004}
+task
+```
+
+All `*ST` tasks can be treated as their super class equivalents `TaskClassif` or `TaskRegr` in any upcoming modeling step.
 
 # Contributed reflections by {mlr3spatiotempcv}
 
@@ -120,8 +127,8 @@ See `as.data.table(mlr_resamplings)` for the full dictionary.
 
 Additional example tasks:
 
-- `tsk("ecuador")` (spatial, classif)
-- `tsk("cookfarm_mlr3")` (spatiotemp, regr)
+- `tsk("ecuador` (spatial, classif)
+- `tsk("cookfarm_mlr3` (spatiotemp, regr)
 
 # Upstream Packages and Scientific References
 
@@ -147,9 +154,9 @@ All methods besides `"spcv_buffer"` also have a corresponding "repeated" method.
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
 | **Grouping**, predefined inds  | (mlr3) Predefined partitions                  |        -          | `mlr_resamplings_custom_cv`                  |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
-| **Grouping**, spatiotemporal   | (mlr3) via `col_roles` `"group"`              |        -          | `mlr_resamplings_cv`, `Task$set_col_roles(<variable, "group")` |
+| **Grouping**, spatiotemporal   | (mlr3) via `col_roles` `"group"`              |        -          | `mlr_resamplings_cv`, `Task$set_col_roles(<variable, "group` |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
-| **Grouping**, spatiotemporal   | (CAST) Leave-Location-and-Time-Out            | @meyer2018        | `mlr_resamplings_sptcv_cstf`, `Task$set_col_roles(<variable>, "space|time")`              |
+| **Grouping**, spatiotemporal   | (CAST) Leave-Location-and-Time-Out            | @meyer2018        | `mlr_resamplings_sptcv_cstf`, `Task$set_col_roles(<variable>, "space|time`              |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
 | **Clustering**, spatiotemporal | (skmeans) Spatiotemporal Clustering           | @zhao2002         | `mlr_resamplings_sptcv_cluto`                |
 +--------------------------------+-----------------------------------------------+-------------------+--------------------------------------+
