@@ -54,12 +54,12 @@ format_sf = function(data) {
   }
 
   # extract spatial meta data
-  coordinates = as.data.frame(sf::st_coordinates(data))
+  coordinates = as.data.table(sf::st_coordinates(data))
 
   # convert sf to data.frame
   data[[attr(data, "sf_column")]] = NULL
   attr(data, "sf_column") = NULL
-  data = as.data.frame(data)
+  data = as.data.table(data)
 
   # add coordinates
   data = cbind(data, coordinates)

@@ -32,19 +32,18 @@ TaskRegrST = R6::R6Class("TaskRegrST",
     initialize = function(id, backend, target, label = NA_character_,
       coordinate_names, crs = NA_character_, coords_as_features = FALSE,
       extra_args = list()) {
-      if (inherits(backend, "sf")) {
-        # extract spatial meta data
-        crs = sf::st_crs(backend)$input
-        coordinates = as.data.frame(sf::st_coordinates(backend))
-        coordinate_names = colnames(coordinates)
-
-        backend = format_sf(backend)
-      }
 
       super$initialize(
         id = id, backend = backend, target = target,
         extra_args = extra_args
       )
+
+      if (inherits(backend, "sf")) {
+        # extract spatial meta data from sf backend
+        crs = sf::st_crs(backend)$input
+        coordinates = as.data.frame(sf::st_coordinates(backend))
+        coordinate_names = colnames(coordinates)
+      }
 
       self$crs = crs
       self$coordinate_names = coordinate_names
