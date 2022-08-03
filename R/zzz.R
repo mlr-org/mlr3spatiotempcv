@@ -59,9 +59,10 @@ register_mlr3 = function() { # nocov start
     )), "type")
 
     # "space" and "time" column roles used in CAST
-    x$task_col_roles$classif_st = c(x$task_col_roles$classif, c("coordinate", "space", "time"))
-    x$task_col_roles$regr_st = c(x$task_col_roles$regr, c("coordinate", "space", "time"))
-
+    x$task_col_roles$classif_st = c(x$task_col_roles$classif, "coordinate", 
+      "space", "time")
+    x$task_col_roles$regr_st = c(x$task_col_roles$regr, "coordinate", 
+      "space", "time")
 
     x$task_properties$classif_st = x$task_properties$classif
     x$task_properties$regr_st = x$task_properties$regr
@@ -79,8 +80,10 @@ register_mlr3 = function() { # nocov start
     )), "type")
 
     # "space" and "time" column roles used in CAST
-    x$task_col_roles$classif = c(x$task_col_roles$classif, c("coordinate", "space", "time"))
-    x$task_col_roles$regr = c(x$task_col_roles$regr, c("coordinate", "space", "time"))
+    x$task_col_roles$classif = c(x$task_col_roles$classif, "coordinate", 
+      "space", "time")
+    x$task_col_roles$regr = c(x$task_col_roles$regr, "coordinate", 
+      "space", "time")
   }
 
   # tasks --------------------------------------------------------------------
