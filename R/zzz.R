@@ -48,18 +48,15 @@ register_mlr3 = function() { # nocov start
 
   x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
 
-  x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
-    ~type, ~package, ~task, ~learner, ~prediction, ~measure,
-    "regr", "mlr3spatiotempcv", "TaskRegrST", "LearnerRegr", "PredictionRegr",
-    "MeasureRegr",
+  if (!any(c("TaskClassifST", "TaskRegrST") %in% x$task_types$task)) {
+    x$task_types = (rbind(x$task_types, x$task_types[c(task == "TaskClassif"), ]))
+    x$task_types[nrow(x$task_types), package := "mlr3spatiotempcv"]
+    x$task_types[nrow(x$task_types), task := "TaskClassifST"]
 
-    "classif", "mlr3spatiotempcv", "TaskClassifST", "LearnerClassif",
-    "PredictionClassif", "MeasureClassif"
-  )), "type")
-
-  # append "coordinates" to col_roles
-  # x$task_col_roles$classif_st = append(x$task_col_roles$classif, "coordinates")
-  # x$task_col_roles$regr_st = append(x$task_col_roles$regr, "coordinates")
+    x$task_types = (rbind(x$task_types, x$task_types[c(task == "TaskRegr"), ]))
+    x$task_types[nrow(x$task_types), package := "mlr3spatiotempcv"]
+    x$task_types[nrow(x$task_types), task := "TaskRegrST"]
+  }
 
   # append "space" and "time" to col_roles
   # used in CAST
