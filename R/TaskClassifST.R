@@ -26,8 +26,10 @@
 #' @export
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
-#'   task = as_task_classif_st(ecuador, target = "slides",
-#'     positive = "TRUE", coordinate_names = c("x", "y"))
+#'   task = as_task_classif_st(ecuador,
+#'     target = "slides",
+#'     positive = "TRUE", coordinate_names = c("x", "y")
+#'   )
 #'
 #'   # passing objects of class 'sf' is also supported
 #'   data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"))
@@ -50,9 +52,19 @@ TaskClassifST = R6::R6Class("TaskClassifST",
     initialize = function(id, backend, target, positive = NULL,
       label = NA_character_, coordinate_names, crs = NA_character_,
       coords_as_features = FALSE, extra_args = list()) {
+      if (inherits(backend, "sf")) {
+        # extract spatial meta data
+        crs = sf::st_crs(backend)$input
+        coordinates = as.data.frame(sf::st_coordinates(backend))
+        coordinate_names = colnames(coordinates)
 
-      super$initialize(id = id, backend = backend, target = target,
-        positive = positive, extra_args = extra_args)
+        backend = format_sf(backend)
+      }
+
+      super$initialize(
+        id = id, backend = backend, target = target,
+        positive = positive, extra_args = extra_args
+      )
 
       self$crs = crs
       self$coordinate_names = coordinate_names
@@ -65,8 +77,10 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       self$coords_as_features = assert_flag(coords_as_features)
 
       new_col_roles = named_list(
-        setdiff(mlr_reflections$task_col_roles[["classif_st"]],
-          names(private$.col_roles)), character(0)
+        setdiff(
+          mlr_reflections$task_col_roles[["classif_st"]],
+          names(private$.col_roles)
+        ), character(0)
       )
       private$.col_roles = insert_named(private$.col_roles, new_col_roles)
     },
@@ -97,11 +111,15 @@ TaskClassifST = R6::R6Class("TaskClassifST",
           sprintf("  - Space: %s", self$col_roles$space)
         ))
       } else if (length(self$col_roles$time)) {
-        catn(c("* Column roles:",
-          sprintf("  - Time: %s", self$col_roles$time)))
+        catn(c(
+          "* Column roles:",
+          sprintf("  - Time: %s", self$col_roles$time)
+        ))
       } else if (length(self$col_roles$space)) {
-        catn(c("* Column roles:",
-          sprintf("  - Space: %s", self$col_roles$space)))
+        catn(c(
+          "* Column roles:",
+          sprintf("  - Space: %s", self$col_roles$space)
+        ))
       }
     }
   ),
@@ -122,8 +140,10 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       if (missing(rhs)) {
         return(self$extra_args$coordinate_names)
       }
-      self$extra_args$coordinate_names = assert_character(rhs, len = 2,
-        all.missing = FALSE, any.missing = FALSE)
+      self$extra_args$coordinate_names = assert_character(rhs,
+        len = 2,
+        all.missing = FALSE, any.missing = FALSE
+      )
     },
 
     #' @field coords_as_features (`logical(1)`)\cr

@@ -26,7 +26,7 @@ author:
       | Faculty of Statistics
     email: \email{lang@statistik.tu-dortmund.de}
   - name: Alexander Brenning
-    orcid: 0000-0001-6640-679
+    orcid: 0000-0001-6640-679X
     affiliation: 'Friedrich Schiller University Jena'
     address: |
       | Department of Geography
@@ -63,14 +63,8 @@ preamble: >
   \usepackage{tablefootnote}
   \newcommand{\specialcell}[2][l]{%
     \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
-# tables: true
 bibliography: paper.bib
 output: rticles::jss_article
-  # bookdown::pdf_book:
-  #   base_format: rticles::jss_article
-  #   citation_package: "natbib"
-    # includes:
-    #   in_header: header.tex
 ---
 
 ```{r setup, echo=FALSE, purl=FALSE}
@@ -84,10 +78,12 @@ options(prompt = "R> ", continue = "+ ")
 
 ```{r setup-2, echo=FALSE, purl=T}
 # for knitr spin later
-knitr::opts_chunk$set(fig.path = "./figs/",
-  cache = TRUE,
+knitr::opts_chunk$set(
+  cache = FALSE,
   cache.lazy = TRUE)
 ```
+
+\nocite{ploton2020}
 
 # Introduction {#sec:intro}
 
@@ -221,6 +217,15 @@ Partitioning objects in \pkg{mlr3spatiotempcv} are equipped with generic `plot()
 
 While \pkg{mlr3spatiotempcv} solely focuses on spatiotemporal resampling methods and their visualization, other packages such as \pkg{mlr3spatial} or \pkg{mlr3temporal} are planned in the \pkg{mlr3} ecosystem to provide dedicated spatiotemporal learner and prediction methods.
 
+From a user perspective, this package structure results in the following workflow for model assessment with \pkg{mlr3spatiotempcv} within \pkg{mlr3}: After choosing a ML algorithm that is supported by \pkg{mlr3} and setting up a learner object, users need to select hyperparameters that should be tuned and specify these in a `paradox::ParamSet`.
+Next, a suitable resampling scheme available within \pkg{mlr3spatiotempcv} is selected that mimics the spatial and/or temporal structure of the prediction task, such as spatial extrapolation, or forecasting of spatial time series.
+This information is used to create a `Resampling` object which is used within a (nested) CV to estimate the model performance.
+When using nested CV, the resampling schemes in the inner (tuning, `mlr3tuning::AutoTuner`) and outer loop (performance estimation, `resample()`) should be identical [@schratz2019].
+To evaluate the (nested) resampling, an adequate performance measure with respect to the response variable, such as the misclassification rate (classification) or the root-mean-square error (regression), must be selected and specified within `mlr3tuning::AutoTuner` and `resample$score()`.
+These choices now allow the user to execute the model assessment via either `resample()` (single model) or `benchmark()` (multiple models), and the results can be summarized visually (via \pkg{mlr3viz}) or in tabular form by accessing the respective fields of the returned `ResampleResult` object.
+
+Additional examples and tutorial can be found in the [mlr3book](https://mlr3book.mlr-org.com) or the [mlr3gallery](https://mlr-org.com/gallery).
+
 # Spatiotemporal partitioning methods and their implementation {#sec:implementation}
 
 At the most general level, resampling methods are categorized according to the level at which the data is partitioned and resampled (see Figure \ref{fig:rsmp-schema}):
@@ -239,7 +244,7 @@ A finer distinction can then be made by looking at how the blocks are derived:
 In some resampling schemes, separation buffers or guard zones can be imposed to separate the training and test data.
 
 ```{r rsmp-schema, echo=FALSE, fig.cap="Conceptual overview of various spatial partitioning schemas. Starting from unpartioned spatial observations (top left) either a 'spatial block partitioning' or a 'spatial leave-one-out resampling' is applied in the first step. A spatial block partitioning can further be turned into a 'leave-one-block-out resampling' or a 'k-fold CV resampling at the block level'. The use of a buffer is theoretically possible in any scenario but in practice only offered by specific method implementations.", out.width="100%",fig.pos="ht"}
-knitr::include_graphics("pdf/rsmp-schema.pdf")
+knitr::include_graphics(here::here("paper/pdf/rsmp-schema.pdf"))
 ```
 
 \pkg{mlr3spatiotempcv} currently implements the partitioning methods identified in Table \ref{tab:sptcv-methods}.
@@ -248,40 +253,44 @@ Comprehensive and up-to-date information can be found in the package's online do
 The following sections give an overview of most implemented partitioning strategies and their visualization options.
 The available methods are further discussed in section \ref{sec:disc}.
 
+% this is required to not expand the authors in the table citations on first use
+\shortcites{ploton2020, karasiak2021, moller2021, endicott2017, wu2020, geiss2017, morera2021, zurell2020, brenning2015, bebber2017, jensen2021, escobar2021, stewart2021, reitz2021, egli2020, gao2019}
+
+
 \begin{table}[ht]
   \centering
   \footnotesize
   \begingroup
     \begin{tabular}{lllll}
       \\
-      Type                            & Sub-type & Name                        & \proglang{R} package     & \# pub. \\
+      Type                            & Sub-type & Name                        & \proglang{R} package   & References \\
       \toprule
-      \multirow{2}{*}{Spatial leave-one-out}        & single point, with buffer &  \texttt{"spcv\_buffer"} \tablefootnote{\label{ploton2020}\cite{ploton2020}} \tablefootnote{\label{diesing2020}\cite{diesing2020}} & \pkg{blockCV}  & 2   \\
+      \multirow{4}{*}{\specialcell{Spatial \\ leave-one-\\out}}        & single point, with buffer &  \texttt{"spcv\_buffer"} & \pkg{blockCV} (2) & \specialcell{\cite{ploton2020} \\ \cite{diesing2020}} \\
       \cmidrule{2-5}
-       & disc, with buffer  & \texttt{"spcv\_disc"} \tablefootnote{\label{endicott2017}\cite{endicott2017}} \tablefootnote{\label{karasiak2021}\cite{karasiak2021}} \tablefootnote{\label{moller2021}\cite{moller2021}} & \pkg{sperrorest}      & 3   \\
+       & disc, with buffer  & \texttt{"spcv\_disc"}  & \pkg{sperrorest} (3) & \specialcell{\cite{karasiak2021} \\ \cite{moller2021} \\ \cite{endicott2017}} \\
       \midrule
-      \multirow{4}{*}{Leave-one-block-out CV} &  clustering of coordinates & \texttt{"spcv\_coords"}  \tablefootnote{\label{morera2021}\cite{morera2021}} \tablefootnote{\label{geiss2017}\cite{geiss2017}} \tablefootnote{\label{wu2020}\cite{wu2020}} & \pkg{sperrorest}       & 6 \\
+      \multirow{4}{*}{\specialcell{Leave-one-\\block-out \\ CV}} &  clustering of coordinates & \texttt{"spcv\_coords"} & \pkg{sperrorest} (6)      & \specialcell{\cite{morera2021} \\ \cite{geiss2017} \\ \cite{wu2020}} \\
             \cmidrule{2-5}
-                                      &  geometric: rectangular & \texttt{"spcv\_tiles"} \tablefootnote{\label{bebber2017}\cite{bebber2017}} \tablefootnote{\label{brenning2015}\cite{brenning2015}} \tablefootnote{\label{zurell2020}\cite{zurell2020}} & \pkg{sperrorest}    &  4  \\
+                                      &  geometric: rectangular & \texttt{"spcv\_tiles"} & \pkg{sperrorest}    & \specialcell{\cite{bebber2017} \\ \cite{zurell2020} \\ \cite{brenning2015}}  \\
                                                   \cmidrule{2-5}
-                                      & custom  &  \texttt{"custom\_cv"}           & \pkg{mlr3} & - \\
+                                      & custom  &  \texttt{"custom\_cv"}           & \pkg{mlr3} (0) & - \\
       \midrule
-      \multirow{4}{*}{CV at the block level} &  geometric: rectangular & \texttt{"spcv\_block"}  \tablefootnote{\label{jensen2021}\cite{jensen2021}} \tablefootnote{\label{escobar2021}\cite{escobar2021}} \tablefootnote{\label{stewart2021}\cite{stewart2021}} & \pkg{blockCV}       & 28 \\
+      \multirow{4}{*}{\specialcell{CV at the \\ block level}} &  geometric: rectangular & \texttt{"spcv\_block"}  & \pkg{blockCV} (28)      & \specialcell{\cite{jensen2021} \\ \cite{escobar2021} \\ \cite{stewart2021}} \\
   \cmidrule{2-5}
-                                      &  custom & \texttt{"cv"} with grouping  & \pkg{mlr3}    &  -  \\
+                                      &  custom & \texttt{"cv"} with grouping  & \pkg{mlr3} (0)  &  -  \\
   \cmidrule{2-5}
-                                      &  clustering in feature space & \texttt{"spcv\_env"} \footref{morera2021}  & \pkg{blockCV}    &  1  \\
+                                      &  clustering in feature space & \texttt{"spcv\_env"} & \pkg{blockCV} (1)   &  \cite{morera2021}  \\
       \midrule
-      \multirow{3}{*}{CV for spatiotemporal data} &  custom & \texttt{"sptcv\_cstf"}  \tablefootnote{\label{egli2020}\cite{egli2020}} \tablefootnote{\label{gao2019}\cite{gao2019}} \tablefootnote{\label{reitz2021}\cite{reitz2021}} & \pkg{CAST}       & 6 \\
+      \multirow{3}{*}{\specialcell{Spatiotemp. \\ CV}} &  custom & \texttt{"sptcv\_cstf"} & \pkg{CAST} (6)      & \specialcell{\cite{gao2019} \\ \cite{reitz2021} \\ \cite{egli2020}} \\
                                                   \cmidrule{2-5}
-                                      &  clustering: space--time coord. & \texttt{"sptcv\_cluto"}  & \pkg{skmeans}    & - \\
+                                      &  clustering: custom & \texttt{"sptcv\_cluto"}  & \pkg{skmeans} (0)    & - \\
                                       \bottomrule
     \end{tabular}
   \endgroup
-  \caption[b]{Spatiotemporal resampling methods available in the \pkg{mlr3} ecosystem.
+  \caption[b]{Available spatiotemporal resampling methods in the \pkg{mlr3} ecosystem.
     The "Name" column shows the \pkg{mlr3} method name as found in the \texttt{mlr3::mlr\_resamplings} dictionary.
-    "\# pub." indicates the number of studies that were found to have used this resampling technique until May 2021.
-    For each method, up to three randomly selected references were added to the table as footnotes.}
+    The count in brackets after the package name represents the number of studies that were found having used this resampling technique until May 2021.
+    For each method, up to three randomly selected references were added to the table.}
     \label{tab:sptcv-methods}
 \end{table}
 
@@ -544,7 +553,7 @@ autoplot(rsmp_cv_group, size = 0.8, task = task_cv, fold_id = 1)
 
 ```{r cv-eval-1, echo=FALSE}
 task_cv = tsk("ecuador")
-group = as.factor(kmeans(task$coordinates(), 8)$cluster)
+group = as.factor(kmeans(task_cv$coordinates(), 8)$cluster)
 task_cv$cbind(data.frame("group" = group))
 task_cv$set_col_roles("group", roles = "group")
 
@@ -575,9 +584,9 @@ rsmp_env = rsmp("spcv_env", features = "distdeforest", folds = 5)
 
 rsmp_env_multi = rsmp("spcv_env", features = c("distdeforest", "slope"), folds = 5)
 
-plot_env_single = autoplot(rsmp_env, size = 0.5, fold_id = 1, task = task) +
+plot_env_single = autoplot(rsmp_env, size = 0.3, fold_id = 1, task = task) +
 
-  plot_env_multi = autoplot(rsmp_env_multi, size = 0.5, fold_id = 1, task = task)
+  plot_env_multi = autoplot(rsmp_env_multi, size = 0.3, fold_id = 1, task = task)
 
 library("patchwork")
 plot_env_single + plot_env_multi
@@ -591,14 +600,14 @@ rsmp_env_multi = rsmp("spcv_env",
   features = c("distdeforest", "slope"), folds = 5)
 
 plot_env_single = autoplot(rsmp_env,
-  size = 0.5, fold_id = 1, task = task) *
+  size = 0.3, fold_id = 1, task = task) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
   ggplot2::theme(plot.title = ggtext::element_textbox(size = 8),
     axis.text = ggplot2::element_text(size = 8))
 
 plot_env_multi = autoplot(rsmp_env_multi,
-  size = 0.5, fold_id = 1, task = task) *
+  size = 0.3, fold_id = 1, task = task) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
   ggplot2::theme(plot.title = ggtext::element_textbox(size = 8),
@@ -614,7 +623,7 @@ Some of the implemented resampling methods operate in multiple dimensions, i.e.,
 In this section, only examples of these methods in the spatiotemporal domain will be shown.
 For their application in lower dimensions, usually only either the space or time coordinates need to be omitted from the user input.
 
-### Custom: "Leave-location-and-time-out" and related methods 
+### Custom: "Leave-location-and-time-out" and related methods
 
 @meyer2018 proposed a spatiotemporal resampling method in which a test set is selected and all observations that correspond to the same location or time point are omitted from the training sample.
 This method is referred to as "leave-location-and-time-out" (LLTO) in package \pkg{CAST}.
@@ -635,31 +644,33 @@ In the terminology used in this work, this can be referred to as resampling at t
 Thus, observations from the same time point are jointly sampled into the same test (or training) fold, with no constraints on the temporal distance between the sampled time points.
 This method does therefore not implement block CV in the sense of the time series literature.
 
-In the `cookfarm` example dataset, the `Date` variable was reduced to five unique levels for better visualization, and then used to create a spatiotemporal regression task in \pkg{mlr3spatiotempcv} (Figure \ref{fig:lto}).
+In the `cookfarm_mlr3` example dataset, the `Date` variable was reduced to five unique levels for better visualization, and then used to create a spatiotemporal regression task in \pkg{mlr3spatiotempcv} (Figure \ref{fig:lto}).
+In `autoplot()`, a stratified sample based on the partitions is taken to reduce the number of points plotted.
 
 ```{r, results='hide'}
-data = cookfarm_sample
-data$Date = rep(c(
+data = cookfarm_mlr3
+set.seed(42)
+data$Date = sample(rep(c(
   "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01",
-  "2020-05-01"), times = 1, each = 100)
-b = mlr3::as_data_backend(data)
-task_spt = TaskRegrST$new(
-  id = "cookfarm", b, target = "PHIHOX",
-  extra_args = list(
-    coordinate_names = c("x", "y"), coords_as_features = FALSE,
-    crs = 26911)
-)
+  "2020-05-01"), times = 1, each = 35768))
+task_spt = as_task_regr_st(data,
+  id = "cookfarm", target = "PHIHOX",
+  coordinate_names = c("x", "y"), coords_as_features = FALSE,
+  crs = 26911)
+task_spt$set_col_roles("Date", roles = "time")
 
-rsmp_cstf_time = rsmp("sptcv_cstf", folds = 5, time_var = "Date")
-rsmp_cstf_time$instantiate(task_spt)
+rsmp_cstf_time = rsmp("sptcv_cstf", folds = 5)
 
 autoplot(rsmp_cstf_time,
-  fold_id = 5, task = task_spt, plot3D = TRUE
+  fold_id = 5, task = task_spt, plot3D = TRUE,
+  sample_fold_n = 3000L
 )
 ```
 
-```{r lto, echo=FALSE, out.width="70%", fig.cap='Perspective plot of `"leave-time-out"` CV from package \\pkg{CAST} (method `"sptcv\\_cstf"` and argument `time\\_var = "Date"`). Only five folds and five time points were used in this example. Note that the blue dots correspond to five discrete time levels, which appear as a point cloud due to the viewing angle.', fig.pos="ht"}
-knitr::include_graphics("png/lto.png")
+```{r lto, echo=FALSE, out.width="80%", fig.cap='Perspective plot of `"leave-time-out"` CV from package \\pkg{CAST} (method `"sptcv\\_cstf"` and column role `"time" = "Date"`). Only five folds and five time points were used in this example. Note that the blue dots correspond to five discrete time levels, which appear as a point cloud due to the viewing angle.', fig.pos="ht"}
+# workflow
+
+knitr::include_graphics("pdf/lto.pdf")
 ```
 
 #### CV at the location level: "leave-location-out" (LLO) --- \code{"sptcv_cstf"} {short-title='CV at the location level: "leave-location-out" (LLO) --- "sptcv_cstf"' }
@@ -668,16 +679,23 @@ In contrast to LTO, the LLO method randomly resamples locations that may, for ex
 The sampled locations form the test partition while the temporal information is ignored (Figure \ref{fig:llo}).
 Unlike spatial CV methods that are based on geometric regions or the clustering of coordinates, the sampled test locations include no particular spatial relationship.
 
+To tell the resampling method to use the 'space' column for partitioning, the 'time' column needs to be unset and the 'space' column defined.
+Because the temporal variable "Date" is not in use in this scenario, `autoplot()` needs to be instructed explicitily to use it for 3D plotting via argument `plot_time_var`.
+
 ```{r results='hide'}
-rsmp_cstf_loc = rsmp("sptcv_cstf", folds = 5, space_var = "SOURCEID")
-rsmp_cstf_loc$instantiate(task_spt)
+task_spt$col_roles$time = character()
+task_spt$set_col_roles("SOURCEID", roles = "space")
+
+rsmp_cstf_loc = rsmp("sptcv_cstf", folds = 5)
 
 autoplot(rsmp_cstf_loc,
-  fold_id = 5, task = task_spt, plot3D = TRUE)
+  fold_id = 5, task = task_spt,
+  plot3D = TRUE, plot_time_var = "Date",
+  sample_fold_n = 3000L)
 ```
 
-```{r llo, echo=FALSE, out.width="70%", fig.cap='Birds-eye view of `"leave-location-out"` CV from package \\pkg{CAST} (method `"sptcv\\_cstf"` and argument `space\\_var = "SOURCEID"`).', fig.pos="ht"}
-knitr::include_graphics("png/llo.png")
+```{r llo, echo=FALSE, out.width="70%", fig.cap='Birds-eye view of `"leave-location-out"` CV from package \\pkg{CAST} (method `"sptcv\\_cstf"` and column role `"space" = "SOURCEID"`).', fig.pos="ht"}
+knitr::include_graphics("pdf/llo.pdf")
 ```
 
 #### "Leave-location-and-time-out" (LLTO) --- \code{"sptcv_cstf"} {short-title='"Leave-location-and-time-out" (LLTO) --- "sptcv_cstf"' }
@@ -694,21 +712,21 @@ The specification of the variable(s) which should be used for a spatial, tempora
 Also, if the selected variable contains too many groups, the difference within train/test splits may become undesirably high and tend towards a LOO CV [@meyer2018].
 
 ```{r results='hide'}
-rsmp_cstf_time_loc = rsmp("sptcv_cstf",
-  folds = 5,
-  space_var = "SOURCEID", time_var = "Date")
-rsmp_cstf_time_loc$instantiate(task_spt)
+task_spt$set_col_roles("SOURCEID", roles = "space")
+task_spt$set_col_roles("Date", roles = "time")
+
+rsmp_cstf_time_loc = rsmp("sptcv_cstf", folds = 5)
 
 autoplot(rsmp_cstf_time_loc,
   fold_id = 4, task = task_spt, plot3D = TRUE,
-  show_omitted = TRUE)
+  show_omitted = TRUE, sample_fold_n = 3000L)
 ```
 
-```{r llto, echo=FALSE, out.width="70%", fig.cap='Perspective plot of `"leave-location-and-time-out"` CV from package \\pkg{CAST} (method `"sptcv\\_cstf"` and arguments `time\\_var = "Date"` and `space\\_var = "SOURCEID"`). The grey points are excluded from both the training and the test set in this fold.', fig.pos="h"}
-knitr::include_graphics("png/llto.png")
+```{r llto, echo=FALSE, out.width="70%", fig.cap='Perspective plot of `"leave-location-and-time-out"` CV from package \\pkg{CAST} (method `"sptcv\\_cstf"` and column roles `"time" = "Date"` and `"space" = "SOURCEID"`). The grey points are excluded from both the training and the test set in this example.', fig.pos="h"}
+knitr::include_graphics("pdf/llto.pdf")
 ```
 
-### Clustering: using CLUTO 
+### Clustering: using CLUTO
 
 At present, \pkg{mlr3spatiotempcv} also supports spatiotemporal partitioning using the versatile CLUTO clustering algorithm [@cluto].
 CLUTO is available in \proglang{R} through the \pkg{skmeans} package [@skmeans], which provides an interface to a downloadable compiled library with a restriction to non-commercial uses (see `help("ResamplingSptCVCluto", package = "mlr3spatiotempcv")` for more information).
@@ -726,6 +744,8 @@ Spatial CV is implemented in the form of leave-one-block-out CV using coordinate
 This approach is better suited for the irregular shape of the present study area than a rectangular partitioning.
 Figures \ref{fig:vis-spcv-eval} and \ref{fig:vis-nspcv-eval} show the contrasting distributions of training and test samples.
 For demonstration purposes only four CV folds and two repetitions are used.
+
+Besides the practical example shown below, additional tutorials covering \pkg{mlr3} use cases can be found at [mlr3gallery](https://mlr-org.com/gallery).
 
 ## Task preparation
 
@@ -756,13 +776,10 @@ The task `"ecuador"` is available as an example task in \pkg{mlr3spatiotempcv} t
 To create it manually from a `data.frame` named `ecuador`, one would do:
 
 ```{r create-task}
-backend = mlr3::as_data_backend(ecuador)
-task = TaskClassifST$new(
-  id = "ecuador", backend = backend, target = "slides", positive = "TRUE",
-  extra_args = list(
-    coordinate_names = c("x", "y"), coords_as_features = FALSE,
-    crs = "EPSG:32717")
-)
+data("ecuador", package = "mlr3spatiotempcv")
+task = as_task_classif_st(ecuador, target = "slides", positive = "TRUE",
+  coordinate_names = c("x", "y"), coords_as_features = FALSE,
+  crs = "EPSG:32717")
 ```
 
 ## Model preparation
@@ -929,4 +946,4 @@ We anticipate that making the existing methods easily accessible to users is an 
 sessionInfo()
 ```
 
-# References
+# References {-}

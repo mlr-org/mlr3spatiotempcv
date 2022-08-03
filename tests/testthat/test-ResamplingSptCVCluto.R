@@ -5,6 +5,7 @@
 test_that("resampling iterations equals folds", {
   skip_on_cran()
   skip_on_os("mac")
+  skip_on_ci()
   skip_if_not_installed("skmeans")
   skip_if_not_installed("mlr3pipelines")
   skip_if(Sys.info()[["machine"]] != "x86_64")
@@ -18,6 +19,7 @@ test_that("resampling iterations equals folds", {
 test_that("reps can be printed", {
   skip_on_cran()
   skip_on_os("mac")
+  skip_on_ci()
   skip_if_not_installed("skmeans")
   skip_if(Sys.info()[["machine"]] != "x86_64")
 
@@ -32,6 +34,7 @@ test_that("reps can be printed", {
 test_that("resampling iterations equals folds * repeats", {
   skip_on_cran()
   skip_on_os("mac")
+  skip_on_ci()
   skip_if_not_installed("skmeans")
   skip_if(Sys.info()[["machine"]] != "x86_64")
 
@@ -49,6 +52,7 @@ test_that("resampling iterations equals folds * repeats", {
 test_that("clustering on coords only works", {
   skip_on_cran()
   skip_on_os("mac")
+  skip_on_ci()
   skip_if_not_installed("skmeans")
   skip_if(Sys.info()[["machine"]] != "x86_64")
 
