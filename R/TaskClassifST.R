@@ -66,6 +66,13 @@ TaskClassifST = R6::R6Class("TaskClassifST",
         positive = positive, extra_args = extra_args
       )
 
+      if (packageVersion("mlr3") > "0.13.4") {
+        # adjust classif task
+        self$task_type = "classif_st"
+        new_col_roles = named_list(setdiff(mlr_reflections$task_col_roles[["classif_st"]], names(private$.col_roles)), character(0))
+        private$.col_roles = insert_named(private$.col_roles, new_col_roles)
+      }
+
       self$crs = crs
       self$coordinate_names = coordinate_names
       walk(coordinate_names, function(x) {
