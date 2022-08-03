@@ -62,14 +62,6 @@ TaskRegrST = R6::R6Class("TaskRegrST",
 
       # add coordinates as features
       self$coords_as_features = assert_flag(coords_as_features)
-
-      new_col_roles = named_list(
-        setdiff(
-          mlr_reflections$task_col_roles[["regr_st"]],
-          names(private$.col_roles)
-        ), character(0)
-      )
-      private$.col_roles = insert_named(private$.col_roles, new_col_roles)
     },
 
     #' Returns coordinates of observations.

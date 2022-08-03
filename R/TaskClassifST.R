@@ -82,14 +82,6 @@ TaskClassifST = R6::R6Class("TaskClassifST",
 
       # add coordinates as features
       self$coords_as_features = assert_flag(coords_as_features)
-
-      new_col_roles = named_list(
-        setdiff(
-          mlr_reflections$task_col_roles[["classif_st"]],
-          names(private$.col_roles)
-        ), character(0)
-      )
-      private$.col_roles = insert_named(private$.col_roles, new_col_roles)
     },
 
     #' @description
