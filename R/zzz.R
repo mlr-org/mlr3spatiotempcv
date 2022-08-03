@@ -49,6 +49,7 @@ register_mlr3 = function() { # nocov start
   x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
 
   if (packageVersion("mlr3") > "0.13.4") {
+    x$task_types = x$task_types[!c("regr_st", "classif_st")]
     x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
       ~type, ~package, ~task, ~learner, ~prediction, ~prediction_data, ~measure,
       "regr_st", "mlr3spatiotempcv", "TaskRegrST", "LearnerRegr", "PredictionRegr", 
@@ -70,6 +71,7 @@ register_mlr3 = function() { # nocov start
     x$default_measures$classif_st = "classif.ce"
     x$default_measures$regr_st = "regr.mse"
   } else {
+    x$task_types = x$task_types[!"mlr3spatiotempcv", , on = "package"]
     x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
       ~type, ~package, ~task, ~learner, ~prediction, ~measure,
       "regr", "mlr3spatiotempcv", "TaskRegrST", "LearnerRegr", "PredictionRegr",
