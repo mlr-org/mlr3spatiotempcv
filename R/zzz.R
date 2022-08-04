@@ -5,7 +5,7 @@
 #' @import paradox
 #' @import mlr3
 #' @import ggplot2
-#' @importFrom utils globalVariables
+#' @importFrom utils globalVariables packageVersion
 #' @section Main resources:
 #' * Book on mlr3: \url{https://mlr3book.mlr-org.com}
 #' * mlr3book section about spatiotemporal data: \url{https://mlr3book.mlr-org.com/08-special-spatiotemp.html}
@@ -48,27 +48,44 @@ register_mlr3 = function() { # nocov start
 
   x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
 
-  x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
-    ~type, ~package, ~task, ~learner, ~prediction, ~measure,
-    "regr", "mlr3spatiotempcv", "TaskRegrST", "LearnerRegr", "PredictionRegr",
-    "MeasureRegr",
+  if (packageVersion("mlr3") > "0.13.4") {
+    x$task_types = x$task_types[!c("regr_st", "classif_st")]
+    x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
+      ~type, ~package, ~task, ~learner, ~prediction, ~prediction_data, ~measure,
+      "regr_st", "mlr3spatiotempcv", "TaskRegrST", "LearnerRegr", "PredictionRegr", 
+      "PredictionDataRegr", "MeasureRegr",
 
-    "classif", "mlr3spatiotempcv", "TaskClassifST", "LearnerClassif",
-    "PredictionClassif", "MeasureClassif"
-  )), "type")
+      "classif_st", "mlr3spatiotempcv", "TaskClassifST", "LearnerClassif",
+      "PredictionClassif", "PredictionDataClassif", "MeasureClassif"
+    )), "type")
 
-  # append "coordinates" to col_roles
-  # x$task_col_roles$classif_st = append(x$task_col_roles$classif, "coordinates")
-  # x$task_col_roles$regr_st = append(x$task_col_roles$regr, "coordinates")
+    # "space" and "time" column roles used in CAST
+    x$task_col_roles$classif_st = c(x$task_col_roles$classif, "coordinate", 
+      "space", "time")
+    x$task_col_roles$regr_st = c(x$task_col_roles$regr, "coordinate", 
+      "space", "time")
 
-  # append "space" and "time" to col_roles
-  # used in CAST
-  # prevent redundant addition when calling `pkgload::load_all()`
-  if (!any(c("space", "time", "plot_time", "coordinate") %in% x$task_col_roles$classif)) {
-    x$task_col_roles$classif = append(x$task_col_roles$classif, c("coordinate", "space", "time"))
-    x$task_col_roles$classif_st = append(x$task_col_roles$classif_st, c("coordinate", "space", "time"))
-    x$task_col_roles$regr = append(x$task_col_roles$regr, c("coordinate", "space", "time"))
-    x$task_col_roles$regr_st = append(x$task_col_roles$regr_st, c("coordinate", "space", "time"))
+    x$task_properties$classif_st = x$task_properties$classif
+    x$task_properties$regr_st = x$task_properties$regr
+
+    x$default_measures$classif_st = "classif.ce"
+    x$default_measures$regr_st = "regr.mse"
+  } else {
+    x$task_types = x$task_types[!"mlr3spatiotempcv", , on = "package"]
+    x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
+      ~type, ~package, ~task, ~learner, ~prediction, ~measure,
+      "regr", "mlr3spatiotempcv", "TaskRegrST", "LearnerRegr", "PredictionRegr",
+      "MeasureRegr",
+
+      "classif", "mlr3spatiotempcv", "TaskClassifST", "LearnerClassif",
+      "PredictionClassif", "MeasureClassif"
+    )), "type")
+
+    # "space" and "time" column roles used in CAST
+    x$task_col_roles$classif = c(x$task_col_roles$classif, "coordinate", 
+      "space", "time")
+    x$task_col_roles$regr = c(x$task_col_roles$regr, "coordinate", 
+      "space", "time")
   }
 
   # tasks --------------------------------------------------------------------
