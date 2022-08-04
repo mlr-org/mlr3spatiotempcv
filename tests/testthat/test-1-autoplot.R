@@ -290,6 +290,7 @@ test_that("autplot blockCV shows correct blocks", {
 
 test_that("autplot blockCV shows correct blocks for repeated_cv", {
   skip_if_not_installed("vdiffr")
+  skip_if_not_installed("blockCV")
   task = test_make_blockCV_test_task()
 
   # geom_sf() is causing troubles with vdiffr

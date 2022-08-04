@@ -79,15 +79,7 @@ test_that("Task creation works via constructor and sf object", {
   data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"))
 
   # create mlr3 task
-  task = TaskClassifST$new("ecuador_sf",
-    backend = data_sf, target = "slides", positive = "TRUE"
+  expect_error(TaskClassifST$new("ecuador_sf",
+    backend = data_sf, target = "slides", positive = "TRUE")
   )
-
-  task_as = as_task_classif_st(data_sf,
-    id = "ecuador_sf",
-    target = "slides", positive = "TRUE"
-  )
-
-
-  expect_equal(task, task_as, ignore_attr = "hash")
 })
