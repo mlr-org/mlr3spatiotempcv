@@ -1,7 +1,7 @@
 test_that("group by space works", {
   # each space unit contains one observation per day
   data = rowwise_table(
-    ~polygon, ~day, ~class,
+    ~polygon, ~day, ~class, 
     "L1",     1,    "A",
     "L1",     2,    "A",
     "L1",     3,    "A",
@@ -12,11 +12,12 @@ test_that("group by space works", {
     "L3",     2,    "B",
     "L3",     3,    "B"
   )
+  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
 
-  task = as_task_classif(data, id = "test", target = "class")
+  task = as_task_classif_st(data, id = "test", target = "class", coordinate_names = c("x", "y"))
   task$set_col_roles("polygon", roles = "space")
 
   resampling = rsmp("sptcv_cstf", stratify = FALSE, folds = 3)
@@ -44,11 +45,12 @@ test_that("group by time works", {
     "L3",     2,    "B",
     "L3",     3,    "B"
   )
+  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
 
-  task = as_task_classif(data, id = "test", target = "class")
+  task = as_task_classif_st(data, id = "test", target = "class", coordinate_names = c("x", "y"))
   task$set_col_roles("day", roles = "time")
 
   resampling = rsmp("sptcv_cstf", stratify = FALSE, folds = 3)
@@ -76,11 +78,12 @@ test_that("group by space and time works", {
     "L3",     2,    "B",
     "L3",     3,    "B"
   )
+  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
 
-  task = as_task_classif(data, id = "test", target = "class")
+  task = as_task_classif_st(data, id = "test", target = "class", coordinate_names = c("x", "y"))
   task$set_col_roles("polygon", roles = "space")
   task$set_col_roles("day", roles = "time")
 
@@ -129,11 +132,12 @@ test_that("stratify on target and group by space works", {
     "L9",     2,    "C",
     "L9",     3,    "C"
   )
+  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
 
-  task = as_task_classif(data, id = "test", target = "class")
+  task = as_task_classif_st(data, id = "test", target = "class", coordinate_names = c("x", "y"))
   task$set_col_roles("polygon", roles = "space")
 
   resampling = rsmp("sptcv_cstf", stratify = TRUE, folds = 3)
@@ -181,11 +185,12 @@ test_that("group by space works with multiple observations within space unit", {
     "L3",     2,    "B",
     "L3",     3,    "B"
   )
+  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
 
-  task = as_task_classif(data, id = "test", target = "class")
+  task = as_task_classif_st(data, id = "test", target = "class", coordinate_names = c("x", "y"))
   task$set_col_roles("polygon", roles = "space")
 
   resampling = rsmp("sptcv_cstf", stratify = FALSE, folds = 3)
@@ -231,11 +236,12 @@ test_that("group by time works with multiple observations within space unit", {
     "L3", 2, "B",
     "L3", 3, "B"
   )
+  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
 
-  task = as_task_classif(data, id = "test", target = "class")
+  task = as_task_classif_st(data, id = "test", target = "class", coordinate_names = c("x", "y"))
   task$set_col_roles("day", roles = "time")
 
   resampling = rsmp("sptcv_cstf", stratify = FALSE, folds = 3)
@@ -281,11 +287,12 @@ test_that("group by space and time works with multiple observations within space
     "L3",     2,    "B",
     "L3",     3,    "B"
   )
+  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
 
-  task = as_task_classif(data, id = "test", target = "class")
+  task = as_task_classif_st(data, id = "test", target = "class", coordinate_names = c("x", "y"))
   task$set_col_roles("polygon", roles = "space")
   task$set_col_roles("day", roles = "time")
 
@@ -388,11 +395,12 @@ test_that("stratify on target and group by space works with multiple observation
     "L9",     2,    "C",
     "L9",     3,    "C"
   )
+  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
 
-  task = as_task_classif(data, id = "test", target = "class")
+  task = as_task_classif_st(data, id = "test", target = "class", coordinate_names = c("x", "y"))
   task$set_col_roles("polygon", roles = "space")
 
   resampling = rsmp("sptcv_cstf", stratify = TRUE, folds = 3)
@@ -425,11 +433,12 @@ test_that("group by space works with one polygon more than folds", {
     "L4",     2,    "C",
     "L4",     3,    "C"
   )
+  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
 
-  task = as_task_classif(data, id = "test", target = "class")
+  task = as_task_classif_st(data, id = "test", target = "class", coordinate_names = c("x", "y"))
   task$set_col_roles("polygon", roles = "space")
 
   resampling = rsmp("sptcv_cstf", stratify = FALSE, folds = 3)
@@ -462,11 +471,12 @@ test_that("group by space errors with one spatial unit less than folds", {
     "L2",     2,    "B",
     "L2",     3,    "B"
   )
+  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
 
-  task = as_task_classif(data, id = "test", target = "class")
+  task = as_task_classif_st(data, id = "test", target = "class", coordinate_names = c("x", "y"))
   task$set_col_roles("polygon", roles = "space")
 
   resampling = rsmp("sptcv_cstf", stratify = FALSE, folds = 3)
@@ -484,11 +494,12 @@ test_that("group by time errors with one temporal unit less than folds", {
     "L3",     1,    "B",
     "L3",     2,    "B"
   )
+  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
 
-  task = as_task_classif(data, id = "test", target = "class")
+  task = as_task_classif_st(data, id = "test", target = "class", coordinate_names = c("x", "y"))
   task$set_col_roles("day", roles = "time")
 
   resampling = rsmp("sptcv_cstf", stratify = FALSE, folds = 3)
@@ -509,11 +520,12 @@ test_that("group by space works", {
     "L3",     2,    "B",
     "L3",     3,    "B"
   )
+  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
 
-  task = as_task_classif(data, id = "test", target = "class")
+  task = as_task_classif_st(data, id = "test", target = "class", coordinate_names = c("x", "y"))
   resampling = rsmp("sptcv_cstf", stratify = FALSE, folds = 3)
   expect_error(resampling$instantiate(task), "has no column role")
 })

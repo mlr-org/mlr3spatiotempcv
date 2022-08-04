@@ -32,13 +32,8 @@ TaskRegrST = R6::R6Class("TaskRegrST",
     initialize = function(id, backend, target, label = NA_character_,
       coordinate_names, crs = NA_character_, coords_as_features = FALSE,
       extra_args = list()) {
-      if (inherits(backend, "sf")) {
-        # extract spatial meta data
-        crs = sf::st_crs(backend)$input
-        coordinates = as.data.frame(sf::st_coordinates(backend))
-        coordinate_names = colnames(coordinates)
-
-        backend = format_sf(backend)
+       if (inherits(backend, "sf")) {
+        stopf("Creating a task from an sf objects is not supported anymore. Use `as_task_regr_st()` to convert an sf objects into a task.") #nolint
       }
 
       super$initialize(
@@ -46,19 +41,20 @@ TaskRegrST = R6::R6Class("TaskRegrST",
         extra_args = extra_args
       )
 
-      if (packageVersion("mlr3") > "0.13.4") {
-        # adjust regr task
-        self$task_type = "regr_st"
-        new_col_roles = named_list(setdiff(mlr_reflections$task_col_roles[["regr_st"]], names(private$.col_roles)), character(0))
-        private$.col_roles = insert_named(private$.col_roles, new_col_roles)
-      }
-
       self$crs = crs
       self$coordinate_names = coordinate_names
       walk(coordinate_names, function(x) {
         assert_numeric(self$backend$head(1)[[x]], .var.name = x)
       })
-      self$coords_as_features = assert_flag(coords_as_features)
+
+      if (packageVersion("mlr3") > "0.13.4") {
+        # adjust classif task
+        self$task_type = "regr_st"
+        new_col_roles = named_list(setdiff(
+          mlr_reflections$task_col_roles[["regr_st"]],
+          names(private$.col_roles)), character(0))
+        private$.col_roles = insert_named(private$.col_roles, new_col_roles)
+      }
 
       # add coordinates as features
       self$coords_as_features = assert_flag(coords_as_features)
