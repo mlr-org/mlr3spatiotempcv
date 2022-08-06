@@ -33,7 +33,7 @@ TaskRegrST = R6::R6Class("TaskRegrST",
       coordinate_names, crs = NA_character_, coords_as_features = FALSE,
       extra_args = list()) {
       if (inherits(backend, "sf")) {
-        stopf("Creating a task from an sf objects is not supported anymore. Use `as_task_regr_st()` to convert an sf objects into a task.") # nolint
+        stopf("Creating tasks from `sf` objects is not supported anymore since >= v2.0.0. Use `as_task_classif_st()` to convert sf objects into a task.") # nolint
       }
 
       super$initialize(
