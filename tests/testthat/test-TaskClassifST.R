@@ -82,3 +82,17 @@ test_that("Task creation works via constructor and sf object", {
   expect_error(TaskClassifST$new("ecuador_sf",
     backend = data_sf, target = "slides", positive = "TRUE"))
 })
+
+test_that("Task creation works via constructor and sf object", {
+  data = test_make_sp()
+  data$p_1 = c(rep("A", 18), rep("B", 18))
+  data$response = rnorm(36)
+
+  data_sf = sf::st_as_sf(data, coords = c("x", "y"))
+
+  # create mlr3 task via constructor
+  expect_error(TaskClassifST$new("ecuador_sf",
+    backend = data_sf,
+    target = "response"
+  ), "Creating tasks from `sf` objects is not supported anymore")
+})

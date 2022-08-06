@@ -57,5 +57,5 @@ test_that("Task creation works via constructor and sf object", {
   expect_error(TaskRegrST$new("ecuador_sf",
     backend = data_sf,
     target = "response"
-  ), "sf objects is not supported")
+  ), "Creating tasks from `sf` objects is not supported anymore")
 })
