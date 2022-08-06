@@ -77,7 +77,10 @@ Coordinate reference system.
 WKT2 or EPSG string.}
 
 \item{coords_as_features}{(\code{logical(1)})\cr
-If \code{TRUE}, coordinates are used as features.}
+If \code{TRUE}, coordinates are used as features.
+This is a shortcut for
+\code{task$set_col_roles(c("x", "y"), role = "feature")} with the assumption
+that the coordinates in the data are named \code{"x"} and \code{"y"}.}
 
 \item{label}{(\code{character(1)})\cr
 Label for the new instance. Shown in \code{as.data.table(mlr_tasks)}.}

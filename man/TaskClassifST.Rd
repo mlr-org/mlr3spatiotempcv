@@ -57,7 +57,10 @@ Returns coordinate reference system of task.}
 Coordinate names.}
 
 \item{\code{coords_as_features}}{(\code{logical(1)})\cr
-If \code{TRUE}, coordinates are used as features.}
+If \code{TRUE}, coordinates are used as features.
+This is a shortcut for
+\code{task$set_col_roles(c("x", "y"), role = "feature")} with the assumption
+that the coordinates in the data are named \code{"x"} and \code{"y"}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -144,7 +147,10 @@ Coordinate reference system.
 WKT2 or EPSG string.}
 
 \item{\code{coords_as_features}}{(\code{logical(1)})\cr
-If \code{TRUE}, coordinates are used as features.}
+If \code{TRUE}, coordinates are used as features.
+This is a shortcut for
+\code{task$set_col_roles(c("x", "y"), role = "feature")} with the assumption
+that the coordinates in the data are named \code{"x"} and \code{"y"}.}
 
 \item{\code{extra_args}}{(named \code{list()})\cr
 Named list of constructor arguments, required for converting task types
