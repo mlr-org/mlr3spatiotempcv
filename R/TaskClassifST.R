@@ -1,4 +1,4 @@
-#' @title Crate a Spatiotemporal Classification Task
+#' @title Create a Spatiotemporal Classification Task
 #'
 #' @description This task specializes [Task] and [TaskSupervised] for
 #' spatiotemporal classification problems. The target column is assumed to be a
