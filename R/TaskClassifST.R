@@ -52,7 +52,7 @@ TaskClassifST = R6::R6Class("TaskClassifST",
     initialize = function(id, backend, target, positive = NULL,
       label = NA_character_, coordinate_names, crs = NA_character_,
       coords_as_features = FALSE, extra_args = list()) {
-       if (inherits(backend, "sf")) {
+      if (inherits(backend, "sf")) {
         stopf("Creating a task from an sf objects is not supported anymore. Use `as_task_classif_st()` to convert an sf objects into a task.")
       }
 

@@ -12,7 +12,7 @@ test_that("group by space works", {
     "L3",     2,    "B",
     "L3",     3,    "B"
   )
-  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
+  data[, c("x", "y") := list(runif(nrow(data)), runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
@@ -45,7 +45,7 @@ test_that("group by time works", {
     "L3",     2,    "B",
     "L3",     3,    "B"
   )
-  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
+  data[, c("x", "y") := list(runif(nrow(data)), runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
@@ -78,7 +78,7 @@ test_that("group by space and time works", {
     "L3",     2,    "B",
     "L3",     3,    "B"
   )
-  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
+  data[, c("x", "y") := list(runif(nrow(data)), runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
@@ -132,7 +132,7 @@ test_that("stratify on target and group by space works", {
     "L9",     2,    "C",
     "L9",     3,    "C"
   )
-  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
+  data[, c("x", "y") := list(runif(nrow(data)), runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
@@ -185,7 +185,7 @@ test_that("group by space works with multiple observations within space unit", {
     "L3",     2,    "B",
     "L3",     3,    "B"
   )
-  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
+  data[, c("x", "y") := list(runif(nrow(data)), runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
@@ -236,7 +236,7 @@ test_that("group by time works with multiple observations within space unit", {
     "L3",     2,    "B",
     "L3",     3,    "B"
   )
-  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
+  data[, c("x", "y") := list(runif(nrow(data)), runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
@@ -287,7 +287,7 @@ test_that("group by space and time works with multiple observations within space
     "L3",     2,    "B",
     "L3",     3,    "B"
   )
-  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
+  data[, c("x", "y") := list(runif(nrow(data)), runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
@@ -395,7 +395,7 @@ test_that("stratify on target and group by space works with multiple observation
     "L9",     2,    "C",
     "L9",     3,    "C"
   )
-  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
+  data[, c("x", "y") := list(runif(nrow(data)), runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
@@ -433,7 +433,7 @@ test_that("group by space works with one polygon more than folds", {
     "L4",     2,    "C",
     "L4",     3,    "C"
   )
-  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
+  data[, c("x", "y") := list(runif(nrow(data)), runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
@@ -473,7 +473,7 @@ test_that("group by space errors with one spatial unit less than folds", {
     "L2",     2,    "B",
     "L2",     3,    "B"
   )
-  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
+  data[, c("x", "y") := list(runif(nrow(data)), runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
@@ -496,7 +496,7 @@ test_that("group by time errors with one temporal unit less than folds", {
     "L3",     1,    "B",
     "L3",     2,    "B"
   )
-  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
+  data[, c("x", "y") := list(runif(nrow(data)), runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]
@@ -522,7 +522,7 @@ test_that("group by space works", {
     "L3",     2,    "B",
     "L3",     3,    "B"
   )
-  data[, c("x", "y") := list(runif(nrow(data)),  runif(nrow(data)))]
+  data[, c("x", "y") := list(runif(nrow(data)), runif(nrow(data)))]
   cols = which(sapply(data, is.character))
   data[, (cols) := lapply(.SD, as.factor), .SDcols = cols]
   data[, x1 := runif(.N)]

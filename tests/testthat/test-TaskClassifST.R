@@ -80,6 +80,5 @@ test_that("Task creation works via constructor and sf object", {
 
   # create mlr3 task
   expect_error(TaskClassifST$new("ecuador_sf",
-    backend = data_sf, target = "slides", positive = "TRUE")
-  )
+    backend = data_sf, target = "slides", positive = "TRUE"))
 })
