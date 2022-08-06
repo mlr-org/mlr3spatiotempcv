@@ -130,32 +130,30 @@
 <div class="section level3">
 <h3 id="creating-a-spatial-task">Creating a spatial Task<a class="anchor" aria-label="anchor" href="#creating-a-spatial-task"></a>
 </h3>
-<p>To make use of spatial resampling methods, a {mlr3} task that is aware of its spatial characteristic needs to be created. Two child classes of <code>Task</code> exist in {mlr3spatiotempcv} for this purpose:</p>
+<p>To make use of spatial resampling methods, a {mlr3} task that is aware of its spatial characteristic needs to be created. Two <code>Task</code> child classes exist in {mlr3spatiotempcv} for this purpose:</p>
 <ul>
 <li><code>TaskClassifST</code></li>
 <li><code>TaskRegrST</code></li>
 </ul>
 <p>To create one of these, you have multiple options:</p>
 <ol style="list-style-type: decimal">
-<li>Use the constructor of the <code>Task</code> directly via <code>$new()</code>
-</li>
-<li>Use the <code>as_task_*</code> converters</li>
+<li>Use the constructor of the <code>Task</code> directly via <code>$new()</code> - this only works for data.table backends (!)</li>
+<li>Use the <code>as_task_*</code> converters (e.g. if your data is stored in an <code>sf</code> object)</li>
 </ol>
-<p>We recommend the latter, as these converters aim to make Task construction easier, e.g. by creating the <code>DataBackend</code> automatically and setting the <code>crs</code> and <code>coordinate_names</code> fields. Let’s assume you start with an <code>sf</code> object, which is a common start scenario for spatial analysis in R:</p>
+<p>We recommend the latter, as the <code>as_task_*</code> converters aim to make task construction easier, e.g., by creating the <code>DataBackend</code> (which is required to create a Task in {mlr3}) automatically and setting the <code>crs</code> and <code>coordinate_names</code> fields. Let’s assume your (point) data is stored in with an <code>sf</code> object, which is a common scenario for spatial analysis in R.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create 'sf' object</span></span>
 <span><span class="va">data_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">ecuador</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">32717</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../reference/as_task_classif_st.html">as_task_classif_st</a></span><span class="op">(</span><span class="va">data_sf</span>, id <span class="op">=</span> <span class="st">"ecuador_task"</span>,</span>
-<span>  target <span class="op">=</span> <span class="st">"slides"</span>, positive <span class="op">=</span> <span class="st">"TRUE"</span><span class="op">)</span></span></code></pre></div>
-<p>You can also use a plain <code>data.frame</code>. In this case, <code>crs</code> and <code>coordinate_names</code> need to be passed along explicitly as they cannot be inferred from the <code>sf</code> object as in the previous example:</p>
+<span><span class="co"># create `TaskClassifST` from `sf` object</span></span>
+<span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../reference/as_task_classif_st.html">as_task_classif_st</a></span><span class="op">(</span><span class="va">data_sf</span>, id <span class="op">=</span> <span class="st">"ecuador_task"</span>, target <span class="op">=</span> <span class="st">"slides"</span>, positive <span class="op">=</span> <span class="st">"TRUE"</span><span class="op">)</span></span></code></pre></div>
+<p>You can also use a plain <code>data.frame</code>. In this case, <code>crs</code> and <code>coordinate_names</code> need to be passed along explicitly as they cannot be inferred directly from the <code>sf</code> object:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../reference/as_task_classif_st.html">as_task_classif_st</a></span><span class="op">(</span><span class="va">ecuador</span>, id <span class="op">=</span> <span class="st">"ecuador_task"</span>,</span>
-<span>  target <span class="op">=</span> <span class="st">"slides"</span>, positive <span class="op">=</span> <span class="st">"TRUE"</span>,</span>
-<span>  coordinate_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">32717</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../reference/as_task_classif_st.html">as_task_classif_st</a></span><span class="op">(</span><span class="va">ecuador</span>, id <span class="op">=</span> <span class="st">"ecuador_task"</span>, target <span class="op">=</span> <span class="st">"slides"</span>,</span>
+<span>  positive <span class="op">=</span> <span class="st">"TRUE"</span>, coordinate_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">32717</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>*ST</code> task family prints a subset of the coordinates by default:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">task</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;TaskClassifST:ecuador_task&gt; (751 x 11)</span></span>
 <span><span class="co">#&gt; * Target: slides</span></span>
 <span><span class="co">#&gt; * Properties: twoclass</span></span>
@@ -175,7 +173,7 @@
 <span><span class="co">#&gt; 749: 713322.5 9560562</span></span>
 <span><span class="co">#&gt; 750: 715392.5 9557932</span></span>
 <span><span class="co">#&gt; 751: 713802.5 9560862</span></span></code></pre></div>
-<p>All <code>*ST</code> tasks can be treated as their super class equivalents <code>TaskClassif</code> or <code>TaskRegr</code> in any upcoming modeling step.</p>
+<p>All <code>*ST</code> tasks can be treated as their super class equivalents <code>TaskClassif</code> or <code>TaskRegr</code> in subsequent {mlr3} modeling steps.</p>
 </div>
 </div>
 <div class="section level2">
@@ -186,10 +184,9 @@
 <div class="section level2">
 <h2 id="task-type">Task Type<a class="anchor" aria-label="anchor" href="#task-type"></a>
 </h2>
-<p>Additional task types:</p>
 <ul>
-<li><code>TaskClassifST</code></li>
-<li><code>TaskRegrST</code></li>
+<li><p><code>TaskClassifST</code></p></li>
+<li><p><code>TaskRegrST</code></p></li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mlr_reflections</span><span class="op">$</span><span class="va">task_types</span></span>
@@ -207,11 +204,10 @@
 <div class="section level2">
 <h2 id="task-column-roles">Task Column Roles<a class="anchor" aria-label="anchor" href="#task-column-roles"></a>
 </h2>
-<p>Additional column roles:</p>
 <ul>
-<li><code>coordinates</code></li>
-<li><code>space</code></li>
-<li><code>time</code></li>
+<li><p><code>coordinate</code></p></li>
+<li><p><code>space</code></p></li>
+<li><p><code>time</code></p></li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mlr_reflections</span><span class="op">$</span><span class="va">task_col_roles</span></span>
@@ -226,7 +222,6 @@
 <div class="section level2">
 <h2 id="resampling-methods">Resampling Methods<a class="anchor" aria-label="anchor" href="#resampling-methods"></a>
 </h2>
-<p>Additional resampling methods:</p>
 <ul>
 <li><p><code>mlr_resampling_spcv_block</code></p></li>
 <li><p><code>mlr_resampling_spcv_buffer</code></p></li>
@@ -242,24 +237,21 @@
 <div class="section level2">
 <h2 id="examples-tasks">Examples Tasks<a class="anchor" aria-label="anchor" href="#examples-tasks"></a>
 </h2>
-<p>Additional example tasks:</p>
 <ul>
-<li>
-<code>tsk("ecuador")</code> (spatial, classif)</li>
-<li>
-<code>tsk("cookfarm_mlr3")</code> (spatiotemp, regr)</li>
+<li><p><code>tsk("ecuador")</code> (spatial, classif)</p></li>
+<li><p><code>tsk("cookfarm_mlr3")</code> (spatiotemp, regr)</p></li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="upstream-packages-and-scientific-references">Upstream Packages and Scientific References<a class="anchor" aria-label="anchor" href="#upstream-packages-and-scientific-references"></a>
 </h2>
 <p>The following table lists all spatiotemporal methods implemented in {mlr3spatiotempcv} (or {mlr3}), their upstream R package and scientific references. All methods besides <code>"spcv_buffer"</code> also have a corresponding “repeated” method.</p>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
-<col width="23%">
-<col width="34%">
-<col width="14%">
-<col width="27%">
+<col width="18%">
+<col width="26%">
+<col width="11%">
+<col width="43%">
 </colgroup>
 <thead><tr class="header">
 <th>Category</th>
@@ -320,7 +312,7 @@
 <td>
 <strong>Grouping</strong>, predefined inds</td>
 <td>(mlr3) Predefined partitions</td>
-<td><pre><code>   -</code></pre></td>
+<td></td>
 <td><code>mlr_resamplings_custom_cv</code></td>
 </tr>
 <tr class="odd">
@@ -328,9 +320,9 @@
 <strong>Grouping</strong>, spatiotemporal</td>
 <td>(mlr3) via <code>col_roles</code> <code>"group"</code>
 </td>
-<td><pre><code>   -</code></pre></td>
+<td></td>
 <td>
-<code>mlr_resamplings_cv</code>, <code>Task$set_col_roles(&lt;variable, "group")</code>
+<code>mlr_resamplings_cv</code>, <code>Task$set_col_roles(&lt;variable&gt;, "group")</code>
 </td>
 </tr>
 <tr class="even">

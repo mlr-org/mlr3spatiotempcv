@@ -135,7 +135,10 @@ Coordinate names.</p></dd>
 
 <dt><code>coords_as_features</code></dt>
 <dd><p>(<code>logical(1)</code>)<br>
-If <code>TRUE</code>, coordinates are used as features.</p></dd>
+If <code>TRUE</code>, coordinates are used as features.
+This is a shortcut for
+<code>task$set_col_roles(c("x", "y"), role = "feature")</code> with the assumption
+that the coordinates in the data are named <code>"x"</code> and <code>"y"</code>.</p></dd>
 
 
 </dl><p></p></div>
@@ -222,7 +225,10 @@ WKT2 or EPSG string.</p></dd>
 
 <dt><code>coords_as_features</code></dt>
 <dd><p>(<code>logical(1)</code>)<br>
-If <code>TRUE</code>, coordinates are used as features.</p></dd>
+If <code>TRUE</code>, coordinates are used as features.
+This is a shortcut for
+<code>task$set_col_roles(c("x", "y"), role = "feature")</code> with the assumption
+that the coordinates in the data are named <code>"x"</code> and <code>"y"</code>.</p></dd>
 
 
 <dt><code>extra_args</code></dt>

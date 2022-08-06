@@ -202,7 +202,10 @@ WKT2 or EPSG string.</p></dd>
 
 <dt>coords_as_features</dt>
 <dd><p>(<code>logical(1)</code>)<br>
-If <code>TRUE</code>, coordinates are used as features.</p></dd>
+If <code>TRUE</code>, coordinates are used as features.
+This is a shortcut for
+<code>task$set_col_roles(c("x", "y"), role = "feature")</code> with the assumption
+that the coordinates in the data are named <code>"x"</code> and <code>"y"</code>.</p></dd>
 
 
 <dt>label</dt>
