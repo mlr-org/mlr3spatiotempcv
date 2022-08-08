@@ -13,40 +13,39 @@ rsmp_cstf_time = rsmp("sptcv_cstf", folds = 5)
 # LTO --------
 p_lto = autoplot(rsmp_cstf_time,
   fold_id = 5, task = task_spt, plot3D = TRUE,
+  point_size = 6, axis_label_fontsize = 15,
   sample_fold_n = 3000L
 )
 
-p_lto_print = layout(p_lto, scene = list(camera = list(eye = list(z = 0.58))), showlegend = F, title = "",
-  margin = list(l = -150, b = 20, r = 0, t = -350))
+p_lto_print = plotly::layout(p_lto,
+  scene = list(camera = list(eye = list(z = 0.58))),
+  showlegend = FALSE, title = "",
+  margin = list(l = 0, b = 0, r = 0, t = 0))
 
 tmp = tempfile(fileext = ".pdf")
-plotly::save_image(p_lto_print, tmp,
-  scale = 2,
-  width = 900, height = 750)
-fs::file_move(tmp, "~/git/mlr-org/mlr3spatiotempcv/paper/pdf/lto.pdf")
+plotly::save_image(p_lto_print, here::here("paper/pdf/lto.pdf"),
+  scale = 2, width = 1000, height = 800)
 
 # LLO ------------
 
 task_spt$col_roles$time = character()
 task_spt$set_col_roles("SOURCEID", roles = "space")
 rsmp_cstf_loc = rsmp("sptcv_cstf", folds = 5)
+
 p_llo = autoplot(rsmp_cstf_loc,
   fold_id = 5, task = task_spt,
+  point_size = 6, axis_label_fontsize = 15,
   plot3D = TRUE, plot_time_var = "Date",
   sample_fold_n = 3000L)
 
 p_llo_print =
-  layout(p_llo,
+  plotly::layout(p_llo,
     scene = list(camera = list(eye = list(z = 2.5, x = -0.1, y = -0.1))),
-    showlegend = F, title = "", polar = T,
-    margin = list(l = -150, b = 20, r = 0, t = -350))
-# p_llo_print
+    showlegend = FALSE, title = "", polar = TRUE,
+    margin = list(l = 0, b = 0, r = 0, t = 0))
 
-tmp = tempfile(fileext = ".pdf")
-plotly::save_image(p_llo_print, tmp,
-  scale = 2,
-  width = 900, height = 750)
-fs::file_move(tmp, "~/git/mlr-org/mlr3spatiotempcv/paper/pdf/llo.pdf")
+plotly::save_image(p_llo_print, here::here("paper/pdf/llo.pdf"),
+  scale = 2, width = 1000, height = 800)
 
 # llto ------------
 
@@ -55,22 +54,17 @@ task_spt$set_col_roles("Date", roles = "time")
 
 rsmp_cstf_space_time = rsmp("sptcv_cstf", folds = 5)
 
-p_llto = autoplot(rsmp_cstf_space_time,
+p_lto = autoplot(rsmp_cstf_time_loc, point_size = 6,
+  axis_label_fontsize = 15,
   fold_id = 4, task = task_spt, plot3D = TRUE,
   show_omitted = TRUE, sample_fold_n = 3000L)
 
-p_llto_print =
-  layout(p_llto,
-    scene = list(camera = list(eye = list(z = 0.58, x = -1.4, y = 1.6))),
-    showlegend = F, title = "",
-    margin = list(l = -250, b = 20, r = 0, t = -350))
-# p_llto_print
+p_lto_print = plotly::layout(p_lto,
+  scene = list(camera = list(eye = list(z = 0.58))),
+  showlegend = FALSE, title = "",
+  margin = list(l = 0, b = 0, r = 0, t = 0))
 
-tmp = tempfile(fileext = ".pdf")
-plotly::save_image(p_llto_print, tmp,
-  scale = 2,
-  width = 1100, height = 550)
-fs::file_move(tmp, "~/git/mlr-org/mlr3spatiotempcv/paper/pdf/llto.pdf")
-
+plotly::save_image(p_lto_print, here::here("paper/pdf/llto.pdf"),
+  scale = 2, width = 1000, height = 800)
 
 # NOTE: Crop the resulting images in Finder (or any other PDF tool)

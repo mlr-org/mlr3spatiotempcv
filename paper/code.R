@@ -1,5 +1,5 @@
 if (!requireNamespace(c("blockCV"), quietly = TRUE)) install.packages(c("blockCV", "sf", "patchwork", "sperrorest", "ggtext", "plotly"))
-
+dir.create("pdf")
 
 library("mlr3")
 library("mlr3spatiotempcv")
@@ -125,33 +125,64 @@ task_spt$set_col_roles("Date", roles = "time")
 
 rsmp_cstf_time = rsmp("sptcv_cstf", folds = 5)
 
-autoplot(rsmp_cstf_time,
+p_lto = autoplot(rsmp_cstf_time,
   fold_id = 5, task = task_spt, plot3D = TRUE,
+  point_size = 6, axis_label_fontsize = 15,
   sample_fold_n = 3000L
 )
 
+p_lto_print = plotly::layout(p_lto,
+  scene = list(camera = list(eye = list(z = 0.58))),
+  showlegend = FALSE, title = "",
+  margin = list(l = 0, b = 0, r = 0, t = 0))
 
+plotly::save_image(p_lto_print, "pdf/lto.pdf",
+  scale = 2, width = 1000, height = 800)
+
+
+knitr::include_graphics("pdf/lto.pdf")
 
 task_spt$col_roles$time = character()
 task_spt$set_col_roles("SOURCEID", roles = "space")
 
 rsmp_cstf_loc = rsmp("sptcv_cstf", folds = 5)
 
-autoplot(rsmp_cstf_loc,
+p_llo = autoplot(rsmp_cstf_loc,
   fold_id = 5, task = task_spt,
+  point_size = 6, axis_label_fontsize = 15,
   plot3D = TRUE, plot_time_var = "Date",
   sample_fold_n = 3000L)
 
+p_llo_print =
+  plotly::layout(p_llo,
+    scene = list(camera = list(eye = list(z = 2.5, x = -0.1, y = -0.1))),
+    showlegend = FALSE, title = "", polar = TRUE,
+    margin = list(l = 0, b = 0, r = 0, t = 0))
+
+plotly::save_image(p_llo_print, "pdf/llo.pdf",
+  scale = 2, width = 1000, height = 800)
+
+knitr::include_graphics("pdf/llo.pdf")
 
 task_spt$set_col_roles("SOURCEID", roles = "space")
 task_spt$set_col_roles("Date", roles = "time")
 
 rsmp_cstf_time_loc = rsmp("sptcv_cstf", folds = 5)
 
-autoplot(rsmp_cstf_time_loc,
+p_lto = autoplot(rsmp_cstf_time_loc, point_size = 6,
+  axis_label_fontsize = 15,
   fold_id = 4, task = task_spt, plot3D = TRUE,
   show_omitted = TRUE, sample_fold_n = 3000L)
 
+p_lto_print = plotly::layout(p_lto,
+  scene = list(camera = list(eye = list(z = 0.58))),
+  showlegend = FALSE, title = "",
+  margin = list(l = 0, b = 0, r = 0, t = 0))
+
+plotly::save_image(p_lto_print, "pdf/llto.pdf",
+  scale = 2, width = 1000, height = 800)
+
+knitr::include_graphics("pdf/llto.pdf")
 
 library("mlr3")
 library("mlr3spatiotempcv")
