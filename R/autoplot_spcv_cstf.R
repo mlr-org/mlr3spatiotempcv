@@ -222,8 +222,10 @@ autoplot.ResamplingSptCVCstf = function( # nolint
             repeats_id),
           autosize = TRUE,
           scene = list(
-            xaxis = list(title = "Lat", nticks = nticks_x),
-            yaxis = list(title = "Lon", nticks = nticks_y),
+            xaxis = list(title = "Lat", nticks = nticks_x,
+              tickfont = list(size = axis_label_fontsize)),
+            yaxis = list(title = "Lon", nticks = nticks_y,
+              tickfont = list(size = axis_label_fontsize)),
             zaxis = list(
               title = "Time",
               type = "date",
