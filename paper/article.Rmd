@@ -572,11 +572,14 @@ The right sub-figure of Figure \ref{fig:env-1-eval} shows the outcome when using
 ```{r env-1-non-eval, eval=FALSE}
 rsmp_env = rsmp("spcv_env", features = "distdeforest", folds = 5)
 
-rsmp_env_multi = rsmp("spcv_env", features = c("distdeforest", "slope"), folds = 5)
+rsmp_env_multi = rsmp("spcv_env", features = c("distdeforest", "slope"),
+  folds = 5)
 
-plot_env_single = autoplot(rsmp_env, size = 0.3, fold_id = 1, task = task) +
+plot_env_single = autoplot(rsmp_env, size = 0.3,
+  fold_id = 1, task = task) +
 
-  plot_env_multi = autoplot(rsmp_env_multi, size = 0.3, fold_id = 1, task = task)
+  plot_env_multi = autoplot(rsmp_env_multi, size = 0.3,
+    fold_id = 1, task = task)
 
 library("patchwork")
 plot_env_single + plot_env_multi
