@@ -4,9 +4,6 @@ author:
   - name: Patrick Schratz
     orcid: 0000-0003-0748-6624
     affiliation: 'Friedrich Schiller University Jena'
-    # affiliaton2: 'Ludwig-Maximilians-University Munich'
-    # use this syntax to add text on several lines
-    # must use German name, see https://www.lmu.de/de/die-lmu/struktur/zentrale-universitaetsverwaltung/kommunikation-und-presse/lmu-brand-guide/content-style-guide/index.html
     address: |
       | Department of Geography
       | Geographic Information Science group
@@ -18,7 +15,6 @@ author:
       | Department of Statistics
       | Statistical Learning and Data Science group
     email: \email{marc.becker@stat.uni-muenchen.de}
-    # To add another line, use \AND at the end of the previous one as above
   - name: Michel Lang
     orcid: 0000-0001-9754-0393
     affiliation: TU Dortmund University
@@ -34,10 +30,7 @@ author:
     email: \email{alexander.brenning@uni-jena.de}
 title:
   formatted: "\\pkg{mlr3spatiotempcv}: Spatiotemporal resampling methods for machine learning in R"
-  # If you use tex in the formatted title, also supply version without
   plain:     "mlr3spatiotempcv: spatiotemporal resampling methods for machine learning in R"
-  # For running headers, if needed
-  # short:     "\\pkg{foo}: A Capitalized Title"
 abstract: >
   Spatial and spatiotemporal machine-learning models require a suitable framework for their model assessment, model selection, and hyperparameter tuning, in order to avoid error estimation bias and over-fitting.
   This contribution reviews the state-of-the-art in spatial and spatiotemporal cross-validation, and introduces the \proglang{R} package \pkg{mlr3spatiotempcv} as an extension package of the machine-learning framework \pkg{mlr3}.
@@ -68,16 +61,13 @@ output: rticles::jss_article
 ---
 
 ```{r setup, echo=FALSE, purl=FALSE}
-# important for correct figure placement
-# see https://stackoverflow.com/a/49395389/4185785
 knitr::knit_hooks$set(plot = function(x, options) {
   knitr::hook_plot_tex(x, options)
 })
 options(prompt = "R> ", continue = "+ ")
 ```
 
-```{r setup-2, echo=FALSE, purl=T}
-# for knitr spin later
+```{r setup-2, echo=FALSE, purl=TRUE}
 knitr::opts_chunk$set(
   cache = FALSE,
   cache.lazy = TRUE)
@@ -677,8 +667,6 @@ plotly::save_image(p_lto_print, "pdf/lto.pdf",
 ```
 
 ```{r lto, echo=FALSE, out.width="80%", fig.cap='Perspective plot of `"leave-time-out"` CV from package \\pkg{CAST} (method `"sptcv\\_cstf"` and column role `"time" = "Date"`). Only five folds and five time points were used in this example. Note that the blue dots correspond to five discrete time levels, which appear as a point cloud due to the viewing angle.', fig.pos="ht"}
-# workflow
-
 knitr::include_graphics("pdf/lto.pdf")
 ```
 
@@ -793,7 +781,6 @@ A random-number seed is set for reproducibility.
 library("mlr3")
 library("mlr3spatiotempcv")
 
-# be less verbose
 lgr::get_logger("bbotk")$set_threshold("warn")
 lgr::get_logger("mlr3")$set_threshold("warn")
 
