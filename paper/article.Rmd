@@ -241,7 +241,7 @@ knitr::include_graphics(here::here("paper/pdf/rsmp-schema.pdf"))
 Several of the implemented algorithms are themselves versatile toolboxes with multiple options.
 Comprehensive and up-to-date information can be found in the package's online documentation (<https://mlr3spatiotempcv.mlr-org.com>).
 The following sections give an overview of most implemented partitioning strategies and their visualization options.
-The available methods are further discussed in section \ref{sec:disc}.
+The available methods are further discussed in Section \ref{sec:disc}.
 
 % this is required to not expand the authors in the table citations on first use
 \shortcites{ploton2020, karasiak2021, moller2021, endicott2017, wu2020, geiss2017, morera2021, zurell2020, brenning2015, bebber2017, jensen2021, escobar2021, stewart2021, reitz2021, egli2020, gao2019}
@@ -378,7 +378,7 @@ This method is referred to as `"spcv_coords"` in \pkg{mlr3spatiotempcv}.
 The coordinate-based clustering approach is very versatile as it adapts to irregularly-shaped study areas and ensures that exactly $k$ partitions are created, which are usually of very similar size when the sample locations are spread out evenly.
 Nevertheless, despite the random selection of initial cluster centers, repeated partitionings may in some cases be nearly identical.
 Also, $k$-means clustering may be less suitable for data sets with pre-existing clusters of points and/or with isolated, distant sample locations.
-When distinct clusters of points are present, as in multi-level sampling, it may be better to define clusters using a factor variable (see method `"custom_cv"` in section \ref{sec:custom-cv}).
+When distinct clusters of points are present, as in multi-level sampling, it may be better to define clusters using a factor variable (see method `"custom_cv"` in Section \ref{sec:custom-cv}).
 
 ```{r coords-non-eval, eval=FALSE}
 rsmp_coords = rsmp("spcv_coords", folds = 5)
@@ -453,11 +453,11 @@ autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1) *
 
 Methods which operate at the block level first group the observations into blocks and then combine these blocks into CV partitions.
 In $k$-fold CV resampling at the block level, there are therefore $k$ partitions, each consisting of $1/k$-th of the blocks.
-The special case in which $k$ equals the number of blocks, CV at the block level simply becomes leave-one-block-out CV, for which dedicated implementations exist (see section \ref{sec:lobo-cv}).
+The special case in which $k$ equals the number of blocks, CV at the block level simply becomes leave-one-block-out CV, for which dedicated implementations exist (see Section \ref{sec:lobo-cv}).
 
 ### Geometric: using rectangular blocks --- \code{"spcv_block"} {short-title='Geometric: using rectangular blocks --- "spcv_block"' }
 
-The `"spcv_block"` method from package \pkg{blockCV} supports both random and systematic resampling of square blocks with argument `selection = "random"` and `"systematic"`, respectively; (see figures \ref{fig:block-random} and \ref{fig:block-systematic}).
+The `"spcv_block"` method from package \pkg{blockCV} supports both random and systematic resampling of square blocks with argument `selection = "random"` and `"systematic"`, respectively; (see Figure \ref{fig:block-random} and Figure \ref{fig:block-systematic}).
 There are additional options for modeling presence-only data, which is a typical use case in species distribution modeling.
 Users can furthermore supply a user-defined polygon via argument `rasterLayer` with predefined blocking zones.
 
@@ -758,7 +758,7 @@ Random forest is used as a classifier, and the area under the ROC curve (AUROC) 
 
 Spatial CV is implemented in the form of leave-one-block-out CV using coordinate-based $k$-means clustering to generate irregularly shaped blocks of roughly equal size.
 This approach is better suited for the irregular shape of the present study area than a rectangular partitioning.
-Figures \ref{fig:vis-spcv-eval} and \ref{fig:vis-nspcv-eval} show the contrasting distributions of training and test samples.
+Figure \ref{fig:vis-spcv-eval} and Figure \ref{fig:vis-nspcv-eval} show the contrasting distributions of training and test samples.
 For demonstration purposes only four CV folds and two repetitions are used.
 
 Besides the practical example shown below, additional tutorials covering \pkg{mlr3} use cases can be found at [mlr3gallery](https://mlr-org.com/gallery).
@@ -888,13 +888,13 @@ The question of which resampling method should be chosen for a prediction task a
 Even though there is and most likely will be no definitive answer to this question, we would like to give some guidance in this section to help find an appropriate method.
 As a general rule, we recommend to use a resampling scheme that (1) mimics the predictive situation in which the model will be applied operationally, and (2) is consistent with the structure of the data. Both aspects are outlined in this section, starting with two concrete modeling scenarios.
 
-Although the case study example in section \ref{sec:case-study} used the `"spcv_coords"` method for coordinate-based clustering, this should not give the impression that this method is the only method suitable for this example task.
+Although the case study example in Section \ref{sec:case-study} used the `"spcv_coords"` method for coordinate-based clustering, this should not give the impression that this method is the only method suitable for this example task.
 In this application setting, we want to assess how well the model generalized from the concrete set of historical landslide occurrences, which is why we ensured that training and test sets contain different, "new" hillslopes and landslides.
 Coordinate-based clustering is particularly appealing in this setting because of its ability to adapt to the irregularly shaped study area of this example.
 Resampling at the level of sub-catchments could have been a viable alternative approach that can be implemented using custom resampling (`"custom_cv"` method); however, this may result in less balanced sizes of test sets as catchment sizes may vary.
 When the timing of landslides is known (event-based inventories) or multiple inventories have been compiled for different time points, it can also be recommendable to additionally sample training and test data from different time points, as with the LLTO and LTO [@meyer2018] or similar methods [@brenning2005].
 
-In other application scenarios such as the crop classification example given in Section  \ref{sec:intro} [@pena2015], the objective is to predict the fruit-tree crop type of 'new', unseen fields within an agricultural region.
+In other application scenarios such as the crop classification example given in Section \ref{sec:intro} [@pena2015], the objective is to predict the fruit-tree crop type of 'new', unseen fields within an agricultural region.
 In this use case we are not at all interested in "predicting" the already known crop type of (other) grid cells within the same agricultural field.
 Also, a model will likely be much better able to predict the crop type within the same field from multitemporal remote-sensing data since all crops within that field are subject to identical management practices (e.g., use of pesticides, pruning of fruit trees, tree spacing), while 'new' fields may be managed differently.
 As a consequence, grid cells from the same field should be grouped into a block, and resampling should be done at the field level (`"cv"` method with grouping) to receive an honest estimate of the model's performance in a relevant predictive situation.
