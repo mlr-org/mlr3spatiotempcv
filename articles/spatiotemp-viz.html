@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Roboto-0.4.1/font.css" rel="stylesheet">
-<link href="../deps/_JetBrains%20Mono-0.4.1/font.css" rel="stylesheet">
-<link href="../deps/_Roboto%20Slab-0.4.1/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Spatiotemporal Visualization">
@@ -35,7 +35,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mlr3spatiotempcv</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,48 +125,48 @@
 <h2 id="d-visualization-spatiotemporal">3D Visualization (spatiotemporal)<a class="anchor" aria-label="anchor" href="#d-visualization-spatiotemporal"></a>
 </h2>
 <p>{mlr3spatiotempcv} makes use of {plotly} to create the 3D plots for visualizing spatiotemporal folds created via the CLUTO algorithm. Arranging multiple 3D plots in {plotly} is done via <a href="https://plotly.com/r/3d-subplots/" class="external-link">3D subplots</a>.</p>
-<p>Unfortunately, {plotly}’s subplot implementation is not dynamic. This means that multiple “scene” objects need to be specified in <code><a href="https://rdrr.io/pkg/plotly/man/layout.html" class="external-link">plotly::layout()</a></code> to determine the coordinates of the respective subplot. Depending on the number of chosen folds by the user in <code><a href="../reference/autoplot.html">autoplot()</a></code>, a different number of scenes with different coordinates needs to be given to align the plots properly.</p>
+<p>Unfortunately, {plotly}’s subplot implementation is not dynamic. This means that multiple “scene” objects need to be specified in <code>plotly::layout()</code> to determine the coordinates of the respective subplot. Depending on the number of chosen folds by the user in <code><a href="../reference/autoplot.html">autoplot()</a></code>, a different number of scenes with different coordinates needs to be given to align the plots properly.</p>
 <p>Hence, manual action is needed to create a properly aligned grid of 3D plots.</p>
 <p>Below is an example how to create a 2x2 grid showing four folds as 3D subplots. It makes use of the returned 3D plotly objects which are returned in a list by <code><a href="../reference/autoplot.html">autoplot()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3.mlr-org.com" class="external-link">mlr3</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3spatiotempcv.mlr-org.com/">mlr3spatiotempcv</a></span><span class="op">)</span>
-<span class="va">task_st</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"cookfarm_mlr3"</span><span class="op">)</span>
-<span class="va">task_st</span><span class="op">$</span><span class="fu">set_col_roles</span><span class="op">(</span><span class="st">"SOURCEID"</span>, roles <span class="op">=</span> <span class="st">"space"</span><span class="op">)</span>
-<span class="va">task_st</span><span class="op">$</span><span class="fu">set_col_roles</span><span class="op">(</span><span class="st">"Date"</span>, roles <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span>
-<span class="va">resampling</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">rsmp</a></span><span class="op">(</span><span class="st">"sptcv_cstf"</span>, folds <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-
-<span class="va">pl</span> <span class="op">=</span> <span class="fu"><a href="../reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">resampling</span>, <span class="va">task_st</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,
-  crs <span class="op">=</span> <span class="fl">4326</span>, point_size <span class="op">=</span> <span class="fl">3</span>, axis_label_fontsize <span class="op">=</span> <span class="fl">10</span>,
-  plot3D <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="co"># Warnings can be ignored</span>
-<span class="va">pl_subplot</span> <span class="op">=</span> <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/subplot.html" class="external-link">subplot</a></span><span class="op">(</span><span class="va">pl</span><span class="op">)</span>
-
-<span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/layout.html" class="external-link">layout</a></span><span class="op">(</span><span class="va">pl_subplot</span>,
-  title <span class="op">=</span> <span class="st">"Individual Folds"</span>,
-  scene <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-    domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,
-    aspectmode <span class="op">=</span> <span class="st">"cube"</span>,
-    camera <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>eye <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>z <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span>,
-  scene2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-    domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,
-    aspectmode <span class="op">=</span> <span class="st">"cube"</span>,
-    camera <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>eye <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>z <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span>,
-  scene3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-    domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>,
-    aspectmode <span class="op">=</span> <span class="st">"cube"</span>,
-    camera <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>eye <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>z <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span>,
-  scene4 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-    domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>,
-    aspectmode <span class="op">=</span> <span class="st">"cube"</span>,
-    camera <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>eye <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>z <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3.mlr-org.com" class="external-link">mlr3</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3spatiotempcv.mlr-org.com/">mlr3spatiotempcv</a></span><span class="op">)</span></span>
+<span><span class="va">task_st</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"cookfarm_mlr3"</span><span class="op">)</span></span>
+<span><span class="va">task_st</span><span class="op">$</span><span class="fu">set_col_roles</span><span class="op">(</span><span class="st">"SOURCEID"</span>, roles <span class="op">=</span> <span class="st">"space"</span><span class="op">)</span></span>
+<span><span class="va">task_st</span><span class="op">$</span><span class="fu">set_col_roles</span><span class="op">(</span><span class="st">"Date"</span>, roles <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span></span>
+<span><span class="va">resampling</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">rsmp</a></span><span class="op">(</span><span class="st">"sptcv_cstf"</span>, folds <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pl</span> <span class="op">=</span> <span class="fu"><a href="../reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">resampling</span>, <span class="va">task_st</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span>
+<span>  crs <span class="op">=</span> <span class="fl">4326</span>, point_size <span class="op">=</span> <span class="fl">3</span>, axis_label_fontsize <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  plot3D <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Warnings can be ignored</span></span>
+<span><span class="va">pl_subplot</span> <span class="op">=</span> <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/subplot.html" class="external-link">subplot</a></span><span class="op">(</span><span class="va">pl</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">plotly</span><span class="fu">::</span><span class="fu">layout</span><span class="op">(</span><span class="va">pl_subplot</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">"Individual Folds"</span>,</span>
+<span>  scene <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    aspectmode <span class="op">=</span> <span class="st">"cube"</span>,</span>
+<span>    camera <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>eye <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>z <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  scene2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    aspectmode <span class="op">=</span> <span class="st">"cube"</span>,</span>
+<span>    camera <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>eye <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>z <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  scene3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    aspectmode <span class="op">=</span> <span class="st">"cube"</span>,</span>
+<span>    camera <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>eye <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>z <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  scene4 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    aspectmode <span class="op">=</span> <span class="st">"cube"</span>,</span>
+<span>    camera <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>eye <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>z <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="../reference/figures/sptcv_cstf_multiplot.png" width="600" style="display: block; margin: auto;"></p>
 <p>Note: The image shown above is a static version created with <code><a href="https://rdrr.io/pkg/plotly/man/save_image.html" class="external-link">plotly::save_image()</a></code>.</p>
 <p>Unfortunately, titles in subplots cannot be created dynamically. However, there is a manual workaround via <a href="https://plotly.com/r/reference/#layout-annotations" class="external-link">annotations</a> show in this <a href="https://rpubs.com/bcd/subplot-titles" class="external-link">RPubs post</a>.</p>
@@ -222,7 +222,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
