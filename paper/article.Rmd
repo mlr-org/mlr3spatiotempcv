@@ -40,7 +40,7 @@ title:
   # short:     "\\pkg{foo}: A Capitalized Title"
 abstract: >
   Spatial and spatiotemporal machine-learning models require a suitable framework for their model assessment, model selection, and hyperparameter tuning, in order to avoid error estimation bias and over-fitting.
-  This contribution reviews the state-of-the-art in spatial and spatiotemporal CV, and introduces the \proglang{R} package \pkg{mlr3spatiotempcv} as an extension package of the machine-learning framework \pkg{mlr3}.
+  This contribution reviews the state-of-the-art in spatial and spatiotemporal cross-validation, and introduces the \proglang{R} package \pkg{mlr3spatiotempcv} as an extension package of the machine-learning framework \pkg{mlr3}.
   Currently various \proglang{R} packages implementing different spatiotemporal partitioning strategies exist: \pkg{blockCV}, \pkg{CAST}, \pkg{skmeans} and \pkg{sperrorest}.
   The goal of \pkg{mlr3spatiotempcv} is to gather the available spatiotemporal resampling methods in \proglang{R} and make them available to users through a simple and common interface.
   This is made possible by integrating the package directly into the \pkg{mlr3} machine-learning framework, which already has support for generic non-spatiotemporal resampling methods such as random partitioning.
