@@ -103,7 +103,7 @@ bibentries = c( # nolint start
   ),
 
   zhao2002 = bibentry("article",
-    url = "http://glaros.dtc.umn.edu/gkhome/node/167",
+    doi = "https://doi.org/10.1145/584792.584877",
     year = "2002",
     pages = "51-524",
     author = "Ying Zhao and George Karypis",

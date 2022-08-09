@@ -56,7 +56,7 @@ Meyer H, Reudenbach C, Hengl T, Katurji M, Nauss T (2018).
 Zhao Y, Karypis G (2002).
 \dQuote{Evaluation of Hierarchical Clustering Algorithms for Document Datasets.}
 \emph{11th Conference of Information and Knowledge Management (CIKM)}, 51-524.
-\url{http://glaros.dtc.umn.edu/gkhome/node/167}.
+\doi{https://doi.org/10.1145/584792.584877}.
 }
 \seealso{
 Useful links:
