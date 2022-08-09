@@ -35,7 +35,7 @@ install.packages('mlr3spatiotempcv', mlrorg = 'https://mlr-org.r-universe.dev')
 
 See the ["Get Started"](https://mlr3spatiotempcv.mlr-org.com/articles/mlr3spatiotempcv.html) vignette for a quick introduction.
 
-For more detailed information including an usage example see the ["Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/08-special-spatiotemp.html) chapter in the mlr3book.
+For more detailed information including an usage example see the ["Spatiotemporal Analysis"](https://mlr3book.mlr-org.com/special.html#spatiotemporal) chapter in the mlr3book.
 
 Article ["Spatiotemporal Visualization"](https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html) shows how 3D subplots grids can be created.
 
