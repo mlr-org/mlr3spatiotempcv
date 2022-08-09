@@ -2,57 +2,11 @@
 
 # mlr3spatiotempcv 2.0.2
 
-## Chore
-
-- compatibility to mlr3 13.5 (#207)
-
-* chore: compatibility to mlr3 13.5
-
-* style: 80 characters
-
-* fix: avoid double load
-
-* fix: Task compability
-
-* fix: col_roles
-
-## Refactoring
-
-- sync task with mlr3spatial (#210)
-
-## paper
-
-- update sptcv_cstf plots
-
-- add sub3 cover letter
-
-- don't exceed page margins with code
-
-- bibliography updates
-
-- fix capitalization of figure, section and table
-
-- remove comments from code
-
-- no abbr in abstract
-
-- create and save pdfs within article
-
-## Uncategorized
-
-- fix sf handling in task constructor
-
-- quotes
-
-- style
-
-
-# mlr3spatiotempcv 2.0.1.9000
-
 - Add error message when trying to create a `TaskClassifST` or `TaskRegrST` from an `sf` object
 - Synchronize `TaskClassifST` or `TaskRegrST` with {mlr3spatial}
 - Add support for `mlr_reflections` changes in {mlr3} > 0.13.4
 - Adjust "Getting Started" vignette to recent API changes
+- `autoplot.ResamplingSptCVCstf()`: Add missing support for argument `axis_label_fontsize` for x and y axes
 
 # mlr3spatiotempcv 2.0.1
 
