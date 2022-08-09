@@ -61,7 +61,7 @@
 #' `static_image = TRUE`.
 #' @export
 #' @seealso
-#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/08-special-spatiotemp.html#vis-spt-partitions)
+#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
 #'   - Vignette [Spatiotemporal Visualization](https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html).
 #'   - [autoplot.ResamplingSpCVBlock()]
 #'   - [autoplot.ResamplingSpCVBuffer()]

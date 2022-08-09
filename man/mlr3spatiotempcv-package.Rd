@@ -12,7 +12,7 @@ Extends the mlr3 ML framework with spatio-temporal resampling methods to account
 
 \itemize{
 \item Book on mlr3: \url{https://mlr3book.mlr-org.com}
-\item mlr3book section about spatiotemporal data: \url{https://mlr3book.mlr-org.com/08-special-spatiotemp.html}
+\item mlr3book section about spatiotemporal data: \url{https://mlr3book.mlr-org.com/special.html#spatiotemporal}
 \item package vignettes: \url{https://mlr3spatiotempcv.mlr-org.com/dev/articles/}
 }
 \subsection{Miscellaneous \pkg{mlr3} content}{
@@ -56,7 +56,7 @@ Meyer H, Reudenbach C, Hengl T, Katurji M, Nauss T (2018).
 Zhao Y, Karypis G (2002).
 \dQuote{Evaluation of Hierarchical Clustering Algorithms for Document Datasets.}
 \emph{11th Conference of Information and Knowledge Management (CIKM)}, 51-524.
-\url{http://glaros.dtc.umn.edu/gkhome/node/167}.
+\doi{https://doi.org/10.1145/584792.584877}.
 }
 \seealso{
 Useful links:
