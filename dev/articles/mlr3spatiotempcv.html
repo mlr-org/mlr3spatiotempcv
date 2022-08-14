@@ -190,16 +190,18 @@
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mlr_reflections</span><span class="op">$</span><span class="va">task_types</span></span>
-<span><span class="co">#&gt;       type          package          task        learner        prediction</span></span>
-<span><span class="co">#&gt; 1: classif             mlr3   TaskClassif LearnerClassif PredictionClassif</span></span>
-<span><span class="co">#&gt; 2: classif mlr3spatiotempcv TaskClassifST LearnerClassif PredictionClassif</span></span>
-<span><span class="co">#&gt; 3:    regr             mlr3      TaskRegr    LearnerRegr    PredictionRegr</span></span>
-<span><span class="co">#&gt; 4:    regr mlr3spatiotempcv    TaskRegrST    LearnerRegr    PredictionRegr</span></span>
-<span><span class="co">#&gt;           measure</span></span>
-<span><span class="co">#&gt; 1: MeasureClassif</span></span>
-<span><span class="co">#&gt; 2: MeasureClassif</span></span>
-<span><span class="co">#&gt; 3:    MeasureRegr</span></span>
-<span><span class="co">#&gt; 4:    MeasureRegr</span></span></code></pre></div>
+<span><span class="co">#&gt;            type          package             task        learner</span></span>
+<span><span class="co">#&gt; 1:      classif             mlr3      TaskClassif LearnerClassif</span></span>
+<span><span class="co">#&gt; 2:   classif_st mlr3spatiotempcv    TaskClassifST LearnerClassif</span></span>
+<span><span class="co">#&gt; 3:         regr             mlr3         TaskRegr    LearnerRegr</span></span>
+<span><span class="co">#&gt; 4:      regr_st mlr3spatiotempcv       TaskRegrST    LearnerRegr</span></span>
+<span><span class="co">#&gt; 5: unsupervised             mlr3 TaskUnsupervised        Learner</span></span>
+<span><span class="co">#&gt;           prediction       prediction_data        measure</span></span>
+<span><span class="co">#&gt; 1: PredictionClassif PredictionDataClassif MeasureClassif</span></span>
+<span><span class="co">#&gt; 2: PredictionClassif PredictionDataClassif MeasureClassif</span></span>
+<span><span class="co">#&gt; 3:    PredictionRegr    PredictionDataRegr    MeasureRegr</span></span>
+<span><span class="co">#&gt; 4:    PredictionRegr    PredictionDataRegr    MeasureRegr</span></span>
+<span><span class="co">#&gt; 5:              &lt;NA&gt;                  &lt;NA&gt;           &lt;NA&gt;</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="task-column-roles">Task Column Roles<a class="anchor" aria-label="anchor" href="#task-column-roles"></a>
@@ -212,10 +214,19 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mlr_reflections</span><span class="op">$</span><span class="va">task_col_roles</span></span>
 <span><span class="co">#&gt; $regr</span></span>
+<span><span class="co">#&gt; [1] "feature" "target"  "name"    "order"   "stratum" "group"   "weight" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $classif</span></span>
+<span><span class="co">#&gt; [1] "feature" "target"  "name"    "order"   "stratum" "group"   "weight" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $unsupervised</span></span>
+<span><span class="co">#&gt; [1] "feature" "name"    "order"  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $classif_st</span></span>
 <span><span class="co">#&gt;  [1] "feature"    "target"     "name"       "order"      "stratum"   </span></span>
 <span><span class="co">#&gt;  [6] "group"      "weight"     "coordinate" "space"      "time"      </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $classif</span></span>
+<span><span class="co">#&gt; $regr_st</span></span>
 <span><span class="co">#&gt;  [1] "feature"    "target"     "name"       "order"      "stratum"   </span></span>
 <span><span class="co">#&gt;  [6] "group"      "weight"     "coordinate" "space"      "time"</span></span></code></pre></div>
 </div>
