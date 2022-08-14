@@ -2,50 +2,7 @@
 
 # mlr3spatiotempcv 2.0.2.9000
 
-## Chore
-
-- compatibility to mlr3 13.5 (#207)
-
-* chore: compatibility to mlr3 13.5
-
-* style: 80 characters
-
-* fix: avoid double load
-
-* fix: Task compability
-
-* fix: col_roles
-
-## Refactoring
-
-- sync task with mlr3spatial (#210)
-
-## paper
-
-- update sptcv_cstf plots
-
-- add sub3 cover letter
-
-- don't exceed page margins with code
-
-- bibliography updates
-
-- fix capitalization of figure, section and table
-
-- remove comments from code
-
-- no abbr in abstract
-
-- create and save pdfs within article
-
-## Uncategorized
-
-- fix sf handling in task constructor
-
-- quotes
-
-- style
-
+- No changes
 
 # mlr3spatiotempcv 2.0.2
 
