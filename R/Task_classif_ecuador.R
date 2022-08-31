@@ -31,6 +31,7 @@ load_task_ecuador = function(id = "ecuador") {
   task = TaskClassifST$new(
     id = "ecuador", b, target = "slides", positive = "TRUE",
     coordinate_names = c("x", "y"), coords_as_features = FALSE,
+    label = "Ecuador landslides",
     crs = "+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs")
   return(task)
 }

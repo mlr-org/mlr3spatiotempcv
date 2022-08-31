@@ -54,6 +54,7 @@ load_task_cookfarm = function(id = "cookfarm_mlr3") {
   b$hash = "_mlr3_tasks_cookfarm_"
   task = TaskRegrST$new(
     id = "cookfarm", b, target = "PHIHOX",
+    label = "Cookfarm profiles",
     coordinate_names = c("x", "y"), coords_as_features = FALSE,
     crs = 26911)
   task$set_col_roles("Date", roles = "time")

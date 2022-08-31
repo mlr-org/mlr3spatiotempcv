@@ -32,6 +32,7 @@ load_task_diplodia = function(id = "diplodia") {
     id = "diplodia", b,
     target = "diplo01", positive = "1",
     coordinate_names = c("x", "y"), coords_as_features = FALSE,
+    label = "Diplodia sapinea infections",
     crs = "+proj=utm +zone=30 +south +datum=WGS84 +units=m +no_defs")
   return(task)
 }

@@ -37,7 +37,7 @@ TaskRegrST = R6::R6Class("TaskRegrST",
       }
 
       super$initialize(
-        id = id, backend = backend, target = target,
+        id = id, backend = backend, target = target, label = label,
         extra_args = extra_args
       )
 

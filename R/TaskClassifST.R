@@ -57,7 +57,7 @@ TaskClassifST = R6::R6Class("TaskClassifST",
       }
 
       super$initialize(
-        id = id, backend = backend, target = target,
+        id = id, backend = backend, target = target, label = label,
         positive = positive, extra_args = extra_args
       )
 
