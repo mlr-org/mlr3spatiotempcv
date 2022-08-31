@@ -40,7 +40,7 @@ Geomorphology, 139-140: 271-284.
 Other Task: 
 \code{\link{TaskClassifST}},
 \code{\link{TaskRegrST}},
-\code{\link{mlr_tasks_cookfarm}},
+\code{\link{mlr_tasks_cookfarm_mlr3}},
 \code{\link{mlr_tasks_diplodia}}
 }
 \concept{Task}

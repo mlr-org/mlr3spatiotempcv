@@ -39,7 +39,7 @@ if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 \seealso{
 Other Task: 
 \code{\link{TaskRegrST}},
-\code{\link{mlr_tasks_cookfarm}},
+\code{\link{mlr_tasks_cookfarm_mlr3}},
 \code{\link{mlr_tasks_diplodia}},
 \code{\link{mlr_tasks_ecuador}}
 }

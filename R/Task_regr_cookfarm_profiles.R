@@ -2,7 +2,7 @@
 #'
 #' @docType data
 #' @usage data(cookfarm_mlr3)
-#' @name mlr_tasks_cookfarm
+#' @name mlr_tasks_cookfarm_mlr3
 #' @format [R6::R6Class] inheriting from [TaskRegr].
 #'
 #' @section Usage:
@@ -53,7 +53,7 @@ load_task_cookfarm = function(id = "cookfarm_mlr3") {
   b = mlr3::as_data_backend(cookfarm_mlr3)
   b$hash = "_mlr3_tasks_cookfarm_"
   task = TaskRegrST$new(
-    id = "cookfarm", b, target = "PHIHOX",
+    id = "cookfarm_mlr3", b, target = "PHIHOX",
     label = "Cookfarm profiles",
     coordinate_names = c("x", "y"), coords_as_features = FALSE,
     crs = 26911)

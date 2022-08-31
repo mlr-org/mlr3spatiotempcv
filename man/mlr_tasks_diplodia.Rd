@@ -42,7 +42,7 @@ Schratz P, Muenchow J, Iturritxa E, Richter J, Brenning A (2019).
 Other Task: 
 \code{\link{TaskClassifST}},
 \code{\link{TaskRegrST}},
-\code{\link{mlr_tasks_cookfarm}},
+\code{\link{mlr_tasks_cookfarm_mlr3}},
 \code{\link{mlr_tasks_ecuador}}
 }
 \concept{Task}

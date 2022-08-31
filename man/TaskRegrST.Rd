@@ -18,7 +18,7 @@ changed by setting \code{coords_as_features = TRUE}.
 \seealso{
 Other Task: 
 \code{\link{TaskClassifST}},
-\code{\link{mlr_tasks_cookfarm}},
+\code{\link{mlr_tasks_cookfarm_mlr3}},
 \code{\link{mlr_tasks_diplodia}},
 \code{\link{mlr_tasks_ecuador}}
 }
