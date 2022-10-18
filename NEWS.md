@@ -2,18 +2,8 @@
 
 # mlr3spatiotempcv 2.0.3
 
-- Merge branch 'main' of github.com:mlr-org/mlr3spatiotempcv
-
-
-
-# mlr3spatiotempcv 2.0.2.9001
-
 - add `label` support for built-in tasks
-
-
-# mlr3spatiotempcv 2.0.2.9000
-
-- No changes
+- adhere to CRAN "noSuggests" policy
 
 # mlr3spatiotempcv 2.0.2
 
