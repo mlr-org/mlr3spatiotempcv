@@ -24,7 +24,8 @@ test_that("tasks created from sf objects do not duplicate rows", {
     target = "response",
     coordinate_names = c("x", "y"),
     crs = "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs",
-    coords_as_features = FALSE)
+    coords_as_features = FALSE
+  )
 
   expect_equal(nrow(task$data()), nrow(data))
 })
@@ -41,12 +42,14 @@ test_that("extra_args contains default arguments", {
     coordinate_names = c("x", "y")
   )
 
-  expect_equal(task$extra_args, list(crs = NA_character_,
+  expect_equal(task$extra_args, list(
+    crs = NA_character_,
     coordinate_names = c("x", "y"), coords_as_features = FALSE
   ))
 })
 
 test_that("Task creation works via constructor and sf object", {
+  skip_if_not_installed("sf")
   data = test_make_sp()
   data$p_1 = c(rep("A", 18), rep("B", 18))
   data$response = rnorm(36)

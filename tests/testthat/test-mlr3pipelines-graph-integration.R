@@ -1,5 +1,4 @@
 test_that("spcv methods work in a Graph Learner", {
-  skip("until mlr3filters >= 0.5.1 in on CRAN - including as_task assertion fix")
   skip_if_not_installed("mlr3pipelines")
   skip_if_not_installed("blockCV")
 
@@ -20,7 +19,6 @@ test_that("spcv methods work in a Graph Learner", {
 })
 
 test_that("sptcv methods work in a Graph Learner", {
-  skip("until mlr3filters >= 0.5.1 in on CRAN - including as_task assertion fix")
   skip_if_not_installed("mlr3pipelines")
 
   skip_on_cran()
