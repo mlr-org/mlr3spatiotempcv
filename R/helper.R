@@ -39,10 +39,6 @@ check_cluto_path = function() {
   return(vcluster_loc)
 }
 
-catn = function(..., file = "") {
-  cat(paste0(..., collapse = "\n"), "\n", sep = "", file = file)
-}
-
 # formats an sf object into a data.frame to be used with for Task creation
 format_sf = function(data) {
   geometries = as.character(unique(sf::st_geometry_type(data)))
