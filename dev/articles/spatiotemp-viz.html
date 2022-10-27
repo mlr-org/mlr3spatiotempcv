@@ -125,10 +125,20 @@
 <div class="section level2">
 <h2 id="d-visualization-spatiotemporal">3D Visualization (spatiotemporal)<a class="anchor" aria-label="anchor" href="#d-visualization-spatiotemporal"></a>
 </h2>
-<p>{mlr3spatiotempcv} makes use of {plotly} to create the 3D plots for visualizing spatiotemporal folds created via the CLUTO algorithm. Arranging multiple 3D plots in {plotly} is done via <a href="https://plotly.com/r/3d-subplots/" class="external-link">3D subplots</a>.</p>
-<p>Unfortunately, {plotly}’s subplot implementation is not dynamic. This means that multiple “scene” objects need to be specified in <code>plotly::layout()</code> to determine the coordinates of the respective subplot. Depending on the number of chosen folds by the user in <code><a href="../reference/autoplot.html">autoplot()</a></code>, a different number of scenes with different coordinates needs to be given to align the plots properly.</p>
-<p>Hence, manual action is needed to create a properly aligned grid of 3D plots.</p>
-<p>Below is an example how to create a 2x2 grid showing four folds as 3D subplots. It makes use of the returned 3D plotly objects which are returned in a list by <code><a href="../reference/autoplot.html">autoplot()</a></code>:</p>
+<p>{mlr3spatiotempcv} makes use of {plotly} to create the 3D plots for
+visualizing spatiotemporal folds created via the CLUTO algorithm.
+Arranging multiple 3D plots in {plotly} is done via <a href="https://plotly.com/r/3d-subplots/" class="external-link">3D subplots</a>.</p>
+<p>Unfortunately, {plotly}’s subplot implementation is not dynamic. This
+means that multiple “scene” objects need to be specified in
+<code>plotly::layout()</code> to determine the coordinates of the
+respective subplot. Depending on the number of chosen folds by the user
+in <code><a href="../reference/autoplot.html">autoplot()</a></code>, a different number of scenes with different
+coordinates needs to be given to align the plots properly.</p>
+<p>Hence, manual action is needed to create a properly aligned grid of
+3D plots.</p>
+<p>Below is an example how to create a 2x2 grid showing four folds as 3D
+subplots. It makes use of the returned 3D plotly objects which are
+returned in a list by <code><a href="../reference/autoplot.html">autoplot()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3.mlr-org.com" class="external-link">mlr3</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3spatiotempcv.mlr-org.com/">mlr3spatiotempcv</a></span><span class="op">)</span></span>
@@ -169,13 +179,23 @@
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="../reference/figures/sptcv_cstf_multiplot.png" width="600" style="display: block; margin: auto;"></p>
-<p>Note: The image shown above is a static version created with <code><a href="https://rdrr.io/pkg/plotly/man/save_image.html" class="external-link">plotly::save_image()</a></code>.</p>
-<p>Unfortunately, titles in subplots cannot be created dynamically. However, there is a manual workaround via <a href="https://plotly.com/r/reference/#layout-annotations" class="external-link">annotations</a> show in this <a href="https://rpubs.com/bcd/subplot-titles" class="external-link">RPubs post</a>.</p>
+<p>Note: The image shown above is a static version created with
+<code><a href="https://rdrr.io/pkg/plotly/man/save_image.html" class="external-link">plotly::save_image()</a></code>.</p>
+<p>Unfortunately, titles in subplots cannot be created dynamically.
+However, there is a manual workaround via <a href="https://plotly.com/r/reference/#layout-annotations" class="external-link">annotations</a>
+show in this <a href="https://rpubs.com/bcd/subplot-titles" class="external-link">RPubs
+post</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="examples-of-spatial-partitioning-2d">Examples of spatial partitioning (2D)<a class="anchor" aria-label="anchor" href="#examples-of-spatial-partitioning-2d"></a>
 </h2>
-<p>The following plots are based on a three fold partitioning of the <a href="https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_ecuador.html">ecuador</a> example task. Method <code>mlr_resampling_sptcv_cstf</code> is omitted here as the <code>ecuador</code> task does not have a factor grouping variable which is required by this method. The partitions created on this dataset do not claim to necessarily make sense in practice - they should only contrast the individual methods against each other. The source code can be found <a href="https://github.com/mlr-org/mlr3spatiotempcv/blob/main/vignettes/spatiotemp-viz.Rmd" class="external-link">here</a>.</p>
+<p>The following plots are based on a three fold partitioning of the <a href="https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_ecuador.html">ecuador</a>
+example task. Method <code>mlr_resampling_sptcv_cstf</code> is omitted
+here as the <code>ecuador</code> task does not have a factor grouping
+variable which is required by this method. The partitions created on
+this dataset do not claim to necessarily make sense in practice - they
+should only contrast the individual methods against each other. The
+source code can be found <a href="https://github.com/mlr-org/mlr3spatiotempcv/blob/main/vignettes/spatiotemp-viz.Rmd" class="external-link">here</a>.</p>
 <p><img src="spatiotemp-viz_files/figure-html/unnamed-chunk-4-1.png" width="960"></p>
 <table class="table">
 <thead><tr class="header">
