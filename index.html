@@ -119,7 +119,9 @@
 <p>Package website: <a href="https://mlr3spatiotempcv.mlr-org.com/">release</a> | <a href="https://mlr3spatiotempcv.mlr-org.com/dev/">dev</a></p>
 <p>Spatiotemporal resampling methods for mlr3.</p>
 <!-- badges: start -->
-<!-- badges: end --><p>This package extends the <a href="https://github.com/mlr-org/mlr3" class="external-link">mlr3</a> package framework with spatiotemporal resampling and visualization methods.</p>
+
+<!-- badges: end -->
+<p>This package extends the <a href="https://github.com/mlr-org/mlr3" class="external-link">mlr3</a> package framework with spatiotemporal resampling and visualization methods.</p>
 <p>If you prefer the <a href="https://www.tidymodels.org/" class="external-link">tidymodels</a> ecosystem, have a look at the <a href="https://spatialsample.tidymodels.org/index.html" class="external-link">{spatialsample}</a> package for spatial sampling methods.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -157,6 +159,11 @@
 <p>This list does not claim to be comprehensive.</p>
 <p>(Disclaimer: Because CRAN does not like DOI URLs in their automated checks, direct linking to scientific articles is not possible…)</p>
 <table class="table">
+<colgroup>
+<col width="6%">
+<col width="3%">
+<col width="89%">
+</colgroup>
 <thead><tr class="header">
 <th>Name</th>
 <th>Language</th>
@@ -214,7 +221,19 @@
 <div class="section level1">
 <h1 id="faq">FAQ<a class="anchor" aria-label="anchor" href="#faq"></a>
 </h1>
-<details><summary>Which resampling method should I use?</summary><br> There is no single-best resampling method. It depends on your dataset characteristics and what your model should is about to predict on. The resampling scheme should reflect the final purpose of the model - this concept is called “target-oriented” resampling. For example, if the model was trained on multiple forest plots and its purpose is to predict something on unknown forest stands, the resampling structure should reflect this.</details><details><summary>Are there more resampling methods than the one {mlr3spatiotempcv} offers?</summary><br> {mlr3spatiotempcv} aims to offer all resampling methods that exist in R. Though this does not mean that it covers all resampling methods. If there are some that you are missing, feel free to open an issue.</details><details><summary>How can I use the “blocking” concept of the old {mlr}?</summary><br> This concept is now supported via the “column roles” concept available in {mlr3} <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">Task</a> objects. See <a href="https://mlr3.mlr-org.com/reference/Resampling.html#grouping-blocking" class="external-link">this documentation</a> for more information.</details><details><summary>For the methods that offer buffering, how can an appropriate value be chosen?</summary><br> There is no easy answer to this question. Buffering train and test sets reduces the similarity between both. The degree of this reduction depends on the dataset itself and there is no general approach how to choosen an appropriate buffer size. Some studies used the distance at which the autocorrelation levels off. This buffer distance often removes quite a lot of observations and needs to be calculated first.</details>
+<details><summary>
+Which resampling method should I use?
+</summary><br> There is no single-best resampling method. It depends on your dataset characteristics and what your model should is about to predict on. The resampling scheme should reflect the final purpose of the model - this concept is called “target-oriented” resampling. For example, if the model was trained on multiple forest plots and its purpose is to predict something on unknown forest stands, the resampling structure should reflect this.
+</details><details><summary>
+Are there more resampling methods than the one {mlr3spatiotempcv} offers?
+</summary><br> {mlr3spatiotempcv} aims to offer all resampling methods that exist in R. Though this does not mean that it covers all resampling methods. If there are some that you are missing, feel free to open an issue.
+</details><details><summary>
+How can I use the “blocking” concept of the old {mlr}?
+</summary><br> This concept is now supported via the “column roles” concept available in {mlr3} <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">Task</a> objects. See <a href="https://mlr3.mlr-org.com/reference/Resampling.html#grouping-blocking" class="external-link">this documentation</a> for more information.
+</details><details><summary>
+For the methods that offer buffering, how can an appropriate value be chosen?
+</summary><br> There is no easy answer to this question. Buffering train and test sets reduces the similarity between both. The degree of this reduction depends on the dataset itself and there is no general approach how to choosen an appropriate buffer size. Some studies used the distance at which the autocorrelation levels off. This buffer distance often removes quite a lot of observations and needs to be calculated first.
+</details>
 </div>
 
   </main><aside class="col-md-3"><div class="links">

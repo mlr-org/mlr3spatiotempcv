@@ -124,33 +124,58 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This package adds resampling methods for the {mlr3} package framework suited for spatial, temporal and spatiotemporal data. These methods can help to reduce the influence of <a href="https://mlr3book.mlr-org.com/special.html#autocorrelation" class="external-link">autocorrelation</a> on performance estimates when performing cross-validation. While this article gives a rather technical introduction to the package, a more applied approach can be found in the <a href="https://mlr3book.mlr-org.com/special.html#spatiotemporal" class="external-link">mlr3book section on “Spatiotemporal Analysis”</a>.</p>
-<p>After loading the package via <code><a href="https://mlr3spatiotempcv.mlr-org.com/">library("mlr3spatiotempcv")</a></code>, the spatiotemporal resampling methods and example tasks provided by {mlr3spatiotempcv} are available to the user <strong>alongside the default {mlr3} resampling methods and tasks</strong>.</p>
+<p>This package adds resampling methods for the {mlr3} package framework
+suited for spatial, temporal and spatiotemporal data. These methods can
+help to reduce the influence of <a href="https://mlr3book.mlr-org.com/special.html#autocorrelation" class="external-link">autocorrelation</a>
+on performance estimates when performing cross-validation. While this
+article gives a rather technical introduction to the package, a more
+applied approach can be found in the <a href="https://mlr3book.mlr-org.com/special.html#spatiotemporal" class="external-link">mlr3book
+section on “Spatiotemporal Analysis”</a>.</p>
+<p>After loading the package via
+<code><a href="https://mlr3spatiotempcv.mlr-org.com/">library("mlr3spatiotempcv")</a></code>, the spatiotemporal resampling
+methods and example tasks provided by {mlr3spatiotempcv} are available
+to the user <strong>alongside the default {mlr3} resampling methods and
+tasks</strong>.</p>
 <div class="section level3">
 <h3 id="creating-a-spatial-task">Creating a spatial Task<a class="anchor" aria-label="anchor" href="#creating-a-spatial-task"></a>
 </h3>
-<p>To make use of spatial resampling methods, a {mlr3} task that is aware of its spatial characteristic needs to be created. Two <code>Task</code> child classes exist in {mlr3spatiotempcv} for this purpose:</p>
+<p>To make use of spatial resampling methods, a {mlr3} task that is
+aware of its spatial characteristic needs to be created. Two
+<code>Task</code> child classes exist in {mlr3spatiotempcv} for this
+purpose:</p>
 <ul>
 <li><code>TaskClassifST</code></li>
 <li><code>TaskRegrST</code></li>
 </ul>
 <p>To create one of these, you have multiple options:</p>
 <ol style="list-style-type: decimal">
-<li>Use the constructor of the <code>Task</code> directly via <code>$new()</code> - this only works for data.table backends (!)</li>
-<li>Use the <code>as_task_*</code> converters (e.g. if your data is stored in an <code>sf</code> object)</li>
+<li>Use the constructor of the <code>Task</code> directly via
+<code>$new()</code> - this only works for data.table backends (!)</li>
+<li>Use the <code>as_task_*</code> converters (e.g. if your data is
+stored in an <code>sf</code> object)</li>
 </ol>
-<p>We recommend the latter, as the <code>as_task_*</code> converters aim to make task construction easier, e.g., by creating the <code>DataBackend</code> (which is required to create a Task in {mlr3}) automatically and setting the <code>crs</code> and <code>coordinate_names</code> fields. Let’s assume your (point) data is stored in with an <code>sf</code> object, which is a common scenario for spatial analysis in R.</p>
+<p>We recommend the latter, as the <code>as_task_*</code> converters aim
+to make task construction easier, e.g., by creating the
+<code>DataBackend</code> (which is required to create a Task in {mlr3})
+automatically and setting the <code>crs</code> and
+<code>coordinate_names</code> fields. Let’s assume your (point) data is
+stored in with an <code>sf</code> object, which is a common scenario for
+spatial analysis in R.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create 'sf' object</span></span>
 <span><span class="va">data_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">ecuador</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">32717</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># create `TaskClassifST` from `sf` object</span></span>
 <span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../reference/as_task_classif_st.html">as_task_classif_st</a></span><span class="op">(</span><span class="va">data_sf</span>, id <span class="op">=</span> <span class="st">"ecuador_task"</span>, target <span class="op">=</span> <span class="st">"slides"</span>, positive <span class="op">=</span> <span class="st">"TRUE"</span><span class="op">)</span></span></code></pre></div>
-<p>You can also use a plain <code>data.frame</code>. In this case, <code>crs</code> and <code>coordinate_names</code> need to be passed along explicitly as they cannot be inferred directly from the <code>sf</code> object:</p>
+<p>You can also use a plain <code>data.frame</code>. In this case,
+<code>crs</code> and <code>coordinate_names</code> need to be passed
+along explicitly as they cannot be inferred directly from the
+<code>sf</code> object:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../reference/as_task_classif_st.html">as_task_classif_st</a></span><span class="op">(</span><span class="va">ecuador</span>, id <span class="op">=</span> <span class="st">"ecuador_task"</span>, target <span class="op">=</span> <span class="st">"slides"</span>,</span>
 <span>  positive <span class="op">=</span> <span class="st">"TRUE"</span>, coordinate_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">32717</span><span class="op">)</span></span></code></pre></div>
-<p>The <code>*ST</code> task family prints a subset of the coordinates by default:</p>
+<p>The <code>*ST</code> task family prints a subset of the coordinates
+by default:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;TaskClassifST:ecuador_task&gt; (751 x 11)</span></span>
@@ -172,13 +197,17 @@
 <span><span class="co">#&gt; 749: 713322.5 9560562</span></span>
 <span><span class="co">#&gt; 750: 715392.5 9557932</span></span>
 <span><span class="co">#&gt; 751: 713802.5 9560862</span></span></code></pre></div>
-<p>All <code>*ST</code> tasks can be treated as their super class equivalents <code>TaskClassif</code> or <code>TaskRegr</code> in subsequent {mlr3} modeling steps.</p>
+<p>All <code>*ST</code> tasks can be treated as their super class
+equivalents <code>TaskClassif</code> or <code>TaskRegr</code> in
+subsequent {mlr3} modeling steps.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="contributed-reflections-by-mlr3spatiotempcv">Contributed reflections by {mlr3spatiotempcv}<a class="anchor" aria-label="anchor" href="#contributed-reflections-by-mlr3spatiotempcv"></a>
 </h2>
-<p>In {mlr3}, dictionaries are used for overview purposes of available methods. The following sections show which dictionaries get appended with new entries when loading {mlr3spatiotempcv}.</p>
+<p>In {mlr3}, dictionaries are used for overview purposes of available
+methods. The following sections show which dictionaries get appended
+with new entries when loading {mlr3spatiotempcv}.</p>
 </div>
 <div class="section level2">
 <h2 id="task-type">Task Type<a class="anchor" aria-label="anchor" href="#task-type"></a>
@@ -242,7 +271,8 @@
 <li><p><code>mlr_resampling_sptcv_cluto</code></p></li>
 <li><p><code>mlr_resampling_sptcv_cstf</code></p></li>
 </ul>
-<p>and their respective repeated versions. See <code>as.data.table(mlr_resamplings)</code> for the full dictionary.</p>
+<p>and their respective repeated versions. See
+<code>as.data.table(mlr_resamplings)</code> for the full dictionary.</p>
 </div>
 <div class="section level2">
 <h2 id="examples-tasks">Examples Tasks<a class="anchor" aria-label="anchor" href="#examples-tasks"></a>
@@ -255,12 +285,15 @@
 <div class="section level2">
 <h2 id="upstream-packages-and-scientific-references">Upstream Packages and Scientific References<a class="anchor" aria-label="anchor" href="#upstream-packages-and-scientific-references"></a>
 </h2>
-<p>The following table lists all spatiotemporal methods implemented in {mlr3spatiotempcv} (or {mlr3}), their upstream R package and scientific references. All methods besides <code>"spcv_buffer"</code> also have a corresponding “repeated” method.</p>
-<table class="table">
+<p>The following table lists all spatiotemporal methods implemented in
+{mlr3spatiotempcv} (or {mlr3}), their upstream R package and scientific
+references. All methods besides <code>"spcv_buffer"</code> also have a
+corresponding “repeated” method.</p>
+<table style="width:99%;" class="table">
 <colgroup>
 <col width="18%">
 <col width="26%">
-<col width="11%">
+<col width="10%">
 <col width="43%">
 </colgroup>
 <thead><tr class="header">
@@ -332,7 +365,8 @@
 </td>
 <td></td>
 <td>
-<code>mlr_resamplings_cv</code>, <code>Task$set_col_roles(&lt;variable&gt;, "group")</code>
+<code>mlr_resamplings_cv</code>,
+<code>Task$set_col_roles(&lt;variable&gt;, "group")</code>
 </td>
 </tr>
 <tr class="even">
@@ -341,7 +375,8 @@
 <td>(CAST) Leave-Location-and-Time-Out</td>
 <td><span class="citation">Meyer et al. (2018)</span></td>
 <td>
-<code>mlr_resamplings_sptcv_cstf</code>, <code>Task$set_col_roles(&lt;variable&gt;, "space|time")</code>
+<code>mlr_resamplings_sptcv_cstf</code>,
+<code>Task$set_col_roles(&lt;variable&gt;, "space|time")</code>
 </td>
 </tr>
 <tr class="odd">
@@ -359,16 +394,31 @@
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-brenning2012" class="csl-entry">
-Brenning, Alexander. 2012. <span>“<span class="nocase">Spatial cross-validation and bootstrap for the assessment of prediction rules in remote sensing: The R package sperrorest</span>.”</span> In <em>2012 <span>IEEE</span> International Geoscience and Remote Sensing Symposium</em>. <span>IEEE</span>. <a href="https://doi.org/10.1109/igarss.2012.6352393" class="external-link">https://doi.org/10.1109/igarss.2012.6352393</a>.
+Brenning, Alexander. 2012. <span>“<span class="nocase">Spatial
+cross-validation and bootstrap for the assessment of prediction rules in
+remote sensing: The R package sperrorest</span>.”</span> In <em>2012
+<span>IEEE</span> International Geoscience and Remote Sensing
+Symposium</em>. <span>IEEE</span>. <a href="https://doi.org/10.1109/igarss.2012.6352393" class="external-link">https://doi.org/10.1109/igarss.2012.6352393</a>.
 </div>
 <div id="ref-meyer2018" class="csl-entry">
-Meyer, Hanna, Christoph Reudenbach, Tomislav Hengl, Marwan Katurji, and Thomas Nauss. 2018. <span>“Improving Performance of Spatio-Temporal Machine Learning Models Using Forward Feature Selection and Target-Oriented Validation.”</span> <em>Environmental Modelling <span>&amp;</span> Software</em> 101 (March): 1–9. <a href="https://doi.org/10.1016/j.envsoft.2017.12.001" class="external-link">https://doi.org/10.1016/j.envsoft.2017.12.001</a>.
+Meyer, Hanna, Christoph Reudenbach, Tomislav Hengl, Marwan Katurji, and
+Thomas Nauss. 2018. <span>“Improving Performance of Spatio-Temporal
+Machine Learning Models Using Forward Feature Selection and
+Target-Oriented Validation.”</span> <em>Environmental Modelling
+<span>&amp;</span> Software</em> 101 (March): 1–9. <a href="https://doi.org/10.1016/j.envsoft.2017.12.001" class="external-link">https://doi.org/10.1016/j.envsoft.2017.12.001</a>.
 </div>
 <div id="ref-valavi2018" class="csl-entry">
-Valavi, Roozbeh, Jane Elith, Jose J. Lahoz-Monfort, and Gurutzeta Guillera-Arroita. 2018. <span>“<span class="nocase">blockCV: an R package for generating spatially or environmentally separated folds for k-fold cross-validation of species distribution models</span>.”</span> <em><span>bioRxiv</span></em>, June. <a href="https://doi.org/10.1101/357798" class="external-link">https://doi.org/10.1101/357798</a>.
+Valavi, Roozbeh, Jane Elith, Jose J. Lahoz-Monfort, and Gurutzeta
+Guillera-Arroita. 2018. <span>“<span class="nocase">blockCV: an R
+package for generating spatially or environmentally separated folds for
+k-fold cross-validation of species distribution models</span>.”</span>
+<em><span>bioRxiv</span></em>, June. <a href="https://doi.org/10.1101/357798" class="external-link">https://doi.org/10.1101/357798</a>.
 </div>
 <div id="ref-zhao2002" class="csl-entry">
-Zhao, Ying, and George Karypis. 2002. <span>“Evaluation of Hierarchical Clustering Algorithms for Document Datasets.”</span> <em>11th Conference of Information and Knowledge Management (CIKM)</em>, 515–24. https://doi.org/<a href="https://doi.org/10.1145/584792.584877" class="external-link">https://doi.org/10.1145/584792.584877</a>.
+Zhao, Ying, and George Karypis. 2002. <span>“Evaluation of Hierarchical
+Clustering Algorithms for Document Datasets.”</span> <em>11th Conference
+of Information and Knowledge Management (CIKM)</em>, 515–24.
+https://doi.org/<a href="https://doi.org/10.1145/584792.584877" class="external-link">https://doi.org/10.1145/584792.584877</a>.
 </div>
 </div>
 </div>
