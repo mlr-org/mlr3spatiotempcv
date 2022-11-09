@@ -39,7 +39,7 @@ autoplot_multi_fold_list = function(task, resampling, sample_fold_n, fold_id,
       sf_df = reorder_levels(sf_df)
 
       plot = ggplot() +
-        geom_sf(data = sf_df, aes(color = indicator), ...) +
+        geom_sf(data = sf_df, aes(color = indicator), linewidth = 0.5, ...) +
         scale_color_manual(values = c(
           "Omitted" = "grey",
           "Train" = "#0072B5",
@@ -73,7 +73,7 @@ autoplot_multi_fold_list = function(task, resampling, sample_fold_n, fold_id,
       sf_df = reorder_levels(sf_df)
 
       plot = ggplot() +
-        geom_sf(data = sf_df, aes(color = indicator), ...) +
+        geom_sf(data = sf_df, aes(color = indicator), linewidth = 0.5, ...) +
         scale_color_manual(values = c(
           "Train" = "#0072B5",
           "Test" = "#E18727"

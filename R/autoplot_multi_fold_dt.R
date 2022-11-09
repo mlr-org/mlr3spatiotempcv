@@ -40,7 +40,7 @@ autoplot_multi_fold_dt = function(task, resampling, resampling_mod,
         geom_sf(data = sf_df, aes(color = indicator), ...) +
         geom_sf(
           data = blocks, color = "black", alpha = 0,
-          size = 0.7) +
+          size = 0.7, linewidth = 0.5) +
         scale_color_manual(values = c(
           "Train" = "#0072B5",
           "Test" = "#E18727"
@@ -75,7 +75,7 @@ autoplot_multi_fold_dt = function(task, resampling, resampling_mod,
     } else {
 
       plot = ggplot() +
-        geom_sf(data = sf_df, aes(color = indicator), ...) +
+        geom_sf(data = sf_df, aes(color = indicator), linewidth = 0.5, ...) +
         scale_color_manual(values = c(
           "Train" = "#0072B5",
           "Test" = "#E18727"

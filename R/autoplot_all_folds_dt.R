@@ -22,7 +22,7 @@ autoplot_all_folds_dt = function(task, resampling, sample_fold_n, fold_id,
   plot = ggplot() +
     geom_sf(
       data = sf_df["fold"], show.legend = "point",
-      aes(color = fold),
+      aes(color = fold), linewidth = 0.5,
       ...
     ) +
     ggsci::scale_color_ucscgb() +
