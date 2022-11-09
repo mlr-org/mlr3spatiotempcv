@@ -33,7 +33,7 @@ autoplot_all_folds_list = function(task, resampling, sample_fold_n, fold_id, rep
 
   plot = ggplot() +
     geom_sf(
-      data = sf_df["fold"], show.legend = "point",
+      data = sf_df["fold"], show.legend = "point", linewidth = 0.5,
       aes(color = fold)
     ) +
     ggsci::scale_color_ucscgb() +
