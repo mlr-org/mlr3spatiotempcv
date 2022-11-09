@@ -1,6 +1,6 @@
 Package: mlr3spatiotempcv
 Title: Spatiotemporal Resampling Methods for 'mlr3'
-Version: 2.0.3
+Version: 2.0.3.9000
 Authors@R: c(
     person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0748-6624")),
@@ -26,8 +26,8 @@ Depends:
 Imports:
     checkmate,
     data.table,
-    ggplot2,
-    mlr3misc (>= 0.9.2),
+    ggplot2 (>= 3.4.0),
+    mlr3misc (>= 0.11.0),
     paradox,
     R6,
     utils
