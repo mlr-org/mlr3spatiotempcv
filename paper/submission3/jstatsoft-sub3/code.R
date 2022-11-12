@@ -1,4 +1,4 @@
-if (!requireNamespace(c("blockCV"), quietly = TRUE)) install.packages(c("blockCV", "sf", "patchwork", "sperrorest", "ggtext", "plotly"))
+if (!requireNamespace("blockCV", quietly = TRUE)) install.packages(c("blockCV", "sf", "patchwork", "sperrorest", "ggtext", "plotly"))
 dir.create("pdf")
 
 library("mlr3")
@@ -220,12 +220,12 @@ rr_sp = resample(
 rr_sp$aggregate(measures = msr("classif.auc"))
 
 
-autoplot(rsmp_sp, task, fold_id = c(1:2), size = 0.8) *
+autoplot(rsmp_sp, task, fold_id = 1:2, size = 0.8) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 
 
-autoplot(rsmp_nsp, task, fold_id = c(1:2), size = 0.8) *
+autoplot(rsmp_nsp, task, fold_id = 1:2, size = 0.8) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
 
