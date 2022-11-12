@@ -75,6 +75,7 @@ mlr3 spatial resampling object of class \link{ResamplingSpCVEnv} or
 Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods.
 }
 \examples{
+\donttest{
 if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   library(mlr3)
   library(mlr3spatiotempcv)
@@ -87,6 +88,7 @@ if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   autoplot(resampling, task, fold_id = 1)
   autoplot(resampling, task, fold_id = c(1, 2)) *
     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+}
 }
 }
 \seealso{
