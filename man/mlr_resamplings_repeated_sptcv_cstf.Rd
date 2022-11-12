@@ -47,7 +47,7 @@ task$set_col_roles("SOURCEID", roles = "space")
 task$set_col_roles("Date", roles = "time")
 
 # Instantiate Resampling
-rcv = rsmp("repeated_sptcv_cstf", folds = 5, repeats = 3)
+rcv = rsmp("repeated_sptcv_cstf", folds = 5, repeats = 2)
 rcv$instantiate(task)
 
 ### Individual sets:

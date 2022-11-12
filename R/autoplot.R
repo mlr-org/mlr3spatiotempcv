@@ -60,6 +60,7 @@
 #'   - [autoplot.ResamplingSptCVCluto()]
 #' @export
 #' @examples
+#' \donttest{
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
@@ -85,6 +86,7 @@
 #'     fold_id = c(1, 2),
 #'     show_blocks = TRUE) *
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+#' }
 #' }
 autoplot.ResamplingSpCVBlock = function( # nolint
   object,

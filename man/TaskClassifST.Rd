@@ -17,6 +17,7 @@ may occur. By default, coordinates are not used as features. This can be
 changed by setting \code{coords_as_features = TRUE}.
 }
 \examples{
+\donttest{
 if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   task = as_task_classif_st(ecuador,
     target = "slides",
@@ -34,6 +35,7 @@ if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   task$negative
   task$coordinates()
   task$coordinate_names
+}
 }
 }
 \seealso{

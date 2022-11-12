@@ -51,12 +51,13 @@ For a list of available arguments, please see \link[blockCV:spatialBlock]{blockC
 }
 
 \examples{
+\donttest{
 if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   library(mlr3)
   task = tsk("ecuador")
 
   # Instantiate Resampling
-  rcv = rsmp("spcv_block", range = 1000L)
+  rcv = rsmp("spcv_block", range = 3000L, folds = 3)
   rcv$instantiate(task)
 
   # Individual sets:
@@ -66,6 +67,7 @@ if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 
   # Internal storage:
   rcv$instance
+}
 }
 }
 \references{

@@ -25,6 +25,7 @@
 #' @family Task
 #' @export
 #' @examples
+#' \donttest{
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 #'   task = as_task_classif_st(ecuador,
 #'     target = "slides",
@@ -42,6 +43,7 @@
 #'   task$negative
 #'   task$coordinates()
 #'   task$coordinate_names
+#' }
 #' }
 TaskClassifST = R6::R6Class("TaskClassifST",
   inherit = TaskClassif,
