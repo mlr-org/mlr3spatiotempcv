@@ -9,6 +9,7 @@
 #' @importFrom stats kmeans
 #' @export
 #' @examples
+#' \donttest{
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   task = tsk("ecuador")
@@ -24,6 +25,7 @@
 #'
 #'   # Internal storage:
 #'   rcv$instance
+#' }
 #' }
 ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
   inherit = mlr3::Resampling,
