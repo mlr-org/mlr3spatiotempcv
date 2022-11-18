@@ -33,6 +33,7 @@ For a list of available arguments, please see \link[blockCV:buffering]{blockCV::
 }
 
 \examples{
+\donttest{
 if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
   library(mlr3)
   task = tsk("ecuador")
@@ -48,6 +49,7 @@ if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 
   # Internal storage:
   # rcv$instance
+}
 }
 }
 \references{

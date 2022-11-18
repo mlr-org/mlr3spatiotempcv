@@ -13,6 +13,7 @@
 #'
 #' @export
 #' @examples
+#' \donttest{
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   task = tsk("ecuador")
@@ -28,6 +29,7 @@
 #'
 #'   # Internal storage:
 #'   rrcv$instance
+#' }
 #' }
 ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
   inherit = mlr3::Resampling,
