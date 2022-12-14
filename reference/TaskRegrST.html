@@ -119,7 +119,7 @@ changed by setting <code>coords_as_features = TRUE</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code><a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a></code> -&gt; <code><a href="https://mlr3.mlr-org.com/reference/TaskSupervised.html" class="external-link">mlr3::TaskSupervised</a></code> -&gt; <code><a href="https://mlr3.mlr-org.com/reference/TaskRegr.html" class="external-link">mlr3::TaskRegr</a></code> -&gt; <code>TaskRegrST</code></p>
+    <p><code><a href="https://rdrr.io/pkg/mlr3/man/Task.html" class="external-link">mlr3::Task</a></code> -&gt; <code><a href="https://rdrr.io/pkg/mlr3/man/TaskSupervised.html" class="external-link">mlr3::TaskSupervised</a></code> -&gt; <code><a href="https://rdrr.io/pkg/mlr3/man/TaskRegr.html" class="external-link">mlr3::TaskRegr</a></code> -&gt; <code>TaskRegrST</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -153,24 +153,24 @@ that the coordinates in the data are named <code>"x"</code> and <code>"y"</code>
 <li><p><a href="#method-TaskRegrST-coordinates"><code>TaskRegrST$coordinates()</code></a></p></li>
 <li><p><a href="#method-TaskRegrST-print"><code>TaskRegrST$print()</code></a></p></li>
 <li><p><a href="#method-TaskRegrST-clone"><code>TaskRegrST$clone()</code></a></p></li>
-</ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="add_strata"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-add_strata"><code>mlr3::Task$add_strata()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="cbind"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-cbind"><code>mlr3::Task$cbind()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="data"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-data"><code>mlr3::Task$data()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="droplevels"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-droplevels"><code>mlr3::Task$droplevels()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="filter"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-filter"><code>mlr3::Task$filter()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="format"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-format"><code>mlr3::Task$format()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="formula"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-formula"><code>mlr3::Task$formula()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="head"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-head"><code>mlr3::Task$head()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="help"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-help"><code>mlr3::Task$help()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="levels"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-levels"><code>mlr3::Task$levels()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="missings"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-missings"><code>mlr3::Task$missings()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="rbind"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-rbind"><code>mlr3::Task$rbind()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="rename"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-rename"><code>mlr3::Task$rename()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="select"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-select"><code>mlr3::Task$select()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="set_col_roles"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-set_col_roles"><code>mlr3::Task$set_col_roles()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="set_levels"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-set_levels"><code>mlr3::Task$set_levels()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="set_row_roles"><a href="https://mlr3.mlr-org.com/reference/Task.html#method-set_row_roles"><code>mlr3::Task$set_row_roles()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mlr3" data-topic="TaskRegr" data-id="truth"><a href="https://mlr3.mlr-org.com/reference/TaskRegr.html#method-truth"><code>mlr3::TaskRegr$truth()</code></a></span></li>
+</ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="add_strata"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-add_strata"><code>mlr3::Task$add_strata()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="cbind"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-cbind"><code>mlr3::Task$cbind()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="data"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-data"><code>mlr3::Task$data()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="droplevels"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-droplevels"><code>mlr3::Task$droplevels()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="filter"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-filter"><code>mlr3::Task$filter()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="format"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-format"><code>mlr3::Task$format()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="formula"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-formula"><code>mlr3::Task$formula()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="head"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-head"><code>mlr3::Task$head()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="help"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-help"><code>mlr3::Task$help()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="levels"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-levels"><code>mlr3::Task$levels()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="missings"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-missings"><code>mlr3::Task$missings()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="rbind"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-rbind"><code>mlr3::Task$rbind()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="rename"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-rename"><code>mlr3::Task$rename()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="select"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-select"><code>mlr3::Task$select()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="set_col_roles"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-set_col_roles"><code>mlr3::Task$set_col_roles()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="set_levels"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-set_levels"><code>mlr3::Task$set_levels()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="Task" data-id="set_row_roles"><a href="https://rdrr.io/pkg/mlr3/man/Task.html#method-set_row_roles"><code>mlr3::Task$set_row_roles()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="mlr3" data-topic="TaskRegr" data-id="truth"><a href="https://rdrr.io/pkg/mlr3/man/TaskRegr.html#method-truth"><code>mlr3::TaskRegr$truth()</code></a></span></li>
 </ul></details></p><hr><a id="method-TaskRegrST-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Create a new spatiotemporal resampling Task

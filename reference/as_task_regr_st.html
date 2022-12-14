@@ -102,10 +102,10 @@ TaskClassif: Calls convert_task().
     <div class="ref-description section level2">
     <p>Convert object to a <a href="TaskRegrST.html">TaskRegrST</a>.</p>
 <p>This is a S3 generic, specialized for at least the following objects:</p><ol><li><p><a href="TaskRegrST.html">TaskRegrST</a>: Ensure the identity.</p></li>
-<li><p><code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> and <a href="https://mlr3.mlr-org.com/reference/DataBackend.html" class="external-link">DataBackend</a>: Provides an alternative to the
+<li><p><code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> and <a href="https://rdrr.io/pkg/mlr3/man/DataBackend.html" class="external-link">DataBackend</a>: Provides an alternative to the
 constructor of <a href="TaskRegrST.html">TaskRegrST</a>.</p></li>
 <li><p><a href="https://r-spatial.github.io/sf/reference/sf.html" class="external-link">sf::sf</a>: Extracts spatial meta data before construction.</p></li>
-<li><p><a href="https://mlr3.mlr-org.com/reference/TaskClassif.html" class="external-link">TaskClassif</a>: Calls <code><a href="https://mlr3.mlr-org.com/reference/convert_task.html" class="external-link">convert_task()</a></code>.</p></li>
+<li><p><a href="https://rdrr.io/pkg/mlr3/man/TaskClassif.html" class="external-link">TaskClassif</a>: Calls <code><a href="https://rdrr.io/pkg/mlr3/man/convert_task.html" class="external-link">convert_task()</a></code>.</p></li>
 </ol></div>
 
     <div class="section level2">
@@ -251,7 +251,7 @@ element is the negative class.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">mlr3misc</span><span class="fu">::</span><span class="fu"><a href="https://mlr3misc.mlr-org.com/reference/require_namespaces.html" class="external-link">require_namespaces</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sf"</span><span class="op">)</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">mlr3misc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mlr3misc/man/require_namespaces.html" class="external-link">require_namespaces</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sf"</span><span class="op">)</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3.mlr-org.com" class="external-link">"mlr3"</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"cookfarm_mlr3"</span>, package <span class="op">=</span> <span class="st">"mlr3spatiotempcv"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
