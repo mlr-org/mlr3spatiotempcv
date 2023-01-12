@@ -8,13 +8,19 @@
   "codeRepository": "https://github.com/mlr-org/mlr3spatiotempcv",
   "issueTracker": "https://github.com/mlr-org/mlr3spatiotempcv/issues",
   "license": "https://spdx.org/licenses/LGPL-3.0",
-  "version": "2.0.3",
+  "version": "2.0.3.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
   "runtimePlatform": "R version 4.2.2 (2022-10-31)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
   "author": [
     {
       "@type": "Person",
@@ -120,6 +126,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "here",
+      "name": "here",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=here"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "knitr",
       "name": "knitr",
       "provider": {
@@ -141,18 +159,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=lgr"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "mlr3filters",
-      "name": "mlr3filters",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=mlr3filters"
     },
     {
       "@type": "SoftwareApplication",
@@ -189,18 +195,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=patchwork"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "here",
-      "name": "here",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=here"
     },
     {
       "@type": "SoftwareApplication",
@@ -408,6 +402,19 @@
     },
     "6": {
       "@type": "SoftwareApplication",
+      "identifier": "mlr3filters",
+      "name": "mlr3filters",
+      "version": ">= 0.7.0.9000",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://github.com/mlr-org/mlr3filters"
+    },
+    "7": {
+      "@type": "SoftwareApplication",
       "identifier": "mlr3misc",
       "name": "mlr3misc",
       "version": ">= 0.11.0",
@@ -419,7 +426,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=mlr3misc"
     },
-    "7": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "paradox",
       "name": "paradox",
@@ -431,7 +438,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=paradox"
     },
-    "8": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "R6",
       "name": "R6",
@@ -443,12 +450,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
     },
-    "9": {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     },
     "SystemRequirements": null
   },
-  "fileSize": "7933.459KB"
+  "fileSize": "8293.477KB"
 }

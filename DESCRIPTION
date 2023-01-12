@@ -27,6 +27,7 @@ Imports:
     checkmate,
     data.table,
     ggplot2 (>= 3.4.0),
+    mlr3filters (>= 0.7.0.9000),
     mlr3misc (>= 0.11.0),
     paradox,
     R6,
@@ -37,13 +38,12 @@ Suggests:
     caret,
     ggsci,
     ggtext,
+    here,
     knitr,
     lgr,
-    mlr3filters,
     mlr3pipelines,
     mlr3tuning,
     patchwork,
-    here,
     plotly,
     raster,
     rgdal,
@@ -58,6 +58,8 @@ Suggests:
     withr
 VignetteBuilder:
     knitr
+Remotes: 
+    mlr-org/mlr3filters
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Encoding: UTF-8
