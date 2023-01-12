@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr3spatiotempcv 2.0.3.9000
+
+- Internal changes only.
+
+
 # mlr3spatiotempcv 2.0.3
 
 - add `label` support for built-in tasks
