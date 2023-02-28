@@ -34,7 +34,7 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
     #' Create an "Environmental Block" resampling instance.
     #'
     #' For a list of available arguments, please see
-    #' [blockCV::buffering()].
+    #' [blockCV::cv_buffer()].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_buffer") {
@@ -105,10 +105,26 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         stopf("Parameter addBG should only be used with spDataType = 'PB'.")
       }
 
+      # compatibility support for blockCV 2.x and 3.x
+      pars$size = pars$theRange
+      pars$theRange = NULL
+      if (!is.null(pars$addBG)) {
+        pars$add_bg = pars$addBG
+        pars$addBG = NULL
+      }
+      if (!is.null(pars$spDataType)) {
+        if (pars$spDataType == "PA") {
+          pars$presence_bg = FALSE
+        } else if (pars$spDataType == "PB") {
+          pars$presence_bg = TRUE
+        }
+        pars$spDataType = NULL
+      }
+
       # Recode response to 0/1 for twoclass
       if ("twoclass" %in% properties) {
         response = ifelse(response == positive, 1, 0)
-        pars$species = "response"
+        pars$column = "response"
       }
 
       data = sf::st_as_sf(cbind(response, coords),
@@ -116,13 +132,14 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
         crs = crs
       )
 
-      inds = invoke(blockCV::buffering,
-        speciesData = data,
+      inds = invoke(blockCV::cv_buffer,
+        x = data,
         progress = FALSE,
+        report = FALSE,
         .args = pars)
 
       # if addBG = TRUE, the test set can contain more than one element
-      if (!is.null(pars$addBG)) {
+      if (!is.null(pars$add_bg)) {
         mlr3misc::map(inds$folds, function(x) {
           set = mlr3misc::map(x, function(y) {
             ids[y]
