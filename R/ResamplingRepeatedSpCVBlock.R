@@ -50,7 +50,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     #' @description
     #' Create an "spatial block" repeated resampling instance.
     #'
-    #' For a list of available arguments, please see [blockCV::spatialBlock].
+    #' For a list of available arguments, please see [blockCV::cv_spatial].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_block") {
@@ -67,7 +67,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         ParamUty$new("rasterLayer",
           default = NULL,
           custom_check = function(x) {
-            checkmate::check_class(x, "RasterLayer",
+            checkmate::check_class(x, "SpatRaster",
               null.ok = TRUE)
           }
         )
@@ -190,27 +190,25 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
   private = list(
     .sample = function(ids, coords, crs) {
 
-      # since blockCV >= 2.1.4 and sf >= 1.0
-      mlr3misc::require_namespaces("rgdal", quietly = TRUE)
-
       pv = self$param_set$values
 
       create_blocks = function(coords, range) {
         points = sf::st_as_sf(coords,
-          coords = colnames(coords))
+          coords = colnames(coords),
+          crs = crs)
 
-        # Suppress print message, warning crs and package load
-        capture.output(inds <- suppressMessages(suppressWarnings(
-          blockCV::spatialBlock(
-            speciesData = points,
-            theRange = range,
-            rows = self$param_set$values$rows,
-            cols = self$param_set$values$cols,
-            k = self$param_set$values$folds,
-            selection = self$param_set$values$selection,
-            showBlocks = FALSE,
-            verbose = FALSE,
-            progress = FALSE))))
+        # browser()
+        inds = blockCV::cv_spatial(
+          x = points,
+          size = self$param_set$values$range,
+          rows_cols = c(self$param_set$values$rows, self$param_set$values$cols),
+          k = self$param_set$values$folds,
+          r = self$param_set$values$rasterLayer,
+          selection = self$param_set$values$selection,
+          plot = FALSE,
+          verbose = FALSE,
+          report = FALSE,
+          progress = FALSE)
         return(inds)
       }
 

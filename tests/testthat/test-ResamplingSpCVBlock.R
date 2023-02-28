@@ -62,12 +62,16 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: selection =
 
   testSF = test_make_blockCV_test_df()
 
-  capture.output(testBlock <- suppressMessages(
-    suppressWarnings(blockCV::spatialBlock(
-      speciesData = testSF,
-      theRange = 50000L,
+  testBlock = suppressMessages(
+    blockCV::cv_spatial(
+      x = testSF,
+      size = 50000L,
       selection = "checkerboard",
-      showBlocks = FALSE))))
+      plot = FALSE,
+      report = FALSE,
+      progress = FALSE,
+      verbose = FALSE
+  ))
 
   expect_equal(rsmp$instance$fold, testBlock$foldID)
 })
@@ -89,21 +93,21 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
   testSF = test_make_blockCV_test_df()
 
   set.seed(42)
-  capture.output(testBlock <- suppressMessages(
-    blockCV::spatialBlock(
-      speciesData = testSF,
+  testBlock = suppressMessages(
+    blockCV::cv_spatial(
+      x = testSF,
       k = 5,
-      rows = 3,
-      cols = 4,
-      showBlocks = FALSE,
+      rows_cols = c(3, 4),
+      plot = FALSE,
       verbose = FALSE,
-      progress = FALSE)
+      report = FALSE,
+      progress = FALSE
   ))
 
   expect_equal(rsmp$instance$fold, testBlock$foldID)
 })
 
-test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer", {
+test_that("mlr3spatiotempcv indices are the same as blockCV indices: spatRaster", {
   skip_if_not_installed("sf")
   skip_if_not_installed("terra")
 
@@ -117,27 +121,28 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: rasterLayer
   task = test_make_blockCV_test_task()
   testSF = test_make_blockCV_test_df()
 
-  rl = raster::raster(raster::extent(testSF), crs = raster::crs(testSF))
-  vals = seq_len(raster::ncell(rl))
-  rl = raster::setValues(rl, vals)
+  spatras = terra::rast(testSF)
+  vals = seq_len(terra::ncell(spatras))
+  terra::setValues(spatras, vals)
 
   rsmp1 = rsmp("spcv_block",
     range = 50000L,
     folds = 2,
-    selection = "checkerboard",
-    rasterLayer = rl)
+    selection = "random",
+    rasterLayer = spatras)
   rsmp1$instantiate(task)
 
   # blockCV
-  capture.output(testBlock <- suppressMessages(
-    blockCV::spatialBlock(
-      speciesData = testSF,
-      theRange = 50000L,
-      selection = "checkerboard",
-      rasterLayer = rl,
-      showBlocks = FALSE,
+  testBlock = suppressMessages(
+    blockCV::cv_spatial(
+      x = testSF,
+      size = 50000L,
+      selection = "random",
+      r = spatras,
+      plot = FALSE,
+      report = FALSE,
       verbose = FALSE,
-      progress = FALSE)
+      progress = FALSE
   ))
 
   expect_equal(rsmp1$instance$fold, testBlock$foldID)

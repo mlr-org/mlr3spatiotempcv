@@ -6,8 +6,6 @@
 #' @references
 #' `r format_bib("valavi2018")`
 #'
-#' @importFrom utils capture.output
-#'
 #' @export
 #' @examples
 #' \donttest{
@@ -42,7 +40,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     #' Create an "spatial block" resampling instance.
     #'
     #' For a list of available arguments, please see
-    #' [blockCV::spatialBlock()].
+    #' [blockCV::cv_spatial()].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_block") {
@@ -57,7 +55,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         ParamUty$new("rasterLayer",
           default = NULL,
           custom_check = function(x) {
-            checkmate::check_class(x, "RasterLayer",
+            checkmate::check_class(x, "SpatRaster",
               null.ok = TRUE)
           }
         )
@@ -154,20 +152,22 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         coords = colnames(coords),
         crs = crs
       )
+      # browser()
       # Suppress print message, warning crs and package load
       # Note: Do not replace the assignment operator here.
-      capture.output(inds <- suppressMessages((
-        blockCV::spatialBlock(
-          speciesData = points,
-          theRange = self$param_set$values$range,
-          rows = self$param_set$values$rows,
-          cols = self$param_set$values$cols,
+      inds = suppressMessages(
+        blockCV::cv_spatial(
+          x = points,
+          size = self$param_set$values$range,
+          rows_cols = c(self$param_set$values$rows, self$param_set$values$cols),
           k = self$param_set$values$folds,
-          rasterLayer = self$param_set$values$rasterLayer,
+          r = self$param_set$values$rasterLayer,
           selection = self$param_set$values$selection,
-          showBlocks = FALSE,
+          plot = FALSE,
           progress = FALSE,
-          verbose = FALSE))))
+          report = FALSE,
+          verbose = FALSE)
+      )
 
       # Warning: In st_point_on_surface.sfc(sf::st_zm(x)) :
       # st_point_on_surface may not give correct results for

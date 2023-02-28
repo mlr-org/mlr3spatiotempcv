@@ -79,7 +79,7 @@
       "@type": "SoftwareApplication",
       "identifier": "blockCV",
       "name": "blockCV",
-      "version": ">= 2.1.4",
+      "version": ">= 3.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -162,6 +162,19 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "mlr3filters",
+      "name": "mlr3filters",
+      "version": ">= 0.7.0.9000",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=mlr3filters"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "mlr3pipelines",
       "name": "mlr3pipelines",
       "provider": {
@@ -219,18 +232,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=raster"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "rgdal",
-      "name": "rgdal",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=rgdal"
     },
     {
       "@type": "SoftwareApplication",
@@ -402,19 +403,6 @@
     },
     "6": {
       "@type": "SoftwareApplication",
-      "identifier": "mlr3filters",
-      "name": "mlr3filters",
-      "version": ">= 0.7.0.9000",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://github.com/mlr-org/mlr3filters"
-    },
-    "7": {
-      "@type": "SoftwareApplication",
       "identifier": "mlr3misc",
       "name": "mlr3misc",
       "version": ">= 0.11.0",
@@ -426,7 +414,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=mlr3misc"
     },
-    "8": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "paradox",
       "name": "paradox",
@@ -438,7 +426,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=paradox"
     },
-    "9": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "R6",
       "name": "R6",
@@ -450,12 +438,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
     },
-    "10": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     },
     "SystemRequirements": null
   },
-  "fileSize": "8293.477KB"
+  "fileSize": "8592.134KB"
 }

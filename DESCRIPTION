@@ -27,26 +27,25 @@ Imports:
     checkmate,
     data.table,
     ggplot2 (>= 3.4.0),
-    mlr3filters (>= 0.7.0.9000),
     mlr3misc (>= 0.11.0),
     paradox,
     R6,
     utils
 Suggests:
     bbotk,
-    blockCV (>= 2.1.4),
+    blockCV (>= 3.0.0),
     caret,
     ggsci,
     ggtext,
     here,
     knitr,
     lgr,
+    mlr3filters (>= 0.7.0.9000),
     mlr3pipelines,
     mlr3tuning,
     patchwork,
     plotly,
     raster,
-    rgdal,
     rmarkdown,
     rpart,
     sf,
@@ -58,12 +57,10 @@ Suggests:
     withr
 VignetteBuilder:
     knitr
-Remotes: 
-    mlr-org/mlr3filters
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3

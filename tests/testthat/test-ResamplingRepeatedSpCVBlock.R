@@ -54,14 +54,15 @@ test_that("no error when length(range) == repeats", {
 
   task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", folds = 3, repeats = 2, range = c(2L, 4L))
-  expect_silent(rsp$instantiate(task))
+  rsp$instantiate(task)
+  expect_class(rsp, "ResamplingRepeatedSpCVBlock")
 })
 
 test_that("error when number of desired folds is larger than number possible blocks", {
   skip_if_not_installed("blockCV")
 
   task = test_make_twoclass_task()
-  rsp = rsmp("repeated_spcv_block", folds = 10, repeats = 2, range = c(2L, 4L))
+  rsp = rsmp("repeated_spcv_block", folds = 20, repeats = 2, range = c(2L, 4L))
   expect_error(rsp$instantiate(task))
 })
 
@@ -78,20 +79,19 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
     folds = 5,
     rows = 3,
     cols = 4)
-  rsmp$instantiate(task)
+  suppressMessages(rsmp$instantiate(task))
 
   testSF = test_make_blockCV_test_df()
 
   set.seed(42)
-  capture.output(testBlock <- suppressMessages(
-    blockCV::spatialBlock(
-      speciesData = testSF,
-      k = 5,
-      rows = 3,
-      cols = 4,
-      showBlocks = FALSE,
-      verbose = FALSE,
-      progress = FALSE)
+  testBlock = suppressMessages(blockCV::cv_spatial(
+    x = testSF,
+    k = 5,
+    rows_cols = c(3, 4),
+    report = FALSE,
+    plot = FALSE,
+    verbose = FALSE,
+    progress = FALSE
   ))
 
   # only use the first iteration
