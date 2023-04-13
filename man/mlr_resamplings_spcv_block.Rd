@@ -10,19 +10,21 @@ It assigns blocks to the training and testing folds \strong{randomly}, \strong{s
 in a \strong{checkerboard pattern}. The distance (\code{size})
 should be in \strong{metres}, regardless of the unit of the reference system of
 the input data (for more information see the details section). By default,
-the function creates blocks according to the extent and shape of the spatial sample data (\code{x} e.g. the species occurrence),
-Alternatively, blocks can be created based on \code{r} assuming that the user has considered the
-landscape for the given species and case study.
+the function creates blocks according to the extent and shape of the spatial sample data (\code{x} e.g.
+the species occurrence), Alternatively, blocks can be created based on \code{r} assuming that the
+user has considered the landscape for the given species and case study.
 Blocks can also be offset so the origin is not at the outer corner of the rasters.
 Instead of providing a distance, the blocks can also be created by specifying a number of rows and/or
-columns and divide the study area into vertical or horizontal bins, as presented in Wenger & Olden (2012) and Bahn & McGill (2012).
-Finally, the blocks can be specified by a user-defined spatial polygon layer.
+columns and divide the study area into vertical or horizontal bins, as presented in Wenger & Olden (2012)
+and Bahn & McGill (2012). Finally, the blocks can be specified by a user-defined spatial polygon layer.
 }
 \details{
-To keep the consistency, all the functions use \strong{metres} as their unit. In this function, when the input map
-has geographic coordinate system (decimal degrees), the block size is calculated based on dividing \code{size} by
-\code{deg_to_metre} (111325 as default, the standard distance of a degree in metres, on the Equator) to change
-the unit to degree.
+To maintain consistency, all functions in this package use \strong{meters} as their unit of
+measurement. However, when the input map has a geographic coordinate system (in decimal degrees),
+the block size is calculated by dividing the \code{size} parameter by \code{deg_to_metre} (which
+defaults to 111325 meters, the standard distance of one degree of latitude on the Equator).
+In reality, this value varies by a factor of the cosine of the latitude. So, an alternative sensible
+value could be \code{cos(mean(sf::st_bbox(x)[c(2,4)]) * pi/180) * 111325}.
 
 The \code{offset} can be used to change the spatial position of the blocks. It can also be used to
 assess the sensitivity of analysis results to shifting in the blocking arrangements.
@@ -61,6 +63,8 @@ Here's a list which shows the mapping between \code{blockCV} < 3.0.0 and \code{b
 \item \code{showBlocks} -> \code{plot}
 \item \code{cols} and \code{rows} -> \code{rows_cols}
 }
+
+The default of argument \code{hexagon} is different in \code{mlr3spatiotempcv} (\code{FALSE} instead of \code{TRUE}) to create square blocks instead of hexagonal blocks by default.
 }
 
 \examples{

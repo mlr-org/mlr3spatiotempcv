@@ -59,6 +59,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         ParamInt$new("repeats", lower = 1, default = 1L, tags = "required"),
         ParamInt$new("rows", lower = 1L),
         ParamInt$new("cols", lower = 1L),
+        ParamInt$new("seed", default = 42L),
+        ParamLgl$new("hexagon", default = FALSE),
         ParamUty$new("range",
           custom_check = function(x) checkmate::assert_integer(x)),
         ParamFct$new("selection", levels = c(
@@ -140,6 +142,12 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       if (is.null(pv$selection)) {
         self$param_set$values$selection = self$param_set$default[["selection"]]
       }
+      if (is.null(pv$seed)) {
+        self$param_set$values$seed = self$param_set$default[["seed"]]
+      }
+      if (is.null(pv$hexagon)) {
+        self$param_set$values$hexagon = self$param_set$default[["hexagon"]]
+      }
 
       # Check for valid combinations of rows, cols and folds
       if (!is.null(pv$row) &&
@@ -168,7 +176,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       instance = private$.sample(
         task$row_ids,
         task$coordinates(),
-        task$crs
+        task$crs,
+        self$param_set$values$seed
       )
 
       self$instance = instance
@@ -188,7 +197,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     }
   ),
   private = list(
-    .sample = function(ids, coords, crs) {
+    .sample = function(ids, coords, crs, seed) {
 
       pv = self$param_set$values
 
@@ -205,10 +214,12 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
           k = self$param_set$values$folds,
           r = self$param_set$values$rasterLayer,
           selection = self$param_set$values$selection,
+          hexagon = self$param_set$values$hexagon,
           plot = FALSE,
           verbose = FALSE,
           report = FALSE,
-          progress = FALSE)
+          progress = FALSE,
+          seed = seed)
         return(inds)
       }
 
@@ -218,7 +229,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
 
         return(list(resampling = data.table(
           row_id = ids,
-          fold = inds$foldID,
+          fold = inds$folds_ids,
           rep = i
         ), blocks = blocks))
       })

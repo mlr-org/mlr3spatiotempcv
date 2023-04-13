@@ -23,3 +23,5 @@
 #' - `speciesData` -> `points`
 #' - `showBlocks` -> `plot`
 #' - `cols` and `rows` -> `rows_cols`
+#'
+#' The default of argument `hexagon` is different in `mlr3spatiotempcv` (`FALSE` instead of `TRUE`) to create square blocks instead of hexagonal blocks by default.

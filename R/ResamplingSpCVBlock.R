@@ -49,6 +49,8 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         ParamInt$new("rows", lower = 1L),
         ParamInt$new("cols", lower = 1L),
         ParamInt$new("range"),
+        ParamInt$new("seed", default = 42L),
+        ParamLgl$new("hexagon", default = FALSE),
         ParamFct$new("selection", levels = c(
           "random", "systematic",
           "checkerboard"), default = "random"),
@@ -103,6 +105,12 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       if (is.null(self$param_set$values$rasterLayer)) {
         self$param_set$values$rasterLayer = self$param_set$default[["rasterLayer"]]
       }
+      if (is.null(pv$seed)) {
+        self$param_set$values$seed = self$param_set$default[["seed"]]
+      }
+      if (is.null(pv$hexagon)) {
+        self$param_set$values$hexagon = self$param_set$default[["hexagon"]]
+      }
 
       # Check for valid combinations of rows, cols and folds
       if (!is.null(self$param_set$values$row) &&
@@ -128,7 +136,8 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       instance = private$.sample(
         task$row_ids,
         task$coordinates(),
-        task$crs
+        task$crs,
+        self$param_set$values$seed
       )
 
       self$instance = instance
@@ -146,7 +155,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     }
   ),
   private = list(
-    .sample = function(ids, coords, crs) {
+    .sample = function(ids, coords, crs, seed) {
 
       points = sf::st_as_sf(coords,
         coords = colnames(coords),
@@ -155,19 +164,19 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       # browser()
       # Suppress print message, warning crs and package load
       # Note: Do not replace the assignment operator here.
-      inds = suppressMessages(
-        blockCV::cv_spatial(
-          x = points,
-          size = self$param_set$values$range,
-          rows_cols = c(self$param_set$values$rows, self$param_set$values$cols),
-          k = self$param_set$values$folds,
-          r = self$param_set$values$rasterLayer,
-          selection = self$param_set$values$selection,
-          plot = FALSE,
-          progress = FALSE,
-          report = FALSE,
-          verbose = FALSE)
-      )
+      inds = blockCV::cv_spatial(
+        x = points,
+        size = self$param_set$values$range,
+        rows_cols = c(self$param_set$values$rows, self$param_set$values$cols),
+        k = self$param_set$values$folds,
+        r = self$param_set$values$rasterLayer,
+        selection = self$param_set$values$selection,
+        hexagon = self$param_set$values$hexagon,
+        plot = FALSE,
+        progress = FALSE,
+        report = FALSE,
+        verbose = FALSE,
+        seed = seed)
 
       # Warning: In st_point_on_surface.sfc(sf::st_zm(x)) :
       # st_point_on_surface may not give correct results for
@@ -180,7 +189,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       # we need to return them here
       data.table(
         row_id = ids,
-        fold = inds$foldID
+        fold = inds$folds_ids
       )
     },
 
