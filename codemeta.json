@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.2 (2022-10-31)",
+  "runtimePlatform": "R version 4.2.3 (2023-03-15)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -79,7 +79,7 @@
       "@type": "SoftwareApplication",
       "identifier": "blockCV",
       "name": "blockCV",
-      "version": ">= 3.0.0",
+      "version": ">= 3.1.1",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -445,5 +445,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "8592.134KB"
+  "fileSize": "12439.757KB"
 }
