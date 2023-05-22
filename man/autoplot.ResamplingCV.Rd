@@ -99,6 +99,5 @@ if (mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext", "ggsci"), quietl
 \item \code{\link[=autoplot.ResamplingSpCVDisc]{autoplot.ResamplingSpCVDisc()}}
 \item \code{\link[=autoplot.ResamplingSpCVTiles]{autoplot.ResamplingSpCVTiles()}}
 \item \code{\link[=autoplot.ResamplingSptCVCstf]{autoplot.ResamplingSptCVCstf()}}
-\item \code{\link[=autoplot.ResamplingSptCVCluto]{autoplot.ResamplingSptCVCluto()}}
 }
 }

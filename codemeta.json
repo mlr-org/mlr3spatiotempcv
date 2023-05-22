@@ -270,18 +270,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "skmeans",
-      "name": "skmeans",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=skmeans"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "sperrorest",
       "name": "sperrorest",
       "provider": {
@@ -457,5 +445,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "12408.903KB"
+  "fileSize": "12412.877KB"
 }

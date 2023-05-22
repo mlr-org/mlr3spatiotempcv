@@ -68,7 +68,6 @@
 #'   - [autoplot.ResamplingSpCVCoords()]
 #'   - [autoplot.ResamplingSpCVEnv()]
 #'   - [autoplot.ResamplingCV()]
-#'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' \donttest{
 #' if (mlr3misc::require_namespaces(c("sf", "plotly"), quietly = TRUE)) {

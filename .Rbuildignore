@@ -21,7 +21,6 @@
 ^joss$
 ^man-roxygen$
 ^BinaryFiles$
-^cluto$
 ^zzz$
 ^LICENSE\.md$
 ^doc$

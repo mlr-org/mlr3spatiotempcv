@@ -75,6 +75,5 @@ if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
 \item \code{\link[=autoplot.ResamplingSpCVEnv]{autoplot.ResamplingSpCVEnv()}}
 \item \code{\link[=autoplot.ResamplingCV]{autoplot.ResamplingCV()}}
 \item \code{\link[=autoplot.ResamplingSptCVCstf]{autoplot.ResamplingSptCVCstf()}}
-\item \code{\link[=autoplot.ResamplingSptCVCluto]{autoplot.ResamplingSptCVCluto()}}
 }
 }

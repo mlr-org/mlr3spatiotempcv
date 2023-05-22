@@ -19,22 +19,3 @@ test_that("spcv methods work in a Graph Learner", {
 
   expect_true(all(out))
 })
-
-test_that("sptcv methods work in a Graph Learner", {
-  skip_if_not_installed("mlr3pipelines")
-
-  skip_on_cran()
-  skip_on_os("mac")
-  skip_if_not_installed("skmeans")
-  rsmps = rsmps(c("sptcv_cstf"), folds = 2)
-
-  out = mlr3misc::map_lgl(rsmps, function(x) {
-    test_graph_learner(task_cluto, x,
-      time_var = "Date",
-      learner = "regr.featureless",
-      measure = "regr.mse"
-    )
-  })
-
-  expect_true(all(out))
-})

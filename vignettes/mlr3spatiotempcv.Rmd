@@ -112,8 +112,6 @@ mlr_reflections$task_col_roles
 
 * `mlr_resampling_spcv_env`
 
-* `mlr_resampling_sptcv_cluto`
-
 * `mlr_resampling_sptcv_cstf`
 
 and their respective repeated versions.
@@ -152,8 +150,6 @@ All methods besides `"spcv_buffer"` also have a corresponding "repeated" method.
 | **Grouping**, spatiotemporal   | (mlr3) via `col_roles` `"group"`              |                   | `mlr_resamplings_cv`, `Task$set_col_roles(<variable>, "group")`              |
 +--------------------------------+-----------------------------------------------+-------------------+------------------------------------------------------------------------------+
 | **Grouping**, spatiotemporal   | (CAST) Leave-Location-and-Time-Out            | @meyer2018        | `mlr_resamplings_sptcv_cstf`, `Task$set_col_roles(<variable>, "space|time")` |
-+--------------------------------+-----------------------------------------------+-------------------+------------------------------------------------------------------------------+
-| **Clustering**, spatiotemporal | (skmeans) Spatiotemporal Clustering           | @zhao2002         | `mlr_resamplings_sptcv_cluto`                                                |
 +--------------------------------+-----------------------------------------------+-------------------+------------------------------------------------------------------------------+
 
 # References
