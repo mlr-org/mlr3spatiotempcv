@@ -50,7 +50,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     #' @description
     #' Create an "spatial block" repeated resampling instance.
     #'
-    #' For a list of available arguments, please see [blockCV::spatialBlock].
+    #' For a list of available arguments, please see [blockCV::cv_spatial].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_block") {
@@ -59,6 +59,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         ParamInt$new("repeats", lower = 1, default = 1L, tags = "required"),
         ParamInt$new("rows", lower = 1L),
         ParamInt$new("cols", lower = 1L),
+        ParamInt$new("seed"),
+        ParamLgl$new("hexagon", default = FALSE),
         ParamUty$new("range",
           custom_check = function(x) checkmate::assert_integer(x)),
         ParamFct$new("selection", levels = c(
@@ -67,7 +69,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         ParamUty$new("rasterLayer",
           default = NULL,
           custom_check = function(x) {
-            checkmate::check_class(x, "RasterLayer",
+            checkmate::check_class(x, "SpatRaster",
               null.ok = TRUE)
           }
         )
@@ -140,6 +142,9 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       if (is.null(pv$selection)) {
         self$param_set$values$selection = self$param_set$default[["selection"]]
       }
+      if (is.null(pv$hexagon)) {
+        self$param_set$values$hexagon = self$param_set$default[["hexagon"]]
+      }
 
       # Check for valid combinations of rows, cols and folds
       if (!is.null(pv$row) &&
@@ -168,7 +173,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       instance = private$.sample(
         task$row_ids,
         task$coordinates(),
-        task$crs
+        task$crs,
+        self$param_set$values$seed
       )
 
       self$instance = instance
@@ -188,31 +194,31 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     }
   ),
   private = list(
-    .sample = function(ids, coords, crs) {
-
-      # since blockCV >= 2.1.4 and sf >= 1.0
-      mlr3misc::require_namespaces("rgdal", quietly = TRUE)
+    .sample = function(ids, coords, crs, seed) {
 
       pv = self$param_set$values
 
       create_blocks = function(coords, range) {
         points = sf::st_as_sf(coords,
-          coords = colnames(coords))
+          coords = colnames(coords),
+          crs = crs)
 
-        # Suppress print message, warning crs and package load
-        capture.output(inds <- suppressMessages(suppressWarnings(
-          blockCV::spatialBlock(
-            speciesData = points,
-            theRange = range,
-            rows = self$param_set$values$rows,
-            cols = self$param_set$values$cols,
-            k = self$param_set$values$folds,
-            selection = self$param_set$values$selection,
-            showBlocks = FALSE,
-            verbose = FALSE,
-            progress = FALSE))))
+        inds = blockCV::cv_spatial(
+          x = points,
+          size = range,
+          rows_cols = c(self$param_set$values$rows, self$param_set$values$cols),
+          k = self$param_set$values$folds,
+          r = self$param_set$values$rasterLayer,
+          selection = self$param_set$values$selection,
+          hexagon = self$param_set$values$hexagon,
+          plot = FALSE,
+          verbose = FALSE,
+          report = FALSE,
+          progress = FALSE,
+          seed = seed)
         return(inds)
       }
+
 
       inds = mlr3misc::map(seq_len(pv$repeats), function(i) {
         inds = create_blocks(coords, self$param_set$values$range[i])
@@ -220,7 +226,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
 
         return(list(resampling = data.table(
           row_id = ids,
-          fold = inds$foldID,
+          fold = inds$folds_ids,
           rep = i
         ), blocks = blocks))
       })

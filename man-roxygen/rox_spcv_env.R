@@ -1,6 +1,6 @@
 #' @description
 #' Splits data by clustering in the feature space.
-#' See the upstream implementation at `blockCV::envBlock()` and
+#' See the upstream implementation at `blockCV::cv_cluster()` and
 #' Valavi et al. (2018) for further information.
 #'
 #' @section Parameters:
@@ -14,6 +14,6 @@
 #' which is present in features.
 #' The method allows for a combination of multiple features for clustering.
 #'
-#' The input of raster images directly as in `blockCV::envBlock()` is not
+#' The input of raster images directly as in `blockCV::cv_cluster()` is not
 #' supported. See \CRANpkg{mlr3spatial} and its raster DataBackends for such
 #' support in \CRANpkg{mlr3}.
