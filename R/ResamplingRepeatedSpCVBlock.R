@@ -59,7 +59,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         ParamInt$new("repeats", lower = 1, default = 1L, tags = "required"),
         ParamInt$new("rows", lower = 1L),
         ParamInt$new("cols", lower = 1L),
-        ParamInt$new("seed", default = 42L),
+        ParamInt$new("seed"),
         ParamLgl$new("hexagon", default = FALSE),
         ParamUty$new("range",
           custom_check = function(x) checkmate::assert_integer(x)),
@@ -142,9 +142,6 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
       if (is.null(pv$selection)) {
         self$param_set$values$selection = self$param_set$default[["selection"]]
       }
-      if (is.null(pv$seed)) {
-        self$param_set$values$seed = self$param_set$default[["seed"]]
-      }
       if (is.null(pv$hexagon)) {
         self$param_set$values$hexagon = self$param_set$default[["hexagon"]]
       }
@@ -206,10 +203,9 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
           coords = colnames(coords),
           crs = crs)
 
-        # browser()
         inds = blockCV::cv_spatial(
           x = points,
-          size = self$param_set$values$range,
+          size = range,
           rows_cols = c(self$param_set$values$rows, self$param_set$values$cols),
           k = self$param_set$values$folds,
           r = self$param_set$values$rasterLayer,
@@ -222,6 +218,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
           seed = seed)
         return(inds)
       }
+
 
       inds = mlr3misc::map(seq_len(pv$repeats), function(i) {
         inds = create_blocks(coords, self$param_set$values$range[i])

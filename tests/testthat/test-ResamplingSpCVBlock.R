@@ -54,7 +54,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: selection =
 
   task = test_make_blockCV_test_task()
 
-  # set.seed(42)
+  set.seed(42)
   rsmp = rsmp("spcv_block",
     range = 50000L,
     selection = "checkerboard",
@@ -104,8 +104,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
       plot = FALSE,
       verbose = FALSE,
       report = FALSE,
-      progress = FALSE,
-      seed = 42
+      progress = FALSE
   ))
 
   expect_equal(rsmp$instance$fold, testBlock$folds_ids)
@@ -125,6 +124,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: spatRaster"
   vals = seq_len(terra::ncell(spatras))
   terra::setValues(spatras, vals)
 
+  set.seed(42)
   rsmp1 = rsmp("spcv_block",
     range = 50000L,
     folds = 2,
@@ -132,7 +132,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: spatRaster"
     rasterLayer = spatras)
   rsmp1$instantiate(task)
 
-  # set.seed(42)
+  set.seed(42)
   # blockCV
   testBlock = suppressMessages(
     blockCV::cv_spatial(
@@ -145,15 +145,14 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: spatRaster"
       plot = FALSE,
       report = FALSE,
       verbose = FALSE,
-      progress = FALSE,
-      seed = 42
+      progress = FALSE
   ))
 
   rl = raster::raster(raster::extent(testSF), crs = raster::crs(testSF))
   vals = seq_len(raster::ncell(rl))
   rl = raster::setValues(rl, vals)
 
-  # set.seed(42)
+  set.seed(42)
   # blockCV OLD
   testBlock_old = suppressMessages(
     blockCV::spatialBlock(

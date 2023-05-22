@@ -49,7 +49,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         ParamInt$new("rows", lower = 1L),
         ParamInt$new("cols", lower = 1L),
         ParamInt$new("range"),
-        ParamInt$new("seed", default = 42L),
+        ParamInt$new("seed"),
         ParamLgl$new("hexagon", default = FALSE),
         ParamFct$new("selection", levels = c(
           "random", "systematic",
@@ -105,9 +105,6 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
       if (is.null(self$param_set$values$rasterLayer)) {
         self$param_set$values$rasterLayer = self$param_set$default[["rasterLayer"]]
       }
-      if (is.null(pv$seed)) {
-        self$param_set$values$seed = self$param_set$default[["seed"]]
-      }
       if (is.null(pv$hexagon)) {
         self$param_set$values$hexagon = self$param_set$default[["hexagon"]]
       }
@@ -161,7 +158,6 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         coords = colnames(coords),
         crs = crs
       )
-      # browser()
       # Suppress print message, warning crs and package load
       # Note: Do not replace the assignment operator here.
       inds = blockCV::cv_spatial(

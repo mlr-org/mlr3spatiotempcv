@@ -74,6 +74,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
 
   sf::sf_use_s2(use_s2 = FALSE)
 
+  set.seed(42)
   rsmp = rsmp("repeated_spcv_block",
     repeats = 2,
     folds = 4,

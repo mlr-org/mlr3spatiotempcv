@@ -210,8 +210,6 @@ test_graph_learner = function(task, resampling,
     filter = mlr3filters::flt("importance", learner = lrn)
   )
 
-  # browser()
-
   # Create process (new learner) for filtering the task
   grph = mlr3pipelines::Graph$new()$add_pipeop(po_filter)$add_pipeop(po_lrn)$add_edge("importance", learner) # nolint
   glrn = mlr3pipelines::GraphLearner$new(grph)
