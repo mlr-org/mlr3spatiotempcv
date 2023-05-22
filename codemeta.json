@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.2 (2022-10-31)",
+  "runtimePlatform": "R version 4.2.3 (2023-03-15)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -411,7 +411,7 @@
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://github.com/mlr-org/mlr3filters"
+      "sameAs": "https://CRAN.R-project.org/package=mlr3filters"
     },
     "7": {
       "@type": "SoftwareApplication",
@@ -457,5 +457,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "8293.477KB"
+  "fileSize": "12408.903KB"
 }
