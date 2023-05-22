@@ -148,9 +148,9 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: spatRaster"
       progress = FALSE
   ))
 
-  rl = raster::raster(raster::extent(testSF), crs = raster::crs(testSF))
-  vals = seq_len(raster::ncell(rl))
-  rl = raster::setValues(rl, vals)
+  rl = terra::rast(terra::ext(testSF), crs = terra::crs(testSF))
+  vals = seq_len(terra::ncell(rl))
+  rl = terra::setValues(rl, vals)
 
   set.seed(42)
   # blockCV OLD

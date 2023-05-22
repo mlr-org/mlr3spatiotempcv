@@ -45,7 +45,6 @@ Suggests:
     mlr3tuning,
     patchwork,
     plotly,
-    raster,
     rmarkdown,
     rpart,
     sf,
