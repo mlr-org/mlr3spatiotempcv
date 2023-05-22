@@ -37,7 +37,7 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
     #' @description
     #' Create an "Environmental Block" repeated resampling instance.
     #'
-    #' For a list of available arguments, please see [blockCV::envBlock].
+    #' For a list of available arguments, please see [blockCV::cv_cluster].
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_env") {

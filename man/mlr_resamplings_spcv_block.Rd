@@ -5,15 +5,45 @@
 \alias{ResamplingSpCVBlock}
 \title{(blockCV) Spatial block resampling}
 \description{
-This function is deprecated and will be removed in future updates! Please use \code{\link[blockCV]{cv_spatial}} instead!
+This function creates spatially separated folds based on a distance to number of row and/or column.
+It assigns blocks to the training and testing folds \strong{randomly}, \strong{systematically} or
+in a \strong{checkerboard pattern}. The distance (\code{size})
+should be in \strong{metres}, regardless of the unit of the reference system of
+the input data (for more information see the details section). By default,
+the function creates blocks according to the extent and shape of the spatial sample data (\code{x} e.g.
+the species occurrence), Alternatively, blocks can be created based on \code{r} assuming that the
+user has considered the landscape for the given species and case study.
+Blocks can also be offset so the origin is not at the outer corner of the rasters.
+Instead of providing a distance, the blocks can also be created by specifying a number of rows and/or
+columns and divide the study area into vertical or horizontal bins, as presented in Wenger & Olden (2012)
+and Bahn & McGill (2012). Finally, the blocks can be specified by a user-defined spatial polygon layer.
+}
+\details{
+To maintain consistency, all functions in this package use \strong{meters} as their unit of
+measurement. However, when the input map has a geographic coordinate system (in decimal degrees),
+the block size is calculated by dividing the \code{size} parameter by \code{deg_to_metre} (which
+defaults to 111325 meters, the standard distance of one degree of latitude on the Equator).
+In reality, this value varies by a factor of the cosine of the latitude. So, an alternative sensible
+value could be \code{cos(mean(sf::st_bbox(x)[c(2,4)]) * pi/180) * 111325}.
+
+The \code{offset} can be used to change the spatial position of the blocks. It can also be used to
+assess the sensitivity of analysis results to shifting in the blocking arrangements.
+These options are available when \code{size} is defined. By default the region is
+located in the middle of the blocks and by setting the offsets, the blocks will shift.
+
+Roberts et. al. (2017) suggest that blocks should be substantially bigger than the range of spatial
+autocorrelation (in model residual) to obtain realistic error estimates, while a buffer with the size of
+the spatial autocorrelation range would result in a good estimation of error. This is because of the so-called
+edge effect (O'Sullivan & Unwin, 2014), whereby points located on the edges of the blocks of opposite sets are
+not separated spatially. Blocking with a buffering strategy overcomes this issue (see \code{\link[blockCV]{cv_buffer}}).
 }
 \section{{mlr3spatiotempcv} notes}{
 
 
-By default \code{\link[blockCV:spatialBlock]{blockCV::spatialBlock()}} does not allow the creation of multiple
-repetitions. \code{mlr3spatiotempcv} adds support for this when using the \code{range}
+By default \code{\link[blockCV:cv_spatial]{blockCV::cv_spatial()}} does not allow the creation of multiple
+repetitions. \code{mlr3spatiotempcv} adds support for this when using the \code{size}
 argument for fold creation. When supplying a vector of \code{length(repeats)} for
-argument \code{range}, these different settings will be used to create folds which
+argument \code{size}, these different settings will be used to create folds which
 differ among the repetitions.
 
 Multiple repetitions are not possible when using the "row & cols" approach
@@ -22,7 +52,19 @@ because the created folds will always be the same.
 The 'Description' and 'Details' fields are inherited from the respective
 upstream function.
 
-For a list of available arguments, please see \link[blockCV:spatialBlock]{blockCV::spatialBlock}.
+For a list of available arguments, please see \link[blockCV:cv_spatial]{blockCV::cv_spatial}.
+
+\code{blockCV} >= 3.0.0 changed the argument names of the implementation. For backward compatibility, \code{mlr3spatiotempcv} is still using the old ones.
+Here's a list which shows the mapping between \code{blockCV} < 3.0.0 and \code{blockCV} >= 3.0.0:
+\itemize{
+\item \code{range} -> \code{size}
+\item \code{rasterLayer} -> \code{r}
+\item \code{speciesData} -> \code{points}
+\item \code{showBlocks} -> \code{plot}
+\item \code{cols} and \code{rows} -> \code{rows_cols}
+}
+
+The default of argument \code{hexagon} is different in \code{mlr3spatiotempcv} (\code{FALSE} instead of \code{TRUE}) to create square blocks instead of hexagonal blocks by default.
 }
 
 \examples{
@@ -98,7 +140,7 @@ values stored in the \code{param_set}.}
 Create an "spatial block" resampling instance.
 
 For a list of available arguments, please see
-\code{\link[blockCV:spatialBlock]{blockCV::spatialBlock()}}.
+\code{\link[blockCV:cv_spatial]{blockCV::cv_spatial()}}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVBlock$new(id = "spcv_block")}\if{html}{\out{</div>}}
 }

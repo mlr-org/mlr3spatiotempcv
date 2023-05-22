@@ -54,14 +54,15 @@ test_that("no error when length(range) == repeats", {
 
   task = test_make_twoclass_task()
   rsp = rsmp("repeated_spcv_block", folds = 3, repeats = 2, range = c(2L, 4L))
-  expect_silent(rsp$instantiate(task))
+  rsp$instantiate(task)
+  expect_class(rsp, "ResamplingRepeatedSpCVBlock")
 })
 
 test_that("error when number of desired folds is larger than number possible blocks", {
   skip_if_not_installed("blockCV")
 
   task = test_make_twoclass_task()
-  rsp = rsmp("repeated_spcv_block", folds = 10, repeats = 2, range = c(2L, 4L))
+  rsp = rsmp("repeated_spcv_block", folds = 20, repeats = 2, range = c(2L, 4L))
   expect_error(rsp$instantiate(task))
 })
 
@@ -69,33 +70,44 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
   skip_if_not_installed("blockCV")
 
   task = test_make_blockCV_test_task()
+  testSF = test_make_blockCV_test_df()
 
   sf::sf_use_s2(use_s2 = FALSE)
 
   set.seed(42)
   rsmp = rsmp("repeated_spcv_block",
     repeats = 2,
-    folds = 5,
+    folds = 4,
     rows = 3,
     cols = 4)
-  rsmp$instantiate(task)
+  suppressMessages(rsmp$instantiate(task))
 
-  testSF = test_make_blockCV_test_df()
+  testBlock_new = blockCV::cv_spatial(
+    x = testSF,
+    k = 4,
+    rows_cols = c(3, 4),
+    hexagon = FALSE,
+    report = FALSE,
+    plot = FALSE,
+    verbose = FALSE,
+    progress = FALSE,
+    seed = 42
+  )
 
-  set.seed(42)
-  capture.output(testBlock <- suppressMessages(
-    blockCV::spatialBlock(
-      speciesData = testSF,
-      k = 5,
-      rows = 3,
-      cols = 4,
-      showBlocks = FALSE,
-      verbose = FALSE,
-      progress = FALSE)
-  ))
+  testBlock_old = blockCV::spatialBlock(
+    speciesData = testSF,
+    k = 4,
+    rows = 3,
+    cols = 4,
+    showBlocks = FALSE,
+    progress = FALSE,
+    verbose = FALSE
+  )
 
-  # only use the first iteration
-  expect_equal(rsmp$instance$fold[1:1000], testBlock$foldID)
+  # tempcv vs. blockCV_new  only use the first iteration
+  expect_equal(rsmp$instance$fold[1:1000], testBlock_new$folds_ids)
+  # tempcv vs. blockCV_old
+  expect_equal(rsmp$instance$fold[1:1000], testBlock_old$foldID)
 })
 
 test_that("Error when selection = checkboard and folds > 2", {

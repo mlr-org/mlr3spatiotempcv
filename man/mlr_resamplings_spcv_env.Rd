@@ -6,7 +6,7 @@
 \title{(blockCV) "Environmental blocking" resampling}
 \description{
 Splits data by clustering in the feature space.
-See the upstream implementation at \code{blockCV::envBlock()} and
+See the upstream implementation at \code{blockCV::cv_cluster()} and
 Valavi et al. (2018) for further information.
 }
 \details{
@@ -14,7 +14,7 @@ Useful when the dataset is supposed to be split on environmental information
 which is present in features.
 The method allows for a combination of multiple features for clustering.
 
-The input of raster images directly as in \code{blockCV::envBlock()} is not
+The input of raster images directly as in \code{blockCV::cv_cluster()} is not
 supported. See \CRANpkg{mlr3spatial} and its raster DataBackends for such
 support in \CRANpkg{mlr3}.
 }
@@ -91,7 +91,7 @@ values stored in the \code{param_set}.}
 \subsection{Method \code{new()}}{
 Create an "Environmental Block" resampling instance.
 
-For a list of available arguments, please see \link[blockCV:envBlock]{blockCV::envBlock}.
+For a list of available arguments, please see \link[blockCV:cv_cluster]{blockCV::cv_cluster}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ResamplingSpCVEnv$new(id = "spcv_env")}\if{html}{\out{</div>}}
 }
