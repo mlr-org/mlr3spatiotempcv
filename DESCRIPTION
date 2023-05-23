@@ -48,7 +48,6 @@ Suggests:
     rmarkdown,
     rpart,
     sf,
-    skmeans,
     sperrorest,
     terra,
     testthat (>= 3.0.0),

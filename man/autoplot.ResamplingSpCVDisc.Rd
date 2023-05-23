@@ -128,6 +128,5 @@ if (mlr3misc::require_namespaces("sf", quietly = TRUE)) {
 \item \code{\link[=autoplot.ResamplingSpCVTiles]{autoplot.ResamplingSpCVTiles()}}
 \item \code{\link[=autoplot.ResamplingSpCVEnv]{autoplot.ResamplingSpCVEnv()}}
 \item \code{\link[=autoplot.ResamplingCV]{autoplot.ResamplingCV()}}
-\item \code{\link[=autoplot.ResamplingSptCVCluto]{autoplot.ResamplingSptCVCluto()}}
 }
 }

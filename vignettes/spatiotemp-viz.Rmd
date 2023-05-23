@@ -17,7 +17,7 @@ on_mac = Sys.info()[["sysname"]] == "Darwin"
 
 ## 3D Visualization (spatiotemporal)
 
-{mlr3spatiotempcv} makes use of {plotly} to create the 3D plots for visualizing spatiotemporal folds created via the CLUTO algorithm.
+{mlr3spatiotempcv} makes use of {plotly} to create the 3D plots for visualizing spatiotemporal folds.
 Arranging multiple 3D plots in {plotly} is done via [3D subplots](https://plotly.com/r/3d-subplots/).
 
 Unfortunately, {plotly}'s subplot implementation is not dynamic.

@@ -66,23 +66,6 @@ test_that("train and test set getter functions are working", {
   }
 })
 
-test_that("train and test set getter functions are working for sptcv", {
-  skip_on_cran()
-  skip_on_os("mac")
-  skip_if_not_installed("skmeans")
-
-  sptcv_rsp = rsmps(
-    c("repeated_sptcv_cstf"),
-    folds = 2
-  )
-
-  for (i in sptcv_rsp) {
-    i$instantiate(task_cluto)
-    expect_silent(i$train_set(1))
-    expect_silent(i$test_set(1))
-  }
-})
-
 test_that("cloning works", {
   skip_if_not_installed("skmeans")
 
