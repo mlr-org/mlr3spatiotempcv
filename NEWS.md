@@ -1,4 +1,14 @@
-<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
+
+# mlr3spatiotempcv 2.1.0.9000
+
+- Merge branch 'main' of github.com:mlr-org/mlr3spatiotempcv.
+
+
+# mlr3spatiotempcv 2.1.0
+
+- Merge branch 'main' of github.com:mlr-org/mlr3spatiotempcv.
+
 
 # mlr3spatiotempcv 2.0.3.9000
 
