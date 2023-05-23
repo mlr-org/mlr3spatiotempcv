@@ -57,7 +57,6 @@
 #'   - [autoplot.ResamplingSpCVTiles()]
 #'   - [autoplot.ResamplingCV()]
 #'   - [autoplot.ResamplingSptCVCstf()]
-#'   - [autoplot.ResamplingSptCVCluto()]
 #' @export
 #' @examples
 #' \donttest{
@@ -184,7 +183,6 @@ plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
 #'   - [autoplot.ResamplingSpCVTiles()]
 #'   - [autoplot.ResamplingCV()]
 #'   - [autoplot.ResamplingSptCVCstf()]
-#'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' \donttest{
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
@@ -285,7 +283,6 @@ plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
 #'   - [autoplot.ResamplingSpCVTiles()]
 #'   - [autoplot.ResamplingCV()]
 #'   - [autoplot.ResamplingSptCVCstf()]
-#'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
 #'   library(mlr3)
@@ -359,128 +356,6 @@ plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
   print(autoplot(x, ...)) # nocov
 }
 
-# SptCV Cluto ------------------------------------------------------------------
-
-#' @title Visualization Functions for SptCV Cluto Methods.
-#'
-#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods to
-#'   visualize mlr3 spatiotemporal resampling objects.
-#'
-#' @inheritParams autoplot.ResamplingSpCVBlock
-#' @param object `[Resampling]`\cr
-#'   mlr3 spatial resampling object of class [ResamplingSptCVCluto] or
-#'   [ResamplingRepeatedSptCVCluto].
-#' @param x `[Resampling]`\cr
-#'   mlr3 spatial resampling object of class [ResamplingSptCVCluto] or
-#'   [ResamplingRepeatedSptCVCluto].
-#' @param tickformat_date `[character]`\cr
-#'   Date format for z-axis.
-#' @param nticks_y `[integer]`\cr
-#'   Number of y axis breaks. Only applies to SptCVCluto.
-#' @param nticks_x `[integer]`\cr
-#'   Number of x axis breaks. Only applies to SptCVCluto.
-#' @param point_size `[numeric]`\cr
-#'   Point size of markers.
-#' @param axis_label_fontsize `[integer]`\cr
-#'   Font size of axis labels.
-#' @name autoplot.ResamplingSptCVCluto
-#' @export
-#' @seealso
-#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
-#'   - Vignette [Spatiotemporal Visualization](https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html).
-#'   - [autoplot.ResamplingSpCVBlock()]
-#'   - [autoplot.ResamplingSpCVBuffer()]
-#'   - [autoplot.ResamplingSpCVCoords()]
-#'   - [autoplot.ResamplingSpCVEnv()]
-#'   - [autoplot.ResamplingSpCVDisc()]
-#'   - [autoplot.ResamplingSpCVTiles()]
-#'   - [autoplot.ResamplingCV()]
-#'   - [autoplot.ResamplingSptCVCstf()]
-#' @examples
-#' \dontrun{
-#' if (mlr3misc::require_namespaces(c("sf", "skmeans", "plotly"), quietly = TRUE)) {
-#'   library(mlr3)
-#'   library(mlr3spatiotempcv)
-#'   task_st = tsk("cookfarm_mlr3")
-#'   resampling = rsmp("sptcv_cluto", folds = 5)
-#'   resampling$instantiate(task_st)
-#'
-#'   # plot
-#'   autoplot(resampling, task_st)
-#'   autoplot(resampling, task_st, fold_id = 1)
-#'   autoplot(resampling, task_st, fold_id = c(1, 2))
-#' }
-#' }
-autoplot.ResamplingSptCVCluto = function( # nolint
-  object,
-  task,
-  fold_id = NULL,
-  plot_as_grid = TRUE,
-  train_color = "#0072B5",
-  test_color = "#E18727",
-  tickformat_date = "%Y-%m",
-  nticks_x = 3,
-  nticks_y = 3,
-  point_size = 3,
-  axis_label_fontsize = 11,
-  sample_fold_n = NULL,
-  ...) {
-
-  autoplot_spatiotemp(
-    resampling = object,
-    task = task,
-    fold_id = fold_id,
-    plot_as_grid = plot_as_grid,
-    tickformat_date = tickformat_date,
-    nticks_y = nticks_y,
-    nticks_x = nticks_y,
-    point_size = point_size,
-    axis_label_fontsize = axis_label_fontsize,
-    sample_fold_n = sample_fold_n,
-    ... = ...
-  )
-}
-
-#' @rdname autoplot.ResamplingSptCVCluto
-#' @export
-autoplot.ResamplingRepeatedSptCVCluto = function( # nolint
-  object,
-  task,
-  fold_id = NULL,
-  repeats_id = 1,
-  plot_as_grid = TRUE,
-  train_color = "#0072B5",
-  test_color = "#E18727",
-  sample_fold_n = NULL,
-  ...) {
-
-  autoplot.ResamplingSptCVCluto(
-    object = object,
-    task = task,
-    fold_id = fold_id,
-    plot_as_grid = plot_as_grid,
-    train_color = train_color,
-    test_color = test_color,
-    sample_fold_n = sample_fold_n,
-    ... = ...,
-    # ellipsis
-    repeats_id = repeats_id
-  )
-}
-
-#' @importFrom graphics plot
-#' @rdname autoplot.ResamplingSptCVCluto
-#' @export
-plot.ResamplingSptCVCluto = function(x, ...) {
-  print(autoplot(x, ...)) # nocov
-}
-
-#' @rdname autoplot.ResamplingSptCVCluto
-#' @export
-plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
-  print(autoplot(x, ...)) # nocov
-}
-
 # SpCVDisc ---------------------------------------------------------------------
 
 #' @title Visualization Functions for SpCV Disc Method.
@@ -523,7 +398,6 @@ plot.ResamplingRepeatedSptCVCluto = function(x, ...) {
 #'   - [autoplot.ResamplingSpCVTiles()]
 #'   - [autoplot.ResamplingSpCVEnv()]
 #'   - [autoplot.ResamplingCV()]
-#'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' \donttest{
 #' if (mlr3misc::require_namespaces("sf", quietly = TRUE)) {
@@ -657,7 +531,6 @@ plot.ResamplingRepeatedSpCVDisc = function(x, ...) {
 #'   - [autoplot.ResamplingSpCVDisc()]
 #'   - [autoplot.ResamplingSpCVEnv()]
 #'   - [autoplot.ResamplingCV()]
-#'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' \donttest{
 #' if (mlr3misc::require_namespaces(c("sf", "sperrorest"), quietly = TRUE)) {
@@ -783,7 +656,6 @@ plot.ResamplingRepeatedSpCVTiles = function(x, ...) {
 #'   - [autoplot.ResamplingSpCVEnv()]
 #'   - [autoplot.ResamplingCV()]
 #'   - [autoplot.ResamplingSptCVCstf()]
-#'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' \donttest{
 #' if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
@@ -863,7 +735,6 @@ plot.ResamplingSpCVBuffer = function(x, ...) {
 #'   - [autoplot.ResamplingSpCVDisc()]
 #'   - [autoplot.ResamplingSpCVTiles()]
 #'   - [autoplot.ResamplingSptCVCstf()]
-#'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext", "ggsci"), quietly = TRUE)) {
 #'   library(mlr3)
@@ -947,7 +818,6 @@ autoplot.ResamplingRepeatedCV = function( # nolint
 #'   - [autoplot.ResamplingSpCVTiles()]
 #'   - [autoplot.ResamplingCV()]
 #'   - [autoplot.ResamplingSptCVCstf()]
-#'   - [autoplot.ResamplingSptCVCluto()]
 #' @examples
 #' if (mlr3misc::require_namespaces(c("sf", "patchwork"), quietly = TRUE)) {
 #'   library(mlr3)

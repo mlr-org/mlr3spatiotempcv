@@ -51,8 +51,8 @@ register_mlr3 = function() { # nocov start
   if (packageVersion("mlr3") > "0.13.4") {
     x$task_types = x$task_types[!c("regr_st", "classif_st")]
     x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
-      ~type,        ~package,           ~task,           ~learner,         ~prediction,         ~prediction_data,        ~measure,
-      "regr_st",    "mlr3spatiotempcv", "TaskRegrST",    "LearnerRegr",    "PredictionRegr",    "PredictionDataRegr",    "MeasureRegr",
+      ~type, ~package, ~task, ~learner, ~prediction, ~prediction_data, ~measure,
+      "regr_st", "mlr3spatiotempcv", "TaskRegrST", "LearnerRegr", "PredictionRegr", "PredictionDataRegr", "MeasureRegr",
       "classif_st", "mlr3spatiotempcv", "TaskClassifST", "LearnerClassif", "PredictionClassif", "PredictionDataClassif", "MeasureClassif"
     )), "type")
 
@@ -70,8 +70,8 @@ register_mlr3 = function() { # nocov start
   } else {
     x$task_types = x$task_types[!"mlr3spatiotempcv", , on = "package"]
     x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
-      ~type,     ~package,           ~task,           ~learner,         ~prediction,         ~measure,
-      "regr",    "mlr3spatiotempcv", "TaskRegrST",    "LearnerRegr",    "PredictionRegr",    "MeasureRegr",
+      ~type, ~package, ~task, ~learner, ~prediction, ~measure,
+      "regr", "mlr3spatiotempcv", "TaskRegrST", "LearnerRegr", "PredictionRegr", "MeasureRegr",
       "classif", "mlr3spatiotempcv", "TaskClassifST", "LearnerClassif", "PredictionClassif", "MeasureClassif"
     )), "type")
 
@@ -104,8 +104,6 @@ register_mlr3 = function() { # nocov start
   mlr_resamplings$add("repeated_spcv_coords", ResamplingRepeatedSpCVCoords)
   mlr_resamplings$add("repeated_spcv_disc", ResamplingRepeatedSpCVDisc)
   mlr_resamplings$add("repeated_spcv_tiles", ResamplingRepeatedSpCVTiles)
-  mlr_resamplings$add("sptcv_cluto", ResamplingSptCVCluto)
-  mlr_resamplings$add("repeated_sptcv_cluto", ResamplingRepeatedSptCVCluto)
   mlr_resamplings$add("sptcv_cstf", ResamplingSptCVCstf)
   mlr_resamplings$add("repeated_sptcv_cstf", ResamplingRepeatedSptCVCstf)
 }
