@@ -1,4 +1,4 @@
-mlr3spatiotempcv 2.0.3
+mlr3spatiotempcv 2.1.0
 
 ## Cran Repository Policy
 
@@ -6,12 +6,12 @@ mlr3spatiotempcv 2.0.3
 
 ## R CMD check results
 
-- [x] Checked locally, R 4.2.1
-- [x] Checked on CI system, R 4.2.1
-- [x] Checked on win-builder, R devel
+- [x] Checked locally, R 4.2.3
+- [ ] Checked on CI system, R 4.3.0
+- [ ] Checked on win-builder, R devel
 
 Check the boxes above after successful execution and remove this line. Then run `fledge::release()`.
 
 ## Current CRAN check results
 
-Initial release.
+- [x] Checked on 2023-05-23, no problems found.
