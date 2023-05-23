@@ -2,12 +2,9 @@
 
 # mlr3spatiotempcv 2.1.0
 
-- Merge branch 'main' of github.com:mlr-org/mlr3spatiotempcv.
-
-
-# mlr3spatiotempcv 2.0.3.9000
-
-- Internal changes only.
+- Add support for {blockCV} v3 and bump requirement to >= 3.1.2 (#222)
+- Replace {raster} dependency in favor of {terra}
+- Remove CLUTO algorithm and method due to CLUTO being non-downloadable anymore (#224)
 
 
 # mlr3spatiotempcv 2.0.3
