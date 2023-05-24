@@ -26,7 +26,6 @@ repos:
       #   -    CAST
       #   -    ggsci
       # codemeta must be above use-tidy-description when both are used
-      - id: codemeta-description-updated
       - id: use-tidy-description
       - id: readme-rmd-rendered
       - id: parsable-R
