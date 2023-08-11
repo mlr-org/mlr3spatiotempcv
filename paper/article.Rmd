@@ -89,7 +89,7 @@ It is most easily understood from a predictive modeling perspective by focusing 
 In crop classification from remotely-sensed data, for instance, learning samples routinely contain multiple grid cells from a sample of fields with known crop type, for instance 2000 grid cells from 100 fields scattered across a large study region.
 The purpose of training a model on this particular sample is to make predictions on other, new fields within the same geographic domain [*intra-domain* prediction, @brenning2005] --- not *within* the same field, which obviously presents only a single crop type that is already known from the training sample.
 In this specific situation it would therefore seem rather unwise to train a model on a simple random subsample of grid cells, and to test it on the remaining data, using other grid cells from the same fields, as if one wanted to predict within a field.
-The results from this performance assessment would be over-optimistic, and perhaps badly so.
+The results from this performance assessment would be over-optimistic, and will not reflect the model's true ability to make predictions for new fields.
 To mimic the predictive situation for which the model is trained, one would rather have to resample at the level of fields, not grid cells [@pena2015].
 If the model was to be applied to adjacent agricultural regions, i.e., outside the learning sample's spatial domain [*extra-domain* prediction, @brenning2005], it would even seem necessary to resample at a higher level of spatial aggregation, i.e., at the level of sub-regions within the learning sample, in order to realistically mimic the actual prediction task.
 The CV resampling needed therefore depends as much on the prediction task itself as on the data structure or dependency at hand.
@@ -103,7 +103,9 @@ In contrast, packages \pkg{blockCV} and \pkg{ENMeval} were developed for block a
 However, neither of these have been integrated into established machine-learning frameworks such as \pkg{mlr}/\pkg{mlr3} [@mlr3] or \pkg{caret}/\pkg{tidymodels} [@kuhn2020], and all of them lack support for temporal prediction tasks.
 The \pkg{CAST} package, in contrast, focuses on spatiotemporal prediction tasks and makes use of some functions of the \pkg{caret} framework [@cast; @meyer2018].
 One limitation of all these packages is the sole focus on model assessment, while the proposed implementation within the \pkg{mlr3} framework also offers seamless integration into model selection and provides parallel execution and enhanced logging abilities.
-It is worth noting that a spatial cross-validation library named \pkg{spacv} has recently been developed for Python3, which can be used with the \pkg{scikit-learn} machine-learning framework [@pedregosa2011].
+During the intitial development of \pkg{mlr3spatiotempcv}, it has been the first toolbox aiming to integrate standalone spatiotemporal validation strategies into an existing machine-learning framework.
+Meanwhile the \pkg{spatialsample} has undertaken similar efforts for the \pkg{tidymodels} framework [@mahoney2023].
+In addition parallel efforts to support spatial validation in the Python world have been made by the \pkg{spacv} and \pkg{spatial-kfold} packages, yet often with only a subset of available methods compared to what \pkg{mlr3spatiotempcv} offers [@ghariani2023].
 
 Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state-of-the-art compilation of spatial and spatiotemporal partitioning schemes that is well-integrated into a comprehensive machine-learning framework in R, the \pkg{mlr3} ecosystem.
 This package is furthermore equipped with a variety of two- and three-dimensional visualization capabilities.
@@ -243,7 +245,6 @@ Comprehensive and up-to-date information can be found in the package's online do
 The following sections give an overview of most implemented partitioning strategies and their visualization options.
 The available methods are further discussed in Section \ref{sec:disc}.
 
-% this is required to not expand the authors in the table citations on first use
 \shortcites{ploton2020, karasiak2021, moller2021, endicott2017, wu2020, geiss2017, morera2021, zurell2020, brenning2015, bebber2017, jensen2021, escobar2021, stewart2021, reitz2021, egli2020, gao2019}
 
 
@@ -259,7 +260,7 @@ The available methods are further discussed in Section \ref{sec:disc}.
       \cmidrule{2-5}
        & disc, with buffer  & \texttt{"spcv\_disc"}  & \pkg{sperrorest} (3) & \specialcell{\cite{karasiak2021} \\ \cite{moller2021} \\ \cite{endicott2017}} \\
       \midrule
-      \multirow{4}{*}{\specialcell{Leave-one-\\block-out \\ CV}} &  clustering of coordinates & \texttt{"spcv\_coords"} & \pkg{sperrorest} (6)      & \specialcell{\cite{morera2021} \\ \cite{geiss2017} \\ \cite{wu2020}} \\
+      \multirow{4}{*}{\specialcell{Leave-one-\\block-out \\ CV}} &  clustering of coordinates & \texttt{"spcv\_coords"}* & \pkg{sperrorest} (6)      & \specialcell{\cite{morera2021} \\ \cite{geiss2017} \\ \cite{wu2020}} \\
             \cmidrule{2-5}
                                       &  geometric: rectangular & \texttt{"spcv\_tiles"} & \pkg{sperrorest}    & \specialcell{\cite{bebber2017} \\ \cite{zurell2020} \\ \cite{brenning2015}}  \\
                                                   \cmidrule{2-5}
@@ -269,18 +270,17 @@ The available methods are further discussed in Section \ref{sec:disc}.
   \cmidrule{2-5}
                                       &  custom & \texttt{"cv"} with grouping  & \pkg{mlr3} (0)  &  -  \\
   \cmidrule{2-5}
-                                      &  clustering in feature space & \texttt{"spcv\_env"} & \pkg{blockCV} (1)   &  \cite{morera2021}  \\
+                                      &  clustering in feature space & \texttt{"spcv\_env"}* & \pkg{blockCV} (1)   &  \cite{morera2021}  \\
       \midrule
-      \multirow{3}{*}{\specialcell{Spatiotemp. \\ CV}} &  custom & \texttt{"sptcv\_cstf"} & \pkg{CAST} (6)      & \specialcell{\cite{gao2019} \\ \cite{reitz2021} \\ \cite{egli2020}} \\
-                                                  \cmidrule{2-5}
-                                      &  clustering: custom & \texttt{"sptcv\_cluto"}  & \pkg{skmeans} (0)    & - \\
+      \multirow{2}{*}{\specialcell{Spatiotemp. \\ CV}} &  custom & \texttt{"sptcv\_cstf"}* & \pkg{CAST} (6)      & \specialcell{\cite{gao2019} \\ \cite{reitz2021} \\ \cite{egli2020}} \\
                                       \bottomrule
     \end{tabular}
   \endgroup
   \caption[b]{Available spatiotemporal resampling methods in the \pkg{mlr3} ecosystem.
     The "Name" column shows the \pkg{mlr3} method name as found in the \texttt{mlr3::mlr\_resamplings} dictionary.
     The count in brackets after the package name represents the number of studies that were found having used this resampling technique until May 2021.
-    For each method, up to three randomly selected references were added to the table.}
+    For each method, up to three randomly selected references were added to the table.
+    Methods suffixed with a * in the "Name" column have been reimplemented in \pkg{mlr3spatiotempcv} for efficiency or to reduce upstream dependencies.}
     \label{tab:sptcv-methods}
 \end{table}
 
@@ -308,7 +308,7 @@ rsmp_buffer = rsmp("spcv_buffer", theRange = 1000)
 autoplot(rsmp_buffer, size = 0.8, task = task, fold_id = 1)
 ```
 
-```{r buffer-eval, fig.cap='Visualization of the spatial buffering method from package \\pkg{blockCV} (method "spcv\\_buffer" in \\pkg{mlr3spatiotempcv}). The buffer distance is 1000 m.', out.width="40%", fig.pos="ht",echo=FALSE}
+```{r buffer-eval, fig.cap='Visualization of the spatial buffering method from package \\pkg{blockCV} (method "spcv\\_buffer" in \\pkg{mlr3spatiotempcv}). The buffer distance is 1000 m.', out.width="55%", fig.pos="ht",echo=FALSE}
 library("mlr3")
 library("mlr3spatiotempcv")
 task = tsk("ecuador")
@@ -317,8 +317,13 @@ rsmp_buffer
 
 autoplot(rsmp_buffer,
   size = 0.8, task = task, fold_id = 1) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
 In the presence/background (or presence-only) situation, in contrast, only presence observations are recorded, and all other locations within the study area are referred to as background and considered as pseudo-absences.
@@ -347,7 +352,7 @@ rsmp_disc
 autoplot(rsmp_disc, size = 0.8, task = task, fold_id = 1)
 ```
 
-```{r disc-eval, fig.cap='Visualization of one training set / test set combination generated with the leave-one-disc-out method from package \\pkg{sperrorest} (method `"spcv\\_disc"` in \\pkg{mlr3spatiotempcv}). The disc has a radius of 300 m and is surrounded by a 400-m buffer.', out.width="40%", echo=FALSE,fig.pos="ht"}
+```{r disc-eval, fig.cap='Visualization of one training set / test set combination generated with the leave-one-disc-out method from package \\pkg{sperrorest} (method `"spcv\\_disc"` in \\pkg{mlr3spatiotempcv}). The disc has a radius of 300 m and is surrounded by a 400-m buffer.', out.width="55%", echo=FALSE,fig.pos="ht"}
 library("mlr3")
 library("mlr3spatiotempcv")
 requireNamespace("blockCV")
@@ -357,8 +362,13 @@ rsmp_disc
 
 autoplot(rsmp_disc,
   size = 0.8, task = task, fold_id = 1) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
 ## Leave-one-block-out cross-validation {#sec:lobo-cv}
@@ -386,13 +396,18 @@ rsmp_coords = rsmp("spcv_coords", folds = 5)
 autoplot(rsmp_coords, size = 0.8, fold_id = 1, task = task)
 ```
 
-```{r coords-eval, fig.cap='Leave-one-block-out CV based on $k$-means clustering of the coordinates as implemented in package \\pkg{sperrorest} (method `"spcv\\_coords"` in \\pkg{mlr3spatiotempcv}).', out.width="40%", fig.pos="ht", echo=FALSE}
+```{r coords-eval, fig.cap='Leave-one-block-out CV based on $k$-means clustering of the coordinates as implemented in package \\pkg{sperrorest} (method `"spcv\\_coords"` in \\pkg{mlr3spatiotempcv}).', out.width="55%", fig.pos="ht", echo=FALSE}
 rsmp_coords = rsmp("spcv_coords", folds = 5)
 
 autoplot(rsmp_coords,
   size = 0.8, fold_id = 1, task = task) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
 ### Geometric: using rectangular blocks --- \code{"spcv_tiles"} {short-title='Geometric: using rectangular blocks --- "spcv_tiles"' }
@@ -411,13 +426,18 @@ rsmp_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
 autoplot(rsmp_tiles, size = 0.8, fold_id = 1, task = task)
 ```
 
-```{r tile, fig.cap='Leave-one-block-out resampling from package \\pkg{sperrorest} (method `"spcv\\_tiles"` in package \\pkg{mlr3spatiotempcv} with argument `nsplit = c(3,4)` indicating the number of rows and columns).', out.width="40%", fig.pos="ht", echo=FALSE}
+```{r tile, fig.cap='Leave-one-block-out resampling from package \\pkg{sperrorest} (method `"spcv\\_tiles"` in package \\pkg{mlr3spatiotempcv} with argument `nsplit = c(3,4)` indicating the number of rows and columns).', out.width="55%", fig.pos="ht", echo=FALSE}
 rsmp_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
 
 autoplot(rsmp_tiles,
   size = 0.8, fold_id = 1, task = task) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
 ### Custom: `"custom_cv"` in \pkg{mlr3} {short-title='Custom: "custom_cv" in mlr3' #sec:custom-cv}
@@ -437,7 +457,7 @@ rsmp_custom$instantiate(task, f = zclass)
 autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1)
 ```
 
-```{r custom-cv, fig.cap='Leave-one-level-out (custom) resampling from package \\pkg{mlr3} (method `"custom\\_cv"`). A factor variable is used to define all partitions.', out.width="40%", fig.pos="ht", echo=FALSE}
+```{r custom-cv, fig.cap='Leave-one-level-out (custom) resampling from package \\pkg{mlr3} (method `"custom\\_cv"`). A factor variable is used to define all partitions.', out.width="55%", fig.pos="ht", echo=FALSE}
 breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
 zclass = cut(task$data()$dem, breaks, include.lowest = TRUE)
 
@@ -445,8 +465,13 @@ rsmp_custom = rsmp("custom_cv")
 rsmp_custom$instantiate(task, f = zclass)
 
 autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
 ## Cross-validation at the block level {#sec:block-cv}
@@ -475,14 +500,19 @@ autoplot(rsmp_block_random, size = 0.8, fold_id = 1, task = task,
   show_blocks = TRUE, show_labels = TRUE)
 ```
 
-```{r block-random, fig.cap='Random resampling of square spatial blocks using the implementation in package \\pkg{blockCV} (method `"spcv\\_block"` with option `selection = "random"` in \\pkg{mlr3spatiotempcv}). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to the test partition.', out.width="40%", fig.pos="ht", echo=FALSE}
+```{r block-random, fig.cap='Random resampling of square spatial blocks using the implementation in package \\pkg{blockCV} (method `"spcv\\_block"` with option `selection = "random"` in \\pkg{mlr3spatiotempcv}). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to the test partition.', out.width="55%", fig.pos="ht", echo=FALSE}
 rsmp_block_random = rsmp("spcv_block", range = 1000, folds = 5)
 
 autoplot(rsmp_block_random,
   size = 0.8, fold_id = 1, task = task,
   show_blocks = TRUE, show_labels = TRUE) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
 In systematic resampling, the blocks are numbered row by row, and blocks $i+j\cdot\texttt{folds}$ are assigned to fold $i$ (see Figure \ref{fig:block-systematic}).
@@ -497,7 +527,7 @@ autoplot(rsmp_block_systematic, size = 0.8, fold_id = 1, task = task,
   show_blocks = TRUE, show_labels = TRUE)
 ```
 
-```{r block-systematic, fig.cap='Sytematic resampling of square spatial blocks using the implementation in package \\pkg{blockCV} (method `"spcv\\_block"` with option `selection = "systematic"` in \\pkg{mlr3spatiotempcv}). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to this test sample.', out.width="40%", fig.pos="ht", echo=FALSE}
+```{r block-systematic, fig.cap='Sytematic resampling of square spatial blocks using the implementation in package \\pkg{blockCV} (method `"spcv\\_block"` with option `selection = "systematic"` in \\pkg{mlr3spatiotempcv}). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to this test sample.', out.width="55%", fig.pos="ht", echo=FALSE}
 rsmp_block_systematic = rsmp("spcv_block",
   range = 1000, folds = 5,
   selection = "systematic"
@@ -506,21 +536,26 @@ rsmp_block_systematic = rsmp("spcv_block",
 autoplot(rsmp_block_systematic,
   size = 0.8, fold_id = 1, task = task,
   show_blocks = TRUE, show_labels = TRUE) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
 *Checkerboard* partitioning is a special case of a systematic block partitioning (`selection = "checkerboard"`) which is why we omitted a practical example for this option.
 It inherently supports only two folds, making it less appealing than the more commonly used five- or ten-fold resampling, which achieve larger training set sizes.
 
-###  Custom: `"cv"` with grouping in \pkg{mlr3} {short-title='Custom: "cv" with grouping in mlr3' #sec:custom-cv-grouping}
+### Custom: `"cv"` with grouping in \pkg{mlr3} {short-title='Custom: "cv" with grouping in mlr3' #sec:custom-cv-grouping}
 
 Although the `"cv"` resampling strategy in \pkg{mlr3} performs random, non-spatial partitioning by default, it can also be used for CV at the block level.
 This is achieved by specifying the "group" column role in a \pkg{mlr3} \texttt{Task} object, which uses the factor levels as blocks.
 A complete group or block of observations is therefore assigned to a specific partition, which consequently honors the grouping structure.
-In the deprecated \pkg{mlr} package this concept was referred to as "blocking".
 
 In contrast to geometric or clustering-based blocks, the spatial or temporal location is not used explicitly, but rather implicitly through the spatial or spatiotemporal footprint of each user-defined block.
+Studies which have applied custom grouping approaches include @meyer2018, @anderson2005, @kasurak2011.
 
 The following example uses $k$-means clustering to generate classes that are used as blocks.
 To underline the honoring of the groups, a number of groups (eight) that is not a multiple of the number of folds (three) was chosen.
@@ -533,11 +568,9 @@ task_cv$cbind(data.frame("group" = group))
 task_cv$set_col_roles("group", roles = "group")
 
 rsmp_cv_group = rsmp("cv", folds = 3)$instantiate(task_cv)
-
-print(rsmp_cv_group$instance)
 ```
 
-```{r cv-non-eval-2, fig.cap='Cross-Validation at the block level including predefined groups from package \\pkg{mlr3} (method `"cv"`). A factor variable (named "group") was used to define the grouping. Each class is either assigned to the test or training set.', out.width="40%", fig.pos="ht", eval=FALSE}
+```{r cv-non-eval-2, fig.cap='Cross-Validation at the block level including predefined groups from package \\pkg{mlr3} (method `"cv"`). A factor variable (named "group") was used to define the grouping. Each class is either assigned to the test or training set.', out.width="55%", fig.pos="ht", eval=FALSE}
 autoplot(rsmp_cv_group, size = 0.8, task = task_cv, fold_id = 1)
 ```
 
@@ -548,14 +581,17 @@ task_cv$cbind(data.frame("group" = group))
 task_cv$set_col_roles("group", roles = "group")
 
 rsmp_cv_group = rsmp("cv", folds = 3)$instantiate(task_cv)
-
-print(rsmp_cv_group$instance)
 ```
 
-```{r cv-eval-2, fig.cap='Cross-Validation at the block level including predefined groups from package \\pkg{mlr3} (method `"cv"`). A factor variable is used to define the grouping. Each class is either assigned to the test or training set.', out.width="40%", fig.pos="ht", echo=FALSE}
+```{r cv-eval-2, fig.cap='Cross-Validation at the block level including predefined groups from package \\pkg{mlr3} (method `"cv"`). A factor variable is used to define the grouping. Each class is either assigned to the test or training set.', out.width="55%", fig.pos="ht", echo=FALSE}
 autoplot(rsmp_cv_group, size = 0.8, task = task_cv, fold_id = 1) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
 ### Clustering: using feature-based clustering --- \code{"spcv_env"} {short-title='Clustering: using feature-based clustering --- "spcv_env"' }
@@ -597,14 +633,16 @@ plot_env_single = autoplot(rsmp_env,
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
   ggplot2::theme(plot.title = ggtext::element_textbox(size = 8),
-    axis.text = ggplot2::element_text(size = 8))
+    axis.text = ggplot2::element_text(size = 8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
 
 plot_env_multi = autoplot(rsmp_env_multi,
   size = 0.3, fold_id = 1, task = task) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
   ggplot2::theme(plot.title = ggtext::element_textbox(size = 8),
-    axis.text = ggplot2::element_text(size = 8))
+    axis.text = ggplot2::element_text(size = 8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
 
 library("patchwork")
 plot_env_single + plot_env_multi + plot_layout(guides = "collect")
@@ -753,7 +791,7 @@ Due to this restriction and the age of the latest release (14 years at the time 
 
 # Step-by-step example: Comparing spatial and non-spatial CV {#sec:case-study}
 
-A well-known case study is used to demonstrate the application of spatial and non-spatial resampling techniques for model assessment in \pkg{mlr3spatiotempcv}.
+A case study is used to demonstrate the application of spatial and non-spatial resampling techniques for model assessment in \pkg{mlr3spatiotempcv}.
 The objective of landslide susceptibility modeling is to predict how prone to landslide initiation a location is.
 Models are fitted to historical landslide occurrences, but they need to learn generalizable relationships between predisposing variables and the response as opposed to perfectly reproducing or memorizing the historical distribution.
 This binary classification task on landslides in Ecuador [@muenchow2012] is available as a built-in task via `tsk("ecuador")`, but is generated from the learning sample in this example.
@@ -880,6 +918,8 @@ If one takes a closer look at the results, the non-spatial CV estimate of AUC (0
 Since test points in non-spatial CV may be from the same slopes or even the same landslides as the training data, the non-spatial CV result should/can be considered as an over-optimistic estimate of the model's ability to predict the susceptibility to "new" landslides.
 Spatial CV, in contrast, provides a better/more accurate measure of a model's ability to generalize from the training sample --- in this case study, from the specific hillslopes and historical landslides in the training sample.
 It is also expected that spatial CV results better represent the model's transferability to geologically and topographically similar areas adjacent to the training area.
+Yet it must be kept in mind that using spatial CV might also lead to an overpessimistic estimate of the model's predictive performance, as large parts of the study area are being left out during training.
+This goes in hand with the limited ability to predict to other areas, as discussed in [@wadoux2021, meyer2021].
 The magnitude of the difference between spatial and non-spatial CV estimates may depend on the dataset, the strength on spatial or spatiotemporal autocorrelation, and the learner itself.
 Algorithms with a higher tendency to overfit to the training set will tend to have a larger spread in such scenarios.
 
@@ -931,12 +971,9 @@ See @schratz2019 for more details as well as chapter 11 of [Geocomputation with 
 
 Since \pkg{mlr3spatiotempcv} harvests already implemented resampling methods from existing R packages, the broader overview presented in this work has highlighted that there are still several gaps that may need to be closed in the future, if specific use cases require those features.
 
-<!-- risks of using buffer zone -->
 For example, buffering, or the use of a spatial or temporal separation distance between training and test sets, is currently only implemented for some methods (`"spcv_buffer"`, `"spcv_disc"`, and `"sptcv_cstf"` with both `space_var` and `time_var`).
 Its use should, however, be limited to use cases involving a prediction distance, as a buffer zone reduces the size of the training sample and introduces the risk of geographically biased training data.
 
-<!-- only some methods are suited for repeated execution -->
-<!-- spcv_coords: limited variance due to limited k-means possibilities -->
 CV is often executed repeatedly to reduce the possible influence of random variability on CV estimates.
 In general, only methods that involve a random mechanism for generating or resampling blocks are suited for this.
 In leave-one-block-out CV, coordinate-based and environmental clustering (`"spcv_coords"`, `"spcv_env"` and `"sptcv_cluto"`) achieve this as their clusters are generated based on random seeds.
@@ -956,7 +993,6 @@ They are advised to focus on the spatial or spatiotemporal structure of the mode
 The compilation of resampling techniques in \pkg{mlr3spatiotempcv} is by no means complete.
 Additional methods or parameters may therefore be added in the future as they become available in upstream package or are contributed directly to this package.
 
-<!-- sign-off -->
 Spatiotemporal cross-validation as a paradigm is not yet fully established in scientific workflows, although it has been discussed intensively for more than a decade now.
 We anticipate that making the existing methods easily accessible to users is an important step to foster the acceptance of spatiotemporal cross-validation in the community and to allow modelers to produce bias-reduced model assessments in environmental and ecological studies.
 
