@@ -851,7 +851,7 @@ learner = lrn("classif.ranger", predict_type = "prob")
 
 ## Non-spatial cross-validation
 
-To define a resampling strategy, the `rsmp()` function is used to generate a resampling object using four folds and two repetitions following a random sampling logic ("cv").
+To define a resampling strategy, the `rsmp()` function is used to generate a resampling object using four folds and two repetitions following a random sampling logic ("repeated_cv").
 
 Next, the created resampling object `rsmp_nsp` is passed to the `resample()` function together with the task and learner objects created earlier to execute the model assessment.
 This is the actual, potentially time-consuming CV estimation. With the present settings, eight random forest classifiers are fitted and evaluated in this step --- one model fitted on each CV training set.
