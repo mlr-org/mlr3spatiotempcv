@@ -873,7 +873,7 @@ rr_nsp$aggregate(measures = msr("classif.auc"))
 
 ## Spatial cross-validation via coordinate-based clustering
 
-The model assessment is now repeated again using spatial CV resampling, for which the only required change is to replace `"repeated_cv"` by `"repeated_spcv_coords"`.
+The model assessment is now repeated again using spatial CV resampling, for which the only required change is to replace `"repeated_cv"` with `"repeated_spcv_coords"`.
 
 ```{r rr-spcv-1, cache.lazy = FALSE, results='hide'}
 rsmp_sp = rsmp("repeated_spcv_coords", folds = 4, repeats = 2)
