@@ -742,7 +742,7 @@ plotly::save_image(p_llo_print, "pdf/llo.pdf",
   scale = 2, width = 1000, height = 800)
 ```
 
-```{r llo, echo=FALSE, out.width="70%", fig.cap='Birds-eye view of `"leave-location-out"` CV from package \\pkg{CAST} (method `"sptcv\\_cstf"` and column role `"space" = "SOURCEID"`).', fig.pos="ht"}
+```{r llo, echo=FALSE, out.width="70%", fig.cap='Birds-eye view of `"leave-location-out"` CV from package \\pkg{CAST} (method `"sptcv\\_cstf"` and column role `"space" = "SOURCEID"`). The readers viewpoint is located on top of the figure, looking down. The transects are individual locations being left out across multiple time steps.', fig.pos="ht"}
 knitr::include_graphics("pdf/llo.pdf")
 ```
 
