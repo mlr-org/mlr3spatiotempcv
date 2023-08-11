@@ -931,16 +931,13 @@ The question of which resampling method should be chosen for a prediction task a
 Even though there is and most likely will be no definitive answer to this question, we would like to give some guidance in this section to help find an appropriate method.
 As a general rule, we recommend to use a resampling scheme that (1) mimics the predictive situation in which the model will be applied operationally, and (2) is consistent with the structure of the data. Both aspects are outlined in this section, starting with two concrete modeling scenarios.
 
-Although the case study example in Section \ref{sec:case-study} used the `"spcv_coords"` method for coordinate-based clustering, this should not give the impression that this method is the only method suitable for this example task.
-In this application setting, we want to assess how well the model generalized from the concrete set of historical landslide occurrences, which is why we ensured that training and test sets contain different, "new" hillslopes and landslides.
+Although the case study example in Section \ref{sec:case-study} used the `"spcv_coords"` method for coordinate-based clustering, other methods would be suitable as well.
+In this particular application setting, we want to assess how well the model generalized from the concrete set of historical landslide occurrences, which is why we ensured that training and test sets contain different, "new" hillslopes and landslides.
 Coordinate-based clustering is particularly appealing in this setting because of its ability to adapt to the irregularly shaped study area of this example.
 Resampling at the level of sub-catchments could have been a viable alternative approach that can be implemented using custom resampling (`"custom_cv"` method); however, this may result in less balanced sizes of test sets as catchment sizes may vary.
 When the timing of landslides is known (event-based inventories) or multiple inventories have been compiled for different time points, it can also be recommendable to additionally sample training and test data from different time points, as with the LLTO and LTO [@meyer2018] or similar methods [@brenning2005].
 
-In other application scenarios such as the crop classification example given in Section \ref{sec:intro} [@pena2015], the objective is to predict the fruit-tree crop type of 'new', unseen fields within an agricultural region.
-In this use case we are not at all interested in "predicting" the already known crop type of (other) grid cells within the same agricultural field.
-Also, a model will likely be much better able to predict the crop type within the same field from multitemporal remote-sensing data since all crops within that field are subject to identical management practices (e.g., use of pesticides, pruning of fruit trees, tree spacing), while 'new' fields may be managed differently.
-As a consequence, grid cells from the same field should be grouped into a block, and resampling should be done at the field level (`"cv"` method with grouping) to receive an honest estimate of the model's performance in a relevant predictive situation.
+In other scenarios, such as when predicting crop types across monocultural fields \ref{sec:intro} [@pena2015], it makes sense to group observations into blocks based on previously known boundaries and resample at the polygon level (`"cv"` method with grouping).
 If, in contrast, the objective is to apply the model to an adjacent agricultural region (e.g., adjacent county) where the same crop types are present, it may be advisable to use coordinate-based clustering (`"spcv_coords"` method) to obtain larger, contiguous test regions.
 
 In summary, there are various factors that may be considered in judging the suitability of a resampling method:
