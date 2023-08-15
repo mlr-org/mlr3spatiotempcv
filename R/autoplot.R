@@ -32,6 +32,8 @@
 #'   Whether to show an overlay of the spatial blocks polygons.
 #' @param show_labels `[logical(1)]`\cr
 #'   Whether to show an overlay of the spatial block IDs.
+#' @param label_size `[numeric(1)]`\cr
+#'   Label size of block labels. Only applies for `show_labels = TRUE`.
 #' @param ... Passed to `geom_sf()`. Helpful for adjusting point sizes and
 #'   shapes.
 #' @param sample_fold_n `[integer]`\cr
@@ -97,6 +99,7 @@ autoplot.ResamplingSpCVBlock = function( # nolint
   show_blocks = FALSE,
   show_labels = FALSE,
   sample_fold_n = NULL,
+  label_size = 2,
   ...) {
 
   autoplot_spatial(
@@ -109,6 +112,7 @@ autoplot.ResamplingSpCVBlock = function( # nolint
     show_blocks = show_blocks,
     show_labels = show_labels,
     sample_fold_n = sample_fold_n,
+    label_size = label_size,
     ... = ...
   )
 }
@@ -126,6 +130,7 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
   show_blocks = FALSE,
   show_labels = FALSE,
   sample_fold_n = NULL,
+  label_size = label_size,
   ...) {
 
   autoplot.ResamplingSpCVBlock(
@@ -138,6 +143,7 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
     show_blocks = show_blocks,
     show_labels = show_labels,
     sample_fold_n = sample_fold_n,
+    label_size = label_size,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -886,6 +892,7 @@ autoplot_spatial = function(
   show_blocks = FALSE,
   show_labels = FALSE,
   sample_fold_n = NULL,
+  label_size = NULL,
   ...) {
 
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
@@ -928,7 +935,8 @@ autoplot_spatial = function(
       resampling_mod = coords_resamp,
       sample_fold_n = sample_fold_n, fold_id = fold_id,
       repeats_id = repeats_id, plot_as_grid = plot_as_grid,
-      show_blocks = show_blocks, show_labels = show_labels, ...)
+      show_blocks = show_blocks, show_labels = show_labels,
+      label_size = label_size, ...)
   } else {
     ### One plot showing all test folds ----------------------------------------
     plot = autoplot_all_folds_dt(task = task, resampling = coords_resamp,

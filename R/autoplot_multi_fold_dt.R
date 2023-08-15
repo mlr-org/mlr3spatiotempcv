@@ -1,4 +1,3 @@
-
 #' Autoplot helper
 #' @param resampling Actual resampling object (needed for spcv_block with
 #'   "show_blocks = TRUE")
@@ -6,7 +5,7 @@
 #' @keywords internal
 autoplot_multi_fold_dt = function(task, resampling, resampling_mod,
   sample_fold_n, fold_id, repeats_id, plot_as_grid = FALSE,
-  show_omitted = FALSE, show_blocks = FALSE, show_labels = FALSE, ...) {
+  show_omitted = FALSE, show_blocks = FALSE, show_labels = FALSE, label_size = 2, ...) {
 
   plot_list = mlr3misc::map(fold_id, function(.x) {
 
@@ -63,7 +62,7 @@ autoplot_multi_fold_dt = function(task, resampling, resampling_mod,
           geom_sf_label(
             data = blocks, color = "black",
             label = blocks$fold,
-            size = 2, label.padding = unit(0.1, "lines"),
+            size = label_size, label.padding = unit(0.1, "lines"),
             fun.geometry = function(x) {
               # Warning: In st_point_on_surface.sfc(sf::st_zm(x)) :
               # st_point_on_surface may not give correct results for
