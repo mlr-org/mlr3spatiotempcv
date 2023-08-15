@@ -15,6 +15,7 @@ autoplot_multi_fold_dt(
   show_omitted = FALSE,
   show_blocks = FALSE,
   show_labels = FALSE,
+  label_size = 2,
   ...
 )
 }
