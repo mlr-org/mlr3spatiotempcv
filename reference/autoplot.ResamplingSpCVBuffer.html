@@ -100,6 +100,7 @@ visualize mlr3 spatiotemporal resampling objects.</p>
 <span>  plot_as_grid <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  train_color <span class="op">=</span> <span class="st">"#0072B5"</span>,</span>
 <span>  test_color <span class="op">=</span> <span class="st">"#E18727"</span>,</span>
+<span>  show_omitted <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -139,6 +140,11 @@ The color to use for the training set observations.</p></dd>
 <dt>test_color</dt>
 <dd><p><code>[character(1)]</code><br>
 The color to use for the test set observations.</p></dd>
+
+
+<dt>show_omitted</dt>
+<dd><p><code>[logical]</code><br>
+Whether to show points not used in train or test set for the current fold.</p></dd>
 
 
 <dt>...</dt>
