@@ -17,6 +17,7 @@
   show_blocks = FALSE,
   show_labels = FALSE,
   sample_fold_n = NULL,
+  label_size = 2,
   ...
 )
 
@@ -31,6 +32,7 @@
   show_blocks = FALSE,
   show_labels = FALSE,
   sample_fold_n = NULL,
+  label_size = label_size,
   ...
 )
 
@@ -70,6 +72,9 @@ Whether to show an overlay of the spatial block IDs.}
 Number of points in a random sample stratified over partitions.
 This argument aims to keep file sizes of resulting plots reasonable and
 reduce overplotting in dense datasets.}
+
+\item{label_size}{\verb{[numeric(1)]}\cr
+Label size of block labels. Only applies for \code{show_labels = TRUE}.}
 
 \item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and
 shapes.}

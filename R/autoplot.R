@@ -32,6 +32,8 @@
 #'   Whether to show an overlay of the spatial blocks polygons.
 #' @param show_labels `[logical(1)]`\cr
 #'   Whether to show an overlay of the spatial block IDs.
+#' @param label_size `[numeric(1)]`\cr
+#'   Label size of block labels. Only applies for `show_labels = TRUE`.
 #' @param ... Passed to `geom_sf()`. Helpful for adjusting point sizes and
 #'   shapes.
 #' @param sample_fold_n `[integer]`\cr
@@ -97,6 +99,7 @@ autoplot.ResamplingSpCVBlock = function( # nolint
   show_blocks = FALSE,
   show_labels = FALSE,
   sample_fold_n = NULL,
+  label_size = 2,
   ...) {
 
   autoplot_spatial(
@@ -109,6 +112,7 @@ autoplot.ResamplingSpCVBlock = function( # nolint
     show_blocks = show_blocks,
     show_labels = show_labels,
     sample_fold_n = sample_fold_n,
+    label_size = label_size,
     ... = ...
   )
 }
@@ -126,6 +130,7 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
   show_blocks = FALSE,
   show_labels = FALSE,
   sample_fold_n = NULL,
+  label_size = label_size,
   ...) {
 
   autoplot.ResamplingSpCVBlock(
@@ -138,6 +143,7 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
     show_blocks = show_blocks,
     show_labels = show_labels,
     sample_fold_n = sample_fold_n,
+    label_size = label_size,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -648,6 +654,8 @@ plot.ResamplingRepeatedSpCVTiles = function(x, ...) {
 #'   mlr3 spatial resampling object of class [ResamplingSpCVBuffer].
 #' @param x `[Resampling]`\cr
 #'   mlr3 spatial resampling object of class [ResamplingSpCVBuffer].
+#' @param show_omitted `[logical]`\cr
+#'   Whether to show points not used in train or test set for the current fold.
 #' @export
 #' @seealso
 #'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
@@ -681,6 +689,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  show_omitted = FALSE,
   ...) {
 
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
@@ -700,7 +709,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
 
   ### Multiplot of single folds with train and test ----------------------
   plot = autoplot_multi_fold_list(task, resampling_sub,
-    sample_fold_n = NULL,
+    sample_fold_n = NULL, show_omitted = show_omitted,
     fold_id, repeats_id = 1)
   return(plot)
 }
@@ -1032,6 +1041,7 @@ autoplot_spatial = function(
   show_blocks = FALSE,
   show_labels = FALSE,
   sample_fold_n = NULL,
+  label_size = NULL,
   ...) {
 
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
@@ -1074,7 +1084,8 @@ autoplot_spatial = function(
       resampling_mod = coords_resamp,
       sample_fold_n = sample_fold_n, fold_id = fold_id,
       repeats_id = repeats_id, plot_as_grid = plot_as_grid,
-      show_blocks = show_blocks, show_labels = show_labels, ...)
+      show_blocks = show_blocks, show_labels = show_labels,
+      label_size = label_size, ...)
   } else {
     ### One plot showing all test folds ----------------------------------------
     plot = autoplot_all_folds_dt(task = task, resampling = coords_resamp,
