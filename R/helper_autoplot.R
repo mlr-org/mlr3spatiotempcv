@@ -68,6 +68,8 @@ reorder_levels = function(object) {
     object$indicator = ordered(object$indicator,
       levels = c("Train", "Test", "Omitted")
     )
+    # forces test points to be plotted on top of omitted points
+    setorder(object, -indicator)
   } else {
 
     # reorder factor levels so that "train" comes first

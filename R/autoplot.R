@@ -648,6 +648,8 @@ plot.ResamplingRepeatedSpCVTiles = function(x, ...) {
 #'   mlr3 spatial resampling object of class [ResamplingSpCVBuffer].
 #' @param x `[Resampling]`\cr
 #'   mlr3 spatial resampling object of class [ResamplingSpCVBuffer].
+#' @param show_omitted `[logical]`\cr
+#'   Whether to show points not used in train or test set for the current fold.
 #' @export
 #' @seealso
 #'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
@@ -681,6 +683,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  show_omitted = FALSE,
   ...) {
 
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
@@ -700,7 +703,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
 
   ### Multiplot of single folds with train and test ----------------------
   plot = autoplot_multi_fold_list(task, resampling_sub,
-    sample_fold_n = NULL,
+    sample_fold_n = NULL, show_omitted = show_omitted,
     fold_id, repeats_id = 1)
   return(plot)
 }
