@@ -58,7 +58,7 @@ ResamplingRepeatedSpCVKnndm = R6Class("ResamplingRepeatedSpCVKnndm",
               null.ok = TRUE)
           }
         ),
-        ParamFct$new("space", levels = c("geographical"), default = "geographical"),
+        ParamFct$new("space", levels = "geographical", default = "geographical"),
         ParamInt$new("folds", default = 10, lower = 2),
         ParamDbl$new("maxp", default = 0.5, lower = 0, upper = 1),
         ParamFct$new("clustering", default = "hierarchical",
