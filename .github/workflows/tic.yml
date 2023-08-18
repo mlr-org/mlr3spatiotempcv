@@ -82,7 +82,6 @@ jobs:
       - name: "[Custom block] [macOS] Install spatial libraries"
         if: runner.os == 'macOS'
         run: |
-          rm '/usr/local/bin/gfortran'
           brew install ccache gdal geos proj udunits jpeg sqlite
           brew install xquartz
           mkdir ~/.R && echo -e "CPPFLAGS += -L/usr/local/opt/jpeg/lib" >> ~/.R/Makevars
