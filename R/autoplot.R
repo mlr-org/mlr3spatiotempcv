@@ -130,7 +130,7 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
   show_blocks = FALSE,
   show_labels = FALSE,
   sample_fold_n = NULL,
-  label_size = label_size,
+  label_size = 2,
   ...) {
 
   autoplot.ResamplingSpCVBlock(
@@ -707,7 +707,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
       Plotting all folds of a LOOCV instance is not supported", wrap = TRUE)
   }
 
-  ### Multiplot of single folds with train and test ----------------------
+  # Multiplot of single folds with train and test
   plot = autoplot_multi_fold_list(task, resampling_sub,
     sample_fold_n = NULL, show_omitted = show_omitted,
     fold_id, repeats_id = 1)
@@ -722,7 +722,7 @@ plot.ResamplingSpCVBuffer = function(x, ...) {
 
 # SpCVKnndm ---------------------------------------------------------------------
 
-#' @title Visualization Functions for SpCV Disc Method.
+#' @title Visualization Functions for SpCV knndm Method.
 #'
 #' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods to
 #'   visualize mlr3 spatiotemporal resampling objects.
@@ -750,8 +750,6 @@ plot.ResamplingSpCVBuffer = function(x, ...) {
 #' @name autoplot.ResamplingSpCVKnndm
 #' @inheritParams autoplot.ResamplingSpCVBlock
 #'
-#' @param show_omitted `[logical]`\cr
-#'   Whether to show points not used in train or test set for the current fold.
 #' @export
 #' @seealso
 #'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
@@ -764,17 +762,19 @@ plot.ResamplingSpCVBuffer = function(x, ...) {
 #'   - [autoplot.ResamplingCV()]
 #' @examples
 #' \donttest{
-#' if (mlr3misc::require_namespaces("sf", quietly = TRUE)) {
+#' if (mlr3misc::require_namespaces(c("CAST", "sf"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
 #'   task = tsk("ecuador")
-#'   resampling = rsmp("spcv_disc",
-#'     folds = 5, radius = 200L, buffer = 200L)
+#'   points = sf::st_as_sf(task$coordinates(), crs = task$crs, coords = c("x", "y"))
+#'   modeldomain = sf::st_as_sfc(sf::st_bbox(points))
+#'
+#'   resampling = rsmp("spcv_knndm",
+#'     folds = 5, modeldomain = modeldomain)
 #'   resampling$instantiate(task)
 #'
 #'   autoplot(resampling, task,
-#'     fold_id = 1,
-#'     show_omitted = TRUE, size = 0.7) *
+#'     fold_id = 1, size = 0.7) *
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 #' }
 #' }
@@ -1375,7 +1375,7 @@ autoplot_custom_cv = function(
   if (!is.null(fold_id)) {
     ### Multiplot of single folds with train and test --------------------------
     plot = autoplot_multi_fold_dt(task = task, resampling = rsmp_autopl,
-      resampling_mod = coords_resamp,
+      resampling_mod = coords_resamp, show_blocks = FALSE,
       sample_fold_n = sample_fold_n, fold_id = fold_id,
       repeats_id = repeats_id, plot_as_grid = plot_as_grid, ...)
   } else {

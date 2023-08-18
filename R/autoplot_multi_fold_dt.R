@@ -4,8 +4,8 @@
 #' @param resampling_mod Modified resampling object (normal data.table)
 #' @keywords internal
 autoplot_multi_fold_dt = function(task, resampling, resampling_mod,
-  sample_fold_n, fold_id, repeats_id, plot_as_grid = FALSE,
-  show_omitted = FALSE, show_blocks = FALSE, show_labels = FALSE, label_size = 2, ...) {
+  sample_fold_n, fold_id, repeats_id, plot_as_grid,
+  show_omitted, show_blocks, show_labels, label_size, ...) {
 
   plot_list = mlr3misc::map(fold_id, function(.x) {
 

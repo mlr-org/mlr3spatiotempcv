@@ -32,7 +32,7 @@
   show_blocks = FALSE,
   show_labels = FALSE,
   sample_fold_n = NULL,
-  label_size = label_size,
+  label_size = 2,
   ...
 )
 

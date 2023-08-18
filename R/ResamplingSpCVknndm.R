@@ -8,29 +8,28 @@
 #'
 #' @export
 #' @examples
-#' library(mlr3)
-#' library(mlr3spatial)
-#' set.seed(42)
-#' simarea = list(matrix(c(0, 0, 0, 100, 100, 100, 100, 0, 0, 0), ncol = 2, byrow = TRUE))
-#' simarea = sf::st_polygon(simarea)
-#' train_points = sf::st_sample(simarea, 1000, type = "random")
-#' train_points = sf::st_as_sf(train_points)
-#' train_points$target = as.factor(sample(c("TRUE", "FALSE"), 1000, replace = TRUE))
-#' pred_points = sf::st_sample(simarea, 1000, type = "regular")
+#' if (mlr3misc::require_namespaces(c("sf", "CAST"), quietly = TRUE)) {
+#'   library(mlr3)
+#'   library(sf)
 #'
-#' task = mlr3spatial::as_task_classif_st(sf::st_as_sf(train_points), "target", positive = "TRUE")
+#'   set.seed(42)
+#'   task = tsk("ecuador")
+#'   points = sf::st_as_sf(task$coordinates(), crs = task$crs, coords = c("x", "y"))
+#'   modeldomain = sf::st_as_sfc(sf::st_bbox(points))
 #'
-#' cv_knndm = rsmp("spcv_knndm", ppoints = pred_points)
-#' cv_knndm$instantiate(task)
-
-#' #' ### Individual sets:
-#' # cv_knndm$train_set(1)
-#' # cv_knndm$test_set(1)
-#' # check that no obs are in both sets
-#' intersect(cv_knndm$train_set(1), cv_knndm$test_set(1)) # good!
+#'   set.seed(42)
+#'   cv_knndm = rsmp("spcv_knndm", modeldomain = modeldomain)
+#'   cv_knndm$instantiate(task)
 #'
-#' # Internal storage:
-#' # cv_knndm$instance # table
+#'   #' ### Individual sets:
+#'   # cv_knndm$train_set(1)
+#'   # cv_knndm$test_set(1)
+#'   # check that no obs are in both sets
+#'   intersect(cv_knndm$train_set(1), cv_knndm$test_set(1)) # good!
+#'
+#'   # Internal storage:
+#'   # cv_knndm$instance # table
+#' }
 ResamplingSpCVKnndm = R6Class("ResamplingSpCVKnndm",
   inherit = mlr3::Resampling,
   public = list(
@@ -43,7 +42,7 @@ ResamplingSpCVKnndm = R6Class("ResamplingSpCVKnndm",
       ps = ParamSet$new(params = list(
         ParamUty$new("modeldomain", default = NULL,
           custom_check = function(x) {
-            checkmate::check_class(x, "SpatRaster",
+            checkmate::check_class(x, "sfc_POLYGON",
               null.ok = TRUE)
           }
         ),
@@ -59,8 +58,9 @@ ResamplingSpCVKnndm = R6Class("ResamplingSpCVKnndm",
         ParamFct$new("clustering", default = "hierarchical",
           levels = c("hierarchical", "kmeans"), tags = "required"),
         ParamUty$new("linkf", default = "ward.D2"),
-        ParamInt$new("samplesize"),
-        ParamFct$new("sampling", levels = c("random", "hexagonal", "regular", "Fibonacci"))
+        ParamInt$new("samplesize", default = 1000),
+        ParamFct$new("sampling", levels = c("random", "hexagonal", "regular", "Fibonacci"),
+          default = "regular")
       ))
       ps$values = list(folds = 10L)
 
@@ -112,6 +112,15 @@ ResamplingSpCVKnndm = R6Class("ResamplingSpCVKnndm",
       }
       if (is.null(pv$clustering)) {
         self$param_set$values$clustering = self$param_set$default[["clustering"]]
+      }
+      if (is.null(pv$sampling)) {
+        self$param_set$values$sampling = self$param_set$default[["sampling"]]
+      }
+      if (is.null(pv$samplesize)) {
+        self$param_set$values$samplesize = self$param_set$default[["samplesize"]]
+      }
+      if (is.null(pv$linkf)) {
+        self$param_set$values$linkf = self$param_set$default[["linkf"]]
       }
 
       instance = private$.sample(

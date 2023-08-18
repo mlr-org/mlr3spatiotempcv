@@ -5,7 +5,7 @@
 \alias{autoplot.ResamplingRepeatedSpCVKnndm}
 \alias{plot.ResamplingSpCVKnndm}
 \alias{plot.ResamplingRepeatedSpCVKnndm}
-\title{Visualization Functions for SpCV Disc Method.}
+\title{Visualization Functions for SpCV knndm Method.}
 \usage{
 \method{autoplot}{ResamplingSpCVKnndm}(
   object,
@@ -15,7 +15,6 @@
   train_color = "#0072B5",
   test_color = "#E18727",
   repeats_id = NULL,
-  show_omitted = FALSE,
   sample_fold_n = NULL,
   ...
 )
@@ -28,7 +27,6 @@
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
-  show_omitted = FALSE,
   sample_fold_n = NULL,
   ...
 )
@@ -61,9 +59,6 @@ The color to use for the test set observations.}
 
 \item{repeats_id}{\verb{[numeric]}\cr
 Repetition ID to plot.}
-
-\item{show_omitted}{\verb{[logical]}\cr
-Whether to show points not used in train or test set for the current fold.}
 
 \item{sample_fold_n}{\verb{[integer]}\cr
 Number of points in a random sample stratified over partitions.
@@ -103,17 +98,19 @@ mode.
 
 \examples{
 \donttest{
-if (mlr3misc::require_namespaces("sf", quietly = TRUE)) {
+if (mlr3misc::require_namespaces(c("CAST", "sf"), quietly = TRUE)) {
   library(mlr3)
   library(mlr3spatiotempcv)
   task = tsk("ecuador")
-  resampling = rsmp("spcv_disc",
-    folds = 5, radius = 200L, buffer = 200L)
+  points = sf::st_as_sf(task$coordinates(), crs = task$crs, coords = c("x", "y"))
+  modeldomain = sf::st_as_sfc(sf::st_bbox(points))
+
+  resampling = rsmp("spcv_knndm",
+    folds = 5, modeldomain = modeldomain)
   resampling$instantiate(task)
 
   autoplot(resampling, task,
-    fold_id = 1,
-    show_omitted = TRUE, size = 0.7) *
+    fold_id = 1, size = 0.7) *
     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
 }
 }
