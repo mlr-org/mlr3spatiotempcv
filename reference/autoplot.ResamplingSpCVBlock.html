@@ -103,6 +103,7 @@ visualize mlr3 spatiotemporal resampling objects.</p>
 <span>  show_blocks <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  show_labels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sample_fold_n <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  label_size <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -118,6 +119,7 @@ visualize mlr3 spatiotemporal resampling objects.</p>
 <span>  show_blocks <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  show_labels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sample_fold_n <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  label_size <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -178,6 +180,11 @@ Whether to show an overlay of the spatial block IDs.</p></dd>
 Number of points in a random sample stratified over partitions.
 This argument aims to keep file sizes of resulting plots reasonable and
 reduce overplotting in dense datasets.</p></dd>
+
+
+<dt>label_size</dt>
+<dd><p><code>[numeric(1)]</code><br>
+Label size of block labels. Only applies for <code>show_labels = TRUE</code>.</p></dd>
 
 
 <dt>...</dt>

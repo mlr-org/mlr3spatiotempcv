@@ -265,6 +265,7 @@ with new entries when loading {mlr3spatiotempcv}.</p>
 <li><p><code>mlr_resampling_spcv_block</code></p></li>
 <li><p><code>mlr_resampling_spcv_buffer</code></p></li>
 <li><p><code>mlr_resampling_spcv_coords</code></p></li>
+<li><p><code>mlr_resampling_spcv_knndm</code></p></li>
 <li><p><code>mlr_resampling_spcv_disc</code></p></li>
 <li><p><code>mlr_resampling_spcv_tiles</code></p></li>
 <li><p><code>mlr_resampling_spcv_env</code></p></li>
@@ -339,25 +340,32 @@ corresponding “repeated” method.</p>
 </tr>
 <tr class="even">
 <td>
+<strong>Clustering</strong>, spatial</td>
+<td>(CAST) KNNDM</td>
+<td><span class="citation">(<strong>linnenbrink2023?</strong>)</span></td>
+<td><code>mlr_resamplings_spcv_knndm</code></td>
+</tr>
+<tr class="odd">
+<td>
 <strong>Clustering</strong>, feature-space</td>
 <td>(blockCV) Environmental Blocking</td>
 <td><span class="citation">Valavi et al. (2018)</span></td>
 <td><code>mlr_resamplings_spcv_env</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><hr></td>
 <td><hr></td>
 <td><hr></td>
 <td><hr></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>
 <strong>Grouping</strong>, predefined inds</td>
 <td>(mlr3) Predefined partitions</td>
 <td></td>
 <td><code>mlr_resamplings_custom_cv</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>
 <strong>Grouping</strong>, spatiotemporal</td>
 <td>(mlr3) via <code>col_roles</code> <code>"group"</code>
@@ -368,7 +376,7 @@ corresponding “repeated” method.</p>
 <code>Task$set_col_roles(&lt;variable&gt;, "group")</code>
 </td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>
 <strong>Grouping</strong>, spatiotemporal</td>
 <td>(CAST) Leave-Location-and-Time-Out</td>
