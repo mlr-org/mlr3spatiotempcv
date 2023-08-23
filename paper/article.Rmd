@@ -102,11 +102,12 @@ A design-based approach, if possible, is the preferred way to assess map accurac
 This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (Table \ref{tab:sptcv-methods}).
 The earliest and most comprehensive of these implementations is the \pkg{sperrorest} \proglang{R} package [@brenning2012], which provides an extensible framework and includes predefined resampling strategies based on geometric blocking, clustering, and buffering.
 In contrast, packages \pkg{blockCV} and \pkg{ENMeval} were developed for block and buffer resampling with a focus on species distribution modeling [@blockCV; @rest2014; @muscarella2014].
-However, neither of these have been integrated into established machine-learning frameworks such as \pkg{mlr}/\pkg{mlr3} [@mlr3] or \pkg{caret}/\pkg{tidymodels} [@kuhn2020], and all of them lack support for temporal prediction tasks.
+However, neither of these have been integrated into established machine-learning frameworks such as \pkg{mlr3} [@mlr3] or \pkg{caret}/\pkg{tidymodels} [@kuhn2020], and all of them lack support for temporal prediction tasks.
 The \pkg{CAST} package, in contrast, focuses on spatiotemporal prediction tasks and makes use of some functions of the \pkg{caret} framework [@cast; @meyer2018].
-One limitation of all these packages is the sole focus on model assessment, while the proposed implementation within the \pkg{mlr3} framework also offers seamless integration into model selection and provides parallel execution and enhanced logging abilities.
+One limitation of all the packages which provide only a subset of the machine learning workflow, e.g., resampling methods, is the sole focus on model assessment.
+Through the integration into the \pkg{mlr3} framework, \pkg{mlr3spatiotempcv} indirectly offers model selection capabilities, i.e., applying and evaluating various algorithms across different preprocessing setups while being able to make use of parallel execution and enhanced logging abilities.
 During the intitial development of \pkg{mlr3spatiotempcv}, it has been the first toolbox aiming to integrate standalone spatiotemporal validation strategies into an existing machine-learning framework.
-Meanwhile the \pkg{spatialsample} has undertaken similar efforts for the \pkg{tidymodels} framework [@mahoney2023].
+Meanwhile the \pkg{spatialsample} has undertaken similar efforts and added the ability to use spatial resampling methods for the \pkg{tidymodels} framework [@mahoney2023].
 In addition parallel efforts to support spatial validation in the Python world have been made by the \pkg{spacv} and \pkg{spatial-kfold} packages, yet often with only a subset of available methods compared to what \pkg{mlr3spatiotempcv} offers [@ghariani2023].
 
 Thus, \pkg{mlr3spatiotempcv} implements for the first time a comprehensive state-of-the-art compilation of spatial and spatiotemporal partitioning schemes that is well-integrated into a comprehensive machine-learning framework in R, the \pkg{mlr3} ecosystem.
@@ -293,6 +294,8 @@ The already implemented methods can be inspected to get to know the class struct
 
 Spatial leave-one-out methods use individual observations in space as test partitions and apply circular buffer or guard zones around around these test points to enforce a minimum prediction distance.
 Leave-one-disc-out resampling modifies this approach to leave out circular regions centered at observation points.
+This method group naturally discards observations when applying buffers, meaning that these are not used for training or testing.
+Depending on the relative amount of discarded observations with respect to the overall number of observations, this might result in a substantial reduction of the sample size and thus decrease the applicability of the results.
 
 ### Spatial leave-one-out with buffer --- \code{"spcv_buffer"} {short-title='Spatial leave-one-out with buffer --- "spcv_buffer"' }
 
@@ -411,6 +414,31 @@ autoplot(rsmp_coords,
       height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
+
+### Clustering-based: using k-fold nearest-neighbour distance matching --- \code{"spcv_knndm"} {short-title='Clustering-based: using kNNDM --- "spcv_knndm"' }
+
+The k-fold nearest-neighboar distance matching method after @linnenbrinck2023 is derived from the NNDM method after @mila.
+By using geographical nearest neighbor distances between test and training points, the method aims to create realistic predictive situations within the CV folds that closely mimic the ones of either existing training and test points, if know, or a provided model domain in which the model is to be applied.
+This is done by minimizing the values ofthe Empirical Cumulative Distribution Function (ECDF) for the respective scenarios outlined above [@linnenbrinck2023].
+
+```{r knndm-non-eval, eval=FALSE}
+rsmp_knndm = rsmp("spcv_knndm", folds = 5)
+
+autoplot(rsmp_knndm, size = 0.8, fold_id = 1, task = task)
+```
+
+
+```{r coords-eval, fig.cap='Leave-one-block-out CV based on $k$-means clustering of the coordinates as implemented in package \\pkg{sperrorest} (method `"spcv\\_coords"` in \\pkg{mlr3spatiotempcv}).', out.width="40%", fig.pos="ht", echo=FALSE}
+rsmp_coords = rsmp("spcv_coords", folds = 5)
+
+autoplot(rsmp_coords,
+  size = 0.8, fold_id = 1, task = task) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+```
+
+
+FIXME:
 
 ### Geometric: using rectangular blocks --- \code{"spcv_tiles"} {short-title='Geometric: using rectangular blocks --- "spcv_tiles"' }
 
