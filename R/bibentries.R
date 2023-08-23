@@ -109,6 +109,17 @@ bibentries = c( # nolint start
     author = "Ying Zhao and George Karypis",
     title = "Evaluation of Hierarchical Clustering Algorithms for Document Datasets",
     journal = "11th Conference of Information and Knowledge Management (CIKM)"
+  ),
+
+  linnenbrink2023 = bibentry("article",
+    author = "Linnenbrink, J. and Mila, C. and Ludwig, M. and Meyer, H.",
+    title = "kNNDM: k-fold Nearest Neighbour Distance Matching Cross-Validation for map accuracy estimation",
+    journal = "EGUsphere",
+    volume = "2023",
+    year = "2023",
+    pages = "1--16",
+    url = "https://egusphere.copernicus.org/preprints/2023/egusphere-2023-1308/",
+    doi = "10.5194/egusphere-2023-1308"
   )
 ) # nolint end
 # nocov end

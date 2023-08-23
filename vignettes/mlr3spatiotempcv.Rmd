@@ -106,6 +106,8 @@ mlr_reflections$task_col_roles
 
 * `mlr_resampling_spcv_coords`
 
+* `mlr_resampling_spcv_knndm`
+
 * `mlr_resampling_spcv_disc`
 
 * `mlr_resampling_spcv_tiles`
@@ -140,6 +142,8 @@ All methods besides `"spcv_buffer"` also have a corresponding "repeated" method.
 | **Blocking**, spatial          | (sperrorest) Spatial Tiles                    | @valavi2018       | `mlr_resamplings_spcv_tiles`                                                 |
 +--------------------------------+-----------------------------------------------+-------------------+------------------------------------------------------------------------------+
 | **Clustering**, spatial        | (sperrorest) Spatial CV                       | @brenning2012     | `mlr_resamplings_spcv_coords`                                                |
++--------------------------------+-----------------------------------------------+-------------------+------------------------------------------------------------------------------+
+| **Clustering**, spatial        | (CAST) KNNDM                                  | @linnenbrink2023  | `mlr_resamplings_spcv_knndm`                                                 |
 +--------------------------------+-----------------------------------------------+-------------------+------------------------------------------------------------------------------+
 | **Clustering**, feature-space  | (blockCV) Environmental Blocking              | @valavi2018       | `mlr_resamplings_spcv_env`                                                   |
 +--------------------------------+-----------------------------------------------+-------------------+------------------------------------------------------------------------------+

@@ -35,6 +35,7 @@ Suggests:
     bbotk,
     blockCV (>= 3.1.2),
     caret,
+    CAST (>= 0.8.0),
     ggsci,
     ggtext,
     here,
@@ -42,6 +43,7 @@ Suggests:
     lgr,
     mlr3filters (>= 0.7.0.9000),
     mlr3pipelines,
+    mlr3spatial,
     mlr3tuning,
     patchwork,
     plotly,
@@ -51,6 +53,7 @@ Suggests:
     sperrorest,
     terra,
     testthat (>= 3.0.0),
+    twosamples,
     vdiffr (>= 1.0.0),
     withr
 VignetteBuilder:
