@@ -315,6 +315,8 @@ test_that("plot() works for 'spcv_tiles'", {
 test_that("plot() works for 'spcv_knndm'", {
   skip_if_not_installed("vdiffr")
 
+  set.seed(42)
+
   simarea = list(matrix(c(0, 0, 0, 100, 100, 100, 100, 0, 0, 0),
     ncol = 2, byrow = TRUE))
   simarea = sf::st_polygon(simarea)
