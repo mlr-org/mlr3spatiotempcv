@@ -30,9 +30,9 @@ jobs:
           # - { os: windows-latest, r: "release" }
           # [Custom matrix env var]
           # - { os: macOS-latest, r: "release", latex: "true", codecov: "false" }
-          - { os: ubuntu-latest, r: "devel", codecov: "true" }
+          - { os: ubuntu-20.04, r: "devel", codecov: "true" }
           # [Custom matrix env var]
-          - { os: ubuntu-latest, r: "release", pkgdown: "true", latex: "true", codecov: "false" }
+          - { os: ubuntu-20.04, r: "release", pkgdown: "true", latex: "true", codecov: "false" }
 
     env:
       # make sure to run `tic::use_ghactions_deploy()` to set up deployment
