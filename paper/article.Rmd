@@ -96,6 +96,8 @@ The CV resampling needed therefore depends as much on the prediction task itself
 
 While it is not the purpose of this article to recommend specific resampling schemes for specific use cases, the example from above may suffice to motivate the use of appropriate spatial and spatiotemporal cross-validation techniques, and the need for a unified framework and computational toolbox that accommodate a variety of prediction tasks that may be applicable to a broad range of application scenarios.
 \pkg{mlr3spatiotempcv} is such a toolbox.
+Yet all the included methods should only be used if no probability sample can be drawn from the data - which is often the case when working with spatial data.
+A design-based approach, if possible, is the preferred way to assess map accuracies [@wadoux2021].
 
 This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (Table \ref{tab:sptcv-methods}).
 The earliest and most comprehensive of these implementations is the \pkg{sperrorest} \proglang{R} package [@brenning2012], which provides an extensible framework and includes predefined resampling strategies based on geometric blocking, clustering, and buffering.
