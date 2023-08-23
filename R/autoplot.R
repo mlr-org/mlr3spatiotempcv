@@ -32,6 +32,8 @@
 #'   Whether to show an overlay of the spatial blocks polygons.
 #' @param show_labels `[logical(1)]`\cr
 #'   Whether to show an overlay of the spatial block IDs.
+#' @param label_size `[numeric(1)]`\cr
+#'   Label size of block labels. Only applies for `show_labels = TRUE`.
 #' @param ... Passed to `geom_sf()`. Helpful for adjusting point sizes and
 #'   shapes.
 #' @param sample_fold_n `[integer]`\cr
@@ -97,6 +99,7 @@ autoplot.ResamplingSpCVBlock = function( # nolint
   show_blocks = FALSE,
   show_labels = FALSE,
   sample_fold_n = NULL,
+  label_size = 2,
   ...) {
 
   autoplot_spatial(
@@ -109,6 +112,7 @@ autoplot.ResamplingSpCVBlock = function( # nolint
     show_blocks = show_blocks,
     show_labels = show_labels,
     sample_fold_n = sample_fold_n,
+    label_size = label_size,
     ... = ...
   )
 }
@@ -126,6 +130,7 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
   show_blocks = FALSE,
   show_labels = FALSE,
   sample_fold_n = NULL,
+  label_size = 2,
   ...) {
 
   autoplot.ResamplingSpCVBlock(
@@ -138,6 +143,7 @@ autoplot.ResamplingRepeatedSpCVBlock = function( # nolint
     show_blocks = show_blocks,
     show_labels = show_labels,
     sample_fold_n = sample_fold_n,
+    label_size = label_size,
     ... = ...,
     # ellipsis
     repeats_id = repeats_id
@@ -648,6 +654,8 @@ plot.ResamplingRepeatedSpCVTiles = function(x, ...) {
 #'   mlr3 spatial resampling object of class [ResamplingSpCVBuffer].
 #' @param x `[Resampling]`\cr
 #'   mlr3 spatial resampling object of class [ResamplingSpCVBuffer].
+#' @param show_omitted `[logical]`\cr
+#'   Whether to show points not used in train or test set for the current fold.
 #' @export
 #' @seealso
 #'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
@@ -681,6 +689,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  show_omitted = FALSE,
   ...) {
 
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
@@ -698,9 +707,9 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
       Plotting all folds of a LOOCV instance is not supported", wrap = TRUE)
   }
 
-  ### Multiplot of single folds with train and test ----------------------
+  # Multiplot of single folds with train and test
   plot = autoplot_multi_fold_list(task, resampling_sub,
-    sample_fold_n = NULL,
+    sample_fold_n = NULL, show_omitted = show_omitted,
     fold_id, repeats_id = 1)
   return(plot)
 }
@@ -710,6 +719,152 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
 plot.ResamplingSpCVBuffer = function(x, ...) {
   print(autoplot(x, ...)) # nocov
 }
+
+# SpCVKnndm ---------------------------------------------------------------------
+
+#' @title Visualization Functions for SpCV knndm Method.
+#'
+#' @description Generic S3 `plot()` and `autoplot()` (ggplot2) methods to
+#'   visualize mlr3 spatiotemporal resampling objects.
+#'
+#' @importFrom stats na.omit
+#'
+#' @details
+#' This method requires to set argument `fold_id` and no plot containing all
+#' partitions can be created. This is because the method does not make use of
+#' all observations but only a subset of them (many observations are left out).
+#' Hence, train and test sets of one fold are not re-used in other folds as in
+#' other methods and plotting these without a train/test indicator would not
+#' make sense.
+#'
+#' @section 2D vs 3D plotting:
+#' This method has both a 2D and a 3D plotting method.
+#' The 2D method returns a \pkg{ggplot} with x and y axes representing the spatial
+#' coordinates.
+#' The 3D method uses \pkg{plotly} to create an interactive 3D plot.
+#' Set `plot3D = TRUE` to use the 3D method.
+#'
+#' Note that spatiotemporal datasets usually suffer from overplotting in 2D
+#' mode.
+#'
+#' @name autoplot.ResamplingSpCVKnndm
+#' @inheritParams autoplot.ResamplingSpCVBlock
+#'
+#' @export
+#' @seealso
+#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
+#'   - Vignette [Spatiotemporal Visualization](https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html).
+#'   - [autoplot.ResamplingSpCVBlock()]
+#'   - [autoplot.ResamplingSpCVBuffer()]
+#'   - [autoplot.ResamplingSpCVCoords()]
+#'   - [autoplot.ResamplingSpCVTiles()]
+#'   - [autoplot.ResamplingSpCVEnv()]
+#'   - [autoplot.ResamplingCV()]
+#' @examples
+#' \donttest{
+#' if (mlr3misc::require_namespaces(c("CAST", "sf"), quietly = TRUE)) {
+#'   library(mlr3)
+#'   library(mlr3spatiotempcv)
+#'   task = tsk("ecuador")
+#'   points = sf::st_as_sf(task$coordinates(), crs = task$crs, coords = c("x", "y"))
+#'   modeldomain = sf::st_as_sfc(sf::st_bbox(points))
+#'
+#'   resampling = rsmp("spcv_knndm",
+#'     folds = 5, modeldomain = modeldomain)
+#'   resampling$instantiate(task)
+#'
+#'   autoplot(resampling, task,
+#'     fold_id = 1, size = 0.7) *
+#'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+#' }
+#' }
+autoplot.ResamplingSpCVKnndm = function( # nolint
+  object,
+  task,
+  fold_id = NULL,
+  plot_as_grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  repeats_id = NULL,
+  sample_fold_n = NULL,
+  ...) {
+
+  resampling = object
+  coords = task$coordinates()
+  coords$row_id = task$row_ids
+  mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
+
+  resampling = assert_autoplot(resampling, fold_id, task)
+
+  if (is.null(repeats_id)) {
+    repeats_id = 1
+  } else {
+    repeats_id = repeats_id
+    # otherwise it gets passed to geom_sf() down below
+    # dots$repeats_id = NULL
+  }
+
+  resampling_sub = resampling$clone()
+
+  if (any(grepl("ResamplingRepeated", class(resampling)))) {
+    resampling_sub$instance = resampling_sub$instance[[repeats_id]]
+  }
+
+  if (!is.null(fold_id)) {
+    ### Multiplot of single folds with train and test
+    plot = autoplot_multi_fold_list(task, resampling_sub, sample_fold_n,
+      fold_id, repeats_id, plot_as_grid)
+    return(plot)
+  } else {
+    ### One plot showing all test folds
+    plot = autoplot_all_folds_list(task, resampling_sub, sample_fold_n,
+      fold_id, repeats_id)
+    return(plot)
+  }
+}
+
+#' @rdname autoplot.ResamplingSpCVKnndm
+#' @export
+autoplot.ResamplingRepeatedSpCVKnndm = function( # nolint
+  object,
+  task,
+  fold_id = NULL,
+  repeats_id = 1,
+  plot_as_grid = TRUE,
+  train_color = "#0072B5",
+  test_color = "#E18727",
+  sample_fold_n = NULL,
+  ...) {
+
+  autoplot.ResamplingSpCVKnndm(
+    object = object,
+    task = task,
+    fold_id = fold_id,
+    plot_as_grid = plot_as_grid,
+    train_color = train_color,
+    test_color = test_color,
+    sample_fold_n = sample_fold_n,
+    ... = ...,
+    # ellipsis
+    repeats_id = repeats_id
+  )
+}
+
+#' @importFrom graphics plot
+#' @rdname autoplot.ResamplingSpCVKnndm
+#' @export
+plot.ResamplingSpCVKnndm = function(x, ...) {
+  print(autoplot(x, ...)) # nocov
+}
+
+#' @rdname autoplot.ResamplingSpCVKnndm
+#' @export
+plot.ResamplingRepeatedSpCVKnndm = function(x, ...) {
+  print(autoplot(x, ...)) # nocov
+}
+
+
+
 
 # CV ---------------------------------------------------------------------------
 
@@ -886,6 +1041,7 @@ autoplot_spatial = function(
   show_blocks = FALSE,
   show_labels = FALSE,
   sample_fold_n = NULL,
+  label_size = NULL,
   ...) {
 
   mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext"))
@@ -928,7 +1084,8 @@ autoplot_spatial = function(
       resampling_mod = coords_resamp,
       sample_fold_n = sample_fold_n, fold_id = fold_id,
       repeats_id = repeats_id, plot_as_grid = plot_as_grid,
-      show_blocks = show_blocks, show_labels = show_labels, ...)
+      show_blocks = show_blocks, show_labels = show_labels,
+      label_size = label_size, ...)
   } else {
     ### One plot showing all test folds ----------------------------------------
     plot = autoplot_all_folds_dt(task = task, resampling = coords_resamp,
@@ -1218,7 +1375,7 @@ autoplot_custom_cv = function(
   if (!is.null(fold_id)) {
     ### Multiplot of single folds with train and test --------------------------
     plot = autoplot_multi_fold_dt(task = task, resampling = rsmp_autopl,
-      resampling_mod = coords_resamp,
+      resampling_mod = coords_resamp, show_blocks = FALSE,
       sample_fold_n = sample_fold_n, fold_id = fold_id,
       repeats_id = repeats_id, plot_as_grid = plot_as_grid, ...)
   } else {

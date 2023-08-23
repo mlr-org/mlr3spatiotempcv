@@ -165,6 +165,19 @@ test_make_blockCV_test_task = function() {
   return(task)
 }
 
+# mlr3 task to compare mlr3spatiotempcv results with {blockCV} results
+test_make_knndm_test_task = function() {
+  data = test_make_blockCV_test_df()
+
+  task = as_task_classif_st(
+    data,
+    id = "test",
+    target = "label",
+    positive = "1"
+  )
+  return(task)
+}
+
 # multiclass tasks -------------------------------------------------------------
 #
 # Create multiclass task

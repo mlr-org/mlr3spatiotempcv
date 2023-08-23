@@ -309,3 +309,56 @@ test_that("plot() works for 'spcv_tiles'", {
   vdiffr::expect_doppelganger("RepSpCVTiles - Fold 1 - sample_fold_n", p8)
   vdiffr::expect_doppelganger("RepSpCVTiles - Fold 1-2 - sample_fold_n", p9)
 })
+
+# spcv_knndm --------------------------------------------------------------------
+
+test_that("plot() works for 'spcv_knndm'", {
+  skip_if_not_installed("vdiffr")
+
+  set.seed(42)
+
+  simarea = list(matrix(c(0, 0, 0, 100, 100, 100, 100, 0, 0, 0),
+    ncol = 2, byrow = TRUE))
+  simarea = sf::st_polygon(simarea)
+  train_points = sf::st_sample(simarea, 1000, type = "random")
+  train_points = sf::st_as_sf(train_points)
+  train_points$target = as.factor(sample(c("TRUE", "FALSE"), 1000, replace = TRUE))
+  pred_points = sf::st_sample(simarea, 1000, type = "regular")
+
+  task = mlr3spatial::as_task_classif_st(sf::st_as_sf(train_points),
+    "target", positive = "TRUE")
+  rsp = rsmp("repeated_spcv_knndm", folds = 3, repeats = 5, ppoints = pred_points)
+  suppressMessages(suppressWarnings(rsp$instantiate(task)))
+  set.seed(42)
+
+  p1 = autoplot(rsp, task = task)
+  p2 = autoplot(rsp, task, 1)
+  # plot() would force image printing here
+  p3 = autoplot(rsp, task, c(1, 2))
+
+
+  expect_true(is.ggplot(p1))
+  expect_true(is.ggplot(p2))
+  expect_list(p3)
+
+  p5 = autoplot(rsp, task, repeats_id = 2)
+  p6 = autoplot(rsp, task, fold_id = 1, repeats_id = 2)
+
+  ### sample_fold_n
+  p7 = autoplot(rsp, task, sample_fold_n = 3L)
+  p8 = autoplot(rsp, task, fold_id = 1, sample_fold_n = 3L)
+  p9 = autoplot(rsp, task, fold_id = c(1, 2), sample_fold_n = 3L)
+
+  vdiffr::expect_doppelganger("SpCVKnndm all test sets", p1)
+  vdiffr::expect_doppelganger("SpCVKnndm Fold 1", p2)
+  vdiffr::expect_doppelganger("SpCVKnndm Fold 1-2", p3)
+
+  vdiffr::expect_doppelganger("RepSpCVKnndm - Fold 1-2, Rep 2", p5)
+  vdiffr::expect_doppelganger("RepSpCVKnndm - Fold 1, Rep 2", p6)
+  vdiffr::expect_doppelganger("RepSpCVKnndm - Fold 1, Rep 1 - sample_n_fold", p7)
+
+  ### sample_fold_n
+  vdiffr::expect_doppelganger("RepSpCVKnndm - sample_fold_n", p7)
+  vdiffr::expect_doppelganger("RepSpCVKnndm - Fold 1 - sample_fold_n", p8)
+  vdiffr::expect_doppelganger("RepSpCVKnndm - Fold 1-2 - sample_fold_n", p9)
+})

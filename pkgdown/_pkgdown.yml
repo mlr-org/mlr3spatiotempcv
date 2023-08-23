@@ -63,6 +63,8 @@ reference:
       - ResamplingRepeatedSpCVCoords
       - ResamplingSpCVDisc
       - ResamplingRepeatedSpCVDisc
+      - ResamplingSpCVKnndm
+      - ResamplingRepeatedSpCVKnndm
   - title: Feature Space Clustering Methods
     desc: These methods cluster in the feature space and not (necessarily) in space or time.
     contents:

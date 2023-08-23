@@ -12,6 +12,7 @@
   plot_as_grid = TRUE,
   train_color = "#0072B5",
   test_color = "#E18727",
+  show_omitted = FALSE,
   ...
 )
 
@@ -37,6 +38,9 @@ The color to use for the training set observations.}
 
 \item{test_color}{\verb{[character(1)]}\cr
 The color to use for the test set observations.}
+
+\item{show_omitted}{\verb{[logical]}\cr
+Whether to show points not used in train or test set for the current fold.}
 
 \item{...}{Passed to \code{geom_sf()}. Helpful for adjusting point sizes and
 shapes.}

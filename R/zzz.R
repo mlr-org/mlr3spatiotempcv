@@ -106,6 +106,8 @@ register_mlr3 = function() { # nocov start
   mlr_resamplings$add("repeated_spcv_tiles", ResamplingRepeatedSpCVTiles)
   mlr_resamplings$add("sptcv_cstf", ResamplingSptCVCstf)
   mlr_resamplings$add("repeated_sptcv_cstf", ResamplingRepeatedSptCVCstf)
+  mlr_resamplings$add("spcv_knndm", ResamplingSpCVKnndm)
+  mlr_resamplings$add("repeated_spcv_knndm", ResamplingRepeatedSpCVKnndm)
 }
 
 .onLoad = function(libname, pkgname) { # nolint
