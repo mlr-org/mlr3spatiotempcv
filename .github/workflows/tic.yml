@@ -66,13 +66,13 @@ jobs:
         id: date
         run: echo "date=$(date '+%d-%m')" >> $GITHUB_OUTPUT
 
-      - name: "[Cache] Cache R packages"
-        if: runner.os != 'Windows'
-        uses: pat-s/always-upload-cache@v3
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
+      # - name: "[Cache] Cache R packages"
+      #   if: runner.os != 'Windows'
+      #   uses: pat-s/always-upload-cache@v3
+      #   with:
+      #     path: ${{ env.R_LIBS_USER }}
+      #     key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
+      #     restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
 
       - name: "[Custom block] [Linux] Install spatial libraries"
         if: runner.os == 'Linux'
