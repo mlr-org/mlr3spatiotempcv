@@ -8,7 +8,7 @@
 #' @importFrom utils globalVariables packageVersion
 #' @section Main resources:
 #' * Book on mlr3: \url{https://mlr3book.mlr-org.com}
-#' * mlr3book section about spatiotemporal data: \url{https://mlr3book.mlr-org.com/special.html#spatiotemporal}
+#' * mlr3book section about spatiotemporal data: \url{https://mlr3book.mlr-org.com/chapters/chapter13/beyond_regression_and_classification.html#spatiotemp-cv}
 #' * package vignettes: \url{https://mlr3spatiotempcv.mlr-org.com/dev/articles/}
 #'
 #' ## Miscellaneous \pkg{mlr3} content

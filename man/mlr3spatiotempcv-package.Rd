@@ -12,7 +12,7 @@ Extends the mlr3 ML framework with spatio-temporal resampling methods to account
 
 \itemize{
 \item Book on mlr3: \url{https://mlr3book.mlr-org.com}
-\item mlr3book section about spatiotemporal data: \url{https://mlr3book.mlr-org.com/special.html#spatiotemporal}
+\item mlr3book section about spatiotemporal data: \url{https://mlr3book.mlr-org.com/chapters/chapter13/beyond_regression_and_classification.html#spatiotemp-cv}
 \item package vignettes: \url{https://mlr3spatiotempcv.mlr-org.com/dev/articles/}
 }
 \subsection{Miscellaneous \pkg{mlr3} content}{
