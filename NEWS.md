@@ -2,8 +2,11 @@
 
 # mlr3spatiotempcv 2.2.0
 
-- Internal changes only.
+## Features
 
+- Add "knndm" method from package {CAST} (#229)
+- Add `label_size` to "spcv_block" to make label size configurable (#227)
+- Add `show_omitted` for "spcv_buffer" method (#228)
 
 # mlr3spatiotempcv 2.1.0
 
