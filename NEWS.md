@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# mlr3spatiotempcv 2.2.0.9000
+
+- Internal changes only.
+
+
 # mlr3spatiotempcv 2.2.0
 
 - Internal changes only.
