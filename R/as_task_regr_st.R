@@ -26,7 +26,7 @@
 #'
 #' @return [TaskRegrST]
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
 #'   library("mlr3")
 #'   data("cookfarm_mlr3", package = "mlr3spatiotempcv")

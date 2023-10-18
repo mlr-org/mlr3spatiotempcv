@@ -891,7 +891,7 @@ plot.ResamplingRepeatedSpCVKnndm = function(x, ...) {
 #'   - [autoplot.ResamplingSpCVTiles()]
 #'   - [autoplot.ResamplingSptCVCstf()]
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' if (mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext", "ggsci"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
