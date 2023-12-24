@@ -13,6 +13,7 @@
 #'
 #' @export
 #' @examples
+#' \donttest{
 #' library(mlr3)
 #' task = tsk("cookfarm_mlr3")
 #' task$set_col_roles("SOURCEID", roles = "space")
@@ -30,6 +31,7 @@
 #'
 #' # Internal storage:
 #' # rcv$instance # table
+#' }
 ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
   inherit = mlr3::Resampling,
   public = list(
