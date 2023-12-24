@@ -161,3 +161,6 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
     }
   )
 )
+
+#' @include aaa.R
+resamplings[["spcv_disc"]] = ResamplingSpCVDisc

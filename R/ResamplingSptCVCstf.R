@@ -163,3 +163,6 @@ sample_cast = function(task, stratify = FALSE, folds) {
   test = if (length(space) && length(time)) pmap(list(test_space, test_time), function(x, y) intersect(x, y)) else if (length(space)) test_space else test_time
   list(train = train, test = test)
 }
+
+#' @include aaa.R
+resamplings[["sptcv_cstf"]] = ResamplingSptCVCstf

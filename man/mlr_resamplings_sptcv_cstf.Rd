@@ -35,6 +35,7 @@ If \code{TRUE}, stratify on the target column.
 }
 
 \examples{
+\donttest{
 library(mlr3)
 task = tsk("cookfarm_mlr3")
 task$set_col_roles("SOURCEID", roles = "space")
@@ -52,6 +53,7 @@ intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 
 # Internal storage:
 # rcv$instance # table
+}
 }
 \references{
 Meyer H, Reudenbach C, Hengl T, Katurji M, Nauss T (2018).
