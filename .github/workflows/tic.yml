@@ -1,14 +1,16 @@
-## tic GitHub Actions template: custom-deploy
-## revision date: 2023-05-22
-# [Custom header]
+## tic GitHub Actions template: linux-deploy
+## revision date: 2023-12-15
 on:
   workflow_dispatch:
   push:
     branches:
-      - main
-      - cran-*
-    tags:
+    - main
+    - master
+    - cran-*
   pull_request:
+    branches:
+    - main
+    - master
   # for now, CRON jobs only run on the default branch of the repo (i.e. usually on master)
   schedule:
     # * is a special character in YAML so you have to quote this string
@@ -26,10 +28,6 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          # use a different tic template type if you do not want to build on all listed platforms
-          # - { os: windows-latest, r: "release" }
-          # [Custom matrix env var]
-          # - { os: macOS-latest, r: "release", latex: "true", codecov: "false" }
           - { os: ubuntu-22.04, r: "devel", codecov: "true" }
           # [Custom matrix env var]
           - { os: ubuntu-22.04, r: "release", pkgdown: "true", latex: "true", codecov: "false" }
@@ -46,7 +44,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-r@v2
         with:
@@ -58,6 +56,10 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
+      - name: Install sys deps for Ubuntu
+        if: runner.os == 'Linux'
+        run: sudo apt update && sudo apt install -y libgit2-dev libcurl4-openssl-dev
+
       # set date/week for use in cache creation
       # https://github.community/t5/GitHub-Actions/How-to-set-and-access-a-Workflow-variable/m-p/42970
       # - cache R packages daily
@@ -66,34 +68,22 @@ jobs:
         id: date
         run: echo "date=$(date '+%d-%m')" >> $GITHUB_OUTPUT
 
-      - name: "[Cache] Cache R packages"
+      - name: "[Cache] Restore R package cache"
         if: runner.os != 'Windows'
-        uses: pat-s/always-upload-cache@v3
+        uses: actions/cache/restore@v3
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
-
-      - name: "[Custom block] [Linux] Install spatial libraries"
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt install ccache libgdal-dev libgeos-dev libproj-dev libudunits2-dev pandoc-citeproc
-
-      - name: "[Custom block] [macOS] Install spatial libraries"
-        if: runner.os == 'macOS'
-        run: |
-          brew install ccache gdal geos proj udunits jpeg sqlite
-          brew install xquartz
-          mkdir ~/.R && echo -e "CPPFLAGS += -L/usr/local/opt/jpeg/lib" >> ~/.R/Makevars
-
-      - name: "[Stage] Install pak"
-        run: Rscript -e "install.packages('pak', repos = 'https://r-lib.github.io/p/pak/devel')"
 
       - name: "[Stage] Install"
-        run: Rscript -e "if (grepl('Ubuntu', Sys.info()[['version']]) && !grepl('Under development', R.version[['status']])) {options(repos = c(CRAN = sprintf('https://packagemanager.rstudio.com/all/__linux__/%s/latest', system('lsb_release -cs', intern = TRUE))))}else{options(repos = c(CRAN = 'cloud.r-project.org'))}; pak::pkg_install('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+        run: Rscript -e "install.packages('tic', repos = c('https://ropensci.r-universe.dev', if (grepl('Ubuntu', Sys.info()[['version']])) {sprintf('https://packagemanager.rstudio.com/all/__linux__/%s/latest', system('lsb_release -cs', intern = TRUE))} else {'https://cloud.r-project.org'}))" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
-      - name: "[Custom block] [Stage] Before Script"
-        run: Rscript -e 'tic::before_script()'
+      - name: "[Cache] Save R package cache"
+        if: runner.os != 'Windows' && always()
+        uses: actions/cache/save@v3
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
 
       - name: "[Stage] Script"
         run: Rscript -e 'tic::script()'
@@ -101,13 +91,9 @@ jobs:
       - name: "[Stage] After Success"
         run: Rscript -e "tic::after_success()"
 
-      - name: "[Custom block] [Stage] After Success on Linux"
-        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'devel'
-        run: Rscript -e "tic::after_success()"
-
       - name: "[Stage] Upload R CMD check artifacts"
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
