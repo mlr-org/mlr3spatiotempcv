@@ -123,6 +123,7 @@ constructor of \link{TaskRegrST}.
 }
 }
 \examples{
+\donttest{
 if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
   library("mlr3")
   data("cookfarm_mlr3", package = "mlr3spatiotempcv")
@@ -135,5 +136,6 @@ if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
   # sf
   cookfarm_sf = sf::st_as_sf(cookfarm_mlr3, coords = c("x", "y"), crs = 26911)
   as_task_regr_st(cookfarm_sf, target = "PHIHOX")
+}
 }
 }

@@ -364,3 +364,6 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
     }
   )
 )
+
+#' @include aaa.R
+resamplings[["repeated_spcv_tiles"]] = ResamplingRepeatedSpCVTiles

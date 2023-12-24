@@ -132,3 +132,6 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
     }
   )
 )
+
+#' @include aaa.R
+resamplings[["repeated_sptcv_cstf"]] = ResamplingRepeatedSptCVCstf

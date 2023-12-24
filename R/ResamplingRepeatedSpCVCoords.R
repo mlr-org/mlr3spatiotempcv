@@ -132,3 +132,6 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
     }
   )
 )
+
+#' @include aaa.R
+resamplings[["repeated_spcv_coords"]] = ResamplingRepeatedSpCVCoords

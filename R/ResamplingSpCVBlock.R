@@ -199,3 +199,6 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     }
   )
 )
+
+#' @include aaa.R
+resamplings[["spcv_block"]] = ResamplingSpCVBlock

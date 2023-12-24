@@ -172,3 +172,6 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
     }
   )
 )
+
+#' @include aaa.R
+resamplings[["spcv_buffer"]] = ResamplingSpCVBuffer
