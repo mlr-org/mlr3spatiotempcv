@@ -51,7 +51,7 @@
 #' @return [ggplot()] or list of ggplot2 objects.
 #' @name autoplot.ResamplingSpCVBlock
 #' @seealso
-#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/chapters/chapter13/beyond_regression_and_classification.html#spatiotemp-cv)
+#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
 #'   - [autoplot.ResamplingSpCVBuffer()]
 #'   - [autoplot.ResamplingSpCVCoords()]
 #'   - [autoplot.ResamplingSpCVEnv()]
@@ -181,7 +181,7 @@ plot.ResamplingRepeatedSpCVBlock = function(x, ...) {
 #'   [ResamplingRepeatedSpCVEnv].
 #' @export
 #' @seealso
-#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/chapters/chapter13/beyond_regression_and_classification.html#spatiotemp-cv)
+#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
 #'   - [autoplot.ResamplingSpCVBlock()]
 #'   - [autoplot.ResamplingSpCVBuffer()]
 #'   - [autoplot.ResamplingSpCVCoords()]
@@ -281,7 +281,7 @@ plot.ResamplingRepeatedSpCVEnv = function(x, ...) {
 #'   [ResamplingRepeatedSpCVCoords].
 #' @export
 #' @seealso
-#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/chapters/chapter13/beyond_regression_and_classification.html#spatiotemp-cv)
+#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
 #'   - [autoplot.ResamplingSpCVBlock()]
 #'   - [autoplot.ResamplingSpCVBuffer()]
 #'   - [autoplot.ResamplingSpCVEnv()]
@@ -396,7 +396,7 @@ plot.ResamplingRepeatedSpCVCoords = function(x, ...) {
 #'   Whether to show points not used in train or test set for the current fold.
 #' @export
 #' @seealso
-#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/chapters/chapter13/beyond_regression_and_classification.html#spatiotemp-cv)
+#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
 #'   - Vignette [Spatiotemporal Visualization](https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html).
 #'   - [autoplot.ResamplingSpCVBlock()]
 #'   - [autoplot.ResamplingSpCVBuffer()]
@@ -456,12 +456,12 @@ autoplot.ResamplingSpCVDisc = function( # nolint
   if (!is.null(fold_id)) {
     ### Multiplot of single folds with train and test
     plot = autoplot_multi_fold_list(task, resampling_sub, sample_fold_n,
-      fold_id, repeats_id, plot_as_grid, show_omitted)
+      fold_id, repeats_id, plot_as_grid, show_omitted, ...)
     return(plot)
   } else {
     ### One plot showing all test folds
     plot = autoplot_all_folds_list(task, resampling_sub, sample_fold_n,
-      fold_id, repeats_id)
+      fold_id, repeats_id, ...)
     return(plot)
   }
 }
@@ -529,7 +529,7 @@ plot.ResamplingRepeatedSpCVDisc = function(x, ...) {
 #'   Whether to show points not used in train or test set for the current fold.
 #' @export
 #' @seealso
-#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/chapters/chapter13/beyond_regression_and_classification.html#spatiotemp-cv)
+#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
 #'   - Vignette [Spatiotemporal Visualization](https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html).
 #'   - [autoplot.ResamplingSpCVBlock()]
 #'   - [autoplot.ResamplingSpCVBuffer()]
@@ -589,12 +589,12 @@ autoplot.ResamplingSpCVTiles = function( # nolint
   if (!is.null(fold_id)) {
     ### Multiplot of single folds with train and test
     plot = autoplot_multi_fold_list(task, resampling_sub, sample_fold_n,
-      fold_id, repeats_id, plot_as_grid, show_omitted)
+      fold_id, repeats_id, plot_as_grid, show_omitted, ...)
     return(plot)
   } else {
     ### One plot showing all test folds
     plot = autoplot_all_folds_list(task, resampling_sub, sample_fold_n,
-      fold_id, repeats_id)
+      fold_id, repeats_id, ...)
     return(plot)
   }
 }
@@ -658,7 +658,7 @@ plot.ResamplingRepeatedSpCVTiles = function(x, ...) {
 #'   Whether to show points not used in train or test set for the current fold.
 #' @export
 #' @seealso
-#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/chapters/chapter13/beyond_regression_and_classification.html#spatiotemp-cv)
+#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
 #'   - [autoplot.ResamplingSpCVBlock()]
 #'   - [autoplot.ResamplingSpCVCoords()]
 #'   - [autoplot.ResamplingSpCVEnv()]
@@ -710,7 +710,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   # Multiplot of single folds with train and test
   plot = autoplot_multi_fold_list(task, resampling_sub,
     sample_fold_n = NULL, show_omitted = show_omitted,
-    fold_id, repeats_id = 1)
+    fold_id, repeats_id = 1, ...)
   return(plot)
 }
 
@@ -752,7 +752,7 @@ plot.ResamplingSpCVBuffer = function(x, ...) {
 #'
 #' @export
 #' @seealso
-#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/chapters/chapter13/beyond_regression_and_classification.html#spatiotemp-cv)
+#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
 #'   - Vignette [Spatiotemporal Visualization](https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html).
 #'   - [autoplot.ResamplingSpCVBlock()]
 #'   - [autoplot.ResamplingSpCVBuffer()]
@@ -882,7 +882,7 @@ plot.ResamplingRepeatedSpCVKnndm = function(x, ...) {
 #' @inheritParams autoplot.ResamplingSpCVBlock
 #' @export
 #' @seealso
-#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/chapters/chapter13/beyond_regression_and_classification.html#spatiotemp-cv)
+#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
 #'   - [autoplot.ResamplingSpCVBlock()]
 #'   - [autoplot.ResamplingSpCVBuffer()]
 #'   - [autoplot.ResamplingSpCVCoords()]
@@ -964,7 +964,7 @@ autoplot.ResamplingRepeatedCV = function( # nolint
 #' @inheritParams autoplot.ResamplingSpCVBlock
 #' @export
 #' @seealso
-#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/chapters/chapter13/beyond_regression_and_classification.html#spatiotemp-cv)
+#'   - mlr3book chapter on ["Spatiotemporal Visualization"](https://mlr3book.mlr-org.com/special.html#vis-spt-partitions)
 #'   - [autoplot.ResamplingSpCVBlock()]
 #'   - [autoplot.ResamplingSpCVBuffer()]
 #'   - [autoplot.ResamplingSpCVCoords()]
