@@ -427,16 +427,19 @@ rsmp_knndm = rsmp("spcv_knndm", folds = 5)
 autoplot(rsmp_knndm, size = 0.8, fold_id = 1, task = task)
 ```
 
-
-```{r coords-eval, fig.cap='Leave-one-block-out CV based on $k$-means clustering of the coordinates as implemented in package \\pkg{sperrorest} (method `"spcv\\_coords"` in \\pkg{mlr3spatiotempcv}).', out.width="40%", fig.pos="ht", echo=FALSE}
+```{r knndm-eval, fig.cap='Leave-one-block-out CV based on $k$-means clustering of the coordinates as implemented in package \\pkg{sperrorest} (method `"spcv\\_coords"` in \\pkg{mlr3spatiotempcv}).', out.width="55%", fig.pos="ht", echo=FALSE}
 rsmp_coords = rsmp("spcv_coords", folds = 5)
 
 autoplot(rsmp_coords,
   size = 0.8, fold_id = 1, task = task) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
-
 
 FIXME:
 
@@ -923,23 +926,29 @@ rr_sp$aggregate(measures = msr("classif.auc"))
 Finally, we visualize (two of) the partitions that were used during performance estimation by making use of the generic `autoplot()` function in package \pkg{mlr3spatiotempcv} (Figure \ref{fig:vis-spcv-eval}).
 
 ```{r vis-nspcv-non-eval, eval=FALSE}
-autoplot(rsmp_nsp, task, fold_id = 1:2, size = 0.8)
+autoplot(rsmp_nsp, task, fold_id = 1:2, size = 0.3)
 ```
 
-```{r vis-nspcv-eval, fig.cap="Random (non-spatial) four-fold CV partitioning. Only the first two folds of the first repetition are shown.", fig.pos="ht", fig.height=6, fig.width=8, echo=FALSE}
-autoplot(rsmp_nsp, task, fold_id = 1:2, size = 0.8) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+```{r vis-nspcv-eval, fig.cap="Random (non-spatial) four-fold CV partitioning. Only the first two folds of the first repetition are shown.", out.width="100%", fig.pos="ht", echo=FALSE}
+autoplot(rsmp_nsp, task, fold_id = 1:2, size = 0.3) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) *
+  ggplot2::theme(plot.title = ggtext::element_textbox(size = 8),
+    axis.text = ggplot2::element_text(size = 8)) *
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
 ```
 
 ```{r vis-spcv-non-eval, eval=FALSE}
-autoplot(rsmp_sp, task, fold_id = 1:2, size = 0.8)
+autoplot(rsmp_sp, task, fold_id = 1:2, size = 0.3)
 ```
 
-```{r vis-spcv-eval, fig.cap="Spatial leave-one-block-out partitioning using coordinate-based clustering to create roughly equally sized polygonal blocks. Due to space limitations only the first two folds of the first repetition are shown.", fig.pos="ht", fig.height=6, fig.width=8, echo=FALSE}
-autoplot(rsmp_sp, task, fold_id = 1:2, size = 0.8) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+```{r vis-spcv-eval, fig.cap="Spatial leave-one-block-out partitioning using coordinate-based clustering to create roughly equally sized polygonal blocks. Only the first two folds of the first repetition are shown.", fig.pos="ht", out.width="100%", echo=FALSE}
+autoplot(rsmp_sp, task, fold_id = 1:2, size = 0.3) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) *
+  ggplot2::theme(plot.title = ggtext::element_textbox(size = 8),
+    axis.text = ggplot2::element_text(size = 8)) *
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
 ```
 
 ## Interpretation
