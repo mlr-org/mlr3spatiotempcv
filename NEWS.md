@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# mlr3spatiotempcv 2.2.0.9000
+
+- Internal changes only.
+
+
+# mlr3spatiotempcv 2.2.0
+
+## Features
+
+- Add "knndm" method from package {CAST} (#229)
+- Add `label_size` to "spcv_block" to make label size configurable (#227)
+- Add `show_omitted` for "spcv_buffer" method (#228)
+
 # mlr3spatiotempcv 2.1.0
 
 - Add support for {blockCV} v3 and bump requirement to >= 3.1.2 (#222)

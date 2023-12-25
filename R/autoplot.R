@@ -456,12 +456,12 @@ autoplot.ResamplingSpCVDisc = function( # nolint
   if (!is.null(fold_id)) {
     ### Multiplot of single folds with train and test
     plot = autoplot_multi_fold_list(task, resampling_sub, sample_fold_n,
-      fold_id, repeats_id, plot_as_grid, show_omitted)
+      fold_id, repeats_id, plot_as_grid, show_omitted, ...)
     return(plot)
   } else {
     ### One plot showing all test folds
     plot = autoplot_all_folds_list(task, resampling_sub, sample_fold_n,
-      fold_id, repeats_id)
+      fold_id, repeats_id, ...)
     return(plot)
   }
 }
@@ -589,12 +589,12 @@ autoplot.ResamplingSpCVTiles = function( # nolint
   if (!is.null(fold_id)) {
     ### Multiplot of single folds with train and test
     plot = autoplot_multi_fold_list(task, resampling_sub, sample_fold_n,
-      fold_id, repeats_id, plot_as_grid, show_omitted)
+      fold_id, repeats_id, plot_as_grid, show_omitted, ...)
     return(plot)
   } else {
     ### One plot showing all test folds
     plot = autoplot_all_folds_list(task, resampling_sub, sample_fold_n,
-      fold_id, repeats_id)
+      fold_id, repeats_id, ...)
     return(plot)
   }
 }
@@ -710,7 +710,7 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
   # Multiplot of single folds with train and test
   plot = autoplot_multi_fold_list(task, resampling_sub,
     sample_fold_n = NULL, show_omitted = show_omitted,
-    fold_id, repeats_id = 1)
+    fold_id, repeats_id = 1, ...)
   return(plot)
 }
 
@@ -891,6 +891,7 @@ plot.ResamplingRepeatedSpCVKnndm = function(x, ...) {
 #'   - [autoplot.ResamplingSpCVTiles()]
 #'   - [autoplot.ResamplingSptCVCstf()]
 #' @examples
+#' \donttest{
 #' if (mlr3misc::require_namespaces(c("sf", "patchwork", "ggtext", "ggsci"), quietly = TRUE)) {
 #'   library(mlr3)
 #'   library(mlr3spatiotempcv)
@@ -903,6 +904,7 @@ plot.ResamplingRepeatedSpCVKnndm = function(x, ...) {
 #'   autoplot(resampling, task, fold_id = 1)
 #'   autoplot(resampling, task, fold_id = c(1, 2)) *
 #'     ggplot2::scale_x_continuous(breaks = seq(-79.085, -79.055, 0.01))
+#' }
 #' }
 autoplot.ResamplingCV = function( # nolint
   object,
