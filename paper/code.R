@@ -1,6 +1,15 @@
-if (!requireNamespace(c("blockCV"), quietly = TRUE)) install.packages(c("blockCV", "sf", "patchwork", "sperrorest", "ggtext", "plotly"))
+# The following lines install dependencies for the plotly-based 3D plots. If you already have a working plotly/python/reticulate installation, these commands DO NOT need to be executed
+# install.packages('reticulate')
+# reticulate::install_miniconda()
+# reticulate::use_miniconda('r-reticulate')
+# reticulate::conda_install('r-reticulate', 'python-kaleido')
+# reticulate::conda_install('r-reticulate', 'plotly')
+
+# R package dependencies
+if (!requireNamespace(c("blockCV"), quietly = TRUE)) install.packages(c("blockCV", "sf", "patchwork", "sperrorest", "ggtext", "plotly", "mlr3", "mlr3spatiotempcv", "knitr", "rmarkdown", "terra", "reticulate"))
 dir.create("pdf")
 
+set.seed(42)
 library("mlr3")
 library("mlr3spatiotempcv")
 task = tsk("ecuador")
@@ -8,9 +17,14 @@ rsmp_buffer = rsmp("spcv_buffer", theRange = 1000)
 rsmp_buffer
 
 autoplot(rsmp_buffer,
-  size = 0.8, task = task, fold_id = 1) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  size = 0.8, task = task, fold_id = 1, show_omitted = TRUE) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 
 
 library("mlr3")
@@ -21,25 +35,53 @@ rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
 rsmp_disc
 
 autoplot(rsmp_disc,
-  size = 0.8, task = task, fold_id = 1) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  size = 0.8, task = task, fold_id = 1, show_omitted = TRUE) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 
 
 rsmp_coords = rsmp("spcv_coords", folds = 5)
 
 autoplot(rsmp_coords,
   size = 0.8, fold_id = 1, task = task) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
+
+
+rsmp_coords = rsmp("spcv_coords", folds = 5)
+
+autoplot(rsmp_coords,
+  size = 0.8, fold_id = 1, task = task) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 
 
 rsmp_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
 
 autoplot(rsmp_tiles,
   size = 0.8, fold_id = 1, task = task) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 
 
 breaks = quantile(task$data()$dem, seq(0, 1, length = 6))
@@ -49,17 +91,27 @@ rsmp_custom = rsmp("custom_cv")
 rsmp_custom$instantiate(task, f = zclass)
 
 autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 
 
 rsmp_block_random = rsmp("spcv_block", range = 1000, folds = 5)
 
 autoplot(rsmp_block_random,
   size = 0.8, fold_id = 1, task = task,
-  show_blocks = TRUE, show_labels = TRUE) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  show_blocks = TRUE, show_labels = TRUE, label_size = 4) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 
 
 rsmp_block_systematic = rsmp("spcv_block",
@@ -69,9 +121,14 @@ rsmp_block_systematic = rsmp("spcv_block",
 
 autoplot(rsmp_block_systematic,
   size = 0.8, fold_id = 1, task = task,
-  show_blocks = TRUE, show_labels = TRUE) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  show_blocks = TRUE, show_labels = TRUE, label_size = 4) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 15),
+    plot.title = ggtext::element_textbox(size = 12,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 
 
 
@@ -82,11 +139,14 @@ task_cv$set_col_roles("group", roles = "group")
 
 rsmp_cv_group = rsmp("cv", folds = 3)$instantiate(task_cv)
 
-print(rsmp_cv_group$instance)
-
 autoplot(rsmp_cv_group, size = 0.8, task = task_cv, fold_id = 1) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 
 
 rsmp_env = rsmp("spcv_env",
@@ -99,15 +159,27 @@ plot_env_single = autoplot(rsmp_env,
   size = 0.3, fold_id = 1, task = task) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
-  ggplot2::theme(plot.title = ggtext::element_textbox(size = 8),
-    axis.text = ggplot2::element_text(size = 8))
+  ggplot2::theme(plot.title = ggtext::element_textbox(size = 8,
+    r = ggplot2::unit(4, "pt"),
+    height = ggplot2::unit(0.30, "inch"), linewidth = 0.5),
+  axis.text = ggplot2::element_text(size = 8.5),
+  legend.title = ggtext::element_textbox(size = 10),
+  legend.text = ggtext::element_textbox(size = 8),
+  legend.key.size = ggplot2::unit(0.4, "cm")) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
 
 plot_env_multi = autoplot(rsmp_env_multi,
   size = 0.3, fold_id = 1, task = task) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
-  ggplot2::theme(plot.title = ggtext::element_textbox(size = 8),
-    axis.text = ggplot2::element_text(size = 8))
+  ggplot2::theme(plot.title = ggtext::element_textbox(size = 8,
+    r = ggplot2::unit(4, "pt"),
+    height = ggplot2::unit(0.30, "inch"), linewidth = 0.5),
+  axis.text = ggplot2::element_text(size = 8.5),
+  legend.title = ggtext::element_textbox(size = 10),
+  legend.text = ggtext::element_textbox(size = 8),
+  legend.key.size = ggplot2::unit(0.4, "cm")) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
 
 library("patchwork")
 plot_env_single + plot_env_multi + plot_layout(guides = "collect")
@@ -138,7 +210,6 @@ p_lto_print = plotly::layout(p_lto,
 
 plotly::save_image(p_lto_print, "pdf/lto.pdf",
   scale = 2, width = 1000, height = 800)
-
 
 knitr::include_graphics("pdf/lto.pdf")
 
@@ -220,13 +291,29 @@ rr_sp = resample(
 rr_sp$aggregate(measures = msr("classif.auc"))
 
 
-autoplot(rsmp_sp, task, fold_id = 1:2, size = 0.8) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+autoplot(rsmp_sp, task, fold_id = 1:2, size = 0.3) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) *
+  ggplot2::theme(plot.title = ggtext::element_textbox(size = 8,
+    r = ggplot2::unit(4, "pt"),
+    height = ggplot2::unit(0.30, "inch"), linewidth = 0.5),
+  axis.text = ggplot2::element_text(size = 8.5),
+  legend.title = ggtext::element_textbox(size = 10),
+  legend.text = ggtext::element_textbox(size = 8),
+  legend.key.size = ggplot2::unit(0.4, "cm")) *
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
 
 
-autoplot(rsmp_nsp, task, fold_id = 1:2, size = 0.8) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.01)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.01))
+autoplot(rsmp_nsp, task, fold_id = 1:2, size = 0.3) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) *
+  ggplot2::theme(plot.title = ggtext::element_textbox(size = 8,
+    r = ggplot2::unit(4, "pt"),
+    height = ggplot2::unit(0.30, "inch"), linewidth = 0.5),
+  axis.text = ggplot2::element_text(size = 8.5),
+  legend.title = ggtext::element_textbox(size = 10),
+  legend.text = ggtext::element_textbox(size = 8),
+  legend.key.size = ggplot2::unit(0.4, "cm")) *
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
 
 sessionInfo()
