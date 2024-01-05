@@ -70,7 +70,8 @@ options(prompt = "R> ", continue = "+ ")
 ```{r setup-2, echo=FALSE, purl=TRUE}
 knitr::opts_chunk$set(
   cache = FALSE,
-  cache.lazy = TRUE)
+  cache.lazy = TRUE
+)
 ```
 
 \nocite{ploton2020}
@@ -269,11 +270,13 @@ The available methods are further discussed in Section \ref{sec:disc}.
                                                   \cmidrule{2-5}
                                       & custom  &  \texttt{"custom\_cv"}           & \pkg{mlr3} (0) & - \\
       \midrule
-      \multirow{4}{*}{\specialcell{CV at the \\ block level}} &  geometric: rectangular & \texttt{"spcv\_block"}  & \pkg{blockCV} (28)      & \specialcell{\cite{jensen2021} \\ \cite{escobar2021} \\ \cite{stewart2021}} \\
+      \multirow{5}{*}{\specialcell{CV at the \\ block level}} &  geometric: rectangular & \texttt{"spcv\_block"}  & \pkg{blockCV} (28)      & \specialcell{\cite{jensen2021} \\ \cite{escobar2021} \\ \cite{stewart2021}} \\
   \cmidrule{2-5}
                                       &  custom & \texttt{"cv"} with grouping  & \pkg{mlr3} (0)  &  -  \\
   \cmidrule{2-5}
                                       &  clustering in feature space & \texttt{"spcv\_env"}* & \pkg{blockCV} (1)   &  \cite{morera2021}  \\
+  \cmidrule{2-5}
+                                      &  clustering of coordinates + aggregation & \texttt{"spcv\_knndm"}* & \pkg{CAST} (1)   &  \cite{ludwig2023}  \\
       \midrule
       \multirow{2}{*}{\specialcell{Spatiotemp. \\ CV}} &  custom & \texttt{"sptcv\_cstf"}* & \pkg{CAST} (6)      & \specialcell{\cite{gao2019} \\ \cite{reitz2021} \\ \cite{egli2020}} \\
                                       \bottomrule
@@ -314,6 +317,7 @@ autoplot(rsmp_buffer, size = 0.8, task = task, fold_id = 1, show_omitted = TRUE)
 ```
 
 ```{r buffer-eval, fig.cap='Visualization of the spatial buffering method from package \\pkg{blockCV} (method "spcv\\_buffer" in \\pkg{mlr3spatiotempcv}). The buffer distance is 1000 m.', out.width="60%", fig.pos="ht",echo=FALSE}
+set.seed(42)
 library("mlr3")
 library("mlr3spatiotempcv")
 task = tsk("ecuador")
@@ -321,13 +325,18 @@ rsmp_buffer = rsmp("spcv_buffer", theRange = 1000)
 rsmp_buffer
 
 autoplot(rsmp_buffer,
-  size = 0.8, task = task, fold_id = 1, show_omitted = TRUE) *
+  size = 0.8, task = task, fold_id = 1, show_omitted = TRUE
+) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
-  ggplot2::theme(text = ggplot2::element_text(size = 16),
-    plot.title = ggtext::element_textbox(size = 13,
+  ggplot2::theme(
+    text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(
+      size = 13,
       r = ggplot2::unit(7, "pt"),
-      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
+    )
+  ) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
@@ -366,13 +375,18 @@ rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
 rsmp_disc
 
 autoplot(rsmp_disc,
-  size = 0.8, task = task, fold_id = 1, show_omitted = TRUE) *
+  size = 0.8, task = task, fold_id = 1, show_omitted = TRUE
+) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
-  ggplot2::theme(text = ggplot2::element_text(size = 16),
-    plot.title = ggtext::element_textbox(size = 13,
+  ggplot2::theme(
+    text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(
+      size = 13,
       r = ggplot2::unit(7, "pt"),
-      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
+    )
+  ) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
@@ -405,43 +419,20 @@ autoplot(rsmp_coords, size = 0.8, fold_id = 1, task = task)
 rsmp_coords = rsmp("spcv_coords", folds = 5)
 
 autoplot(rsmp_coords,
-  size = 0.8, fold_id = 1, task = task) *
+  size = 0.8, fold_id = 1, task = task
+) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
-  ggplot2::theme(text = ggplot2::element_text(size = 16),
-    plot.title = ggtext::element_textbox(size = 13,
+  ggplot2::theme(
+    text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(
+      size = 13,
       r = ggplot2::unit(7, "pt"),
-      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
+    )
+  ) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
-
-### Clustering-based: using k-fold nearest-neighbour distance matching --- \code{"spcv_knndm"} {short-title='Clustering-based: using kNNDM --- "spcv_knndm"' }
-
-The k-fold nearest-neighboar distance matching method after @linnenbrinck2023 is derived from the NNDM method after @mila.
-By using geographical nearest neighbor distances between test and training points, the method aims to create realistic predictive situations within the CV folds that closely mimic the ones of either existing training and test points, if know, or a provided model domain in which the model is to be applied.
-This is done by minimizing the values ofthe Empirical Cumulative Distribution Function (ECDF) for the respective scenarios outlined above [@linnenbrinck2023].
-
-```{r knndm-non-eval, eval=FALSE}
-rsmp_knndm = rsmp("spcv_knndm", folds = 5)
-
-autoplot(rsmp_knndm, size = 0.8, fold_id = 1, task = task)
-```
-
-```{r knndm-eval, fig.cap='Leave-one-block-out CV based on $k$-means clustering of the coordinates as implemented in package \\pkg{sperrorest} (method `"spcv\\_coords"` in \\pkg{mlr3spatiotempcv}).', out.width="60%", fig.pos="ht", echo=FALSE}
-rsmp_coords = rsmp("spcv_coords", folds = 5)
-
-autoplot(rsmp_coords,
-  size = 0.8, fold_id = 1, task = task) *
-  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
-  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
-  ggplot2::theme(text = ggplot2::element_text(size = 16),
-    plot.title = ggtext::element_textbox(size = 13,
-      r = ggplot2::unit(7, "pt"),
-      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
-```
-
-FIXME:
 
 ### Geometric: using rectangular blocks --- \code{"spcv_tiles"} {short-title='Geometric: using rectangular blocks --- "spcv_tiles"' }
 
@@ -463,13 +454,18 @@ autoplot(rsmp_tiles, size = 0.8, fold_id = 1, task = task)
 rsmp_tiles = rsmp("spcv_tiles", nsplit = c(3L, 4L))
 
 autoplot(rsmp_tiles,
-  size = 0.8, fold_id = 1, task = task) *
+  size = 0.8, fold_id = 1, task = task
+) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
-  ggplot2::theme(text = ggplot2::element_text(size = 16),
-    plot.title = ggtext::element_textbox(size = 13,
+  ggplot2::theme(
+    text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(
+      size = 13,
       r = ggplot2::unit(7, "pt"),
-      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
+    )
+  ) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
@@ -500,10 +496,14 @@ rsmp_custom$instantiate(task, f = zclass)
 autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
-  ggplot2::theme(text = ggplot2::element_text(size = 16),
-    plot.title = ggtext::element_textbox(size = 13,
+  ggplot2::theme(
+    text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(
+      size = 13,
       r = ggplot2::unit(7, "pt"),
-      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
+    )
+  ) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
@@ -529,8 +529,10 @@ It should be noted that rectangular partitioning can be problematic in irregular
 ```{r block-random-non-eval, eval=FALSE}
 rsmp_block_random = rsmp("spcv_block", range = 1000, folds = 5)
 
-autoplot(rsmp_block_random, size = 0.8, fold_id = 1, task = task,
-  show_blocks = TRUE, show_labels = TRUE, label_size = 4)
+autoplot(rsmp_block_random,
+  size = 0.8, fold_id = 1, task = task,
+  show_blocks = TRUE, show_labels = TRUE, label_size = 4
+)
 ```
 
 ```{r block-random, fig.cap='Random resampling of square spatial blocks using the implementation in package \\pkg{blockCV} (method `"spcv\\_block"` with option `selection = "random"` in \\pkg{mlr3spatiotempcv}). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to the test partition.', out.width="60%", fig.pos="ht", echo=FALSE}
@@ -538,13 +540,18 @@ rsmp_block_random = rsmp("spcv_block", range = 1000, folds = 5)
 
 autoplot(rsmp_block_random,
   size = 0.8, fold_id = 1, task = task,
-  show_blocks = TRUE, show_labels = TRUE, label_size = 4) *
+  show_blocks = TRUE, show_labels = TRUE, label_size = 4
+) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
-  ggplot2::theme(text = ggplot2::element_text(size = 16),
-    plot.title = ggtext::element_textbox(size = 13,
+  ggplot2::theme(
+    text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(
+      size = 13,
       r = ggplot2::unit(7, "pt"),
-      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
+    )
+  ) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
@@ -556,8 +563,10 @@ rsmp_block_systematic = rsmp("spcv_block",
   range = 1000, folds = 5, selection = "systematic"
 )
 
-autoplot(rsmp_block_systematic, size = 0.8, fold_id = 1, task = task,
-  show_blocks = TRUE, show_labels = TRUE, label_size = 4)
+autoplot(rsmp_block_systematic,
+  size = 0.8, fold_id = 1, task = task,
+  show_blocks = TRUE, show_labels = TRUE, label_size = 4
+)
 ```
 
 ```{r block-systematic, fig.cap='Sytematic resampling of square spatial blocks using the implementation in package \\pkg{blockCV} (method `"spcv\\_block"` with option `selection = "systematic"` in \\pkg{mlr3spatiotempcv}). The size of the squares is 1000 m, and four out of the 19 blocks were assigned to this test sample.', out.width="60%", fig.pos="ht", echo=FALSE}
@@ -568,13 +577,18 @@ rsmp_block_systematic = rsmp("spcv_block",
 
 autoplot(rsmp_block_systematic,
   size = 0.8, fold_id = 1, task = task,
-  show_blocks = TRUE, show_labels = TRUE, label_size = 4) *
+  show_blocks = TRUE, show_labels = TRUE, label_size = 4
+) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
-  ggplot2::theme(text = ggplot2::element_text(size = 15),
-    plot.title = ggtext::element_textbox(size = 12,
+  ggplot2::theme(
+    text = ggplot2::element_text(size = 15),
+    plot.title = ggtext::element_textbox(
+      size = 12,
       r = ggplot2::unit(7, "pt"),
-      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
+    )
+  ) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
@@ -620,10 +634,14 @@ rsmp_cv_group = rsmp("cv", folds = 3)$instantiate(task_cv)
 autoplot(rsmp_cv_group, size = 0.8, task = task_cv, fold_id = 1) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
-  ggplot2::theme(text = ggplot2::element_text(size = 16),
-    plot.title = ggtext::element_textbox(size = 13,
+  ggplot2::theme(
+    text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(
+      size = 13,
       r = ggplot2::unit(7, "pt"),
-      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8)) +
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
+    )
+  ) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
 ```
 
@@ -641,14 +659,20 @@ The right sub-figure of Figure \ref{fig:env-1-eval} shows the outcome when using
 ```{r env-1-non-eval, eval=FALSE}
 rsmp_env = rsmp("spcv_env", features = "distdeforest", folds = 5)
 
-rsmp_env_multi = rsmp("spcv_env", features = c("distdeforest", "slope"),
-  folds = 5)
+rsmp_env_multi = rsmp("spcv_env",
+  features = c("distdeforest", "slope"),
+  folds = 5
+)
 
-plot_env_single = autoplot(rsmp_env, size = 0.3,
-  fold_id = 1, task = task) +
+plot_env_single = autoplot(rsmp_env,
+  size = 0.3,
+  fold_id = 1, task = task
+) +
 
-  plot_env_multi = autoplot(rsmp_env_multi, size = 0.3,
-  fold_id = 1, task = task)
+  plot_env_multi = autoplot(rsmp_env_multi,
+  size = 0.3,
+  fold_id = 1, task = task
+)
 
 library("patchwork")
 plot_env_single + plot_env_multi
@@ -656,39 +680,94 @@ plot_env_single + plot_env_multi
 
 ```{r env-1-eval, fig.cap='Environmental leave-one-block-out CV from package \\pkg{blockCV} using one (left, `"distdeforest"`) and two (right, `"distdeforest"` and `"slope"`) predictors to define blocks in the feature space. Due to feature space clustering observations are not (necessarily) grouped in the spatial domain.', out.width="100%", fig.pos="ht", echo=FALSE}
 rsmp_env = rsmp("spcv_env",
-  features = "distdeforest", folds = 5)
+  features = "distdeforest", folds = 5
+)
 
 rsmp_env_multi = rsmp("spcv_env",
-  features = c("distdeforest", "slope"), folds = 5)
+  features = c("distdeforest", "slope"), folds = 5
+)
 
 plot_env_single = autoplot(rsmp_env,
-  size = 0.3, fold_id = 1, task = task) *
+  size = 0.3, fold_id = 1, task = task
+) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
-  ggplot2::theme(plot.title = ggtext::element_textbox(size = 8,
-    r = ggplot2::unit(4, "pt"),
-    height = ggplot2::unit(0.30, "inch"), linewidth = 0.5),
-  axis.text = ggplot2::element_text(size = 8.5),
-  legend.title = ggtext::element_textbox(size = 10),
-  legend.text = ggtext::element_textbox(size = 8),
-  legend.key.size = ggplot2::unit(0.4, "cm")) +
+  ggplot2::theme(
+    plot.title = ggtext::element_textbox(
+      size = 8,
+      r = ggplot2::unit(4, "pt"),
+      height = ggplot2::unit(0.30, "inch"), linewidth = 0.5
+    ),
+    axis.text = ggplot2::element_text(size = 8.5),
+    legend.title = ggtext::element_textbox(size = 10),
+    legend.text = ggtext::element_textbox(size = 8),
+    legend.key.size = ggplot2::unit(0.4, "cm")
+  ) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
 
 plot_env_multi = autoplot(rsmp_env_multi,
-  size = 0.3, fold_id = 1, task = task) *
+  size = 0.3, fold_id = 1, task = task
+) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
-  ggplot2::theme(plot.title = ggtext::element_textbox(size = 8,
-    r = ggplot2::unit(4, "pt"),
-    height = ggplot2::unit(0.30, "inch"), linewidth = 0.5),
-  axis.text = ggplot2::element_text(size = 8.5),
-  legend.title = ggtext::element_textbox(size = 10),
-  legend.text = ggtext::element_textbox(size = 8),
-  legend.key.size = ggplot2::unit(0.4, "cm")) +
+  ggplot2::theme(
+    plot.title = ggtext::element_textbox(
+      size = 8,
+      r = ggplot2::unit(4, "pt"),
+      height = ggplot2::unit(0.30, "inch"), linewidth = 0.5
+    ),
+    axis.text = ggplot2::element_text(size = 8.5),
+    legend.title = ggtext::element_textbox(size = 10),
+    legend.text = ggtext::element_textbox(size = 8),
+    legend.key.size = ggplot2::unit(0.4, "cm")
+  ) +
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
 
 library("patchwork")
 plot_env_single + plot_env_multi + plot_layout(guides = "collect")
+```
+
+### Nearest Neighbour Distance Matching --- \code{"spcv_knndm"} {short-title='Nearest Neighbour Distance Matching --- "spcv_knndm"' }
+
+The `spcv_knndm` method from the \pkg{CAST} package uses a two-stage approach: first groups of observations are created using Nearest Neighbour clustering.
+These are then merged into k clusters with the aim to minimize the differences between the empirical Nearest Neighbour distribution function of training and prediction points and training and test data during CV using the Wasserstein W statistic [@linnenbrink2023].
+
+The main goal is to ensure similar conditions during CV compared to the actual prediction scenario of the trained model.
+The k-fold variant is an extension of the LOOCV variant proposed initially by @mila2022 and more suited for large datasets.
+
+The following example uses the default settings of the implementation in the \pkg{CAST} package.
+The method requires a prediction area as an `sf` polygon or point object.
+In this case the former was used and passed as an argument to the `"spcv_knndm"` method.
+
+```{r knndm-non-eval, eval=FALSE}
+points = sf::st_as_sf(task$coordinates(), crs = task$crs, coords = c("x", "y"))
+modeldomain = sf::st_as_sfc(sf::st_bbox(points))
+
+rsmp_knndm = rsmp("spcv_knndm", modeldomain = modeldomain, folds = 5)
+
+autoplot(rsmp_knndm, size = 0.8, fold_id = 1, task = task, label_size = 4)
+```
+
+```{r knndm, fig.cap='Random resampling of square spatial blocks using the implementation in package \\pkg{CAST} (method `"spcv\\_knndm"`). Hierarchical clustering has been used together with the "ward.D2" link function and a target of five folds.', out.width="60%", fig.pos="ht", echo=FALSE}
+points = sf::st_as_sf(task$coordinates(), crs = task$crs, coords = c("x", "y"))
+modeldomain = sf::st_as_sfc(sf::st_bbox(points))
+
+rsmp_knndm = rsmp("spcv_knndm", modeldomain = modeldomain, folds = 5)
+
+suppressMessages(autoplot(rsmp_knndm,
+  size = 0.8, fold_id = 1, task = task, label_size = 4
+) *
+  ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
+  ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) +
+  ggplot2::theme(
+    text = ggplot2::element_text(size = 16),
+    plot.title = ggtext::element_textbox(
+      size = 13,
+      r = ggplot2::unit(7, "pt"),
+      height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
+    )
+  ) +
+  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5))))
 ```
 
 ## Cross-validation for spatiotemporal data
@@ -726,11 +805,13 @@ data = cookfarm_mlr3
 set.seed(42)
 data$Date = sample(rep(c(
   "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01",
-  "2020-05-01"), times = 1, each = 35768))
+  "2020-05-01"
+), times = 1, each = 35768))
 task_spt = as_task_regr_st(data,
   id = "cookfarm", target = "PHIHOX",
   coordinate_names = c("x", "y"), coords_as_features = FALSE,
-  crs = 26911)
+  crs = 26911
+)
 task_spt$set_col_roles("Date", roles = "time")
 
 rsmp_cstf_time = rsmp("sptcv_cstf", folds = 5)
@@ -744,10 +825,12 @@ p_lto = autoplot(rsmp_cstf_time,
 p_lto_print = plotly::layout(p_lto,
   scene = list(camera = list(eye = list(z = 0.58))),
   showlegend = FALSE, title = "",
-  margin = list(l = 0, b = 0, r = 0, t = 0))
+  margin = list(l = 0, b = 0, r = 0, t = 0)
+)
 
 plotly::save_image(p_lto_print, "pdf/lto.pdf",
-  scale = 2, width = 1000, height = 800)
+  scale = 2, width = 1000, height = 800
+)
 ```
 
 ```{r lto, echo=FALSE, out.width="80%", fig.cap='Perspective plot of `"leave-time-out"` CV from package \\pkg{CAST} (method `"sptcv\\_cstf"` and column role `"time" = "Date"`). Only five folds and five time points were used in this example. Note that the blue dots correspond to five discrete time levels, which appear as a point cloud due to the viewing angle.', fig.pos="ht"}
@@ -773,16 +856,19 @@ p_llo = autoplot(rsmp_cstf_loc,
   fold_id = 5, task = task_spt,
   point_size = 6, axis_label_fontsize = 15,
   plot3D = TRUE, plot_time_var = "Date",
-  sample_fold_n = 3000L)
+  sample_fold_n = 3000L
+)
 
 p_llo_print =
   plotly::layout(p_llo,
     scene = list(camera = list(eye = list(z = 2.5, x = -0.1, y = -0.1))),
     showlegend = FALSE, title = "", polar = TRUE,
-    margin = list(l = 0, b = 0, r = 0, t = 0))
+    margin = list(l = 0, b = 0, r = 0, t = 0)
+  )
 
 plotly::save_image(p_llo_print, "pdf/llo.pdf",
-  scale = 2, width = 1000, height = 800)
+  scale = 2, width = 1000, height = 800
+)
 ```
 
 ```{r llo, echo=FALSE, out.width="70%", fig.cap='Birds-eye view of `"leave-location-out"` CV from package \\pkg{CAST} (method `"sptcv\\_cstf"` and column role `"space" = "SOURCEID"`). The readers viewpoint is located on top of the figure, looking down. The transects are individual locations being left out across multiple time steps.', fig.pos="ht"}
@@ -808,18 +894,22 @@ task_spt$set_col_roles("Date", roles = "time")
 
 rsmp_cstf_time_loc = rsmp("sptcv_cstf", folds = 5)
 
-p_lto = autoplot(rsmp_cstf_time_loc, point_size = 6,
+p_lto = autoplot(rsmp_cstf_time_loc,
+  point_size = 6,
   axis_label_fontsize = 15,
   fold_id = 4, task = task_spt, plot3D = TRUE,
-  show_omitted = TRUE, sample_fold_n = 3000L)
+  show_omitted = TRUE, sample_fold_n = 3000L
+)
 
 p_lto_print = plotly::layout(p_lto,
   scene = list(camera = list(eye = list(z = 0.58))),
   showlegend = FALSE, title = "",
-  margin = list(l = 0, b = 0, r = 0, t = 0))
+  margin = list(l = 0, b = 0, r = 0, t = 0)
+)
 
 plotly::save_image(p_lto_print, "pdf/llto.pdf",
-  scale = 2, width = 1000, height = 800)
+  scale = 2, width = 1000, height = 800
+)
 ```
 
 ```{r llto, echo=FALSE, out.width="70%", fig.cap='Perspective plot of `"leave-location-and-time-out"` CV from package \\pkg{CAST} (method `"sptcv\\_cstf"` and column roles `"time" = "Date"` and `"space" = "SOURCEID"`). The grey points are excluded from both the training and the test set in this example.', fig.pos="h"}
@@ -876,9 +966,11 @@ To create it manually from a `data.frame` named `ecuador`, one would do:
 
 ```{r create-task}
 data("ecuador", package = "mlr3spatiotempcv")
-task = as_task_classif_st(ecuador, target = "slides", positive = "TRUE",
+task = as_task_classif_st(ecuador,
+  target = "slides", positive = "TRUE",
   coordinate_names = c("x", "y"), coords_as_features = FALSE,
-  crs = "EPSG:32717")
+  crs = "EPSG:32717"
+)
 ```
 
 ## Model preparation
@@ -943,13 +1035,17 @@ autoplot(rsmp_sp, task, fold_id = 1:2, size = 0.3)
 autoplot(rsmp_sp, task, fold_id = 1:2, size = 0.3) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) *
-  ggplot2::theme(plot.title = ggtext::element_textbox(size = 8,
-    r = ggplot2::unit(4, "pt"),
-    height = ggplot2::unit(0.30, "inch"), linewidth = 0.5),
-  axis.text = ggplot2::element_text(size = 8.5),
-  legend.title = ggtext::element_textbox(size = 10),
-  legend.text = ggtext::element_textbox(size = 8),
-  legend.key.size = ggplot2::unit(0.4, "cm")) *
+  ggplot2::theme(
+    plot.title = ggtext::element_textbox(
+      size = 8,
+      r = ggplot2::unit(4, "pt"),
+      height = ggplot2::unit(0.30, "inch"), linewidth = 0.5
+    ),
+    axis.text = ggplot2::element_text(size = 8.5),
+    legend.title = ggtext::element_textbox(size = 10),
+    legend.text = ggtext::element_textbox(size = 8),
+    legend.key.size = ggplot2::unit(0.4, "cm")
+  ) *
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
 ```
 
@@ -961,13 +1057,17 @@ autoplot(rsmp_nsp, task, fold_id = 1:2, size = 0.3)
 autoplot(rsmp_nsp, task, fold_id = 1:2, size = 0.3) *
   ggplot2::scale_y_continuous(breaks = seq(-3.97, -4, -0.02)) *
   ggplot2::scale_x_continuous(breaks = seq(-79.06, -79.08, -0.02)) *
-  ggplot2::theme(plot.title = ggtext::element_textbox(size = 8,
-    r = ggplot2::unit(4, "pt"),
-    height = ggplot2::unit(0.30, "inch"), linewidth = 0.5),
-  axis.text = ggplot2::element_text(size = 8.5),
-  legend.title = ggtext::element_textbox(size = 10),
-  legend.text = ggtext::element_textbox(size = 8),
-  legend.key.size = ggplot2::unit(0.4, "cm")) *
+  ggplot2::theme(
+    plot.title = ggtext::element_textbox(
+      size = 8,
+      r = ggplot2::unit(4, "pt"),
+      height = ggplot2::unit(0.30, "inch"), linewidth = 0.5
+    ),
+    axis.text = ggplot2::element_text(size = 8.5),
+    legend.title = ggtext::element_textbox(size = 10),
+    legend.text = ggtext::element_textbox(size = 8),
+    legend.key.size = ggplot2::unit(0.4, "cm")
+  ) *
   ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
 ```
 
@@ -1028,7 +1128,7 @@ See @schratz2019 for more details as well as chapter 11 of [Geocomputation with 
 Since \pkg{mlr3spatiotempcv} harvests already implemented resampling methods from existing R packages, the broader overview presented in this work has highlighted that there are still several gaps that may need to be closed in the future, if specific use cases require those features.
 
 For example, buffering, or the use of a spatial or temporal separation distance between training and test sets, is currently only implemented for some methods (`"spcv_buffer"`, `"spcv_disc"`, and `"sptcv_cstf"` with both `space_var` and `time_var`).
-Its use should, however, be limited to use cases involving a prediction distance, as a buffer zone reduces the size of the training sample and introduces the risk of geographically biased training data.
+Its use should, however, be limited to use cases involving a prediction distance, as a buffer zone reduces the size of the training sample and introduces the risk of geographically biased training data [@meyer2021, @zhu2015].
 
 CV is often executed repeatedly to reduce the possible influence of random variability on CV estimates.
 In general, only methods that involve a random mechanism for generating or resampling blocks are suited for this.
