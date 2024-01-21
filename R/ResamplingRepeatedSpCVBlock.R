@@ -62,16 +62,16 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         seed = p_int(),
         hexagon = p_lgl(default = FALSE),
         range = p_uty(
-          custom_check = function(x) checkmate::assert_integer(x)),
+          custom_check = checkmate::check_integer),
         selection = p_fct(levels = c(
           "random", "systematic",
           "checkerboard"), default = "random"),
         rasterLayer = p_uty(
           default = NULL,
-          custom_check = function(x) {
+          custom_check = crate(function(x) {
             checkmate::check_class(x, "SpatRaster",
               null.ok = TRUE)
-          }
+          })
         )
       )
 

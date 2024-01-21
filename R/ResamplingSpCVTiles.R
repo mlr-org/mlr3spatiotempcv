@@ -36,8 +36,8 @@ ResamplingSpCVTiles = R6Class("ResamplingSpCVTiles",
     #' [sperrorest::partition_tiles].
     initialize = function(id = "spcv_tiles") {
       ps = ps(
-        dsplit = p_uty(custom_check = function(x) checkmate::assert_integer(x, len = 2)),
-        nsplit = p_uty(custom_check = function(x) checkmate::assert_integer(x, len = 2)),
+        dsplit = p_uty(custom_check = crate(function(x) checkmate::assert_integer(x, len = 2))),
+        nsplit = p_uty(custom_check = crate(function(x) checkmate::assert_integer(x, len = 2))),
         rotation = p_fct(levels = c("none", "random", "user"), default = "none"),
         user_rotation = p_uty(default = NULL),
         offset = p_fct(levels = c("none", "random", "user"), default = "none"),

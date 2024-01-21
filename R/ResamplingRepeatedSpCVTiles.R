@@ -48,8 +48,8 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_tiles") {
       ps = ps(
-        dsplit = p_uty(custom_check = function(x) checkmate::assert_integer(x, len = 2)),
-        nsplit = p_uty(custom_check = function(x) checkmate::assert_integer(x, len = 2)),
+        dsplit = p_uty(custom_check = crate(function(x) checkmate::check_integer(x, len = 2))),
+        nsplit = p_uty(custom_check = crate(function(x) checkmate::check_integer(x, len = 2))),
         rotation = p_fct(levels = c("none", "random", "user"), default = "none"),
         user_rotation = p_uty(default = NULL),
         offset = p_fct(levels = c("none", "random", "user"), default = "none"),

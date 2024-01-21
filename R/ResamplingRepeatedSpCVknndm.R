@@ -47,16 +47,16 @@ ResamplingRepeatedSpCVKnndm = R6Class("ResamplingRepeatedSpCVKnndm",
     initialize = function(id = "repeated_spcv_knndm") {
       ps = ps(
         modeldomain = p_uty(default = NULL,
-          custom_check = function(x) {
+          custom_check = crate(function(x) {
             checkmate::check_class(x, "SpatRaster",
               null.ok = TRUE)
-          }
+          })
         ),
         ppoints = p_uty(default = NULL,
-          custom_check = function(x) {
+          custom_check = crate(function(x) {
             checkmate::check_class(x, "sfc_POINT",
               null.ok = TRUE)
-          }
+          })
         ),
         space = p_fct(levels = "geographical", default = "geographical"),
         folds = p_int(default = 10, lower = 2),
