@@ -45,29 +45,29 @@ ResamplingRepeatedSpCVKnndm = R6Class("ResamplingRepeatedSpCVKnndm",
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_knndm") {
-      ps = ParamSet$new(params = list(
-        ParamUty$new("modeldomain", default = NULL,
+      ps = ps(
+        modeldomain = p_uty(default = NULL,
           custom_check = function(x) {
             checkmate::check_class(x, "SpatRaster",
               null.ok = TRUE)
           }
         ),
-        ParamUty$new("ppoints", default = NULL,
+        ppoints = p_uty(default = NULL,
           custom_check = function(x) {
             checkmate::check_class(x, "sfc_POINT",
               null.ok = TRUE)
           }
         ),
-        ParamFct$new("space", levels = "geographical", default = "geographical"),
-        ParamInt$new("folds", default = 10, lower = 2),
-        ParamDbl$new("maxp", default = 0.5, lower = 0, upper = 1),
-        ParamFct$new("clustering", default = "hierarchical",
+        space = p_fct(levels = "geographical", default = "geographical"),
+        folds = p_int(default = 10, lower = 2),
+        maxp = p_dbl(default = 0.5, lower = 0, upper = 1),
+        clustering = p_fct(default = "hierarchical",
           levels = c("hierarchical", "kmeans"), tags = "required"),
-        ParamUty$new("linkf", default = "ward.D2"),
+        linkf = p_uty(default = "ward.D2"),
         ParamInt$new("samplesize"),
-        ParamFct$new("sampling", levels = c("random", "hexagonal", "regular", "Fibonacci")),
-        ParamInt$new("repeats", lower = 1, default = 1L, tags = "required")
-      ))
+        sampling = p_fct(levels = c("random", "hexagonal", "regular", "Fibonacci")),
+        repeats = p_int(lower = 1, default = 1L, tags = "required")
+      )
       ps$values = list(repeats = 1, folds = 10)
 
       super$initialize(
