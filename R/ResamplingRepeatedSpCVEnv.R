@@ -42,8 +42,8 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_env") {
       ps = ps(
-        folds = p_int(lower = 1L, default = 10L, tags = "required"),
-        repeats = p_int(lower = 1, default = 10L, tags = "required"),
+        folds = p_int(lower = 1L, tags = "required"),
+        repeats = p_int(lower = 1, tags = "required"),
         ParamUty$new("features")
       )
       ps$values = list(folds = 10L, repeats = 1)

@@ -44,7 +44,7 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_disc") {
       ps = ps(
-        folds = p_int(lower = 1L, default = 10L, tags = "required"),
+        folds = p_int(lower = 1L, tags = "required"),
         ParamInt$new("radius",
           lower = 0L, tags = "required",
           special_vals = list(0L)),
@@ -54,7 +54,7 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
         ParamUty$new("prob",
           default = NULL),
         replace = p_lgl(default = FALSE),
-        repeats = p_int(lower = 1, default = 1L, tags = "required")
+        repeats = p_int(lower = 1, tags = "required")
       )
       ps$values = list(folds = 10L, repeats = 1)
       super$initialize(

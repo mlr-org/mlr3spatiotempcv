@@ -43,8 +43,8 @@ ResamplingRepeatedSpCVCoords = R6Class("ResamplingRepeatedSpCVCoords",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_coords") {
       ps = ps(
-        folds = p_int(lower = 1L, default = 10L, tags = "required"),
-        repeats = p_int(lower = 1, default = 1L, tags = "required")
+        folds = p_int(lower = 1L, tags = "required"),
+        repeats = p_int(lower = 1, tags = "required")
       )
       ps$values = list(folds = 10L, repeats = 1)
       super$initialize(

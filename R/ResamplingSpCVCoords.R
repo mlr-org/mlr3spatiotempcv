@@ -35,7 +35,7 @@ ResamplingSpCVCoords = R6Class("ResamplingSpCVCoords",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_coords") {
       ps = ps(
-        folds = p_int(lower = 1L, default = 10L, tags = "required")
+        folds = p_int(lower = 1L, tags = "required")
       )
       ps$values = list(folds = 10L)
       super$initialize(

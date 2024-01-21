@@ -36,7 +36,7 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_disc") {
       ps = ps(
-        folds = p_int(lower = 1L, default = 10L, tags = "required"),
+        folds = p_int(lower = 1L, tags = "required"),
         ParamInt$new("radius",
           lower = 0L, tags = "required",
           special_vals = list(0L)),

@@ -55,8 +55,8 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_block") {
       ps = ps(
-        folds = p_int(lower = 1L, default = 10L, tags = "required"),
-        repeats = p_int(lower = 1, default = 1L, tags = "required"),
+        folds = p_int(lower = 1L, tags = "required"),
+        repeats = p_int(lower = 1, tags = "required"),
         rows = p_int(lower = 1L),
         cols = p_int(lower = 1L),
         ParamInt$new("seed"),

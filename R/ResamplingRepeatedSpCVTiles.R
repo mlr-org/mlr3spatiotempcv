@@ -58,7 +58,7 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
         min_frac = p_dbl(default = 0.025, lower = 0, upper = 1),
         min_n = p_int(default = 5, lower = 0),
         iterate = p_int(default = 1, lower = 1),
-        repeats = p_int(lower = 1, default = 1L, tags = "required")
+        repeats = p_int(lower = 1, tags = "required")
       )
       ps$values = list(repeats = 1)
       super$initialize(

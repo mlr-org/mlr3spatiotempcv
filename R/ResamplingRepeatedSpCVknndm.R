@@ -66,7 +66,7 @@ ResamplingRepeatedSpCVKnndm = R6Class("ResamplingRepeatedSpCVKnndm",
         linkf = p_uty(default = "ward.D2"),
         ParamInt$new("samplesize"),
         sampling = p_fct(levels = c("random", "hexagonal", "regular", "Fibonacci")),
-        repeats = p_int(lower = 1, default = 1L, tags = "required")
+        repeats = p_int(lower = 1, tags = "required")
       )
       ps$values = list(repeats = 1, folds = 10)
 
