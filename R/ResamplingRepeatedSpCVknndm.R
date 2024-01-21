@@ -64,7 +64,7 @@ ResamplingRepeatedSpCVKnndm = R6Class("ResamplingRepeatedSpCVKnndm",
         clustering = p_fct(default = "hierarchical",
           levels = c("hierarchical", "kmeans"), tags = "required"),
         linkf = p_uty(default = "ward.D2"),
-        ParamInt$new("samplesize"),
+        samplesize = p_int(),
         sampling = p_fct(levels = c("random", "hexagonal", "regular", "Fibonacci")),
         repeats = p_int(lower = 1, tags = "required")
       )

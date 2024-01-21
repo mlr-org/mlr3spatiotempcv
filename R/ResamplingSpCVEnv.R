@@ -40,7 +40,7 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
     initialize = function(id = "spcv_env") {
       ps = ps(
         folds = p_int(lower = 1L, tags = "required"),
-        ParamUty$new("features")
+        features = p_uty()
       )
       ps$values = list(folds = 10L)
       super$initialize(

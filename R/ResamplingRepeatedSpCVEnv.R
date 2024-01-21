@@ -44,7 +44,7 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
       ps = ps(
         folds = p_int(lower = 1L, tags = "required"),
         repeats = p_int(lower = 1, tags = "required"),
-        ParamUty$new("features")
+        features = p_uty()
       )
       ps$values = list(folds = 10L, repeats = 1)
       super$initialize(

@@ -59,7 +59,7 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
         repeats = p_int(lower = 1, tags = "required"),
         rows = p_int(lower = 1L),
         cols = p_int(lower = 1L),
-        ParamInt$new("seed"),
+        seed = p_int(),
         hexagon = p_lgl(default = FALSE),
         range = p_uty(
           custom_check = function(x) checkmate::assert_integer(x)),
