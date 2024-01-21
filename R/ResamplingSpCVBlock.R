@@ -54,7 +54,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         selection = p_fct(levels = c(
           "random", "systematic",
           "checkerboard"), default = "random"),
-        ParamUty$new("rasterLayer",
+        rasterLayer = p_uty(
           default = NULL,
           custom_check = function(x) {
             checkmate::check_class(x, "SpatRaster",

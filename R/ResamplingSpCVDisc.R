@@ -37,13 +37,13 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
     initialize = function(id = "spcv_disc") {
       ps = ps(
         folds = p_int(lower = 1L, tags = "required"),
-        ParamInt$new("radius",
+        radius = p_int(
           lower = 0L, tags = "required",
           special_vals = list(0L)),
-        ParamInt$new("buffer",
+        buffer = p_int(
           lower = 0L, default = NULL,
           special_vals = list(NULL)),
-        ParamUty$new("prob",
+        prob = p_uty(
           default = NULL),
         replace = p_lgl(default = FALSE)
       )
