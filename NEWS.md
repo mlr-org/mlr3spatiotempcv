@@ -2,9 +2,16 @@
 
 # mlr3spatiotempcv 2.3.0
 
-- Cleanup dicts during unload.
+## Features
+
 - Allow changing point size in all `autoplot()` functions (#231).
-- Pass ellipsis to all autoplot() subfunctions.
+
+## Misc
+
+- Cleanup dicts during unload (#233)
+- Pass ellipsis to all `autoplot()` sub-functions.
+- Fix mlr3book references
+- Compile "vis" vignette also on macOS
 
 
 # mlr3spatiotempcv 2.2.0
