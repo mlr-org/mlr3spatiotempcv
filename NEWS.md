@@ -1,11 +1,9 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# mlr3spatiotempcv 2.2.0.9001
+# mlr3spatiotempcv 2.3.0
 
 - Cleanup dicts during unload.
-
 - Allow changing point size in all `autoplot()` functions (#231).
-
 - Pass ellipsis to all autoplot() subfunctions.
 
 
