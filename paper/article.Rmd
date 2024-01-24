@@ -97,8 +97,7 @@ The CV resampling needed therefore depends as much on the prediction task itself
 
 While it is not the purpose of this article to recommend specific resampling schemes for specific use cases, the example from above may suffice to motivate the use of appropriate spatial and spatiotemporal cross-validation techniques, and the need for a unified framework and computational toolbox that accommodate a variety of prediction tasks that may be applicable to a broad range of application scenarios.
 \pkg{mlr3spatiotempcv} is such a toolbox.
-Yet all the included methods should only be used if no probability sample can be drawn from the data - which is often the case when working with spatial data.
-A design-based approach, if possible, is the preferred way to assess map accuracies [@wadoux2021].
+We would like to note that design-based approaches are also a viable approach in situations in which it is possible to obtain additional independently sampled test data as a probability sample [@wadoux2021].
 
 This toolbox, implemented as an open-source R package, builds upon and generalizes several existing toolboxes that have been developed in recent years for more specific settings (Table \ref{tab:sptcv-methods}).
 The earliest and most comprehensive of these implementations is the \pkg{sperrorest} \proglang{R} package [@brenning2012], which provides an extensible framework and includes predefined resampling strategies based on geometric blocking, clustering, and buffering.
@@ -140,7 +139,7 @@ Since there is only a sample $\mathcal{T}$ of test data drawn from the populatio
 This representation as a point estimator of $\mathit{perf(\hat{f}_\mathcal{L})}$ underlines the importance of using a random sample for model assessment to avoid estimation bias. Other estimators than the simple mean may be required when $\mathcal{T}$ is not a simple random sample, for instance a stratified random sample [e.g., @thompson2012].
 As always, judgment sampling may lead to uncontrollable bias.
 
-Since re-using the learning sample $\mathcal{L}$ for testing, i.e., $\mathcal{T}:=\mathcal{L}$, would yield the over-optimistic *resubstitution* or *apparent* performance, CV partitions the sample $\mathcal{L}$ into disjoint training and test sets.
+Since re-using the learning sample $\mathcal{L}$ for testing, i.e., $\mathcal{T}:=\mathcal{L}$, would over-optimistically estimate the model's predictive performance on new instances (so-called *resubstitution* or *apparent* model performance; @hand1997), CV partitions the sample $\mathcal{L}$ into disjoint training and test sets.
 Specifically, $\mathcal{L}$ is split into $k$ partitions,
 \[
 \mathcal{L} = \mathcal{L}_1 \cup \ldots \cup \mathcal{L}_k,\qquad \mathcal{L}_i\cap \mathcal{L}_j = \emptyset\quad \textrm{for all}\ i\neq j,
@@ -178,9 +177,9 @@ Although this is just a special case of non-spatial CV with $k=n$, it is sometim
 
 Spatial variants of CV have been proposed that apply an exclusion *buffer* or guard zone to the test locations to separate them from the training data [@brenning2005; @roberts2017].
 One approach that has been proposed for defining a separation distance is to use the range of autocorrelation of model residuals to determine the buffer distance, as this seeks to establish independence conditional on the predictors [@brenning2005; @roberts2017].
+Recently, spatial LOO CV has been extended to generate spatial *prediction error profiles*, which relate prediction error to prediction distance [@brenning2023].
 
-It should be noted that $k$-fold CV with a large value of $k$, and LOO CV in particular ($k=n$), is not only very time-consuming since the model has to be trained $k$ times; these models will also be nearly identical since only a tiny fraction of the data is withheld, and therefore estimation bias increases.
-'Pure' LOO CV is therefore not recommended for machine-learning model assessment.
+It should be noted that $k$-fold CV with a large $k$, and LOO CV in particular ($k=n$) is computationally expensive due to the large number of models being fitted. There is ongoing debate regarding the bias--variance trade-off of these methods in model selection and assessment [@kohavi1995; @arlot2010; @zhang2015].
 
 In the purely temporal domain, a special case is to leave out temporal observational units (or time slices; leave-time-out or LTO CV), as in leave-one-year-out CV [@anderson2005; @brenning2005].
 CV and hold-out validation strategies for time series have been discussed more extensively in the forecasting literature, considering also the effects of serial autocorrelation [@bergmeir2018]; these methods are not the focus of the implementation presented in this work.
@@ -297,8 +296,8 @@ The already implemented methods can be inspected to get to know the class struct
 
 Spatial leave-one-out methods use individual observations in space as test partitions and apply circular buffer or guard zones around around these test points to enforce a minimum prediction distance.
 Leave-one-disc-out resampling modifies this approach to leave out circular regions centered at observation points.
-This method group naturally discards observations when applying buffers, meaning that these are not used for training or testing.
-Depending on the relative amount of discarded observations with respect to the overall number of observations, this might result in a substantial reduction of the sample size and thus decrease the applicability of the results.
+This group of methods discards observations when applying buffers, meaning that these are not used for training or testing.
+Depending on the fraction of data being discarded, this might result in a substantial reduction of the sample size and consequently pessimistically biased performance estimates.
 
 ### Spatial leave-one-out with buffer --- \code{"spcv_buffer"} {short-title='Spatial leave-one-out with buffer --- "spcv_buffer"' }
 
@@ -354,7 +353,7 @@ Leave-one-disc-out resampling from package \pkg{sperrorest} defines circular tes
 It thus ensures that a minimum separation distance between training and test data is maintained.
 The number of discs is specified by the `folds` argument, which defaults to the sample size $n$.
 Sample locations are selected randomly when `folds` is smaller than $n$; it is optionally possible to sample with replacement (`replace = TRUE`).
-Leave-one-disc-out resampling becomes spatial LOO CV for a radius of 0 m and when each observation is at a unique location.
+Leave-one-disc-out resampling becomes LOO CV and when each observation is at a unique location.
 
 It should be noted that the resampled discs will potentially overlap.
 Strictly speaking, this straightforward extension of spatial LOO does therefore not establish a disjoint partitioning as used for CV resampling in the traditional sense.
@@ -1075,9 +1074,9 @@ autoplot(rsmp_nsp, task, fold_id = 1:2, size = 0.3) *
 
 If one takes a closer look at the results, the non-spatial CV estimate of AUC (0.76) is substantially higher compared to the spatial CV estimate of 0.64.
 Since test points in non-spatial CV may be from the same slopes or even the same landslides as the training data, the non-spatial CV result should/can be considered as an over-optimistic estimate of the model's ability to predict the susceptibility to "new" landslides.
-Spatial CV, in contrast, provides a better/more accurate measure of a model's ability to generalize from the training sample --- in this case study, from the specific hillslopes and historical landslides in the training sample.
+Spatial CV, in contrast, provides a bias-reduced measure of a model's ability to generalize from the training sample --- in this case study, from the specific hillslopes and historical landslides in the training sample.
 It is also expected that spatial CV results better represent the model's transferability to geologically and topographically similar areas adjacent to the training area.
-Yet it must be kept in mind that using spatial CV might also lead to an overpessimistic estimate of the model's predictive performance, as large parts of the study area are being left out during training.
+Yet, it must be kept in mind that using spatial CV might also lead to an pessimistic estimate of the model's predictive performance if large parts of the study area are being left out during training, depending on the number of CV folds being used.
 This goes in hand with the limited ability to predict to other areas, as discussed in [@wadoux2021, meyer2021].
 The magnitude of the difference between spatial and non-spatial CV estimates may depend on the dataset, the strength on spatial or spatiotemporal autocorrelation, and the learner itself.
 Algorithms with a higher tendency to overfit to the training set will tend to have a larger spread in such scenarios.
