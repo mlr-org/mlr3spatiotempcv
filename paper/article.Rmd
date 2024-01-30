@@ -75,6 +75,7 @@ knitr::opts_chunk$set(
 ```
 
 \nocite{ploton2020}
+\nocite{ludwig2023}
 
 # Introduction {#sec:intro}
 
@@ -278,13 +279,13 @@ The available methods are further discussed in Section \ref{sec:disc}.
                                                   \cmidrule{2-5}
                                       & custom  &  \texttt{"custom\_cv"}           & \pkg{mlr3} (0) & - \\
       \midrule
-      \multirow{5}{*}{\specialcell{CV at the \\ block level}} &  geometric: rectangular & \texttt{"spcv\_block"}  & \pkg{blockCV} (28)      & \specialcell{\cite{jensen2021} \\ \cite{escobar2021} \\ \cite{stewart2021}} \\
+      \multirow{6}{*}{\specialcell{CV at the \\ block level}} &  geometric: rectangular & \texttt{"spcv\_block"}  & \pkg{blockCV} (28)      & \specialcell{\cite{jensen2021} \\ \cite{escobar2021} \\ \cite{stewart2021}} \\
   \cmidrule{2-5}
                                       &  custom & \texttt{"cv"} with grouping  & \pkg{mlr3} (0)  &  -  \\
   \cmidrule{2-5}
                                       &  clustering in feature space & \texttt{"spcv\_env"}* & \pkg{blockCV} (1)   &  \cite{morera2021}  \\
   \cmidrule{2-5}
-                                      &  clustering of coordinates + aggregation & \texttt{"spcv\_knndm"}* & \pkg{CAST} (1)   &  \cite{ludwig2023}  \\
+                                      & {\specialcell{clustering of coordinates + \\ aggregation}} & \texttt{"spcv\_knndm"}* & \pkg{CAST} (1)   &  Ludwig \textit{et al.} (2023)  \\
       \midrule
       \multirow{2}{*}{\specialcell{Spatiotemp. \\ CV}} &  custom & \texttt{"sptcv\_cstf"}* & \pkg{CAST} (6)      & \specialcell{\cite{gao2019} \\ \cite{reitz2021} \\ \cite{egli2020}} \\
                                       \bottomrule
