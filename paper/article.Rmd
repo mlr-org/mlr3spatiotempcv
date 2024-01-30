@@ -199,7 +199,7 @@ With its integrative approach and its aim to provide long-term support, \pkg{mlr
 Issues that practitioners often face include varying argument lists of learners, different return values of `predict()` methods, and support for only specific feature types.
 These challenges result in substantial overhead and possible reproducibility issues, which are exacerbated by asynchronous development timelines of different components of the used ML pipelines.
 
-Compared to other existing machine-learning frameworks in R (e.g., \pkg{caret} [@kuhn2020] or \pkg{tidymodels} [@tidymodels]), \pkg{mlr3} is the only one that provides a dedicated object-oriented framework for spatial and spatiotemporal resampling methods.
+Compared to other existing machine-learning frameworks in R (e.g., \pkg{caret} [@kuhn2020] or \pkg{tidymodels} [@kuhn2020]), \pkg{mlr3} is the only one that provides a dedicated object-oriented framework for spatial and spatiotemporal resampling methods.
 In addition \pkg{mlr3} uses efficient core dependencies from the \pkg{data.table} [@datatable] and \pkg{R6} [@r6] packages, which are particularly well suited for large datasets.
 Through this object-oriented approach, \pkg{mlr3} uses substantially less memory than other frameworks due to the use of pointer references and the avoidance of deep object copies whenever possible [@mlr3book].
 
