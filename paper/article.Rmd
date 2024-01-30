@@ -33,7 +33,7 @@ title:
   plain:     "mlr3spatiotempcv: spatiotemporal resampling methods for machine learning in R"
 abstract: >
   Spatial and spatiotemporal machine-learning models require a suitable framework for their model assessment, model selection, and hyperparameter tuning, in order to avoid error estimation bias and over-fitting.
-  This contribution reviews the state-of-the-art in spatial and spatiotemporal cross-validation, and introduces the \proglang{R} package \pkg{mlr3spatiotempcv} as an extension package of the machine-learning framework \pkg{mlr3}.
+  This contribution provides an overview of the state-of-the-art in spatial and spatiotemporal cross-validation techniques and their implementations in R while introducing the \proglang{R} package \pkg{mlr3spatiotempcv} as an extension package of the machine-learning framework \pkg{mlr3}.
   Currently various \proglang{R} packages implementing different spatiotemporal partitioning strategies exist: \pkg{blockCV}, \pkg{CAST}, \pkg{skmeans} and \pkg{sperrorest}.
   The goal of \pkg{mlr3spatiotempcv} is to gather the available spatiotemporal resampling methods in \proglang{R} and make them available to users through a simple and common interface.
   This is made possible by integrating the package directly into the \pkg{mlr3} machine-learning framework, which already has support for generic non-spatiotemporal resampling methods such as random partitioning.
@@ -105,7 +105,7 @@ In contrast, packages \pkg{blockCV} and \pkg{ENMeval} were developed for block a
 However, neither of these have been integrated into established machine-learning frameworks such as \pkg{mlr3} [@mlr3] or \pkg{caret}/\pkg{tidymodels} [@kuhn2020], and all of them lack support for temporal prediction tasks.
 The \pkg{CAST} package, in contrast, focuses on spatiotemporal prediction tasks and makes use of some functions of the \pkg{caret} framework [@cast; @meyer2018].
 One limitation of all the packages which provide only a subset of the machine learning workflow, e.g., resampling methods, is the sole focus on model assessment.
-Through the integration into the \pkg{mlr3} framework, \pkg{mlr3spatiotempcv} indirectly offers model selection capabilities, i.e., applying and evaluating various algorithms across different preprocessing setups while being able to make use of parallel execution and enhanced logging abilities.
+Through the integration into the \pkg{mlr3} framework, \pkg{mlr3spatiotempcv} indirectly offers model selection capabilities, i.e., applying and evaluating various algorithms across different preprocessing setups (e.g., all the preprocessing ‘pipeops’ of \pkg{mlr3pipelines}) while being able to make use of parallel execution and enhanced logging abilities.
 During the intitial development of \pkg{mlr3spatiotempcv}, it has been the first toolbox aiming to integrate standalone spatiotemporal validation strategies into an existing machine-learning framework.
 Meanwhile the \pkg{spatialsample} has undertaken similar efforts and added the ability to use spatial resampling methods for the \pkg{tidymodels} framework [@mahoney2023].
 In addition parallel efforts to support spatial validation in the Python world have been made by the \pkg{spacv} and \pkg{spatial-kfold} packages, yet often with only a subset of available methods compared to what \pkg{mlr3spatiotempcv} offers [@ghariani2023].
@@ -199,10 +199,15 @@ With its integrative approach and its aim to provide long-term support, \pkg{mlr
 Issues that practitioners often face include varying argument lists of learners, different return values of `predict()` methods, and support for only specific feature types.
 These challenges result in substantial overhead and possible reproducibility issues, which are exacerbated by asynchronous development timelines of different components of the used ML pipelines.
 
+Compared to other existing machine-learning frameworks in R (e.g., \pkg{caret} [@kuhn2020] or \pkg{tidymodels} [@tidymodels]), \pkg{mlr3} is the only one that provides a dedicated object-oriented framework for spatial and spatiotemporal resampling methods.
+In addition \pkg{mlr3} uses efficient core dependencies from the \pkg{data.table} [@datatable] and \pkg{R6} [@r6] packages, which are particularly well suited for large datasets.
+Through this object-oriented approach, \pkg{mlr3} uses substantially less memory than other frameworks due to the use of pointer references and the avoidance of deep object copies whenever possible [@mlr3book].
+
 Within the \pkg{mlr3} ecosystem, partitioning strategies are represented by their own objects of class \texttt{Resampling}, most of which are available within \pkg{mlr3} itself (e.g., random CV); other specialized strategies are defined in extension packages such as \pkg{mlr3spatiotempcv}.
 In the ML pipeline, these objects define the data splits used for model assessment and selection (hyperparameter tuning) by ML algorithms.
 Spatial and spatiotemporal partitioning techniques in \pkg{mlr3spatiotempcv} are currently mostly imported and interfaced from other packages, in particular \pkg{sperrorest}, \pkg{blockCV} and \pkg{CAST} [@brenning2012; @blockCV; @cast], in order to expose them to \pkg{mlr3} functionality.
-To reduce dependencies, some methods were re-implemented instead of importing them from the respective upstream packages.
+By closely following previously proposed methods and existing implementations, we allow users of these established and tested approaches to transition into \pkg{mlr3} without having to adjust their resampling procedures.
+To reduce unnecessary upstream dependencies, some methods were re-implemented instead of importing them from the respective upstream packages.
 
 Resampling objects in \pkg{mlr3spatiotmpcv} inherit from class \texttt{mlr3::Resampling} and can be created from established object classes for geospatial data in \proglang{R}, including simple features [@pebesma2018], which facilitates their integration into domain-specific workflows in the geospatial sciences.
 Support for projected (planar) and unprojected (geographic) coordinate reference systems (CRS) currently varies depending on the partitioning techniques used, since these inherit their behavior from the underlying upstream packages.
@@ -210,7 +215,11 @@ Support for projected (planar) and unprojected (geographic) coordinate reference
 Partitioning objects in \pkg{mlr3spatiotempcv} are equipped with generic `plot()` and `autoplot()` methods to visualize the created partitions.
 `autoplot()` is \pkg{ggplot2}-based and uses [ggplot2](https://ggplot2.tidyverse.org) [@ggplot2] in two-dimensional geographic space and [\pkg{plotly}](https://github.com/ropensci/plotly) [@plotly] in the three dimensional case, i.e., geographic space plus time.
 
-While \pkg{mlr3spatiotempcv} solely focuses on spatiotemporal resampling methods and their visualization, other packages such as \pkg{mlr3spatial} or \pkg{mlr3temporal} are planned in the \pkg{mlr3} ecosystem to provide dedicated spatiotemporal learner and prediction methods.
+While \pkg{mlr3spatiotempcv} solely focuses on spatiotemporal resampling methods and their visualization, other packages such as \pkg{mlr3spatial} or \pkg{mlr3temporal} are planned in the \pkg{mlr3} ecosystem to provide dedicated spatiotemporal learner and prediction methods (see Figure \ref{fig:mlr3-ecosystem}).
+
+```{r mlr3-ecosystem, echo=FALSE, fig.cap="Overview of the mlr3 ecosystem. The packages with gray dashed lines are still in development, all others have a stable interface. Source: @mlr3book", out.width="100%",fig.pos="ht"}
+knitr::include_graphics(here::here("paper/png/mlr3-ecosystem.png"))
+```
 
 From a user perspective, this package structure results in the following workflow for model assessment with \pkg{mlr3spatiotempcv} within \pkg{mlr3}: After choosing a ML algorithm that is supported by \pkg{mlr3} and setting up a learner object, users need to select hyperparameters that should be tuned and specify these in a `paradox::ParamSet`.
 Next, a suitable resampling scheme available within \pkg{mlr3spatiotempcv} is selected that mimics the spatial and/or temporal structure of the prediction task, such as spatial extrapolation, or forecasting of spatial time series.
@@ -238,7 +247,7 @@ A finer distinction can then be made by looking at how the blocks are derived:
 
 In some resampling schemes, separation buffers or guard zones can be imposed to separate the training and test data.
 
-```{r rsmp-schema, echo=FALSE, fig.cap="Conceptual overview of various spatial partitioning schemas. Starting from unpartioned spatial observations (top left) either a 'spatial block partitioning' or a 'spatial leave-one-out resampling' is applied in the first step. A spatial block partitioning can further be turned into a 'leave-one-block-out resampling' or a 'k-fold CV resampling at the block level'. The use of a buffer is theoretically possible in any scenario but in practice only offered by specific method implementations.", out.width="100%",fig.pos="ht"}
+```{r rsmp-schema, echo=FALSE, fig.cap="Conceptual overview of various spatial partitioning schemas. Starting from unpartioned spatial observations (top left) either a 'spatial block partitioning' or a 'spatial leave-one-out resampling' is applied in the first step. A spatial block partitioning can further be turned into a 'leave-one-block-out resampling' or a 'k-fold CV resampling at the block level'. The use of a buffer is theoretically possible in any scenario but in practice only offered by specific method implementations. In \\pkg{mlr3}, statistics are then calculated per fold and aggregated using the mean by default.", out.width="100%",fig.pos="ht"}
 knitr::include_graphics(here::here("paper/pdf/rsmp-schema.pdf"))
 ```
 
@@ -1077,7 +1086,6 @@ Since test points in non-spatial CV may be from the same slopes or even the same
 Spatial CV, in contrast, provides a bias-reduced measure of a model's ability to generalize from the training sample --- in this case study, from the specific hillslopes and historical landslides in the training sample.
 It is also expected that spatial CV results better represent the model's transferability to geologically and topographically similar areas adjacent to the training area.
 Yet, it must be kept in mind that using spatial CV might also lead to an pessimistic estimate of the model's predictive performance if large parts of the study area are being left out during training, depending on the number of CV folds being used.
-This goes in hand with the limited ability to predict to other areas, as discussed in [@wadoux2021, meyer2021].
 The magnitude of the difference between spatial and non-spatial CV estimates may depend on the dataset, the strength on spatial or spatiotemporal autocorrelation, and the learner itself.
 Algorithms with a higher tendency to overfit to the training set will tend to have a larger spread in such scenarios.
 
@@ -1111,14 +1119,15 @@ Based on these criteria users may choose a matching resampling method that is ei
 The specific publications related to the methods integrated into \pkg{mlr3spatiotempcv} may give further advice and provide additional use cases for the application of each respective approach.
 Users should therefore also refer to publications that are referenced of linked in the help files of this package or its respective upstream packages.
 
-## Resampling for hyperparameter tuning
+## Resampling in model optimization
 
-CV is also widely used to assess model performance when tuning the hyperparameters of flexible machine-learning models, and this is also supported by the \pkg{mlr3} framework.
+CV is also widely used to assess model performance when tuning hyperparameters of flexible machine-learning models or performing feature selection [@cai2018, @bischl2021] .
+The \pkg{mlr3} framework supports the use of CV for both approaches.
 Using the CV methods introduced here, \pkg{mlr3} can therefore be used to optimized models to show an improved performance in specific spatial or spatiotemporal predictive setting [@schratz2019].
 Such an optimization may, for example, result in a reduced maximum tree depth or increased minimum node size in the Ecuador case study, since these hyperparameter settings would result in a stronger generalization and reduced overfitting.
+Usually both hyperparameter and feature selection (wrapper feature selection or filters) are combined within a single, nested optimization process [@schratz2021].
 
-We recommend using nested CV for this purpose.
-In nested CV, an "inner" CV is performed on each CV training set, since hyperparameter tuning is an integral part of model fitting that should not be able to use information from the CV test set.
+In nested CV specifically, an "inner" CV is performed on each CV training set, since hyperparameter tuning is an integral part of model fitting that should not be able to use information from the outer CV test set.
 In such scenarios it is recommended to use the same spatial resampling method for the inner CV (hyperparameter tuning) as for the outer CV (model assessment) in order to use the appropriate objective function for optimization.
 See @schratz2019 for more details as well as chapter 11 of [Geocomputation with R](https://geocompr.robinlovelace.net/spatial-cv.html) [@lovelace2019].
 
