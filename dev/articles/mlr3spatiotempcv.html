@@ -187,6 +187,7 @@ by default:</p>
 <span><span class="co">#&gt;     distslidespast, hcurv, log.carea, slope, vcurv</span></span>
 <span><span class="co">#&gt; * Coordinates:</span></span>
 <span><span class="co">#&gt;             x       y</span></span>
+<span><span class="co">#&gt;         &lt;num&gt;   &lt;num&gt;</span></span>
 <span><span class="co">#&gt;   1: 712882.5 9560002</span></span>
 <span><span class="co">#&gt;   2: 715232.5 9559582</span></span>
 <span><span class="co">#&gt;   3: 715392.5 9560172</span></span>
@@ -219,13 +220,16 @@ with new entries when loading {mlr3spatiotempcv}.</p>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mlr_reflections</span><span class="op">$</span><span class="va">task_types</span></span>
+<span><span class="co">#&gt; Key: &lt;type&gt;</span></span>
 <span><span class="co">#&gt;            type          package             task        learner</span></span>
+<span><span class="co">#&gt;          &lt;char&gt;           &lt;char&gt;           &lt;char&gt;         &lt;char&gt;</span></span>
 <span><span class="co">#&gt; 1:      classif             mlr3      TaskClassif LearnerClassif</span></span>
 <span><span class="co">#&gt; 2:   classif_st mlr3spatiotempcv    TaskClassifST LearnerClassif</span></span>
 <span><span class="co">#&gt; 3:         regr             mlr3         TaskRegr    LearnerRegr</span></span>
 <span><span class="co">#&gt; 4:      regr_st mlr3spatiotempcv       TaskRegrST    LearnerRegr</span></span>
 <span><span class="co">#&gt; 5: unsupervised             mlr3 TaskUnsupervised        Learner</span></span>
 <span><span class="co">#&gt;           prediction       prediction_data        measure</span></span>
+<span><span class="co">#&gt;               &lt;char&gt;                &lt;char&gt;         &lt;char&gt;</span></span>
 <span><span class="co">#&gt; 1: PredictionClassif PredictionDataClassif MeasureClassif</span></span>
 <span><span class="co">#&gt; 2: PredictionClassif PredictionDataClassif MeasureClassif</span></span>
 <span><span class="co">#&gt; 3:    PredictionRegr    PredictionDataRegr    MeasureRegr</span></span>
