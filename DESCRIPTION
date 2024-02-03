@@ -1,6 +1,6 @@
 Package: mlr3spatiotempcv
 Title: Spatiotemporal Resampling Methods for 'mlr3'
-Version: 2.2.0.9000
+Version: 2.3.0.9000
 Authors@R: c(
     person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0748-6624")),
@@ -64,4 +64,40 @@ Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, r6 = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.0
+Collate: 
+    'aaa.R'
+    'ResamplingRepeatedSpCVBlock.R'
+    'ResamplingRepeatedSpCVCoords.R'
+    'ResamplingRepeatedSpCVDisc.R'
+    'ResamplingRepeatedSpCVEnv.R'
+    'ResamplingRepeatedSpCVTiles.R'
+    'ResamplingRepeatedSpCVknndm.R'
+    'ResamplingRepeatedSptCVCstf.R'
+    'ResamplingSpCVBlock.R'
+    'ResamplingSpCVBuffer.R'
+    'ResamplingSpCVCoords.R'
+    'ResamplingSpCVDisc.R'
+    'ResamplingSpCVEnv.R'
+    'ResamplingSpCVKnndm.R'
+    'ResamplingSpCVTiles.R'
+    'ResamplingSptCVCstf.R'
+    'TaskClassifST.R'
+    'TaskRegrST.R'
+    'Task_classif_diplodia.R'
+    'Task_classif_ecuador.R'
+    'Task_regr_cookfarm_profiles.R'
+    'as_task_classif_st.R'
+    'as_task_regr_st.R'
+    'autoplot.R'
+    'autoplot_all_folds_dt.R'
+    'autoplot_all_folds_list.R'
+    'autoplot_multi_fold_dt.R'
+    'autoplot_multi_fold_list.R'
+    'autoplot_spcv_cstf.R'
+    'bibentries.R'
+    'helper.R'
+    'helper_DataBackend.R'
+    'helper_autoplot.R'
+    'reexports.R'
+    'zzz.R'

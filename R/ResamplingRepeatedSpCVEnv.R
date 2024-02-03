@@ -151,3 +151,6 @@ ResamplingRepeatedSpCVEnv = R6Class("ResamplingRepeatedSpCVEnv",
     }
   )
 )
+
+#' @include aaa.R
+resamplings[["repeated_spcv_env"]] = ResamplingRepeatedSpCVEnv

@@ -197,3 +197,6 @@ ResamplingRepeatedSpCVKnndm = R6Class("ResamplingRepeatedSpCVKnndm",
     }
   )
 )
+
+#' @include aaa.R
+resamplings[["repeated_spcv_knndm"]] = ResamplingRepeatedSpCVKnndm

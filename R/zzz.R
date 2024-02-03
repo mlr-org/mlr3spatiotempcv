@@ -123,6 +123,9 @@ register_mlr3 = function() { # nocov start
   hooks = getHook(event)
   pkgname = vapply(hooks, function(x) environment(x)$pkgname, NA_character_)
   setHook(event, hooks[pkgname != "mlr3spatiotempcv"], action = "replace")
+
+  mlr_resamplings = mlr3::mlr_resamplings
+  walk(names(resamplings), function(id) mlr_resamplings$remove(id))
 }
 
 leanify_package() # nocov end

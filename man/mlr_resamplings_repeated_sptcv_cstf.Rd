@@ -41,6 +41,7 @@ Number of repeats.
 }
 
 \examples{
+\donttest{
 library(mlr3)
 task = tsk("cookfarm_mlr3")
 task$set_col_roles("SOURCEID", roles = "space")
@@ -58,6 +59,7 @@ intersect(rcv$train_set(1), rcv$test_set(1)) # good!
 
 # Internal storage:
 # rcv$instance # table
+}
 }
 \references{
 Zhao Y, Karypis G (2002).

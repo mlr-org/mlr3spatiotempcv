@@ -262,3 +262,6 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     }
   )
 )
+
+#' @include aaa.R
+resamplings[["repeated_spcv_block"]] = ResamplingRepeatedSpCVBlock
