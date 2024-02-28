@@ -54,26 +54,26 @@ ResamplingRepeatedSpCVBlock = R6Class("ResamplingRepeatedSpCVBlock",
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_block") {
-      ps = ParamSet$new(params = list(
-        ParamInt$new("folds", lower = 1L, default = 10L, tags = "required"),
-        ParamInt$new("repeats", lower = 1, default = 1L, tags = "required"),
-        ParamInt$new("rows", lower = 1L),
-        ParamInt$new("cols", lower = 1L),
-        ParamInt$new("seed"),
-        ParamLgl$new("hexagon", default = FALSE),
-        ParamUty$new("range",
-          custom_check = function(x) checkmate::assert_integer(x)),
-        ParamFct$new("selection", levels = c(
+      ps = ps(
+        folds = p_int(lower = 1L, tags = "required"),
+        repeats = p_int(lower = 1, tags = "required"),
+        rows = p_int(lower = 1L),
+        cols = p_int(lower = 1L),
+        seed = p_int(),
+        hexagon = p_lgl(default = FALSE),
+        range = p_uty(
+          custom_check = checkmate::check_integer),
+        selection = p_fct(levels = c(
           "random", "systematic",
           "checkerboard"), default = "random"),
-        ParamUty$new("rasterLayer",
+        rasterLayer = p_uty(
           default = NULL,
-          custom_check = function(x) {
+          custom_check = crate(function(x) {
             checkmate::check_class(x, "SpatRaster",
               null.ok = TRUE)
-          }
+          })
         )
-      ))
+      )
 
       ps$values = list(folds = 10L, repeats = 1L)
       super$initialize(

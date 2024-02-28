@@ -41,11 +41,11 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_sptcv_cstf") {
-      ps = ParamSet$new(params = list(
-        ParamInt$new("folds", lower = 1L, default = 3L, tags = "required"),
-        ParamInt$new("repeats", lower = 1, default = 10L, tags = "required"),
-        ParamLgl$new("stratify", default = FALSE)
-      ))
+      ps = ps(
+        folds = p_int(lower = 1L, tags = "required"),
+        repeats = p_int(lower = 1, tags = "required"),
+        stratify = p_lgl(default = FALSE)
+      )
       ps$values = list(folds = 3L, repeats = 10L, stratify = FALSE)
 
       super$initialize(

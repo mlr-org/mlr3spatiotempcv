@@ -228,11 +228,7 @@ test_graph_learner = function(task, resampling,
   glrn = mlr3pipelines::GraphLearner$new(grph)
 
   # Create filter parameters
-  param_set = paradox::ParamSet$new(
-    params = list(paradox::ParamDbl$new("importance.filter.frac",
-      lower = 0.1, upper = 1
-    ))
-  )
+  param_set = paradox::ps(importance.filter.frac = paradox::p_dbl(lower = 0.1, upper = 1))
 
   # Create filtering instance
   instance = mlr3tuning::TuningInstanceSingleCrit$new(
