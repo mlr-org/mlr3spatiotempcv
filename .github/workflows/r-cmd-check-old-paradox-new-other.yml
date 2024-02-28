@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: paradox
-        run: 'echo -e "Remotes:\n    mlr-org/mlr3spatial@s3params_compat,\n    mlr-org/mlr3pipelines@s3params_compat,\n    mlr-org/bbotk@s3params_compat,\n    mlr-org/mlr3tuning@s3params_compat" >> DESCRIPTION'
+        run: 'echo -e "Remotes:\n    mlr-org/mlr3spatial,\n    mlr-org/mlr3pipelines,\n    mlr-org/bbotk,\n    mlr-org/mlr3tuning" >> DESCRIPTION'
 
       - uses: r-lib/actions/setup-pandoc@v2
 
