@@ -12,7 +12,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-on_mac = Sys.info()[["sysname"]] == "Darwin"
 ```
 
 ## 3D Visualization (spatiotemporal)
@@ -87,7 +86,7 @@ Method `mlr_resampling_sptcv_cstf` is omitted here as the `ecuador` task does no
 The partitions created on this dataset do not claim to necessarily make sense in practice - they should only contrast the individual methods against each other.
 The source code can be found [here](https://github.com/mlr-org/mlr3spatiotempcv/blob/main/vignettes/spatiotemp-viz.Rmd).
 
-```{r, echo=FALSE, cache=TRUE, fig.width=10, fig.height=8, eval=!on_mac}
+```{r, echo=FALSE, cache=TRUE, fig.width=10, fig.height=8}
 library(patchwork)
 library(ggplot2)
 library(mlr3)

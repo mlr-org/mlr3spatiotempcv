@@ -1,8 +1,22 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# mlr3spatiotempcv 2.2.0.9000
+# mlr3spatiotempcv 2.3.0.9000
 
-- Internal changes only.
+- Same as previous version.
+
+
+# mlr3spatiotempcv 2.3.0
+
+## Features
+
+- Allow changing point size in all `autoplot()` functions (#231).
+
+## Misc
+
+- Cleanup dicts during unload (#233)
+- Pass ellipsis to all `autoplot()` sub-functions.
+- Fix mlr3book references
+- Compile "vis" vignette also on macOS
 
 
 # mlr3spatiotempcv 2.2.0
