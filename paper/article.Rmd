@@ -187,7 +187,7 @@ CV and hold-out validation strategies for time series have been discussed more e
 
 Turning to prediction tasks with spatiotemporal data, various spatial, temporal, or spatiotemporal partitioning strategies are being used, depending on the specific study objectives.
 While the former two ignore the temporal and spatial dimension of the data, respectively, it has also been proposed to leave out random subsets of locations and time points [@meyer2018] or spatiotemporal clusters [@cluto].
-Details of these and other implementations are outlined in the respective subsections of Section \ref{sec:implementation}.
+Details of these and other implementations are outlined in Section \ref{sec:implementation}.
 
 # \pkg{mlr3spatiotempcv} within the \pkg{mlr3} ecosystem {short-title="mlr3spatiotempcv within the mlr3 ecosystem" #r-code}
 
@@ -322,7 +322,8 @@ library("mlr3spatiotempcv")
 task = tsk("ecuador")
 rsmp_buffer = rsmp("spcv_buffer", theRange = 1000)
 
-autoplot(rsmp_buffer, size = 0.8, task = task, fold_id = 1, show_omitted = TRUE)
+autoplot(rsmp_buffer, size = 0.8, task = task,
+  fold_id = 1, show_omitted = TRUE)
 ```
 
 ```{r buffer-eval, fig.cap='Visualization of the spatial buffering method from package \\pkg{blockCV} (method "spcv\\_buffer" in \\pkg{mlr3spatiotempcv}). The buffer distance is 1000 m.', out.width="60%", fig.pos="ht",echo=FALSE}
@@ -346,7 +347,8 @@ autoplot(rsmp_buffer,
       height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
     )
   ) +
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
+  ggplot2::guides(colour = ggplot2::guide_legend(
+    override.aes = list(size = 1.5)))
 ```
 
 In the presence/background (or presence-only) situation, in contrast, only presence observations are recorded, and all other locations within the study area are referred to as background and considered as pseudo-absences.
@@ -372,7 +374,8 @@ Strictly speaking, this straightforward extension of spatial LOO does therefore 
 rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 300L, buffer = 400L)
 rsmp_disc
 
-autoplot(rsmp_disc, size = 0.8, task = task, fold_id = 1, show_omitted = TRUE)
+autoplot(rsmp_disc, size = 0.8, task = task,
+  fold_id = 1, show_omitted = TRUE)
 ```
 
 ```{r disc-eval, fig.cap='Visualization of one training set / test set combination generated with the leave-one-disc-out method from package \\pkg{sperrorest} (method `"spcv\\_disc"` in \\pkg{mlr3spatiotempcv}). The disc has a radius of 300 m and is surrounded by a 400-m buffer.', out.width="60%", echo=FALSE,fig.pos="ht"}
@@ -396,7 +399,8 @@ autoplot(rsmp_disc,
       height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
     )
   ) +
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
+  ggplot2::guides(colour = ggplot2::guide_legend(
+    override.aes = list(size = 1.5)))
 ```
 
 ## Leave-one-block-out cross-validation {#sec:lobo-cv}
@@ -440,7 +444,8 @@ autoplot(rsmp_coords,
       height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
     )
   ) +
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
+  ggplot2::guides(colour = ggplot2::guide_legend(
+    override.aes = list(size = 1.5)))
 ```
 
 ### Geometric: using rectangular blocks --- \code{"spcv_tiles"} {short-title='Geometric: using rectangular blocks --- "spcv_tiles"' }
@@ -475,7 +480,8 @@ autoplot(rsmp_tiles,
       height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
     )
   ) +
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
+  ggplot2::guides(colour = ggplot2::guide_legend(
+    override.aes = list(size = 1.5)))
 ```
 
 ### Custom: `"custom_cv"` in \pkg{mlr3} {short-title='Custom: "custom_cv" in mlr3' #sec:custom-cv}
@@ -513,7 +519,8 @@ autoplot(rsmp_custom, size = 0.8, task = task, fold_id = 1) *
       height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
     )
   ) +
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
+  ggplot2::guides(colour = ggplot2::guide_legend(
+    override.aes = list(size = 1.5)))
 ```
 
 ## Cross-validation at the block level {#sec:block-cv}
@@ -561,7 +568,8 @@ autoplot(rsmp_block_random,
       height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
     )
   ) +
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
+  ggplot2::guides(colour = ggplot2::guide_legend(
+    override.aes = list(size = 1.5)))
 ```
 
 In systematic resampling, the blocks are numbered row by row, and blocks $i+j\cdot\texttt{folds}$ are assigned to fold $i$ (see Figure \ref{fig:block-systematic}).
@@ -598,7 +606,8 @@ autoplot(rsmp_block_systematic,
       height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
     )
   ) +
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
+  ggplot2::guides(colour = ggplot2::guide_legend(
+    override.aes = list(size = 1.5)))
 ```
 
 *Checkerboard* partitioning is a special case of a systematic block partitioning (`selection = "checkerboard"`) which is why we omitted a practical example for this option.
@@ -651,7 +660,8 @@ autoplot(rsmp_cv_group, size = 0.8, task = task_cv, fold_id = 1) *
       height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
     )
   ) +
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5)))
+  ggplot2::guides(colour = ggplot2::guide_legend(
+    override.aes = list(size = 1.5)))
 ```
 
 ### Clustering: using feature-based clustering --- \code{"spcv_env"} {short-title='Clustering: using feature-based clustering --- "spcv_env"' }
@@ -712,7 +722,8 @@ plot_env_single = autoplot(rsmp_env,
     legend.text = ggtext::element_textbox(size = 8),
     legend.key.size = ggplot2::unit(0.4, "cm")
   ) +
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
+  ggplot2::guides(colour = ggplot2::guide_legend(
+    override.aes = list(size = 0.8)))
 
 plot_env_multi = autoplot(rsmp_env_multi,
   size = 0.3, fold_id = 1, task = task
@@ -730,7 +741,8 @@ plot_env_multi = autoplot(rsmp_env_multi,
     legend.text = ggtext::element_textbox(size = 8),
     legend.key.size = ggplot2::unit(0.4, "cm")
   ) +
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
+  ggplot2::guides(colour = ggplot2::guide_legend(
+    override.aes = list(size = 0.8)))
 
 library("patchwork")
 plot_env_single + plot_env_multi + plot_layout(guides = "collect")
@@ -749,7 +761,8 @@ The method requires a prediction area as an `sf` polygon or point object.
 In this case the former was used and passed as an argument to the `"spcv_knndm"` method.
 
 ```{r knndm-non-eval, eval=FALSE}
-points = sf::st_as_sf(task$coordinates(), crs = task$crs, coords = c("x", "y"))
+points = sf::st_as_sf(task$coordinates(), crs = task$crs,
+  coords = c("x", "y"))
 modeldomain = sf::st_as_sfc(sf::st_bbox(points))
 
 rsmp_knndm = rsmp("spcv_knndm", modeldomain = modeldomain, folds = 5)
@@ -758,7 +771,8 @@ autoplot(rsmp_knndm, size = 0.8, fold_id = 1, task = task, label_size = 4)
 ```
 
 ```{r knndm, fig.cap='Random resampling of square spatial blocks using the implementation in package \\pkg{CAST} (method `"spcv\\_knndm"`). Hierarchical clustering has been used together with the "ward.D2" link function and a target of five folds.', out.width="60%", fig.pos="ht", echo=FALSE}
-points = sf::st_as_sf(task$coordinates(), crs = task$crs, coords = c("x", "y"))
+points = sf::st_as_sf(task$coordinates(), crs = task$crs,
+  coords = c("x", "y"))
 modeldomain = sf::st_as_sfc(sf::st_bbox(points))
 
 rsmp_knndm = rsmp("spcv_knndm", modeldomain = modeldomain, folds = 5)
@@ -776,7 +790,8 @@ suppressMessages(autoplot(rsmp_knndm,
       height = ggplot2::unit(0.46, "inch"), linewidth = 0.8
     )
   ) +
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 1.5))))
+  ggplot2::guides(colour = ggplot2::guide_legend(
+    override.aes = list(size = 1.5))))
 ```
 
 ## Cross-validation for spatiotemporal data
@@ -1055,7 +1070,8 @@ autoplot(rsmp_sp, task, fold_id = 1:2, size = 0.3) *
     legend.text = ggtext::element_textbox(size = 8),
     legend.key.size = ggplot2::unit(0.4, "cm")
   ) *
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
+  ggplot2::guides(colour = ggplot2::guide_legend(
+    override.aes = list(size = 0.8)))
 ```
 
 ```{r vis-nspcv-non-eval, eval=FALSE}
@@ -1077,7 +1093,8 @@ autoplot(rsmp_nsp, task, fold_id = 1:2, size = 0.3) *
     legend.text = ggtext::element_textbox(size = 8),
     legend.key.size = ggplot2::unit(0.4, "cm")
   ) *
-  ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size = 0.8)))
+  ggplot2::guides(colour = ggplot2::guide_legend(
+    override.aes = list(size = 0.8)))
 ```
 
 ## Interpretation
