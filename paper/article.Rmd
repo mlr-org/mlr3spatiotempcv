@@ -1191,7 +1191,8 @@ Spatiotemporal cross-validation as a paradigm is not yet fully established in sc
 We anticipate that making the existing methods easily accessible to users is an important step to foster the acceptance of spatiotemporal cross-validation in the community and to allow modelers to produce bias-reduced model assessments in environmental and ecological studies.
 
 ```{r echo=FALSE, cache=FALSE}
-sessionInfo()
+utils:::print.sessionInfo(sessionInfo()[-c(3,12,13)],
+  locale = FALSE, tzone = FALSE)
 ```
 
 # References {-}
