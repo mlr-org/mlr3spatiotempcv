@@ -123,34 +123,46 @@ Finally, recommendations for the selection of suitable resampling techniques are
 # Spatial and spatiotemporal CV
 
 In CV for predictive model assessment, the following formal setting is considered.
-The interest is in predicting a numerical or categorical response $y$ of an object or instance using a feature vector $\mathbf{x} = (x^{(1)}, \ldots, x^{(p)})^t\in\mathbb{R}^p$ and a model $\hat{f}_\mathcal{L}$ that has been trained on a learning sample $\mathcal{L} = \{(y_i, \mathbf{x}_i),\ i = 1, ..., n\}$.
+The interest is in predicting a numerical or categorical response $y$ of an object or instance using a feature vector $\mathbf{x} = (x^\top{1}, \ldots, x^\top{p})^\top{t}\in\mathbb{R}^\top{p}$ and a model $\hat{f}_\mathcal{L}$ that has been trained on a learning sample $\mathcal{L} = \{(y_i, \mathbf{x}_i),\ i = 1, ..., n\}$.
 The goal is to estimate the expected value of the performance of $\hat{f}_\mathcal{L}$,
-\[
-\mathit{perf(\hat{f}_\mathcal{L})} := E(l(Y,\hat{f}_\mathcal{L}(X))),
-\]
+
+\begin{equation}
+\mathit{perf(\hat{f}_\mathcal{L})} := E(l(Y,\hat{f}_\mathcal{L}(X)))
+\label{eq:perf}
+\end{equation}
+
 where $l$ is a real-valued loss function, and the expected value is with respect to the probability distribution of $X$, the features of an instance $(Y,X)$ drawn randomly from the underlying population.
 This is referred to as the *actual* or *conditional* performance measure, as it is conditional on $\mathcal{L}$ [@hand1997].
-The loss function can take a variety of forms such as the misclassification error $I(Y\neq\hat{f}_\mathcal{L}(X))$ in classification, or the squared error $(Y-\hat{f}_\mathcal{L}(X))^2$ in regression, among many other possible measures.
+The loss function can take a variety of forms such as the misclassification error $I(Y\neq\hat{f}_\mathcal{L}(X))$ in classification, or the squared error $(Y-\hat{f}_\mathcal{L}(X))^\top{2}$ in regression, among many other possible measures.
 The choice of the performance measure is equally critical as the choice of the estimation procedure, but it is beyond the scope of this contribution to discuss performance measures for regression and classification (see, e.g., @hand1997 for classification, and @hyndman2006 for regression and forecasting tasks).
 
 Since there is only a sample $\mathcal{T}$ of test data drawn from the population, one can only *estimate* the conditional performance of $\hat{f}_\mathcal{L}$:
-\[
+
+\begin{equation}
 \widehat{\mathit{perf}}_T(\hat{f}_\mathcal{L}) = \frac{1}{|\mathcal{T}|}\sum_{(Y,X)\in\mathcal{T}}l(Y,\hat{f}_\mathcal{L}(X)).
-\]
+\label{eq:condperf}
+\end{equation}
+
 This representation as a point estimator of $\mathit{perf(\hat{f}_\mathcal{L})}$ underlines the importance of using a random sample for model assessment to avoid estimation bias. Other estimators than the simple mean may be required when $\mathcal{T}$ is not a simple random sample, for instance a stratified random sample [e.g., @thompson2012].
 As always, judgment sampling may lead to uncontrollable bias.
 
 Since re-using the learning sample $\mathcal{L}$ for testing, i.e., $\mathcal{T}:=\mathcal{L}$, would over-optimistically estimate the model's predictive performance on new instances (so-called *resubstitution* or *apparent* model performance; @hand1997), CV partitions the sample $\mathcal{L}$ into disjoint training and test sets.
 Specifically, $\mathcal{L}$ is split into $k$ partitions,
-\[
+
+\begin{equation}
 \mathcal{L} = \mathcal{L}_1 \cup \ldots \cup \mathcal{L}_k,\qquad \mathcal{L}_i\cap \mathcal{L}_j = \emptyset\quad \textrm{for all}\ i\neq j,
-\]
+\label{eq:part}
+\end{equation}
+
 and a model $\hat{f}_{(i)}$ is fitted on $\mathcal{L}_{(i)} := \mathcal{L}\setminus \mathcal{L}_i$, while $\mathcal{L}_i$ is withheld for testing.
 This is repeated for $i=1,\ldots,k$ in order to effectively use the entire sample for testing, while keeping training and test sets disjoint at all times.
 The $k$-fold CV estimator can therefore be written as
-\[
-\widehat{\mathit{perf}}_{\mathcal{L}, CV}(f) := \frac{1}{k}\sum_{i=1}^k\widehat{\mathit{perf}}_{\mathcal{L}_i}(\hat{f}_{\mathcal{L}_{(i)}}),
-\]
+
+\begin{equation}
+\widehat{\mathit{perf}}_{\mathcal{L}, CV}(f) := \frac{1}{k}\sum_{i=1}^\top{k}\widehat{\mathit{perf}}_{\mathcal{L}_i}(\hat{f}_{\mathcal{L}_{(i)}}),
+\label{eq:kfold}
+\end{equation}
+
 where $f$ is a ML algorithm, i.e., a mapping that trains a model $\hat{f}_\mathcal{S}$ using any suitable training sample $\mathcal{S}$.
 The use of $k=5$ or $k=10$ folds is most commonly seen in practice, and these preferences are also supported by theory [@bengio2004; @cawley2010].
 The $k$-fold CV estimator of model performance is a nearly unbiased estimator of the conditional performance measure when the observations were drawn independently [@efron1983].
