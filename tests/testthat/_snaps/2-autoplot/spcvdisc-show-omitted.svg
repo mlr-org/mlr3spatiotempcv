@@ -866,11 +866,11 @@
 <text x='566.12' y='568.61' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='8.31px' lengthAdjust='spacingAndGlyphs'>W</text>
 <rect x='585.79' y='254.32' width='64.53' height='78.13' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <text x='591.26' y='268.51' style='font-size: 11.00px; font-family: sans;' textLength='16.51px' lengthAdjust='spacingAndGlyphs'>Set</text>
-<rect x='591.26' y='275.13' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
+<rect x='591.26' y='275.13' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #EBEBEB;' />
 <circle cx='599.90' cy='283.77' r='1.95' style='stroke-width: 0.71; stroke: #0072B5; fill: #0072B5;' />
-<rect x='591.26' y='292.41' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
+<rect x='591.26' y='292.41' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #EBEBEB;' />
 <circle cx='599.90' cy='301.05' r='1.95' style='stroke-width: 0.71; stroke: #E18727; fill: #E18727;' />
-<rect x='591.26' y='309.69' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
+<rect x='591.26' y='309.69' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #EBEBEB;' />
 <circle cx='599.90' cy='318.33' r='1.95' style='stroke-width: 0.71; stroke: #BEBEBE; fill: #BEBEBE;' />
 <text x='614.02' y='286.80' style='font-size: 8.80px; font-family: sans;' textLength='20.05px' lengthAdjust='spacingAndGlyphs'>Train</text>
 <text x='614.02' y='304.08' style='font-size: 8.80px; font-family: sans;' textLength='17.12px' lengthAdjust='spacingAndGlyphs'>Test</text>

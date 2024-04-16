@@ -843,9 +843,9 @@
 <text x='571.51' y='568.61' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='8.31px' lengthAdjust='spacingAndGlyphs'>W</text>
 <rect x='591.17' y='262.96' width='53.77' height='60.85' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <text x='596.65' y='277.15' style='font-size: 11.00px; font-family: sans;' textLength='16.51px' lengthAdjust='spacingAndGlyphs'>Set</text>
-<rect x='596.65' y='283.77' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
+<rect x='596.65' y='283.77' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #EBEBEB;' />
 <circle cx='605.29' cy='292.41' r='1.95' style='stroke-width: 0.71; stroke: #0072B5; fill: #0072B5;' />
-<rect x='596.65' y='301.05' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #F2F2F2;' />
+<rect x='596.65' y='301.05' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #EBEBEB;' />
 <circle cx='605.29' cy='309.69' r='1.95' style='stroke-width: 0.71; stroke: #E18727; fill: #E18727;' />
 <text x='619.41' y='295.44' style='font-size: 8.80px; font-family: sans;' textLength='20.05px' lengthAdjust='spacingAndGlyphs'>Train</text>
 <text x='619.41' y='312.72' style='font-size: 8.80px; font-family: sans;' textLength='17.12px' lengthAdjust='spacingAndGlyphs'>Test</text>
