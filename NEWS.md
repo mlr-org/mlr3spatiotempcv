@@ -1,12 +1,8 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# mlr3spatiotempcv 2.3.0.9001
+# mlr3spatiotempcv 2.3.1
 
 - Merge branch 'main' into jss3.
-
-
-# mlr3spatiotempcv 2.3.0.9000
-
 - Same as previous version.
 
 
