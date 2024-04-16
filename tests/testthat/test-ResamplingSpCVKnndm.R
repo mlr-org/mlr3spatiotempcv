@@ -19,7 +19,7 @@ test_that("mlr3spatiotempcv indices are the same as CAST knndm: modeldomain", {
   expect_equal(rsmp$instance$test, testknndm$indx_test)
 })
 
-test_that("mlr3spatiotempcv indices are the same as CAST knndm: ppoints", {
+test_that("mlr3spatiotempcv indices are the same as CAST knndm: predpoints", {
   skip_if_not_installed("CAST")
 
   simarea = list(matrix(c(0, 0, 0, 100, 100, 100, 100, 0, 0, 0),
@@ -34,13 +34,13 @@ test_that("mlr3spatiotempcv indices are the same as CAST knndm: ppoints", {
     "target", positive = "TRUE")
 
   set.seed(42)
-  rsmp = rsmp("spcv_knndm", ppoints = pred_points)
+  rsmp = rsmp("spcv_knndm", predpoints = pred_points)
   suppressMessages(suppressWarnings(rsmp$instantiate(task)))
 
   set.seed(42)
   testknndm = suppressMessages(suppressWarnings(CAST::knndm(
     tpoints = train_points,
-    ppoints = pred_points
+    predpoints = pred_points
   )))
 
   expect_equal(rsmp$instance$train, testknndm$indx_train)

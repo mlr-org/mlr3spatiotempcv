@@ -327,7 +327,7 @@ test_that("plot() works for 'spcv_knndm'", {
 
   task = mlr3spatial::as_task_classif_st(sf::st_as_sf(train_points),
     "target", positive = "TRUE")
-  rsp = rsmp("repeated_spcv_knndm", folds = 3, repeats = 5, ppoints = pred_points)
+  rsp = rsmp("repeated_spcv_knndm", folds = 3, repeats = 5, predpoints = pred_points)
   suppressMessages(suppressWarnings(rsp$instantiate(task)))
   set.seed(42)
 
