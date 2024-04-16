@@ -46,7 +46,7 @@ ResamplingSpCVKnndm = R6Class("ResamplingSpCVKnndm",
               null.ok = TRUE)
           }
         ),
-        ParamUty$new("ppoints", default = NULL,
+        ParamUty$new("predpoints", default = NULL,
           custom_check = function(x) {
             checkmate::check_class(x, "sfc_POINT",
               null.ok = TRUE)
@@ -87,8 +87,8 @@ ResamplingSpCVKnndm = R6Class("ResamplingSpCVKnndm",
 
       pv = self$param_set$values
 
-      if (is.null(pv$modeldomain) && is.null(pv$ppoints)) {
-        stopf("Either 'modeldomain' or 'ppoints' need to be set.")
+      if (is.null(pv$modeldomain) && is.null(pv$predpoints)) {
+        stopf("Either 'modeldomain' or 'predpoints' need to be set.")
       }
 
       if (!is.null(groups)) {
@@ -156,7 +156,7 @@ ResamplingSpCVKnndm = R6Class("ResamplingSpCVKnndm",
       inds = CAST::knndm(
         tpoints = points,
         modeldomain = self$param_set$values$modeldomain,
-        ppoints = self$param_set$values$ppoints,
+        predpoints = self$param_set$values$predpoints,
         k = self$param_set$values$folds,
         maxp = self$param_set$values$maxp,
         clustering = self$param_set$values$clustering,
