@@ -14,10 +14,10 @@ test_that("AutoTuner works with sptcv methods", {
   logger_mlr3$set_threshold("warn")
 
   learner = lrn("classif.rpart")
-  tune_ps = ParamSet$new(list(
-    ParamDbl$new("cp", lower = 0.001, upper = 0.1),
-    ParamInt$new("minsplit", lower = 1, upper = 10)
-  ))
+  tune_ps = ps(
+    cp = p_dbl(lower = 0.001, upper = 0.1),
+    minsplit = p_int(lower = 1, upper = 10)
+  )
   terminator = trm("evals", n_evals = 2)
   tuner = tnr("random_search")
 

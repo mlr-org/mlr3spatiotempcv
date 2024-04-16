@@ -47,19 +47,19 @@ ResamplingRepeatedSpCVTiles = R6Class("ResamplingRepeatedSpCVTiles",
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_spcv_tiles") {
-      ps = ParamSet$new(params = list(
-        ParamUty$new("dsplit", custom_check = function(x) checkmate::assert_integer(x, len = 2)),
-        ParamUty$new("nsplit", custom_check = function(x) checkmate::assert_integer(x, len = 2)),
-        ParamFct$new("rotation", levels = c("none", "random", "user"), default = "none"),
-        ParamUty$new("user_rotation", default = NULL),
-        ParamFct$new("offset", levels = c("none", "random", "user"), default = "none"),
-        ParamUty$new("user_offset", default = NULL),
-        ParamLgl$new("reassign", default = TRUE),
-        ParamDbl$new("min_frac", default = 0.025, lower = 0, upper = 1),
-        ParamInt$new("min_n", default = 5, lower = 0),
-        ParamInt$new("iterate", default = 1, lower = 1),
-        ParamInt$new("repeats", lower = 1, default = 1L, tags = "required")
-      ))
+      ps = ps(
+        dsplit = p_uty(custom_check = crate(function(x) checkmate::check_integer(x, len = 2))),
+        nsplit = p_uty(custom_check = crate(function(x) checkmate::check_integer(x, len = 2))),
+        rotation = p_fct(levels = c("none", "random", "user"), default = "none"),
+        user_rotation = p_uty(default = NULL),
+        offset = p_fct(levels = c("none", "random", "user"), default = "none"),
+        user_offset = p_uty(default = NULL),
+        reassign = p_lgl(default = TRUE),
+        min_frac = p_dbl(default = 0.025, lower = 0, upper = 1),
+        min_n = p_int(default = 5, lower = 0),
+        iterate = p_int(default = 1, lower = 1),
+        repeats = p_int(lower = 1, tags = "required")
+      )
       ps$values = list(repeats = 1)
       super$initialize(
         id = id,

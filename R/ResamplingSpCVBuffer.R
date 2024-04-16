@@ -38,11 +38,11 @@ ResamplingSpCVBuffer = R6Class("ResamplingSpCVBuffer",
     #' @param id `character(1)`\cr
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_buffer") {
-      ps = ParamSet$new(params = list(
-        ParamInt$new("theRange", lower = 1L, tags = "required"),
-        ParamFct$new("spDataType", default = "PA", levels = c("PA", "PB")),
-        ParamLgl$new("addBG", default = TRUE)
-      ))
+      ps = ps(
+        theRange = p_int(lower = 1L, tags = "required"),
+        spDataType = p_fct(default = "PA", levels = c("PA", "PB")),
+        addBG = p_lgl(default = TRUE)
+      )
 
       super$initialize(
         id = id,
