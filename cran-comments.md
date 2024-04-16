@@ -2,22 +2,22 @@ mlr3spatiotempcv 2.3.1
 
 ## Cran Repository Policy
 
-- [ ] Reviewed CRP last edited 2024-04-04.
+- [x] Reviewed CRP last edited 2024-04-04.
 
 See changes at https://github.com/eddelbuettel/crp/compare/master@%7B2023-08-15%7D...master@%7B2024-04-04%7D
 
 ## R CMD check results
 
 - [x] Checked locally, R 4.3.3
-- [ ] Checked on CI system, R 4.3.3
-- [ ] Checked on win-builder, R devel
+- [x] Checked on CI system, R 4.3.3
+- [x] Checked on win-builder, R devel
 
 Check the boxes above after successful execution and remove this line. Then run `fledge::release()`.
 
 ## Current CRAN check results
 
 - [x] Checked on 2024-04-16, problems found: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
-- [ ] ERROR: r-devel-linux-x86_64-debian-clang, r-devel-linux-x86_64-debian-gcc, r-patched-linux-x86_64, r-release-linux-x86_64
+- [x] ERROR: r-devel-linux-x86_64-debian-clang, r-devel-linux-x86_64-debian-gcc, r-patched-linux-x86_64, r-release-linux-x86_64
      Running examples in ‘mlr3spatiotempcv-Ex.R’ failed
      The error most likely occurred in:
      
@@ -59,7 +59,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      unused argument (ppoints = self$param_set$values$ppoints)
      Calls: <Anonymous> ... .__ResamplingRepeatedSpCVKnndm__.sample -> map -> lapply -> FUN
      Execution halted
-- [ ] ERROR: r-devel-linux-x86_64-debian-clang
+- [x] ERROR: r-devel-linux-x86_64-debian-clang
      Running ‘testthat.R’ [118s/81s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
@@ -293,7 +293,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-devel-linux-x86_64-debian-gcc
+- [x] ERROR: r-devel-linux-x86_64-debian-gcc
      Running ‘testthat.R’ [99s/92s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
@@ -527,7 +527,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-devel-linux-x86_64-fedora-clang, r-devel-linux-x86_64-fedora-gcc, r-prerel-windows-x86_64, r-release-windows-x86_64, r-oldrel-windows-x86_64
+- [x] ERROR: r-devel-linux-x86_64-fedora-clang, r-devel-linux-x86_64-fedora-gcc, r-prerel-windows-x86_64, r-release-windows-x86_64, r-oldrel-windows-x86_64
      Running examples in ‘mlr3spatiotempcv-Ex.R’ failed
      The error most likely occurred in:
      
@@ -568,7 +568,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      unused argument (ppoints = self$param_set$values$ppoints)
      Calls: <Anonymous> ... .__ResamplingRepeatedSpCVKnndm__.sample -> map -> lapply -> FUN
      Execution halted
-- [ ] ERROR: r-devel-linux-x86_64-fedora-clang
+- [x] ERROR: r-devel-linux-x86_64-fedora-clang
      Running ‘testthat.R’ [154s/76s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
@@ -802,7 +802,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-devel-linux-x86_64-fedora-gcc
+- [x] ERROR: r-devel-linux-x86_64-fedora-gcc
      Running ‘testthat.R’ [142s/87s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
@@ -1035,7 +1035,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-prerel-windows-x86_64
+- [x] ERROR: r-prerel-windows-x86_64
      Running 'testthat.R' [46s]
      Running the tests in 'tests/testthat.R' failed.
      Complete output:
@@ -1269,7 +1269,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-patched-linux-x86_64
+- [x] ERROR: r-patched-linux-x86_64
      Running ‘testthat.R’ [124s/87s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
@@ -1503,7 +1503,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-release-linux-x86_64
+- [x] ERROR: r-release-linux-x86_64
      Running ‘testthat.R’ [129s/98s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
@@ -1737,7 +1737,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-release-windows-x86_64
+- [x] ERROR: r-release-windows-x86_64
      Running 'testthat.R' [70s]
      Running the tests in 'tests/testthat.R' failed.
      Complete output:
@@ -1971,7 +1971,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-oldrel-windows-x86_64
+- [x] ERROR: r-oldrel-windows-x86_64
      Running 'testthat.R' [64s]
      Running the tests in 'tests/testthat.R' failed.
      Complete output:
