@@ -25,7 +25,7 @@ calculating the full distance matrix of the training points even for a projected
 
 In order to select between clustering algorithms and number of folds `k`, different `knndm` configurations can be run
 and compared, being the one with a lower W statistic the one that offers a better match. W statistics between `knndm`
-runs are comparable as long as `tpoints` and `ppoints` or `modeldomain` stay the same.
+runs are comparable as long as `tpoints` and `predpoints` or `modeldomain` stay the same.
 
 Map validation using knndm should be used using `CAST::global_validation`, i.e. by stacking all out-of-sample
 predictions and evaluating them all at once. The reasons behind this are 1) The resulting folds can be
@@ -37,9 +37,9 @@ the `maxp` parameter; this may help to control for strong clustering (at the cos
 Secondly, decrease the number of final folds `k`, which may help to have larger clusters.
 
 The `modeldomain` is a sf polygon that defines the prediction area. The function takes a regular point sample
-(amount defined by `samplesize`) from the spatial extent. As an alternative use `ppoints` instead of
+(amount defined by `samplesize`) from the spatial extent. As an alternative use `predpoints` instead of
 `modeldomain`, if you have already defined the prediction locations (e.g. raster pixel centroids).
-When using either `modeldomain` or `ppoints`, we advise to plot the study area polygon and the
+When using either `modeldomain` or `predpoints`, we advise to plot the study area polygon and the
 training/prediction points as a previous step to ensure they are aligned.
 }
 \section{Parameters}{
