@@ -1,13 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# mlr3spatiotempcv 2.3.0.9001
+# mlr3spatiotempcv 2.3.1
 
-- Merge branch 'main' into jss3.
-
-
-# mlr3spatiotempcv 2.3.0.9000
-
-- Same as previous version.
+- Add support for new {paradox} version (#234)
+- Rename `ppoints` param in {CAST} functions to `predpoints` to adhere with the upstream package renaming (#237)
+- Update {vdiffr} tests with latest {ggplot2} version
 
 
 # mlr3spatiotempcv 2.3.0
