@@ -1,141 +1,49 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/404.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/articles/mlr3spatiotempcv.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/TaskClassifST.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/TaskRegrST.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/as_task_classif_st.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/as_task_regr_st.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/assert_spatial_task.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingCV.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingCustomCV.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVBlock.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVBuffer.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVCoords.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVDisc.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVEnv.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVKnndm.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVTiles.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSptCVCstf.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot_multi_fold_dt.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr3spatiotempcv-package.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_spcv_block.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_spcv_coords.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_spcv_disc.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_spcv_env.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_spcv_knndm.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_spcv_tiles.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_sptcv_cstf.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_block.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_buffer.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_coords.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_disc.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_env.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_knndm.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_tiles.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_sptcv_cstf.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_cookfarm_mlr3.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_diplodia.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_ecuador.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3spatiotempcv.mlr-org.com/reference/strat_sample_folds.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/404.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/LICENSE.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/articles/index.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/articles/mlr3spatiotempcv.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/articles/spatiotemp-viz.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/authors.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/index.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/news/index.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/TaskClassifST.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/TaskRegrST.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/as_task_classif_st.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/as_task_regr_st.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/assert_spatial_task.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingCV.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingCustomCV.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVBlock.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVBuffer.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVCoords.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVDisc.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVEnv.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVKnndm.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSpCVTiles.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.ResamplingSptCVCstf.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/autoplot_multi_fold_dt.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/index.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr3spatiotempcv-package.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_spcv_block.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_spcv_coords.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_spcv_disc.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_spcv_env.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_spcv_knndm.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_spcv_tiles.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_repeated_sptcv_cstf.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_block.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_buffer.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_coords.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_disc.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_env.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_knndm.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_spcv_tiles.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_resamplings_sptcv_cstf.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_cookfarm_mlr3.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_diplodia.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_ecuador.html</loc></url>
+<url><loc>https://mlr3spatiotempcv.mlr-org.com/reference/strat_sample_folds.html</loc></url>
 </urlset>
+
