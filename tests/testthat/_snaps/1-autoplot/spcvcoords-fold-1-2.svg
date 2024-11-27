@@ -49,6 +49,16 @@
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
 <defs>
+  <clipPath id='cpMzI3LjY0fDcxNC41MnwxNDIuODV8NDUwLjQ1'>
+    <rect x='327.64' y='142.85' width='386.88' height='307.60' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMzI3LjY0fDcxNC41MnwxNDIuODV8NDUwLjQ1)'>
+<rect x='327.64' y='142.85' width='386.88' height='307.60' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' />
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<defs>
   <clipPath id='cpNjIuMjZ8MzIyLjE2fDE3Mi4wOXw0MzEuOTg='>
     <rect x='62.26' y='172.09' width='259.89' height='259.89' />
   </clipPath>
@@ -161,16 +171,6 @@
 <text x='230.01' y='162.61' style='font-size: 10.00px; font-family: sans;' textLength='5.56px' lengthAdjust='spacingAndGlyphs'>1</text>
 </g>
 <defs>
-  <clipPath id='cpMzI3LjY0fDcxNC41MnwxNDIuODV8NDUwLjQ1'>
-    <rect x='327.64' y='142.85' width='386.88' height='307.60' />
-  </clipPath>
-</defs>
-<g clip-path='url(#cpMzI3LjY0fDcxNC41MnwxNDIuODV8NDUwLjQ1)'>
-<rect x='327.64' y='142.85' width='386.88' height='307.60' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' />
-</g>
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-</g>
-<defs>
   <clipPath id='cpMzg0LjQyfDY0NC4zMnwxNzIuMDl8NDMxLjk4'>
     <rect x='384.42' y='172.09' width='259.89' height='259.89' />
   </clipPath>
@@ -281,55 +281,14 @@
 <text x='493.24' y='162.61' style='font-size: 10.00px; font-family: sans;' textLength='8.34px' lengthAdjust='spacingAndGlyphs'>2,</text>
 <text x='504.36' y='162.61' style='font-size: 10.00px; font-family: sans;' textLength='45.03px' lengthAdjust='spacingAndGlyphs'>Repetition</text>
 <text x='552.17' y='162.61' style='font-size: 10.00px; font-family: sans;' textLength='5.56px' lengthAdjust='spacingAndGlyphs'>1</text>
-</g>
-<defs>
-  <clipPath id='cpNjU1LjI3fDcwOS4wNHwyNzEuNjF8MzMyLjQ2'>
-    <rect x='655.27' y='271.61' width='53.77' height='60.85' />
-  </clipPath>
-</defs>
-<g clip-path='url(#cpNjU1LjI3fDcwOS4wNHwyNzEuNjF8MzMyLjQ2)'>
-</g>
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <rect x='655.27' y='271.61' width='53.77' height='60.85' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-</g>
-<g clip-path='url(#cpNjU1LjI3fDcwOS4wNHwyNzEuNjF8MzMyLjQ2)'>
-</g>
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <text x='660.75' y='285.80' style='font-size: 11.00px; font-family: sans;' textLength='16.51px' lengthAdjust='spacingAndGlyphs'>Set</text>
-</g>
-<g clip-path='url(#cpNjU1LjI3fDcwOS4wNHwyNzEuNjF8MzMyLjQ2)'>
-</g>
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <rect x='660.75' y='292.42' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #EBEBEB;' />
-</g>
-<g clip-path='url(#cpNjU1LjI3fDcwOS4wNHwyNzEuNjF8MzMyLjQ2)'>
-</g>
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <circle cx='669.39' cy='301.06' r='1.95' style='stroke-width: 0.71; stroke: #0072B5; fill: #0072B5;' />
-</g>
-<g clip-path='url(#cpNjU1LjI3fDcwOS4wNHwyNzEuNjF8MzMyLjQ2)'>
-</g>
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <rect x='660.75' y='309.70' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #EBEBEB;' />
-</g>
-<g clip-path='url(#cpNjU1LjI3fDcwOS4wNHwyNzEuNjF8MzMyLjQ2)'>
-</g>
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <circle cx='669.39' cy='318.34' r='1.95' style='stroke-width: 0.71; stroke: #E18727; fill: #E18727;' />
-</g>
-<g clip-path='url(#cpNjU1LjI3fDcwOS4wNHwyNzEuNjF8MzMyLjQ2)'>
-</g>
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <text x='683.51' y='304.09' style='font-size: 8.80px; font-family: sans;' textLength='20.05px' lengthAdjust='spacingAndGlyphs'>Train</text>
-</g>
-<g clip-path='url(#cpNjU1LjI3fDcwOS4wNHwyNzEuNjF8MzMyLjQ2)'>
-</g>
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <text x='683.51' y='321.37' style='font-size: 8.80px; font-family: sans;' textLength='17.12px' lengthAdjust='spacingAndGlyphs'>Test</text>
-</g>
-<g clip-path='url(#cpNjU1LjI3fDcwOS4wNHwyNzEuNjF8MzMyLjQ2)'>
-</g>
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <text x='10.96' y='134.63' style='font-size: 13.20px; font-family: sans;' textLength='137.21px' lengthAdjust='spacingAndGlyphs'>SpCVCoords - Fold 1-2</text>
 </g>
 </svg>
