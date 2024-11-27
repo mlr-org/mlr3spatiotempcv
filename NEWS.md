@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# mlr3spatiotempcv 2.3.1.9000
+
+- Internal changes only.
+
+
 # mlr3spatiotempcv 2.3.1
 
 - Add support for new {paradox} version (#234)
