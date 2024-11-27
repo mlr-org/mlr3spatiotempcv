@@ -6,7 +6,7 @@
 \alias{mlr3spatiotempcv-package}
 \title{mlr3spatiotempcv: Spatiotemporal Resampling Methods for 'mlr3'}
 \description{
-Extends the mlr3 ML framework with spatio-temporal resampling methods to account for the presence of spatiotemporal autocorrelation (STAC) in predictor variables. STAC may cause highly biased performance estimates in cross-validation if ignored.
+Extends the mlr3 machine learning framework with spatio-temporal resampling methods to account for the presence of spatiotemporal autocorrelation (STAC) in predictor variables. STAC may cause highly biased performance estimates in cross-validation if ignored. A JSS article is available at \doi{10.18637/jss.v111.i07}.
 }
 \section{Main resources}{
 
