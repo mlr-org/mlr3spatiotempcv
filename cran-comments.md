@@ -1,66 +1,56 @@
-mlr3spatiotempcv 2.3.1
+mlr3spatiotempcv 2.3.2
 
 ## Cran Repository Policy
 
-- [x] Reviewed CRP last edited 2024-04-04.
+- [ ] Reviewed CRP last edited 2024-08-27.
 
-See changes at https://github.com/eddelbuettel/crp/compare/master@%7B2023-08-15%7D...master@%7B2024-04-04%7D
+See changes at https://github.com/eddelbuettel/crp/compare/master@%7B2024-04-04%7D...master@%7B2024-08-27%7D
 
 ## R CMD check results
 
-- [x] Checked locally, R 4.3.3
-- [x] Checked on CI system, R 4.3.3
-- [x] Checked on win-builder, R devel
+- [x] Checked locally, R 4.4.2
+- [ ] Checked on CI system, R 4.4.2
+- [ ] Checked on win-builder, R devel
 
 Check the boxes above after successful execution and remove this line. Then run `fledge::release()`.
 
 ## Current CRAN check results
 
-- [x] Checked on 2024-04-16, problems found: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
-- [x] ERROR: r-devel-linux-x86_64-debian-clang, r-devel-linux-x86_64-debian-gcc, r-patched-linux-x86_64, r-release-linux-x86_64
-     Running examples in ‘mlr3spatiotempcv-Ex.R’ failed
-     The error most likely occurred in:
-     
-     > base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-     > ### Name: mlr_resamplings_repeated_spcv_knndm
-     > ### Title: (CAST) Repeated K-fold Nearest Neighbour Distance Matching
-     > ### Aliases: mlr_resamplings_repeated_spcv_knndm
-     > ###   ResamplingRepeatedSpCVKnndm
-     > 
-     > ### ** Examples
-     > 
-     > library(mlr3)
-     > library(mlr3spatial)
-     
-     Attaching package: ‘mlr3spatial’
-     
-     The following objects are masked from ‘package:mlr3spatiotempcv’:
-     
-     TaskClassifST, TaskRegrST, as_task_classif_st,
-     as_task_classif_st.DataBackend, as_task_classif_st.TaskClassifST,
-     as_task_classif_st.data.frame, as_task_classif_st.sf,
-     as_task_regr_st, as_task_regr_st.DataBackend,
-     as_task_regr_st.TaskClassifST, as_task_regr_st.TaskRegrST,
-     as_task_regr_st.data.frame, as_task_regr_st.sf
-     
-     > set.seed(42)
-     > simarea = list(matrix(c(0, 0, 0, 100, 100, 100, 100, 0, 0, 0), ncol = 2, byrow = TRUE))
-     > simarea = sf::st_polygon(simarea)
-     > train_points = sf::st_sample(simarea, 1000, type = "random")
-     > train_points = sf::st_as_sf(train_points)
-     > train_points$target = as.factor(sample(c("TRUE", "FALSE"), 1000, replace = TRUE))
-     > pred_points = sf::st_sample(simarea, 1000, type = "regular")
-     > 
-     > task = mlr3spatial::as_task_classif_st(sf::st_as_sf(train_points), "target", positive = "TRUE")
-     > 
-     > cv_knndm = rsmp("repeated_spcv_knndm", ppoints = pred_points, repeats = 2)
-     > cv_knndm$instantiate(task)
-     Error in CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain,  : 
-     unused argument (ppoints = self$param_set$values$ppoints)
-     Calls: <Anonymous> ... .__ResamplingRepeatedSpCVKnndm__.sample -> map -> lapply -> FUN
-     Execution halted
-- [x] ERROR: r-devel-linux-x86_64-debian-clang
-     Running ‘testthat.R’ [118s/81s]
+- [x] Checked on 2024-11-27, problems found: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
+- [ ] NOTE: r-devel-linux-x86_64-debian-clang, r-devel-linux-x86_64-debian-gcc, r-devel-windows-x86_64
+     Found the following Rd file(s) with Rd \link{} targets missing package
+     anchors:
+     TaskClassifST.Rd: Task, TaskSupervised, DataBackend,
+     DataBackendDataTable, convert_task
+     TaskRegrST.Rd: Task, TaskSupervised, DataBackend,
+     DataBackendDataTable, convert_task
+     as_task_classif_st.Rd: DataBackend, TaskRegr, convert_task
+     as_task_regr_st.Rd: DataBackend, TaskClassif, convert_task
+     autoplot.ResamplingCV.Rd: ResamplingCV, ResamplingRepeatedCV
+     autoplot.ResamplingCustomCV.Rd: ResamplingCustomCV
+     autoplot.ResamplingSpCVBlock.Rd: ggplot
+     mlr_resamplings_repeated_spcv_block.Rd: Task
+     mlr_resamplings_repeated_spcv_coords.Rd: Task
+     mlr_resamplings_repeated_spcv_disc.Rd: Task
+     mlr_resamplings_repeated_spcv_env.Rd: Task
+     mlr_resamplings_repeated_spcv_knndm.Rd: Task
+     mlr_resamplings_repeated_spcv_tiles.Rd: Task
+     mlr_resamplings_repeated_sptcv_cstf.Rd: Task
+     mlr_resamplings_spcv_block.Rd: Task
+     mlr_resamplings_spcv_buffer.Rd: Task
+     mlr_resamplings_spcv_coords.Rd: Task
+     mlr_resamplings_spcv_disc.Rd: Task
+     mlr_resamplings_spcv_env.Rd: Task
+     mlr_resamplings_spcv_knndm.Rd: Task
+     mlr_resamplings_spcv_tiles.Rd: Task
+     mlr_resamplings_sptcv_cstf.Rd: Task
+     mlr_tasks_cookfarm_mlr3.Rd: TaskRegr, Task, mlr_tasks
+     mlr_tasks_diplodia.Rd: TaskClassif, Task, mlr_tasks
+     mlr_tasks_ecuador.Rd: TaskClassif, Task, mlr_tasks
+     Please provide package anchors for all Rd \link{} targets not in the
+     package itself and the base packages.
+- [ ] ERROR: r-devel-linux-x86_64-debian-clang
+     Running ‘testthat.R’ [103s/54s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
      > if (requireNamespace("testthat", quietly = TRUE)) {
@@ -71,752 +61,9 @@ Check the boxes above after successful execution and remove this line. Then run 
      + }
      Loading required package: mlr3
      Starting 2 test processes
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
+     [ FAIL 1 | WARN 1 | SKIP 24 | PASS 1206 ]
      
-     ══ Skipped tests (23) ══════════════════════════════════════════════════════════
-     • On CRAN (18): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
-     'test-1-autoplot.R:98:3', 'test-1-autoplot.R:130:3',
-     'test-1-autoplot.R:157:3', 'test-1-autoplot.R:189:3',
-     'test-1-autoplot.R:224:3', 'test-1-autoplot.R:257:3',
-     'test-1-autoplot.R:268:3', 'test-1-autoplot.R:315:3',
-     'test-1-autoplot.R:343:3', 'test-1-autoplot.R:377:3',
-     'test-2-autoplot.R:129:3', 'test-2-autoplot.R:182:3',
-     'test-2-autoplot.R:204:3', 'test-2-autoplot.R:246:3',
-     'test-2-autoplot.R:300:3', 'test-autoplot_buffer.R:19:3'
-     • On Linux (2): 'test-2-autoplot.R:8:3', 'test-2-autoplot.R:54:3'
-     • empty test (1): 'test-helper-DataBackend.R:1:1'
-     • raster cannot be loaded (1): 'test-mlr3pipelines-graph-integration.R:4:3'
-     • skmeans cannot be loaded (1): 'test-mlr_sptcv_generic.R:70:3'
-     
-     ══ Failed tests ════════════════════════════════════════════════════════════════
-     ── Error ('test-2-autoplot.R:331:3'): plot() works for 'spcv_knndm' ────────────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-2-autoplot.R:331:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:21:3'): folds can be printed ─────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:21:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:31:3'): reps can be printed ──────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:31:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:41:3'): resampling iterations equals folds * repeats ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:41:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingSpCVKnndm.R:10:3'): mlr3spatiotempcv indices are the same as CAST knndm: modeldomain ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:10:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     ── Error ('test-ResamplingSpCVKnndm.R:38:3'): mlr3spatiotempcv indices are the same as CAST knndm: ppoints ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:38:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
-     Deleting unused snapshots:
-     • 1-autoplot/autoplot-show-blocks-true-show-labels-true.svg
-     • 1-autoplot/custom-cv-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/custom-cv-fold-1-2.svg
-     • 1-autoplot/custom-cv-fold-1-sample-fold-n.svg
-     • 1-autoplot/custom-cv-fold-1.svg
-     • 1-autoplot/custom-cv-sample-fold-n.svg
-     • 1-autoplot/cv-fold-1-2-groups-col-role.svg
-     • 1-autoplot/cv-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/cv-fold-1-2.svg
-     • 1-autoplot/cv-fold-1-groups-col-role.svg
-     • 1-autoplot/cv-fold-1-sample-fold-n.svg
-     • 1-autoplot/cv-fold-1.svg
-     • 1-autoplot/cv-sample-fold-n.svg
-     • 1-autoplot/repcv-fold-1-2-rep-1.svg
-     • 1-autoplot/repcv-fold-1-2-rep-2.svg
-     • 1-autoplot/repcv-fold-1-rep-1.svg
-     • 1-autoplot/repcv-fold-1-rep-2.svg
-     • 1-autoplot/repspcvblock-fold-1-2-rep-1.svg
-     • 1-autoplot/repspcvblock-fold-1-2-rep-2.svg
-     • 1-autoplot/repspcvblock-fold-1-rep-1.svg
-     • 1-autoplot/repspcvblock-fold-1-rep-2.svg
-     • 1-autoplot/repspcvcoords-fold-1-2-rep-1.svg
-     • 1-autoplot/repspcvcoords-fold-1-2-rep-2.svg
-     • 1-autoplot/repspcvcoords-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/repspcvcoords-fold-1-rep-1.svg
-     • 1-autoplot/repspcvcoords-fold-1-rep-2.svg
-     • 1-autoplot/repspcvcoords-fold-1-sample-fold-n.svg
-     • 1-autoplot/repspcvcoords-sample-fold-n.svg
-     • 1-autoplot/repspcvenv-fold-1-2-rep-1.svg
-     • 1-autoplot/repspcvenv-fold-1-2-rep-2.svg
-     • 1-autoplot/repspcvenv-fold-1-rep-1.svg
-     • 1-autoplot/repspcvenv-fold-1-rep-2.svg
-     • 1-autoplot/spcvblock-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/spcvblock-fold-1-2.svg
-     • 1-autoplot/spcvblock-fold-1-sample-fold-n.svg
-     • 1-autoplot/spcvblock-fold-1.svg
-     • 1-autoplot/spcvblock-sample-fold-n.svg
-     • 1-autoplot/spcvcoords-fold-1-2.svg
-     • 1-autoplot/spcvcoords-fold-1.svg
-     • 1-autoplot/spcvenv-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/spcvenv-fold-1-2.svg
-     • 1-autoplot/spcvenv-fold-1-sample-fold-n.svg
-     • 1-autoplot/spcvenv-fold-1.svg
-     • 1-autoplot/spcvenv-sample-fold-n.svg
-     • 2-autoplot/repspcvdisc-fold-1-2-rep-2.svg
-     • 2-autoplot/repspcvdisc-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/repspcvdisc-fold-1-rep-1-sample-n-fold.svg
-     • 2-autoplot/repspcvdisc-fold-1-rep-2.svg
-     • 2-autoplot/repspcvdisc-fold-1-sample-fold-n.svg
-     • 2-autoplot/repspcvdisc-sample-fold-n.svg
-     • 2-autoplot/repspcvknndm-fold-1-2-rep-2.svg
-     • 2-autoplot/repspcvknndm-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/repspcvknndm-fold-1-rep-1-sample-n-fold.svg
-     • 2-autoplot/repspcvknndm-fold-1-rep-2.svg
-     • 2-autoplot/repspcvknndm-fold-1-sample-fold-n.svg
-     • 2-autoplot/repspcvknndm-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-fold-1-2-rep-2.svg
-     • 2-autoplot/repspcvtiles-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-fold-1-2.svg
-     • 2-autoplot/repspcvtiles-fold-1-rep-2.svg
-     • 2-autoplot/repspcvtiles-fold-1-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-fold-1.svg
-     • 2-autoplot/repspcvtiles-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-show-omitted.svg
-     • 2-autoplot/repsptcvcstf-2d-space-var-fold-1-2-rep-2.svg
-     • 2-autoplot/repsptcvcstf-2d-space-var-fold-1-rep-2.svg
-     • 2-autoplot/repsptcvcstf-fold-1-2-rep-1.svg
-     • 2-autoplot/repsptcvcstf-fold-1-2-rep-2.svg
-     • 2-autoplot/repsptcvcstf-fold-1-rep-1-sample-fold-n.svg
-     • 2-autoplot/repsptcvcstf-fold-1-rep-2.svg
-     • 2-autoplot/spcvdisc-fold-1-2.svg
-     • 2-autoplot/spcvdisc-fold-1.svg
-     • 2-autoplot/spcvdisc-show-omitted.svg
-     • 2-autoplot/spcvknndm-all-test-sets.svg
-     • 2-autoplot/spcvknndm-fold-1-2.svg
-     • 2-autoplot/spcvknndm-fold-1.svg
-     • 2-autoplot/sptcvcstf-2d-space-var-all-test-sets.svg
-     • 2-autoplot/sptcvcstf-2d-space-var-fold-1-2.svg
-     • 2-autoplot/sptcvcstf-2d-space-var-fold-1.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-all-test-sets.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2-rep-2.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-rep-2.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-2.svg
-     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-sample-fold-n.svg
-     • autoplot_buffer/spcvbuffer-fold-1-2.svg
-     Error: Test failures
-     Execution halted
-- [x] ERROR: r-devel-linux-x86_64-debian-gcc
-     Running ‘testthat.R’ [99s/92s]
-     Running the tests in ‘tests/testthat.R’ failed.
-     Complete output:
-     > if (requireNamespace("testthat", quietly = TRUE)) {
-     +   library("checkmate")
-     +   library("testthat")
-     +   library("mlr3spatiotempcv")
-     +   test_check("mlr3spatiotempcv")
-     + }
-     Loading required package: mlr3
-     Starting 2 test processes
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
-     
-     ══ Skipped tests (23) ══════════════════════════════════════════════════════════
-     • On CRAN (18): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
-     'test-1-autoplot.R:98:3', 'test-1-autoplot.R:130:3',
-     'test-1-autoplot.R:157:3', 'test-1-autoplot.R:189:3',
-     'test-1-autoplot.R:224:3', 'test-1-autoplot.R:257:3',
-     'test-1-autoplot.R:268:3', 'test-1-autoplot.R:315:3',
-     'test-1-autoplot.R:343:3', 'test-1-autoplot.R:377:3',
-     'test-2-autoplot.R:129:3', 'test-2-autoplot.R:182:3',
-     'test-2-autoplot.R:204:3', 'test-2-autoplot.R:246:3',
-     'test-2-autoplot.R:300:3', 'test-autoplot_buffer.R:19:3'
-     • On Linux (2): 'test-2-autoplot.R:8:3', 'test-2-autoplot.R:54:3'
-     • empty test (1): 'test-helper-DataBackend.R:1:1'
-     • raster cannot be loaded (1): 'test-mlr3pipelines-graph-integration.R:4:3'
-     • skmeans cannot be loaded (1): 'test-mlr_sptcv_generic.R:70:3'
-     
-     ══ Failed tests ════════════════════════════════════════════════════════════════
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:21:3'): folds can be printed ─────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:21:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:31:3'): reps can be printed ──────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:31:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:41:3'): resampling iterations equals folds * repeats ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:41:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-2-autoplot.R:331:3'): plot() works for 'spcv_knndm' ────────────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-2-autoplot.R:331:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingSpCVKnndm.R:10:3'): mlr3spatiotempcv indices are the same as CAST knndm: modeldomain ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:10:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     ── Error ('test-ResamplingSpCVKnndm.R:38:3'): mlr3spatiotempcv indices are the same as CAST knndm: ppoints ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:38:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
-     Deleting unused snapshots:
-     • 1-autoplot/autoplot-show-blocks-true-show-labels-true.svg
-     • 1-autoplot/custom-cv-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/custom-cv-fold-1-2.svg
-     • 1-autoplot/custom-cv-fold-1-sample-fold-n.svg
-     • 1-autoplot/custom-cv-fold-1.svg
-     • 1-autoplot/custom-cv-sample-fold-n.svg
-     • 1-autoplot/cv-fold-1-2-groups-col-role.svg
-     • 1-autoplot/cv-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/cv-fold-1-2.svg
-     • 1-autoplot/cv-fold-1-groups-col-role.svg
-     • 1-autoplot/cv-fold-1-sample-fold-n.svg
-     • 1-autoplot/cv-fold-1.svg
-     • 1-autoplot/cv-sample-fold-n.svg
-     • 1-autoplot/repcv-fold-1-2-rep-1.svg
-     • 1-autoplot/repcv-fold-1-2-rep-2.svg
-     • 1-autoplot/repcv-fold-1-rep-1.svg
-     • 1-autoplot/repcv-fold-1-rep-2.svg
-     • 1-autoplot/repspcvblock-fold-1-2-rep-1.svg
-     • 1-autoplot/repspcvblock-fold-1-2-rep-2.svg
-     • 1-autoplot/repspcvblock-fold-1-rep-1.svg
-     • 1-autoplot/repspcvblock-fold-1-rep-2.svg
-     • 1-autoplot/repspcvcoords-fold-1-2-rep-1.svg
-     • 1-autoplot/repspcvcoords-fold-1-2-rep-2.svg
-     • 1-autoplot/repspcvcoords-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/repspcvcoords-fold-1-rep-1.svg
-     • 1-autoplot/repspcvcoords-fold-1-rep-2.svg
-     • 1-autoplot/repspcvcoords-fold-1-sample-fold-n.svg
-     • 1-autoplot/repspcvcoords-sample-fold-n.svg
-     • 1-autoplot/repspcvenv-fold-1-2-rep-1.svg
-     • 1-autoplot/repspcvenv-fold-1-2-rep-2.svg
-     • 1-autoplot/repspcvenv-fold-1-rep-1.svg
-     • 1-autoplot/repspcvenv-fold-1-rep-2.svg
-     • 1-autoplot/spcvblock-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/spcvblock-fold-1-2.svg
-     • 1-autoplot/spcvblock-fold-1-sample-fold-n.svg
-     • 1-autoplot/spcvblock-fold-1.svg
-     • 1-autoplot/spcvblock-sample-fold-n.svg
-     • 1-autoplot/spcvcoords-fold-1-2.svg
-     • 1-autoplot/spcvcoords-fold-1.svg
-     • 1-autoplot/spcvenv-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/spcvenv-fold-1-2.svg
-     • 1-autoplot/spcvenv-fold-1-sample-fold-n.svg
-     • 1-autoplot/spcvenv-fold-1.svg
-     • 1-autoplot/spcvenv-sample-fold-n.svg
-     • 2-autoplot/repspcvdisc-fold-1-2-rep-2.svg
-     • 2-autoplot/repspcvdisc-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/repspcvdisc-fold-1-rep-1-sample-n-fold.svg
-     • 2-autoplot/repspcvdisc-fold-1-rep-2.svg
-     • 2-autoplot/repspcvdisc-fold-1-sample-fold-n.svg
-     • 2-autoplot/repspcvdisc-sample-fold-n.svg
-     • 2-autoplot/repspcvknndm-fold-1-2-rep-2.svg
-     • 2-autoplot/repspcvknndm-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/repspcvknndm-fold-1-rep-1-sample-n-fold.svg
-     • 2-autoplot/repspcvknndm-fold-1-rep-2.svg
-     • 2-autoplot/repspcvknndm-fold-1-sample-fold-n.svg
-     • 2-autoplot/repspcvknndm-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-fold-1-2-rep-2.svg
-     • 2-autoplot/repspcvtiles-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-fold-1-2.svg
-     • 2-autoplot/repspcvtiles-fold-1-rep-2.svg
-     • 2-autoplot/repspcvtiles-fold-1-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-fold-1.svg
-     • 2-autoplot/repspcvtiles-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-show-omitted.svg
-     • 2-autoplot/repsptcvcstf-2d-space-var-fold-1-2-rep-2.svg
-     • 2-autoplot/repsptcvcstf-2d-space-var-fold-1-rep-2.svg
-     • 2-autoplot/repsptcvcstf-fold-1-2-rep-1.svg
-     • 2-autoplot/repsptcvcstf-fold-1-2-rep-2.svg
-     • 2-autoplot/repsptcvcstf-fold-1-rep-1-sample-fold-n.svg
-     • 2-autoplot/repsptcvcstf-fold-1-rep-2.svg
-     • 2-autoplot/spcvdisc-fold-1-2.svg
-     • 2-autoplot/spcvdisc-fold-1.svg
-     • 2-autoplot/spcvdisc-show-omitted.svg
-     • 2-autoplot/spcvknndm-all-test-sets.svg
-     • 2-autoplot/spcvknndm-fold-1-2.svg
-     • 2-autoplot/spcvknndm-fold-1.svg
-     • 2-autoplot/sptcvcstf-2d-space-var-all-test-sets.svg
-     • 2-autoplot/sptcvcstf-2d-space-var-fold-1-2.svg
-     • 2-autoplot/sptcvcstf-2d-space-var-fold-1.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-all-test-sets.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2-rep-2.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-rep-2.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-2.svg
-     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-sample-fold-n.svg
-     • autoplot_buffer/spcvbuffer-fold-1-2.svg
-     Error: Test failures
-     Execution halted
-- [x] ERROR: r-devel-linux-x86_64-fedora-clang, r-devel-linux-x86_64-fedora-gcc, r-prerel-windows-x86_64, r-release-windows-x86_64, r-oldrel-windows-x86_64
-     Running examples in ‘mlr3spatiotempcv-Ex.R’ failed
-     The error most likely occurred in:
-     
-     > ### Name: mlr_resamplings_repeated_spcv_knndm
-     > ### Title: (CAST) Repeated K-fold Nearest Neighbour Distance Matching
-     > ### Aliases: mlr_resamplings_repeated_spcv_knndm
-     > ###   ResamplingRepeatedSpCVKnndm
-     > 
-     > ### ** Examples
-     > 
-     > library(mlr3)
-     > library(mlr3spatial)
-     
-     Attaching package: ‘mlr3spatial’
-     
-     The following objects are masked from ‘package:mlr3spatiotempcv’:
-     
-     TaskClassifST, TaskRegrST, as_task_classif_st,
-     as_task_classif_st.DataBackend, as_task_classif_st.TaskClassifST,
-     as_task_classif_st.data.frame, as_task_classif_st.sf,
-     as_task_regr_st, as_task_regr_st.DataBackend,
-     as_task_regr_st.TaskClassifST, as_task_regr_st.TaskRegrST,
-     as_task_regr_st.data.frame, as_task_regr_st.sf
-     
-     > set.seed(42)
-     > simarea = list(matrix(c(0, 0, 0, 100, 100, 100, 100, 0, 0, 0), ncol = 2, byrow = TRUE))
-     > simarea = sf::st_polygon(simarea)
-     > train_points = sf::st_sample(simarea, 1000, type = "random")
-     > train_points = sf::st_as_sf(train_points)
-     > train_points$target = as.factor(sample(c("TRUE", "FALSE"), 1000, replace = TRUE))
-     > pred_points = sf::st_sample(simarea, 1000, type = "regular")
-     > 
-     > task = mlr3spatial::as_task_classif_st(sf::st_as_sf(train_points), "target", positive = "TRUE")
-     > 
-     > cv_knndm = rsmp("repeated_spcv_knndm", ppoints = pred_points, repeats = 2)
-     > cv_knndm$instantiate(task)
-     Error in CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain,  : 
-     unused argument (ppoints = self$param_set$values$ppoints)
-     Calls: <Anonymous> ... .__ResamplingRepeatedSpCVKnndm__.sample -> map -> lapply -> FUN
-     Execution halted
-- [x] ERROR: r-devel-linux-x86_64-fedora-clang
-     Running ‘testthat.R’ [154s/76s]
-     Running the tests in ‘tests/testthat.R’ failed.
-     Complete output:
-     > if (requireNamespace("testthat", quietly = TRUE)) {
-     +   library("checkmate")
-     +   library("testthat")
-     +   library("mlr3spatiotempcv")
-     +   test_check("mlr3spatiotempcv")
-     + }
-     Loading required package: mlr3
-     Starting 2 test processes
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
-     
-     ══ Skipped tests (23) ══════════════════════════════════════════════════════════
-     • On CRAN (18): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
-     'test-1-autoplot.R:98:3', 'test-1-autoplot.R:130:3',
-     'test-1-autoplot.R:157:3', 'test-1-autoplot.R:189:3',
-     'test-1-autoplot.R:224:3', 'test-1-autoplot.R:257:3',
-     'test-1-autoplot.R:268:3', 'test-1-autoplot.R:315:3',
-     'test-1-autoplot.R:343:3', 'test-1-autoplot.R:377:3',
-     'test-2-autoplot.R:129:3', 'test-2-autoplot.R:182:3',
-     'test-2-autoplot.R:204:3', 'test-2-autoplot.R:246:3',
-     'test-2-autoplot.R:300:3', 'test-autoplot_buffer.R:19:3'
-     • On Linux (2): 'test-2-autoplot.R:8:3', 'test-2-autoplot.R:54:3'
-     • empty test (1): 'test-helper-DataBackend.R:1:1'
-     • raster cannot be loaded (1): 'test-mlr3pipelines-graph-integration.R:4:3'
-     • skmeans cannot be loaded (1): 'test-mlr_sptcv_generic.R:70:3'
-     
-     ══ Failed tests ════════════════════════════════════════════════════════════════
-     ── Error ('test-2-autoplot.R:331:3'): plot() works for 'spcv_knndm' ────────────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-2-autoplot.R:331:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:21:3'): folds can be printed ─────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:21:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:31:3'): reps can be printed ──────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:31:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:41:3'): resampling iterations equals folds * repeats ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:41:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingSpCVKnndm.R:10:3'): mlr3spatiotempcv indices are the same as CAST knndm: modeldomain ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:10:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     ── Error ('test-ResamplingSpCVKnndm.R:38:3'): mlr3spatiotempcv indices are the same as CAST knndm: ppoints ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:38:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
-     Deleting unused snapshots:
-     • 1-autoplot/autoplot-show-blocks-true-show-labels-true.svg
-     • 1-autoplot/custom-cv-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/custom-cv-fold-1-2.svg
-     • 1-autoplot/custom-cv-fold-1-sample-fold-n.svg
-     • 1-autoplot/custom-cv-fold-1.svg
-     • 1-autoplot/custom-cv-sample-fold-n.svg
-     • 1-autoplot/cv-fold-1-2-groups-col-role.svg
-     • 1-autoplot/cv-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/cv-fold-1-2.svg
-     • 1-autoplot/cv-fold-1-groups-col-role.svg
-     • 1-autoplot/cv-fold-1-sample-fold-n.svg
-     • 1-autoplot/cv-fold-1.svg
-     • 1-autoplot/cv-sample-fold-n.svg
-     • 1-autoplot/repcv-fold-1-2-rep-1.svg
-     • 1-autoplot/repcv-fold-1-2-rep-2.svg
-     • 1-autoplot/repcv-fold-1-rep-1.svg
-     • 1-autoplot/repcv-fold-1-rep-2.svg
-     • 1-autoplot/repspcvblock-fold-1-2-rep-1.svg
-     • 1-autoplot/repspcvblock-fold-1-2-rep-2.svg
-     • 1-autoplot/repspcvblock-fold-1-rep-1.svg
-     • 1-autoplot/repspcvblock-fold-1-rep-2.svg
-     • 1-autoplot/repspcvcoords-fold-1-2-rep-1.svg
-     • 1-autoplot/repspcvcoords-fold-1-2-rep-2.svg
-     • 1-autoplot/repspcvcoords-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/repspcvcoords-fold-1-rep-1.svg
-     • 1-autoplot/repspcvcoords-fold-1-rep-2.svg
-     • 1-autoplot/repspcvcoords-fold-1-sample-fold-n.svg
-     • 1-autoplot/repspcvcoords-sample-fold-n.svg
-     • 1-autoplot/repspcvenv-fold-1-2-rep-1.svg
-     • 1-autoplot/repspcvenv-fold-1-2-rep-2.svg
-     • 1-autoplot/repspcvenv-fold-1-rep-1.svg
-     • 1-autoplot/repspcvenv-fold-1-rep-2.svg
-     • 1-autoplot/spcvblock-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/spcvblock-fold-1-2.svg
-     • 1-autoplot/spcvblock-fold-1-sample-fold-n.svg
-     • 1-autoplot/spcvblock-fold-1.svg
-     • 1-autoplot/spcvblock-sample-fold-n.svg
-     • 1-autoplot/spcvcoords-fold-1-2.svg
-     • 1-autoplot/spcvcoords-fold-1.svg
-     • 1-autoplot/spcvenv-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/spcvenv-fold-1-2.svg
-     • 1-autoplot/spcvenv-fold-1-sample-fold-n.svg
-     • 1-autoplot/spcvenv-fold-1.svg
-     • 1-autoplot/spcvenv-sample-fold-n.svg
-     • 2-autoplot/repspcvdisc-fold-1-2-rep-2.svg
-     • 2-autoplot/repspcvdisc-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/repspcvdisc-fold-1-rep-1-sample-n-fold.svg
-     • 2-autoplot/repspcvdisc-fold-1-rep-2.svg
-     • 2-autoplot/repspcvdisc-fold-1-sample-fold-n.svg
-     • 2-autoplot/repspcvdisc-sample-fold-n.svg
-     • 2-autoplot/repspcvknndm-fold-1-2-rep-2.svg
-     • 2-autoplot/repspcvknndm-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/repspcvknndm-fold-1-rep-1-sample-n-fold.svg
-     • 2-autoplot/repspcvknndm-fold-1-rep-2.svg
-     • 2-autoplot/repspcvknndm-fold-1-sample-fold-n.svg
-     • 2-autoplot/repspcvknndm-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-fold-1-2-rep-2.svg
-     • 2-autoplot/repspcvtiles-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-fold-1-2.svg
-     • 2-autoplot/repspcvtiles-fold-1-rep-2.svg
-     • 2-autoplot/repspcvtiles-fold-1-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-fold-1.svg
-     • 2-autoplot/repspcvtiles-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-show-omitted.svg
-     • 2-autoplot/repsptcvcstf-2d-space-var-fold-1-2-rep-2.svg
-     • 2-autoplot/repsptcvcstf-2d-space-var-fold-1-rep-2.svg
-     • 2-autoplot/repsptcvcstf-fold-1-2-rep-1.svg
-     • 2-autoplot/repsptcvcstf-fold-1-2-rep-2.svg
-     • 2-autoplot/repsptcvcstf-fold-1-rep-1-sample-fold-n.svg
-     • 2-autoplot/repsptcvcstf-fold-1-rep-2.svg
-     • 2-autoplot/spcvdisc-fold-1-2.svg
-     • 2-autoplot/spcvdisc-fold-1.svg
-     • 2-autoplot/spcvdisc-show-omitted.svg
-     • 2-autoplot/spcvknndm-all-test-sets.svg
-     • 2-autoplot/spcvknndm-fold-1-2.svg
-     • 2-autoplot/spcvknndm-fold-1.svg
-     • 2-autoplot/sptcvcstf-2d-space-var-all-test-sets.svg
-     • 2-autoplot/sptcvcstf-2d-space-var-fold-1-2.svg
-     • 2-autoplot/sptcvcstf-2d-space-var-fold-1.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-all-test-sets.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2-rep-2.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-rep-2.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-2.svg
-     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-sample-fold-n.svg
-     • autoplot_buffer/spcvbuffer-fold-1-2.svg
-     Error: Test failures
-     Execution halted
-- [x] ERROR: r-devel-linux-x86_64-fedora-gcc
-     Running ‘testthat.R’ [142s/87s]
-     Running the tests in ‘tests/testthat.R’ failed.
-     Complete output:
-     > if (requireNamespace("testthat", quietly = TRUE)) {
-     +   library("checkmate")
-     +   library("testthat")
-     +   library("mlr3spatiotempcv")
-     +   test_check("mlr3spatiotempcv")
-     + }
-     Loading required package: mlr3
-     Starting 2 test processes
-     [ FAIL 6 | WARN 0 | SKIP 22 | PASS 1202 ]
-     
-     ══ Skipped tests (22) ══════════════════════════════════════════════════════════
+     ══ Skipped tests (24) ══════════════════════════════════════════════════════════
      • On CRAN (19): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
      'test-1-autoplot.R:98:3', 'test-1-autoplot.R:130:3',
      'test-1-autoplot.R:157:3', 'test-1-autoplot.R:189:3',
@@ -825,356 +72,36 @@ Check the boxes above after successful execution and remove this line. Then run 
      'test-1-autoplot.R:343:3', 'test-1-autoplot.R:377:3',
      'test-2-autoplot.R:129:3', 'test-2-autoplot.R:182:3',
      'test-2-autoplot.R:204:3', 'test-2-autoplot.R:246:3',
-     'test-2-autoplot.R:300:3', 'test-autoplot_buffer.R:19:3',
-     'test-mlr3pipelines-graph-integration.R:5:3'
+     'test-2-autoplot.R:300:3', 'test-2-autoplot.R:352:3',
+     'test-autoplot_buffer.R:19:3'
      • On Linux (2): 'test-2-autoplot.R:8:3', 'test-2-autoplot.R:54:3'
-     • empty test (1): 'test-helper-DataBackend.R:1:1'
-     
-     ══ Failed tests ════════════════════════════════════════════════════════════════
-     ── Error ('test-2-autoplot.R:331:3'): plot() works for 'spcv_knndm' ────────────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-2-autoplot.R:331:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:21:3'): folds can be printed ─────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:21:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:31:3'): reps can be printed ──────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:31:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:41:3'): resampling iterations equals folds * repeats ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:41:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingSpCVKnndm.R:10:3'): mlr3spatiotempcv indices are the same as CAST knndm: modeldomain ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:10:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     ── Error ('test-ResamplingSpCVKnndm.R:38:3'): mlr3spatiotempcv indices are the same as CAST knndm: ppoints ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:38:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     
-     [ FAIL 6 | WARN 0 | SKIP 22 | PASS 1202 ]
-     Deleting unused snapshots:
-     • 1-autoplot/autoplot-show-blocks-true-show-labels-true.svg
-     • 1-autoplot/custom-cv-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/custom-cv-fold-1-2.svg
-     • 1-autoplot/custom-cv-fold-1-sample-fold-n.svg
-     • 1-autoplot/custom-cv-fold-1.svg
-     • 1-autoplot/custom-cv-sample-fold-n.svg
-     • 1-autoplot/cv-fold-1-2-groups-col-role.svg
-     • 1-autoplot/cv-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/cv-fold-1-2.svg
-     • 1-autoplot/cv-fold-1-groups-col-role.svg
-     • 1-autoplot/cv-fold-1-sample-fold-n.svg
-     • 1-autoplot/cv-fold-1.svg
-     • 1-autoplot/cv-sample-fold-n.svg
-     • 1-autoplot/repcv-fold-1-2-rep-1.svg
-     • 1-autoplot/repcv-fold-1-2-rep-2.svg
-     • 1-autoplot/repcv-fold-1-rep-1.svg
-     • 1-autoplot/repcv-fold-1-rep-2.svg
-     • 1-autoplot/repspcvblock-fold-1-2-rep-1.svg
-     • 1-autoplot/repspcvblock-fold-1-2-rep-2.svg
-     • 1-autoplot/repspcvblock-fold-1-rep-1.svg
-     • 1-autoplot/repspcvblock-fold-1-rep-2.svg
-     • 1-autoplot/repspcvcoords-fold-1-2-rep-1.svg
-     • 1-autoplot/repspcvcoords-fold-1-2-rep-2.svg
-     • 1-autoplot/repspcvcoords-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/repspcvcoords-fold-1-rep-1.svg
-     • 1-autoplot/repspcvcoords-fold-1-rep-2.svg
-     • 1-autoplot/repspcvcoords-fold-1-sample-fold-n.svg
-     • 1-autoplot/repspcvcoords-sample-fold-n.svg
-     • 1-autoplot/repspcvenv-fold-1-2-rep-1.svg
-     • 1-autoplot/repspcvenv-fold-1-2-rep-2.svg
-     • 1-autoplot/repspcvenv-fold-1-rep-1.svg
-     • 1-autoplot/repspcvenv-fold-1-rep-2.svg
-     • 1-autoplot/spcvblock-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/spcvblock-fold-1-2.svg
-     • 1-autoplot/spcvblock-fold-1-sample-fold-n.svg
-     • 1-autoplot/spcvblock-fold-1.svg
-     • 1-autoplot/spcvblock-sample-fold-n.svg
-     • 1-autoplot/spcvcoords-fold-1-2.svg
-     • 1-autoplot/spcvcoords-fold-1.svg
-     • 1-autoplot/spcvenv-fold-1-2-sample-fold-n.svg
-     • 1-autoplot/spcvenv-fold-1-2.svg
-     • 1-autoplot/spcvenv-fold-1-sample-fold-n.svg
-     • 1-autoplot/spcvenv-fold-1.svg
-     • 1-autoplot/spcvenv-sample-fold-n.svg
-     • 2-autoplot/repspcvdisc-fold-1-2-rep-2.svg
-     • 2-autoplot/repspcvdisc-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/repspcvdisc-fold-1-rep-1-sample-n-fold.svg
-     • 2-autoplot/repspcvdisc-fold-1-rep-2.svg
-     • 2-autoplot/repspcvdisc-fold-1-sample-fold-n.svg
-     • 2-autoplot/repspcvdisc-sample-fold-n.svg
-     • 2-autoplot/repspcvknndm-fold-1-2-rep-2.svg
-     • 2-autoplot/repspcvknndm-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/repspcvknndm-fold-1-rep-1-sample-n-fold.svg
-     • 2-autoplot/repspcvknndm-fold-1-rep-2.svg
-     • 2-autoplot/repspcvknndm-fold-1-sample-fold-n.svg
-     • 2-autoplot/repspcvknndm-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-fold-1-2-rep-2.svg
-     • 2-autoplot/repspcvtiles-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-fold-1-2.svg
-     • 2-autoplot/repspcvtiles-fold-1-rep-2.svg
-     • 2-autoplot/repspcvtiles-fold-1-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-fold-1.svg
-     • 2-autoplot/repspcvtiles-sample-fold-n.svg
-     • 2-autoplot/repspcvtiles-show-omitted.svg
-     • 2-autoplot/repsptcvcstf-2d-space-var-fold-1-2-rep-2.svg
-     • 2-autoplot/repsptcvcstf-2d-space-var-fold-1-rep-2.svg
-     • 2-autoplot/repsptcvcstf-fold-1-2-rep-1.svg
-     • 2-autoplot/repsptcvcstf-fold-1-2-rep-2.svg
-     • 2-autoplot/repsptcvcstf-fold-1-rep-1-sample-fold-n.svg
-     • 2-autoplot/repsptcvcstf-fold-1-rep-2.svg
-     • 2-autoplot/spcvdisc-fold-1-2.svg
-     • 2-autoplot/spcvdisc-fold-1.svg
-     • 2-autoplot/spcvdisc-show-omitted.svg
-     • 2-autoplot/spcvknndm-all-test-sets.svg
-     • 2-autoplot/spcvknndm-fold-1-2.svg
-     • 2-autoplot/spcvknndm-fold-1.svg
-     • 2-autoplot/sptcvcstf-2d-space-var-all-test-sets.svg
-     • 2-autoplot/sptcvcstf-2d-space-var-fold-1-2.svg
-     • 2-autoplot/sptcvcstf-2d-space-var-fold-1.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-all-test-sets.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2-rep-2.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-rep-2.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-fold-1.svg
-     • 2-autoplot/sptcvcstf-2d-time-var-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-2-sample-fold-n.svg
-     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-2.svg
-     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-sample-fold-n.svg
-     • autoplot_buffer/spcvbuffer-fold-1-2.svg
-     Error: Test failures
-     Execution halted
-- [x] ERROR: r-prerel-windows-x86_64
-     Running 'testthat.R' [46s]
-     Running the tests in 'tests/testthat.R' failed.
-     Complete output:
-     > if (requireNamespace("testthat", quietly = TRUE)) {
-     +   library("checkmate")
-     +   library("testthat")
-     +   library("mlr3spatiotempcv")
-     +   test_check("mlr3spatiotempcv")
-     + }
-     Loading required package: mlr3
-     Starting 2 test processes
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
-     
-     ══ Skipped tests (23) ══════════════════════════════════════════════════════════
-     • On CRAN (18): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
-     'test-1-autoplot.R:98:3', 'test-1-autoplot.R:130:3',
-     'test-1-autoplot.R:157:3', 'test-1-autoplot.R:189:3',
-     'test-1-autoplot.R:224:3', 'test-1-autoplot.R:257:3',
-     'test-1-autoplot.R:268:3', 'test-1-autoplot.R:315:3',
-     'test-1-autoplot.R:343:3', 'test-1-autoplot.R:377:3',
-     'test-2-autoplot.R:129:3', 'test-2-autoplot.R:182:3',
-     'test-2-autoplot.R:204:3', 'test-2-autoplot.R:246:3',
-     'test-2-autoplot.R:300:3', 'test-autoplot_buffer.R:19:3'
-     • On Windows (2): 'test-2-autoplot.R:9:3', 'test-2-autoplot.R:55:3'
      • empty test (1): 'test-helper-DataBackend.R:1:1'
      • raster cannot be loaded (1): 'test-mlr3pipelines-graph-integration.R:4:3'
      • skmeans cannot be loaded (1): 'test-mlr_sptcv_generic.R:70:3'
      
      ══ Failed tests ════════════════════════════════════════════════════════════════
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:21:3'): folds can be printed ─────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
+     ── Error ('test-TaskClassifST.R:16:3'): Supplying a non-spatio temporal task gives descriptive error message ──
+     Error: Element with key 'boston_housing' not found in DictionaryTask!
      Backtrace:
      ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:21:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:31:3'): reps can be printed ──────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:31:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:41:3'): resampling iterations equals folds * repeats ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:41:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingSpCVKnndm.R:10:3'): mlr3spatiotempcv indices are the same as CAST knndm: modeldomain ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:10:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     ── Error ('test-ResamplingSpCVKnndm.R:38:3'): mlr3spatiotempcv indices are the same as CAST knndm: ppoints ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:38:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     ── Error ('test-2-autoplot.R:331:3'): plot() works for 'spcv_knndm' ────────────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-2-autoplot.R:331:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
+     1. ├─testthat::expect_error(...) at test-TaskClassifST.R:16:3
+     2. │ └─testthat:::expect_condition_matching(...)
+     3. │   └─testthat:::quasi_capture(...)
+     4. │     ├─testthat (local) .capture(...)
+     5. │     │ └─base::withCallingHandlers(...)
+     6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+     7. ├─rsmp("spcv_coords")$instantiate(tsk("boston_housing"))
+     8. │ └─mlr3spatiotempcv:::.__ResamplingSpCVCoords__instantiate(...)
+     9. │   └─mlr3::assert_task(task)
+     10. │     └─checkmate::assert_class(task, "Task", .var.name = .var.name)
+     11. │       └─checkmate::checkClass(x, classes, ordered, null.ok)
+     12. └─mlr3::tsk("boston_housing")
+     13.   └─mlr3misc::dictionary_sugar_get(dict = mlr_tasks, .key, ...)
+     14.     └─mlr3misc:::dictionary_get(dict, .key)
+     15.       └─mlr3misc:::dictionary_retrieve_item(self, key)
+     16.         └─mlr3misc::stopf(...)
      
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
+     [ FAIL 1 | WARN 1 | SKIP 24 | PASS 1206 ]
      Deleting unused snapshots:
      • 1-autoplot/autoplot-show-blocks-true-show-labels-true.svg
      • 1-autoplot/custom-cv-fold-1-2-sample-fold-n.svg
@@ -1249,7 +176,6 @@ Check the boxes above after successful execution and remove this line. Then run 
      • 2-autoplot/spcvdisc-fold-1-2.svg
      • 2-autoplot/spcvdisc-fold-1.svg
      • 2-autoplot/spcvdisc-show-omitted.svg
-     • 2-autoplot/spcvknndm-all-test-sets.svg
      • 2-autoplot/spcvknndm-fold-1-2.svg
      • 2-autoplot/spcvknndm-fold-1.svg
      • 2-autoplot/sptcvcstf-2d-space-var-all-test-sets.svg
@@ -1269,8 +195,8 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [x] ERROR: r-patched-linux-x86_64
-     Running ‘testthat.R’ [124s/87s]
+- [ ] ERROR: r-devel-linux-x86_64-debian-gcc
+     Running ‘testthat.R’ [87s/59s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
      > if (requireNamespace("testthat", quietly = TRUE)) {
@@ -1281,10 +207,10 @@ Check the boxes above after successful execution and remove this line. Then run 
      + }
      Loading required package: mlr3
      Starting 2 test processes
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
+     [ FAIL 1 | WARN 1 | SKIP 24 | PASS 1206 ]
      
-     ══ Skipped tests (23) ══════════════════════════════════════════════════════════
-     • On CRAN (18): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
+     ══ Skipped tests (24) ══════════════════════════════════════════════════════════
+     • On CRAN (19): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
      'test-1-autoplot.R:98:3', 'test-1-autoplot.R:130:3',
      'test-1-autoplot.R:157:3', 'test-1-autoplot.R:189:3',
      'test-1-autoplot.R:224:3', 'test-1-autoplot.R:257:3',
@@ -1292,123 +218,36 @@ Check the boxes above after successful execution and remove this line. Then run 
      'test-1-autoplot.R:343:3', 'test-1-autoplot.R:377:3',
      'test-2-autoplot.R:129:3', 'test-2-autoplot.R:182:3',
      'test-2-autoplot.R:204:3', 'test-2-autoplot.R:246:3',
-     'test-2-autoplot.R:300:3', 'test-autoplot_buffer.R:19:3'
+     'test-2-autoplot.R:300:3', 'test-2-autoplot.R:352:3',
+     'test-autoplot_buffer.R:19:3'
      • On Linux (2): 'test-2-autoplot.R:8:3', 'test-2-autoplot.R:54:3'
      • empty test (1): 'test-helper-DataBackend.R:1:1'
      • raster cannot be loaded (1): 'test-mlr3pipelines-graph-integration.R:4:3'
      • skmeans cannot be loaded (1): 'test-mlr_sptcv_generic.R:70:3'
      
      ══ Failed tests ════════════════════════════════════════════════════════════════
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:21:3'): folds can be printed ─────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
+     ── Error ('test-TaskClassifST.R:16:3'): Supplying a non-spatio temporal task gives descriptive error message ──
+     Error: Element with key 'boston_housing' not found in DictionaryTask!
      Backtrace:
      ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:21:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:31:3'): reps can be printed ──────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:31:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:41:3'): resampling iterations equals folds * repeats ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:41:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-2-autoplot.R:331:3'): plot() works for 'spcv_knndm' ────────────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-2-autoplot.R:331:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingSpCVKnndm.R:10:3'): mlr3spatiotempcv indices are the same as CAST knndm: modeldomain ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:10:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     ── Error ('test-ResamplingSpCVKnndm.R:38:3'): mlr3spatiotempcv indices are the same as CAST knndm: ppoints ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:38:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
+     1. ├─testthat::expect_error(...) at test-TaskClassifST.R:16:3
+     2. │ └─testthat:::expect_condition_matching(...)
+     3. │   └─testthat:::quasi_capture(...)
+     4. │     ├─testthat (local) .capture(...)
+     5. │     │ └─base::withCallingHandlers(...)
+     6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+     7. ├─rsmp("spcv_coords")$instantiate(tsk("boston_housing"))
+     8. │ └─mlr3spatiotempcv:::.__ResamplingSpCVCoords__instantiate(...)
+     9. │   └─mlr3::assert_task(task)
+     10. │     └─checkmate::assert_class(task, "Task", .var.name = .var.name)
+     11. │       └─checkmate::checkClass(x, classes, ordered, null.ok)
+     12. └─mlr3::tsk("boston_housing")
+     13.   └─mlr3misc::dictionary_sugar_get(dict = mlr_tasks, .key, ...)
+     14.     └─mlr3misc:::dictionary_get(dict, .key)
+     15.       └─mlr3misc:::dictionary_retrieve_item(self, key)
+     16.         └─mlr3misc::stopf(...)
      
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
+     [ FAIL 1 | WARN 1 | SKIP 24 | PASS 1206 ]
      Deleting unused snapshots:
      • 1-autoplot/autoplot-show-blocks-true-show-labels-true.svg
      • 1-autoplot/custom-cv-fold-1-2-sample-fold-n.svg
@@ -1483,7 +322,6 @@ Check the boxes above after successful execution and remove this line. Then run 
      • 2-autoplot/spcvdisc-fold-1-2.svg
      • 2-autoplot/spcvdisc-fold-1.svg
      • 2-autoplot/spcvdisc-show-omitted.svg
-     • 2-autoplot/spcvknndm-all-test-sets.svg
      • 2-autoplot/spcvknndm-fold-1-2.svg
      • 2-autoplot/spcvknndm-fold-1.svg
      • 2-autoplot/sptcvcstf-2d-space-var-all-test-sets.svg
@@ -1503,8 +341,8 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [x] ERROR: r-release-linux-x86_64
-     Running ‘testthat.R’ [129s/98s]
+- [ ] ERROR: r-devel-linux-x86_64-fedora-clang
+     Running ‘testthat.R’ [183s/92s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
      > if (requireNamespace("testthat", quietly = TRUE)) {
@@ -1515,10 +353,10 @@ Check the boxes above after successful execution and remove this line. Then run 
      + }
      Loading required package: mlr3
      Starting 2 test processes
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
+     [ FAIL 1 | WARN 1 | SKIP 24 | PASS 1206 ]
      
-     ══ Skipped tests (23) ══════════════════════════════════════════════════════════
-     • On CRAN (18): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
+     ══ Skipped tests (24) ══════════════════════════════════════════════════════════
+     • On CRAN (19): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
      'test-1-autoplot.R:98:3', 'test-1-autoplot.R:130:3',
      'test-1-autoplot.R:157:3', 'test-1-autoplot.R:189:3',
      'test-1-autoplot.R:224:3', 'test-1-autoplot.R:257:3',
@@ -1526,123 +364,36 @@ Check the boxes above after successful execution and remove this line. Then run 
      'test-1-autoplot.R:343:3', 'test-1-autoplot.R:377:3',
      'test-2-autoplot.R:129:3', 'test-2-autoplot.R:182:3',
      'test-2-autoplot.R:204:3', 'test-2-autoplot.R:246:3',
-     'test-2-autoplot.R:300:3', 'test-autoplot_buffer.R:19:3'
+     'test-2-autoplot.R:300:3', 'test-2-autoplot.R:352:3',
+     'test-autoplot_buffer.R:19:3'
      • On Linux (2): 'test-2-autoplot.R:8:3', 'test-2-autoplot.R:54:3'
      • empty test (1): 'test-helper-DataBackend.R:1:1'
      • raster cannot be loaded (1): 'test-mlr3pipelines-graph-integration.R:4:3'
      • skmeans cannot be loaded (1): 'test-mlr_sptcv_generic.R:70:3'
      
      ══ Failed tests ════════════════════════════════════════════════════════════════
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:21:3'): folds can be printed ─────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
+     ── Error ('test-TaskClassifST.R:16:3'): Supplying a non-spatio temporal task gives descriptive error message ──
+     Error: Element with key 'boston_housing' not found in DictionaryTask!
      Backtrace:
      ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:21:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:31:3'): reps can be printed ──────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:31:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:41:3'): resampling iterations equals folds * repeats ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:41:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-2-autoplot.R:331:3'): plot() works for 'spcv_knndm' ────────────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-2-autoplot.R:331:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingSpCVKnndm.R:10:3'): mlr3spatiotempcv indices are the same as CAST knndm: modeldomain ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:10:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     ── Error ('test-ResamplingSpCVKnndm.R:38:3'): mlr3spatiotempcv indices are the same as CAST knndm: ppoints ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:38:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
+     1. ├─testthat::expect_error(...) at test-TaskClassifST.R:16:3
+     2. │ └─testthat:::expect_condition_matching(...)
+     3. │   └─testthat:::quasi_capture(...)
+     4. │     ├─testthat (local) .capture(...)
+     5. │     │ └─base::withCallingHandlers(...)
+     6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+     7. ├─rsmp("spcv_coords")$instantiate(tsk("boston_housing"))
+     8. │ └─mlr3spatiotempcv:::.__ResamplingSpCVCoords__instantiate(...)
+     9. │   └─mlr3::assert_task(task)
+     10. │     └─checkmate::assert_class(task, "Task", .var.name = .var.name)
+     11. │       └─checkmate::checkClass(x, classes, ordered, null.ok)
+     12. └─mlr3::tsk("boston_housing")
+     13.   └─mlr3misc::dictionary_sugar_get(dict = mlr_tasks, .key, ...)
+     14.     └─mlr3misc:::dictionary_get(dict, .key)
+     15.       └─mlr3misc:::dictionary_retrieve_item(self, key)
+     16.         └─mlr3misc::stopf(...)
      
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
+     [ FAIL 1 | WARN 1 | SKIP 24 | PASS 1206 ]
      Deleting unused snapshots:
      • 1-autoplot/autoplot-show-blocks-true-show-labels-true.svg
      • 1-autoplot/custom-cv-fold-1-2-sample-fold-n.svg
@@ -1717,7 +468,6 @@ Check the boxes above after successful execution and remove this line. Then run 
      • 2-autoplot/spcvdisc-fold-1-2.svg
      • 2-autoplot/spcvdisc-fold-1.svg
      • 2-autoplot/spcvdisc-show-omitted.svg
-     • 2-autoplot/spcvknndm-all-test-sets.svg
      • 2-autoplot/spcvknndm-fold-1-2.svg
      • 2-autoplot/spcvknndm-fold-1.svg
      • 2-autoplot/sptcvcstf-2d-space-var-all-test-sets.svg
@@ -1737,9 +487,9 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [x] ERROR: r-release-windows-x86_64
-     Running 'testthat.R' [70s]
-     Running the tests in 'tests/testthat.R' failed.
+- [ ] ERROR: r-devel-linux-x86_64-fedora-gcc
+     Running ‘testthat.R’ [189s/106s]
+     Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
      > if (requireNamespace("testthat", quietly = TRUE)) {
      +   library("checkmate")
@@ -1749,10 +499,10 @@ Check the boxes above after successful execution and remove this line. Then run 
      + }
      Loading required package: mlr3
      Starting 2 test processes
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
+     [ FAIL 1 | WARN 1 | SKIP 23 | PASS 1211 ]
      
      ══ Skipped tests (23) ══════════════════════════════════════════════════════════
-     • On CRAN (18): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
+     • On CRAN (20): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
      'test-1-autoplot.R:98:3', 'test-1-autoplot.R:130:3',
      'test-1-autoplot.R:157:3', 'test-1-autoplot.R:189:3',
      'test-1-autoplot.R:224:3', 'test-1-autoplot.R:257:3',
@@ -1760,123 +510,34 @@ Check the boxes above after successful execution and remove this line. Then run 
      'test-1-autoplot.R:343:3', 'test-1-autoplot.R:377:3',
      'test-2-autoplot.R:129:3', 'test-2-autoplot.R:182:3',
      'test-2-autoplot.R:204:3', 'test-2-autoplot.R:246:3',
-     'test-2-autoplot.R:300:3', 'test-autoplot_buffer.R:19:3'
-     • On Windows (2): 'test-2-autoplot.R:9:3', 'test-2-autoplot.R:55:3'
+     'test-2-autoplot.R:300:3', 'test-2-autoplot.R:352:3',
+     'test-autoplot_buffer.R:19:3', 'test-mlr3pipelines-graph-integration.R:5:3'
+     • On Linux (2): 'test-2-autoplot.R:8:3', 'test-2-autoplot.R:54:3'
      • empty test (1): 'test-helper-DataBackend.R:1:1'
-     • raster cannot be loaded (1): 'test-mlr3pipelines-graph-integration.R:4:3'
-     • skmeans cannot be loaded (1): 'test-mlr_sptcv_generic.R:70:3'
      
      ══ Failed tests ════════════════════════════════════════════════════════════════
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:21:3'): folds can be printed ─────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
+     ── Error ('test-TaskClassifST.R:16:3'): Supplying a non-spatio temporal task gives descriptive error message ──
+     Error: Element with key 'boston_housing' not found in DictionaryTask!
      Backtrace:
      ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:21:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:31:3'): reps can be printed ──────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:31:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:41:3'): resampling iterations equals folds * repeats ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:41:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-2-autoplot.R:331:3'): plot() works for 'spcv_knndm' ────────────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-2-autoplot.R:331:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingSpCVKnndm.R:10:3'): mlr3spatiotempcv indices are the same as CAST knndm: modeldomain ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:10:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     ── Error ('test-ResamplingSpCVKnndm.R:38:3'): mlr3spatiotempcv indices are the same as CAST knndm: ppoints ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:38:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
+     1. ├─testthat::expect_error(...) at test-TaskClassifST.R:16:3
+     2. │ └─testthat:::expect_condition_matching(...)
+     3. │   └─testthat:::quasi_capture(...)
+     4. │     ├─testthat (local) .capture(...)
+     5. │     │ └─base::withCallingHandlers(...)
+     6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+     7. ├─rsmp("spcv_coords")$instantiate(tsk("boston_housing"))
+     8. │ └─mlr3spatiotempcv:::.__ResamplingSpCVCoords__instantiate(...)
+     9. │   └─mlr3::assert_task(task)
+     10. │     └─checkmate::assert_class(task, "Task", .var.name = .var.name)
+     11. │       └─checkmate::checkClass(x, classes, ordered, null.ok)
+     12. └─mlr3::tsk("boston_housing")
+     13.   └─mlr3misc::dictionary_sugar_get(dict = mlr_tasks, .key, ...)
+     14.     └─mlr3misc:::dictionary_get(dict, .key)
+     15.       └─mlr3misc:::dictionary_retrieve_item(self, key)
+     16.         └─mlr3misc::stopf(...)
      
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
+     [ FAIL 1 | WARN 1 | SKIP 23 | PASS 1211 ]
      Deleting unused snapshots:
      • 1-autoplot/autoplot-show-blocks-true-show-labels-true.svg
      • 1-autoplot/custom-cv-fold-1-2-sample-fold-n.svg
@@ -1951,7 +612,6 @@ Check the boxes above after successful execution and remove this line. Then run 
      • 2-autoplot/spcvdisc-fold-1-2.svg
      • 2-autoplot/spcvdisc-fold-1.svg
      • 2-autoplot/spcvdisc-show-omitted.svg
-     • 2-autoplot/spcvknndm-all-test-sets.svg
      • 2-autoplot/spcvknndm-fold-1-2.svg
      • 2-autoplot/spcvknndm-fold-1.svg
      • 2-autoplot/sptcvcstf-2d-space-var-all-test-sets.svg
@@ -1971,8 +631,8 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [x] ERROR: r-oldrel-windows-x86_64
-     Running 'testthat.R' [64s]
+- [ ] ERROR: r-devel-windows-x86_64
+     Running 'testthat.R' [51s]
      Running the tests in 'tests/testthat.R' failed.
      Complete output:
      > if (requireNamespace("testthat", quietly = TRUE)) {
@@ -1983,10 +643,10 @@ Check the boxes above after successful execution and remove this line. Then run 
      + }
      Loading required package: mlr3
      Starting 2 test processes
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
+     [ FAIL 1 | WARN 1 | SKIP 24 | PASS 1206 ]
      
-     ══ Skipped tests (23) ══════════════════════════════════════════════════════════
-     • On CRAN (18): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
+     ══ Skipped tests (24) ══════════════════════════════════════════════════════════
+     • On CRAN (19): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
      'test-1-autoplot.R:98:3', 'test-1-autoplot.R:130:3',
      'test-1-autoplot.R:157:3', 'test-1-autoplot.R:189:3',
      'test-1-autoplot.R:224:3', 'test-1-autoplot.R:257:3',
@@ -1994,123 +654,36 @@ Check the boxes above after successful execution and remove this line. Then run 
      'test-1-autoplot.R:343:3', 'test-1-autoplot.R:377:3',
      'test-2-autoplot.R:129:3', 'test-2-autoplot.R:182:3',
      'test-2-autoplot.R:204:3', 'test-2-autoplot.R:246:3',
-     'test-2-autoplot.R:300:3', 'test-autoplot_buffer.R:19:3'
+     'test-2-autoplot.R:300:3', 'test-2-autoplot.R:352:3',
+     'test-autoplot_buffer.R:19:3'
      • On Windows (2): 'test-2-autoplot.R:9:3', 'test-2-autoplot.R:55:3'
      • empty test (1): 'test-helper-DataBackend.R:1:1'
      • raster cannot be loaded (1): 'test-mlr3pipelines-graph-integration.R:4:3'
      • skmeans cannot be loaded (1): 'test-mlr_sptcv_generic.R:70:3'
      
      ══ Failed tests ════════════════════════════════════════════════════════════════
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:21:3'): folds can be printed ─────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
+     ── Error ('test-TaskClassifST.R:16:3'): Supplying a non-spatio temporal task gives descriptive error message ──
+     Error: Element with key 'boston_housing' not found in DictionaryTask!
      Backtrace:
      ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:21:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:31:3'): reps can be printed ──────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:31:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingRepeatedSpCVKnndm.R:41:3'): resampling iterations equals folds * repeats ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-ResamplingRepeatedSpCVKnndm.R:41:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-2-autoplot.R:331:3'): plot() works for 'spcv_knndm' ────────────
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsp$instantiate(task))) at test-2-autoplot.R:331:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingRepeatedSpCVKnndm__.sample(...)
-     9.         └─mlr3misc::map(...)
-     10.           └─base::lapply(.x, .f, ...)
-     11.             └─mlr3spatiotempcv (local) FUN(X[[i]], ...)
-     ── Error ('test-ResamplingSpCVKnndm.R:10:3'): mlr3spatiotempcv indices are the same as CAST knndm: modeldomain ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:10:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
-     ── Error ('test-ResamplingSpCVKnndm.R:38:3'): mlr3spatiotempcv indices are the same as CAST knndm: ppoints ──
-     Error in `CAST::knndm(tpoints = points, modeldomain = self$param_set$values$modeldomain, 
-     ppoints = self$param_set$values$ppoints, k = self$param_set$values$folds, 
-     maxp = self$param_set$values$maxp, clustering = self$param_set$values$clustering, 
-     linkf = self$param_set$values$linkf, samplesize = self$param_set$values$samplesize, 
-     sampling = self$param_set$values$sampling)`: unused argument (ppoints = self$param_set$values$ppoints)
-     Backtrace:
-     ▆
-     1. ├─base::suppressMessages(suppressWarnings(rsmp$instantiate(task))) at test-ResamplingSpCVKnndm.R:38:3
-     2. │ └─base::withCallingHandlers(...)
-     3. ├─base::suppressWarnings(rsmp$instantiate(task))
-     4. │ └─base::withCallingHandlers(...)
-     5. └─rsmp$instantiate(task)
-     6.   └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__instantiate(...)
-     7.     └─private$.sample(task$row_ids, task$coordinates(), task$crs)
-     8.       └─mlr3spatiotempcv:::.__ResamplingSpCVKnndm__.sample(...)
+     1. ├─testthat::expect_error(...) at test-TaskClassifST.R:16:3
+     2. │ └─testthat:::expect_condition_matching(...)
+     3. │   └─testthat:::quasi_capture(...)
+     4. │     ├─testthat (local) .capture(...)
+     5. │     │ └─base::withCallingHandlers(...)
+     6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+     7. ├─rsmp("spcv_coords")$instantiate(tsk("boston_housing"))
+     8. │ └─mlr3spatiotempcv:::.__ResamplingSpCVCoords__instantiate(...)
+     9. │   └─mlr3::assert_task(task)
+     10. │     └─checkmate::assert_class(task, "Task", .var.name = .var.name)
+     11. │       └─checkmate::checkClass(x, classes, ordered, null.ok)
+     12. └─mlr3::tsk("boston_housing")
+     13.   └─mlr3misc::dictionary_sugar_get(dict = mlr_tasks, .key, ...)
+     14.     └─mlr3misc:::dictionary_get(dict, .key)
+     15.       └─mlr3misc:::dictionary_retrieve_item(self, key)
+     16.         └─mlr3misc::stopf(...)
      
-     [ FAIL 6 | WARN 0 | SKIP 23 | PASS 1197 ]
+     [ FAIL 1 | WARN 1 | SKIP 24 | PASS 1206 ]
      Deleting unused snapshots:
      • 1-autoplot/autoplot-show-blocks-true-show-labels-true.svg
      • 1-autoplot/custom-cv-fold-1-2-sample-fold-n.svg
@@ -2185,7 +758,298 @@ Check the boxes above after successful execution and remove this line. Then run 
      • 2-autoplot/spcvdisc-fold-1-2.svg
      • 2-autoplot/spcvdisc-fold-1.svg
      • 2-autoplot/spcvdisc-show-omitted.svg
-     • 2-autoplot/spcvknndm-all-test-sets.svg
+     • 2-autoplot/spcvknndm-fold-1-2.svg
+     • 2-autoplot/spcvknndm-fold-1.svg
+     • 2-autoplot/sptcvcstf-2d-space-var-all-test-sets.svg
+     • 2-autoplot/sptcvcstf-2d-space-var-fold-1-2.svg
+     • 2-autoplot/sptcvcstf-2d-space-var-fold-1.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-all-test-sets.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2-rep-2.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2-sample-fold-n.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-rep-2.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-sample-fold-n.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-fold-1.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-sample-fold-n.svg
+     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-2-sample-fold-n.svg
+     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-2.svg
+     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-sample-fold-n.svg
+     • autoplot_buffer/spcvbuffer-fold-1-2.svg
+     Error: Test failures
+     Execution halted
+- [ ] ERROR: r-patched-linux-x86_64
+     Running ‘testthat.R’ [102s/55s]
+     Running the tests in ‘tests/testthat.R’ failed.
+     Complete output:
+     > if (requireNamespace("testthat", quietly = TRUE)) {
+     +   library("checkmate")
+     +   library("testthat")
+     +   library("mlr3spatiotempcv")
+     +   test_check("mlr3spatiotempcv")
+     + }
+     Loading required package: mlr3
+     Starting 2 test processes
+     [ FAIL 1 | WARN 1 | SKIP 24 | PASS 1206 ]
+     
+     ══ Skipped tests (24) ══════════════════════════════════════════════════════════
+     • On CRAN (19): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
+     'test-1-autoplot.R:98:3', 'test-1-autoplot.R:130:3',
+     'test-1-autoplot.R:157:3', 'test-1-autoplot.R:189:3',
+     'test-1-autoplot.R:224:3', 'test-1-autoplot.R:257:3',
+     'test-1-autoplot.R:268:3', 'test-1-autoplot.R:315:3',
+     'test-1-autoplot.R:343:3', 'test-1-autoplot.R:377:3',
+     'test-2-autoplot.R:129:3', 'test-2-autoplot.R:182:3',
+     'test-2-autoplot.R:204:3', 'test-2-autoplot.R:246:3',
+     'test-2-autoplot.R:300:3', 'test-2-autoplot.R:352:3',
+     'test-autoplot_buffer.R:19:3'
+     • On Linux (2): 'test-2-autoplot.R:8:3', 'test-2-autoplot.R:54:3'
+     • empty test (1): 'test-helper-DataBackend.R:1:1'
+     • raster cannot be loaded (1): 'test-mlr3pipelines-graph-integration.R:4:3'
+     • skmeans cannot be loaded (1): 'test-mlr_sptcv_generic.R:70:3'
+     
+     ══ Failed tests ════════════════════════════════════════════════════════════════
+     ── Error ('test-TaskClassifST.R:16:3'): Supplying a non-spatio temporal task gives descriptive error message ──
+     Error: Element with key 'boston_housing' not found in DictionaryTask!
+     Backtrace:
+     ▆
+     1. ├─testthat::expect_error(...) at test-TaskClassifST.R:16:3
+     2. │ └─testthat:::expect_condition_matching(...)
+     3. │   └─testthat:::quasi_capture(...)
+     4. │     ├─testthat (local) .capture(...)
+     5. │     │ └─base::withCallingHandlers(...)
+     6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+     7. ├─rsmp("spcv_coords")$instantiate(tsk("boston_housing"))
+     8. │ └─mlr3spatiotempcv:::.__ResamplingSpCVCoords__instantiate(...)
+     9. │   └─mlr3::assert_task(task)
+     10. │     └─checkmate::assert_class(task, "Task", .var.name = .var.name)
+     11. │       └─checkmate::checkClass(x, classes, ordered, null.ok)
+     12. └─mlr3::tsk("boston_housing")
+     13.   └─mlr3misc::dictionary_sugar_get(dict = mlr_tasks, .key, ...)
+     14.     └─mlr3misc:::dictionary_get(dict, .key)
+     15.       └─mlr3misc:::dictionary_retrieve_item(self, key)
+     16.         └─mlr3misc::stopf(...)
+     
+     [ FAIL 1 | WARN 1 | SKIP 24 | PASS 1206 ]
+     Deleting unused snapshots:
+     • 1-autoplot/autoplot-show-blocks-true-show-labels-true.svg
+     • 1-autoplot/custom-cv-fold-1-2-sample-fold-n.svg
+     • 1-autoplot/custom-cv-fold-1-2.svg
+     • 1-autoplot/custom-cv-fold-1-sample-fold-n.svg
+     • 1-autoplot/custom-cv-fold-1.svg
+     • 1-autoplot/custom-cv-sample-fold-n.svg
+     • 1-autoplot/cv-fold-1-2-groups-col-role.svg
+     • 1-autoplot/cv-fold-1-2-sample-fold-n.svg
+     • 1-autoplot/cv-fold-1-2.svg
+     • 1-autoplot/cv-fold-1-groups-col-role.svg
+     • 1-autoplot/cv-fold-1-sample-fold-n.svg
+     • 1-autoplot/cv-fold-1.svg
+     • 1-autoplot/cv-sample-fold-n.svg
+     • 1-autoplot/repcv-fold-1-2-rep-1.svg
+     • 1-autoplot/repcv-fold-1-2-rep-2.svg
+     • 1-autoplot/repcv-fold-1-rep-1.svg
+     • 1-autoplot/repcv-fold-1-rep-2.svg
+     • 1-autoplot/repspcvblock-fold-1-2-rep-1.svg
+     • 1-autoplot/repspcvblock-fold-1-2-rep-2.svg
+     • 1-autoplot/repspcvblock-fold-1-rep-1.svg
+     • 1-autoplot/repspcvblock-fold-1-rep-2.svg
+     • 1-autoplot/repspcvcoords-fold-1-2-rep-1.svg
+     • 1-autoplot/repspcvcoords-fold-1-2-rep-2.svg
+     • 1-autoplot/repspcvcoords-fold-1-2-sample-fold-n.svg
+     • 1-autoplot/repspcvcoords-fold-1-rep-1.svg
+     • 1-autoplot/repspcvcoords-fold-1-rep-2.svg
+     • 1-autoplot/repspcvcoords-fold-1-sample-fold-n.svg
+     • 1-autoplot/repspcvcoords-sample-fold-n.svg
+     • 1-autoplot/repspcvenv-fold-1-2-rep-1.svg
+     • 1-autoplot/repspcvenv-fold-1-2-rep-2.svg
+     • 1-autoplot/repspcvenv-fold-1-rep-1.svg
+     • 1-autoplot/repspcvenv-fold-1-rep-2.svg
+     • 1-autoplot/spcvblock-fold-1-2-sample-fold-n.svg
+     • 1-autoplot/spcvblock-fold-1-2.svg
+     • 1-autoplot/spcvblock-fold-1-sample-fold-n.svg
+     • 1-autoplot/spcvblock-fold-1.svg
+     • 1-autoplot/spcvblock-sample-fold-n.svg
+     • 1-autoplot/spcvcoords-fold-1-2.svg
+     • 1-autoplot/spcvcoords-fold-1.svg
+     • 1-autoplot/spcvenv-fold-1-2-sample-fold-n.svg
+     • 1-autoplot/spcvenv-fold-1-2.svg
+     • 1-autoplot/spcvenv-fold-1-sample-fold-n.svg
+     • 1-autoplot/spcvenv-fold-1.svg
+     • 1-autoplot/spcvenv-sample-fold-n.svg
+     • 2-autoplot/repspcvdisc-fold-1-2-rep-2.svg
+     • 2-autoplot/repspcvdisc-fold-1-2-sample-fold-n.svg
+     • 2-autoplot/repspcvdisc-fold-1-rep-1-sample-n-fold.svg
+     • 2-autoplot/repspcvdisc-fold-1-rep-2.svg
+     • 2-autoplot/repspcvdisc-fold-1-sample-fold-n.svg
+     • 2-autoplot/repspcvdisc-sample-fold-n.svg
+     • 2-autoplot/repspcvknndm-fold-1-2-rep-2.svg
+     • 2-autoplot/repspcvknndm-fold-1-2-sample-fold-n.svg
+     • 2-autoplot/repspcvknndm-fold-1-rep-1-sample-n-fold.svg
+     • 2-autoplot/repspcvknndm-fold-1-rep-2.svg
+     • 2-autoplot/repspcvknndm-fold-1-sample-fold-n.svg
+     • 2-autoplot/repspcvknndm-sample-fold-n.svg
+     • 2-autoplot/repspcvtiles-fold-1-2-rep-2.svg
+     • 2-autoplot/repspcvtiles-fold-1-2-sample-fold-n.svg
+     • 2-autoplot/repspcvtiles-fold-1-2.svg
+     • 2-autoplot/repspcvtiles-fold-1-rep-2.svg
+     • 2-autoplot/repspcvtiles-fold-1-sample-fold-n.svg
+     • 2-autoplot/repspcvtiles-fold-1.svg
+     • 2-autoplot/repspcvtiles-sample-fold-n.svg
+     • 2-autoplot/repspcvtiles-show-omitted.svg
+     • 2-autoplot/repsptcvcstf-2d-space-var-fold-1-2-rep-2.svg
+     • 2-autoplot/repsptcvcstf-2d-space-var-fold-1-rep-2.svg
+     • 2-autoplot/repsptcvcstf-fold-1-2-rep-1.svg
+     • 2-autoplot/repsptcvcstf-fold-1-2-rep-2.svg
+     • 2-autoplot/repsptcvcstf-fold-1-rep-1-sample-fold-n.svg
+     • 2-autoplot/repsptcvcstf-fold-1-rep-2.svg
+     • 2-autoplot/spcvdisc-fold-1-2.svg
+     • 2-autoplot/spcvdisc-fold-1.svg
+     • 2-autoplot/spcvdisc-show-omitted.svg
+     • 2-autoplot/spcvknndm-fold-1-2.svg
+     • 2-autoplot/spcvknndm-fold-1.svg
+     • 2-autoplot/sptcvcstf-2d-space-var-all-test-sets.svg
+     • 2-autoplot/sptcvcstf-2d-space-var-fold-1-2.svg
+     • 2-autoplot/sptcvcstf-2d-space-var-fold-1.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-all-test-sets.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2-rep-2.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2-sample-fold-n.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-2.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-rep-2.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-fold-1-sample-fold-n.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-fold-1.svg
+     • 2-autoplot/sptcvcstf-2d-time-var-sample-fold-n.svg
+     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-2-sample-fold-n.svg
+     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-2.svg
+     • 2-autoplot/sptcvcstf-3d-time-var-fold-1-sample-fold-n.svg
+     • autoplot_buffer/spcvbuffer-fold-1-2.svg
+     Error: Test failures
+     Execution halted
+- [ ] ERROR: r-oldrel-windows-x86_64
+     Running 'testthat.R' [76s]
+     Running the tests in 'tests/testthat.R' failed.
+     Complete output:
+     > if (requireNamespace("testthat", quietly = TRUE)) {
+     +   library("checkmate")
+     +   library("testthat")
+     +   library("mlr3spatiotempcv")
+     +   test_check("mlr3spatiotempcv")
+     + }
+     Loading required package: mlr3
+     Starting 2 test processes
+     [ FAIL 1 | WARN 1 | SKIP 24 | PASS 1206 ]
+     
+     ══ Skipped tests (24) ══════════════════════════════════════════════════════════
+     • On CRAN (19): 'test-1-autoplot.R:40:3', 'test-1-autoplot.R:72:3',
+     'test-1-autoplot.R:98:3', 'test-1-autoplot.R:130:3',
+     'test-1-autoplot.R:157:3', 'test-1-autoplot.R:189:3',
+     'test-1-autoplot.R:224:3', 'test-1-autoplot.R:257:3',
+     'test-1-autoplot.R:268:3', 'test-1-autoplot.R:315:3',
+     'test-1-autoplot.R:343:3', 'test-1-autoplot.R:377:3',
+     'test-2-autoplot.R:129:3', 'test-2-autoplot.R:182:3',
+     'test-2-autoplot.R:204:3', 'test-2-autoplot.R:246:3',
+     'test-2-autoplot.R:300:3', 'test-2-autoplot.R:352:3',
+     'test-autoplot_buffer.R:19:3'
+     • On Windows (2): 'test-2-autoplot.R:9:3', 'test-2-autoplot.R:55:3'
+     • empty test (1): 'test-helper-DataBackend.R:1:1'
+     • raster cannot be loaded (1): 'test-mlr3pipelines-graph-integration.R:4:3'
+     • skmeans cannot be loaded (1): 'test-mlr_sptcv_generic.R:70:3'
+     
+     ══ Failed tests ════════════════════════════════════════════════════════════════
+     ── Error ('test-TaskClassifST.R:16:3'): Supplying a non-spatio temporal task gives descriptive error message ──
+     Error: Element with key 'boston_housing' not found in DictionaryTask!
+     Backtrace:
+     ▆
+     1. ├─testthat::expect_error(...) at test-TaskClassifST.R:16:3
+     2. │ └─testthat:::expect_condition_matching(...)
+     3. │   └─testthat:::quasi_capture(...)
+     4. │     ├─testthat (local) .capture(...)
+     5. │     │ └─base::withCallingHandlers(...)
+     6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+     7. ├─rsmp("spcv_coords")$instantiate(tsk("boston_housing"))
+     8. │ └─mlr3spatiotempcv:::.__ResamplingSpCVCoords__instantiate(...)
+     9. │   └─mlr3::assert_task(task)
+     10. │     └─checkmate::assert_class(task, "Task", .var.name = .var.name)
+     11. │       └─checkmate::checkClass(x, classes, ordered, null.ok)
+     12. └─mlr3::tsk("boston_housing")
+     13.   └─mlr3misc::dictionary_sugar_get(dict = mlr_tasks, .key, ...)
+     14.     └─mlr3misc:::dictionary_get(dict, .key)
+     15.       └─mlr3misc:::dictionary_retrieve_item(self, key)
+     16.         └─mlr3misc::stopf(...)
+     
+     [ FAIL 1 | WARN 1 | SKIP 24 | PASS 1206 ]
+     Deleting unused snapshots:
+     • 1-autoplot/autoplot-show-blocks-true-show-labels-true.svg
+     • 1-autoplot/custom-cv-fold-1-2-sample-fold-n.svg
+     • 1-autoplot/custom-cv-fold-1-2.svg
+     • 1-autoplot/custom-cv-fold-1-sample-fold-n.svg
+     • 1-autoplot/custom-cv-fold-1.svg
+     • 1-autoplot/custom-cv-sample-fold-n.svg
+     • 1-autoplot/cv-fold-1-2-groups-col-role.svg
+     • 1-autoplot/cv-fold-1-2-sample-fold-n.svg
+     • 1-autoplot/cv-fold-1-2.svg
+     • 1-autoplot/cv-fold-1-groups-col-role.svg
+     • 1-autoplot/cv-fold-1-sample-fold-n.svg
+     • 1-autoplot/cv-fold-1.svg
+     • 1-autoplot/cv-sample-fold-n.svg
+     • 1-autoplot/repcv-fold-1-2-rep-1.svg
+     • 1-autoplot/repcv-fold-1-2-rep-2.svg
+     • 1-autoplot/repcv-fold-1-rep-1.svg
+     • 1-autoplot/repcv-fold-1-rep-2.svg
+     • 1-autoplot/repspcvblock-fold-1-2-rep-1.svg
+     • 1-autoplot/repspcvblock-fold-1-2-rep-2.svg
+     • 1-autoplot/repspcvblock-fold-1-rep-1.svg
+     • 1-autoplot/repspcvblock-fold-1-rep-2.svg
+     • 1-autoplot/repspcvcoords-fold-1-2-rep-1.svg
+     • 1-autoplot/repspcvcoords-fold-1-2-rep-2.svg
+     • 1-autoplot/repspcvcoords-fold-1-2-sample-fold-n.svg
+     • 1-autoplot/repspcvcoords-fold-1-rep-1.svg
+     • 1-autoplot/repspcvcoords-fold-1-rep-2.svg
+     • 1-autoplot/repspcvcoords-fold-1-sample-fold-n.svg
+     • 1-autoplot/repspcvcoords-sample-fold-n.svg
+     • 1-autoplot/repspcvenv-fold-1-2-rep-1.svg
+     • 1-autoplot/repspcvenv-fold-1-2-rep-2.svg
+     • 1-autoplot/repspcvenv-fold-1-rep-1.svg
+     • 1-autoplot/repspcvenv-fold-1-rep-2.svg
+     • 1-autoplot/spcvblock-fold-1-2-sample-fold-n.svg
+     • 1-autoplot/spcvblock-fold-1-2.svg
+     • 1-autoplot/spcvblock-fold-1-sample-fold-n.svg
+     • 1-autoplot/spcvblock-fold-1.svg
+     • 1-autoplot/spcvblock-sample-fold-n.svg
+     • 1-autoplot/spcvcoords-fold-1-2.svg
+     • 1-autoplot/spcvcoords-fold-1.svg
+     • 1-autoplot/spcvenv-fold-1-2-sample-fold-n.svg
+     • 1-autoplot/spcvenv-fold-1-2.svg
+     • 1-autoplot/spcvenv-fold-1-sample-fold-n.svg
+     • 1-autoplot/spcvenv-fold-1.svg
+     • 1-autoplot/spcvenv-sample-fold-n.svg
+     • 2-autoplot/repspcvdisc-fold-1-2-rep-2.svg
+     • 2-autoplot/repspcvdisc-fold-1-2-sample-fold-n.svg
+     • 2-autoplot/repspcvdisc-fold-1-rep-1-sample-n-fold.svg
+     • 2-autoplot/repspcvdisc-fold-1-rep-2.svg
+     • 2-autoplot/repspcvdisc-fold-1-sample-fold-n.svg
+     • 2-autoplot/repspcvdisc-sample-fold-n.svg
+     • 2-autoplot/repspcvknndm-fold-1-2-rep-2.svg
+     • 2-autoplot/repspcvknndm-fold-1-2-sample-fold-n.svg
+     • 2-autoplot/repspcvknndm-fold-1-rep-1-sample-n-fold.svg
+     • 2-autoplot/repspcvknndm-fold-1-rep-2.svg
+     • 2-autoplot/repspcvknndm-fold-1-sample-fold-n.svg
+     • 2-autoplot/repspcvknndm-sample-fold-n.svg
+     • 2-autoplot/repspcvtiles-fold-1-2-rep-2.svg
+     • 2-autoplot/repspcvtiles-fold-1-2-sample-fold-n.svg
+     • 2-autoplot/repspcvtiles-fold-1-2.svg
+     • 2-autoplot/repspcvtiles-fold-1-rep-2.svg
+     • 2-autoplot/repspcvtiles-fold-1-sample-fold-n.svg
+     • 2-autoplot/repspcvtiles-fold-1.svg
+     • 2-autoplot/repspcvtiles-sample-fold-n.svg
+     • 2-autoplot/repspcvtiles-show-omitted.svg
+     • 2-autoplot/repsptcvcstf-2d-space-var-fold-1-2-rep-2.svg
+     • 2-autoplot/repsptcvcstf-2d-space-var-fold-1-rep-2.svg
+     • 2-autoplot/repsptcvcstf-fold-1-2-rep-1.svg
+     • 2-autoplot/repsptcvcstf-fold-1-2-rep-2.svg
+     • 2-autoplot/repsptcvcstf-fold-1-rep-1-sample-fold-n.svg
+     • 2-autoplot/repsptcvcstf-fold-1-rep-2.svg
+     • 2-autoplot/spcvdisc-fold-1-2.svg
+     • 2-autoplot/spcvdisc-fold-1.svg
+     • 2-autoplot/spcvdisc-show-omitted.svg
      • 2-autoplot/spcvknndm-fold-1-2.svg
      • 2-autoplot/spcvknndm-fold-1.svg
      • 2-autoplot/sptcvcstf-2d-space-var-all-test-sets.svg
