@@ -6,7 +6,7 @@
 \alias{cookfarm_mlr3}
 \title{Cookfarm Profiles Regression Task}
 \format{
-\link[R6:R6Class]{R6::R6Class} inheriting from \link{TaskRegr}.
+\link[R6:R6Class]{R6::R6Class} inheriting from \link[mlr3:TaskRegr]{mlr3::TaskRegr}.
 }
 \usage{
 data(cookfarm_mlr3)
@@ -58,9 +58,9 @@ modeling the spatial and temporal variation of soil moisture in a dryland
 agricultural field. Submitted to Water Resources Research.
 }
 \seealso{
-\link[mlr3misc:Dictionary]{Dictionary} of \link[=Task]{Tasks}: \link{mlr_tasks}
+\link[mlr3misc:Dictionary]{Dictionary} of \link[mlr3:Task]{Tasks}: \link[mlr3:mlr_tasks]{mlr3::mlr_tasks}
 
-\code{as.data.table(mlr_tasks)} for a complete table of all (also dynamically created) \link[=Task]{Tasks}.
+\code{as.data.table(mlr_tasks)} for a complete table of all (also dynamically created) \link[mlr3:Task]{Tasks}.
 
 Other Task: 
 \code{\link{TaskClassifST}},

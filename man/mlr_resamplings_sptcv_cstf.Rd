@@ -122,7 +122,7 @@ Materializes fixed training and test splits for a given task.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{task}}{\link{Task}\cr
+\item{\code{task}}{\link[mlr3:Task]{mlr3::Task}\cr
 A task to instantiate.}
 }
 \if{html}{\out{</div>}}

@@ -4,7 +4,7 @@
 \alias{TaskRegrST}
 \title{Create a Spatiotemporal Regression Task}
 \description{
-This task specializes \link{Task} and \link{TaskSupervised} for spatiotemporal
+This task specializes \link[mlr3:Task]{mlr3::Task} and \link{TaskSupervised} for spatiotemporal
 classification problems.
 
 A spatial example task is available via \code{tsk("ecuador")}, a spatiotemporal
@@ -102,9 +102,9 @@ Returns coordinates of observations.
 \item{\code{id}}{(\code{character(1)})\cr
 Identifier for the new instance.}
 
-\item{\code{backend}}{(\link{DataBackend})\cr
-Either a \link{DataBackend}, or any object which is convertible to a
-\link{DataBackend} with \code{as_data_backend()}.
+\item{\code{backend}}{(\link[mlr3:DataBackend]{mlr3::DataBackend})\cr
+Either a \link[mlr3:DataBackend]{mlr3::DataBackend}, or any object which is convertible to a
+\link[mlr3:DataBackend]{mlr3::DataBackend} with \code{as_data_backend()}.
 E.g., am \code{sf} will be converted to a \link{DataBackendDataTable}.}
 
 \item{\code{target}}{(\code{character(1)})\cr
@@ -128,7 +128,7 @@ that the coordinates in the data are named \code{"x"} and \code{"y"}.}
 
 \item{\code{extra_args}}{(named \code{list()})\cr
 Named list of constructor arguments, required for converting task types
-via \code{\link[=convert_task]{convert_task()}}.}
+via \code{\link[mlr3:convert_task]{mlr3::convert_task()}}.}
 }
 \if{html}{\out{</div>}}
 }
