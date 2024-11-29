@@ -57,7 +57,7 @@ This list does not claim to be comprehensive.
 | Name          | Language | Resources                                                                                                                     |
 | ------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | blockCV       | R        | [CRAN](https://cran.r-project.org/package=blockCV)                                                                            |
-| CAST          | R        | [Paper](https://www.sciencedirect.com/science/article/pii/S1364815217310976), [CRAN](https://cran.r-project.org/package=CAST) |
+| CAST          | R        | [Paper](https://doi.org/10.1016/j.envsoft.2017.12.001), [CRAN](https://cran.r-project.org/package=CAST) |
 | ENMeval       | R        | [CRAN](https://cran.r-project.org/package=ENMeval)                                                                            |
 | spatialsample | R        | [CRAN](https://cran.r-project.org/package=spatialsample)                                                                      |
 | sperrorest    | R        | [CRAN](https://cran.r-project.org/package=sperrorest)                                                                         |
