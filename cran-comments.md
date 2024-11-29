@@ -1,23 +1,25 @@
 mlr3spatiotempcv 2.3.2
 
+The DOI in the CITATION is for a new JSS publication that will be registered after publication on CRAN.
+
 ## Cran Repository Policy
 
-- [ ] Reviewed CRP last edited 2024-08-27.
+- [x] Reviewed CRP last edited 2024-08-27.
 
 See changes at https://github.com/eddelbuettel/crp/compare/master@%7B2024-04-04%7D...master@%7B2024-08-27%7D
 
 ## R CMD check results
 
 - [x] Checked locally, R 4.4.2
-- [ ] Checked on CI system, R 4.4.2
-- [ ] Checked on win-builder, R devel
+- [x] Checked on CI system, R 4.4.2
+- [x] Checked on win-builder, R devel
 
 Check the boxes above after successful execution and remove this line. Then run `fledge::release()`.
 
 ## Current CRAN check results
 
 - [x] Checked on 2024-11-27, problems found: https://cran.r-project.org/web/checks/check_results_mlr3spatiotempcv.html
-- [ ] NOTE: r-devel-linux-x86_64-debian-clang, r-devel-linux-x86_64-debian-gcc, r-devel-windows-x86_64
+- [x] NOTE: r-devel-linux-x86_64-debian-clang, r-devel-linux-x86_64-debian-gcc, r-devel-windows-x86_64
      Found the following Rd file(s) with Rd \link{} targets missing package
      anchors:
      TaskClassifST.Rd: Task, TaskSupervised, DataBackend,
@@ -49,7 +51,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      mlr_tasks_ecuador.Rd: TaskClassif, Task, mlr_tasks
      Please provide package anchors for all Rd \link{} targets not in the
      package itself and the base packages.
-- [ ] ERROR: r-devel-linux-x86_64-debian-clang
+- [x] ERROR: r-devel-linux-x86_64-debian-clang
      Running ‘testthat.R’ [103s/54s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
@@ -195,7 +197,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-devel-linux-x86_64-debian-gcc
+- [x] ERROR: r-devel-linux-x86_64-debian-gcc
      Running ‘testthat.R’ [87s/59s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
@@ -341,7 +343,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-devel-linux-x86_64-fedora-clang
+- [x] ERROR: r-devel-linux-x86_64-fedora-clang
      Running ‘testthat.R’ [183s/92s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
@@ -487,7 +489,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-devel-linux-x86_64-fedora-gcc
+- [x] ERROR: r-devel-linux-x86_64-fedora-gcc
      Running ‘testthat.R’ [189s/106s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
@@ -631,7 +633,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-devel-windows-x86_64
+- [x] ERROR: r-devel-windows-x86_64
      Running 'testthat.R' [51s]
      Running the tests in 'tests/testthat.R' failed.
      Complete output:
@@ -777,7 +779,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-patched-linux-x86_64
+- [x] ERROR: r-patched-linux-x86_64
      Running ‘testthat.R’ [102s/55s]
      Running the tests in ‘tests/testthat.R’ failed.
      Complete output:
@@ -923,7 +925,7 @@ Check the boxes above after successful execution and remove this line. Then run 
      • autoplot_buffer/spcvbuffer-fold-1-2.svg
      Error: Test failures
      Execution halted
-- [ ] ERROR: r-oldrel-windows-x86_64
+- [x] ERROR: r-oldrel-windows-x86_64
      Running 'testthat.R' [76s]
      Running the tests in 'tests/testthat.R' failed.
      Complete output:
