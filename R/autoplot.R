@@ -48,7 +48,7 @@
 #' When no single fold is selected, the [ggsci::scale_color_ucscgb()] palette
 #' is used to display all partitions.
 #' If you want to change the colors, call `<plot> + <color-palette>()`.
-#' @return [ggplot()] or list of ggplot2 objects.
+#' @return [ggplot2::ggplot()] or list of ggplot2 objects.
 #' @name autoplot.ResamplingSpCVBlock
 #' @seealso
 #'   - mlr3book chapter on ["Spatial Analysis"](https://mlr3book.mlr-org.com/chapters/chapter13/beyond_regression_and_classification.html#sec-spatiotemporal)

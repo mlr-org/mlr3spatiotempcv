@@ -87,7 +87,7 @@ mlr3 spatial resampling object. One of class \link{ResamplingSpCVBuffer},
 \link{ResamplingSpCVBlock}, \link{ResamplingSpCVCoords}, \link{ResamplingSpCVEnv}.}
 }
 \value{
-\code{\link[=ggplot]{ggplot()}} or list of ggplot2 objects.
+\code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} or list of ggplot2 objects.
 }
 \description{
 Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods to
