@@ -4,7 +4,7 @@
 \alias{TaskClassifST}
 \title{Create a Spatiotemporal Classification Task}
 \description{
-This task specializes \link[mlr3:Task]{mlr3::Task} and \link{TaskSupervised} for
+This task specializes \link[mlr3:Task]{mlr3::Task} and \link[mlr3:TaskSupervised]{mlr3::TaskSupervised} for
 spatiotemporal classification problems. The target column is assumed to be a
 factor. The \code{task_type} is set to \code{"classif"} and \code{"spatiotemporal"}.
 
@@ -128,7 +128,7 @@ Identifier for the new instance.}
 \item{\code{backend}}{(\link[mlr3:DataBackend]{mlr3::DataBackend})\cr
 Either a \link[mlr3:DataBackend]{mlr3::DataBackend}, or any object which is convertible to a
 \link[mlr3:DataBackend]{mlr3::DataBackend} with \code{as_data_backend()}.
-E.g., am \code{sf} will be converted to a \link{DataBackendDataTable}.}
+E.g., am \code{sf} will be converted to a \link[mlr3:DataBackendDataTable]{mlr3::DataBackendDataTable}.}
 
 \item{\code{target}}{(\code{character(1)})\cr
 Name of the target column.}

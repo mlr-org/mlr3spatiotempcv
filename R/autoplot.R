@@ -874,11 +874,11 @@ plot.ResamplingRepeatedSpCVKnndm = function(x, ...) {
 #'
 #' @name autoplot.ResamplingCV
 #' @param object `[Resampling]`\cr
-#'   mlr3 spatial resampling object of class [ResamplingCV] or
-#'   [ResamplingRepeatedCV].
+#'   mlr3 spatial resampling object of class [mlr3::ResamplingCV] or
+#'   [mlr3::ResamplingRepeatedCV].
 #' @param x `[Resampling]`\cr
-#'   mlr3 spatial resampling object of class [ResamplingCV] or
-#'   [ResamplingRepeatedCV].
+#'   mlr3 spatial resampling object of class [mlr3::ResamplingCV] or
+#'   [mlr3::ResamplingRepeatedCV].
 #' @inheritParams autoplot.ResamplingSpCVBlock
 #' @export
 #' @seealso
@@ -960,9 +960,9 @@ autoplot.ResamplingRepeatedCV = function( # nolint
 #'
 #' @name autoplot.ResamplingCustomCV
 #' @param object `[Resampling]`\cr
-#'   mlr3 spatial resampling object of class [ResamplingCustomCV].
+#'   mlr3 spatial resampling object of class [mlr3::ResamplingCustomCV].
 #' @param x `[Resampling]`\cr
-#'   mlr3 spatial resampling object of class [ResamplingCustomCV].
+#'   mlr3 spatial resampling object of class [mlr3::ResamplingCustomCV].
 #' @inheritParams autoplot.ResamplingSpCVBlock
 #' @export
 #' @seealso

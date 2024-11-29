@@ -1,7 +1,7 @@
 #' @title Create a Spatiotemporal Regression Task
 #'
 #' @description
-#' This task specializes [mlr3::Task] and [TaskSupervised] for spatiotemporal
+#' This task specializes [mlr3::Task] and [mlr3::TaskSupervised] for spatiotemporal
 #' classification problems.
 #'
 #' A spatial example task is available via `tsk("ecuador")`, a spatiotemporal
