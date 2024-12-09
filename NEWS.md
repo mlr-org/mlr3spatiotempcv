@@ -1,8 +1,15 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# mlr3spatiotempcv 2.3.2.9000
+
+- Bump version to 2.3.1.9000.
+
+
 # mlr3spatiotempcv 2.3.2
 
-- Internal changes only.
+- mlr3 compatibility
+- JSS paper inclusion
+- Roxygen fixes
 
 
 # mlr3spatiotempcv 2.3.1
