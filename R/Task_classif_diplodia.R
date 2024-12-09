@@ -3,7 +3,7 @@
 #' @docType data
 #' @usage data(diplodia)
 #' @name mlr_tasks_diplodia
-#' @format [R6::R6Class] inheriting from [TaskClassif].
+#' @format [R6::R6Class] inheriting from [mlr3::TaskClassif].
 #'
 #' @section Usage:
 #' ```

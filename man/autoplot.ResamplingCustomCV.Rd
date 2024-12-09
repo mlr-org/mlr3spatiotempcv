@@ -20,7 +20,7 @@
 }
 \arguments{
 \item{object}{\verb{[Resampling]}\cr
-mlr3 spatial resampling object of class \link{ResamplingCustomCV}.}
+mlr3 spatial resampling object of class \link[mlr3:mlr_resamplings_custom_cv]{mlr3::ResamplingCustomCV}.}
 
 \item{task}{\verb{[TaskClassifST]/[TaskRegrST]}\cr
 mlr3 task object.}
@@ -48,7 +48,7 @@ reduce overplotting in dense datasets.}
 shapes.}
 
 \item{x}{\verb{[Resampling]}\cr
-mlr3 spatial resampling object of class \link{ResamplingCustomCV}.}
+mlr3 spatial resampling object of class \link[mlr3:mlr_resamplings_custom_cv]{mlr3::ResamplingCustomCV}.}
 }
 \description{
 Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods.

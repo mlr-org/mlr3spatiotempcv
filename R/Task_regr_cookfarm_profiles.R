@@ -3,7 +3,7 @@
 #' @docType data
 #' @usage data(cookfarm_mlr3)
 #' @name mlr_tasks_cookfarm_mlr3
-#' @format [R6::R6Class] inheriting from [TaskRegr].
+#' @format [R6::R6Class] inheriting from [mlr3::TaskRegr].
 #'
 #' @section Usage:
 #' ```

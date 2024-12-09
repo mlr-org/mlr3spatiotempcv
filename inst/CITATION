@@ -1,0 +1,23 @@
+bibentry(bibtype = "Article",
+  title        = "{mlr3spatiotempcv}: Spatiotemporal Resampling Methods for Machine Learning in {R}",
+  author       = c(person(given = "Patrick",
+                          family = "Schratz",
+                          email = "alexander.brenning@uni-jena.de"),
+                   person(given = "Marc",
+                          family = "Becker",
+                          email = "marc.becker@stat.uni-muenchen.de"),
+                   person(given = "Michel",
+                          family = "Lang",
+                          email = "lang@statistik.tu-dortmund.de"),
+                   person(given = "Alexander",
+                          family = "Brenning",
+                          email = "patrick.schratz@uni-jena.de")),
+  journal      = "Journal of Statistical Software",
+  year         = "2024",
+  volume       = "111",
+  number       = "7",
+  pages        = "1--36",
+  doi          = "10.18637/jss.v111.i07",
+  header       = "To cite mlr3spatiotempcv in publications use:"
+)
+

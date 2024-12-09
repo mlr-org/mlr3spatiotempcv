@@ -14,7 +14,7 @@ test_that("printing works", {
 
 test_that("Supplying a non-spatio temporal task gives descriptive error message", {
   expect_error(
-    rsmp("spcv_coords")$instantiate(tsk("boston_housing")),
+    rsmp("spcv_coords")$instantiate(tsk("mtcars")),
     "Must inherit from class 'TaskClassifST' or 'TaskRegrST'."
   ) # nolint
 })

@@ -6,10 +6,10 @@
 #' This is a S3 generic, specialized for at least the following objects:
 #'
 #' 1. [TaskRegrST]: Ensure the identity.
-#' 1. [data.frame()] and [DataBackend]: Provides an alternative to the
+#' 1. [data.frame()] and [mlr3::DataBackend]: Provides an alternative to the
 #'    constructor of [TaskRegrST].
 #' 1. [sf::sf]: Extracts spatial meta data before construction.
-#' 1. [TaskClassif]: Calls [convert_task()].
+#' 1. [mlr3::TaskClassif]: Calls [mlr3::convert_task()].
 #'
 #' @param x (any)\cr
 #'   Object to convert.

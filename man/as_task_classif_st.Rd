@@ -93,10 +93,10 @@ Convert an object to a \link{TaskClassifST}.
 This is a S3 generic for the following objects:
 \enumerate{
 \item \link{TaskClassifST}: Ensure the identity.
-\item \code{\link[=data.frame]{data.frame()}} and \link{DataBackend}: Provides an alternative to the
+\item \code{\link[=data.frame]{data.frame()}} and \link[mlr3:DataBackend]{mlr3::DataBackend}: Provides an alternative to the
 constructor of \link{TaskClassifST}.
 \item \link[sf:sf]{sf::sf}: Extracts spatial meta data before construction.
-\item \link{TaskRegr}: Calls \code{\link[=convert_task]{convert_task()}}.
+\item \link[mlr3:TaskRegr]{mlr3::TaskRegr}: Calls \code{\link[mlr3:convert_task]{mlr3::convert_task()}}.
 }
 }
 \examples{

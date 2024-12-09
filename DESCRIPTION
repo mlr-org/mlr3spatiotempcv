@@ -1,6 +1,6 @@
 Package: mlr3spatiotempcv
 Title: Spatiotemporal Resampling Methods for 'mlr3'
-Version: 2.3.1
+Version: 2.3.2
 Authors@R: c(
     person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0748-6624")),
@@ -11,10 +11,11 @@ Authors@R: c(
     person("Michel", "Lang", , "michellang@gmail.com", role = "ctb",
            comment = c(ORCID = "0000-0001-9754-0393"))
   )
-Description: Extends the mlr3 ML framework with spatio-temporal resampling
-    methods to account for the presence of spatiotemporal autocorrelation
-    (STAC) in predictor variables. STAC may cause highly biased
-    performance estimates in cross-validation if ignored.
+Description: Extends the mlr3 machine learning framework with
+    spatio-temporal resampling methods to account for the presence of
+    spatiotemporal autocorrelation (STAC) in predictor variables. STAC may
+    cause highly biased performance estimates in cross-validation if
+    ignored. A JSS article is available at <doi:10.18637/jss.v111.i07>.
 License: LGPL-3
 URL: https://mlr3spatiotempcv.mlr-org.com/,
     https://github.com/mlr-org/mlr3spatiotempcv,
@@ -64,7 +65,7 @@ Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, r6 = TRUE)
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.2
 Collate: 
     'aaa.R'
     'ResamplingRepeatedSpCVBlock.R'

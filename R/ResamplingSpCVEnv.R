@@ -53,7 +53,7 @@ ResamplingSpCVEnv = R6Class("ResamplingSpCVEnv",
 
     #' @description
     #'  Materializes fixed training and test splits for a given task.
-    #' @param task [Task]\cr
+    #' @param task [mlr3::Task]\cr
     #'  A task to instantiate.
     instantiate = function(task) {
 

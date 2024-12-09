@@ -27,20 +27,28 @@ In order to select between clustering algorithms and number of folds `k`, differ
 and compared, being the one with a lower W statistic the one that offers a better match. W statistics between `knndm`
 runs are comparable as long as `tpoints` and `predpoints` or `modeldomain` stay the same.
 
-Map validation using knndm should be used using `CAST::global_validation`, i.e. by stacking all out-of-sample
+Map validation using `knndm` should be used using `CAST::global_validation`, i.e. by stacking all out-of-sample
 predictions and evaluating them all at once. The reasons behind this are 1) The resulting folds can be
 unbalanced and 2) nearest neighbour functions are constructed and matched using all CV folds simultaneously.
 
-If training data points are very clustered with respect to the prediction area and the presented knndm
+If training data points are very clustered with respect to the prediction area and the presented `knndm`
 configuration still show signs of Gj* > Gij, there are several things that can be tried. First, increase
 the `maxp` parameter; this may help to control for strong clustering (at the cost of having unbalanced folds).
 Secondly, decrease the number of final folds `k`, which may help to have larger clusters.
 
-The `modeldomain` is a sf polygon that defines the prediction area. The function takes a regular point sample
-(amount defined by `samplesize`) from the spatial extent. As an alternative use `predpoints` instead of
-`modeldomain`, if you have already defined the prediction locations (e.g. raster pixel centroids).
-When using either `modeldomain` or `predpoints`, we advise to plot the study area polygon and the
-training/prediction points as a previous step to ensure they are aligned.
+The `modeldomain` is either a sf polygon that defines the prediction area, or alternatively a SpatRaster out of which a polygon,
+transformed into the CRS of the training points, is defined as the outline of all non-NA cells.
+Then, the function takes a regular point sample (amount defined by `samplesize`) from the spatial extent.
+As an alternative use `predpoints` instead of `modeldomain`, if you have already defined the prediction locations (e.g. raster pixel centroids).
+When using either `modeldomain` or `predpoints`, we advise to plot the study area polygon and the training/prediction points as a previous step to ensure they are aligned.
+
+`knndm` can also be performed in the feature space by setting `space` to "feature".
+Euclidean distances or Mahalanobis distances can be used for distance calculation, but only Euclidean are tested.
+In this case, nearest neighbour distances are calculated in n-dimensional feature space rather than in geographical space.
+`tpoints` and `predpoints` can be data frames or sf objects containing the values of the features. Note that the names of `tpoints` and `predpoints` must be the same.
+`predpoints` can also be missing, if `modeldomain` is of class SpatRaster. In this case, the values of of the SpatRaster will be extracted to the `predpoints`.
+In the case of any categorical features, Gower distances will be used to calculate the Nearest Neighbour distances [Experimental]. If categorical
+features are present, and `clustering` = "kmeans", K-Prototype clustering will be performed instead.
 }
 \section{Parameters}{
 
@@ -187,7 +195,7 @@ Materializes fixed training and test splits for a given task.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{task}}{\link{Task}\cr
+\item{\code{task}}{\link[mlr3:Task]{mlr3::Task}\cr
 A task to instantiate.}
 }
 \if{html}{\out{</div>}}

@@ -73,7 +73,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
 
     #' @description
     #'  Materializes fixed training and test splits for a given task.
-    #' @param task [Task]\cr
+    #' @param task [mlr3::Task]\cr
     #'  A task to instantiate.
     instantiate = function(task) {
       mlr3misc::require_namespaces(c("blockCV", "sf"))

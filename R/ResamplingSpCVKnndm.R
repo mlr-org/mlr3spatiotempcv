@@ -74,7 +74,7 @@ ResamplingSpCVKnndm = R6Class("ResamplingSpCVKnndm",
 
     #' @description
     #'  Materializes fixed training and test splits for a given task.
-    #' @param task [Task]\cr
+    #' @param task [mlr3::Task]\cr
     #'   A task to instantiate.
     instantiate = function(task) {
       task = assert_task(task)

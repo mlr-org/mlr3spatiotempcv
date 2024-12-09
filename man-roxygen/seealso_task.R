@@ -1,5 +1,5 @@
 #' @seealso
-#' [Dictionary][mlr3misc::Dictionary] of [Tasks][Task]: [mlr_tasks]
+#' [Dictionary][mlr3misc::Dictionary] of [Tasks][mlr3::Task]: [mlr3::mlr_tasks]
 #'
-#' `as.data.table(mlr_tasks)` for a complete table of all (also dynamically created) [Tasks][Task].
+#' `as.data.table(mlr_tasks)` for a complete table of all (also dynamically created) [Tasks][mlr3::Task].
 #' @family Task

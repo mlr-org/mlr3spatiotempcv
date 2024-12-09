@@ -36,8 +36,8 @@
 }
 \arguments{
 \item{object}{\verb{[Resampling]}\cr
-mlr3 spatial resampling object of class \link{ResamplingCV} or
-\link{ResamplingRepeatedCV}.}
+mlr3 spatial resampling object of class \link[mlr3:mlr_resamplings_cv]{mlr3::ResamplingCV} or
+\link[mlr3:mlr_resamplings_repeated_cv]{mlr3::ResamplingRepeatedCV}.}
 
 \item{task}{\verb{[TaskClassifST]/[TaskRegrST]}\cr
 mlr3 task object.}
@@ -68,8 +68,8 @@ shapes.}
 Repetition ID to plot.}
 
 \item{x}{\verb{[Resampling]}\cr
-mlr3 spatial resampling object of class \link{ResamplingCV} or
-\link{ResamplingRepeatedCV}.}
+mlr3 spatial resampling object of class \link[mlr3:mlr_resamplings_cv]{mlr3::ResamplingCV} or
+\link[mlr3:mlr_resamplings_repeated_cv]{mlr3::ResamplingRepeatedCV}.}
 }
 \description{
 Generic S3 \code{plot()} and \code{autoplot()} (ggplot2) methods.
