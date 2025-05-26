@@ -33,9 +33,9 @@ test_that("plot() works for 'cv'", {
   p8 = autoplot(plots$rsp, plots$task, fold_id = 1, sample_fold_n = 3L)
   p9 = autoplot(plots$rsp, plots$task, fold_id = c(1, 2), sample_fold_n = 3L)
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
+  expect_true(is_ggplot(p2))
 
   vdiffr::expect_doppelganger("CV all test sets", p1)
   vdiffr::expect_doppelganger("CV - Fold 1", p2)
@@ -59,15 +59,15 @@ test_that("plot() works for 'repeated-cv'", {
   p2 = autoplot(plots$rsp, plots$task, 1)
   p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
+  expect_true(is_ggplot(p2))
 
   p4 = autoplot(plots$rsp, plots$task, repeats_id = 2)
   p5 = autoplot(plots$rsp, plots$task, fold_id = 1, repeats_id = 2)
 
-  expect_true(is.ggplot(p4))
-  expect_true(is.ggplot(p5))
+  expect_true(is_ggplot(p4))
+  expect_true(is_ggplot(p5))
 
   vdiffr::expect_doppelganger("RepCV all test sets", p1)
   vdiffr::expect_doppelganger("RepCV Fold 1 Rep 1", p2)
@@ -123,9 +123,9 @@ test_that("plot() works for 'custom_cv'", {
   p8 = autoplot(rsp, task, fold_id = 1, sample_fold_n = 3L)
   p9 = autoplot(rsp, task, fold_id = c(1, 2), sample_fold_n = 3L)
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
-  expect_true(is.ggplot(p3))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
+  expect_true(is_ggplot(p3))
 
   vdiffr::expect_doppelganger("Custom-CV all test sets", p1)
   vdiffr::expect_doppelganger("Custom-CV - Fold 1", p2)
@@ -150,9 +150,9 @@ test_that("plot() works for 'spcv_coords'", {
   p2 = autoplot(plots$rsp, plots$task, 1)
   p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
+  expect_true(is_ggplot(p2))
 
   vdiffr::expect_doppelganger("SpCVCoords all test sets", p1)
   vdiffr::expect_doppelganger("SpCVCoords - Fold 1", p2)
@@ -171,9 +171,9 @@ test_that("plot() works for 'repeated_spcv_coords'", {
   p2 = autoplot(plots$rsp, plots$task, 1)
   p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
+  expect_true(is_ggplot(p2))
 
   p4 = autoplot(plots$rsp, plots$task, repeats_id = 2)
   p5 = autoplot(plots$rsp, plots$task, fold_id = 1, repeats_id = 2)
@@ -183,8 +183,8 @@ test_that("plot() works for 'repeated_spcv_coords'", {
   p8 = autoplot(plots$rsp, plots$task, fold_id = 1, sample_fold_n = 3L)
   p9 = autoplot(plots$rsp, plots$task, fold_id = c(1, 2), sample_fold_n = 3L)
 
-  expect_true(is.ggplot(p4))
-  expect_true(is.ggplot(p5))
+  expect_true(is_ggplot(p4))
+  expect_true(is_ggplot(p5))
 
   vdiffr::expect_doppelganger("RepSpCVCoords all test sets", p1)
   vdiffr::expect_doppelganger("RepSpCVCoords Fold 1 Rep 1", p2)
@@ -217,9 +217,9 @@ test_that("plot() works for 'spcv_block'", {
   p8 = autoplot(plots$rsp, plots$task, fold_id = 1, sample_fold_n = 3L)
   p9 = autoplot(plots$rsp, plots$task, fold_id = c(1, 2), sample_fold_n = 3L)
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
+  expect_true(is_ggplot(p2))
 
   vdiffr::expect_doppelganger("SpCVBlock all test sets", p1)
   vdiffr::expect_doppelganger("SpCVBlock - Fold 1", p2)
@@ -244,15 +244,15 @@ test_that("plot() works for 'repeated_spcv_block'", {
   p2 = autoplot(plots$rsp, plots$task, 1)
   p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
+  expect_true(is_ggplot(p2))
 
   p4 = autoplot(plots$rsp, plots$task, repeats_id = 2)
   p5 = autoplot(plots$rsp, plots$task, fold_id = 1, repeats_id = 2)
 
-  expect_true(is.ggplot(p4))
-  expect_true(is.ggplot(p5))
+  expect_true(is_ggplot(p4))
+  expect_true(is_ggplot(p5))
 
   vdiffr::expect_doppelganger("RepSpCVBlock all test sets", p1)
   vdiffr::expect_doppelganger("RepSpCVBlock Fold 1 Rep 1", p2)
@@ -336,9 +336,9 @@ test_that("plot() works for 'spcv_env'", {
   p8 = autoplot(plots$rsp, plots$task, fold_id = 1, sample_fold_n = 2L)
   p9 = autoplot(plots$rsp, plots$task, fold_id = c(1, 2), sample_fold_n = 2L)
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
+  expect_true(is_ggplot(p2))
 
   vdiffr::expect_doppelganger("SpCVEnv all test sets", p1)
   vdiffr::expect_doppelganger("SpCVEnv - Fold 1", p2)
@@ -364,15 +364,15 @@ test_that("plot() works for 'repeated_spcv_env'", {
   p2 = autoplot(plots$rsp, plots$task, 1)
   p3 = autoplot(plots$rsp, plots$task, c(1, 2))
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
+  expect_true(is_ggplot(p2))
 
   p4 = autoplot(plots$rsp, plots$task, repeats_id = 2)
   p5 = autoplot(plots$rsp, plots$task, fold_id = 1, repeats_id = 2)
 
-  expect_true(is.ggplot(p4))
-  expect_true(is.ggplot(p5))
+  expect_true(is_ggplot(p4))
+  expect_true(is_ggplot(p5))
 
   vdiffr::expect_doppelganger("RepSpCVEnv all test sets", p1)
   vdiffr::expect_doppelganger("RepSpCVEnv Fold 1 Rep 1", p2)

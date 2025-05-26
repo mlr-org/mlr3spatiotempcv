@@ -21,8 +21,8 @@ test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
       sample_fold_n = 3L)
   )
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
   expect_list(p3)
 
   p4 = autoplot(rsp, tsk_cookfarm_sub, repeats_id = 2, sample_fold_n = 3L)
@@ -64,8 +64,8 @@ test_that("plot() works for 'sptcv_cstf' 2D - space_var", {
   # plot() would force image printing here
   p3 = autoplot(rsp, tsk_cookfarm_sub, c(1, 2), sample_fold_n = 3L)
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
   expect_list(p3)
 
   p4 = autoplot(rsp, tsk_cookfarm_sub, repeats_id = 2, sample_fold_n = 3L)
@@ -230,10 +230,10 @@ test_that("plot() works for 'spcv_disc'", {
     autoplot(rsp, task, 1, show_omitted = TRUE)
   )
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
   expect_list(p3)
-  expect_true(is.ggplot(p4))
+  expect_true(is_ggplot(p4))
 
   p5 = autoplot(rsp, task, repeats_id = 2)
   p6 = autoplot(rsp, task, fold_id = 1, repeats_id = 2)
@@ -284,10 +284,10 @@ test_that("plot() works for 'spcv_tiles'", {
     autoplot(rsp, task, 1, show_omitted = TRUE)
   )
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
   expect_list(p3)
-  expect_true(is.ggplot(p4))
+  expect_true(is_ggplot(p4))
 
   p5 = autoplot(rsp, task, c(1, 2), repeats_id = 2)
   p6 = autoplot(rsp, task, fold_id = 1, repeats_id = 2)
@@ -337,8 +337,8 @@ test_that("plot() works for 'spcv_knndm'", {
   p3 = autoplot(rsp, task, c(1, 2))
 
 
-  expect_true(is.ggplot(p1))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p1))
+  expect_true(is_ggplot(p2))
   expect_list(p3)
 
   p5 = autoplot(rsp, task, repeats_id = 2)
