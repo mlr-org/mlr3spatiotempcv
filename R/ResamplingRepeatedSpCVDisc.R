@@ -104,6 +104,7 @@ ResamplingRepeatedSpCVDisc = R6Class("ResamplingRepeatedSpCVDisc",
 
       self$task_hash = task$hash
       self$task_nrow = task$nrow
+      self$task_row_hash = task$row_hash
       invisible(self)
     }
   ),
