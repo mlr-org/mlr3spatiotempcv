@@ -258,6 +258,43 @@ test_that("plot() works for 'spcv_disc'", {
   vdiffr::expect_doppelganger("RepSpCVDisc - Fold 1-2 - sample_fold_n", p9)
 })
 
+test_that("train_color and test_color parameters work for resampling methods", {
+  skip_if_not_installed("ggplot2")
+  
+  set.seed(42)
+  
+  task = tsk("ecuador")
+  
+  # Test spcv_disc
+  rsp_disc = rsmp("spcv_disc", folds = 4, radius = 200, buffer = 200)
+  rsp_disc$instantiate(task)
+  
+  p_disc = autoplot(rsp_disc, task, fold_id = 1, train_color = "red", test_color = "green")
+  
+  expect_true(is_ggplot(p_disc))
+  
+  # Extract the color scale to verify colors
+  build_disc = ggplot2::ggplot_build(p_disc)
+  colors_disc = build_disc$plot$scales$scales[[1]]$palette(2)
+  
+  expect_equal(unname(colors_disc[1]), "red")  # Train color
+  expect_equal(unname(colors_disc[2]), "green") # Test color
+  
+  # Test spcv_tiles
+  rsp_tiles = rsmp("spcv_tiles", nsplit = c(2L, 2L))
+  rsp_tiles$instantiate(task)
+  
+  p_tiles = autoplot(rsp_tiles, task, fold_id = 1, train_color = "blue", test_color = "orange")
+  
+  expect_true(is_ggplot(p_tiles))
+  
+  build_tiles = ggplot2::ggplot_build(p_tiles)
+  colors_tiles = build_tiles$plot$scales$scales[[1]]$palette(2)
+  
+  expect_equal(unname(colors_tiles[1]), "blue")  # Train color
+  expect_equal(unname(colors_tiles[2]), "orange") # Test color
+})
+
 # spcv_tiles --------------------------------------------------------------------
 
 test_that("plot() works for 'spcv_tiles'", {
@@ -361,4 +398,34 @@ test_that("plot() works for 'spcv_knndm'", {
   vdiffr::expect_doppelganger("RepSpCVKnndm - sample_fold_n", p7)
   vdiffr::expect_doppelganger("RepSpCVKnndm - Fold 1 - sample_fold_n", p8)
   vdiffr::expect_doppelganger("RepSpCVKnndm - Fold 1-2 - sample_fold_n", p9)
+})
+
+# spcv_disc custom colors test ------------------------------------------------
+
+test_that("train_color and test_color parameters work for 'spcv_disc'", {
+  skip_if_not_installed("blockCV")
+  set.seed(42)
+
+  task = tsk("ecuador")
+  rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 200L, buffer = 400L)
+  rsmp_disc$instantiate(task)
+
+  # Test custom colors - this should work without errors
+  p_custom = autoplot(rsmp_disc, task = task, fold_id = 1, show_omitted = FALSE,
+                     train_color = "red", test_color = "green")
+  
+  expect_true(is_ggplot(p_custom))
+  
+  # Check that the plot has the correct color scales
+  expect_true("ScaleDiscrete" %in% class(p_custom$scales$scales[[1]]))
+  
+  # Test that the plot builds without error
+  expect_no_error(ggplot_build(p_custom))
+  
+  # Test multiple folds with custom colors
+  p_multi = autoplot(rsmp_disc, task = task, fold_id = c(1, 2), 
+                    train_color = "red", test_color = "green")
+  
+  expect_true(is_ggplot(p_multi))
+  expect_no_error(ggplot_build(p_multi))
 })

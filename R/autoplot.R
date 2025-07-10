@@ -456,7 +456,7 @@ autoplot.ResamplingSpCVDisc = function( # nolint
   if (!is.null(fold_id)) {
     ### Multiplot of single folds with train and test
     plot = autoplot_multi_fold_list(task, resampling_sub, sample_fold_n,
-      fold_id, repeats_id, plot_as_grid, show_omitted, ...)
+      fold_id, repeats_id, plot_as_grid, show_omitted, train_color, test_color, ...)
     return(plot)
   } else {
     ### One plot showing all test folds
@@ -589,7 +589,7 @@ autoplot.ResamplingSpCVTiles = function( # nolint
   if (!is.null(fold_id)) {
     ### Multiplot of single folds with train and test
     plot = autoplot_multi_fold_list(task, resampling_sub, sample_fold_n,
-      fold_id, repeats_id, plot_as_grid, show_omitted, ...)
+      fold_id, repeats_id, plot_as_grid, show_omitted, train_color, test_color, ...)
     return(plot)
   } else {
     ### One plot showing all test folds
@@ -709,8 +709,10 @@ autoplot.ResamplingSpCVBuffer = function( # nolint
 
   # Multiplot of single folds with train and test
   plot = autoplot_multi_fold_list(task, resampling_sub,
-    sample_fold_n = NULL, show_omitted = show_omitted,
-    fold_id, repeats_id = 1, ...)
+    sample_fold_n = NULL, fold_id = fold_id, 
+    repeats_id = 1, plot_as_grid = plot_as_grid,
+    show_omitted = show_omitted, 
+    train_color = train_color, test_color = test_color, ...)
   return(plot)
 }
 
@@ -813,7 +815,8 @@ autoplot.ResamplingSpCVKnndm = function( # nolint
   if (!is.null(fold_id)) {
     ### Multiplot of single folds with train and test
     plot = autoplot_multi_fold_list(task, resampling_sub, sample_fold_n,
-      fold_id, repeats_id, plot_as_grid)
+      fold_id, repeats_id, plot_as_grid, show_omitted = FALSE, 
+      train_color = train_color, test_color = test_color)
     return(plot)
   } else {
     ### One plot showing all test folds

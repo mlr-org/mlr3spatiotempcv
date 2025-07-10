@@ -4,10 +4,10 @@ repos:
   - repo: https://github.com/lorenzwalthert/precommit
     rev: v0.4.3.9012
     hooks:
-      - id: style-files
-        args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
-        additional_dependencies:
-        - mlr-org/styler.mlr
+      # - id: style-files
+      #   args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
+      #   additional_dependencies:
+      #   - mlr-org/styler.mlr
       # - id: roxygenize
       #   additional_dependencies:
       #   -    checkmate
