@@ -2,25 +2,10 @@
 
 # mlr3spatiotempcv 2.3.3
 
-## compatibility
-
-- Mlr3 1.0.0 (#242).
-
 ## Bug fixes
 
+- mlr3 1.0.0 compatibility (#242).
 - Use of custom `train_color` and `test_color` in `autoplot()` (#241, #243).
-
-## Chore
-
-- Remove tic.R.
-
-## Continuous integration
-
-- Remove tic badge.
-
-## Uncategorized
-
-- Bump version to 2.3.1.9000.
 
 
 # mlr3spatiotempcv 2.3.2
