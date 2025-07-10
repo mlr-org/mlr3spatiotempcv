@@ -399,3 +399,33 @@ test_that("plot() works for 'spcv_knndm'", {
   vdiffr::expect_doppelganger("RepSpCVKnndm - Fold 1 - sample_fold_n", p8)
   vdiffr::expect_doppelganger("RepSpCVKnndm - Fold 1-2 - sample_fold_n", p9)
 })
+
+# spcv_disc custom colors test ------------------------------------------------
+
+test_that("train_color and test_color parameters work for 'spcv_disc'", {
+  skip_if_not_installed("blockCV")
+  set.seed(42)
+
+  task = tsk("ecuador")
+  rsmp_disc = rsmp("spcv_disc", folds = 100, radius = 200L, buffer = 400L)
+  rsmp_disc$instantiate(task)
+
+  # Test custom colors - this should work without errors
+  p_custom = autoplot(rsmp_disc, task = task, fold_id = 1, show_omitted = FALSE,
+                     train_color = "red", test_color = "green")
+  
+  expect_true(is_ggplot(p_custom))
+  
+  # Check that the plot has the correct color scales
+  expect_true("ScaleDiscrete" %in% class(p_custom$scales$scales[[1]]))
+  
+  # Test that the plot builds without error
+  expect_no_error(ggplot_build(p_custom))
+  
+  # Test multiple folds with custom colors
+  p_multi = autoplot(rsmp_disc, task = task, fold_id = c(1, 2), 
+                    train_color = "red", test_color = "green")
+  
+  expect_true(is_ggplot(p_multi))
+  expect_no_error(ggplot_build(p_multi))
+})
