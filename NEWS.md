@@ -1,6 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# mlr3spatiotempcv 2.3.2.9001
+# mlr3spatiotempcv 2.3.3
+
+## compatibility
+
+- Mlr3 1.0.0 (#242).
 
 ## Bug fixes
 
@@ -14,12 +18,7 @@
 
 - Remove tic badge.
 
-## compatibility
-
-- Mlr3 1.0.0 (#242).
-
-
-# mlr3spatiotempcv 2.3.2.9000
+## Uncategorized
 
 - Bump version to 2.3.1.9000.
 
