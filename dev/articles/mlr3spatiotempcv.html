@@ -133,12 +133,13 @@ along explicitly as they cannot be inferred directly from the
 by default:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;TaskClassifST:ecuador_task&gt; (751 x 11)</span></span>
-<span><span class="co">#&gt; * Target: slides</span></span>
-<span><span class="co">#&gt; * Properties: twoclass</span></span>
-<span><span class="co">#&gt; * Features (10):</span></span>
-<span><span class="co">#&gt;   - dbl (10): carea, cslope, dem, distdeforest, distroad,</span></span>
-<span><span class="co">#&gt;     distslidespast, hcurv, log.carea, slope, vcurv</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;TaskClassifST&gt;</span><span style="font-weight: bold;"> (751x11)</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; • Target: slides</span></span>
+<span><span class="co">#&gt; • Properties: twoclass</span></span>
+<span><span class="co">#&gt; • Features (10):</span></span>
+<span><span class="co">#&gt;   • dbl (10): carea, cslope, dem, distdeforest, distroad, distslidespast,</span></span>
+<span><span class="co">#&gt;   hcurv, log.carea, slope, vcurv</span></span>
 <span><span class="co">#&gt; * Coordinates:</span></span>
 <span><span class="co">#&gt;             x       y</span></span>
 <span><span class="co">#&gt;         &lt;num&gt;   &lt;num&gt;</span></span>
@@ -201,25 +202,27 @@ with new entries when loading {mlr3spatiotempcv}.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mlr_reflections</span><span class="op">$</span><span class="va">task_col_roles</span></span>
 <span><span class="co">#&gt; $regr</span></span>
-<span><span class="co">#&gt; [1] "feature" "target"  "name"    "order"   "stratum" "group"   "weight" </span></span>
-<span><span class="co">#&gt; [8] "offset" </span></span>
+<span><span class="co">#&gt; [1] "feature"         "target"          "name"            "order"          </span></span>
+<span><span class="co">#&gt; [5] "stratum"         "group"           "offset"          "weights_learner"</span></span>
+<span><span class="co">#&gt; [9] "weights_measure"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $classif</span></span>
-<span><span class="co">#&gt; [1] "feature" "target"  "name"    "order"   "stratum" "group"   "weight" </span></span>
-<span><span class="co">#&gt; [8] "offset" </span></span>
+<span><span class="co">#&gt; [1] "feature"         "target"          "name"            "order"          </span></span>
+<span><span class="co">#&gt; [5] "stratum"         "group"           "offset"          "weights_learner"</span></span>
+<span><span class="co">#&gt; [9] "weights_measure"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $unsupervised</span></span>
 <span><span class="co">#&gt; [1] "feature" "name"    "order"  </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $classif_st</span></span>
-<span><span class="co">#&gt;  [1] "feature"    "target"     "name"       "order"      "stratum"   </span></span>
-<span><span class="co">#&gt;  [6] "group"      "weight"     "offset"     "coordinate" "space"     </span></span>
-<span><span class="co">#&gt; [11] "time"      </span></span>
+<span><span class="co">#&gt;  [1] "feature"         "target"          "name"            "order"          </span></span>
+<span><span class="co">#&gt;  [5] "stratum"         "group"           "offset"          "weights_learner"</span></span>
+<span><span class="co">#&gt;  [9] "weights_measure" "coordinate"      "space"           "time"           </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $regr_st</span></span>
-<span><span class="co">#&gt;  [1] "feature"    "target"     "name"       "order"      "stratum"   </span></span>
-<span><span class="co">#&gt;  [6] "group"      "weight"     "offset"     "coordinate" "space"     </span></span>
-<span><span class="co">#&gt; [11] "time"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "feature"         "target"          "name"            "order"          </span></span>
+<span><span class="co">#&gt;  [5] "stratum"         "group"           "offset"          "weights_learner"</span></span>
+<span><span class="co">#&gt;  [9] "weights_measure" "coordinate"      "space"           "time"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="resampling-methods">Resampling Methods<a class="anchor" aria-label="anchor" href="#resampling-methods"></a>

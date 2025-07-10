@@ -220,15 +220,16 @@ element is the negative class.</p></dd>
 <span class="r-in"><span>  <span class="va">cookfarm_sf</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">cookfarm_mlr3</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">26911</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">as_task_regr_st</span><span class="op">(</span><span class="va">cookfarm_sf</span>, target <span class="op">=</span> <span class="st">"PHIHOX"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;TaskRegrST:cookfarm_sf&gt; (178840 x 23)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Target: PHIHOX</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Properties: -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Features (22):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - dbl (18): BLD, LHDICM, Port1C, Port1EC, Port1VW, Port2C, Port2EC,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Port2VW, Port3C, Port3EC, Port3VW, Port4C, Port4EC, Port4VW,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Port5C, Port5EC, Port5VW, UHDICM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - fct (3): HZDUSD, SOURCEID, TAXSUSDA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - chr (1): Date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;TaskRegrST&gt;</span><span style="font-weight: bold;"> (178840x23)</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Target: PHIHOX</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Properties: -</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> • Features (22):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   • dbl (18): BLD, LHDICM, Port1C, Port1EC, Port1VW, Port2C, Port2EC, Port2VW,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Port3C, Port3EC, Port3VW, Port4C, Port4EC, Port4VW, Port5C, Port5EC, Port5VW,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   UHDICM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   • fct (3): HZDUSD, SOURCEID, TAXSUSDA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   • chr (1): Date</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Coordinates:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                X       Y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;num&gt;   &lt;num&gt;</span>
