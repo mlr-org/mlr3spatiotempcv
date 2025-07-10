@@ -1,5 +1,24 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# mlr3spatiotempcv 2.3.2.9001
+
+## Bug fixes
+
+- Use of custom `train_color` and `test_color` in `autoplot()` (#241, #243).
+
+## Chore
+
+- Remove tic.R.
+
+## Continuous integration
+
+- Remove tic badge.
+
+## compatibility
+
+- Mlr3 1.0.0 (#242).
+
+
 # mlr3spatiotempcv 2.3.2.9000
 
 - Bump version to 2.3.1.9000.
