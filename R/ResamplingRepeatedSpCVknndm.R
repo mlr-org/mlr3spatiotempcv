@@ -133,6 +133,7 @@ ResamplingRepeatedSpCVKnndm = R6Class("ResamplingRepeatedSpCVKnndm",
 
       self$instance = instance
       self$task_hash = task$hash
+      self$task_row_hash = task$row_hash
       self$task_nrow = task$nrow
       invisible(self)
     }

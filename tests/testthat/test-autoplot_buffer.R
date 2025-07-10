@@ -13,8 +13,8 @@ test_that("plot() works for 'spcv_buffer'", {
   p3 = autoplot(plots$rsp, plots$task, c(1, 2))
   p4 = autoplot(plots$rsp, plots$task, c(1, 2), plot_as_grid = FALSE)
 
-  expect_true(is.ggplot(p2))
-  expect_true(is.ggplot(p2))
+  expect_true(is_ggplot(p2))
+  expect_true(is_ggplot(p2))
 
   vdiffr::expect_doppelganger("SpCVBuffer - Fold 1", p2)
   vdiffr::expect_doppelganger("SpCVBuffer - Fold 1-2", p3)

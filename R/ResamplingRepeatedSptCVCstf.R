@@ -96,6 +96,7 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
       self$instance = private$.sample(task)
 
       self$task_hash = task$hash
+      self$task_row_hash = task$row_hash
       self$task_nrow = task$nrow
       invisible(self)
     }
