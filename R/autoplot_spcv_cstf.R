@@ -142,7 +142,7 @@ autoplot.ResamplingSptCVCstf = function( # nolint
     if (!is.null(fold_id)) {
       ### Multiplot of single folds with train and test ----------------------
       plot = autoplot_multi_fold_list(task, resampling_sub, sample_fold_n,
-        fold_id, repeats_id, plot_as_grid, show_omitted)
+        fold_id, repeats_id, plot_as_grid, show_omitted, train_color, test_color)
       # }
     } else {
       ### One plot showing all test folds --------------------------------------

@@ -1,5 +1,6 @@
 autoplot_multi_fold_list = function(task, resampling, sample_fold_n, fold_id,
-  repeats_id, plot_as_grid = TRUE, show_omitted = FALSE, ...) {
+  repeats_id, plot_as_grid = TRUE, show_omitted = FALSE, 
+  train_color = "#0072B5", test_color = "#E18727", ...) {
 
   plot_list = mlr3misc::map(fold_id, function(.x) {
 
@@ -42,8 +43,8 @@ autoplot_multi_fold_list = function(task, resampling, sample_fold_n, fold_id,
         geom_sf(data = sf_df, aes(color = indicator), linewidth = 0.5, ...) +
         scale_color_manual(values = c(
           "Omitted" = "grey",
-          "Train" = "#0072B5",
-          "Test" = "#E18727"
+          "Train" = train_color,
+          "Test" = test_color
         )) +
         {
           if (spcv_buffer) {
@@ -75,8 +76,8 @@ autoplot_multi_fold_list = function(task, resampling, sample_fold_n, fold_id,
       plot = ggplot() +
         geom_sf(data = sf_df, aes(color = indicator), linewidth = 0.5, ...) +
         scale_color_manual(values = c(
-          "Train" = "#0072B5",
-          "Test" = "#E18727"
+          "Train" = train_color,
+          "Test" = test_color
         )) +
         {
           if (spcv_buffer) {

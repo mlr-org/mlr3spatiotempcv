@@ -258,6 +258,43 @@ test_that("plot() works for 'spcv_disc'", {
   vdiffr::expect_doppelganger("RepSpCVDisc - Fold 1-2 - sample_fold_n", p9)
 })
 
+test_that("train_color and test_color parameters work for resampling methods", {
+  skip_if_not_installed("ggplot2")
+  
+  set.seed(42)
+  
+  task = tsk("ecuador")
+  
+  # Test spcv_disc
+  rsp_disc = rsmp("spcv_disc", folds = 4, radius = 200, buffer = 200)
+  rsp_disc$instantiate(task)
+  
+  p_disc = autoplot(rsp_disc, task, fold_id = 1, train_color = "red", test_color = "green")
+  
+  expect_true(is_ggplot(p_disc))
+  
+  # Extract the color scale to verify colors
+  build_disc = ggplot2::ggplot_build(p_disc)
+  colors_disc = build_disc$plot$scales$scales[[1]]$palette(2)
+  
+  expect_equal(unname(colors_disc[1]), "red")  # Train color
+  expect_equal(unname(colors_disc[2]), "green") # Test color
+  
+  # Test spcv_tiles
+  rsp_tiles = rsmp("spcv_tiles", nsplit = c(2L, 2L))
+  rsp_tiles$instantiate(task)
+  
+  p_tiles = autoplot(rsp_tiles, task, fold_id = 1, train_color = "blue", test_color = "orange")
+  
+  expect_true(is_ggplot(p_tiles))
+  
+  build_tiles = ggplot2::ggplot_build(p_tiles)
+  colors_tiles = build_tiles$plot$scales$scales[[1]]$palette(2)
+  
+  expect_equal(unname(colors_tiles[1]), "blue")  # Train color
+  expect_equal(unname(colors_tiles[2]), "orange") # Test color
+})
+
 # spcv_tiles --------------------------------------------------------------------
 
 test_that("plot() works for 'spcv_tiles'", {
