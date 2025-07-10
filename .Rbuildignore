@@ -40,3 +40,5 @@ autoplot-repeated-show-blocks-true-show-labels-true.svg$
 ^cache$
 ^inst/vcluster$
 ^inst/vcluster\.exe$
+.claude/
+CLAUDE.md
