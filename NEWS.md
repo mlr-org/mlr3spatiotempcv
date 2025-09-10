@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# mlr3spatiotempcv 2.3.3.9000
+
+## Chore
+
+- Update saved backend (#247).
+
+
 # mlr3spatiotempcv 2.3.3
 
 ## Bug fixes
