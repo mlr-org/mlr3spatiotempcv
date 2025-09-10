@@ -45,7 +45,7 @@ To cite the package in publications, use the output of `citation("mlr3spatiotemp
 
 ## Resources
 
-- [Recorded talk about mlr3spatiotempcv and mlr3spatial at OpenDataScience Europe Conference 2021 in Wageningen, NL](https://av.tib.eu/media/55271)
+- [Recorded talk about mlr3spatiotempcv and mlr3spatial at OpenDataScience Europe Conference 2021 in Wageningen, NL](https://www.youtube.com/watch?v=lWOMsmeWfEo)
 - [List of scientific articles related to spatiotemporal modeling and/or spatial partitioning](https://pat-s.notion.site/Spatial-autocorrelation-in-modeling-b62e1bc904b546b9a489b171913a3551)
 
 # Other spatiotemporal resampling packages
