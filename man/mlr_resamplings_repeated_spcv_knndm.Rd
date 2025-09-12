@@ -67,28 +67,30 @@ Number of repeats.
 }
 
 \examples{
-library(mlr3)
-library(mlr3spatial)
-set.seed(42)
-simarea = list(matrix(c(0, 0, 0, 100, 100, 100, 100, 0, 0, 0), ncol = 2, byrow = TRUE))
-simarea = sf::st_polygon(simarea)
-train_points = sf::st_sample(simarea, 1000, type = "random")
-train_points = sf::st_as_sf(train_points)
-train_points$target = as.factor(sample(c("TRUE", "FALSE"), 1000, replace = TRUE))
-pred_points = sf::st_sample(simarea, 1000, type = "regular")
+if (requireNamespace(c("mlr3spatial", "mlr3"))) {
+  library(mlr3)
+  library(mlr3spatial)
+  set.seed(42)
+  simarea = list(matrix(c(0, 0, 0, 100, 100, 100, 100, 0, 0, 0), ncol = 2, byrow = TRUE))
+  simarea = sf::st_polygon(simarea)
+  train_points = sf::st_sample(simarea, 1000, type = "random")
+  train_points = sf::st_as_sf(train_points)
+  train_points$target = as.factor(sample(c("TRUE", "FALSE"), 1000, replace = TRUE))
+  pred_points = sf::st_sample(simarea, 1000, type = "regular")
 
-task = mlr3spatial::as_task_classif_st(sf::st_as_sf(train_points), "target", positive = "TRUE")
+  task = mlr3spatial::as_task_classif_st(sf::st_as_sf(train_points), "target", positive = "TRUE")
 
-cv_knndm = rsmp("repeated_spcv_knndm", predpoints = pred_points, repeats = 2)
-cv_knndm$instantiate(task)
-#' ### Individual sets:
-# cv_knndm$train_set(1)
-# cv_knndm$test_set(1)
-# check that no obs are in both sets
-intersect(cv_knndm$train_set(1), cv_knndm$test_set(1)) # good!
+  cv_knndm = rsmp("repeated_spcv_knndm", predpoints = pred_points, repeats = 2)
+  cv_knndm$instantiate(task)
+  ### Individual sets:
+  # cv_knndm$train_set(1)
+  # cv_knndm$test_set(1)
+  # check that no obs are in both sets
+  intersect(cv_knndm$train_set(1), cv_knndm$test_set(1)) # good!
 
-# Internal storage:
-# cv_knndm$instance # table
+  # Internal storage:
+  # cv_knndm$instance # table
+}
 }
 \references{
 Linnenbrink, J., Mila, C., Ludwig, M., Meyer, H. (2023).

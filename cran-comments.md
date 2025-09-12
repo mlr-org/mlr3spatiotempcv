@@ -1,4 +1,4 @@
-mlr3spatiotempcv 2.3.3
+mlr3spatiotempcv 2.3.4
 
 ## Cran Repository Policy
 

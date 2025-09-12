@@ -23,7 +23,7 @@ test_that("plot() works for 'sptcv_cstf' 2D - time_var", {
 
   expect_true(is_ggplot(p1))
   expect_true(is_ggplot(p2))
-  expect_list(p3)
+  expect_s3_class(p3, "patchwork")
 
   p4 = autoplot(rsp, tsk_cookfarm_sub, repeats_id = 2, sample_fold_n = 3L)
   p5 = autoplot(rsp, tsk_cookfarm_sub, fold_id = 1, repeats_id = 2,
@@ -66,7 +66,7 @@ test_that("plot() works for 'sptcv_cstf' 2D - space_var", {
 
   expect_true(is_ggplot(p1))
   expect_true(is_ggplot(p2))
-  expect_list(p3)
+  expect_s3_class(p3, "patchwork")
 
   p4 = autoplot(rsp, tsk_cookfarm_sub, repeats_id = 2, sample_fold_n = 3L)
   p5 = autoplot(rsp, tsk_cookfarm_sub, fold_id = 1, repeats_id = 2,
@@ -232,7 +232,7 @@ test_that("plot() works for 'spcv_disc'", {
 
   expect_true(is_ggplot(p1))
   expect_true(is_ggplot(p2))
-  expect_list(p3)
+  expect_s3_class(p3, "patchwork")
   expect_true(is_ggplot(p4))
 
   p5 = autoplot(rsp, task, repeats_id = 2)
@@ -260,6 +260,10 @@ test_that("plot() works for 'spcv_disc'", {
 
 test_that("train_color and test_color parameters work for resampling methods", {
   skip_if_not_installed("ggplot2")
+  skip_if_not_installed("vdiffr")
+  skip_if_not_installed("sf")
+  skip_if_not_installed("patchwork")
+  skip_if_not_installed("ggtext")
   
   set.seed(42)
   
@@ -323,7 +327,7 @@ test_that("plot() works for 'spcv_tiles'", {
 
   expect_true(is_ggplot(p1))
   expect_true(is_ggplot(p2))
-  expect_list(p3)
+  expect_s3_class(p3, "patchwork")
   expect_true(is_ggplot(p4))
 
   p5 = autoplot(rsp, task, c(1, 2), repeats_id = 2)
@@ -376,7 +380,7 @@ test_that("plot() works for 'spcv_knndm'", {
 
   expect_true(is_ggplot(p1))
   expect_true(is_ggplot(p2))
-  expect_list(p3)
+  expect_s3_class(p3, "patchwork")
 
   p5 = autoplot(rsp, task, repeats_id = 2)
   p6 = autoplot(rsp, task, fold_id = 1, repeats_id = 2)

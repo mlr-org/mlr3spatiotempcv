@@ -1,6 +1,6 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# mlr3spatiotempcv 2.3.3.9000
+# mlr3spatiotempcv 2.3.4
 
 ## Chore
 
