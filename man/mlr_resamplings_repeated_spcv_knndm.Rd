@@ -67,7 +67,7 @@ Number of repeats.
 }
 
 \examples{
-if (requireNamespace(c("mlr3spatial", "mlr3")) {
+if (requireNamespace(c("mlr3spatial", "mlr3"))) {
   library(mlr3)
   library(mlr3spatial)
   set.seed(42)

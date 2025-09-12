@@ -13,7 +13,7 @@
 #'
 #' @export
 #' @examples
-#' if (requireNamespace(c("mlr3spatial", "mlr3")) {
+#' if (requireNamespace(c("mlr3spatial", "mlr3"))) {
 #'   library(mlr3)
 #'   library(mlr3spatial)
 #'   set.seed(42)
@@ -29,7 +29,6 @@
 #'   cv_knndm = rsmp("repeated_spcv_knndm", predpoints = pred_points, repeats = 2)
 #'   cv_knndm$instantiate(task)
 #' }
-
 #' #' ### Individual sets:
 #' # cv_knndm$train_set(1)
 #' # cv_knndm$test_set(1)
