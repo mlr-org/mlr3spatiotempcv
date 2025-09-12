@@ -260,6 +260,10 @@ test_that("plot() works for 'spcv_disc'", {
 
 test_that("train_color and test_color parameters work for resampling methods", {
   skip_if_not_installed("ggplot2")
+  skip_if_not_installed("vdiffr")
+  skip_if_not_installed("sf")
+  skip_if_not_installed("patchwork")
+  skip_if_not_installed("ggtext")
   
   set.seed(42)
   
