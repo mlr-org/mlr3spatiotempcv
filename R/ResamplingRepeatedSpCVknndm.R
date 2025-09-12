@@ -28,15 +28,15 @@
 #'
 #'   cv_knndm = rsmp("repeated_spcv_knndm", predpoints = pred_points, repeats = 2)
 #'   cv_knndm$instantiate(task)
-#' }
-#' #' ### Individual sets:
-#' # cv_knndm$train_set(1)
-#' # cv_knndm$test_set(1)
-#' # check that no obs are in both sets
-#' intersect(cv_knndm$train_set(1), cv_knndm$test_set(1)) # good!
+#'   ### Individual sets:
+#'   # cv_knndm$train_set(1)
+#'   # cv_knndm$test_set(1)
+#'   # check that no obs are in both sets
+#'   intersect(cv_knndm$train_set(1), cv_knndm$test_set(1)) # good!
 #'
-#' # Internal storage:
-#' # cv_knndm$instance # table
+#'   # Internal storage:
+#'   # cv_knndm$instance # table
+#' }
 ResamplingRepeatedSpCVKnndm = R6Class("ResamplingRepeatedSpCVKnndm",
   inherit = mlr3::Resampling,
   public = list(

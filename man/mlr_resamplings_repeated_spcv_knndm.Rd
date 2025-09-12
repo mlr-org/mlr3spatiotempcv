@@ -82,15 +82,15 @@ if (requireNamespace(c("mlr3spatial", "mlr3"))) {
 
   cv_knndm = rsmp("repeated_spcv_knndm", predpoints = pred_points, repeats = 2)
   cv_knndm$instantiate(task)
-}
-#' ### Individual sets:
-# cv_knndm$train_set(1)
-# cv_knndm$test_set(1)
-# check that no obs are in both sets
-intersect(cv_knndm$train_set(1), cv_knndm$test_set(1)) # good!
+  ### Individual sets:
+  # cv_knndm$train_set(1)
+  # cv_knndm$test_set(1)
+  # check that no obs are in both sets
+  intersect(cv_knndm$train_set(1), cv_knndm$test_set(1)) # good!
 
-# Internal storage:
-# cv_knndm$instance # table
+  # Internal storage:
+  # cv_knndm$instance # table
+}
 }
 \references{
 Linnenbrink, J., Mila, C., Ludwig, M., Meyer, H. (2023).
