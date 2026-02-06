@@ -287,8 +287,8 @@ ResamplingSpCVTiles = R6Class("ResamplingSpCVTiles",
       ### end: this part is mainly copied from sperrorest::partition_tiles()
 
       class(tile) == "list"
-      train_inds = lapply(tile, function(x) x$train)
-      test_inds = lapply(tile, function(x) x$test)
+      train_inds = lapply(tile, function(x) ids[x$train])
+      test_inds = lapply(tile, function(x) ids[x$test])
 
       names(train_inds) = 1:length(train_inds)
       names(test_inds) = 1:length(test_inds)
