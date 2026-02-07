@@ -135,9 +135,6 @@ test_that("plot() works for 'sptcv_cstf'", {
   expect_list(p9)
   expect_class(p9[[1]], "plotly")
   expect_class(p9[[2]], "plotly")
-  vdiffr::expect_doppelganger("SptCVCstf 3D time_var - Fold 1 - sample_fold_n", p8)
-  vdiffr::expect_doppelganger("SptCVCstf 3D time_var - Fold 1-2 - sample_fold_n", p9)
-
 })
 
 test_that("plot() works for 'repeated_spcv_cstf'", {

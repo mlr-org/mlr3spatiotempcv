@@ -138,8 +138,8 @@ ResamplingSpCVDisc = R6Class("ResamplingSpCVDisc",
         ### end: this part is mainly copied from sperrorest::partition_disc()
 
         # similar result structure as in sptcv_cstf
-        self$instance$test[[mlr3_index]] = test_sel
-        self$instance$train[[mlr3_index]] = train_sel
+        self$instance$test[[mlr3_index]] = ids[test_sel]
+        self$instance$train[[mlr3_index]] = ids[train_sel]
 
         mlr3_index = mlr3_index + 1
       }

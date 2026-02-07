@@ -174,7 +174,10 @@ ResamplingRepeatedSpCVKnndm = R6Class("ResamplingRepeatedSpCVKnndm",
           samplesize = self$param_set$values$samplesize,
           sampling = self$param_set$values$sampling)
 
-        list(train = inds$indx_train, test = inds$indx_test)
+        list(
+          train = lapply(inds$indx_train, function(x) ids[x]),
+          test = lapply(inds$indx_test, function(x) ids[x])
+        )
       })
 
     },
