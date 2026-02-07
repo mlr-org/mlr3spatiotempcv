@@ -1,0 +1,71 @@
+# Cookfarm Profiles Regression Task
+
+The R.J. Cook Agronomy Farm (cookfarm) is a Long-Term Agroecosystem
+Research Site operated by Washington State University, located near
+Pullman, Washington, USA. Contains spatio-temporal (3D+T) measurements
+of three soil properties and a number of spatial and temporal regression
+covariates.
+
+Here, only the "Profiles" dataset is used from the collection. The
+`Date` column was appended from the `readings` dataset. In addition
+coordinates were appended to the task as variables `"x"` and `"y"`.
+
+The dataset was borrowed and adapted from package GSIF which was on
+archived on CRAN in 2021-03.
+
+## Usage
+
+``` r
+data(cookfarm_mlr3)
+```
+
+## Format
+
+[R6::R6Class](https://r6.r-lib.org/reference/R6Class.html) inheriting
+from [mlr3::TaskRegr](https://mlr3.mlr-org.com/reference/TaskRegr.html).
+
+## Usage
+
+    mlr_tasks$get("cookfarm")
+    tsk("cookfarm_mlr3")
+
+## Column roles
+
+The task has set column roles "space" and "time" for variables `"Date"`
+and `"SOURCEID"`, respectively. These are used by certain methods during
+partitioning, e.g., `mlr_resamplings_sptcv_cstf` with variant
+"Leave-location-and-time-out". If only one of space or time should left
+out, the column roles must be adjusted by the user!
+
+## References
+
+Gasch, C.K., Hengl, T., Gräler, B., Meyer, H., Magney, T., Brown, D.J.,
+2015. Spatio-temporal interpolation of soil water, temperature, and
+electrical conductivity in 3D+T: the Cook Agronomy Farm data set.
+Spatial Statistics, 14, pp.70–90.
+
+Gasch, C.K., D.J. Brown, E.S. Brooks, M. Yourek, M. Poggio, D.R. Cobos,
+C.S. Campbell, 2016? Retroactive calibration of soil moisture sensors
+using a two-step, soil-specific correction. Submitted to Vadose Zone
+Journal.
+
+Gasch, C.K., D.J. Brown, C.S. Campbell, D.R. Cobos, E.S. Brooks, M.
+Chahal, M. Poggio, 2016? A field-scale sensor network data set for
+monitoring and modeling the spatial and temporal variation of soil
+moisture in a dryland agricultural field. Submitted to Water Resources
+Research.
+
+## See also
+
+[Dictionary](https://mlr3misc.mlr-org.com/reference/Dictionary.html) of
+[Tasks](https://mlr3.mlr-org.com/reference/Task.html):
+[mlr3::mlr_tasks](https://mlr3.mlr-org.com/reference/mlr_tasks.html)
+
+`as.data.table(mlr_tasks)` for a complete table of all (also dynamically
+created) [Tasks](https://mlr3.mlr-org.com/reference/Task.html).
+
+Other Task:
+[`TaskClassifST`](https://mlr3spatiotempcv.mlr-org.com/reference/TaskClassifST.md),
+[`TaskRegrST`](https://mlr3spatiotempcv.mlr-org.com/reference/TaskRegrST.md),
+[`mlr_tasks_diplodia`](https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_diplodia.md),
+[`mlr_tasks_ecuador`](https://mlr3spatiotempcv.mlr-org.com/reference/mlr_tasks_ecuador.md)
