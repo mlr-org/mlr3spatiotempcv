@@ -87,8 +87,8 @@ This list does not claim to be comprehensive.
 <details>
   <summary>How can I use the "blocking" concept of the old {mlr}?</summary>
   <br>
-    This concept is now supported via the "column roles" concept available in {mlr3} [Task](https://mlr3.mlr-org.com/reference/Task.html) objects.
-    See [this documentation](https://mlr3.mlr-org.com/reference/Resampling.html#grouping-blocking) for more information.
+    This concept is now supported via the "column roles" concept available in {mlr3} <a href="https://mlr3.mlr-org.com/reference/Task.html">Task</a> objects.
+    See <a href="https://mlr3.mlr-org.com/reference/Resampling.html#grouping-blocking">this documentation</a> for more information.
 </details>
 
 <details>
