@@ -50,7 +50,7 @@
 "cookfarm_mlr3"
 
 load_task_cookfarm = function(id = "cookfarm_mlr3") {
-  b = mlr3::as_data_backend(cookfarm_mlr3)
+  b = mlr3::as_data_backend(mlr3misc::load_dataset("cookfarm_mlr3", "mlr3spatiotempcv"))
   b$hash = "_mlr3_tasks_cookfarm_"
   task = TaskRegrST$new(
     id = "cookfarm_mlr3", b, target = "PHIHOX",

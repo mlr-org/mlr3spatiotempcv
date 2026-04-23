@@ -26,7 +26,7 @@
 "diplodia"
 
 load_task_diplodia = function(id = "diplodia") {
-  b = mlr3::as_data_backend(diplodia)
+  b = mlr3::as_data_backend(mlr3misc::load_dataset("diplodia", "mlr3spatiotempcv"))
   b$hash = "_mlr3_tasks_diplodia_"
   task = TaskClassifST$new(
     id = "diplodia", b,

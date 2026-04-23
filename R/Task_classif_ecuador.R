@@ -26,7 +26,7 @@
 "ecuador"
 
 load_task_ecuador = function(id = "ecuador") {
-  b = mlr3::as_data_backend(ecuador)
+  b = mlr3::as_data_backend(mlr3misc::load_dataset("ecuador", "mlr3spatiotempcv"))
   b$hash = "_mlr3_tasks_ecuador_"
   task = TaskClassifST$new(
     id = "ecuador", b, target = "slides", positive = "TRUE",
