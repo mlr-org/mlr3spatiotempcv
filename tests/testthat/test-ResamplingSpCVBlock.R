@@ -148,28 +148,8 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: spatRaster"
       progress = FALSE
   ))
 
-  rl = terra::rast(terra::ext(testSF), crs = terra::crs(testSF))
-  vals = seq_len(terra::ncell(rl))
-  rl = terra::setValues(rl, vals)
-
-  set.seed(42)
-  # blockCV OLD
-  testBlock_old = suppressMessages(
-    blockCV::spatialBlock(
-      speciesData = testSF,
-      theRange = 50000L,
-      selection = "random",
-      rasterLayer = rl,
-      k = 2,
-      verbose = FALSE,
-      progress = FALSE,
-      showBlocks = FALSE
-  ))
-
-  # tempcv vs blockCV (NEW)
+  # tempcv vs blockCV
   expect_equal(rsmp1$instance$fold, testBlock$folds_ids)
-  # blockCV old vs blockCV NEW
-  expect_equal(testBlock_old$foldID, testBlock$folds_ids)
 })
 
 test_that("Error when selection = checkboard and folds > 2", {

@@ -82,7 +82,7 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
     cols = 4)
   suppressMessages(rsmp$instantiate(task))
 
-  testBlock_new = blockCV::cv_spatial(
+  testBlock = blockCV::cv_spatial(
     x = testSF,
     k = 4,
     rows_cols = c(3, 4),
@@ -94,20 +94,8 @@ test_that("mlr3spatiotempcv indices are the same as blockCV indices: cols and ro
     seed = 42
   )
 
-  testBlock_old = blockCV::spatialBlock(
-    speciesData = testSF,
-    k = 4,
-    rows = 3,
-    cols = 4,
-    showBlocks = FALSE,
-    progress = FALSE,
-    verbose = FALSE
-  )
-
-  # tempcv vs. blockCV_new  only use the first iteration
-  expect_equal(rsmp$instance$fold[1:1000], testBlock_new$folds_ids)
-  # tempcv vs. blockCV_old
-  expect_equal(rsmp$instance$fold[1:1000], testBlock_old$foldID)
+  # tempcv vs. blockCV  only use the first iteration
+  expect_equal(rsmp$instance$fold[1:1000], testBlock$folds_ids)
 })
 
 test_that("Error when selection = checkboard and folds > 2", {
