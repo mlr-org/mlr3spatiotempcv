@@ -18,12 +18,14 @@ package for spatial sampling methods.
 CRAN version
 
 ``` r
+
 install.packages("mlr3spatiotempcv")
 ```
 
 Development version
 
 ``` r
+
 remotes::install_github("mlr-org/mlr3spatiotempcv")
 
 # R Universe Repo
@@ -66,17 +68,17 @@ This list does not claim to be comprehensive.
 (Disclaimer: Because CRAN does not like DOI URLs in their automated
 checks, direct linking to scientific articles is not possible…)
 
-| Name          | Language | Resources                                                                                                       |
-|---------------|----------|-----------------------------------------------------------------------------------------------------------------|
-| blockCV       | R        | [CRAN](https://cran.r-project.org/package=blockCV)                                                              |
-| CAST          | R        | [Paper](https://doi.org/10.1016/j.envsoft.2017.12.001), [CRAN](https://cran.r-project.org/package=CAST)         |
-| ENMeval       | R        | [CRAN](https://cran.r-project.org/package=ENMeval)                                                              |
-| spatialsample | R        | [CRAN](https://cran.r-project.org/package=spatialsample)                                                        |
-| sperrorest    | R        | [CRAN](https://cran.r-project.org/package=sperrorest)                                                           |
-| Pyspatialml   | Python   | [GitHub](https://github.com/stevenpawley/Pyspatialml)                                                           |
-| spacv         | Python   | [GitHub](https://github.com/SamComber/spacv)                                                                    |
-| Museo Toolbox | Python   | [Paper](https://joss.theoj.org/papers/10.21105/joss.01978), [GitHub](https://github.com/nkarasiak/MuseoToolBox) |
-| spatial-kfold | Python   | [GitHub](https://github.com/WalidGharianiEAGLE/spatial-kfold)                                                   |
+| Name | Language | Resources |
+|----|----|----|
+| blockCV | R | [CRAN](https://cran.r-project.org/package=blockCV) |
+| CAST | R | [Paper](https://doi.org/10.1016/j.envsoft.2017.12.001), [CRAN](https://cran.r-project.org/package=CAST) |
+| ENMeval | R | [CRAN](https://cran.r-project.org/package=ENMeval) |
+| spatialsample | R | [CRAN](https://cran.r-project.org/package=spatialsample) |
+| sperrorest | R | [CRAN](https://cran.r-project.org/package=sperrorest) |
+| Pyspatialml | Python | [GitHub](https://github.com/stevenpawley/Pyspatialml) |
+| spacv | Python | [GitHub](https://github.com/SamComber/spacv) |
+| Museo Toolbox | Python | [Paper](https://joss.theoj.org/papers/10.21105/joss.01978), [GitHub](https://github.com/nkarasiak/MuseoToolBox) |
+| spatial-kfold | Python | [GitHub](https://github.com/WalidGharianiEAGLE/spatial-kfold) |
 
 # FAQ
 

@@ -152,6 +152,7 @@ if (mlr3misc::require_namespaces(c("sf"), quietly = TRUE)) {
 #> • Features (10):
 #>   • dbl (10): carea, cslope, dem, distdeforest, distroad, distslidespast,
 #>   hcurv, log.carea, slope, vcurv
+#> • Target classes: TRUE (positive class, 67%), FALSE (33%)
 #> * Coordinates:
 #>             X       Y
 #>         <num>   <num>

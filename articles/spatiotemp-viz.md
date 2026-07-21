@@ -23,6 +23,7 @@ returned in a list by
 [`autoplot()`](https://mlr3spatiotempcv.mlr-org.com/reference/autoplot.md):
 
 ``` r
+
 library(mlr3)
 library(mlr3spatiotempcv)
 task_st = tsk("cookfarm_mlr3")

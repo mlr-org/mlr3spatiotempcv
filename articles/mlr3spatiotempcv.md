@@ -40,6 +40,7 @@ in with an `sf` object, which is a common scenario for spatial analysis
 in R.
 
 ``` r
+
 # create 'sf' object
 data_sf = sf::st_as_sf(ecuador, coords = c("x", "y"), crs = 32717)
 
@@ -52,6 +53,7 @@ You can also use a plain `data.frame`. In this case, `crs` and
 inferred directly from the `sf` object:
 
 ``` r
+
 task = as_task_classif_st(ecuador, id = "ecuador_task", target = "slides",
   positive = "TRUE", coordinate_names = c("x", "y"), crs = 32717)
 ```
@@ -59,6 +61,7 @@ task = as_task_classif_st(ecuador, id = "ecuador_task", target = "slides",
 The `*ST` task family prints a subset of the coordinates by default:
 
 ``` r
+
 print(task)
 #> 
 #> ── <TaskClassifST> (751x11) ────────────────────────────────────────────────────
@@ -67,6 +70,7 @@ print(task)
 #> • Features (10):
 #>   • dbl (10): carea, cslope, dem, distdeforest, distroad, distslidespast,
 #>   hcurv, log.carea, slope, vcurv
+#> • Target classes: TRUE (positive class, 67%), FALSE (33%)
 #> * Coordinates:
 #>             x       y
 #>         <num>   <num>
@@ -99,6 +103,7 @@ with new entries when loading {mlr3spatiotempcv}.
 - `TaskRegrST`
 
 ``` r
+
 mlr_reflections$task_types
 #> Key: <type>
 #>            type          package             task        learner
@@ -126,6 +131,7 @@ mlr_reflections$task_types
 - `time`
 
 ``` r
+
 mlr_reflections$task_col_roles
 #> $regr
 #> [1] "feature"         "target"          "name"            "order"          
@@ -191,8 +197,8 @@ corresponding “repeated” method.
 
 Brenning, Alexander. 2012. “Spatial cross-validation and bootstrap for
 the assessment of prediction rules in remote sensing: The R package
-sperrorest.” In *2012 IEEE International Geoscience and Remote Sensing
-Symposium*. IEEE. <https://doi.org/10.1109/igarss.2012.6352393>.
+sperrorest.” *2012 IEEE International Geoscience and Remote Sensing
+Symposium*, July. <https://doi.org/10.1109/igarss.2012.6352393>.
 
 Linnenbrink, Jan, Carles Milà, Marvin Ludwig, and Hanna Meyer. 2023.
 “kNNDM: K-Fold Nearest Neighbour Distance Matching Cross-Validation for
@@ -208,5 +214,5 @@ Validation.” *Environmental Modelling & Software* 101 (March): 1–9.
 Valavi, Roozbeh, Jane Elith, Jose J. Lahoz-Monfort, and Gurutzeta
 Guillera-Arroita. 2018. “blockCV: an R package for generating spatially
 or environmentally separated folds for k-fold cross-validation of
-species distribution models.” *bioRxiv*, June.
+species distribution models.” *bioRxiv*, ahead of print, June.
 <https://doi.org/10.1101/357798>.
