@@ -105,3 +105,51 @@ test_that("Error when selection = checkboard and folds > 2", {
   expect_error(rsmp("repeated_spcv_block", range = 10000L,
     selection = "checkerboard", folds = 5)$instantiate(task))
 })
+
+test_that("balance_on_target passes the task target to blockCV", {
+  skip_if_not_installed("blockCV")
+
+  task = test_make_blockCV_test_task()
+  testSF = test_make_blockCV_test_df()
+
+  sf::sf_use_s2(use_s2 = FALSE)
+
+  rsp = rsmp("repeated_spcv_block",
+    repeats = 2,
+    folds = 4,
+    rows = 3,
+    cols = 4,
+    seed = 42,
+    balance_on_target = TRUE)
+  suppressMessages(rsp$instantiate(task))
+
+  testBlock = suppressMessages(blockCV::cv_spatial(
+    x = testSF,
+    column = "label",
+    k = 4,
+    rows_cols = c(3, 4),
+    hexagon = FALSE,
+    report = FALSE,
+    plot = FALSE,
+    verbose = FALSE,
+    progress = FALSE,
+    seed = 42
+  ))
+
+  # only compare the first repetition
+  expect_equal(rsp$instance$fold[1:1000], testBlock$folds_ids)
+})
+
+test_that("error when presence_bg is set without balance_on_target", {
+  skip_if_not_installed("blockCV")
+
+  task = test_make_blockCV_test_task()
+  rsp = rsmp("repeated_spcv_block",
+    repeats = 1, folds = 4, rows = 3, cols = 4, presence_bg = TRUE)
+
+  expect_error(
+    rsp$instantiate(task),
+    "requires 'balance_on_target = TRUE'",
+    fixed = TRUE
+  )
+})

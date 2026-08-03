@@ -165,6 +165,74 @@ test_make_blockCV_test_task = function() {
   return(task)
 }
 
+# sf DF with an imbalanced presence-background response (~10% presences) to use
+# directly with {blockCV} functions
+test_make_blockCV_pb_test_df = function() {
+  set.seed(123)
+  x = runif(1000, -80.4, -74)
+  y = runif(1000, 39.6, 41)
+
+  data = data.frame(
+    spp = "test",
+    occ = factor(as.integer(runif(length(x)) < 0.1)),
+    x = x,
+    y = y
+  )
+
+  data_sf = sf::st_as_sf(data,
+    coords = c("x", "y"),
+    crs = "EPSG:4326"
+  )
+
+  return(data_sf)
+}
+
+# mlr3 task to compare mlr3spatiotempcv results with {blockCV} results
+test_make_blockCV_pb_test_task = function() {
+  data = test_make_blockCV_pb_test_df()
+
+  task = as_task_classif_st(
+    data,
+    id = "test",
+    target = "occ",
+    positive = "1"
+  )
+  return(task)
+}
+
+# sf DF with a continuous response to use directly with {blockCV} functions
+test_make_blockCV_regr_test_df = function() {
+  set.seed(123)
+  x = runif(1000, -80.4, -74)
+  y = runif(1000, 39.6, 41)
+
+  data = data.frame(
+    spp = "test",
+    response = rnorm(length(x)),
+    x = x,
+    y = y
+  )
+
+  data_sf = sf::st_as_sf(data,
+    coords = c("x", "y"),
+    crs = "EPSG:4326"
+  )
+
+  return(data_sf)
+}
+
+# mlr3 task to compare mlr3spatiotempcv results with {blockCV} results
+test_make_blockCV_regr_test_task = function() {
+  data = test_make_blockCV_regr_test_df()
+
+  task = as_task_regr_st(
+    data,
+    id = "test",
+    target = "response"
+  )
+  return(task)
+}
+
 # mlr3 task to compare mlr3spatiotempcv results with {blockCV} results
 test_make_knndm_test_task = function() {
   data = test_make_blockCV_test_df()

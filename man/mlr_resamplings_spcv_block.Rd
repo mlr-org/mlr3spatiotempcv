@@ -67,6 +67,50 @@ Here's a list which shows the mapping between \code{blockCV} < 3.0.0 and \code{b
 The default of argument \code{hexagon} is different in \code{mlr3spatiotempcv} (\code{FALSE} instead of \code{TRUE}) to create square blocks instead of hexagonal blocks by default.
 }
 
+\section{Fold balancing}{
+
+
+\code{\link[blockCV:cv_spatial]{blockCV::cv_spatial()}} assigns blocks to folds by drawing \code{iteration}
+random candidate assignments and keeping the most balanced one.
+All balancing parameters only take effect for \code{selection = "random"}.
+
+By default the balancing objective is the total number of observations per
+fold, which is what \code{mlr3spatiotempcv} has always used.
+Setting \code{balance_on_target = TRUE} passes the target of the task to argument
+\code{column} of \code{\link[blockCV:cv_spatial]{blockCV::cv_spatial()}}, which balances the response classes
+(or the quantile bins of a continuous response) across the folds instead.
+This is opt-in to keep the default fold assignment unchanged.
+}
+
+\section{Parameters}{
+
+\itemize{
+\item \code{balance} (\code{logical(1)})\cr
+Search \code{iteration} random block-to-fold assignments for a balanced one.
+If \code{FALSE}, a single random assignment is used.
+Default: \code{TRUE}.
+\item \code{iteration} (\code{integer(1)})\cr
+Number of candidate assignments evaluated during the balancing search.
+Default: \code{100}.
+\item \code{balance_on_target} (\code{logical(1)})\cr
+Balance the classes (or quantile bins) of the task target across folds
+instead of the plain number of observations.
+Default: \code{FALSE}.
+\item \code{num_bins} (\code{integer(1)})\cr
+Number of quantile bins a continuous target is stratified into before
+balancing. Only relevant with \code{balance_on_target = TRUE}.
+Set to \code{NULL} to treat every unique value as its own class.
+Default: \code{4}.
+\item \code{presence_bg} (\code{logical(1)})\cr
+Treat the target as presence-background data, i.e. balance only the
+presence records so that the abundant background points cannot dominate
+the objective. Requires \code{balance_on_target = TRUE}.
+For a two-class \link{TaskClassifST} the positive class of the task is used as
+the presence class, a numeric target must consist of \code{0}s and \code{1}s.
+Default: \code{FALSE}.
+}
+}
+
 \examples{
 \donttest{
 if (mlr3misc::require_namespaces(c("sf", "blockCV"), quietly = TRUE)) {
