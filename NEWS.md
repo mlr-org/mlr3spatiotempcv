@@ -1,16 +1,15 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# mlr3spatiotempcv 2.3.4.9000
+# mlr3spatiotempcv 2.3.5
 
 ## Bug fixes
 
-### resampling
+- require at least two folds for partitioning resamplings (#253, #258).
+- fix `an error that prevented spcv_knndm` to work properly in nested resampling (#249, #250).
 
-- Require at least two folds for partitioning resamplings (#253, #258).
+## chore
 
-- Use load_dataset for tasks (#254).
-
-- Spcv_knndm and nested resampling (#249, #250).
+- Use ```load_dataset` for tasks (#254).
 
 ## Testing
 
