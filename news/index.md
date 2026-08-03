@@ -1,5 +1,28 @@
 # Changelog
 
+## mlr3spatiotempcv 2.3.5
+
+### Bug fixes
+
+- require at least two folds for partitioning resamplings
+  ([\#253](https://github.com/mlr-org/mlr3spatiotempcv/issues/253),
+  [\#258](https://github.com/mlr-org/mlr3spatiotempcv/issues/258)).
+- fix `an error that prevented spcv_knndm` to work properly in nested
+  resampling
+  ([\#249](https://github.com/mlr-org/mlr3spatiotempcv/issues/249),
+  [\#250](https://github.com/mlr-org/mlr3spatiotempcv/issues/250)).
+
+### chore
+
+- Use \`\``load_dataset` for tasks
+  ([\#254](https://github.com/mlr-org/mlr3spatiotempcv/issues/254)).
+
+### Testing
+
+- Update tests for blockCV 4.0 (drop spatialBlock)
+  ([\#255](https://github.com/mlr-org/mlr3spatiotempcv/issues/255),
+  [\#256](https://github.com/mlr-org/mlr3spatiotempcv/issues/256)).
+
 ## mlr3spatiotempcv 2.3.4
 
 CRAN release: 2025-09-12
