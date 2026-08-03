@@ -1,5 +1,22 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# mlr3spatiotempcv 2.3.4.9000
+
+## Bug fixes
+
+### resampling
+
+- Require at least two folds for partitioning resamplings (#253, #258).
+
+- Use load_dataset for tasks (#254).
+
+- Spcv_knndm and nested resampling (#249, #250).
+
+## Testing
+
+- Update tests for blockCV 4.0 (drop spatialBlock) (#255, #256).
+
+
 # mlr3spatiotempcv 2.3.4
 
 ## Chore
