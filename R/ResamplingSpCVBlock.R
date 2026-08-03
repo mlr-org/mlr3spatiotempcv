@@ -54,6 +54,11 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         selection = p_fct(levels = c(
           "random", "systematic",
           "checkerboard"), default = "random"),
+        balance = p_lgl(default = TRUE),
+        iteration = p_int(lower = 1L, default = 100L),
+        balance_on_target = p_lgl(default = FALSE),
+        num_bins = p_int(lower = 2L, default = 4L, special_vals = list(NULL)),
+        presence_bg = p_lgl(default = FALSE),
         rasterLayer = p_uty(
           default = NULL,
           custom_check = crate(function(x) {
@@ -134,7 +139,8 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
         task$row_ids,
         task$coordinates(),
         task$crs,
-        self$param_set$values$seed
+        self$param_set$values$seed,
+        blockcv_response(task, pv$balance_on_target, pv$presence_bg)
       )
 
       self$instance = instance
@@ -153,22 +159,33 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     }
   ),
   private = list(
-    .sample = function(ids, coords, crs, seed) {
+    .sample = function(ids, coords, crs, seed, response = NULL) {
+
+      pv = self$param_set$values
 
       points = sf::st_as_sf(coords,
         coords = colnames(coords),
         crs = crs
       )
+      if (!is.null(response)) {
+        points[[blockcv_col_name]] = response
+      }
       # Suppress print message, warning crs and package load
       # Note: Do not replace the assignment operator here.
       inds = blockCV::cv_spatial(
         x = points,
-        size = self$param_set$values$range,
-        rows_cols = c(self$param_set$values$rows, self$param_set$values$cols),
-        k = self$param_set$values$folds,
-        r = self$param_set$values$rasterLayer,
-        selection = self$param_set$values$selection,
-        hexagon = self$param_set$values$hexagon,
+        column = if (is.null(response)) NULL else blockcv_col_name,
+        size = pv$range,
+        rows_cols = c(pv$rows, pv$cols),
+        k = pv$folds,
+        r = pv$rasterLayer,
+        selection = pv$selection,
+        hexagon = pv$hexagon,
+        balance = pv$balance %??% TRUE,
+        iteration = pv$iteration %??% 100L,
+        # 'NULL' is a valid user setting for 'num_bins', hence check the name
+        num_bins = if ("num_bins" %in% names(pv)) pv$num_bins else 4L,
+        presence_bg = pv$presence_bg %??% FALSE,
         plot = FALSE,
         progress = FALSE,
         report = FALSE,
