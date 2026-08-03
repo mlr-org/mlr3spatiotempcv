@@ -16,7 +16,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/mlr-org/mlr3spatiotempcv/blob/v2.3.5/inst/CITATION)
+[`inst/CITATION`](https://github.com/mlr-org/mlr3spatiotempcv/blob/main/inst/CITATION)
 
 Schratz P, Becker M, Lang M, Brenning A (2024). “mlr3spatiotempcv:
 Spatiotemporal Resampling Methods for Machine Learning in R.” *Journal
