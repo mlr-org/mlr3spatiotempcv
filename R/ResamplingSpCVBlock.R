@@ -45,7 +45,7 @@ ResamplingSpCVBlock = R6Class("ResamplingSpCVBlock",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "spcv_block") {
       ps = ps(
-        folds = p_int(lower = 1L, tags = "required"),
+        folds = p_int(lower = 2L, tags = "required"),
         rows = p_int(lower = 1L),
         cols = p_int(lower = 1L),
         range = p_int(),
