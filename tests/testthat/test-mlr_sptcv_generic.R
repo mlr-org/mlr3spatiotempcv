@@ -66,6 +66,34 @@ test_that("train and test set getter functions are working", {
   }
 })
 
+test_that("partitioning resamplings reject 'folds = 1'", {
+  # a single fold cannot be partitioned into train and test (#253)
+  keys = c(
+    "spcv_block", "spcv_coords", "spcv_env", "sptcv_cstf",
+    "repeated_spcv_block", "repeated_spcv_coords", "repeated_spcv_env",
+    "repeated_sptcv_cstf"
+  )
+
+  for (key in keys) {
+    # paradox reports the widened integer bound, so only match on the id
+    expect_error(rsmp(key, folds = 1), "folds")
+  }
+})
+
+test_that("'spcv_disc' allows 'folds = 1'", {
+  # here 'folds' is the number of sampled discs, not a partition of the data,
+  # so a single fold still yields a non-empty training set
+  task = test_make_twoclass_task()
+
+  # the test coordinates form a 6x6 grid with 1 m spacing
+  resampling = rsmp("spcv_disc", folds = 1, radius = 2, buffer = 1)
+  resampling$instantiate(task)
+
+  expect_equal(resampling$iters, 1)
+  expect_gt(length(resampling$train_set(1)), 0)
+  expect_gt(length(resampling$test_set(1)), 0)
+})
+
 test_that("cloning works", {
   skip_if_not_installed("skmeans")
 

@@ -42,7 +42,7 @@ ResamplingRepeatedSptCVCstf = R6Class("ResamplingRepeatedSptCVCstf",
     #'   Identifier for the resampling strategy.
     initialize = function(id = "repeated_sptcv_cstf") {
       ps = ps(
-        folds = p_int(lower = 1L, tags = "required"),
+        folds = p_int(lower = 2L, tags = "required"),
         repeats = p_int(lower = 1, tags = "required"),
         stratify = p_lgl(default = FALSE)
       )
